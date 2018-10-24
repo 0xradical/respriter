@@ -1,0 +1,18 @@
+@import 'variables.scss';
+@import 'grid.scss';
+
+.c-art {
+
+  &--responsive-orientation {
+
+    @media(orientation: portrait) {
+      width: 100%;
+    }
+
+    @media(orientation: landspace) {
+      height: 100%;
+    }
+
+  }
+
+}

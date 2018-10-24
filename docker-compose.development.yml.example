@@ -1,0 +1,59 @@
+version: '3'
+services:
+  base: &base
+    image: codextremist/rails5:v1.0
+    volumes:
+      - .:/app
+    network_mode: host
+    env_file:
+      - .env.development
+    depends_on:
+      - redis
+      - mailcatcher
+      - postgres
+      - elasticsearch
+
+  app:
+    <<: *base
+    command: bundle exec foreman start -f Procfile.development
+    privileged: true
+    depends_on:
+      - redis
+      - mailcatcher
+      - postgres
+      - elasticsearch
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+
+  postgres:
+    image: postgres:9.6
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-9.6:/var/lib/postgresql/data
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.1
+    environment:
+      - "discovery.type=single-node"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+volumes:
+  redis:
+  postgres-9.6:
+  esdata:

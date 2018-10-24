@@ -1,0 +1,50 @@
+<%= content_for :section_header do %>
+  <%= "Log in" %>
+<% end %>
+
+  <div class='l-container__shrinker'>
+    <div class='l-hgrid-2c@desktop-1c@phone'>
+      <div>
+        <%= link_to t('components.omniauth_sign_in', { provider: 'LinkedIn' }), 
+          user_account_linkedin_omniauth_authorize_path,
+          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'LinkedIn' }) }, class: 'mx-Mb(5px) btn-social btn-social--linkedin' } %>
+
+        <%= link_to t('components.omniauth_sign_in', { provider: 'Facebook' }), 
+          user_account_facebook_omniauth_authorize_path,
+          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Facebook' }) }, class: 'mx-Mb(5px) btn-social btn-social--facebook' } %>
+
+        <%= link_to t('components.omniauth_sign_in', { provider: 'Github' }),  user_account_github_omniauth_authorize_path,
+          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Github' }) }, class: 'mx-Mb(5px) btn-social btn-social--github' } %>
+
+      </div>
+      <div>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+          <%#= devise_error_messages! %>
+
+          <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
+            <%= f.label :email, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+            <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+          </div>
+
+          <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
+            <%= f.label :password, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+            <%= f.password_field :password, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+            <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+          </div>
+
+          <% if devise_mapping.rememberable? -%>
+            <div class="field">
+              <%= f.check_box :remember_me %>
+              <%= f.label :remember_me %>
+            </div>
+          <% end -%>
+
+          <%= f.submit "Log in", class: 'btn btn--blue-flat btn--block' %>
+
+        <% end %>
+        <%= render "user_accounts/shared/links" %>
+      </div>
+    </div>
+  </div>

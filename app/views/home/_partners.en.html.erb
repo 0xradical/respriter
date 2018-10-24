@@ -1,0 +1,9 @@
+<% %w(udemy coursera lynda udacity pluralsight edx mit-opencourseware treehouse alison
+khan-academy babbel memrise futurelearn open-culture opensap hubspot-academy general-assembly masterclass tuts+ code-school desire2learn
+codecademy datacamp platzi skillshare).each do |p| %>
+  <div class='waffle'>
+    <svg viewbox='0 0 24 24'>
+      <use xlink:href='#<%= p %>'></use>
+    </svg>
+  </div>
+<% end %>

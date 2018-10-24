@@ -1,0 +1,24 @@
+<% content_for :body_html_attributes do %>
+  class="mx-Bc(white)"
+<% end %>
+
+<script type='text/javascript'>
+  window.env_context = {
+    authenticity_token: '<%= form_authenticity_token %>',
+    destroyAccountTemplate: '<%= button_to I18n.t("pages.dashboard_index.html.destroy_account_button"), user_account_registration_path, data: { confirm: "Are you sure?" }, class: "btn btn--magenta-flat btn--tiny btn--rounded", method: :delete %>'
+  }
+</script>
+
+<script id='app-props' type='x-vue-props'>
+  {
+    "locale": "<%= I18n.locale %>"
+  }
+</script>
+
+<%= content_for :javascript do %>
+  <script src="<%= web_component_path('vueUserDashboardApp.js') %>" type='text/javascript'></script>
+  <link rel="stylesheet" media="screen" href="<%= web_component_path('vueUserDashboardApp.css') %>">
+<% end %>
+<div data-vue-user-dashboard-app
+  data-vue-user-dashboard-app-translations='<%= YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.yml" )).to_json %>'
+  data-vue-user-dashboard-app-props='app-props'></div>

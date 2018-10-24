@@ -1,0 +1,12 @@
+- { id: 'arts_and_design',                  icon: 'rule-and-pencil-icon-o' }
+- { id: 'business',                         icon: 'business' }
+- { id: 'marketing',                        icon: 'target-icon-o' }
+- { id: 'computer_science',                 icon: 'card-icon-o' }
+- { id: 'data_science',                     icon: 'data-icon-o' }
+- { id: 'language_and_communication',       icon: 'dialog-icon-o' }
+- { id: 'life_sciences',                    icon: 'atom-icon-o' }
+- { id: 'math_and_logic',                   icon: 'categories-icon-o' }
+- { id: 'personal_development',             icon: 'graph-icon-o' }
+- { id: 'physical_science_and_engineering', icon: 'gear-icon-o' }
+- { id: 'social_science',                   icon: 'user-icon-o' }
+- { id: 'health_and_fitness',               icon: 'cross-icon-o' }

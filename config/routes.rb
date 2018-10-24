@@ -1,0 +1,55 @@
+Rails.application.routes.draw do
+
+  root to: 'home#index'
+
+  get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
+  get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
+  get '/blog', to: redirect('http://www.quero.com/blog/', status: 301)
+
+  # Devise
+  devise_for :admin_accounts
+  devise_for :user_accounts, controllers: {
+    sessions: 'user_accounts/sessions',
+    registrations: 'user_accounts/registrations',
+    omniauth_callbacks: 'user_accounts/omniauth_callbacks' 
+  }
+
+  namespace :user_accounts do
+    match '*dashboard', to: 'dashboard#index', via: [:get], as: :dashboard
+  end
+
+  get '/search(/:category)', to: 'courses#index', as: :courses
+
+  # OmniAuth
+  #get '/auth/:provider/callback', to: 'omniauth_sessions#create', as: :omniauth
+
+  namespace :api do
+
+    namespace :admin do
+      namespace :v1 do
+        resources :courses
+        resources :portals
+      end
+    end
+
+    namespace :bot do
+      namespace :v1 do
+        resources :courses
+      end
+    end
+
+    namespace :user do
+      namespace :v1 do
+        resource :account
+        resource :profile
+        resources :interests,      only: [:index, :create, :update, :destroy]
+        resources :tags,           only: :index
+        resources :images,         only: :create
+        resources :oauth_accounts, only: [:destroy]
+        resources :passwords,      only: :create
+      end
+    end
+
+  end
+
+end

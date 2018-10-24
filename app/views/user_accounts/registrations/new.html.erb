@@ -1,0 +1,37 @@
+<%= content_for :section_header do %>
+  <%= "Sign up" %>
+<% end %>
+
+<div class='l-cgrid' >
+  <div class='l-cgrid__col'>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%#= devise_error_messages! %>
+
+  <%# if session[:omniauth_data].empty? %>
+    <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
+      <%= f.label :email, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+      <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+    </div>
+  <%# else %>
+    <%#= f.hidden_field :email, session[:omniauth_data]['email'] %>
+  <%# end %>
+
+  <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
+    <%= f.label :password, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+    <%= f.password_field :password, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+    <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+  </div>
+
+  <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
+    <%= f.label :password_confirmation, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+    <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+    <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+  </div>
+
+  <%= f.submit "Sign up", class: 'btn btn--blue-flat btn--block' %>
+
+<% end %>
+<%= render "user_accounts/shared/links" %>
+  </div>
+</div>

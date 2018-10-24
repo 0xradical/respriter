@@ -1,0 +1,7 @@
+<%= content_for :body do %>
+  <div class='l-container mx-Pt(40px) mx-Pb(60px)'>
+    <h2 class='mx-Ta(c) mx-Mb(40px)'><%= yield :section_header %></h2>
+      <%= yield %>
+  </div>
+<% end %>
+<%= render template: 'layouts/global' %>

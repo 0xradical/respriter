@@ -1,0 +1,17 @@
+<% content_for :body_html_attributes do %>
+  style="background-color:#fff"
+<% end %>
+
+<%= content_for :header_html_attributes do %>
+  class="mx-Bc(#fff) mx-Bb(light-gray)"
+<% end %>
+
+
+<% content_for :body do %>
+  <div class='mx-Pt(40px) l-container'>
+    <%= yield %>
+  </div>
+<% end %>
+
+<%= render template: 'layouts/global' %>
+

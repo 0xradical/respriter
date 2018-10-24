@@ -1,0 +1,269 @@
+en:
+  dictionary: &dictionary
+    sign_in: "Log In"
+    sign_up: "Sign Up"
+    sign_out: 'Log out'
+    price: "Price"
+    cancel_search: "Cancel search"
+    filters: "Filters"
+    audio: "Language"
+    subtitles: "Subtitles"
+    categories: "Categories"
+    max_price: "Max. $"
+    certificate: "certificate"
+    length: "length"
+    previous_page: "Previous page"
+    next_ page: "Next page"
+    search_results: "Showing %{total} results"
+    for: "for"
+    sort_by: "Sort by"
+    lowest_price: "Lowest price"
+    highest_price: "Highest Price"
+    top_reviewed: "Top reviewed"
+    favorite: "Favorite"
+    go_to_course: "Go to course"
+    search: 
+  iso639_codes:
+    en: 'English'
+    pt: 'Portuguese'
+    pt-BR: 'Brazilian Portuguese'
+    es: 'Spanish'
+    ru: 'Russian'
+    it: 'Italian'
+    de: 'German'
+    fr: 'French'
+  components:
+    omniauth_sign_in: "Connect with %{provider}"
+    omniauth_signin_in: "Connecting with %{provider}"
+    searchbar_placeholder: "Find a course ..."
+  categories: &categories
+    arts_and_design: 'Arts and Design'
+    business: 'Business'
+    marketing: 'Marketing'
+    computer_science: 'Computer Science'
+    data_science: 'Data Science'
+    language_and_communication: 'Language and Communication'
+    life_sciences: 'Life Sciences'
+    math_and_logic: 'Math and Logic'
+    personal_development: 'Personal Development'
+    physical_science_and_engineering: 'Physical Science and Engineering'
+    social_science: 'Social Science'
+    health_and_fitness: 'Health and Fitness'
+  tags:
+    design: 'Design'
+    art_culture: 'Art and Culture'
+    architecture: 'Architecture'
+    history: 'History'
+    humanities: 'Humanities'
+    literature: 'Literature'
+    music: 'Music'
+    photography: 'Photography'
+    design_sprint_foundations: 'Design Sprint Foundations'
+    design_and_creativity: 'Design and Creativity'
+    visual_arts: 'Visual Arts'
+    film_and_theatre: 'Film and Theatre'
+    digital_media: 'Digital Media'
+    business_management: 'Business Management'
+    economics_finance: 'Economics and Finance'
+    business_analisys: 'Business Analisys'
+    office_productivity: 'Office Productivity'
+    hr: 'HR'
+    management_and_leadership: 'Management and Leadership'
+    accounting: 'Accounting'
+    project_management: 'Project Management'
+    strategic_management: 'Strategic Management'
+    industry_specific: 'Industry Specific'
+    entrepreneurship: 'Entrepreneurship'
+    human_resources: 'Human Resources'
+    finance: 'Finance'
+    business_intelligence: 'Business Intelligence'
+    professional_development: 'Professional Development'
+    excel: 'Excel'
+    marketing: 'Marketing'
+    digital_marketing: 'Digital Marketing'
+    content_marketing: 'Content Marketing'
+    marketing_analytics: 'Marketing Analytics'
+    sales: 'Sales'
+    android_basics: 'Android Basics'
+    android_developer: 'Android Developer'
+    artificial_intelligence: 'Artificial Intelligence'
+    computer_vision: 'Computer Vision'
+    front_end_developer: 'Front End Developer'
+    full_stack_developer: 'Full Stack Developer'
+    intro_to_self_driving_car: 'Intro to Self Driving Car'
+    intro_to_programming: 'Intro to Programming'
+    ios: 'IOS'
+    deep_learning: 'Deep Learning'
+    machine_learning: 'Machine Learning'
+    school_of_ai: 'School of AI'
+    react: 'React'
+    autonomous_system: 'Autonomous System'
+    self_driving_car: 'Self-driving car'
+    unreal: 'Unreal'
+    it_and_software: 'IT and Software'
+    mobile_web: 'Mobile Web'
+    vr: 'VR'
+    virtual_reality: 'Virtual Reality'
+    python: 'Python'
+    internet_of_things: 'Internet of Things'
+    ios_development: 'IOS Development'
+    information_technology: 'Information Technology'
+    devops: 'Devops'
+    software_development: 'Software Development'
+    android_development: 'Android Development'
+    mobile_development: 'Mobile Development'
+    game_development: 'Game Development'
+    programming_languages: 'Programming Languages'
+    computer_networking: 'Computer Networking'
+    cybersecurity: 'Cybersecurity'
+    web_development: 'Web Development'
+    algorithms_and_data_structures: 'Algorithms and Data Structures'
+    databases: 'Databases'
+    blockchain_and_cryptocurrency: 'Blockchain and Cryptocurrency'
+    data_analysis_statistics: 'Data Analysis Statistics'
+    data_foundations: 'Data Foundations'
+    data_scientist: 'Data Scientist'
+    big_data: 'Big Data'
+    data_analysis: 'Data Analysis'
+    bioinformatics: 'Bioinformatics'
+    data_mining: 'Data Mining'
+    data_visualization: 'Data Visualization'
+    language: 'Language'
+    communication: 'Communication'
+    nlp: 'NLP'
+    teacher_training: 'Teacher Training'
+    writing: 'Writing'
+    esl: 'ESL'
+    grammar_and_writing: 'Grammar and Writing'
+    climate_change: 'Climate Change'
+    environmental_science: 'Environmental Science'
+    biology: 'Biology'
+    energy_and_earth_sciences:  'Energy and Earth Sciences'
+    environmental_studies: 'Environmental Studies'
+    math: 'Math'
+    logic: 'Logic'
+    algorithms: 'Algorithms'
+    algebra_and geometry: 'Algebra and Geometry'
+    statistics_and_probability: 'Statistics and Probability'
+    calculus: 'Calculus'
+    lifestyle: 'Lifestyle'
+    personal_development: 'Personal Development'
+    cooking: 'Cooking'
+    coaching: 'Coaching'
+    test_prep: 'Test Prep'
+    teacher_development: 'Teacher Development'
+    stem: 'STEM'
+    higher_education: 'Higher Education'
+    k12: 'K12'
+    course_development: 'Course Development'
+    online_education: 'Online Education'
+    career_development: 'Career Development'
+    communication_skills: 'Communication Skills'
+    engineering: 'Engineering'
+    physics: 'Physics'
+    robotics: 'Robotics'
+    chemistry: 'Chemistry'
+    electronics: 'Electronics'
+    mechanical_engineering: 'Mechanical Engineering'
+    electrical_engineering: 'Electrical Engineering'
+    civil_engineering: 'Civil Engineering'
+    astronomy: 'Astronomy'
+    gis: 'GIS'
+    quantum_mechanics: 'Quantum Mechanics'
+    nanotechnology: 'nanotechnology'
+    culture: 'Culture'
+    religion: 'Religion'
+    philosophy: 'Philosophy'
+    law: 'Law'
+    ethics: 'Ethics'
+    philosophy_ethics: 'Philosophy Ethics'
+    anthropology: 'Anthropology'
+    behavioral_sciences: 'Behavioral Sciences'
+    economics: 'Economics'
+    geography: 'Geography'
+    international_studies: 'International Studies'
+    politics: 'Politics'
+    psichology: 'Psichology'
+    sociology: 'Sociology'
+    urban_planning: 'Urban Planning'
+    political_science: 'Political Science'
+    human_rights: 'Human Rights'
+    sustainability: 'Sustainability '
+    sports: 'Sports'
+    food_nutrition: 'Food Nutrition'
+    health_and_safety: 'Health and Safety'
+    medicine: 'Medicine'
+    health_and_fitness: 'Health and Fitness'
+    health_care: 'Health Care'
+    disease_and_disorder: 'Disease and Disorder'
+    nutrition_and_wellness: 'Nutrition and Wellness'
+    public_health: 'Public Health'
+    nursing: 'Nursing'
+  pages:
+    home_index:
+      meta:
+        title: 'Online Courses with Certificate - Free Registration | Quero'
+        meta_description: 'Find the best Online Courses with Certificate. More than 50 platforms and
+        institutions and more than 500.000 courses. Including free courses from Harvard, MIT, Yale and many more'
+      html:
+        main_header: 'Find and compare online courses <br/> from multiple providers'
+        main_sub_header: 'More than 100,000 courses available. Free options with certificate'
+        top_reviewed_header: 'Top Reviews'
+        browse_by_category_header: 'Browse by Category'
+        best_prices_header: 'Best Prices'
+        most_popular_header: 'Most Popular'
+        free_courses_header: 'Free Courses'
+        partners_header: 'Find 100.000+ online courses'
+        partners_text: 'Udemy, Khan Academy, Coursera, EdX and Lynda are some of our partners.
+        Find the best online courses with certificate. More than 50 platforms and more than 100,000
+        options. Free online courses from Harvard, MIT, Yale and more'
+    courses_index:
+      meta:
+      html:
+        arts_and_design_text: 'Strengthen and widen perceptions, observations and critical thinking.
+        Learn from home at your own pace with online Art and Design courses.'
+        business_text: 'Nurture valuable abilities in markets, finance, operations and strategy.
+        Advance in the world of business with online Business courses.'
+        marketing_text: 'Learn tactics to reach, attract, engage and retain customers . Keep up with
+        the best practices with online Marketing Courses.' 
+        computer_science_text: 'Study the design, development and analysis of software and hardware.
+        Keep your set of skills updated with online Computer Science courses.'       
+        data_science_text: 'Extract knowledge and insights
+        from large amounts of data. Accelerate your learning curve with online Data Science
+        courses.'
+        language_and_communication_text: 'Develop skills of listening, reading, speaking
+        and writing. Master your Language and Communication abilities with online courses.'
+        life_sciences_text: 'Understand physical structures, chemical processes and molecular
+        interactions of living structures. Push your frontiers with online Life Sciences courses.'
+        math_and_logic_text: 'Study Algebra, Geometry , Arithmetic, Statistics and more. Develop
+        your reasoning and analytical thinking with online Math and Logic courses.'
+        personal_development_text: 'Achieve your fully potential in your personal life and
+        professional career. Take online Personal Development courses and become the greatest
+        version of you.' 
+        physical_science_and_engineering_text: 'Learn how to solve problems and
+        build creations that benefit humanity. Explore all areas of Physical Science and Engineering
+        with online courses.' 
+        social_science_text: 'Study all aspects of human society and social
+        life. Understand many of the worlds biggest issues with online Social Science courses.'
+        health_and_fitness_text: 'Increase your knowledge about health maintenance, disease
+        prevention and risky behaviors reduction. Live longer and achieve your goals with online
+        Health and Fitness courses.'
+    dashboard_index:
+      meta:
+        title: 'Member Area | Quero'
+      html:
+        account_settings_header: 'Account Settings'
+        secure_your_account_header: 'Secure your Account'
+        secure_your_account_button: 'Create a password'
+        account_settings_link: 'Account Settings'
+        account_settings_form_button: 'Save'
+        profile_link: 'Profile'
+        interests_link: 'Areas of Interest'
+        language_preferences_header: 'Language Preferences'
+        connected_oauth_accounts_header: 'Connected Accounts'
+        add_oauth_accounts_header: 'Add other accounts'
+        destroy_account_header: 'Delete Account'
+        destroy_account_button: 'Delete Account'
+        upload_image_button: 'Upload photo'
+        select_interest_placeholder: 'Choose your areas of interest'
+

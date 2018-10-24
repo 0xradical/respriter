@@ -1,0 +1,89 @@
+source 'http://rubygems.org'
+source 'https://rails-assets.org'
+
+ruby '2.5.1'
+
+gem 'rails', '~> 5.2.0'
+gem 'webpacker', github: 'rails/webpacker'
+gem 'pg'
+gem 'puma'
+
+#gem 'active_model_serializers', '~> 0.10.0'
+gem 'activerecord-import'
+gem 'fast_jsonapi'
+
+# Rack
+gem 'rack-reverse-proxy', :require => 'rack/reverse_proxy'
+
+# Pagination
+gem 'kaminari'
+
+# MiniMagick
+gem 'mini_magick'
+gem 'carrierwave'
+gem 'carrierwave-aws'
+
+# Elastic Search
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+gem 'elasticsearch-dsl'
+
+# Exceptions
+gem 'rollbar'
+
+# Browser
+gem 'browser'
+gem 'user_agent_parser'
+
+# Authentication
+gem 'devise'
+gem 'omniauth-oauth2'
+#gem 'omniauth'
+gem 'omniauth-linkedin-oauth2'
+gem 'omniauth-facebook'
+gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
+
+gem 'redis-namespace'
+gem 'redis-rails'
+
+# Background jobs
+gem 'sidekiq'
+gem 'sidekiq-unique-jobs'
+
+# Sitemap
+gem 'sitemap_generator'
+
+# Email
+gem "valid_email2"
+
+group :test do
+  gem 'cucumber-rails', require: false
+  gem 'guard-cucumber'
+  gem 'guard-rspec'
+  gem 'webmock'
+  gem 'capybara'
+  gem 'poltergeist'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
+  gem 'vcr'
+  gem 'database_cleaner'
+  gem 'fivemat'
+  gem 'rspec-its'
+  gem 'rspec-mocks'
+  gem 'shoulda'
+  gem 'timecop'
+  gem 'capybara-email'
+end
+
+group :development, :test do
+  gem 'pry'
+  gem 'rack-proxy'
+  gem 'foreman'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'spring'
+  gem 'listen'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+end

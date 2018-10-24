@@ -1,0 +1,15 @@
+<div class='l-grid[5w@phone]'>
+  <% %w(udemy coursera lynda udacity pluralsight edx mit-opencourseware treehouse alison
+  khan-academy babbel memrise general-assembly masterclass tuts+ code-school desire2learn
+  codecademy datacamp platzi).each do |p| %>
+    <div class='l-col' style='max-height:90px'>
+      <div style='max-width:72px;text-align:center'>
+        <div style='padding:15px;padding-bottom:10px;'>
+          <svg viewbox='0 0 24 24'>
+            <use xlink:href='#<%= p %>'></use>
+          </svg>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

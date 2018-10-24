@@ -1,0 +1,27 @@
+<%= content_for :section_header do %>
+  Change your password
+<% end %>
+
+<div class='l-cgrid' >
+  <div class='l-cgrid__col'>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= devise_error_messages! %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
+        <%= f.label :password, "New password", data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+        <%= f.password_field :password, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+        <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+      </div>
+
+      <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
+        <%= f.label :password_confirmation,"Confirm new password",  data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+        <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+        <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+      </div>
+
+      <%= f.submit "Submit", class: 'btn btn--blue-flat btn--block' %>
+    <% end %>
+    <%= render "user_accounts/shared/links" %>
+  </div>
+</div>

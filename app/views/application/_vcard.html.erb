@@ -1,0 +1,50 @@
+<div class='c-vcard'>
+
+  <div class='c-vcard__header' style='vertical-align:middle'>
+    <span class='c-label'>
+      <svg class='c-label__icon c-label__icon--inc-60%'>
+        <use xlink:href=<%= "##{course.provider.slug}" %>></use>
+      </svg>
+      <span class='mx-W(150px) c-label__text'>
+        <span class='c-tags c-tags--gray mx-Ml(4px)'>
+          <%= course.provider.name %>
+        </span>
+      </span>
+    </span>
+
+
+    <%# <div class='logo' style='vertical-align:middle;text-align:center;display:inline-block;width:15%;max-width:128px'> %>
+      <%# <svg viewbox='0 0 100 100' style='margin:15%'> %>
+        <%# <use xlink:href=[>= "##{course.provider.slug}" <]></use> %>
+      <%# </svg> %>
+    <%# </div> %>
+  <!--<span style='vertical-align:middle'><%#= course.provider.name %></span> -->
+
+    <div class='c-vcard__header-icon-slot'>
+      <svg viewbox='0 0 100 100'>
+        <use xlink:href='heart-icon'></use>
+      </svg>
+    </div>
+  </div>
+
+  <div class='c-vcard__body'>
+    <%= link_to course.url, target: '_blank' do %>
+      <h3 style='font-size:1em;line-height:1.1em;height:3.1em;overflow:hidden'>
+        <%= course.name %>
+      </h3>
+    <% end %>
+  </div>
+
+  <div class='c-vcard__footer-price-slot'>
+    <% if course.price > 0 %>
+      <span class='c-price'><%= number_to_currency(course.price) %></span>
+    <% else %>
+      <span class='c-tag c-tag--green-flat'>free</span>
+    <% end %>
+  </div><div class='c-vcard__footer-action-slot'>
+    <%= link_to course.affiliate_link, target: '_blank', class: 'btn btn--tiny btn--rounded btn--blue-border' do %>
+      Go to course
+    <% end %>
+  </div>
+
+</div>
