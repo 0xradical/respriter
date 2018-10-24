@@ -9,8 +9,5 @@ class CreateEnrollments < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
-    add_index :enrollments, :user_account_id, unique: true
-    add_index :enrollments, :course_id,       unique: true
-
   end
 end

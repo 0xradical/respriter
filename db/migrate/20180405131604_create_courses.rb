@@ -32,7 +32,6 @@ class CreateCourses < ActiveRecord::Migration[5.1]
     end
 
     add_index :courses, :url_md5,     unique: true
-    add_index :courses, :provider_id, unique: true
     add_index :courses, :slug,        unique: true
 
     execute <<-SQL

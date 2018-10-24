@@ -57,6 +57,15 @@ ActiveRecord::Schema.define(version: 2018_10_15_193452) do
     t.index ["user_account_id"], name: "index_enrollments_on_user_account_id"
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_account_id"
+    t.bigint "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_favorites_on_course_id"
+    t.index ["user_account_id"], name: "index_favorites_on_user_account_id"
+  end
+
   create_table "images", force: :cascade do |t|
     t.string "caption"
     t.string "file"
@@ -65,6 +74,7 @@ ActiveRecord::Schema.define(version: 2018_10_15_193452) do
     t.integer "imageable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
   create_table "oauth_accounts", force: :cascade do |t|
@@ -126,6 +136,7 @@ ActiveRecord::Schema.define(version: 2018_10_15_193452) do
     t.index ["unlock_token"], name: "index_user_accounts_on_unlock_token", unique: true
   end
 
+  add_foreign_key "favorites", "user_accounts"
   add_foreign_key "oauth_accounts", "user_accounts"
   add_foreign_key "profiles", "user_accounts"
 end
