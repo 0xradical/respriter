@@ -206,7 +206,7 @@ pt-BR:
         instituições e mais de 100.000 cursos. Incluindo cursos grátis de Harvard, MIT, Yale entre
         outros'
       html:
-        main_header: 'Encontre e compare cursos online de diversas plataformas'
+        main_header: 'Encontre e compare cursos online <br/> de diversas plataformas'
         main_sub_header: 'Mais de 100.000 cursos disponíveis. Opções gratuitas com certificado'
         top_reviewed_header: 'Melhor avaliados'
         browse_by_category_header: 'Navegue por Categoria'

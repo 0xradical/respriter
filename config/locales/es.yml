@@ -204,7 +204,7 @@ es:
         meta_description: 'Encuentra los mejores cursos online con certificado. Más de 50
         plataformas y Instituciones y más de 100.000 cursos. Incluye cursos gratuitos de Harvard, MIT, Yale y mucho más'
       html:
-        main_header: 'Encuentre y compare cursos online de diversas plataformas'
+        main_header: 'Encuentre y compare cursos online <br/> de diversas plataformas'
         main_sub_header: 'Más de 100.000 cursos disponibles. Opciones gratuitas con certificado'
         top_reviewed_header: 'Mejor evaluados'
         browse_by_category_header: 'Navegue por Categoria'
