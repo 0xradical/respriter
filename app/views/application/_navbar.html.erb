@@ -33,7 +33,7 @@
 
   <div class='c-navbar__search-slot'>
     <script id='navbar-search' type='x-vue-template'>
-      <search-bar id='header-nav-search' containerClass='c-search' placeholder="<%= t('components.searchbar_placeholder') %>">
+      <search-bar id='header-nav-search' :searchBtn='false' containerClass='c-search' placeholder="<%= t('components.searchbar_placeholder') %>">
         <template slot='close-icon'>
           <svg width='48px' height='48px' viewbox='0 0 100 100'>
             <use xlink:href='#close-icon'></use>
