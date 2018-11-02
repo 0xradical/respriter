@@ -1,14 +1,14 @@
 namespace :integration do
-  task import_courses: [:environment] do |t,args|
+  task :import_courses, [:global_sequence] => [:environment] do |t,args|
     categories = YAML::load_file(Rails.root.join('config', 'locales', 'en.yml'))['en']['categories'].invert
     supported_languages = %w(en pt pt-BR es ru it de fr)
     num_of_threads = 5; threads = []
     num_of_threads.times do |i|
       threads << Thread.new do
-        pos = i; cycle = 0;
-        next_page = pos * 50
+        pos = (args[:global_sequence].to_i || 0) + ( i * 50); cycle = 0;
+        next_page = pos
         loop do
-          puts "Thread #{pos} fetching page #{next_page}"
+          puts "Thread #{i} fetching page #{next_page}"
           uri = URI("https://napoleon-the-crawler.herokuapp.com/resources/updates/#{next_page}")
 
           req = Net::HTTP::Get.new(uri)
@@ -30,7 +30,10 @@ namespace :integration do
               next
             end
 
-            next unless supported_languages.include?(record['content']['language'])
+            if (supported_languages & record['content']['language']).empty?
+              puts "#{record['content']['language']} language not supported"
+              next
+            end
 
             begin
               provider.courses.find_or_create_by!(id: record['id']) do |course|
@@ -38,7 +41,12 @@ namespace :integration do
                 course.name             = record['content']['course_name']
                 course.subtitles        = record['content']['subtitles']
                 course.region           = record['content']['language']
-                course.category         = categories[record['content']['category']]
+                if record['content']['category'].match(/[A-Z]+/)
+                  course.category         = categories[record['content']['category']]
+                else
+                  course.category         = record['content']['category']
+                end
+                course.tags             = record['content']['tags']
                 course.audio            = [record['content']['audio']].flatten
                 course.slug             = record['content']['slug']
                 course.url              = record['content']['url']
@@ -50,7 +58,7 @@ namespace :integration do
             end
           end
 
-          cycle += 1; next_page = (pos + (cycle * num_of_threads)) * 50
+          cycle += 1; next_page = pos + (cycle * num_of_threads * 50)
           break if (collection.empty?)
         end
       end
