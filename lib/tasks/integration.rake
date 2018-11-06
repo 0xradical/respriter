@@ -37,22 +37,24 @@ namespace :integration do
 
             begin
               provider.courses.find_or_create_by!(id: record['id']) do |course|
-                course.global_sequence  = record['global_sequence']
-                course.name             = record['content']['course_name']
-                course.subtitles        = record['content']['subtitles']
-                course.region           = record['content']['language']
+                course.global_sequence    = record['global_sequence']
+                course.dataset_sequence   = record['dataset_sequence']
+                course.resource_sequence  = record['resource_sequence']
+                course.name               = record['content']['course_name']
+                course.subtitles          = record['content']['subtitles']
+                course.region             = record['content']['language']
                 if record['content']['category'].match(/[A-Z]+/)
                   course.category         = categories[record['content']['category']]
                 else
                   course.category         = record['content']['category']
                 end
-                course.tags             = record['content']['tags']
-                course.audio            = [record['content']['audio']].flatten
-                course.slug             = record['content']['slug']
-                course.url              = record['content']['url']
-                course.video_url        = record['content']['video_url']
-                course.description      = record['content']['description']
-                course.price            = record['content']['price'].to_f
+                course.tags               = record['content']['tags']
+                course.audio              = [record['content']['audio']].flatten
+                course.slug               = record['content']['slug']
+                course.url                = record['content']['url']
+                course.video_url          = record['content']['video_url']
+                course.description        = record['content']['description']
+                course.price              = record['content']['price'].to_f
               end
             rescue
             end
