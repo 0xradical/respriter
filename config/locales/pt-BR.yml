@@ -6,7 +6,7 @@ pt-BR:
     price: 'Preço'
     cancel_search: 'Sair da pesquisa'
     filters: 'Filtros'
-    audio_language: 'Idioma do áudio'
+    audio: 'Idioma do áudio'
     subtitles: 'Legendas'
     categories: 'Categorias'
     max_price: 'Até R$'
@@ -16,16 +16,25 @@ pt-BR:
     next_ page: 'Próxima página'
     search_results: "Exibindo %{total} resultados"
     for: "para"
+    from: "De"
+    to: "Até"
+    min: "Min"
+    max: "Max"
+    free: 'Grátis'
+    only_free: 'Somente grátis'
     sort_by: 'Ordenar por'
+    display_filter: 'Mostrar filtro'
     lowest_price: 'Menor preço'
     highest_price: 'Maior preço'
+    provider: 'Plataformas'
     top_reviewed: 'Melhor avaliados'
     favorite: 'Favoritar'
     go_to_course: 'Ir para o curso'
   iso639_codes:
     en: 'Inglês'
+    en-US: 'Inglês (EUA)'
     pt: 'Português'
-    pt-BR: 'Português do Brasil'
+    pt-BR: 'Português (Brasil)'
     es: 'Espanhol'
     ru: 'Russo'
     it: 'Italiano'

@@ -1,7 +1,7 @@
 namespace :integration do
   task :import_courses, [:global_sequence] => [:environment] do |t,args|
     categories = YAML::load_file(Rails.root.join('config', 'locales', 'en.yml'))['en']['categories'].invert
-    supported_languages = %w(en pt pt-BR es ru it de fr)
+    supported_languages = %w(en en-US pt pt-BR es ru it de fr)
     num_of_threads = 5; threads = []
     num_of_threads.times do |i|
       threads << Thread.new do

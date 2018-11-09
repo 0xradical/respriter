@@ -13,6 +13,8 @@ class Course < ApplicationRecord
   belongs_to  :provider
   has_many    :user_accounts, through: :enrollments
 
+  delegate :name, :slug,  to: :provider, prefix: true
+
   settings index: { number_of_shards: 1 } do
     mappings dynamic: 'false' do
 
@@ -28,10 +30,12 @@ class Course < ApplicationRecord
         indexes :es, analyzer: 'spanish'
       end
 
-      indexes :price,     type: 'double'
-      indexes :audio,     type: 'keyword'
-      indexes :subtitles, type: 'keyword'
-      indexes :category,  type: 'keyword'
+      indexes :price,         type: 'double'
+      indexes :audio,         type: 'keyword'
+      indexes :subtitles,     type: 'keyword'
+      indexes :category,      type: 'keyword'
+      indexes :tags,          type: 'keyword'
+      indexes :provider_name, type: 'keyword'
 
     end
   end
@@ -40,7 +44,7 @@ class Course < ApplicationRecord
   scope :by_provider, -> (provider) { joins(:provider).where("providers.slug = ?", provider)  }
   scope :free, -> { where(price: 0) }
 
-  def affiliate_link
+  def affiliate_url
     if provider.afn_url_template.present?
       provider.afn_url_template % { course_url: ERB::Util.url_encode(url) }
     else
@@ -57,52 +61,81 @@ class Course < ApplicationRecord
       bulk_index_async(result.ids)
     end
 
-    def search(query)
-      __elasticsearch__.search(query)
+    def reset_index!
+      __elasticsearch__.delete_index!
+      rescue
+      ensure
+        __elasticsearch__.create_index!
+        __elasticsearch__.import
     end
 
-    def search(q, options={})
-      search_def = Elasticsearch::DSL::Search.search do
+    def search(query:, filter: nil, order: nil)
+      search_exp = Elasticsearch::DSL::Search.search do
+
         query do
-
           bool do
-            must do
 
-              if q.present?
+            if query.present?
+
+              must do
                 multi_match do
-                  query q
-                  type 'best_fields'
-                  fields %w(name description provider.name)
+                  query query
+                  fields %w(name^2 tags.keyword^2 description)
                 end
-              else
+              end
+
+              should do
+                term 'tags.keyword' => query
+              end
+
+            else
+
+              must do
                 match_all
               end
 
             end
+
+            if (filter&.[] :price)
+              filter do
+                range price: { gte: filter[:price].min, lte: filter[:price].max }
+              end
+            end
+
           end
         end
 
         post_filter do
           bool do
 
-            if options[:category]
-              must { terms category: options[:category] }
+            if (filter&.[] :providers)
+              must { terms provider_name: filter[:providers] }
             end
 
-            if options[:audio]
-              must { terms audio: options[:audio] }
+            if (filter&.[] :categories)
+              must { term category: filter[:categories].gsub('-','_') }
             end
 
-            if options[:subtitles]
-              must { terms subtitles: options[:subtitles] }
+            if (filter&.[] :audio)
+              must { terms audio: filter[:audio] }
             end
 
-            if options[:price]
-              must do 
-                range price: { lte: options[:price] }
-              end
+            if (filter&.[] :subtitles)
+              must { terms subtitles: filter[:subtitles] }
             end
 
+          end
+        end
+
+        if order&.[] :price
+          sort do
+            by :price, order: order[:price]
+          end
+        end
+
+        aggregation :providers do
+          terms do
+            field 'provider_name'
           end
         end
 
@@ -128,13 +161,8 @@ class Course < ApplicationRecord
           max field: 'price'
         end
 
-
       end
-      __elasticsearch__.search(search_def)
-    end
-
-    def elasticsearch_import
-      __elasticsearch__.import
+      __elasticsearch__.search(search_exp)
     end
 
     def bulk_index_async(records)
@@ -144,7 +172,23 @@ class Course < ApplicationRecord
   end
 
   def as_indexed_json(options={})
-    self.as_json(methods: :affiliate_link, include: { provider: { only: [:name, :slug] } })
+    {
+      id:             id,
+      name:           name,
+      description:    description,
+      price:          price,
+      affiliate_url:  affiliate_url,
+      url:            url,
+      url_id:         url_md5,
+      video_url:      video_url,
+      tags:           tags,
+      audio:          audio,
+      subtitles:      subtitles,
+      category:       category,
+      provider_name:  provider_name,
+      provider_slug:  provider_slug
+    }
+    #self.as_json(methods: :affiliate_link, include: { provider: { only: [:name, :slug] } })
   end
 
 end

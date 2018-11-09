@@ -14,18 +14,25 @@ es:
     length: 'Tiempo de duración'
     previous_page: 'Página anterior'
     next_ page: 'Segiuente página'
+    free: 'Gratis'
+    min: "Min"
+    max: "Max"
     search_results: "Mostrando %{total} resultados"
     for: "para"
     sort_by: 'Ordenar por'
+    display_filter: 'Mostrar filtro'
     lowest_price: 'Precio más bajo'
     highest_price: 'Precio más alto'
+    only_free: 'Solo gratis'
     top_reviewed: 'Mejor evaluados'
     favorite: 'Favorito'
+    provider: 'Plataformas'
     go_to_course: 'Ir al curso'
   iso639_codes:
     en: 'Inglés'
+    en-US: 'Inglés (EUA)'
     pt: 'Portugués'
-    pt-BR: 'Portugués de Brasil'
+    pt-BR: 'Portugués (Brasil)'
     es: 'Español'
     ru: 'Ruso'
     it: 'Italiano'

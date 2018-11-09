@@ -4,6 +4,10 @@ en:
     sign_up: "Sign Up"
     sign_out: 'Log out'
     price: "Price"
+    from: "From"
+    to: "To"
+    min: "Min"
+    max: "Max"
     cancel_search: "Cancel search"
     filters: "Filters"
     audio: "Language"
@@ -11,12 +15,16 @@ en:
     categories: "Categories"
     max_price: "Max. $"
     certificate: "certificate"
+    provider: 'Providers'
     length: "length"
     previous_page: "Previous page"
     next_ page: "Next page"
     search_results: "Showing %{total} results"
+    only_free: "Only free"
+    free: "Free"
     for: "for"
     sort_by: "Sort by"
+    display_filter: 'Display filter'
     lowest_price: "Lowest price"
     highest_price: "Highest Price"
     top_reviewed: "Top reviewed"
@@ -25,8 +33,9 @@ en:
     search: 
   iso639_codes:
     en: 'English'
+    en-US: 'English (US)'
     pt: 'Portuguese'
-    pt-BR: 'Brazilian Portuguese'
+    pt-BR: 'Portuguese (Brazil)'
     es: 'Spanish'
     ru: 'Russian'
     it: 'Italian'
