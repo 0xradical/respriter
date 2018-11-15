@@ -60,6 +60,10 @@ class Course < ApplicationRecord
 
   class << self
 
+    def global_sequence
+      order(global_sequence: :desc).first.global_sequence
+    end
+
     def bulk_upsert(values)
       result = import values, validate: false, on_duplicate_key_update: {
         conflict_target: [:global_id], columns: [:duration_in_hours, :name] 
