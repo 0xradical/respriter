@@ -1,72 +1,93 @@
 namespace :integration do
+
+  task :courses do |t, args|
+    puts "Courses Integration Service"
+    Benchmark.realtime do
+      gs = Course.global_sequence
+      loop do 
+        uri = URI("https://napoleon-the-crawler.herokuapp.com/resources/updates/#{next_page}")
+        req = Net::HTTP::Get.new(uri)
+        req.basic_auth ENV['NAPOLEON_CRAWLER_BASIC_AUTH_USER'], ENV['NAPOLEON_CRAWLER_BASIC_AUTH_PASS']
+        res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+          http.request(req)
+        end
+        collection = JSON.parse(res.body)
+        break if (collection.empty?)
+      end
+    end
+  end
+
+
   task :import_courses, [:global_sequence] => [:environment] do |t,args|
     categories = YAML::load_file(Rails.root.join('config', 'locales', 'en.yml'))['en']['categories'].invert
     supported_languages = %w(en en-US pt pt-BR es ru it de fr)
     num_of_threads = 5; threads = []
-    num_of_threads.times do |i|
-      threads << Thread.new do
-        pos = (args[:global_sequence].to_i || 0) + ( i * 50); cycle = 0;
-        next_page = pos
-        loop do
-          puts "Thread #{i} fetching page #{next_page}"
-          uri = URI("https://napoleon-the-crawler.herokuapp.com/resources/updates/#{next_page}")
+    Benchmark.bm(20) do |bm|
+      bm.report "API access ..." do
+        num_of_threads.times do |i|
+          threads << Thread.new do
+            pos = (args[:global_sequence].to_i || 0) + ( i * 50); cycle = 0;
+            next_page = pos
+            loop do
+              puts "Thread #{i} fetching page #{next_page}"
+              uri = URI("https://napoleon-the-crawler.herokuapp.com/resources/updates/#{next_page}")
 
-          req = Net::HTTP::Get.new(uri)
-          req.basic_auth ENV['NAPOLEON_CRAWLER_BASIC_AUTH_USER'], ENV['NAPOLEON_CRAWLER_BASIC_AUTH_PASS']
+              req = Net::HTTP::Get.new(uri)
+              req.basic_auth ENV['NAPOLEON_CRAWLER_BASIC_AUTH_USER'], ENV['NAPOLEON_CRAWLER_BASIC_AUTH_PASS']
 
-          res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-            http.request(req)
-          end
-
-          collection = JSON.parse(res.body)
-
-          collection.each do |record|
-
-            slug = ActiveSupport::Inflector.transliterate(record['content']['provider_name'].downcase).gsub(/\W+/, '-').chomp('-')
-            provider = Provider.find_by(slug: slug)
-
-            if provider.nil?
-              puts "#{record['content']['provider_name']} with slug #{slug} not found"
-              next
-            end
-
-            if (supported_languages & record['content']['language']).empty?
-              puts "#{record['content']['language']} language not supported"
-              next
-            end
-
-            begin
-              provider.courses.find_or_create_by!(id: record['id']) do |course|
-                course.global_sequence    = record['global_sequence']
-                course.dataset_sequence   = record['dataset_sequence']
-                course.resource_sequence  = record['resource_sequence']
-                course.name               = record['content']['course_name']
-                course.subtitles          = record['content']['subtitles']
-                course.region             = record['content']['language']
-                if record['content']['category'].match(/[A-Z]+/)
-                  course.category         = categories[record['content']['category']]
-                else
-                  course.category         = record['content']['category']
-                end
-                course.tags               = record['content']['tags']
-                course.audio              = [record['content']['audio']].flatten
-                course.slug               = record['content']['slug']
-                course.url                = record['content']['url']
-                course.video_url          = record['content']['video_url']
-                course.description        = record['content']['description']
-                course.price              = record['content']['price'].to_f
+              res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+                http.request(req)
               end
-            rescue
+
+              collection = JSON.parse(res.body)
+
+              collection.each do |record|
+
+                slug = ActiveSupport::Inflector.transliterate(record['content']['provider_name'].downcase).gsub(/\W+/, '-').chomp('-')
+                provider = Provider.find_by(slug: slug)
+
+                if provider.nil?
+                  puts "#{record['content']['provider_name']} with slug #{slug} not found"
+                  next
+                end
+
+                if (supported_languages & record['content']['language']).empty?
+                  puts "#{record['content']['language']} language not supported"
+                  next
+                end
+
+                begin
+                  provider.courses.find_or_create_by!(id: record['id']) do |course|
+                    course.global_sequence    = record['global_sequence']
+                    course.dataset_sequence   = record['dataset_sequence']
+                    course.resource_sequence  = record['resource_sequence']
+                    course.name               = record['content']['course_name']
+                    course.subtitles          = record['content']['subtitles']
+                    course.region             = record['content']['language']
+                    if record['content']['category'].match(/[A-Z]+/)
+                      course.category         = categories[record['content']['category']]
+                    else
+                      course.category         = record['content']['category']
+                    end
+                    course.tags               = record['content']['tags']
+                    course.audio              = [record['content']['audio']].flatten
+                    course.slug               = record['content']['slug']
+                    course.url                = record['content']['url']
+                    course.video_url          = record['content']['video_url']
+                    course.description        = record['content']['description']
+                    course.price              = record['content']['price'].to_f
+                  end
+                rescue
+                end
+              end
+
+              cycle += 1; next_page = pos + (cycle * num_of_threads * 50)
+              break if (collection.empty?)
             end
           end
-
-          cycle += 1; next_page = pos + (cycle * num_of_threads * 50)
-          break if (collection.empty?)
         end
+        threads.each { |thr| thr.join }
       end
     end
-
-    threads.each { |thr| thr.join }
-
   end
 end

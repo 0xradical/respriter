@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_02_111502) do
+ActiveRecord::Schema.define(version: 2018_11_15_164156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -49,11 +49,17 @@ ActiveRecord::Schema.define(version: 2018_11_02_111502) do
     t.decimal "user_rating"
     t.text "description"
     t.string "tracked_url"
+    t.jsonb "tracking_data", default: {}
+    t.bigint "payment_id"
     t.bigint "user_account_id"
-    t.bigint "course_id"
+    t.uuid "course_id"
+    t.uuid "click_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["click_id"], name: "index_enrollments_on_click_id"
     t.index ["course_id"], name: "index_enrollments_on_course_id"
+    t.index ["payment_id"], name: "index_enrollments_on_payment_id"
+    t.index ["tracking_data"], name: "index_enrollments_on_tracking_data", using: :gin
     t.index ["user_account_id"], name: "index_enrollments_on_user_account_id"
   end
 
@@ -87,6 +93,9 @@ ActiveRecord::Schema.define(version: 2018_11_02_111502) do
     t.index ["user_account_id"], name: "index_oauth_accounts_on_user_account_id"
   end
 
+# Could not dump table "payments" because of following StandardError
+#   Unknown type 'payment_source' for column 'source'
+
   create_table "profiles", force: :cascade do |t|
     t.string "name"
     t.date "date_of_birth"
@@ -106,6 +115,8 @@ ActiveRecord::Schema.define(version: 2018_11_02_111502) do
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_providers_on_name", unique: true
+    t.index ["slug"], name: "index_providers_on_slug", unique: true
   end
 
   create_table "user_accounts", force: :cascade do |t|

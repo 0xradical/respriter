@@ -4,6 +4,12 @@ class ApplicationController < ActionController::Base
   prepend_before_action :set_locale
   layout :fetch_layout
 
+  protected
+
+  def after_sign_in_path_for(resource)
+    request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+  end
+
   private
 
   def default_url_options

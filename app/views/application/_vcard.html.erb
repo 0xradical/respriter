@@ -42,7 +42,7 @@
       <span class='c-tag c-tag--green-flat'>free</span>
     <% end %>
   </div><div class='c-vcard__footer-action-slot'>
-    <%= link_to course.affiliate_url, target: '_blank', class: 'btn btn--tiny btn--rounded btn--blue-border' do %>
+    <%= link_to gateway_path(course.id), target: '_blank', class: 'btn btn--tiny btn--rounded btn--blue-border' do %>
       Go to course
     <% end %>
   </div>

@@ -66,9 +66,13 @@
 
     <%- if user_account_signed_in? %>
       <div class='c-navbar__slot'>
-        <% if current_user_account.avatar.present? %>
-          <%= link_to user_accounts_dashboard_path("dashboard") do %>
+        <%= link_to user_accounts_dashboard_path("dashboard") do %>
+          <% if current_user_account.avatar.present? %>
             <%= image_tag(current_user_account.avatar, height: '37px', style: 'border-radius:50%;border:1px solid #ccc') %>
+          <% else %>
+            <svg width='37px' height='37px'>
+              <use xlink:href='#avatar'>
+            </svg>
           <% end %>
         <% end %>
       </div>

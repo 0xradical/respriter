@@ -18,7 +18,8 @@ Rails.application.routes.draw do
     match '*dashboard', to: 'dashboard#index', via: [:get], as: :dashboard
   end
 
-  get '/search(/:category)', to: 'courses#index', as: :courses
+  get '/search(/:category)',    to: 'courses#index',  as: :courses
+  get '/forward/:id',           to: 'gateway#index',  as: :gateway
 
   # OmniAuth
   #get '/auth/:provider/callback', to: 'omniauth_sessions#create', as: :omniauth

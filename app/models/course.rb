@@ -11,6 +11,8 @@ class Course < ApplicationRecord
   validates :name, presence: true
 
   belongs_to  :provider
+
+  has_many    :enrollments
   has_many    :user_accounts, through: :enrollments
 
   delegate :name, :slug,  to: :provider, prefix: true
@@ -42,14 +44,18 @@ class Course < ApplicationRecord
 
   scope :by_category, -> (category) { where(category: category) }
   scope :by_provider, -> (provider) { joins(:provider).where("providers.slug = ?", provider)  }
-  scope :free, -> { where(price: 0) }
+  scope :free,        -> { where(price: 0) }
 
-  def affiliate_url
-    if provider.afn_url_template.present?
-      provider.afn_url_template % { course_url: ERB::Util.url_encode(url) }
-    else
-      url
-    end
+  def has_afn?
+    !!provider.afn_url_template
+  end
+
+  def forwarding_url(click_id)
+    (provider.afn_url_template || url ) % { click_id: click_id, course_url: ERB::Util.url_encode(url) }
+  end
+
+  def gateway_path
+    Rails.application.routes.url_helpers.gateway_path(id)
   end
 
   class << self
@@ -177,8 +183,8 @@ class Course < ApplicationRecord
       name:           name,
       description:    description,
       price:          price,
-      affiliate_url:  affiliate_url,
       url:            url,
+      gateway_path:   gateway_path,
       url_id:         url_md5,
       video_url:      video_url,
       tags:           tags,

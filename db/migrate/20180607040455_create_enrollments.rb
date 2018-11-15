@@ -8,6 +8,5 @@ class CreateEnrollments < ActiveRecord::Migration[5.1]
       t.references :course
       t.timestamps
     end
-
   end
 end

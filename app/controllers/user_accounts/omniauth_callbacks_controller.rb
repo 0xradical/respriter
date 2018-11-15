@@ -5,17 +5,22 @@ class UserAccounts::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
   before_action :create_oauth_session, only: [:github, :facebook, :linkedin]
 
   def github
-    redirect_to user_accounts_dashboard_path('dashboard')
+    sign_in_and_redirect @user_account, scope: :user_account
+    #sign_in @user_account, scope: :user_account
+    #redirect_to user_accounts_dashboard_path('dashboard')
     #render :success
   end
 
   def linkedin
-    redirect_to user_accounts_dashboard_path('dashboard')
+    sign_in_and_redirect @user_account, scope: :user_account
+    #redirect_to user_accounts_dashboard_path('dashboard')
     #render :success
   end
 
   def facebook
-    redirect_to user_accounts_dashboard_path('dashboard')
+    sign_in_and_redirect @user_account, scope: :user_account
+    #sign_in @user_account, scope: :user_account
+    #redirect_to user_accounts_dashboard_path('dashboard')
     #render :success
   end
 
@@ -25,7 +30,7 @@ class UserAccounts::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
 
   # GET|POST /users/auth/twitter/callback
   # def failure
-  #   super
+    # super
   # end
 
   # protected
@@ -35,7 +40,6 @@ class UserAccounts::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
       current_user_account.add_oauth_account(request.env['omniauth.auth'])
     else
       @user_account = OauthAccount.from_provider(oauth: request.env['omniauth.auth'])
-      sign_in @user_account, scope: :user_account
     end
   end
 
