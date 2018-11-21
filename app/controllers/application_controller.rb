@@ -2,7 +2,10 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   prepend_before_action :set_locale
+  before_action         :store_tracking_data
   layout :fetch_layout
+
+  UTM_REGEX = /(utm_campaign|utm_source|utm_medium|utm_content|utm_term)=([a-zA-Z0-9\-._~:\/?#\[\]@!$'\(\)*+,\;=]*)&?/
 
   protected
 
@@ -28,6 +31,10 @@ class ApplicationController < ActionController::Base
     pref_langs.each do |lang|
       return lang if I18n.available_locales.include?(lang.to_sym)
     end
+  end
+
+  def store_tracking_data
+    session[:tracking_data] ||= SessionTracker.new(request).track
   end
 
   def fetch_layout
