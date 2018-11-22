@@ -17,6 +17,9 @@
 .env.production
 .env.test
 
+*.pem
+*.dump
+
 docker-compose.yml
 docker-compose.development.yml
 docker-compose.test.yml
