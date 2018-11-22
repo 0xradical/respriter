@@ -16,6 +16,8 @@ class SessionTracker
 
   def track_http_accept_language
     { http_accept_language: HttpAcceptLanguageParser.parse(@request.env['HTTP_ACCEPT_LANGUAGE']) }
+    rescue HttpAcceptLanguageParser::MissingHttpAcceptLanguageHeader
+      { http_acccept_language: [] }
   end
 
   def track_ip
