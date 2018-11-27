@@ -51,7 +51,10 @@ class Course < ApplicationRecord
   end
 
   def forwarding_url(click_id)
-    (provider.afn_url_template || url ) % { click_id: click_id, course_url: ERB::Util.url_encode(url) }
+    (provider.afn_url_template || url ) % { 
+      click_id: click_id, 
+      course_url: provider.encoded_deep_linking? ? ERB::Util.url_encode(url) : url 
+    }
   end
 
   def gateway_path
