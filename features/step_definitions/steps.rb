@@ -45,12 +45,8 @@ When(/^my email is missing$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Given("that courses are indexed") do
-  Course.reset_index!
-  @course = create(:course)
-end
-
 Given("I'm on a search result page") do
+  @course = create(:course)
   visit courses_path
 end
 

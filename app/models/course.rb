@@ -17,7 +17,7 @@ class Course < ApplicationRecord
 
   delegate :name, :slug,  to: :provider, prefix: true
 
-  index_name "courses_#{Rails.env}"
+  index_name "courses_#{Rails.env}" unless Rails.env.production?
 
   settings index: { number_of_shards: 1 } do
     mappings dynamic: 'false' do
@@ -65,7 +65,7 @@ class Course < ApplicationRecord
 
   class << self
 
-    def global_sequence
+    def current_global_sequence
       order(global_sequence: :desc).first.global_sequence
     end
 
@@ -79,8 +79,12 @@ class Course < ApplicationRecord
     def reset_index!
       __elasticsearch__.delete_index! rescue nil
       __elasticsearch__.create_index!
-      __elasticsearch__.import
     end
+
+    def import_data(scope = nil)
+      __elasticsearch__.import query: -> { where(scope) }
+    end
+
 
     def search(query:, filter: nil, order: nil)
       search_exp = Elasticsearch::DSL::Search.search do

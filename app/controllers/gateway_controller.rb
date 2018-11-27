@@ -10,8 +10,7 @@ class GatewayController < ApplicationController
       tracking_data:    session[:tracking_data],
       user_account_id:  current_user_account&.id
     })
-    render nothing: true
-    #redirect_to forwarding_url
+    redirect_to forwarding_url
   end
 
 end
