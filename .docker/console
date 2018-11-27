@@ -4,7 +4,7 @@ do
 case $i in
   -e=*|--environment=*)
   ENVIRONMENT="${i#*=}"
-  echo $ENVIRONMENT
+  echo "--------- $ENVIRONMENT environment ---------"
   shift # past argument=value
   ;;
 esac

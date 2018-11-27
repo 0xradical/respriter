@@ -1,7 +1,7 @@
 class Course < ApplicationRecord
 
   include Elasticsearch::Model
-  #include Elasticsearch::Model::Callbacks
+  include Elasticsearch::Model::Callbacks
   include Slugifyable
 
   paginates_per 25
@@ -16,6 +16,8 @@ class Course < ApplicationRecord
   has_many    :user_accounts, through: :enrollments
 
   delegate :name, :slug,  to: :provider, prefix: true
+
+  index_name "courses_#{Rails.env}"
 
   settings index: { number_of_shards: 1 } do
     mappings dynamic: 'false' do
@@ -75,11 +77,9 @@ class Course < ApplicationRecord
     end
 
     def reset_index!
-      __elasticsearch__.delete_index!
-      rescue
-      ensure
-        __elasticsearch__.create_index!
-        __elasticsearch__.import
+      __elasticsearch__.delete_index! rescue nil
+      __elasticsearch__.create_index!
+      __elasticsearch__.import
     end
 
     def search(query:, filter: nil, order: nil)

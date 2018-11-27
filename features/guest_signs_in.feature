@@ -1,4 +1,4 @@
-@guest @guest-signs-in
+@guest @guest-signs-in @javascript
 Feature: Guest signs in
 
   As a guest

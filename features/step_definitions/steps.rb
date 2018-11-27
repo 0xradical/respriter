@@ -12,6 +12,10 @@ When(/^I click on "([^"]*)"$/) do |arg1|
   click_on arg1
 end
 
+When(/^I click on the course button$/) do
+  @gateway_window = window_opened_by { find(:xpath, "//a[@href='/forward/#{@course.id}'][@target='_blank']").click }
+end
+
 Then(/^an user account with email "([^"]*)" is created$/) do |email|
   account = UserAccount.find_by(email: email)
   expect(account).to be_present
@@ -41,3 +45,22 @@ When(/^my email is missing$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
+Given("that courses are indexed") do
+  Course.reset_index!
+  @course = create(:course)
+end
+
+Given("I'm on a search result page") do
+  visit courses_path
+end
+
+Given("an event is being tracked by GTM") do
+  expect(page).to have_css('[data-gtm-event=goToCourseEvent]')
+end
+
+Then("I'm forwarded to the course provider") do
+  within_window @gateway_window do
+    enrollment = Enrollment.find_by(course_id: @course.id)
+    expect(enrollment).to have_attributes(course_id: @course.id)
+  end
+end

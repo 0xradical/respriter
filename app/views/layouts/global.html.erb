@@ -23,13 +23,15 @@
       window.I18n = { locale: "<%= I18n.locale %>" }
     </script>
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-K5JDRZV');</script>
-    <!-- End Google Tag Manager -->
+    <% if Rails.env.production? %>
+      <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-K5JDRZV');</script>
+      <!-- End Google Tag Manager -->
+    <% end %>
 
     <%= yield :javascript  %>
     <%= yield :stylesheets %>
@@ -39,10 +41,12 @@
 
   <body <%= content_for(:body_html_attributes) ? yield(:body_html_attributes) : 'class="mx-Bc(light-gray)"' %> >
 
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K5JDRZV"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    <% if Rails.env.production? %>
+      <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K5JDRZV"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <!-- End Google Tag Manager (noscript) -->
+    <% end %>
 
     <div <%= content_for(:header_html_attributes) ? yield(:header_html_attributes) : "class=mx-BC(#fff)" %>>
       <div class='l-container'>

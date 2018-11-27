@@ -1,4 +1,4 @@
-@guest @guest-signs-up
+@guest @guest-signs-up @javascript
 Feature: Guest signs up
 
   As a guest
@@ -30,28 +30,28 @@ Feature: Guest signs up
     | john.doe@no-mx-record-found-82637382 | valid_password_0101      |
     | john.doe@quero.com                   | short                    |
 
-  @guest-signs-up-3
-  Scenario Outline: Guest successfull sign up with oauth
-    Given I visit the sign up page
-    When I connect with my "<oauth>" account
-    Then an user account with email "john.doe@quero.com" is created and associated with "<oauth>"
+  # @guest-signs-up-3
+  # Scenario Outline: Guest successfull sign up with oauth
+    # Given I visit the sign up page
+    # When I connect with my "<oauth>" account
+    # Then an user account with email "john.doe@quero.com" is created and associated with "<oauth>"
 
-    Examples:
+    # Examples:
 
-    | oauth     |
-    | linkedin  |
-    | github    |
+    # | oauth     |
+    # | linkedin  |
+    # | github    |
 
-  @guest-signs-up-4
-  Scenario Outline: Guest unsuccessfull sign up with oauth
-    Given I visit the sign up page
-    When I connect with my "<oauth>" account
-    And my email is missing
-    #Then I am redirected to the restricted content
+  # @guest-signs-up-4
+  # Scenario Outline: Guest unsuccessfull sign up with oauth
+    # Given I visit the sign up page
+    # When I connect with my "<oauth>" account
+    # And my email is missing
+    # #Then I am redirected to the restricted content
 
-    Examples:
+    # Examples:
 
-    | oauth     |
-    | linkedin  |
-    | github    |
+    # | oauth     |
+    # | linkedin  |
+    # | github    |
 

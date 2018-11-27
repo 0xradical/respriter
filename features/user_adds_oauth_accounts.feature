@@ -1,4 +1,4 @@
-@user @user-adds-oauth-accounts
+@user @user-adds-oauth-accounts @javascript
 Feature: User adds oauth accounts
 
   As a user

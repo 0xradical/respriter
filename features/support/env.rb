@@ -1,4 +1,3 @@
-require 'capybara/poltergeist'
 require 'cucumber/rails'
 require 'cucumber/rspec/doubles'
 require 'webmock/cucumber'
@@ -6,50 +5,32 @@ require 'webmock/cucumber'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-POLTERGEIST_DRIVER_BASE_SETTINGS = {
-  js_errors: false,
-  timeout: 10,
-  phantomjs_options: ['--debug=no', '--load-images=no', '--ignore-ssl-errors=yes', '--ssl-protocol=TLSv1']
-}
-
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, POLTERGEIST_DRIVER_BASE_SETTINGS.merge({ phantomjs_logger: Logger.new("/dev/null") }))
-end
-
-Capybara.register_driver :poltergeist_debug do |app|
-  Capybara::Poltergeist::Driver.new(app, POLTERGEIST_DRIVER_BASE_SETTINGS.merge({ inspector: true }))
-end
-
-Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :remote,
-    desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome,
-    url: "http://#{ENV['SELENIUM_HOST']}/wd/hub"
-  )
-end
-
-Capybara.default_driver    = ENV['CAPYBARA_DEFAULT_DRIVER'].blank? ? :poltergeist : ENV['CAPYBARA_DEFAULT_DRIVER'].try(:to_sym)
-Capybara.javascript_driver = ENV['CAPYBARA_JAVASCRIPT_DRIVER'].blank? ? :poltergeist : ENV['CAPYBARA_JAVASCRIPT_DRIVER'].try(:to_sym)
-
-if Capybara.default_driver.to_s.include?('selenium')
-  capybara_app_host = %x(/sbin/ip route|awk '/default/ { print $3 }').strip
-end
+Capybara.server = :puma, { Silent: true }
 
 Capybara.configure do |config|
-  config.server_port            = ENV['CAPYBARA_SERVER_PORT'] || 3001
+  config.server_port            = ENV['CAPYBARA_SERVER_PORT'] || 3000
   config.server_host            = '0.0.0.0'
-  config.app_host               = "http://#{capybara_app_host}:#{config.server_port}" if capybara_app_host
-  config.default_max_wait_time  = ENV['CAPYBARA_DEFAULT_MAX_WAIT_TIME'].to_i || 90
+  config.default_max_wait_time  = 15
 end
+
+# Capybara.register_driver :chrome do |app|
+  # browser_options = ::Selenium::WebDriver::Chrome::Options.new
+  # #browser_options.args << '--headless=false'
+  # #browser_options.args << '--disable-gpu'
+  # browser_options.args << '--window-size=1400,900'
+  # browser_options.args << '--remote-debugging-port=9222'
+  # # Sandbox cannot be used inside unprivileged Docker container
+  # #browser_options.args << '--no-sandbox'
+  # Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+# end
+
+Capybara.javascript_driver = :selenium_chrome
 
 # Allow only local requests for Capybara
 WebMock.disable_net_connect!({
   allow_localhost: true,
   allow: [
-    /#{ENV['ELASTICSEARCH_URL']}/,
-    /#{ENV['SELENIUM_HOST']}\/wd\/hub/,
-    /#{capybara_app_host}/
+    /#{ENV['ELASTICSEARCH_URL']}/
   ]
 })
 
@@ -106,5 +87,6 @@ Around do |scenario, block|
 end
 
 Cucumber::Rails::Database.javascript_strategy = :truncation
+
 World(FactoryBot::Syntax::Methods)
 World(ActiveJob::TestHelper)
