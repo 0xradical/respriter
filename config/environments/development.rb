@@ -45,6 +45,13 @@ Rails.application.configure do
     config.console = Pry
   end
 
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins '*'
+      resource '*', headers: :any, expose: %w(Authorization), methods: [:get, :put, :post, :options]
+    end
+  end
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 

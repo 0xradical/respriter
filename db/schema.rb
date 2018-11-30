@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_27_193928) do
+ActiveRecord::Schema.define(version: 2018_12_13_172406) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
@@ -36,6 +37,7 @@ ActiveRecord::Schema.define(version: 2018_11_27_193928) do
     t.datetime "locked_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "preferences", default: {}
     t.index ["confirmation_token"], name: "index_admin_accounts_on_confirmation_token", unique: true
     t.index ["email"], name: "index_admin_accounts_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_accounts_on_reset_password_token", unique: true
@@ -83,6 +85,16 @@ ActiveRecord::Schema.define(version: 2018_11_27_193928) do
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
+  create_table "landing_pages", force: :cascade do |t|
+    t.string "slug"
+    t.string "template"
+    t.text "meta_html"
+    t.jsonb "html", default: {}
+    t.text "body_html"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "oauth_accounts", force: :cascade do |t|
     t.string "provider"
     t.string "uid"
@@ -107,7 +119,7 @@ ActiveRecord::Schema.define(version: 2018_11_27_193928) do
   end
 
   create_table "providers", force: :cascade do |t|
-    t.string "name"
+    t.citext "name"
     t.text "description"
     t.string "slug"
     t.string "afn_url_template"

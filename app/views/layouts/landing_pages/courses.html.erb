@@ -1,0 +1,37 @@
+<%%= content_for :javascript do %>
+  <script src="<%= web_component_path('iconTechLibrary.js') %>" type='text/javascript'></script>
+<%% end %>
+
+<%%= content_for :meta do %>
+  <%%= html.meta %>
+<%% end %>
+
+<!-- HERO -->
+<div class='c-hero c-hero--squerol-pattern-theme'>
+  <div class='c-hero__mask'></div>
+  <div class='l-container mx-H(126px) c-hero__content c-layout-vcenter-block'>
+    <div class='c-layout-vcenter-block__child'>
+      <div style='float:left;margin-right:10px'>
+        <svg width='72px' height='72px'>
+          <%%= html.tagline_art %>
+        </svg>
+      </div>
+
+      <div style='width:calc(100% - (72px))'>
+        <h1 style='font-size:1.8em;margin:0;padding:0'><%%= html.tagline %></h1>
+        <p style='font-size:0.875em;margin:0'>
+          <%%= html.sub_title %>
+        </p>
+      </div>
+    </div>
+
+    <div class='c-hero__illustration mx-D(n)@phone'>
+      <%= image_pack_tag("svg/squerol_nerd.svg", style: 'height:100%') %>
+    </div>
+
+  </div>
+</div>
+
+<div class='l-container' style='margin-top:40px'>
+  <%%= html.body %>
+</div>

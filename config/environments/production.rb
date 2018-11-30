@@ -2,6 +2,15 @@ Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
 
+  config.middleware.insert_before 0, Rack::Cors do
+
+    allow do
+      origins 'http://admin.quero.com'
+      resource '*', headers: :any, expose: %w(Authorization), methods: [:get, :put, :post, :options]
+    end
+
+  end
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
