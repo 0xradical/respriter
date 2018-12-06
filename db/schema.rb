@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_27_193928) do
+ActiveRecord::Schema.define(version: 2018_12_06_020722) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
@@ -83,6 +84,15 @@ ActiveRecord::Schema.define(version: 2018_11_27_193928) do
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
+  create_table "landing_pages", force: :cascade do |t|
+    t.string "slug"
+    t.string "template"
+    t.jsonb "data", default: {}
+    t.text "html"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "oauth_accounts", force: :cascade do |t|
     t.string "provider"
     t.string "uid"
@@ -107,7 +117,7 @@ ActiveRecord::Schema.define(version: 2018_11_27_193928) do
   end
 
   create_table "providers", force: :cascade do |t|
-    t.string "name"
+    t.citext "name"
     t.text "description"
     t.string "slug"
     t.string "afn_url_template"

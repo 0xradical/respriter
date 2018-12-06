@@ -1,12 +1,11 @@
 class Course < ApplicationRecord
 
   include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-  include Slugifyable
+  #include Elasticsearch::Model::Callbacks
+
+  SUPPORTED_LANGUAGES = %w(pt en es ru it de fr)
 
   paginates_per 25
-
-  slugify run_on: :before_save
 
   validates :name, presence: true
 
@@ -65,10 +64,6 @@ class Course < ApplicationRecord
 
   class << self
 
-    def current_global_sequence
-      order(global_sequence: :desc).first.global_sequence
-    end
-
     def bulk_upsert(values)
       result = import values, validate: false, on_duplicate_key_update: {
         conflict_target: [:global_id], columns: [:duration_in_hours, :name] 
@@ -76,15 +71,22 @@ class Course < ApplicationRecord
       bulk_index_async(result.ids)
     end
 
+    def current_global_sequence
+      maximum(:global_sequence)
+    end
+
+    def is_language_supported?(lang)
+      !(SUPPORTED_LANGUAGES & [lang].flatten.map { |l| l.split('-') }.flatten).empty?
+    end
+
     def reset_index!
       __elasticsearch__.delete_index! rescue nil
       __elasticsearch__.create_index!
     end
 
-    def import_data(scope = nil)
-      __elasticsearch__.import query: -> { where(scope) }
+    def default_import_to_search_index
+      import_to_search_index({published: true})
     end
-
 
     def search(query:, filter: nil, order: nil)
       search_exp = Elasticsearch::DSL::Search.search do
@@ -186,6 +188,12 @@ class Course < ApplicationRecord
       ElasticSearchIndexJob.perform_later(self.to_s, records)
     end
 
+    private
+
+    def import_to_search_index(scope = nil)
+      __elasticsearch__.import query: -> { where(scope) }
+    end
+
   end
 
   def as_indexed_json(options={})
@@ -205,7 +213,6 @@ class Course < ApplicationRecord
       provider_name:  provider_name,
       provider_slug:  provider_slug
     }
-    #self.as_json(methods: :affiliate_link, include: { provider: { only: [:name, :slug] } })
   end
 
 end
