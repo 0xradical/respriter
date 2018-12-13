@@ -5,7 +5,7 @@ Rails.application.configure do
   config.middleware.insert_before 0, Rack::Cors do
 
     allow do
-      origins 'http://admin.quero.com'
+      origins /https?:\/\/admin.quero.com/
       resource '*', headers: :any, expose: %w(Authorization), methods: [:get, :put, :post, :options]
     end
 

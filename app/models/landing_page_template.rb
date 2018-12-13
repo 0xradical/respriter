@@ -33,9 +33,9 @@ class LandingPageTemplate
   end
 
   def set_data
-    @data = @layout.scan(VAR_REGEX).flatten.map do |captured_group|
-      { name: captured_group.strip, value: ''}
-    end
+    @data = Hash[@layout.scan(VAR_REGEX).flatten.map do |captured_group|
+      [captured_group.strip, '']
+    end]
   end
 
 end
