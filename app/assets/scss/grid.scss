@@ -4,6 +4,12 @@ body {
   //lost-utility: edit;
 }
 
+.grid-4w_desktop {
+  > div {
+    lost-waffle: 1/4;
+  }
+}
+
 #prov {
   background-color: #FFF;
   padding: 80px 0px 60px;

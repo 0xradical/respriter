@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   get '/blog', to: redirect('http://www.quero.com/blog/', status: 301)
 
   # Devise
-  devise_for :admin_accounts
+  devise_for :admin_accounts, controllers: { 
+    sessions: 'admin_accounts/sessions' 
+  }, defaults: { format: :json }
+
   devise_for :user_accounts, controllers: {
     sessions: 'user_accounts/sessions',
     registrations: 'user_accounts/registrations',
@@ -21,6 +24,8 @@ Rails.application.routes.draw do
   get '/search(/:category)',    to: 'courses#index',  as: :courses
   get '/forward/:id',           to: 'gateway#index',  as: :gateway
 
+  resources :landing_pages, only: :show,  path: 'l'
+
   # OmniAuth
   #get '/auth/:provider/callback', to: 'omniauth_sessions#create', as: :omniauth
 
@@ -28,8 +33,12 @@ Rails.application.routes.draw do
 
     namespace :admin do
       namespace :v1 do
+        resources :user_accounts
+        resources :enrollments
         resources :courses
-        resources :portals
+        resources :providers
+        resources :landing_pages
+        resources :landing_page_templates, only: [:index, :show]
       end
     end
 

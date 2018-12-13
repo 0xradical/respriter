@@ -2,7 +2,7 @@ module Api
   module Admin
     module V1
 
-      class CoursesController < ActionController::API
+      class CoursesController < BaseController
 
         def index
           @courses = Course.all

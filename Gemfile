@@ -8,11 +8,11 @@ gem 'webpacker', github: 'rails/webpacker'
 gem 'pg'
 gem 'puma'
 
-#gem 'active_model_serializers', '~> 0.10.0'
 gem 'activerecord-import'
 gem 'fast_jsonapi'
 
 # Rack
+gem 'rack-cors'
 gem 'rack-reverse-proxy', :require => 'rack/reverse_proxy'
 gem 'http'
 
@@ -38,6 +38,7 @@ gem 'user_agent_parser'
 
 # Authentication
 gem 'devise'
+gem 'devise-jwt', '~> 0.5.8'
 gem 'omniauth-oauth2'
 #gem 'omniauth'
 gem 'omniauth-linkedin-oauth2'
