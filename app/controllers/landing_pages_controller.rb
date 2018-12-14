@@ -9,8 +9,7 @@ class LandingPagesController < ApplicationController
       'SCRIPT_NAME'=>'',
       'warden' => warden
     })
-    @lp.html.each { |k,v| @lp.html[k] = v.html_safe }
-    render inline: lp_tpl.layout, layout: 'application', locals: { html: OpenStruct.new(@lp.html) }
+    render inline: lp_tpl.layout, layout: 'application', locals: { html: OpenStruct.new(@lp.compile_ejs) }
   end
 
 end

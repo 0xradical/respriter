@@ -28,7 +28,7 @@ module Api
         private
 
         def landing_page_params
-          params.require(:landing_page).permit(:slug, :template, html: {})
+          params.require(:landing_page).permit(:slug, :template, html: {}, data: {})
         end
 
       end

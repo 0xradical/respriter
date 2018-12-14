@@ -16,6 +16,9 @@ gem 'rack-cors'
 gem 'rack-reverse-proxy', :require => 'rack/reverse_proxy'
 gem 'http'
 
+gem 'ejs'
+gem 'execjs'
+
 # Pagination
 gem 'kaminari'
 

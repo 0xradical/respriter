@@ -1,12 +1,9 @@
 class LandingPage < ApplicationRecord
 
-  def template
-    <<-TEMPLATE
-      <%= content_for :meta do %>
-      #{meta_html}
-      <% end %>
-      #{body_html}
-    TEMPLATE
+  def compile_ejs
+    Hash[html.map do |k,v|
+      [k, EJS.evaluate(v, data).html_safe]
+    end]
   end
 
 end
