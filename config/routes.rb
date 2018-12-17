@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get '/search(/:category)',    to: 'courses#index',  as: :courses
   get '/forward/:id',           to: 'gateway#index',  as: :gateway
 
-  resources :landing_pages, only: :show,  path: 'l'
+  get '/:id', to: 'landing_pages#show', as: :landing_pages
 
   # OmniAuth
   #get '/auth/:provider/callback', to: 'omniauth_sessions#create', as: :omniauth
