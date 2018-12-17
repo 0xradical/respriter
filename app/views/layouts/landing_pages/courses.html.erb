@@ -9,26 +9,25 @@
 <!-- HERO -->
 <div class='c-hero c-hero--squerol-pattern-theme'>
   <div class='c-hero__mask'></div>
-  <div class='l-container mx-H(126px) c-hero__content c-layout-vcenter-block'>
-    <div class='c-layout-vcenter-block__child'>
-      <div style='float:left;margin-right:15px'>
-        <svg width='96px' height='96px' style='border:1px solid #dee7ed'>
+  <div class='l-container'>
+    <div class='mx-H(126px) c-hero__content c-layout-vcenter-block'>
+      <div class='c-layout-vcenter-block__child'>
+
+        <div style='vertical-align:middle;margin-right:15px;width:20%;max-height:96px;display:inline-block;max-width:96px;box-sizing:border-box'>
           <%%= html.tagline_art %>
-        </svg>
+        </div><div style='display:inline-block;vertical-align:middle;width:calc(80% - 15px);max-width:390px'>
+          <h1 style='font-size:1.8em;margin:0;line-height:1.2em;padding:0;margin-bottom:5px'><%%= html.tagline %></h1>
+          <p style='font-size:0.875em;margin:0'>
+            <%%= html.sub_title %>
+          </p>
+        </div>
       </div>
 
-      <div style='width:calc(100% - (72px))'>
-        <h1 style='font-size:1.8em;margin:0;padding:0;margin-bottom:5px'><%%= html.tagline %></h1>
-        <p style='font-size:0.875em;margin:0'>
-          <%%= html.sub_title %>
-        </p>
+      <div class='c-hero__illustration mx-D(n)@phone mx-D(n)@tablet'>
+        <%= image_pack_tag("svg/squerol_nerd.svg", style: 'height:100%') %>
       </div>
-    </div>
 
-    <div class='c-hero__illustration mx-D(n)@phone'>
-      <%= image_pack_tag("svg/squerol_nerd.svg", style: 'height:100%') %>
     </div>
-
   </div>
 </div>
 
