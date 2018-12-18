@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
   get '/blog', to: redirect('http://www.quero.com/blog/', status: 301)
 
+
   # Devise
   devise_for :admin_accounts, controllers: { 
     sessions: 'admin_accounts/sessions' 
@@ -29,13 +30,19 @@ Rails.application.routes.draw do
   # OmniAuth
   #get '/auth/:provider/callback', to: 'omniauth_sessions#create', as: :omniauth
 
+  concern :import do
+    collection do 
+      post 'import'
+    end
+  end
+
   namespace :api do
 
     namespace :admin do
       namespace :v1 do
         resources :user_accounts
         resources :enrollments
-        resources :courses
+        resources :courses, concerns: [:import]
         resources :providers
         resources :landing_pages
         resources :landing_page_templates, only: [:index, :show]

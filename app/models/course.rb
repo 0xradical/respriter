@@ -1,5 +1,6 @@
 class Course < ApplicationRecord
 
+  include CSVImport
   include Elasticsearch::Model
   #include Elasticsearch::Model::Callbacks
 

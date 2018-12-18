@@ -14,11 +14,16 @@ module Api
           render json: @posts
         end
 
-        # private
+        def import
+          @courses = Course.import_from_csv(csv_file[:file], [:url])
+          render json: @courses
+        end
 
-        # def data
-          # params.require(:data).permit(:name, :portal_id, :[])
-        # end
+        private
+
+        def csv_file
+          params.permit(:file)
+        end
 
       end
 
