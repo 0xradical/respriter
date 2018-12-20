@@ -4,11 +4,6 @@ module Api
 
       class CoursesController < BaseController
 
-        def index
-          @courses = Course.all
-          render json: @courses
-        end
-
         def create
           @posts = Course.create(request.parameters[:data])
           render json: @posts

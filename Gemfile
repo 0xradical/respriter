@@ -8,7 +8,9 @@ gem 'webpacker', github: 'rails/webpacker'
 gem 'pg'
 gem 'puma'
 
+# ActiveRecord
 gem 'activerecord-import'
+gem 'active_record_upsert'
 gem 'fast_jsonapi'
 
 # Rack
@@ -31,6 +33,12 @@ gem 'carrierwave-aws'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem 'elasticsearch-dsl'
+
+# AffiliateHub
+gem 'affiliate_hub',                    github: 'codextremist/affiliate_hub'
+gem 'affiliate_hub_rakuten_marketing',  github: 'codextremist/affiliate_hub_rakuten_marketing'
+gem 'affiliate_hub_impact_radius',      github: 'codextremist/affiliate_hub_impact_radius'
+gem 'affiliate_hub_awin',               github: 'codextremist/affiliate_hub_awin'
 
 # Exceptions
 gem 'rollbar'

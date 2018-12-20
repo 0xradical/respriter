@@ -2,8 +2,10 @@ module Api
   module Admin
     module V1
 
-      class EnrollmentsController < BaseController; end
+      class EarningsController < BaseController
+      end
 
     end
   end
 end
+

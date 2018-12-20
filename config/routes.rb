@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     namespace :admin do
       namespace :v1 do
         resources :user_accounts
+        resources :earnings
         resources :enrollments
         resources :courses, concerns: [:import]
         resources :providers

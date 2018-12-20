@@ -25,7 +25,9 @@ module App
     end
 
     config.autoload_paths += [
-      "#{Rails.root}/app/uploaders"
+      "#{Rails.root}/app/uploaders",
+      "#{Rails.root}/app/models/reports",
+      "#{Rails.root}/app/services"
     ]
 
     config.action_mailer.default_url_options = { host: 'quero.com' }

@@ -4,11 +4,6 @@ module Api
 
       class LandingPagesController < BaseController
 
-        def index
-          @landing_pages = LandingPage.page(params[:p])
-          render json: LandingPageSerializer.new(@landing_pages)
-        end
-
         def show
           @landing_page = LandingPage.find(params[:id])
           render json: LandingPageSerializer.new(@landing_page)

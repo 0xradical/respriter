@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_17_193900) do
+ActiveRecord::Schema.define(version: 2018_12_20_182109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "admin_accounts", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -47,20 +48,16 @@ ActiveRecord::Schema.define(version: 2018_12_17_193900) do
 # Could not dump table "courses" because of following StandardError
 #   Unknown type 'category' for column 'category'
 
-  create_table "enrollments", force: :cascade do |t|
+  create_table "enrollments", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.decimal "user_rating"
     t.text "description"
     t.string "tracked_url"
     t.jsonb "tracking_data", default: {}
-    t.bigint "payment_id"
     t.bigint "user_account_id"
     t.uuid "course_id"
-    t.uuid "click_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["click_id"], name: "index_enrollments_on_click_id"
     t.index ["course_id"], name: "index_enrollments_on_course_id"
-    t.index ["payment_id"], name: "index_enrollments_on_payment_id"
     t.index ["tracking_data"], name: "index_enrollments_on_tracking_data", using: :gin
     t.index ["user_account_id"], name: "index_enrollments_on_user_account_id"
   end
@@ -106,9 +103,6 @@ ActiveRecord::Schema.define(version: 2018_12_17_193900) do
     t.index ["user_account_id"], name: "index_oauth_accounts_on_user_account_id"
   end
 
-# Could not dump table "payments" because of following StandardError
-#   Unknown type 'payment_source' for column 'source'
-
   create_table "profiles", force: :cascade do |t|
     t.string "name"
     t.date "date_of_birth"
@@ -132,6 +126,9 @@ ActiveRecord::Schema.define(version: 2018_12_17_193900) do
     t.index ["name"], name: "index_providers_on_name", unique: true
     t.index ["slug"], name: "index_providers_on_slug", unique: true
   end
+
+# Could not dump table "tracked_actions" because of following StandardError
+#   Unknown type 'payment_source' for column 'source'
 
   create_table "user_accounts", force: :cascade do |t|
     t.string "email", default: "", null: false
