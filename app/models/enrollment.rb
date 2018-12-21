@@ -4,4 +4,6 @@ class Enrollment < ApplicationRecord
   belongs_to :user_account, optional: true
   belongs_to :course
 
+  default_scope -> { order("created_at ASC") }
+
 end

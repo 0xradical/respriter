@@ -25,7 +25,7 @@ module Integration
                 TrackedAction.new.tap do |action|
                   action.ext_id           = resource['Id']
                   action.ext_click_date   = Time.parse(resource['EventDate']).utc
-                  action.enrollment_id    = resource['SharedId']
+                  action.enrollment_id    = resource['SubId1']
                   action.sale_amount      = resource['Amount']
                   action.earnings_amount  = resource['Payout']
                   action.source           = 'impact_radius'
