@@ -16,3 +16,30 @@
   }
 
 }
+
+.tippy-tooltip.quero-theme {
+  background-color: color(dark-gray);
+  color: #FFF;
+  font-size: 0.75em;
+}
+
+.tippy-tooltip.quero-theme[data-animatefill] {
+  background-color: transparent;
+}
+
+.tippy-tooltip.quero-theme .tippy-backdrop {
+  background-color: color(dark-gray);
+}
+
+.tippy-popper[x-placement^='top'] .tippy-tooltip.quero-theme .tippy-arrow {
+  border-top-color: color(dark-gray);
+}
+.tippy-popper[x-placement^='bottom'] .tippy-tooltip.quero-theme .tippy-arrow {
+  border-bottom-color: color(dark-gray);
+}
+.tippy-popper[x-placement^='left'] .tippy-tooltip.quero-theme .tippy-arrow {
+  border-left-color: color(dark-gray);
+}
+.tippy-popper[x-placement^='right'] .tippy-tooltip.quero-theme .tippy-arrow {
+  border-right-color: color(dark-gray);
+}

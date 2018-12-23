@@ -1,32 +1,32 @@
 <%%= content_for :meta do %>
-  <%%= html.meta %>
+  <%= slots.meta %>
 <%% end %>
 
 <!-- HERO -->
 <div class='c-hero c-hero--squerol-pattern-theme'>
   <div class='c-hero__mask'></div>
   <div class='l-container'>
-    <div class='mx-H(126px) c-hero__content c-layout-vcenter-block'>
+    <div style='height:126px' class='c-hero__content c-layout-vcenter-block'>
       <div class='c-layout-vcenter-block__child'>
 
         <div style='vertical-align:middle;margin-right:15px;width:20%;max-height:96px;display:inline-block;max-width:96px;box-sizing:border-box'>
-          <%%= html.tagline_art %>
+          <%= slots.tagline_art %>
         </div><div style='display:inline-block;vertical-align:middle;width:calc(80% - 15px);max-width:390px'>
-          <h1 style='font-size:1.8em;margin:0;line-height:1.2em;padding:0;margin-bottom:5px'><%%= html.tagline %></h1>
+          <h1 style='font-size:1.8em;margin:0;line-height:1.2em;padding:0;margin-bottom:5px'><%= slots.tagline %></h1>
           <p style='font-size:0.875em;margin:0'>
-            <%%= html.sub_title %>
+            <%= slots.sub_title %>
           </p>
         </div>
       </div>
 
       <div class='c-hero__illustration mx-D(n)@phone mx-D(n)@tablet'>
-        <%= image_pack_tag("svg/squerol_nerd.svg", style: 'height:100%') %>
+        <%%= image_pack_tag("svg/squerol_nerd.svg", style: 'height:100%') %>
       </div>
 
     </div>
   </div>
 </div>
 
-<div class='l-container' style='margin-top:40px'>
-  <%%= html.body %>
+<div class='l-container mx-Mt(40px)' style='margin-top:40px'>
+  <%= slots.body %>
 </div>

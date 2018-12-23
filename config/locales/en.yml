@@ -1,5 +1,27 @@
 en:
   dictionary: &dictionary
+    levels:
+      beginner: "Beginner"
+      intermediate: "Intermediate"
+      advanced: "Advanced"
+      all: "All levels"
+    preview_this_course: "Preview this course"
+    preview_not_available: "Preview not available"
+    see_syllabus: "See syllabus"
+    trial_period: "%{period} trial"
+    free_trial: "Free trial"
+    certificate:
+      included: "Certificate included"
+      paid: "Paid certificate (%{price})"
+    extra_paid_content: "Extra paid content"
+    pace:
+      instructor_paced: "Instructor-paced"
+      self_paced: "Self-paced"
+    subscription_period: 
+      months: "Monthly subscription"
+      years: "Annual subscription"
+    for_this_course: "For this course"
+    not_available: "N/A"
     sign_in: "Log In"
     sign_up: "Sign Up"
     sign_out: 'Log out'
@@ -14,7 +36,6 @@ en:
     subtitles: "Subtitles"
     categories: "Categories"
     max_price: "Max. $"
-    certificate: "certificate"
     provider: 'Providers'
     length: "length"
     previous_page: "Previous page"
@@ -30,7 +51,13 @@ en:
     top_reviewed: "Top reviewed"
     favorite: "Favorite"
     go_to_course: "Go to course"
-    search: 
+    search:
+  meta:
+    icons:
+      user_and_monitor: 'Course pace'
+      clock: 'Duration'
+      level: 'Level'
+      institution: 'Offered By'
   iso639_codes:
     en: 'English'
     en-US: 'English (US)'
@@ -45,6 +72,18 @@ en:
     omniauth_sign_in: "Connect with %{provider}"
     omniauth_signin_in: "Connecting with %{provider}"
     searchbar_placeholder: "Find a course ..."
+    icons:
+      user_and_monitor: 'Course pace'
+      level: 'Level'
+      clock: 'Duration'
+    card:
+      subscription_tip: "This provider offers a %{period} free trial. At the end of this period, the
+      subscription fee will be charged.It gives you unlimited access to their courses. You may cancel
+      the subscription at any time."
+      free_course_tip: "You can take this course for free. Certificates, group discussions, exercises,
+      offline viewing, among others may not be included. To unlock all features and get full access
+      you must subscribe to the paid plan"
+
   categories: &categories
     arts_and_design: 'Arts and Design'
     business: 'Business'

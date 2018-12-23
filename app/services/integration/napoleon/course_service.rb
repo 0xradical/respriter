@@ -5,8 +5,9 @@ module Integration
       class << self
 
         def run(global_sequence=nil)
-          global_sequence = global_sequence || Course.order(global_sequence: :desc).first.global_sequence
+          global_sequence = global_sequence || Course.current_global_sequence
           ::Napoleon.client.resources(global_sequence) do |resource|
+
             Course.new.tap do |course|
               course.id               = resource['id']
               course.global_sequence  = resource['global_sequence']
@@ -15,13 +16,23 @@ module Integration
               course.subtitles        = resource['content']['subtitles']
               course.price            = resource['content']['price']
               course.url              = resource['content']['url']
+              course.pace             = resource['content']['pace']
+              course.level            = resource['content']['level']
+              course.effort           = resource['content']['effort']
+              course.free_content     = resource['content']['free_content']
+              course.paid_content     = resource['content']['paid_content']
               course.description      = resource['content']['description']
+              course.syllabus         = resource['content']['syllabus']
+              course.certificate      = resource['content']['certificate']
+              course.offered_by       = resource['content']['offered_by']
               course.published        = resource['content']['published']
               course.provider_id      = Provider.find_by(name: resource['content']['provider_name'])&.id
               course.video            = resource['content']['video']
               course.category         = resource['content']['category']
               course.tags             = resource['content']['tags']
+              course.source_schema    = resource
             end.upsert
+
           end
         end
 

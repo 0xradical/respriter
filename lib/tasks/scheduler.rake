@@ -7,10 +7,6 @@ namespace :app do
       Integration::RakutenMarketing::TrackedActionService.run
     end
 
-    task courses_service: [:environment] do |t,args|
-      Integration::Napoleon::CourseService.run
-    end
-
     namespace :rakuten_marketing do
       task tracked_actions_service: [:environment] do |t, args|
         Integration::RakutenMarketing::TrackedActionService.run

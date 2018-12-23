@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     match '*dashboard', to: 'dashboard#index', via: [:get], as: :dashboard
   end
 
+  resources :videos, only: :show
+
   get '/search(/:category)',    to: 'courses#index',  as: :courses
   get '/forward/:id',           to: 'gateway#index',  as: :gateway
 

@@ -1,60 +1,175 @@
+<% uniq = SecureRandom.hex(48) %>
 
 <div class='c-vcard'>
 
-  <div class='c-vcard__header' style='background-color:#243f52;width:100%;height:120px'>
-    <%# if (course) %>
-    <!-- <iframe width='100%' height="100%" src="<%#= course %>" frameborder="0" allow="accelerometer" allowfullscreen></iframe> -->
-    <%# else %>
-      <%= image_pack_tag('no-video.svg', height: '100%') %>
-    <%# end %>
+  <div class='c-vcard__head'>
+    <div id='embed-<%= uniq %>' class='c-video'>
+      <% if course.video %>
+        <div data-embedded-video='/videos/<%= course.id %>' data-embedded-video-target='#embed-<%= uniq %>' class='swiper-no-swiping c-video__content'>
+          <%= svg_icons_lib('play', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
+          <span class='c-video__subtitle'><%= t('dictionary.preview_this_course') %></span>
+        </div>
+      <% else %>
+        <div class='c-video__content'>
+          <%= svg_icons_lib('no-video', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
+          <span class='c-video__subtitle'><%= t('dictionary.preview_not_available') %> </span>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <div class='c-vcard__body'>
 
-    <div class='c-vcard__body-slot'>
-
-      <div class='c-vcard__body-slot-l'>
-        <span class='c-label'>
-
-          <svg class='c-label__icon c-label__icon--inc-25%'>
-            <use xlink:href='<%= "#{asset_pack_path('providers-lib.svg')}##{course.provider.slug}" %>' />
-          </svg>
-
-          <span class='c-label__text' style='font-size:0.875em'>
-            <span class='c-tags c-tags--gray mx-Ml(4px)'>
-              <%= course.provider.name %>
-            </span>
+    <div class='c-vcard__content-row'>
+      <span class='c-label'>
+        <svg class='c-label__icon c-label__icon--inc-25% c-label__icon--circled-border'>
+          <use xlink:href='<%= "#{asset_pack_path('providers-lib.svg')}##{course.provider.slug}" %>' />
+        </svg>
+        <span class='c-label__text' style='font-size:0.875em'>
+          <span class='c-tags c-tags--gray mx-Ml(4px)'>
+            <%= course.provider.name %>
           </span>
-
         </span>
-      </div>
-
-      <div class='c-vcard__body-slot-r'>
-        <a href='#'>
-          <%= svg_icons_lib('heart', { width: '18px', height: '18px' } ) %>
-        </a>
-      </div>
-
+      </span>
     </div>
 
-    <a href='<%= course.id %>' target='_blank' title='<%= course.name %>' class='c-vcard__title'>
-      <%= course.name %>
-    </a>
-
-  </div>
-
-  <div class='c-vcard__footer'>
-    <div class='c-vcard__footer-slot'>
-      <div class='c-vcard__footer-slot-l'>
-        <span class='c-price' style='vertical-align:middle'>$<%= course.price %></span>
-      </div>
-      <div class='c-vcard__footer-slot-r'>
-        <a href="<%= gateway_path(course.id) %>" title="Go to course on provider's page" target='_blank' class='btn btn--tiny btn--green-flat'>
-          go to course
+    <div class='c-vcard__content-row'>
+      <div class='c-vcard__title-box'>
+        <a href='<%= gateway_path(course.id) %>' target='_blank' title='<%= course.name %>' class='c-vcard__title'>
+          <%= course.name %>
         </a>
       </div>
     </div>
+
+    <div class='c-vcard__content-row mx-Fs-0d875'>
+    </div>
+
+    <div class='c-vcard__content-row c-vcard__content--spaced'>
+      <table class='c-vcard__tabular' style='width:100%;'>
+        <tr>
+          <td>
+            <span class='c-label'>
+              <%= svg_icons_lib('velocimeter', {
+                alt: t('meta.icons.user_and_monitor'),
+                class: 'c-label__icon c-label__icon--inc-25%',
+                title: t('meta.icons.user_and_monitor')
+              } ) %>
+              <span class='c-label__text' style='font-size:0.75em'>
+                <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                  <%= course.pace ? t("dictionary.pace.#{course.pace}") : t("dictionary.not_available") %>
+                </span>
+              </span>
+            </span>
+          </td>
+          <td>
+            <span class='c-label'>
+              <%= svg_icons_lib('level', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+              <span class='c-label__text' style='font-size:0.75em'>
+                <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                  <%= course.level ? t("dictionary.levels.#{course.level}") : t("dictionary.not_available")%>
+                </span>
+              </span>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <% if course.effort %>
+              <span class='c-label'>
+                <%= svg_icons_lib('clock', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+                <span class='c-label__text' style='font-size:0.75em'>
+                  <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                    <%= t("datetime.distance_in_words.about_x_hours", count: course.effort.ceil) %>
+                  </span>
+                </span>
+              </span>
+            <% end %>
+          </td>
+          <td>
+            <% if course.offered_by.present? %>
+              <span class='c-label'>
+                <%= svg_icons_lib('institution', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+                <span class='c-label__text' style='font-size:0.75em'>
+                  <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                    <%= course.offered_by.map { |i| i['name'] }.join(',') %>
+                  </span>
+                </span>
+              </span>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class='c-vcard__content-row c-vcard__content--spaced' style='font-size:0'>
+      <div class='c-vcard__content-lcol c-vcard__content-lcol--W(40%)'>
+        <ul class='c-list c-list--unstyled'>
+          <li class='c-vcard__content-box c-vcard__content-box--ellipsis'>
+            <span class='c-label'>
+              <%= svg_icons_lib('audio', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+              <span class='c-label__text' style='font-size:0.875em'>
+                <span class='c-tags c-tags--gray mx-Ml(4px) mx-Tt(u)'>
+                  <%= course.root_languages_for_audio.join(',') %>
+                </span>
+              </span>
+            </span>
+          </li>
+          <li class='c-vcard__content-box c-vcard__content-box--ellipsis'>
+            <span class='c-label'>
+              <%= svg_icons_lib('subtitle', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+              <span class='c-label__text' style='font-size:0.875em'>
+                <span class='c-tags c-tags--gray mx-Ml(4px) mx-Tt(u)'>
+                  <%= (course.subtitles & session[:tracking_data]['http_accept_language']).join(',') %>
+                </span>
+              </span>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class='c-vcard__content-rcol c-vcard__content-rcol--W(60%)'>
+
+        <div class='mx-Fs-0d625 mx-Tt(u) c-vcard__content-box c-vcard__content-box--Ta(r)'>
+          <% if course.subscription_type? %>
+            <span class='mx-C(dark-green)'><%= t("dictionary.free_trial")%></span>: <%= t("datetime.distance_in_words.x_#{course.trial_period['unit']}", count: course.trial_period['value']) %>
+          <% end %>
+        </div>
+
+        <div class='c-vcard__content-box c-vcard__price mx-Tt(u) c-vcard__content-box--Ta(r)'>
+          <%= course.free_content? ? 'free' : "$#{course.price}" %>
+        </div>
+
+        <div class='c-vcard__content-box c-vcard__content-box--Ta(r) mx-Fs-0d625'>
+
+          <% if course.free_content? && course.paid_content? %>
+            <span data-tippy="<%= t('components.card.free_course_tip') %>" class='c-label'>
+              <%= svg_icons_lib('currency', { class: 'c-label__icon' } ) %>
+              <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                <%= t('dictionary.extra_paid_content')%>
+              </span>
+            </span>
+          <% elsif course.subscription_type? && course.has_free_trial? %>
+            <span data-tippy="<%= t('components.card.subscription_tip', period: t("datetime.distance_in_words.x_#{course.trial_period['unit']}", count: course.trial_period['value']) ) %>" class='c-label'>
+              <%= svg_icons_lib('renew', { class: 'c-label__icon' } ) %>
+              <span class='c-label__text'>
+                <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                  <%= t("dictionary.subscription_period.#{course.subscription_period['unit']}") %>
+                </span>
+              </span>
+            </span>
+          <% end %>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class='c-vcard__content-row'>
+      <a href="<%= course.id %>" title="Go to course on provider's page" target='_blank'
+        style='margin:1em 0 0.5em; text-align:center' class='btn btn--block btn--rounded btn--blue-flat'>
+        <%= t("dictionary.go_to_course") %>
+      </a>
+    </div>
+
   </div>
 
 </div>
-

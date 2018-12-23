@@ -7,6 +7,7 @@ gem 'rails', '~> 5.2.0'
 gem 'webpacker', github: 'rails/webpacker'
 gem 'pg'
 gem 'puma'
+gem 'semantic'
 
 # ActiveRecord
 gem 'activerecord-import'
@@ -19,7 +20,6 @@ gem 'rack-reverse-proxy', :require => 'rack/reverse_proxy'
 gem 'http'
 
 gem 'ejs'
-#gem 'eco'
 gem 'execjs'
 
 # Pagination
@@ -29,6 +29,9 @@ gem 'kaminari'
 gem 'mini_magick'
 gem 'carrierwave'
 gem 'carrierwave-aws'
+
+# Aws
+gem 'aws-sdk', '~> 3'
 
 # Elastic Search
 gem 'elasticsearch-model'

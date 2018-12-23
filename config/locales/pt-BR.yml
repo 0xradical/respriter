@@ -1,5 +1,27 @@
 pt-BR:
   dictionary: &dictionary
+    levels:
+      beginner: "Iniciante"
+      intermediate: "Intermediário"
+      advanced: "Avançado"
+      all: "Todos os níveis"
+    preview_this_course: "Visualizar este curso"
+    preview_not_available: "Vídeo não disponível"
+    see_syllabus: "Ver plano de estudos"
+    trial_period: "%{period} grátis"
+    free_trial: "Grátis por"
+    certificate:
+      included: "Certificado incluso"
+      paid: "Certificado pago (%{price})"
+    extra_paid_content: "Conteúdo extra pago"
+    pace:
+      instructor_paced: "Rítmo fixo"
+      self_paced: "Rítmo flexível"
+    subscription_period: 
+      months: "Assinatura mensal"
+      years: "Assinatura anual"
+    for_this_course: "Por este curso"
+    not_available: "N/D"
     sign_in: 'Entrar'
     sign_up: 'Cadastre-se'
     sign_out: 'Sair'
@@ -10,7 +32,6 @@ pt-BR:
     subtitles: 'Legendas'
     categories: 'Categorias'
     max_price: 'Até R$'
-    certificate: 'certificado'
     length: 'Tempo de duração'
     previous_page: 'Página anterior'
     next_ page: 'Próxima página'
@@ -30,6 +51,12 @@ pt-BR:
     top_reviewed: 'Melhor avaliados'
     favorite: 'Favoritar'
     go_to_course: 'Ir para o curso'
+  meta:
+    icons:
+      user_and_monitor: 'Ritmo do curso'
+      clock: 'Duração'
+      level: 'Nível'
+      institution: 'Oferecido por'
   iso639_codes:
     en: 'Inglês'
     en-US: 'Inglês (EUA)'
@@ -44,6 +71,13 @@ pt-BR:
     omniauth_sign_in: 'Conectar com %{provider}'
     omniauth_signin_in: 'Conectando com %{provider}'
     searchbar_placeholder: "Buscar cursos ..."
+    card:
+      free_course_tip: "Você pode assistir este curso gratuitamente. Certificados, discussões em
+      grupo, exercícios, visualização off-line, entre outras funcionalidades podem não estar
+      disponíveis na versão gratuita. Para ter acesso completo, é preciso adquirir a versão paga"
+      subscription_tip: "Essa plataforma oferece %{period} grátis. Ao final deste período, será
+      cobrada a taxa de assinatura.  Você terá acesso ilimitado a todos os cursos. A assinatura pode
+      ser cancelada a qualquer momento"
   categories: &categories
     arts_and_design: 'Artes e Design'
     business: 'Negócios'

@@ -6,6 +6,8 @@ class Course < ApplicationRecord
 
   SUPPORTED_LANGUAGES = %w(pt en es ru it de fr)
 
+  upsert_keys [:id]
+
   paginates_per 25
 
   validates :name, presence: true
@@ -44,9 +46,42 @@ class Course < ApplicationRecord
     end
   end
 
-  scope :by_category, -> (category) { where(category: category) }
-  scope :by_provider, -> (provider) { joins(:provider).where("providers.slug = ?", provider)  }
-  scope :free,        -> { where(price: 0) }
+  scope :by_category,   -> (category) { where(category: category) }
+  scope :by_provider,   -> (provider) { joins(:provider).where("providers.slug = ?", provider)  }
+  scope :free,          -> { where(free_content: true) }
+  scope :featured,      -> { order('enrollments_count DESC') }
+
+  def root_languages_for_audio
+    audio.map { |lang| lang.split('-')[0] }.uniq
+  end
+
+  def root_languages_for_subtitles
+    subtitles.map { |lang| lang.split('-')[0] }.uniq
+  end
+
+  def subscription_type?
+    main_pricing_model.try(:[], 'type') == 'subscription'
+  end
+
+  def has_free_trial?
+    !main_pricing_model.try(:[], 'trial_period')&.empty?
+  end
+
+  def price
+    (main_pricing_model.try(:[],'price') || super).to_f
+  end
+
+  def main_pricing_model
+    pricing_models.first
+  end
+
+  def trial_period
+    main_pricing_model.try(:[], 'trial_period')
+  end
+
+  def subscription_period
+    main_pricing_model.try(:[], 'subscription_period')
+  end
 
   def has_afn?
     !!provider.afn_url_template
@@ -62,6 +97,26 @@ class Course < ApplicationRecord
   def gateway_path
     Rails.application.routes.url_helpers.gateway_path(id)
   end
+
+  def as_indexed_json(options={})
+    {
+      id:             id,
+      name:           name,
+      description:    description,
+      price:          price,
+      url:            url,
+      gateway_path:   gateway_path,
+      url_id:         url_md5,
+      video_url:      video_url,
+      tags:           tags,
+      audio:          audio,
+      subtitles:      subtitles,
+      category:       category,
+      provider_name:  provider_name,
+      provider_slug:  provider_slug
+    }
+  end
+
 
   class << self
 
@@ -195,25 +250,6 @@ class Course < ApplicationRecord
       __elasticsearch__.import query: -> { where(scope) }
     end
 
-  end
-
-  def as_indexed_json(options={})
-    {
-      id:             id,
-      name:           name,
-      description:    description,
-      price:          price,
-      url:            url,
-      gateway_path:   gateway_path,
-      url_id:         url_md5,
-      video_url:      video_url,
-      tags:           tags,
-      audio:          audio,
-      subtitles:      subtitles,
-      category:       category,
-      provider_name:  provider_name,
-      provider_slug:  provider_slug
-    }
   end
 
 end

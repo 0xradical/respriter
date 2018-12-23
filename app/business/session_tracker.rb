@@ -7,7 +7,7 @@ class SessionTracker
   end
 
   def track
-    %w(ip utm http_accept_language referer query_string user_agent).inject({}) do |tracking_obj, property|
+    [:ip,:utm,:http_accept_language,:referer,:query_string,:user_agent].inject({}) do |tracking_obj, property|
       tracking_obj.merge send("track_#{property}")
     end.with_indifferent_access
   end

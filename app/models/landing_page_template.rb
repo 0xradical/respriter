@@ -1,41 +1,35 @@
 class LandingPageTemplate
 
-  VAR_REGEX=/<%= html\.([a-z_]*) %>/
+  VAR_REGEX=/<%= slots\.([a-z_]*) %>/
 
   include ActiveModel::Model
 
   attr_accessor :id, :data, :layout
 
-  def initialize(layout_name, context={})
-    @id     = layout_name
-    @layout = set_layout(layout_name, context)
-    @data   = set_data
+  def initialize(template)
+    @id     = File.basename(template, '.html.erb')
+    @layout = set_layout(template)
+    @data   = set_placeholders
   end
 
-  class << self
-
-    def renderer(context={})
-      renderer = ApplicationController.renderer.new
-      renderer.instance_variable_set(:@env, context)
-      renderer
-    end
-
+  def fill_slots(slots)
+    ERB.new(@layout).result(slots.instance_eval { binding })
   end
 
   private
 
-  def template_path(layout_name)
-    "layouts/landing_pages/#{layout_name}"
+  def set_layout(template)
+    @layout = File.read(template_path(template))
   end
 
-  def set_layout(layout_name, context={})
-    self.class.renderer(context).render(template_path(layout_name), layout: false)
-  end
-
-  def set_data
+  def set_placeholders
     @data = Hash[@layout.scan(VAR_REGEX).flatten.map do |captured_group|
       [captured_group.strip, '']
     end]
+  end
+
+  def template_path(template)
+    Rails.root.join('app','views','layouts','landing_pages',template)
   end
 
 end
