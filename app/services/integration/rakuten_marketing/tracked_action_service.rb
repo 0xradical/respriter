@@ -25,7 +25,7 @@ module Integration
                 action.ext_click_date   = resource['transaction_date']
                 action.source           = 'rakuten'
                 action.payload          = resource
-              end.upsert
+              end.save!
             end
           end
 
