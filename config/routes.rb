@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
   get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
-  get '/blog', to: redirect('http://www.quero.com/blog/', status: 301)
+  #get '/blog', to: redirect('http://www.quero.com/blog/', status: 301)
 
 
   # Devise

@@ -3,7 +3,7 @@ khan-academy babbel memrise futurelearn open-culture opensap hubspot-academy gen
 codecademy datacamp platzi skillshare).each do |p| %>
   <div class='waffle'>
     <svg viewbox='0 0 24 24'>
-      <use xlink:href='#<%= p %>'></use>
+      <use xlink:href='<%= "#{asset_pack_path('providers-lib.svg')}##{p}" %>'></use>
     </svg>
   </div>
 <% end %>

@@ -1,15 +1,15 @@
 <script id='main-menu-tpl' type='x-tmpl-mustache'>
   <div data-vue-cpt data-vue-template='locale-dropdown'></div>
-  <button data-button class='btn btn--blue-border btn--small btn--uppercase'><%= t('dictionary.sign_in') %></button>
-  <button data-button class='btn btn--gray-border btn--small btn--uppercase'><%= t('dictionary.sign_up') %></button>
-  <h4 class='c-offcanvas-menu__section'>Categories</h4>
-  <ul class='mx-list-unstyled mx-M(0) mx-P(0)'>
+  <button class='btn btn--blue-border btn--small'><%= t('dictionary.sign_in') %></button>
+  <button class='btn btn--gray-border btn--small'><%= t('dictionary.sign_up') %></button>
+  <h4 class='c-off-canvas-menu__section'>Categories</h4>
+  <ul class='c-list c-list--unstyled'>
     {{#categories}}
       <a href={{ path }}  style='text-decoration:none;color:initial'>
-        <li class='mx-Ptb(4px)'>
+        <li style='padding:4px 0px'>
           <span class='c-label'>
             <svg class='c-label__icon'>
-              <use xlink:href=#{{icon}}></use>
+              <use xlink:href=<%= asset_pack_path('icons-lib.svg') %>#{{icon}}></use>
             </svg>
             <span class='c-label__text'>{{text}}</span>
           </span>
@@ -26,42 +26,38 @@
 <div class='c-navbar' role='header-nav'>
 
   <%= link_to root_path do %>
-    <svg width='127px' height='37px' class='c-navbar__slot'>
-      <use xlink:href='#logo-quero'></use>
-    </svg>
+    <img src="<%= asset_pack_path('quero-logo.svg') %>" width='127px' class='c-navbar__slot'>
   <% end %>
 
   <div class='c-navbar__search-slot'>
     <script id='navbar-search' type='x-vue-template'>
       <search-bar id='header-nav-search' :searchBtn='false' containerClass='c-search' placeholder="<%= t('components.searchbar_placeholder') %>">
+
         <template slot='close-icon'>
-          <svg width='48px' height='48px' viewbox='0 0 100 100'>
-            <use xlink:href='#close-icon'></use>
-          </svg>
+          <%= svg_icons_lib('close_thin', { width: '48px', height: '48px', viewbox:'0 0 100 100' } ) %>
         </template>
+
       </search-bar>
     </script>
-    <div data-vue-cpt data-vue-template='navbar-search'></div>
+    <div data-vue-cpt='navbar-search'></div>
   </div>
 
   <nav class='mx-F(r)'>
 
     <a onclick="document.getElementById('header-nav-search').classList.add('c-search--visible')" 
       class='c-navbar__slot mx-D(n)@tablet mx-D(n)@desktop mx-D(n)@tv'>
-      <svg width='24px' height='24px'>
-        <use xlink:href='#search-icon' ></use>
-      </svg>
+      <%= svg_icons_lib('magnifying-glass', { width: '24px', height: '24px' } ) %>
     </a>
 
     <% unless user_account_signed_in? %>
-      <div class='c-navbar__slot mx-Mr(10px) mx-D(n)@phone'>
-        <div data-vue-cpt data-vue-template='locale-dropdown'></div>
+      <div class='c-navbar__slot mx-D(n)@phone' style='margin-right(10px)'>
+        <div data-vue-cpt='locale-dropdown'></div>
       </div>
     <% end %>
 
-    <a data-offcanvas-menu='#main-menu' 
-       data-offcanvas-menu-tpl-id='#main-menu-tpl'
-       data-offcanvas-menu-tpl-data='<%= JSON.generate({categories: LabelPrinter.new.labels }) %>'
+    <a data-off-canvas-menu='#main-menu' 
+       data-off-canvas-menu-tpl='#main-menu-tpl'
+       data-off-canvas-menu-tpl-data='<%= JSON.generate({categories: LabelPrinter.new.labels }) %>'
       class='mx-D(n)@desktop mx-D(n)@tv c-navbar__offcanvas-menu-btn'></a>
 
     <%- if user_account_signed_in? %>
@@ -70,26 +66,21 @@
           <% if current_user_account.avatar.present? %>
             <%= image_tag(current_user_account.avatar, height: '37px', style: 'border-radius:50%;border:1px solid #ccc') %>
           <% else %>
-            <svg width='37px' height='37px'>
-              <use xlink:href='#avatar'>
-            </svg>
+            <%= svg_icons_lib('avatar', { width: '37px', height: '37px' } ) %>
           <% end %>
         <% end %>
       </div>
     <% else %>
-      <span class='c-navbar__slot mx-Mr(10px) mx-D(n)@phone mx-D(n)@tablet'>
+      <span class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet' style='margin-right:10px'>
         <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
-          data: { button: '' },
           class: 'btn btn--blue-border btn--small btn--uppercase' %>
       </span>
 
       <span class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet'>
         <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
-          data: { button: '' },
           class: 'btn btn--gray-border btn--small btn--uppercase' %>
       </span>
     <%- end %>
-
 
   </nav>
 </div>

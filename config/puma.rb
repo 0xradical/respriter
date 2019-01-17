@@ -52,5 +52,9 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # end
 #
 
+on_worker_fork do
+  FileUtils.touch('/tmp/app-initialized')
+end
+
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart

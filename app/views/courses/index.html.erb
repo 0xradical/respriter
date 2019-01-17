@@ -11,8 +11,8 @@
 </script>
 
 <%= content_for :javascript do %>
-  <script src="<%= web_component_path('vueSearchApp.js') %>" type='text/javascript'></script>
-  <link rel="stylesheet" media="screen" href="<%= web_component_path('vueSearchApp.css') %>">
+  <%= javascript_pack_tag 'search-page' %>
+  <%= stylesheet_pack_tag 'search-page' %>
 <% end %>
 
 <%= content_for :body_html_attributes do %>

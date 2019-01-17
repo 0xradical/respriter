@@ -7,10 +7,7 @@ module.exports = {
   test: /\.yml$/,
   use: [
     {
-      loader: 'file-loader',
-      options: {
-        name: '[name].json'
-      }
+      loader: 'json-loader'
     },
     {
       loader: 'yaml-loader'

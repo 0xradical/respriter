@@ -4,15 +4,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const S3Uploader = require('webpack-s3-uploader')
 
-const vue = require('./loaders/vue')
-const yaml = require('./loaders/yaml')
+const vue           = require('./loaders/vue')
+const yaml          = require('./loaders/yaml')
 
 environment.loaders.append('vue',vue)
 environment.loaders.append('yaml',yaml)
 
 environment.plugins.append('MiniCssExtractPlugin', new MiniCssExtractPlugin({
-  filename: process.env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css',
-  chunkFilename: '[id].css'
+  filename: process.env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css'
 }));
 
 environment.plugins.append('VueLoaderPlugin', new VueLoaderPlugin())

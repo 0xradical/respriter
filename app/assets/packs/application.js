@@ -7,4 +7,12 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import 'scss/application.scss';
+require('../scss/application.scss')
+
+let JST = {};
+var req = require.context('!raw-loader!../jst', true, /^(.*\.(ejs$))[^.]*$/im);
+req.keys().forEach(function(key) {
+  JST[key] = req(key);
+});
+
+window.JST = JST;
