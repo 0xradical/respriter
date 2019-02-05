@@ -16,6 +16,7 @@ module Integration
               course.price            = resource['content']['price']
               course.url              = resource['content']['url']
               course.description      = resource['content']['description']
+              course.published        = resource['content']['published']
               course.provider_id      = Provider.find_by(name: resource['content']['provider_name'])&.id
               course.video            = resource['content']['video']
               course.category         = resource['content']['category']
