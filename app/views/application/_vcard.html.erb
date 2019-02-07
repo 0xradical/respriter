@@ -20,7 +20,7 @@
   </div>
 
   <div class='c-vcard__body'>
-    <%= link_to course.url, target: '_blank' do %>
+    <%= link_to gateway_path(course.id), target: '_blank' do %>
       <h3 style='font-size:1em;line-height:1.1em;height:3.1em;overflow:hidden'>
         <%= course.name %>
       </h3>
