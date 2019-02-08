@@ -29,7 +29,11 @@ module Napoleon
         puts "Fetching global_sequence #{global_sequence}..."
       break if resources.empty?
         resources.each do |resource|
-          blk.call(resource)
+          begin
+            blk.call(resource)
+          rescue ActiveRecord::RecordNotUnique, ActiveRecord::StatementInvalid
+            next
+          end
         end
         global_sequence = resources.last['global_sequence']
       end
