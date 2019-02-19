@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'production') {
       region: 'us-east-1'
     },
     s3UploadOptions: {
-      Bucket: 'quero-assets/web-app'
+      Bucket: 'quero-cdn/assets'
     }
   }));
 }
