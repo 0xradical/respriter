@@ -1,6 +1,10 @@
 namespace :app do
   namespace :scheduler do
 
+    task :courses_service, [:global_sequence] => [:environment] do |t, args|
+      Integration::Napoleon::CourseService.run(args[:global_sequence])
+    end
+
     task tracked_actions_service: [:environment] do |t, args|
       Integration::Awin::TrackedActionService.run
       Integration::ImpactRadius::TrackedActionService.run
