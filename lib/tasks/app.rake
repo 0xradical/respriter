@@ -47,23 +47,4 @@ namespace :app do
     end
   end
 
-  namespace :integration do
-    task :courses do |t, args|
-      puts "Courses Integration Service"
-      Benchmark.realtime do
-        gs = Course.global_sequence
-        loop do 
-          uri = URI("https://napoleon-the-crawler.herokuapp.com/resources/updates/#{next_page}")
-          req = Net::HTTP::Get.new(uri)
-          req.basic_auth ENV['NAPOLEON_CRAWLER_BASIC_AUTH_USER'], ENV['NAPOLEON_CRAWLER_BASIC_AUTH_PASS']
-          res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-            http.request(req)
-          end
-          collection = JSON.parse(res.body)
-          break if (collection.empty?)
-        end
-      end
-    end
-  end
-
 end
