@@ -74,28 +74,24 @@
         </tr>
         <tr>
           <td>
-            <% if course.effort %>
-              <span class='c-label'>
-                <%= svg_icons_lib('clock', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-                <span class='c-label__text' style='font-size:0.75em'>
-                  <span class='c-tags c-tags--gray mx-Ml(4px)'>
-                    <%= t("datetime.distance_in_words.about_x_hours", count: course.effort.ceil) %>
-                  </span>
+            <span class='c-label'>
+              <%= svg_icons_lib('clock', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+              <span class='c-label__text' style='font-size:0.75em'>
+                <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                  <%= course.effort ? t("datetime.distance_in_words.about_x_hours", count: course.effort.ceil) : t('dictionary.not_available') %>
                 </span>
               </span>
-            <% end %>
+            </span>
           </td>
           <td>
-            <% if course.offered_by.present? %>
-              <span class='c-label'>
-                <%= svg_icons_lib('institution', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-                <span class='c-label__text' style='font-size:0.75em'>
-                  <span class='c-tags c-tags--gray mx-Ml(4px)'>
-                    <%= course.offered_by.map { |i| i['name'] }.join(',') %>
-                  </span>
+            <span class='c-label'>
+              <%= svg_icons_lib('institution', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+              <span class='c-label__text' style='font-size:0.75em'>
+                <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                  <%= course.offered_by.present? ? course.offered_by.map { |i| i['name'] }.join(',') : t("dictionary.not_available") %>
                 </span>
               </span>
-            <% end %>
+            </span>
           </td>
         </tr>
       </table>
@@ -107,7 +103,7 @@
           <li class='c-vcard__content-box c-vcard__content-box--ellipsis'>
             <span class='c-label'>
               <%= svg_icons_lib('audio', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-              <span class='c-label__text' style='font-size:0.875em'>
+              <span class='c-label__text' style='font-size:0.75em'>
                 <span class='c-tags c-tags--gray mx-Ml(4px) mx-Tt(u)'>
                   <%= course.root_languages_for_audio.join(',') %>
                 </span>
@@ -117,7 +113,7 @@
           <li class='c-vcard__content-box c-vcard__content-box--ellipsis'>
             <span class='c-label'>
               <%= svg_icons_lib('subtitle', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-              <span class='c-label__text' style='font-size:0.875em'>
+              <span class='c-label__text' style='font-size:0.75em'>
                 <span class='c-tags c-tags--gray mx-Ml(4px) mx-Tt(u)'>
                   <%= (course.subtitles & session[:tracking_data]['http_accept_language']).join(',') %>
                 </span>
