@@ -2207,7 +2207,7 @@ electron-to-chromium@^1.3.103, electron-to-chromium@^1.3.30, electron-to-chromiu
 
 "elements@https://github.com/codextremist/elements.git":
   version "1.0.0"
-  resolved "https://github.com/codextremist/elements.git#f1ea3a09d81eb304701fa0d22b0fd58d02f1356d"
+  resolved "https://github.com/codextremist/elements.git#d23e3d0ce10cc6a826e00840e545aa070391681b"
   dependencies:
     svgxuse "^1.2.6"
 
