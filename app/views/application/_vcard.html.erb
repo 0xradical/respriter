@@ -115,7 +115,11 @@
               <%= svg_icons_lib('subtitle', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
               <span class='c-label__text' style='font-size:0.75em'>
                 <span class='c-tags c-tags--gray mx-Ml(4px) mx-Tt(u)'>
-                  <%= (course.subtitles & session[:tracking_data]['http_accept_language']).join(',') %>
+                  <% begin %>
+                    <%= (course.subtitles & session[:tracking_data]['http_accept_language']).join(',') %>
+                  <% rescue %>
+                    EN
+                  <% end %>
                 </span>
               </span>
             </span>

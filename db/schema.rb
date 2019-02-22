@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_20_000225) do
+ActiveRecord::Schema.define(version: 2019_02_22_125654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2019_02_20_000225) do
   end
 
   create_table "landing_pages", force: :cascade do |t|
-    t.string "slug"
+    t.citext "slug"
     t.string "template"
     t.text "meta_html"
     t.jsonb "html", default: {}
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 2019_02_20_000225) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "data", default: {}
+    t.index ["slug"], name: "index_landing_pages_on_slug", unique: true
   end
 
   create_table "oauth_accounts", force: :cascade do |t|
