@@ -107,7 +107,7 @@ class Course < ApplicationRecord
       url:            url,
       gateway_path:   gateway_path,
       url_id:         url_md5,
-      video_url:      video_url,
+      video_url:      nil,
       tags:           tags,
       audio:          audio,
       subtitles:      subtitles,
