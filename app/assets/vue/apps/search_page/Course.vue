@@ -36,7 +36,7 @@
     <div class='c-hcard__price-slot'>
       <span v-if='price > 0' class='c-hcard__price'> {{ price | currency }} </span>
       <span v-if='price == 0 || course.price == null' class='c-tag c-tag--blue'> {{ $t('dictionary.free') }} </span>
-      <a class='mx-D(n)@tablet mx-D(n)@tv mx-D(n)@desktop btn btn--blue-border btn--tiny btn--rounded' target='_blank' :href='course.gateway_path'>
+      <a rel='nofollow' class='mx-D(n)@tablet mx-D(n)@tv mx-D(n)@desktop btn btn--blue-border btn--tiny btn--rounded' target='_blank' :href='course.gateway_path'>
         {{ $t('dictionary.go_to_course') }}
       </a>
     </div>
@@ -51,7 +51,7 @@
           <span class='c-label__text'>&nbsp; Watch preview</span>
         </span>
       </a>
-      <a data-gtm-event='goToCourseEvent' class='mx-D(n)@phone btn btn--green-flat btn--tiny btn--rounded btn--block' target='_blank' :href='course.gateway_path'>
+      <a rel='nofollow' class='mx-D(n)@phone btn btn--green-flat btn--tiny btn--rounded btn--block' target='_blank' :href='course.gateway_path'>
         {{$t('dictionary.go_to_course') }}</a>
     </div>
 

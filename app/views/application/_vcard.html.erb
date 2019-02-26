@@ -35,7 +35,7 @@
 
     <div class='c-vcard__content-row'>
       <div class='c-vcard__title-box'>
-        <a href='<%= gateway_path(course.id) %>' target='_blank' title='<%= course.name %>' class='c-vcard__title'>
+        <a href='<%= gateway_path(course.id) %>' rel='nofollow' target='_blank' title='<%= course.name %>' class='c-vcard__title'>
           <%= course.name %>
         </a>
       </div>
@@ -164,7 +164,7 @@
     </div>
 
     <div class='c-vcard__content-row'>
-      <a href="<%= gateway_path(course.id) %>" title="Go to course on provider's page" target='_blank'
+      <a href="<%= gateway_path(course.id) %>" rel='nofollow' title="Go to course on provider's page" target='_blank'
         style='margin:1em 0 0.5em; text-align:center' class='btn btn--block btn--rounded btn--blue-flat'>
         <%= t("dictionary.go_to_course") %>
       </a>
