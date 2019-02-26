@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_26_205726) do
+ActiveRecord::Schema.define(version: 2019_02_26_223828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
