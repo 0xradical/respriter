@@ -27,7 +27,7 @@
             <svg class='c-label__icon'>
               <use :xlink:href='subtitleIcon'></use>
             </svg>
-            <span class='c-label__text c-label__text--shrink-25% c-label__text--uppercase'>{{ course.subtitles.join(', ') }}</span>
+            <span class='c-label__text c-label__text--shrink-25% c-label__text--uppercase'>en</span>
           </span>
         </li>
       </ul>
