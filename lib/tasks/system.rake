@@ -82,7 +82,7 @@ namespace :system do
       ActiveRecord::Base.connection.execute("DELETE FROM enrollments WHERE #{where_op}")
     end
 
-    desc "Delete enrollments created by crawlers and spider bots"
+    desc "Reset courses counter cache"
     task reset_courses_counter_cache: [:environment] do |t,args|
       Course.find_each(batch_size: 1500) do |course|
         Course.reset_counters(course.id, :enrollments)
