@@ -4,14 +4,15 @@ namespace :system do
 
     desc "Create an admin account"
     task :create, [:email, :password, :key] => [:environment] do |t,args|
-      if args[:key] == ENV['RAKE_TASK_KEY'] && ENV['__ORIGIN__'] == 'admin'
-        password = args[:password] || SecureRandom.hex(8)
-        admin = AdminAccount.create({
-          email: args[:email], 
-          password: password
-        })
-        puts "AdminAccount with email #{admin.email} and password: #{password} successfully created"
+      if ENV['__ORIGIN__']
+        raise SecurityError.new("Key mismatch") if args[:key] != ENV['RAKE_TASK_KEY']
       end
+      password = args[:password] || SecureRandom.hex(8)
+      admin = AdminAccount.create({
+        email: args[:email], 
+        password: password
+      })
+      puts "AdminAccount with email #{admin.email} and password: #{password} successfully created"
     end
 
   end
@@ -20,16 +21,18 @@ namespace :system do
 
     desc "Import published courses to elasticsearch index"
     task :import_courses, [:key] => [:environment] do |t,args|
-      if args[:key] == ENV['RAKE_TASK_KEY'] && ENV['__ORIGIN__'] == 'admin'
-        Course.default_import_to_search_index
+      if ENV['__ORIGIN__']
+        raise SecurityError.new("Key mismatch") if args[:key] != ENV['RAKE_TASK_KEY']
       end
+      Course.default_import_to_search_index
     end
 
     desc "Reset courses index"
     task :reset_courses_index, [:key] => [:environment] do |t,args|
-      if args[:key] == ENV['RAKE_TASK_KEY'] && ENV['__ORIGIN__'] == 'admin'
-        Course.reset_index!
+      if ENV['__ORIGIN__']
+        raise SecurityError.new("Key mismatch") if args[:key] != ENV['RAKE_TASK_KEY']
       end
+      Course.reset_index!
     end
 
   end
