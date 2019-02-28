@@ -17,7 +17,7 @@ module Integration
               course.price            = resource['content']['price']
               course.url              = resource['content']['url']
               course.pace             = resource['content']['pace']
-              course.level            = resource['content']['level']
+              course.level            = Array.wrap(resource['content']['level'])
               course.effort           = resource['content']['effort']
               course.free_content     = resource['content']['free_content']
               course.paid_content     = resource['content']['paid_content']

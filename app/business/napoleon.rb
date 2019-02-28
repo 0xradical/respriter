@@ -35,7 +35,7 @@ module Napoleon
             check_version!(resource['content']['version'])
             blk.call(resource)
           rescue VersionNotSupported, ActiveRecord::RecordNotUnique, ActiveRecord::StatementInvalid => e
-            log('info', "Fail to process resource #{resource['id']}: #{e.message}", ["gs #{resource['global_sequence']}"])
+            log('warn', "Fail to process resource #{resource['id']}: #{e.message}", ["gs #{resource['global_sequence']}"])
             next
           end
         end
