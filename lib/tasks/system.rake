@@ -73,4 +73,22 @@ namespace :system do
 
   end
 
+  namespace :db do
+
+    desc "Delete enrollments created by crawlers and spider bots"
+    task delete_bot_created_enrollments: [:environment] do |t,args|
+      bots = %w(Googlebot SemrushBot bingbot AhrefsBot MJ12bot)
+      where_op = bots.map { |bot| "tracking_data -> 'user_agent' ->> 'browser' ILIKE '#{bot}%'" }.join(' OR ')
+      ActiveRecord::Base.connection.execute("DELETE FROM enrollments WHERE #{where_op}")
+    end
+
+    desc "Delete enrollments created by crawlers and spider bots"
+    task reset_courses_counter_cache: [:environment] do |t,args|
+      Course.find_each(batch_size: 1500) do |course|
+        Course.reset_counters(course.id, :enrollments)
+      end
+    end
+
+  end
+
 end
