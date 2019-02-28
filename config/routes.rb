@@ -49,6 +49,11 @@ Rails.application.routes.draw do
         resources :providers
         resources :landing_pages
         resources :landing_page_templates, only: [:index, :show]
+        resources :rake_tasks do
+          collection do
+            put 'run', action: :run
+          end
+        end
       end
     end
 
