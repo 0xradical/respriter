@@ -53,7 +53,7 @@ es:
     math_and_logic: 'Matemáticas y Lógica'
     personal_development: 'Desarollo Personal'
     physical_science_and_engineering: 'Ciencia Física Y Ingeniería'
-    social_science: 'Ciencias Sociales'
+    social_sciences: 'Ciencias Sociales'
     health_and_fitness: 'Salud y Fitness'
   tags:
     design: 'Design'

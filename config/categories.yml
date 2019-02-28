@@ -8,5 +8,5 @@
 - { id: 'math_and_logic',                   icon: 'categories' }
 - { id: 'personal_development',             icon: 'graph' }
 - { id: 'physical_science_and_engineering', icon: 'gear' }
-- { id: 'social_science',                   icon: 'user' }
+- { id: 'social_sciences',                  icon: 'user' }
 - { id: 'health_and_fitness',               icon: 'cross' }

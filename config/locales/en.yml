@@ -95,7 +95,7 @@ en:
     math_and_logic: 'Math and Logic'
     personal_development: 'Personal Development'
     physical_science_and_engineering: 'Physical Science and Engineering'
-    social_science: 'Social Science'
+    social_sciences: 'Social Sciences'
     health_and_fitness: 'Health and Fitness'
   tags:
     design: 'Design'
@@ -291,7 +291,7 @@ en:
         physical_science_and_engineering_text: 'Learn how to solve problems and
         build creations that benefit humanity. Explore all areas of Physical Science and Engineering
         with online courses.' 
-        social_science_text: 'Study all aspects of human society and social
+        social_sciences_text: 'Study all aspects of human society and social
         life. Understand many of the worlds biggest issues with online Social Science courses.'
         health_and_fitness_text: 'Increase your knowledge about health maintenance, disease
         prevention and risky behaviors reduction. Live longer and achieve your goals with online
