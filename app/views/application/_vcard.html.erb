@@ -65,8 +65,12 @@
             <span class='c-label'>
               <%= svg_icons_lib('level', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
               <span class='c-label__text' style='font-size:0.75em'>
-                <span class='c-tags c-tags--gray mx-Ml(4px)'>
-                  <%= course.level ? t("dictionary.levels.#{course.level}") : t("dictionary.not_available")%>
+              <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                  <% if !course.level.empty? %>
+                    <%= course.level.map { |l| t("dictionary.levels.#{l}") }.join(',') %>
+                  <% else %>
+                    <%= t("dictionary.not_available") %>
+                  <% end %>
                 </span>
               </span>
             </span>
