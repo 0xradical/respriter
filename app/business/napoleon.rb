@@ -26,10 +26,12 @@ module Napoleon
     end
 
     def resources(global_sequence, &blk)
-      started_at, count, errors, run = Time.now, 0, 0, SecureRandom.hex(4)
-      log(:info,  "Pulling courses ...",["BEGIN","run.#{run}", "seq.#{global_sequence}".ansi(:blue)])
+      @global_sequence, @started_at, @run = global_sequence, Time.now, SecureRandom.hex(4)
+      count, errors, run = 0, 0
+      log(:info,  "Pulling courses ...",["BEGIN","run.#{@run}", "seq.#{@global_sequence}".ansi(:blue)])
+      start_heartbeat
       loop do
-        resources = JSON.parse(http.get(URI % {global_sequence: global_sequence}).body)
+        resources = JSON.parse(http.get(URI % {global_sequence: @global_sequence}).body)
         break if resources.empty?
         resources.each do |resource|
           begin
@@ -37,16 +39,36 @@ module Napoleon
             blk.call(resource)
           rescue VersionNotSupported, ActiveRecord::RecordNotUnique, ActiveRecord::StatementInvalid => e
             errors += 1
-            log(:warn,  "Fail to process resource: #{e.message}", ["run.#{run}", "seq.#{global_sequence}".ansi(:blue), "err.#{errors}".ansi(:red)])
-            log(:debug, "--inspect-- " + resource.to_s.ansi(:red), "err.#{errors}".ansi(:red))
+            log(:error,  "Fail to process resource: #{e.message}", ["run.#{@run}", "seq.#{@global_sequence}".ansi(:blue), "err.#{errors}".ansi(:red)])
+            log(:error, "--inspect-- " + resource.to_s.ansi(:red), "err.#{errors}".ansi(:red))
             next
           end
           count += 1
         end
-        global_sequence = resources.last['global_sequence']
+        @global_sequence = resources.last['global_sequence']
       end
-      run_time = Time.at((Time.now - started_at)).utc.strftime('%Hh %Mm %Ss')
-      log(:info, "Bye! " + "Total: #{count} resources".ansi(:yellow) + " | " + (errors.zero? ? "Errors: #{errors.to_s}".ansi(:green) : "Errors: #{errors.to_s}".ansi(:red))+ " | " + "Took #{run_time}".ansi(:blue), ["END","run.#{run}", "seq.#{global_sequence}".ansi(:blue)])
+      stop_heartbeat
+      log(:info, "Bye! " + "Total: #{count} resources".ansi(:yellow) + " | " + (errors.zero? ? "Errors: #{errors.to_s}".ansi(:green) : "Errors: #{errors.to_s}".ansi(:red))+ " | " + "Took #{elapsed_time}".ansi(:blue), ["END","run.#{@run}", "seq.#{@global_sequence}".ansi(:blue)])
+    end
+
+    def elapsed_time
+      Time.at((Time.now - @started_at)).utc.strftime('%Hh%Mm%Ss')
+    end
+
+    def start_heartbeat
+      @exit = false
+      @heartbeat = Thread.new do
+        while !@exit do
+          sleep(90)
+          log(:info,"...", ["run.#{@run}", "seq.#{@global_sequence}".ansi(:blue), "heartbeat.#{elapsed_time}".ansi(:yellow)])
+        end
+      end
+      Signal.trap('INT') { @exit = true;  exit }
+    end
+
+    def stop_heartbeat
+      @exit = true
+      @heartbeat.join
     end
 
     def log(level, msg, tags=nil)
