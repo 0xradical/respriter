@@ -7,7 +7,7 @@ class SessionTracker
   end
 
   def track
-    [:ip,:utm,:http_accept_language,:referer,:query_string,:user_agent].inject({}) do |tracking_obj, property|
+    [:ip,:utm,:cf_ipcountry, :http_accept_language,:referer,:query_string,:user_agent].inject({}) do |tracking_obj, property|
       tracking_obj.merge send("track_#{property}")
     end.with_indifferent_access
   end
@@ -18,6 +18,11 @@ class SessionTracker
     { http_accept_language: HttpAcceptLanguageParser.parse(@request.env['HTTP_ACCEPT_LANGUAGE']) }
     rescue HttpAcceptLanguageParser::MissingHttpAcceptLanguageHeader
       { http_acccept_language: [] }
+  end
+
+  # Cloudflare's GeoIP special header
+  def track_cf_ipcountry
+    { country: @request.env['HTTP_CF_IPCOUNTRY'] }
   end
 
   def track_ip
