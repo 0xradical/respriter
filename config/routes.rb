@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
     namespace :admin do
       namespace :v1 do
+        resource :profile, only: :update
         resources :user_accounts
         resources :earnings
         resources :enrollments
