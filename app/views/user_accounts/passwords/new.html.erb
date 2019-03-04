@@ -1,5 +1,5 @@
 <%= content_for :section_header do %>
-  Forgot your password?
+  <%= t('devise.passwords.new.section') %>
 <% end %>
 
 <div class='l-cgrid'>
@@ -12,7 +12,7 @@
         <%= f.email_field :email, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
         <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
       </div>
-      <%= f.submit "Send me reset password instructions", class: 'btn btn--blue-flat btn--block' %>
+      <%= f.submit t('devise.passwords.new.send_me_reset_password_instructions'), class: 'btn btn--blue-flat btn--block' %>
     <% end %>
 
     <%= render "user_accounts/shared/links" %>

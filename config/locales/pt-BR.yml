@@ -1,4 +1,10 @@
 pt-BR:
+  activerecord:
+    attributes:
+      user_account:
+        password: "Senha"
+        email: "Email"
+        password_confirmation: "Confirmação de senha"
   dictionary: &dictionary
     levels:
       beginner: "Iniciante"

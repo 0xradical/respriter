@@ -1,4 +1,10 @@
 es:
+  activerecord:
+    attributes:
+      user_account:
+        password: "Contraseña"
+        email: "Email"
+        password_confirmation: "Confirmación de contraseña"
   dictionary:
     sign_in: 'Entrar'
     sign_up: 'Registrate'

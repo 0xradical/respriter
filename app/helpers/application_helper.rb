@@ -1,5 +1,10 @@
 module ApplicationHelper
 
+  def alert_alias(name)
+    alert_map = { notice: 'blue', info: 'blue', alert: 'magenta', danger: 'magenta', warning: 'yellow', success: 'green' }
+    alert_map[name.to_sym]
+  end
+
   def omniauth_button(provider: provider, label: label)
     link_to(label, send("user_account_#{provider.to_s}_omniauth_authorize_path"))
   end
