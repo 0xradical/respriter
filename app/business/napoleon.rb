@@ -59,7 +59,7 @@ module Napoleon
       @exit = false
       @heartbeat = Thread.new do
         while !@exit do
-          sleep(90)
+          sleep(300)
           log(:info,"...", ["run.#{@run}", "seq.#{@global_sequence}".ansi(:blue), "heartbeat.#{elapsed_time}".ansi(:yellow)])
         end
       end
@@ -67,8 +67,7 @@ module Napoleon
     end
 
     def stop_heartbeat
-      @exit = true
-      @heartbeat.join
+      @heartbeat.kill
     end
 
     def log(level, msg, tags=nil)
