@@ -10,9 +10,7 @@ class Course < ApplicationRecord
 
   paginates_per 25
 
-  validates :name, presence: true
-
-  belongs_to  :provider
+  belongs_to  :provider, optional: true
 
   has_many    :enrollments
   has_many    :user_accounts, through: :enrollments
