@@ -29,6 +29,7 @@ module Integration
               course.category           = resource['content']['category']
               course.tags               = resource['content']['tags']
               course.__source_schema__  = resource
+              course.provider_id        = Provider.find_by(name: resource['content']['provider_name'])&.id
             end.upsert
 
           end
