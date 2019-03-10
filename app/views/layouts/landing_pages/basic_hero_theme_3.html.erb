@@ -1,0 +1,26 @@
+<%%= content_for :meta do %>
+  <%= slots.meta %>
+<%% end %>
+
+<!-- HERO -->
+<div class='c-hero(2.0) c-hero(2.0)--bg-linear-gradient(<%= slots.hero_bg_color || "dark-blue" %>)'>
+  <div class='l-container'>
+    <div class='c-hero(2.0)__art c-hero(2.0)__art--center-right' style="background-image:url(<%= slots.hero_art %>);background-size: auto 65%">
+      <div class='c-hero(2.0)__content c-hero(2.0)__content--giant-1'>
+
+        <h1 class='c-title'>
+          <%= slots.hero_title %>
+        </h1>
+
+        <p class='mx-D(n)@phone c-hero(2.0)__text-slot mx-Mt(0d875)'>
+          <%= slots.hero_text %>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='l-container mx-Mt(40px)' style='margin-top:40px'>
+  <%= slots.body %>
+</div>

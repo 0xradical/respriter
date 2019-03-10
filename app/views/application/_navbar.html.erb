@@ -1,7 +1,9 @@
 <script id='main-menu-tpl' type='x-tmpl-mustache'>
   <div data-vue-cpt data-vue-template='locale-dropdown'></div>
-  <button class='btn btn--blue-border btn--rounded btn--small'><%= t('dictionary.sign_in') %></button>
-  <button class='btn btn--blue-flat btn--rounded btn--small'><%= t('dictionary.sign_up') %></button>
+  <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
+    class: 'btn btn--blue-border btn--rounded btn--small btn--uppercase' %>
+  <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
+    class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
   <h4 class='c-off-canvas-menu__section'>Categories</h4>
   <ul class='c-list c-list--unstyled'>
     {{#categories}}

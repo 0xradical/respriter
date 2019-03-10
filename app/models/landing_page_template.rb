@@ -1,6 +1,6 @@
 class LandingPageTemplate
 
-  VAR_REGEX=/<%= slots\.([a-z0-9_]*) %>/
+  VAR_REGEX=/<%= slots\.([a-z0-9_]*).* %>/
 
   include ActiveModel::Model
 
