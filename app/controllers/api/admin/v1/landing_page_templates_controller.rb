@@ -12,7 +12,7 @@ module Api
         end
 
         def show
-          lp_tpl = LandingPageTemplate.new('courses.html.erb')
+          lp_tpl = LandingPageTemplate.new("#{params[:id]}.html.erb")
           render json: LandingPageTemplateSerializer.new(lp_tpl)
         end
 

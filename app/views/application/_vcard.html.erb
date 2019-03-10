@@ -45,60 +45,56 @@
     </div>
 
     <div class='c-vcard__content-row c-vcard__content--spaced'>
-      <table class='c-vcard__tabular' style='width:100%;'>
-        <tr>
-          <td>
-            <span class='c-label'>
-              <%= svg_icons_lib('velocimeter', {
-                alt: t('meta.icons.user_and_monitor'),
-                class: 'c-label__icon c-label__icon--inc-25%',
-                title: t('meta.icons.user_and_monitor')
-              } ) %>
-              <span class='c-label__text' style='font-size:0.75em'>
-                <span class='c-tags c-tags--gray mx-Ml(4px)'>
-                  <%= course.pace ? t("dictionary.pace.#{course.pace}") : t("dictionary.not_available") %>
-                </span>
-              </span>
-            </span>
-          </td>
-          <td>
-            <span class='c-label'>
-              <%= svg_icons_lib('level', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-              <span class='c-label__text' style='font-size:0.75em'>
+      <ul class='c-list c-list--unstyled'>
+        <li>
+          <span class='c-label'>
+            <%= svg_icons_lib('velocimeter', {
+              alt: t('meta.icons.user_and_monitor'),
+              class: 'c-label__icon c-label__icon--inc-25%',
+              title: t('meta.icons.user_and_monitor')
+            } ) %>
+            <span class='c-label__text' style='font-size:0.75em'>
               <span class='c-tags c-tags--gray mx-Ml(4px)'>
-                  <% if !course.level.empty? %>
-                    <%= course.level.map { |l| t("dictionary.levels.#{l}") }.join(',') %>
-                  <% else %>
-                    <%= t("dictionary.not_available") %>
-                  <% end %>
-                </span>
+                <%= course.pace ? t("dictionary.pace.#{course.pace}") : t("dictionary.not_available") %>
               </span>
             </span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class='c-label'>
-              <%= svg_icons_lib('clock', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-              <span class='c-label__text' style='font-size:0.75em'>
-                <span class='c-tags c-tags--gray mx-Ml(4px)'>
-                  <%= course.effort ? t("datetime.distance_in_words.about_x_hours", count: course.effort.ceil) : t('dictionary.not_available') %>
-                </span>
+          </span>
+        </li>
+        <li>
+          <span class='c-label'>
+            <%= svg_icons_lib('level', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+            <span class='c-label__text' style='font-size:0.75em'>
+            <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                <% if !course.level.empty? %>
+                  <%= course.level.map { |l| t("dictionary.levels.#{l}") }.join(',') %>
+                <% else %>
+                  <%= t("dictionary.not_available") %>
+                <% end %>
               </span>
             </span>
-          </td>
-          <td>
-            <span class='c-label'>
-              <%= svg_icons_lib('institution', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-              <span class='c-label__text' style='font-size:0.75em'>
-                <span class='c-tags c-tags--gray mx-Ml(4px)'>
-                  <%= course.offered_by.present? ? course.offered_by.map { |i| i['name'] }.join(',') : t("dictionary.not_available") %>
-                </span>
+          </span>
+        </li>
+        <li>
+          <span class='c-label'>
+            <%= svg_icons_lib('clock', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+            <span class='c-label__text' style='font-size:0.75em'>
+              <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                <%= course.effort ? t("datetime.distance_in_words.about_x_hours", count: course.effort.ceil) : t('dictionary.not_available') %>
               </span>
             </span>
-          </td>
-        </tr>
-      </table>
+          </span>
+        </li>
+        <li>
+          <span class='c-label'>
+            <%= svg_icons_lib('institution', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+            <span class='c-label__text' style='font-size:0.75em'>
+              <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                <%= course.offered_by.present? ? course.offered_by.map { |i| i['name'] }.join(',') : t("dictionary.not_available") %>
+              </span>
+            </span>
+          </span>
+        </li>
+      </ul>
     </div>
 
     <div class='c-vcard__content-row c-vcard__content--spaced' style='font-size:0'>
