@@ -76,7 +76,7 @@
 
   <div class='mx-D(n)@phone mx-D(n)@tablet l-grid[4w@desktop|3w@tablet|1w@phone]'>
     <% @most_popular.each do |course| %>
-      <div class='l-col' style='height:415px'>
+      <div class='l-col' style='height:448px'>
         <%= render partial: 'vcard', locals: { course: course } %>
       </div>
     <% end %>
@@ -103,7 +103,7 @@
 
   <div class='mx-D(n)@phone mx-D(n)@tablet l-grid[4w@desktop|3w@tablet|1w@phone]'>
     <% @free_courses.each do |course| %>
-      <div class='l-col' style='height:415px'>
+      <div class='l-col' style='height:448px'>
         <%= render 'vcard', course: course %>
       </div>
     <% end %>
