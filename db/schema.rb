@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_10_031745) do
+ActiveRecord::Schema.define(version: 2019_03_13_223626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -91,6 +91,8 @@ ActiveRecord::Schema.define(version: 2019_03_10_031745) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "data", default: {}
+    t.text "erb_template"
+    t.string "layout"
     t.index ["slug"], name: "index_landing_pages_on_slug", unique: true
   end
 

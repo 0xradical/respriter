@@ -23,7 +23,7 @@ module Api
         private
 
         def landing_page_params
-          params.require(:landing_page).permit(:slug, :id, :template, html: {}, data: {})
+          params.require(:landing_page).permit(:slug, :id, :layout, :erb_template, data: {})
         end
 
       end

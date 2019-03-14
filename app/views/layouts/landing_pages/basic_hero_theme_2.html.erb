@@ -1,20 +1,17 @@
 <%%= content_for :meta do %>
-  <%= slots.meta %>
 <%% end %>
 
 <!-- HERO -->
-<div class='c-hero(2.0) c-hero(2.0)--bg-flat(<%= slots.hero_bg_color %>)'>
+<div class='c-hero(2.0) c-hero(2.0)--bg-flat(x-blue)'>
   <div class='l-container'>
-    <div class='c-hero(2.0)__art c-hero(2.0)__art--bottom-right c-hero(2.0)__art--landscape' style="background-image:url(<%%= asset_pack_path('svg/<%= slots.hero_art %>') %>)">
+    <div class='c-hero(2.0)__art c-hero(2.0)__art--bottom-right c-hero(2.0)__art--landscape' style="background-image:url(<%%= asset_pack_path('svg/') %>)">
       <div class='c-hero(2.0)__content c-hero(2.0)__content--giant-1'>
 
         <h1 class='c-title-impact c-hero(2.0)__title-slot'>
-          <%= slots.hero_title %>
           <span class='c-title-impact__superscript'></span>
         </h1>
 
         <p class='mx-D(n)@phone c-hero(2.0)__text-slot mx-Mt(0d875)'>
-          <%= slots.hero_text %>
         </p>
 
       </div>
@@ -22,6 +19,4 @@
   </div>
 </div>
 
-<div class='l-container mx-Mt(40px)' style='margin-top:40px'>
-  <%= slots.body %>
-</div>
+<div class='l-container mx-Mt(40px)' style='margin-top:40px'></div>
