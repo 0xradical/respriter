@@ -14,10 +14,4 @@ class LandingPage < ApplicationRecord
     end
   end
 
-  def slot(name)
-    binding.pry
-    yield if html[name.to_s].nil?
-    html[name.to_s]
-  end
-
 end
