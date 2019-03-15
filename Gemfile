@@ -31,7 +31,7 @@ gem 'carrierwave'
 gem 'carrierwave-aws'
 
 # Aws
-gem 'aws-sdk', '~> 3'
+gem 'aws-sdk-cloudfront'
 
 # Elastic Search
 gem 'elasticsearch-model'
