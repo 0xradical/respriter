@@ -5,6 +5,8 @@
   <div class='c-vcard__head'>
     <div id='embed-<%= uniq %>' class='c-video'>
       <% if course.video %>
+        <div class="c-video__bg-img" style="background-image:url(<%= course.video_thumbnail %>)"></div>
+        <div class="c-video__mask"></div>
         <div data-embedded-video='/videos/<%= course.id %>' data-embedded-video-target='#embed-<%= uniq %>' class='swiper-no-swiping c-video__content'>
           <%= svg_icons_lib('play', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
           <span class='c-video__subtitle'><%= t('dictionary.preview_this_course') %></span>

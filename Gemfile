@@ -30,7 +30,10 @@ gem 'mini_magick'
 gem 'carrierwave'
 gem 'carrierwave-aws'
 
-# AWS
+# Thumbor
+gem 'ruby-thumbor'
+
+# Aws
 gem 'aws-sdk-cloudfront'
 
 # Elastic Search

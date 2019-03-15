@@ -57,6 +57,12 @@ class Course < ApplicationRecord
     subtitles.map { |lang| lang.split('-')[0] }.uniq
   end
 
+  def video_thumbnail
+    return nil if video['thumbnail_url'].nil?
+    crypto = Thumbor::CryptoURL.new ENV['THUMBOR_SECURITY_KEY']
+    "http://thumbor.quero.com#{crypto.generate(:width => 241, :image => video['thumbnail_url'])}"
+  end
+
   def subscription_type?
     main_pricing_model.try(:[], 'type') == 'subscription'
   end
