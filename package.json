@@ -1,11 +1,7 @@
 {
   "name": "app",
   "private": true,
-  "scripts": {
-    "deploy": "webpack -p --env.NODE_ENV=production",
-    "build": "webpack --watch",
-    "dev": "webpack-dev-server"
-  },
+  "scripts": {},
   "dependencies": {
     "@rails/webpacker": "=4.0.0-pre.3",
     "blocks": "https://github.com/codextremist/blocks.git",

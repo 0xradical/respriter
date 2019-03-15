@@ -23,13 +23,8 @@ tippy.setDefaults({
 
 tippy();
 
-document.addEventListener('DOMContentLoaded', () => {
-  //tippy();
-});
-
 // Import Blocks
 import 'blocks/build/dist/blocks.all.js'
-
 
 window.iconsLibPath = iconsLib
 window.providersLibPath = providersLib

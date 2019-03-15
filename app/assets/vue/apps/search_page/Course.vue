@@ -76,15 +76,15 @@ export default {
   computed: {
 
     playIcon () {
-      return window.iconsLibPath + '#play'
+      return `${window.iconsLibPath}#play`
     },
 
     audioIcon () {
-      return window.iconsLibPath + '#audio'
+      return `${window.iconsLibPath}#audio`
     },
 
     subtitleIcon () {
-      return window.iconsLibPath + '#subtitle'
+      return `${window.iconsLibPath}#subtitle`
     },
 
     logo () {

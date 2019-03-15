@@ -8,13 +8,13 @@
 
     <button slot='search-btn' style='vertical-align:top' class='btn btn--blue-flat'>
       <svg width='1.5em' height='1.5em'>
-        <use xlink:href="<%= asset_pack_path('icons-lib.svg') %>#magnifying-glass_white"></use>
+        <use xlink:href="<%= asset_pack_url('icons-lib.svg', host: '//') %>#magnifying-glass_white"></use>
       </svg>
     </button>
 
     <template slot='close-icon'>
       <svg width='18px'>
-        <use xlink:href='#close-icon'></use>
+        <use xlink:href="<%= asset_pack_url('icons-lib.svg', host: '//') %>#close-icon"></use>
       </svg>
     </template>
 
@@ -45,7 +45,7 @@
             <%= link_to courses_path(category[:slug]), class: 'c-label c-label--double-line' do %>
 
               <svg class='c-label__icon' viewbox='0 0 100 100'>
-                <use xlink:href='<%= "#{asset_pack_path('icons-lib.svg')}##{category[:icon]}"  %>'></use>
+                <use xlink:href='<%= "#{asset_pack_url('icons-lib.svg', host: '//')}##{category[:icon]}"  %>'></use>
               </svg>
               <span style='width:120px' class='c-label__text'><%= category[:text] %></span>
             <% end %>

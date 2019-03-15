@@ -5,9 +5,7 @@
     <div class='l-col' style='max-height:90px'>
       <div style='max-width:72px;text-align:center'>
         <div style='padding:15px;padding-bottom:10px;'>
-          <svg viewbox='0 0 24 24'>
-            <use xlink:href='#<%= p %>'></use>
-          </svg>
+          <%= svg_providers_lib(p, { width: '24px', height: '24px'} ) %>
         </div>
         <h6 class='mx-D(n)@phone mx-D(n)@tablet' style='margin-top:0px;word-wrap:break-word'>
           <%= p.split('-').map(&:capitalize).join(' ') %>
