@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# Ignore database.yml
+/config/database.yml
+
 # Ignore bundler config.
 /.bundle
 
@@ -13,7 +16,7 @@
 !/log/.keep
 !/tmp/.keep
 
-.env.development
+.env
 .env.production
 .env.test
 
@@ -21,9 +24,6 @@
 *.dump
 
 docker-compose.yml
-docker-compose.development.yml
-docker-compose.test.yml
-docker-compose.production.yml
 
 /node_modules
 /yarn-error.log
@@ -32,6 +32,7 @@ docker-compose.production.yml
 /public/packs
 /public/uploads
 /public/assets
+/public/assets-test
 /public/web-app
 /public/packs-test
 /node_modules

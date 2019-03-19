@@ -19,11 +19,6 @@ module App
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
-    # config.middleware.insert(0, Rack::ReverseProxy) do
-      # reverse_proxy_options preserve_host: true
-      # reverse_proxy /^\/blog(\/.*)$/,   'http://blog.quero.com$1', preserve_host: true
-    # end
-
     config.autoload_paths += [
       "#{Rails.root}/app/uploaders",
       "#{Rails.root}/app/models/reports",
@@ -38,5 +33,8 @@ module App
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.active_record.schema_format = :sql
+
   end
 end

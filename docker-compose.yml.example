@@ -1,22 +1,46 @@
 version: '3'
 services:
   base: &base
-    image: codextremist/rails5:v1.0
+    image: codextremist/rails:2.0.0
     volumes:
       - .:/app
-    network_mode: host
     env_file:
-      - .env.test
+      - .env
+
+  app:
+    <<: *base
+    command: bundle exec rails s -b 0.0.0.0
+    ports:
+      - '3000:3000'
     depends_on:
+      - sidekiq
+      - webpacker
       - redis
       - mailcatcher
       - postgres
       - elasticsearch
 
-  app:
+  sidekiq:
     <<: *base
-    command: bundle exec foreman start -f Procfile.test
-    privileged: true
+    command: bundle exec sidekiq
+
+  webpacker:
+    <<: *base
+    command: bin/webpack-dev-server
+    environment:
+      - "WEBPACKER_DEV_SERVER_HOST=0.0.0.0"
+      - "WEBPACKER_DEV_SERVER_PUBLIC=webpacker:3035"
+    ports:
+      - "3035:3035"
+
+  cucumber:
+    <<: *base
+    entrypoint: bundle exec cucumber
+    ports:
+      - '3000:3000'
+      - '9222:9222'
+    env_file:
+      - .env.test
     depends_on:
       - redis
       - mailcatcher
@@ -44,12 +68,13 @@ services:
       - postgres-9.6:/var/lib/postgresql/data
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.1
+    image: nshou/elasticsearch-kibana:latest
     environment:
       - "discovery.type=single-node"
     ports:
       - "9200:9200"
       - "9300:9300"
+      - "5601:5601"
     volumes:
       - esdata:/usr/share/elasticsearch/data
 

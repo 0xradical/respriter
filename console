@@ -10,6 +10,6 @@ case $i in
 esac
 done
 
-ENVIRONMENT=${ENVIRONMENT:-development}
+ENVIRONMENT=${ENVIRONMENT:-}
 
-docker-compose -f "../docker-compose.$ENVIRONMENT.yml" run --service-ports bundle exec rails console
+docker-compose run --service-ports --entrypoint /bin/bash app

@@ -8,6 +8,5 @@ Feature: Guest goes to course
   @guest-goes-to-course @gtm-event
   Scenario: Guest goes to a course
     Given I'm on a search result page
-    And an event is being tracked by GTM
     When I click on the course button
     Then I'm forwarded to the course provider

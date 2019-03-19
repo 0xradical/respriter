@@ -21,19 +21,20 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+local: &local
+  username: <%= ENV.fetch('PG_USER')  { 'postgres' } %>
+  host: <%= ENV.fetch('PG_HOST')  { 'localhost' } %>
+  port: <%= ENV.fetch('PG_PORT')  { 5432 } %>
+
 development:
   <<: *default
-  database: quero_development
-  username: postgres
-  host: localhost
-  port: 5432
+  <<: *local
+  database: <%= ENV.fetch('PG_DATABASE') { 'quero_development' } %>
 
 test:
   <<: *default
-  database: quero_test
-  username: postgres
-  host: localhost
-  port: 5432
+  <<: *local
+  database: <%= ENV.fetch('PG_DATABASE') { 'quero_test' } %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

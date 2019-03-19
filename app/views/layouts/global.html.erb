@@ -9,7 +9,6 @@
     <!-- Google Search Console: accounts@quero.com -->
     <meta name="google-site-verification" content="frJWYLKLhn2TNmNSFXsY_N34EKr2sAfK3TE-M9ogE1o" />
 
-    <%= javascript_pack_tag 'vendor', 'application' %>
     <%= stylesheet_pack_tag 'vendor', 'application' %>
 
     <script type='text/javascript'>
@@ -66,6 +65,7 @@
       </ul>
     </footer>
 
+    <%= javascript_pack_tag 'vendor', 'application' %> 
     <%= yield :javascript  %>
   </body>
 

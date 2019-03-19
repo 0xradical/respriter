@@ -1,3 +1,9 @@
+# Call it like bundle exec rake log_sql db:migrate to log
+# output
+task :log_sql => :environment do
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+end
+
 namespace :system do
 
   namespace :admin_accounts do

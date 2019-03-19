@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+
+class String
+  def ansi(color)
+    case color
+      when :blue
+       return "\033[34m#{self}\033[0m"
+      when :red
+        return "\033[31;1m#{self}\033[0m"
+      when :yellow
+        return "\033[33m#{self}\033[0m"
+      when :green
+        return "\033[32m#{self}\033[0m"
+    end
+  end
+end
+
+root_dir = "/app"
+
+confirm = ''
+
+if File.exists?(root_dir + '/config' + '/database.yml')
+  loop do
+    puts "*** WARNING ***".ansi(:red)
+    puts "All your local databases will be dropped and rebuilt from scratch. Proceed? [Y/n]".ansi(:yellow)
+    confirm = STDIN.gets.chomp.downcase
+    break if (confirm == 'y' || confirm == 'n')
+    puts "unrecognized option: ".ansi(:yellow) + input
+  end
+end
+
+exit(0) if confirm == 'n'
+
+system 'bundle install'
+system 'yarn install'
+
+if !File.exists?(root_dir + '/config' + '/database.yml')
+  puts "Creating database.yml from database.yml.example".ansi(:green)
+  system "cp #{root_dir}/config/database.yml.example #{root_dir}/config/database.yml"
+end
+
+system 'bundle exec rake db:drop db:create db:migrate'

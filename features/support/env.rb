@@ -1,6 +1,6 @@
 require 'cucumber/rails'
 require 'cucumber/rspec/doubles'
-require 'webmock/cucumber'
+#require 'webmock/cucumber'
 
 include Warden::Test::Helpers
 Warden.test_mode!
@@ -13,18 +13,21 @@ Capybara.configure do |config|
   config.default_max_wait_time  = 15
 end
 
-# Capybara.register_driver :chrome do |app|
-  # browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  # #browser_options.args << '--headless=false'
-  # #browser_options.args << '--disable-gpu'
-  # browser_options.args << '--window-size=1400,900'
-  # browser_options.args << '--remote-debugging-port=9222'
-  # # Sandbox cannot be used inside unprivileged Docker container
-  # #browser_options.args << '--no-sandbox'
-  # Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
-# end
+Capybara.register_driver :chrome do |app|
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new
+  browser_options.args << '--headless'
+  browser_options.args << '--disable-gpu'
+  browser_options.args << '--remote-debugging-port=9222'
+  browser_options.args << '--remote-debugging-address=0.0.0.0'
+  browser_options.args << '--no-sandbox'
+  Capybara::Selenium::Driver.new(
+    app, 
+    browser: :chrome, 
+    options: browser_options
+  )
+end
 
-Capybara.javascript_driver = :selenium_chrome
+Capybara.javascript_driver = :chrome
 
 # Allow only local requests for Capybara
 WebMock.disable_net_connect!({
@@ -34,7 +37,7 @@ WebMock.disable_net_connect!({
   ]
 })
 
-ActionController::Base.asset_host = Capybara.app_host
+#ActionController::Base.asset_host = Capybara.app_host
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
 # selectors in your step definitions to use the XPath syntax.
@@ -77,7 +80,7 @@ end
 #
 #   Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
 #     DatabaseCleaner.strategy = :transaction
-#   end
+#   endCapybara.server = :puma, { Silent: true } # To clean up your test output
 # Possible values are :truncation and :transaction
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
