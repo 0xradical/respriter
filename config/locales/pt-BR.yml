@@ -6,6 +6,9 @@ pt-BR:
         email: "Email"
         password_confirmation: "Confirmação de senha"
   dictionary: &dictionary
+    terms_and_conditions: "Termos e Condições"
+    privacy_policy: "Política de Privacidade"
+    blog: "Blog"
     levels:
       beginner: "Iniciante"
       intermediate: "Intermediário"

@@ -47,6 +47,8 @@ Rails.application.configure do
     config.console = Pry
   end
 
+  config.action_view.raise_on_missing_translations = true
+
   config.middleware.insert_before 0, Rack::Cors do
     allow do
       origins '*'

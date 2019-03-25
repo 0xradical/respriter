@@ -26,8 +26,6 @@ Vue.use(VueCurrencyFilter, {
   symbolSpacing: true
 })
 
-console.log(translations)
-
 const i18n = new VueI18n({ locale: 'en', messages: translations });
 
 const router = new VueRouter({

@@ -50,6 +50,7 @@ gem 'rollbar'
 # Browser
 gem 'browser'
 gem 'user_agent_parser'
+gem 'http-accept'
 
 # Authentication
 gem 'devise'

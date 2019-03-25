@@ -5,4 +5,3 @@ end
 AfterStep('@slow-motion') do
   sleep(7)
 end
-

@@ -1,5 +1,8 @@
 en:
   dictionary: &dictionary
+    terms_and_conditions: "Terms and Conditions"
+    privacy_policy: "Privacy Policy"
+    blog: "Blog"
     levels:
       beginner: "Beginner"
       intermediate: "Intermediate"

@@ -1,3 +1,16 @@
+Given("My browser is set to {string}") do |language|
+  #page.driver.header 'Accept-Language', language
+end
+
+When("I visit {string}") do |path|
+  visit send(path)
+end
+
+Then("I can see the page content") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+
 Given(/^I visit the sign up page$/) do
   visit new_user_account_registration_path
 end

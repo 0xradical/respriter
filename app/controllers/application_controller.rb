@@ -1,11 +1,9 @@
 class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
-  prepend_before_action :set_locale
-  before_action         :store_tracking_data
+  prepend_before_action :parse_browser_session
+  before_action :set_locale
   layout :fetch_layout
-
-  UTM_REGEX = /(utm_campaign|utm_source|utm_medium|utm_content|utm_term)=([a-zA-Z0-9\-._~:\/?#\[\]@!$'\(\)*+,\;=]*)&?/
 
   protected
 
@@ -20,29 +18,17 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    pref_locale = current_user_account&.profile&.preferences&.send(:[], 'locale')
-    I18n.locale = pref_locale || params[:locale] || load_locale_preferences_from_accept_language_header!
-    rescue I18n::InvalidLocale, HttpAcceptLanguageParser::MissingHttpAcceptLanguageHeader
-      I18n.locale = I18n.default_locale
+    I18n.locale = params[:locale] || (I18n.available_locales & @browser_languages)&.first
   end
 
-  def load_locale_preferences_from_accept_language_header!
-    pref_langs = HttpAcceptLanguageParser.parse(request.env['HTTP_ACCEPT_LANGUAGE'])
-    pref_langs.each do |lang|
-      return lang if I18n.available_locales.include?(lang.to_sym)
-    end
-  end
-
-  def store_tracking_data
-    session[:tracking_data] ||= SessionTracker.new(request).track
+  def parse_browser_session
+    browser_session = BrowserSessionParser.new(request).call
+    @browser_languages = browser_session.fetch(:preferred_languages) { 'en' } 
+    session[:tracking_data] ||= browser_session
   end
 
   def fetch_layout
-    if devise_controller?
-      "devise"
-    else
-      "application"
-    end
+    devise_controller? ? "devise" : "application"
   end
 
 end

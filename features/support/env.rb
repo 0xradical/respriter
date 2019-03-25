@@ -1,6 +1,6 @@
 require 'cucumber/rails'
 require 'cucumber/rspec/doubles'
-#require 'webmock/cucumber'
+require 'webmock/cucumber'
 
 include Warden::Test::Helpers
 Warden.test_mode!
@@ -15,16 +15,19 @@ end
 
 Capybara.register_driver :chrome do |app|
   browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--headless'
-  browser_options.args << '--disable-gpu'
-  browser_options.args << '--remote-debugging-port=9222'
-  browser_options.args << '--remote-debugging-address=0.0.0.0'
-  browser_options.args << '--no-sandbox'
+  browser_options.add_argument('--no-sandbox')
+  browser_options.add_argument('--headless')
+  browser_options.add_argument('--disable-gpu')
+  browser_options.add_argument('--lang=pt,pt-BR;q=0.5')
+  browser_options.add_argument('--remote-debugging-port=9222')
+  browser_options.add_argument('--remote-debugging-address=0.0.0.0')
+
   Capybara::Selenium::Driver.new(
     app, 
     browser: :chrome, 
     options: browser_options
   )
+
 end
 
 Capybara.javascript_driver = :chrome
@@ -80,7 +83,7 @@ end
 #
 #   Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
 #     DatabaseCleaner.strategy = :transaction
-#   endCapybara.server = :puma, { Silent: true } # To clean up your test output
+#   end
 # Possible values are :truncation and :transaction
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
