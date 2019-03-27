@@ -18,7 +18,7 @@ Capybara.register_driver :chrome do |app|
   browser_options.add_argument('--no-sandbox')
   browser_options.add_argument('--headless')
   browser_options.add_argument('--disable-gpu')
-  browser_options.add_argument('--lang=pt,pt-BR;q=0.5')
+  browser_options.add_argument("--lang=#{ENV.fetch('BROWSER_LANGUAGE').fetch { 'en' } }")
   browser_options.add_argument('--remote-debugging-port=9222')
   browser_options.add_argument('--remote-debugging-address=0.0.0.0')
 
