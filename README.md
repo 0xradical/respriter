@@ -11,7 +11,7 @@
 
 ### Setup your environment
 
-__1__ - Run
+__1__ - Build your application
 
 ```bash
   make bootstrap
@@ -23,12 +23,10 @@ __2__ - Run the server
   make rails
 ```
 
-## Helpers
-
-To access the container tty
+_3_ - Ask for help
 
 ```bash
-  ./console
+  make
 ```
 
 ### Pending Tasks
@@ -43,18 +41,22 @@ To access the container tty
 
 ## Running tests
 
-### Cucumber
-
-To run integration tests, just call cucumber
+To run the complete test suite (e2e and unit tests)
 
 ```bash
-  ./cucumber
+  make tests
 ```
 
-As `./cucumber` is just acting as a proxy, you can pass any cli arguments you will
+To run e2e tests run
 
 ```bash
-./cucumber --tags @guest-signs-up-2
+  make cucumber
 ```
 
 If you want to debug your running tests, open Chrome and type `http://localhost:9222`
+
+## System Architecture
+- [Elements - A component-based CSS framework](http:/github.com/querocourses/elements)
+- [Blocks - A reactive component library](http:/github.com/querocourses/blocks)
+
+<img src='system.svg'/>

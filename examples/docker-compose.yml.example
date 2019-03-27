@@ -4,17 +4,31 @@ services:
     image: codextremist/rails:2.0.0
     volumes:
       - .:/app
-    env_file:
-      - .env
 
-  app:
+  app_development:
     <<: *base
     command: bundle exec rails s -b 0.0.0.0
+    env_file:
+      - .env
     ports:
       - '3000:3000'
     depends_on:
+      #- thumbor
       - sidekiq
       - webpacker
+      - redis
+      - mailcatcher
+      - postgres
+      - elasticsearch
+
+  app_test:
+    <<: *base
+    ports:
+      - '3000:3000'
+      - '9222:9222'
+    env_file:
+      - .env.test
+    depends_on:
       - redis
       - mailcatcher
       - postgres
@@ -33,25 +47,30 @@ services:
     ports:
       - "3035:3035"
 
-  cucumber:
-    <<: *base
-    entrypoint: bundle exec cucumber
-    ports:
-      - '3000:3000'
-      - '9222:9222'
-    env_file:
-      - .env.test
-    depends_on:
-      - redis
-      - mailcatcher
-      - postgres
-      - elasticsearch
-
   mailcatcher:
     image: schickling/mailcatcher
     ports:
       - "1025:1025"
       - "1080:1080"
+
+  thumbor:
+    image: dalthon/thumbor-s3-storage
+    volumes:
+      - ./thumbor/thumbor.conf:/thumbor/thumbor.conf
+    ports:
+      - 8000:8000
+    depends_on:
+      - fake.s3
+    environment:
+      - THUMBOR_LOG_LEVEL=debug
+
+  fake.s3:
+    image: vladnev/fake-s3
+    ports:
+      - 9000:9000
+    volumes:
+      - fake_s3_data:/storage
+    command: -r /storage -p 9000 -H fake.s3
 
   redis:
     image: redis
@@ -82,3 +101,4 @@ volumes:
   redis:
   postgres-9.6:
   esdata:
+  fake_s3_data:

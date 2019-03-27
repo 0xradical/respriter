@@ -1,0 +1,43 @@
+digraph G {
+  graph [ fontname=Helvetica, fontcolor=black, fontsize=5 ];
+  node [ fontname=Helvetica, fontcolor=black, fontsize=5];
+  edge [ fontname=Helvetica, fontcolor=black, fontsize=5 ];
+
+  size = "4,4";
+
+  subgraph sub0 {
+    label="elements";
+    color=lightgrey;
+    node[color="gray"];
+    edge[color="gray", style="dashed"];
+    elements_local  [label="elements@local"];
+    elements_github [label="elements@github", color="black"];
+    cdn [label="cdn.classpert.com"];
+    elements_local -> elements_github [label="git push"];
+    elements_local -> cdn [label="yarn deploy"];
+  }
+
+  subgraph sub1 {
+    node[color="gray"];
+    edge[color="gray", style="dashed"];
+    blocks_local  [label="blocks@local"];
+    blocks_github [label="blocks@github", color="black"];
+    cdn [label="cdn.classpert.com"];
+    blocks_local -> blocks_github [label="git push"];
+    blocks_local -> cdn [label="yarn deploy"];
+    label = "blocks";
+  }
+
+  subgraph sub2 {
+    web_app_local [label="web-app@local"];
+    web_app_github [label="web-app@github"];
+    web_app_travis [label="travis"];
+    web_app_heroku [label="heroku"];
+    web_app_local -> elements_github [label="yarn {install,upgrade}"];
+    web_app_local -> blocks_github [label="yarn {install,upgrade}"];
+    web_app_local -> web_app_github [label="git push"]; 
+    web_app_github -> web_app_travis [label="ci push"];
+    web_app_travis -> web_app_heroku [label="deploy"];
+  }
+
+}
