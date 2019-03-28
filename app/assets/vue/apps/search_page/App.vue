@@ -69,7 +69,6 @@
 <script>
 
   import _ from 'lodash';
-  import { iconsLib, providersLib } from '../../../packs/vendor.js'; 
   import Course from './Course.vue';
   import CourseModal from './CourseModal.vue';
   import Pagination from './Pagination.vue';

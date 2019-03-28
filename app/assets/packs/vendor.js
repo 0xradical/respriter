@@ -2,8 +2,8 @@
 import 'elements/build/dist/elements.bundle.css'
 import 'elements/build/dist/elements.bundle.js'
 import 'elements/build/icon-font.css'
-import iconsLib from '!file-loader?name=[name]-[hash].[ext]!elements/build/dist/svgs/icons-lib'
-import providersLib from '!file-loader?name=[name]-[hash].[ext]!elements/build/dist/svgs/providers-lib'
+import iconsLibPath from '!file-loader?name=[name]-[hash].[ext]!elements/build/dist/svgs/icons-lib'
+import providersLibPath from '!file-loader?name=[name]-[hash].[ext]!elements/build/dist/svgs/providers-lib'
 
 // Import single svgs
 import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/quero-logo'
@@ -26,5 +26,5 @@ tippy();
 // Import Blocks
 import 'blocks/build/dist/blocks.all.js'
 
-window.iconsLibPath = iconsLib
-window.providersLibPath = providersLib
+window.iconsLibPath = iconsLibPath
+window.providersLibPath = providersLibPath
