@@ -58,9 +58,10 @@ class Course < ApplicationRecord
   end
 
   def video_thumbnail
-    return nil if video['thumbnail_url'].nil?
-    crypto = Thumbor::CryptoURL.new ENV['THUMBOR_SECURITY_KEY']
-    "http://thumbor.quero.com#{crypto.generate(:width => 241, :image => video['thumbnail_url'])}"
+    return nil unless video['thumbnail_url']
+    crypto = Thumbor::CryptoURL.new ENV.fetch('THUMBOR_SECURITY_KEY')
+    path = crypto.generate(:width => 241, :image => video['thumbnail_url'])
+    ENV.fetch('THUMBOR_HOST').chomp('/') + path
   end
 
   def subscription_type?
