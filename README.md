@@ -14,16 +14,10 @@
 __1__ - Build your application
 
 ```bash
-  make bootstrap
+  make lazy
 ```
 
-__2__ - Run the server
-
-```bash
-  make rails
-```
-
-__3__ - Ask for help
+__2__ - Ask for help
 
 ```bash
   make

@@ -6,13 +6,18 @@ HEROKU_APP_NAME := quero-web-app
 
 ENV = development
 
-.PHONY: help bootstrap console tests cucumber guard db_up db_restore hrk_stg_db_restore tty down docker-build docker-push cucumber
+.PHONY: help bootstrap console tests cucumber guard db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push cucumber
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-bootstrap: docker-compose.yml .env .env.test ## Build your application from scratch
+bootstrap: docker-compose.yml .env .env.test
 	@docker-compose run --service-ports app_$(ENV) bin/bootstrap
+
+lazy: bootstrap db_restore ## Build your application from scratch and restores the latest dump
+	@docker-compose run app_$(ENV) bundle exec rake db:migrate
+	@docker-compose run app_$(ENV) bundle exec rake system:elasticsearch:import_courses
+	@docker-compose run -p 3000:3000 app_$(ENV)
 
 rails: ## Run rails server
 	@docker-compose run -p 3000:3000 app_$(ENV)
@@ -33,9 +38,13 @@ guard: ## Run cucumber tests. Usage e.g: ARGS="" make guard
 db_up: ## Run the database server
 	@docker-compose run --service-ports postgres
 
+db_reset: ## Reset your database
+	@docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec rake db:drop db:create db:migrate
+
 db_restore: ## Downloads latest production dump from Heroku and restores locally
 	@heroku pg:backups:download --app=$(HEROKU_APP_NAME)-prd --output=./db/backups/latest.dump
 	@pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d quero_development ./db/backups/latest.dump
+	@docker-compose run --service-ports app_$(ENV) bundle exec rake db:migrate
 	@rm ./db/backups/latest.dump
 
 hrk_stg_db_restore: ## Dumps latest production dump from production and restores in staging
