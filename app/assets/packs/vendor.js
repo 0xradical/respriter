@@ -23,8 +23,9 @@ tippy.setDefaults({
 
 tippy();
 
+// Avoid strong CORS rules
+window.iconsLibPath = iconsLibPath.replace(/.*\/([-_\w]*\/[-_\w]*\.svg)$/, "$1") 
+window.providersLibPath = providersLibPath.replace(/.*\/([-_\w]*\/[-_\w]*\.svg)$/, "$1") 
+
 // Import Blocks
 import 'blocks/build/dist/blocks.all.js'
-
-window.iconsLibPath = iconsLibPath
-window.providersLibPath = providersLibPath

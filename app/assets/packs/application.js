@@ -8,11 +8,3 @@
 // layout file, like app/views/layouts/application.html.erb
 
 require('../scss/application.scss')
-
-let JST = {};
-var req = require.context('!raw-loader!../jst', true, /^(.*\.(ejs$))[^.]*$/im);
-req.keys().forEach(function(key) {
-  JST[key] = req(key);
-});
-
-window.JST = JST;
