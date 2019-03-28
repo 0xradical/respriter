@@ -102,7 +102,8 @@ CREATE TYPE public.level AS ENUM (
 
 CREATE TYPE public.pace AS ENUM (
     'self_paced',
-    'instructor_paced'
+    'instructor_paced',
+    'live_class'
 );
 
 
@@ -1132,6 +1133,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190310032740'),
 ('20190310062807'),
 ('20190313223626'),
-('20190327031758');
+('20190327031758'),
+('20190328144400');
 
 
