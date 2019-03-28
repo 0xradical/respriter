@@ -16,7 +16,7 @@ bootstrap: docker-compose.yml .env .env.test ## Build your application from scra
 rails: ## Run rails server
 	@docker-compose run -p 3000:3000 app_$(ENV)
 
-console: ## Run rails console. Usage e.g: ENV="test" console
+console: ## Run rails console. Usage e.g: ENV="test" make console
 	@docker-compose run --service-ports app_$(ENV) bundle exec rails c
 
 tests: ## Run the complete test suite
@@ -32,7 +32,7 @@ guard: ## Run cucumber tests. Usage e.g: ARGS="" make guard
 db: ## Run the database server
 	@docker-compose run --service-ports postgres
 
-tty: ## Attach a tty to the app container. Usage e.g: ENV=test tty
+tty: ## Attach a tty to the app container. Usage e.g: ENV=test make tty
 	@docker-compose run --service-ports --entrypoint /bin/bash app_$(ENV)
 
 down: ## Run docker-compose down
