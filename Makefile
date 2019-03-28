@@ -14,7 +14,7 @@ bootstrap: docker-compose.yml .env .env.test ## Build your application from scra
 	@docker-compose run --service-ports app_$(ENV) bin/bootstrap
 
 rails: ## Run rails server
-	@docker-compose run --service-ports app_$(ENV)
+	@docker-compose run -p 3000:3000 app_$(ENV)
 
 console: ## Run rails console. Usage e.g: ENV="test" console
 	@docker-compose run --service-ports app_$(ENV) bundle exec rails c
