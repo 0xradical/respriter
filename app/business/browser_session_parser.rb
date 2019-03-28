@@ -27,8 +27,9 @@ class BrowserSessionParser
   end
 
   def parse_http_accept_language
+    return { preferred_languages: [:en] } if @request.env['HTTP_ACCEPT_LANGUAGE'].nil?
     http_accept_language_parser = HTTP::Accept::Languages.parse(@request.env['HTTP_ACCEPT_LANGUAGE'])
-    { preferred_languages: http_accept_language_parser&.map { |l| l.locale } }
+    { preferred_languages: http_accept_language_parser&.map { |l| l&.locale.to_sym } }
   end
 
   # Cloudflare's GeoIP special header

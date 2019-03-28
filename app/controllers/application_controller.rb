@@ -18,12 +18,14 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    I18n.locale = params[:locale] || (I18n.available_locales & @browser_languages)&.first
+    locales = [params[:locale], @browser_languages].flatten.compact.map(&:to_sym)
+    available_locales = I18n.available_locales.map { |l| [l, l.to_s.split('-')[0].to_sym] }.flatten.uniq
+    I18n.locale = (locales & available_locales).first
   end
 
   def parse_browser_session
     browser_session = BrowserSessionParser.new(request).call
-    @browser_languages = browser_session.fetch(:preferred_languages) { 'en' } 
+    @browser_languages = browser_session[:preferred_languages]
     session[:tracking_data] ||= browser_session
   end
 

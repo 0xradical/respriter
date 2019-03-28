@@ -23,7 +23,7 @@ __2__ - Run the server
   make rails
 ```
 
-_3_ - Ask for help
+__3__ - Ask for help
 
 ```bash
   make
@@ -34,10 +34,10 @@ _3_ - Ask for help
 - [ ] Change all AWS & third-party keys commited on .env.example file | Remove keys
 - [ ] Create github -> ci -> heroku workflow
 - [ ] Mock OAuths
-- [ ] Move helpers to a Makefile ?
-- [ ] Add S3 as a service on docker-compose
+- [x] Move helpers to a Makefile ?
+- [x] Add S3 as a service on docker-compose
 - [ ] Create a proxy server for services that don't have a sandbox environment (affiliators)
-- [ ] Update README.md with an architecture diagram and how it relates to other sub-systems (elements and blocks)
+- [x] Update README.md with an architecture diagram and how it relates to other sub-systems (elements and blocks)
 
 ## Running tests
 
