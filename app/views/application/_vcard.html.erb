@@ -137,7 +137,7 @@
         </div>
 
         <div class='c-vcard__content-box c-vcard__price mx-Tt(u) c-vcard__content-box--Ta(r)'>
-          <%= course.free_content? ? 'free' : "$#{course.price}" %>
+          <%= course.free_content? ? 'free' : "$#{'%.2f' % course.price}" %>
         </div>
 
         <div class='c-vcard__content-box c-vcard__content-box--Ta(r) mx-Fs-0d625'>
