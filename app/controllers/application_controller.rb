@@ -21,8 +21,7 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     locales = [params[:locale], @browser_languages].flatten.compact.map(&:to_sym)
-    available_locales = I18n.available_locales.map { |l| [l, l.to_s.split('-')[0].to_sym] }.flatten.uniq
-    I18n.locale = (locales & available_locales).first
+    I18n.locale = (locales & I18n.available_locales).first || :en
   end
 
   def parse_browser_session
