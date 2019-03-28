@@ -232,7 +232,6 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     http-form_data (2.1.1)
-    http_accept_language (2.1.1)
     http_parser.rb (0.6.0)
     httparty (0.16.4)
       mime-types (~> 3.0)
@@ -501,7 +500,6 @@ DEPENDENCIES
   guard-rspec
   http
   http-accept
-  http_accept_language
   kaminari
   listen
   mini_magick
