@@ -25,7 +25,7 @@ module App
       "#{Rails.root}/app/services"
     ]
 
-    config.action_mailer.default_url_options = { host: 'quero.com' }
+    config.action_mailer.default_url_options = { host: 'classpert.com' }
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

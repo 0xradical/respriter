@@ -6,7 +6,10 @@ import iconsLibPath from '!file-loader?name=[name]-[hash].[ext]!elements/build/d
 import providersLibPath from '!file-loader?name=[name]-[hash].[ext]!elements/build/dist/svgs/providers-lib'
 
 // Import single svgs
-import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/quero-logo'
+import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/logo'
+import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/logo_negative'
+import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/logo_symbol'
+import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/logo_symbol-negative'
 import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/no-video'
 
 import '../js/video_player'

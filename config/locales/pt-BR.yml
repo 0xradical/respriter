@@ -253,7 +253,7 @@ pt-BR:
   pages:
     home_index:
       meta:
-        title: 'Cursos Online com Certificado - Cadastro Grátis | Quero'
+        title: 'Cursos Online com Certificado - Cadastro Grátis | Classpert'
         meta_description: 'Encontre os melhores cursos com certificado. Mais de 50 plataformas e
         instituições e mais de 100.000 cursos. Incluindo cursos grátis de Harvard, MIT, Yale entre
         outros'
@@ -303,7 +303,7 @@ pt-BR:
         seus objetivos com cursos online de Saúde e fitness.'
     dashboard_index:
       meta:
-        title: 'Área do Usuário | Quero'
+        title: 'Área do Usuário | Classpert'
       html:
         account_settings_header: 'Configurações da Conta'
         account_settings_link: 'Configurações da Conta'

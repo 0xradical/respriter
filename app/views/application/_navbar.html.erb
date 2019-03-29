@@ -1,5 +1,4 @@
 <script id='main-menu-tpl' type='x-tmpl-mustache'>
-  <div data-vue-cpt data-vue-template='locale-dropdown'></div>
   <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
     class: 'btn btn--blue-border btn--rounded btn--small btn--uppercase' %>
   <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
@@ -28,28 +27,22 @@
 <div class='c-navbar' role='header-nav'>
 
   <%= link_to root_path do %>
-    <img src="<%= asset_pack_path('quero-logo.svg') %>" width='127px' class='c-navbar__slot'>
+    <img src="<%= asset_pack_path('logo_negative.svg') %>" class='c-navbar__slot mx-D(n)@phone' width='156px'>
+    <img src="<%= asset_pack_path('logo_symbol-negative.svg') %>" class='c-navbar__slot mx-D(n)@tablet mx-D(n)@desktop mx-D(n)@tv' width='40px'>
   <% end %>
 
-  <div class='c-navbar__search-slot'>
+  <div class='c-navbar__slot mx-Ml-1d25'>
     <script id='navbar-search' type='x-vue-template'>
-      <search-bar id='header-nav-search' :searchBtn='false' containerClass='c-search' placeholder="<%= t('components.searchbar_placeholder') %>">
-
-        <template slot='close-icon'>
-          <%= svg_icons_lib('close_thin', { width: '48px', height: '48px', viewbox:'0 0 100 100' } ) %>
-        </template>
-
+      <search-bar placeholder="<%= t('components.searchbar_placeholder') %>"
+      :css-classes='{container: "c-search-slim c-search-slim--negative", form:
+      "c-search-slim__form", input: "c-search-slim__input"}'>
+        <span slot='icon' class='c-search-slim__icon'></span>
       </search-bar>
     </script>
     <div data-vue-cpt='navbar-search'></div>
   </div>
 
-  <nav class='mx-F(r)'>
-
-    <a onclick="document.getElementById('header-nav-search').classList.add('c-search--visible')" 
-      class='c-navbar__slot mx-D(n)@tablet mx-D(n)@desktop mx-D(n)@tv'>
-      <%= svg_icons_lib('magnifying-glass', { width: '24px', height: '24px' } ) %>
-    </a>
+  <nav style='float:right;line-height:40px;display:inline-block;vertical-align:middle'>
 
     <% unless user_account_signed_in? %>
       <div class='c-navbar__slot mx-D(n)@phone' style='margin-right(10px)'>
@@ -75,7 +68,7 @@
     <% else %>
       <span class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet' style='margin-right:4px;margin-left:10px;'>
         <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
-          class: 'btn btn--blue-border btn--rounded btn--small btn--uppercase' %>
+          class: 'btn btn--white-border btn--rounded btn--small btn--uppercase' %>
       </span>
 
       <span class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet'>

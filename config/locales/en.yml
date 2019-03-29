@@ -253,7 +253,7 @@ en:
   pages:
     home_index:
       meta:
-        title: 'Online Courses with Certificate - Free Registration | Quero'
+        title: 'Online Courses with Certificate - Free Registration | Classpert'
         meta_description: 'Find the best Online Courses with Certificate. More than 50 platforms and
         institutions and more than 500.000 courses. Including free courses from Harvard, MIT, Yale and many more'
       html:
@@ -301,7 +301,7 @@ en:
         Health and Fitness courses.'
     dashboard_index:
       meta:
-        title: 'Member Area | Quero'
+        title: 'Member Area | Classpert'
       html:
         account_settings_header: 'Account Settings'
         secure_your_account_header: 'Secure your Account'

@@ -39,7 +39,8 @@
       <!-- End Google Tag Manager (noscript) -->
     <% end %>
 
-    <div <%= content_for(:header_html_attributes) ? yield(:header_html_attributes) : "class=mx-BC(lighter-gray)" %>>
+    <div <%#= content_for(:header_html_attributes) ? yield(:header_html_attributes) : "class=mx-BC(white)" %>>
+    <div <%= content_for(:header_html_attributes) ? yield(:header_html_attributes) : "style=background-color:#0C4977;color=#FFF" %>>
       <div class='l-container'>
         <header>
           <%= render 'application/navbar' %>

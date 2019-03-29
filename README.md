@@ -23,6 +23,24 @@ __2__ - Ask for help
   make
 ```
 
+### Linking dependencies
+
+The web-app depends on two in-house projects, [Elements - A component-based CSS
+framework](http:/github.com/querocourses/elements) and [Blocks - A reactive component
+library](http:/github.com/querocourses/blocks). Elements is the CSS framework for all
+internal components such as: `heros`, `alerts`, `buttons`, `tags`, `cards`, etc. Blocks
+is a library of reactive components. Blocks allows you to inject reactive components anywhere 
+in your app with ease.
+To help your prototype your components inside the web-app, you can simply run
+
+```bash
+make link-elements
+```
+
+```bash
+make unlink-elements
+```
+
 ### Pending Tasks
 
 - [ ] Change all AWS & third-party keys commited on .env.example file | Remove keys

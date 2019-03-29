@@ -1,15 +1,15 @@
-NAME   :=	codextremist/rails
-TAG    :=	2.0.0
+NAME   :=	classpert/rails
+TAG    :=	2.0.1
 IMG    :=	${NAME}\:${TAG}
 LATEST :=	${NAME}\:latest
 HEROKU_APP_NAME := quero-web-app
 
 ENV = development
 
-.PHONY: help bootstrap console tests cucumber guard db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push cucumber
+.PHONY: help bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push cucumber
 
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 bootstrap: docker-compose.yml .env .env.test
 	@docker-compose run --service-ports app_$(ENV) bin/bootstrap
@@ -35,6 +35,15 @@ cucumber: ## Run cucumber tests. Usage e.g: ARGS="--tags @user-signs-up" make cu
 guard: ## Run cucumber tests. Usage e.g: ARGS="" make guard
 	@docker-compose run --service-ports app_test bundle exec guard $(ARGS)
 
+yarn: ## Run yarn. Usage e.g: ARGS="add normalize" make yarn
+	@docker-compose run app_development yarn $(ARGS)
+
+yarn-link-%: ## Link yarn to your local package copy. Usage e.g: yarn-link-elements
+	@docker-compose run app_development yarn link $*
+
+yarn-unlink-%: ## Unlink yarn from your local package copy. Usage e.g: yarn-unlink-elements
+	@docker-compose run app_development yarn unlink $*
+
 db_up: ## Run the database server
 	@docker-compose run --service-ports postgres
 
@@ -51,7 +60,7 @@ hrk_stg_db_restore: ## Dumps latest production dump from production and restores
 	@heroku pg:backups:restore `heroku pg:backups:url --app=$(HEROKU_APP_NAME)-prd` DATABASE_URL --app=$(HEROKU_APP_NAME)-stg
 
 tty: ## Attach a tty to the app container. Usage e.g: ENV=test make tty
-	@docker-compose run --service-ports --entrypoint /bin/bash app_$(ENV)
+	@docker-compose run -p 3000:3000 --entrypoint /bin/bash app_$(ENV)
 
 down: ## Run docker-compose down
 	@docker-compose down

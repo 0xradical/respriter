@@ -2,7 +2,7 @@
 Feature: Guest signs up
 
   As a guest
-  I want to sign up at Quero
+  I want to sign up at Classpert
   So I can have access to user content
 
   @guest-signs-up-1

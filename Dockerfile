@@ -80,12 +80,12 @@ WORKDIR /build/node-v$node_version
 RUN ./configure && make && make install
 
 # Install Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -qy libuv1
-RUN apt-get install --no-install-recommends yarn
+# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+# RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+# RUN apt-get update && apt-get install -qy libuv1
+# RUN apt-get install --no-install-recommends yarn
 
-RUN yarn global add phantomjs-prebuilt 
+# RUN yarn global add phantomjs-prebuilt 
 
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
@@ -119,4 +119,10 @@ RUN gem install bundler --no-doc
 RUN mkdir /app
 ENV BUNDLE_PATH /app/.bundle
 WORKDIR /app
+ARG yarn_version=1.15.2
+
+# Install Yarn
+RUN ln -s /home/$UNAME/.yarn/bin/yarn /usr/bin/yarn
 USER $UNAME
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $yarn_version
+RUN yarn global add phantomjs-prebuilt 

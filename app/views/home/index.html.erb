@@ -3,34 +3,20 @@
   <meta name='description' content="<%= t('pages.home_index.meta.meta_description') %>" />
 <% end %>
 
-<script id='hero-search' type='x-vue-template'>
-  <search-bar containerClass='c-search c-search--large' placeholder="<%= t('components.searchbar_placeholder') %>">
-
-    <button slot='search-btn' style='vertical-align:top' class='btn btn--blue-flat'>
-      <svg width='1.5em' height='1.5em'>
-        <use xlink:href="<%= asset_pack_url('icons-lib.svg', host: '//') %>#magnifying-glass_white"></use>
-      </svg>
-    </button>
-
-    <template slot='close-icon'>
-      <svg width='18px'>
-        <use xlink:href="<%= asset_pack_url('icons-lib.svg', host: '//') %>#close-icon"></use>
-      </svg>
-    </template>
-
+<script id='search-impact' type='x-vue-template'>
+  <search-bar :css-classes='{container: "c-search-impact", form: "c-search-impact__form", input: "c-search-impact__input"}' :hidden-inputs='{ locale: "en" }'>
+    <button slot='search-action' class='c-search-impact__btn'></button>
   </search-bar>
 </script>
 
-<div class='c-hero c-hero--lighter-gray-bg c-hero--characters-theme'>
-  <div class='c-hero__container' style='position:relative'>
-    <div class='l-container'>
-      <div class='c-hero__header' style='text-align:center'>
-        <h1>
-          <%= t('pages.home_index.html.main_header').html_safe %>
-        </h1>
-      </div>
-      <div class='c-hero__search-slot'>
-        <div data-vue-cpt='hero-search'></div>
+<div class='c-hero-impact mx-C(white) mx-BgI(lg(#0c4977,#1686B6))'>
+  <div class='c-hero-impact__art' style="background-image:url(<%= asset_pack_path('media/svg/illustration_blue.svg')%>);">
+    <div class='c-hero-impact__slot'>
+      <h1 class='c-title-important'>
+        <%= t('pages.home_index.html.main_header').html_safe %>
+      </h1>
+      <div class='mx-Mt(20px)' style='margin:0 auto'>
+        <div data-vue-cpt='search-impact'></div>
       </div>
     </div>
   </div>
@@ -47,10 +33,11 @@
               <svg class='c-label__icon' viewbox='0 0 100 100'>
                 <use xlink:href='<%= "#{asset_pack_url('icons-lib.svg', host: '//')}##{category[:icon]}"  %>'></use>
               </svg>
-              <span style='width:120px' class='c-label__text'><%= category[:text] %></span>
+              <span style='width:125px' class='c-label__text'><%= category[:text] %></span>
             <% end %>
           </li>
         <% end %>
+        <div class='mx-Cl(b)'></div>
       </ul>
     </nav>
 

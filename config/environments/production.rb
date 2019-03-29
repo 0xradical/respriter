@@ -5,7 +5,7 @@ Rails.application.configure do
   config.middleware.insert_before 0, Rack::Cors do
 
     allow do
-      origins /https?:\/\/admin.quero.com/, 'https?:\/\/blog.quero.com','https?:\/\/quero.com', 'https?:\/\/staging.quero.com'
+      origins /https?:\/\/admin.classpert.com/, 'https?:\/\/blog.classpert.com','https?:\/\/classpert.com', 'https?:\/\/staging.classpert.com'
       resource '*', headers: :any, expose: %w(Authorization), methods: [:get, :put, :post, :options]
     end
 
@@ -48,7 +48,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -68,7 +68,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address:              ENV['SMTP_ADDRESS'],
     port:                 ENV['SMTP_PORT'],
-    domain:               'quero.com',
+    domain:               'classpert.com',
     user_name:            ENV['SMTP_USER_NAME'],
     password:             ENV['SMTP_PASSWORD'],
     authentication:       'plain',

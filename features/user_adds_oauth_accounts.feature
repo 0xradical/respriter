@@ -2,7 +2,7 @@
 Feature: User adds oauth accounts
 
   As a user
-  I want to connect my Quero account with multiple oauth accounts
+  I want to connect my Classpert account with multiple oauth accounts
   So I can fill my profile and improve my logged experience
 
   Scenario: User connects with one account

@@ -3,7 +3,7 @@ Feature: Guest signs in
 
   As a guest
   With a registered user account
-  I want to sign in at Quero
+  I want to sign in at Classpert
   So I can access logged content
 
   @guest-signs-in-1

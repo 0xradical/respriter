@@ -4,9 +4,9 @@
   "scripts": {},
   "dependencies": {
     "@rails/webpacker": "^4.0.0-rc.8",
-    "blocks": "https://github.com/codextremist/blocks.git",
+    "blocks": "https://github.com/codextremist/blocks.git#searchbar-refactor",
     "ejs-loader": "^0.3.1",
-    "elements": "https://github.com/codextremist/elements.git",
+    "elements": "https://github.com/codextremist/elements.git#hero-refactor",
     "expose-loader": "^0.7.5",
     "extract-loader": "^3.0.0",
     "html-webpack-plugin": "^4.0.0-beta.1",
