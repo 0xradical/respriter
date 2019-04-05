@@ -22,6 +22,23 @@
   </div>
 </div>
 
+<script id='promo-video-modal' type='x-vue-template'>
+  <modal name='promo-video-modal'>
+    <iframe width='100%' height="100%" src="https://www.youtube.com/embed/3qPdvXevRU4"
+    frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
+  </modal>
+</script>
+
+<div class='c-alert c-alert--darkest-blue mx-Fs-1d25'>
+  <div class='l-container'>
+    <div style='position:relative'>
+      <%= image_pack_tag("media/svg/squerol-inside-phone.svg", style: 'position:absolute;bottom:-10px;') %>
+      <span style='margin-left:60px;'>Wondering how Classpert works? 
+      <b><span onclick="window.__vms__['promo-video-modal'].$modal.show('promo-video-modal')" class='mx-C(yellow)'>Watch our demo video!</span> </span></b>
+    </div>
+  </div>
+</div>
+
 <div class='mx-D(n)@phone' style='padding:50px 0px;background-color:#fff;'>
   <div class='l-container'>
     <nav>
@@ -111,3 +128,5 @@
     </div>
   </div>
 </section>
+
+<div data-vue-cpt='promo-video-modal'></div>
