@@ -1,4 +1,4 @@
-<img src='https://quero.com/assets/quero-logo.svg' width='220px'/> 
+<img src='https://classpert.com/assets/logo.svg' width='220px'/> 
 
 ![website status](https://shields.quero.com/website/https/quero.com.svg)
 ![GitHub pull requests](http://shields.quero.com/github/issues-pr/querocourses/web-app.svg)
@@ -34,11 +34,13 @@ in your app with ease.
 To help your prototype your components inside the web-app, you can simply run
 
 ```bash
-make link-elements
+make yarn-link-elements
+make yarn-link-blocks
 ```
 
 ```bash
-make unlink-elements
+make yarn-unlink-elements
+make yarn-unlink-blocks
 ```
 
 ### Pending Tasks
