@@ -1217,7 +1217,7 @@ block-stream@*:
 
 "blocks@https://github.com/codextremist/blocks.git":
   version "1.0.0"
-  resolved "https://github.com/codextremist/blocks.git#485234ed21ee24dc4c705c6d06a3777769755b52"
+  resolved "https://github.com/codextremist/blocks.git#907f6246bcb769d0367e7fc0c34ffb4155b9c0dd"
   dependencies:
     add "^2.0.6"
     vue-social-sharing "^2.4.1"
