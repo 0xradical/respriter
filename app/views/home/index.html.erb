@@ -12,10 +12,8 @@
 <div class='c-hero-impact mx-C(white) mx-BgI(lg(#0c4977,#1686B6))'>
   <div class='c-hero-impact__art' style="background-image:url(<%= asset_pack_path('media/svg/illustration_blue.svg')%>);">
     <div class='c-hero-impact__slot'>
-      <h1 class='c-title-important'>
-        <%= t('pages.home_index.html.main_header').html_safe %>
-      </h1>
-      <div class='mx-Mt(20px)' style='margin:0 auto'>
+      <h1 class='mx-Fs-2d5@>desktop mx-Fs-2@tablet mx-Fs-1d5@phone'><%= t('pages.home_index.html.main_header').html_safe %></h1>
+      <div class='mx-Mt-1d25 mx-Ml-0d875@phone mx-Mr-0d875@phone'>
         <div data-vue-cpt='search-impact'></div>
       </div>
     </div>
@@ -23,18 +21,24 @@
 </div>
 
 <script id='promo-video-modal' type='x-vue-template'>
-  <modal name='promo-video-modal'>
+  <modal :adaptive=true name='promo-video-modal'>
     <iframe width='100%' height="100%" src="https://www.youtube.com/embed/3qPdvXevRU4"
     frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
   </modal>
 </script>
 
-<div class='c-alert c-alert--darkest-blue mx-Fs-1d25'>
+<div class='c-alert c-alert--full c-alert--darkest-blue mx-Fs-1d25 mx-Plr(0)'>
   <div class='l-container'>
     <div style='position:relative'>
-      <%= image_pack_tag("media/svg/squerol-inside-phone.svg", style: 'position:absolute;bottom:-10px;') %>
-      <span style='margin-left:60px;'>Wondering how Classpert works? 
-      <b><span onclick="window.__vms__['promo-video-modal'].$modal.show('promo-video-modal')" class='mx-C(yellow)'>Watch our demo video!</span> </span></b>
+      <%= image_pack_tag("media/svg/squerol-inside-phone.svg", style: 'position:absolute;bottom:0;') %>
+      <span style='margin-left:65px;'>
+        <span class='mx-D(n)@phone'><%= t('.new_to_classpert') %></span>
+        <b>
+          <span onclick="window.__vms__['promo-video-modal'].$modal.show('promo-video-modal')" class='mx-C(yellow)'>
+            <%= t('.watch_the_video') %>
+          </span>
+        </b>
+      </span>
     </div>
   </div>
 </div>

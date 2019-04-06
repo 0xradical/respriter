@@ -250,6 +250,10 @@ en:
     nutrition_and_wellness: 'Nutrition and Wellness'
     public_health: 'Public Health'
     nursing: 'Nursing'
+  home:
+    index:
+      new_to_classpert: 'New to Classpert?'
+      watch_the_video: 'Watch the video!'
   pages:
     home_index:
       meta:
@@ -257,7 +261,7 @@ en:
         meta_description: 'Find the best Online Courses with Certificate. More than 50 platforms and
         institutions and more than 500.000 courses. Including free courses from Harvard, MIT, Yale and many more'
       html:
-        main_header: 'Find and compare online courses <br/> from multiple providers'
+        main_header: 'Find and compare online courses from multiple providers'
         main_sub_header: 'More than 100,000 courses available. Free options with certificate'
         top_reviewed_header: 'Top Reviews'
         browse_by_category_header: 'Browse by Category'

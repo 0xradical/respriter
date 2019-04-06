@@ -27,8 +27,8 @@
 <div class='c-navbar' role='header-nav'>
 
   <%= link_to root_path do %>
-    <img src="<%= asset_pack_path('logo_negative.svg') %>" class='c-navbar__slot mx-D(n)@phone' width='156px'>
-    <img src="<%= asset_pack_path('logo_symbol-negative.svg') %>" class='c-navbar__slot mx-D(n)@tablet mx-D(n)@desktop mx-D(n)@tv' width='40px'>
+    <img src="<%= asset_pack_path('logo_negative.svg') %>" class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet' width='156px'>
+    <img src="<%= asset_pack_path('logo_symbol-negative.svg') %>" class='c-navbar__slot mx-D(n)@>desktop' width='40px'>
   <% end %>
 
   <div class='c-navbar__slot mx-Ml-1d25@>tablet mx-Ml-0d5@phone'>
@@ -53,7 +53,7 @@
     <a data-off-canvas-menu='#main-menu' 
        data-off-canvas-menu-tpl='#main-menu-tpl'
        data-off-canvas-menu-tpl-data='<%= JSON.generate({categories: LabelPrinter.new.labels }) %>'
-      class='mx-D(n)@desktop mx-D(n)@tv c-navbar__offcanvas-menu-btn'></a>
+      class='mx-D(n)@desktop mx-D(n)@tv mx-D(n)@tablet c-navbar__offcanvas-menu-btn'></a>
 
     <%- if user_account_signed_in? %>
       <div class='c-navbar__slot'>
@@ -66,12 +66,12 @@
         <% end %>
       </div>
     <% else %>
-      <span class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet' style='margin-right:4px;margin-left:10px;'>
+      <span class='c-navbar__slot mx-D(n)@phone' style='margin-right:4px;margin-left:10px;'>
         <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
           class: 'btn btn--white-border btn--rounded btn--small btn--uppercase' %>
       </span>
 
-      <span class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet'>
+      <span class='c-navbar__slot mx-D(n)@phone'>
         <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
           class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
       </span>
