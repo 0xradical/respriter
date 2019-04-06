@@ -19,7 +19,7 @@ lazy: bootstrap db_restore ## Build your application from scratch and restores t
 	@docker-compose run app_$(ENV) bundle exec rake system:elasticsearch:import_courses
 	@docker-compose run -p 3000:3000 app_$(ENV)
 
-rails: ## Run rails server
+rails: down ## Run rails server
 	@docker-compose run -p 3000:3000 app_$(ENV)
 
 console: ## Run rails console. Usage e.g: ENV="test" make console
