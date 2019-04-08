@@ -1,4 +1,10 @@
 pt-BR:
+  careers: &careers
+    data_scientist: Cientista de Dados
+    game_developer: Desenvolvedor de Jogos
+    mobile_app_developer: Desenvolvedor de Aplicativos
+    software_developer: Desenvolvedor de Software
+    web_developer: Desenvolvedor Web
   activerecord:
     attributes:
       user_account:
@@ -254,6 +260,10 @@ pt-BR:
     index:
       new_to_classpert: 'Novo na Classpert?'
       watch_the_video: 'Assista ao nosso video!'
+      kickstart_your_career: 'Inicie sua carreira'
+      kickstart_your_career_sub: 'Nossos especialistas escolheram os melhores cursos para que você inicie sua carreira'
+      careers:
+        <<: *careers
   pages:
     home_index:
       meta:

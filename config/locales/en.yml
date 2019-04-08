@@ -1,4 +1,10 @@
 en:
+  careers: &careers
+    data_scientist: Data Scientist
+    game_developer: Game Developer
+    mobile_app_developer: Mobile App Developer
+    software_developer: Software Developer
+    web_developer: Web Developer
   dictionary: &dictionary
     terms_and_conditions: "Terms and Conditions"
     privacy_policy: "Privacy Policy"
@@ -254,6 +260,10 @@ en:
     index:
       new_to_classpert: 'New to Classpert?'
       watch_the_video: 'Watch the video!'
+      kickstart_your_career: 'Kickstart your career'
+      kickstart_your_career_sub: 'Our experts have handpicked the best online courses to start your career'
+      careers:
+        <<: *careers
   pages:
     home_index:
       meta:
