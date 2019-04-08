@@ -68,6 +68,124 @@
   </div>
 </div>
 
+<script id='career-paths-carousel' type='x-vue-template'>
+  <swiper :options='{"preventClicks": false, "preventClicksPropagation": false, "wrapperClass": "swiper-wrapper"}'>
+    <swiper-slide>
+      <div class='m-career-path m-career-path--data-scientist'>
+        <%= link_to landing_pages_path('become-a-data-scientist'), { target: '_blank' } do %>
+          <span class='m-career-path__arrow'></span>
+          <span class='m-career-path__title'>Data Scientist</span>
+        <% end %>
+        <div class='m-career-path__character'>
+          <img src="<%= asset_pack_path('media/svg/squerol-data-scientist_character.svg') %>">
+        </div>
+      </div>
+    </swiper-slide>
+
+    <swiper-slide>
+      <div class='m-career-path m-career-path--game-developer'>
+        <%= link_to landing_pages_path('become-a-game-developer'), { target: '_blank' } do %>
+          <span class='m-career-path__arrow'></span>
+          <span class='m-career-path__title'>Game Developer</span>
+        <% end %>
+        <div class='m-career-path__character'>
+          <img src="<%= asset_pack_path('media/svg/squerol-game-developer_character.svg') %>">
+        </div>
+      </div>
+    </swiper-slide>
+
+    <swiper-slide>
+      <div class='m-career-path m-career-path--mobile-app-developer'>
+        <%= link_to landing_pages_path('become-a-mobile-app-developer'), { target: '_blank' } do %>
+          <span class='m-career-path__arrow'></span>
+          <span class='m-career-path__title'>Mobile App Developer</span>
+        <% end %>
+        <div class='m-career-path__character'>
+          <img src="<%= asset_pack_path('media/svg/squerol-mobile-app-developer_character.svg') %>">
+        </div>
+      </div>
+    </swiper-slide>
+
+    <swiper-slide>
+      <div class='m-career-path m-career-path--software-developer'>
+        <%= link_to landing_pages_path('become-a-software-developer'), { target: '_blank' } do %>
+          <span class='m-career-path__arrow'></span>
+          <span class='m-career-path__title'>Software Developer</span>
+        <% end %>
+        <div class='m-career-path__character'>
+          <img src="<%= asset_pack_path('media/svg/squerol-software-developer_character.svg') %>">
+        </div>
+      </div>
+    </swiper-slide>
+
+    <swiper-slide>
+      <div class='m-career-path m-career-path--web-developer'>
+        <%= link_to landing_pages_path('become-a-web-developer'), { target: '_blank' } do %>
+          <span class='m-career-path__arrow'></span>
+          <span class='m-career-path__title'>Web Developer</span>
+        <% end %>
+        <div class='m-career-path__character'>
+          <img src="<%= asset_pack_path('media/svg/squerol-web-developer_character.svg') %>">
+        </div>
+      </div>
+    </swiper-slide>
+  </swiper>
+</script>
+
+<section id='career-paths' class='l-container' style='padding-top:50px;padding-bottom:70px;'>
+  <h2 class='c-header c-header__large mx-Mb-0d125'>
+    Kickstart your career
+  </h2>
+
+  <span class='mx-D(ib) mx-Mb-1d25'>Our experts have hand picked the best courses to start your career</span>
+
+  <div class='mx-D(n)@desktop mx-D(n)@tv'>
+    <div data-vue-cpt='career-paths-carousel'></div>
+  </div>
+
+  <div class='o-career-paths mx-D(n)@phone mx-D(n)@tablet'>
+    <%= link_to landing_pages_path('become-a-data-scientist'), { target: '_blank', class: 'm-career-path m-career-path--data-scientist' } do %>
+      <span class='m-career-path__arrow'></span>
+      <span class='m-career-path__title'>Data Scientist</span>
+      <div class='m-career-path__character'>
+        <img src="<%= asset_pack_path('media/svg/squerol-data-scientist_character.svg') %>">
+      </div>
+    <% end %>
+
+    <%= link_to landing_pages_path('become-a-game-developer'), { target: '_blank', class: 'm-career-path m-career-path--game-developer' } do %>
+      <span class='m-career-path__arrow'></span>
+      <span class='m-career-path__title'>Game Developer</span>
+      <div class='m-career-path__character'>
+        <img src="<%= asset_pack_path('media/svg/squerol-game-developer_character.svg') %>">
+      </div>
+    <% end %>
+
+    <%= link_to landing_pages_path('become-a-mobile-app-developer'), { target: '_blank', class: 'm-career-path m-career-path--mobile-app-developer' } do %>
+      <span class='m-career-path__arrow'></span>
+      <span class='m-career-path__title'>Mobile App Developer</span>
+      <div class='m-career-path__character'>
+        <img src="<%= asset_pack_path('media/svg/squerol-mobile-app-developer_character.svg') %>">
+      </div>
+    <% end %>
+
+    <%= link_to landing_pages_path('become-a-software-developer'), { target: '_blank', class: 'm-career-path m-career-path--software-developer' } do %>
+      <span class='m-career-path__arrow'></span>
+      <span class='m-career-path__title'>Software Developer</span>
+      <div class='m-career-path__character'>
+        <img src="<%= asset_pack_path('media/svg/squerol-software-developer_character.svg') %>">
+      </div>
+    <% end %>
+
+    <%= link_to landing_pages_path('become-a-web-developer'), { target: '_blank', class: 'm-career-path m-career-path--web-developer' } do %>
+      <span class='m-career-path__arrow'></span>
+      <span class='m-career-path__title'>Web Developer</span>
+      <div class='m-career-path__character'>
+        <img src="<%= asset_pack_path('media/svg/squerol-web-developer_character.svg') %>">
+      </div>
+    <% end %>
+  </div>
+</section>
+
 <script id='most-popular-carousel' type='x-vue-template'>
   <swiper @ready="function(){this.window.initVideoPlayers()}" :options='{"preventClicks": false, "preventClicksPropagation": false}'>
     <% @most_popular.each do |course| %>
@@ -78,8 +196,8 @@
   </swiper>
 </script>
 
-<section id='most-popular' class='l-container' style='padding-top:50px;padding-bottom:70px;'>
-  <h2 class='c-header c-header__large' style='margin-bottom:20px'><%= t('pages.home_index.html.most_popular_header') %></h2>
+<section id='most-popular' class='l-container' style='padding-bottom:70px;'>
+  <h2 class='c-header c-header__large mx-Mb-1d25'><%= t('pages.home_index.html.most_popular_header') %></h2>
 
   <div class='mx-D(n)@desktop mx-D(n)@tv'>
     <div data-vue-cpt='most-popular-carousel'></div>
