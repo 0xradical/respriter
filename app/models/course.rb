@@ -236,7 +236,7 @@ class Course < ApplicationRecord
             end
 
             if (filter&.[] :categories)
-              must { term category: filter[:categories].gsub('-','_') }
+              must { term category: [filter[:categories]].flatten&.first&.gsub('-','_') }
             end
 
             if (filter&.[] :audio)

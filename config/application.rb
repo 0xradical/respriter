@@ -20,6 +20,7 @@ module App
     config.load_defaults 5.1
 
     config.autoload_paths += [
+      "#{Rails.root}/app/business",
       "#{Rails.root}/app/uploaders",
       "#{Rails.root}/app/models/reports",
       "#{Rails.root}/app/services"

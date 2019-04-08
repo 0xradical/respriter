@@ -4,8 +4,12 @@ Rails.application.routes.draw do
 
   get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
   get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
-  #get '/blog', to: redirect('http://www.quero.com/blog/', status: 301)
 
+  NavigationalTag.all.each do |tag|
+    get "/#{tag.slugify}", to: 'courses#index', tag: tag.id, as: tag.id
+  end
+
+  get '/search', to: 'courses#index',  as: :courses 
 
   # Devise
   devise_for :admin_accounts, controllers: { 
@@ -24,13 +28,9 @@ Rails.application.routes.draw do
 
   resources :videos, only: :show
 
-  get '/search(/:category)',    to: 'courses#index',  as: :courses
   get '/forward/:id',           to: 'gateway#index',  as: :gateway
 
   get '/:id', to: 'landing_pages#show', as: :landing_pages
-
-  # OmniAuth
-  #get '/auth/:provider/callback', to: 'omniauth_sessions#create', as: :omniauth
 
   concern :import do
     collection do 

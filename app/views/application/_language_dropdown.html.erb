@@ -1,0 +1,27 @@
+<div data-dropdown class='c-dropdown'>
+  <a class='c-label' style='color:#FFF' href='javascript:void(0)'>
+    <%= svg_icons_lib(I18nHelper.root_language, class: 'c-label__icon') %>
+    <span class='c-label__text c-label__text--shrink-25% mx-Tt(u)'><%= I18nHelper.root_language %></span>
+  </a>
+  <div class='c-dropdown__menu-slot'>
+    <ul class='c-menu'>
+      <span class='c-menu__arrow-up'></span>
+      <li>
+        <%= link_to (root_url(subdomain: '').chomp('/') + request.path) do %>
+          <span class='c-label'>
+            <%= svg_icons_lib('en', class: 'c-label__icon') %>
+            <span class='c-label__text c-label__text--shrink-25%'>EN</span>
+          </span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to (root_url(subdomain: 'pt-BR').chomp('/') + request.path) do %>
+          <span class='c-label'>
+            <%= svg_icons_lib('pt', class: 'c-label__icon') %>
+            <span class='c-label__text c-label__text--shrink-25%'>PT</span>
+          </span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>

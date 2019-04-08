@@ -2,12 +2,21 @@
   <head>
 
     <%= csrf_meta_tags %>
-    <%= yield :meta %>
-
+    <!-- Common Metas -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="[img url]">
+    <meta property="og:locale" content="<%= I18n.locale %>">
+    <meta name="author" content="Classpert">
+    <meta name="copyright" content="Classpert">
+    <meta name="designer" content="Classpert">
+    <meta name="abstract" content="Classpert.com - Find and Compare Online Courses from Multiple Providers">
+    <link ref='alternate' hreflang='pt-BR' href='https://pt-BR.classpert.com<%= request.path %>' />
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="verification" content="898f8f25672b3d4f1acbb0228a862b98">
     <!-- Google Search Console: accounts@quero.com -->
     <meta name="google-site-verification" content="frJWYLKLhn2TNmNSFXsY_N34EKr2sAfK3TE-M9ogE1o" />
+    <%= yield :meta %>
 
     <%= stylesheet_pack_tag 'vendor', 'application' %>
 

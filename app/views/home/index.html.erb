@@ -1,10 +1,11 @@
 <%= content_for :meta do %>
-  <title><%= t('pages.home_index.meta.title') %></title>
-  <meta name='description' content="<%= t('pages.home_index.meta.meta_description') %>" />
+  <title><%= t('.meta.title') %></title>
+  <meta name='description' content="<%= t('.meta.description') %>" />
+  <meta property='og:description' content="<%= t('.meta.description') %>" />
 <% end %>
 
 <script id='search-impact' type='x-vue-template'>
-  <search-bar :css-classes='{container: "c-search-impact", form: "c-search-impact__form", input: "c-search-impact__input"}' :hidden-inputs='{ locale: "en" }'>
+  <search-bar :css-classes='{container: "c-search-impact", form: "c-search-impact__form", input: "c-search-impact__input"}'>
     <button slot='search-action' class='c-search-impact__btn'></button>
   </search-bar>
 </script>
@@ -50,14 +51,14 @@
   <div class='l-container'>
     <nav>
       <ul class='c-list c-list--unstyled c-list--inline' style='margin-top:-25px'>
-        <% LabelPrinter.new.labels.each do |category| %>
+        <% NavigationalTag.all.each do |t| %>
           <li style='margin-top:25px'>
-            <%= link_to courses_path(category[:slug]), class: 'c-label c-label--double-line' do %>
+            <%= link_to send("#{t.id}_path"), class: 'c-label c-label--double-line' do %>
 
               <svg class='c-label__icon' viewbox='0 0 100 100'>
-                <use xlink:href='<%= "#{asset_pack_url('icons-lib.svg', host: '//')}##{category[:icon]}"  %>'></use>
+                <use xlink:href='<%= "#{asset_pack_url('icons-lib.svg', host: '//')}##{t.icon}"  %>'></use>
               </svg>
-              <span style='width:125px' class='c-label__text'><%= category[:text] %></span>
+              <span style='width:125px' class='c-label__text'><%= t.name %></span>
             <% end %>
           </li>
         <% end %>

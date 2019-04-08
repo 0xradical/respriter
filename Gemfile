@@ -4,7 +4,6 @@ source 'https://rails-assets.org'
 ruby '2.6.2'
 
 gem 'rails', '~> 5.2.2'
-#gem 'webpacker', git: 'https://github.com/rails/webpacker'
 gem 'webpacker', '>= 4.0.x'
 gem 'pg'
 gem 'puma'
@@ -99,5 +98,6 @@ group :development, :test do
   gem 'spring'
   gem 'listen'
   gem 'rspec-rails'
+  gem 'factory_bot'
   gem 'factory_bot_rails'
 end

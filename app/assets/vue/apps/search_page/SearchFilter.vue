@@ -56,7 +56,7 @@
           <li v-for='category in aggregations.categories.buckets'>
             <label style='vertical-align:top'>
               <input v-model='filter.categories' :value="category.key" type='checkbox' name='categories' style='vertical-align:middle;margin:0'>
-              {{ $t(`categories.${category.key}`) }} ({{ category.doc_count }})
+              {{ $t(`tags.${category.key}`) }} ({{ category.doc_count }})
             </label>
           </li>
         </ul>

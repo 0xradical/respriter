@@ -15,12 +15,9 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def default_url_options
-    { locale: I18n.locale }
-  end
-
   def set_locale
-    locales = [params[:locale], @browser_languages].flatten.compact.map(&:to_sym)
+    parsed_locale = I18nHelper.sanitize_locale(request.subdomains.first)
+    locales = [parsed_locale, @browser_languages].flatten.compact.map(&:to_sym)
     I18n.locale = (locales & I18n.available_locales).first || :en
   end
 

@@ -1,122 +1,17 @@
 pt-BR:
-  careers: &careers
-    data_scientist: Cientista de Dados
-    game_developer: Desenvolvedor de Jogos
-    mobile_app_developer: Desenvolvedor de Aplicativos
-    software_developer: Desenvolvedor de Software
-    web_developer: Desenvolvedor Web
-  activerecord:
-    attributes:
-      user_account:
-        password: "Senha"
-        email: "Email"
-        password_confirmation: "Confirmação de senha"
-  dictionary: &dictionary
-    terms_and_conditions: "Termos e Condições"
-    privacy_policy: "Política de Privacidade"
-    blog: "Blog"
-    levels:
-      beginner: "Iniciante"
-      intermediate: "Intermediário"
-      advanced: "Avançado"
-      all: "Todos os níveis"
-    preview_this_course:
-      short: "Visualizar"
-      long: "Visualizar este curso"
-    preview_not_available:
-      short: "Indisponível"
-      long: "Vídeo não disponível"
-    trial_period: "%{period} grátis"
-    free_trial: "Grátis por"
-    certificate:
-      included: "Certificado incluso"
-      free: "Certificado gratuito"
-      paid: "Certificado pago (%{price})"
-    extra_paid_content: "Conteúdo extra pago"
-    pace:
-      instructor_paced: "Rítmo fixo"
-      self_paced: "Rítmo flexível"
-    subscription_period:
-      months: "Assinatura mensal"
-      years: "Assinatura anual"
-    for_this_course: "Por este curso"
-    not_available: "N/D"
-    sign_in: 'Entrar'
-    sign_up: 'Cadastre-se'
-    sign_out: 'Sair'
-    price: 'Preço'
-    cancel_search: 'Sair da pesquisa'
-    filters: 'Filtros'
-    audio: 'Idioma do áudio'
-    subtitles: 'Legendas'
-    categories: 'Categorias'
-    max_price: 'Até R$'
-    length: 'Tempo de duração'
-    previous_page: 'Página anterior'
-    next_ page: 'Próxima página'
-    search_results: "Exibindo %{total} resultados"
-    for: "para"
-    from: "De"
-    to: "Até"
-    min: "Min"
-    max: "Max"
-    free: 'Grátis'
-    only_free: 'Somente grátis'
-    sort_by: 'Ordenar por'
-    display_filter: 'Mostrar filtro'
-    lowest_price: 'Menor preço'
-    highest_price: 'Maior preço'
-    provider: 'Plataformas'
-    top_reviewed: 'Melhor avaliados'
-    favorite: 'Favoritar'
-    go_to_course: 'Ir para o curso'
-    details:
-      show: 'Exibir Detalhes'
-      hide: 'Esconder Detalhes'
-    syllabus:
-      header: 'Plano de estudos'
-      view: 'Ver plano de estudos'
-  meta:
-    icons:
-      user_and_monitor: 'Ritmo do curso'
-      clock: 'Duração'
-      level: 'Nível'
-      institution: 'Oferecido por'
-  iso639_codes:
-    en: 'Inglês'
-    en-US: 'Inglês (EUA)'
-    pt: 'Português'
-    pt-BR: 'Português (Brasil)'
-    es: 'Espanhol'
-    ru: 'Russo'
-    it: 'Italiano'
-    de: 'Alemão'
-    fr: 'Francês'
-  components:
-    omniauth_sign_in: 'Conectar com %{provider}'
-    omniauth_signin_in: 'Conectando com %{provider}'
-    searchbar_placeholder: "Buscar cursos ..."
-    card:
-      free_course_tip: "Você pode assistir este curso gratuitamente. Certificados, discussões em
-      grupo, exercícios, visualização off-line, entre outras funcionalidades podem não estar
-      disponíveis na versão gratuita. Para ter acesso completo, é preciso adquirir a versão paga"
-      subscription_tip: "Essa plataforma oferece %{period} grátis. Ao final deste período, será
-      cobrada a taxa de assinatura.  Você terá acesso ilimitado a todos os cursos. A assinatura pode
-      ser cancelada a qualquer momento"
-  categories: &categories
+  tags: &tags
     arts_and_design: 'Artes e Design'
     business: 'Negócios'
     marketing: 'Marketing'
     computer_science: 'Ciência da Computação'
     data_science: 'Ciência de Dados'
-    language_and_communication: 'Idiomas e Comunicacao'
+    language_and_communication: 'Idiomas e Comunicação'
     life_sciences: 'Ciências da Vida'
     math_and_logic: 'Matemática e Lógica'
-    personal_development: 'Desenvolvmento Pessoal'
+    personal_development: 'Desenvolvimento Pessoal'
     physical_science_and_engineering: 'Ciências Físicas e Engenharia'
     social_sciences: 'Ciências Sociais'
-    health_and_fitness: 'Saúde e Fitness'
-  tags:
+    health_and_fitness: 'Saúde e Bem Estar'
     design: 'Design'
     art_culture: 'Arte & Cultura'
     architecture: 'Arquitetura'
@@ -146,7 +41,6 @@ pt-BR:
     business_intelligence: 'Business Intelligence'
     profesional_development: 'Desenvolvimento Profissional'
     excel: 'Excel'
-    marketing: 'Marketing'
     digital_marketing: 'Marketing Digital'
     content_marketing: 'Marketing de Conteúdo'
     marketing_analytics: 'Marketing Analítico'
@@ -214,7 +108,6 @@ pt-BR:
     statistics_and_probability: 'Estatística e Probabilidade'
     calculus: 'Cálculo'
     lifestyle: 'Lifestyle'
-    personal_development: 'Desenvolvimento Pessoal'
     cooking: 'Culinária'
     coaching: 'Coaching'
     test_prep: 'Curso Preparatório'
@@ -260,12 +153,119 @@ pt-BR:
     food_nutrition: 'Nutriçao'
     health_and_safety: 'Saúde e Segurança'
     medicine: 'Medicina'
-    health_and_fitness: 'Saúde e Fitness'
     health_care: 'Cuidados com a Saúde'
     disease_and_disorder: 'Doenças e Enfermidades'
     nutrition_and_wellness: 'Nutrição e Bem Estar'
     public_health: 'Saúde Pública'
     nursing: 'Enfermagem'
+  careers: &careers
+    data_scientist: Cientista de Dados
+    game_developer: Desenvolvedor de Jogos
+    mobile_app_developer: Desenvolvedor de Aplicativos
+    software_developer: Desenvolvedor de Software
+    web_developer: Desenvolvedor Web
+  activerecord:
+    attributes:
+      user_account:
+        password: "Senha"
+        email: "Email"
+        password_confirmation: "Confirmação de senha"
+  dictionary: &dictionary
+    terms_and_conditions: "Termos e Condições"
+    privacy_policy: "Política de Privacidade"
+    blog: "Blog"
+    levels:
+      beginner: "Iniciante"
+      intermediate: "Intermediário"
+      advanced: "Avançado"
+      all: "Todos os níveis"
+    preview_this_course:
+      short: "Visualizar"
+      long: "Visualizar este curso"
+    preview_not_available:
+      short: "Indisponível"
+      long: "Vídeo não disponível"
+    see_syllabus: "Ver plano de estudos"
+    trial_period: "%{period} grátis"
+    free_trial: "Grátis por"
+    certificate:
+      included: "Certificado incluso"
+      free: "Certificado gratuito"
+      paid: "Certificado pago (%{price})"
+    details:
+      show: 'Exibir Detalhes'
+      hide: 'Esconder Detalhes'
+    syllabus:
+      header: 'Plano de estudos'
+      view: 'Ver plano de estudos'
+    extra_paid_content: "Conteúdo extra pago"
+    pace:
+      instructor_paced: "Rítmo fixo"
+      self_paced: "Rítmo flexível"
+    subscription_period: 
+      months: "Assinatura mensal"
+      years: "Assinatura anual"
+    for_this_course: "Por este curso"
+    not_available: "N/D"
+    sign_in: 'Entrar'
+    sign_up: 'Cadastre-se'
+    sign_out: 'Sair'
+    price: 'Preço'
+    cancel_search: 'Sair da pesquisa'
+    filters: 'Filtros'
+    audio: 'Idioma do áudio'
+    subtitles: 'Legendas'
+    categories: 'Categorias'
+    max_price: 'Até R$'
+    length: 'Tempo de duração'
+    previous_page: 'Página anterior'
+    next_ page: 'Próxima página'
+    search_results: "Exibindo %{total} resultados"
+    for: "para"
+    from: "De"
+    to: "Até"
+    min: "Min"
+    max: "Max"
+    free: 'Grátis'
+    only_free: 'Somente grátis'
+    sort_by: 'Ordenar por'
+    display_filter: 'Mostrar filtro'
+    lowest_price: 'Menor preço'
+    highest_price: 'Maior preço'
+    provider: 'Plataformas'
+    top_reviewed: 'Melhor avaliados'
+    favorite: 'Favoritar'
+    go_to_course: 'Ir para o curso'
+  meta:
+    icons:
+      user_and_monitor: 'Ritmo do curso'
+      clock: 'Duração'
+      level: 'Nível'
+      institution: 'Oferecido por'
+  iso639_codes:
+    en: 'Inglês'
+    en-US: 'Inglês (EUA)'
+    pt: 'Português'
+    pt-BR: 'Português (Brasil)'
+    es: 'Espanhol'
+    ru: 'Russo'
+    it: 'Italiano'
+    de: 'Alemão'
+    fr: 'Francês'
+    ja: 'Japonês'
+    tr: 'Turco'
+    zh: 'Chinês'
+  components:
+    omniauth_sign_in: 'Conectar com %{provider}'
+    omniauth_signin_in: 'Conectando com %{provider}'
+    searchbar_placeholder: "Buscar cursos ..."
+    card:
+      free_course_tip: "Você pode assistir este curso gratuitamente. Certificados, discussões em
+      grupo, exercícios, visualização off-line, entre outras funcionalidades podem não estar
+      disponíveis na versão gratuita. Para ter acesso completo, é preciso adquirir a versão paga"
+      subscription_tip: "Essa plataforma oferece %{period} grátis. Ao final deste período, será
+      cobrada a taxa de assinatura.  Você terá acesso ilimitado a todos os cursos. A assinatura pode
+      ser cancelada a qualquer momento"
   home:
     index:
       new_to_classpert: 'Novo na Classpert?'
@@ -274,6 +274,84 @@ pt-BR:
       kickstart_your_career_sub: 'Nossos especialistas escolheram os melhores cursos para que você inicie sua carreira'
       careers:
         <<: *careers
+      meta:
+        title: 'Cursos Online com Certificado - Gratuitos e Pagos | Classpert'
+        description: 'Encontre os Melhores Cursos Online com Certificado. Descubra Mais de 50
+        Plataformas e 500.000 Cursos. Incluindo Cursos Gratuitos de Harvard, MIT, Yale e muito mais'
+  courses:
+    index:
+      arts_and_design:
+        meta:
+          title: 'Cursos Online de Artes e Design | Classpert'
+          description: 'Aprenda habilidades e conhecimentos artísticos práticos. Explore uma ampla
+          variedade de assuntos em Artes e Design. Encontre cursos online gratuitos e pagos com
+          certificado'
+      business:
+        meta:
+          title: 'Cursos Online de Negócios | Classpert'
+          description: 'Melhore suas habilidades em todos os aspectos do ambiente empresarial
+          moderno. Cultive competências valiosas em finanças, operações, gerenciamento e estratégia.
+          Encontre cursos online gratuitos e pagos com certificado'
+      marketing:
+        meta:
+          title: 'Cursos Online de Marketing | Classpert'
+          description: 'Desenvolva suas habilidades em marketing com os melhores cursos online.
+          Aprenda táticas para alcançar, atrair, engajar e reter clientes. Encontre cursos online
+          gratuitos e pagos com certificado.'
+      computer_science:
+        meta:
+          title: 'Cursos Online de Ciência da Computação | Classpert'
+          description: 'Descubra cursos e especializações de ciência da computação das mais renomadas
+          plataformas. Estude o design, desenvolvimento e análise de software e hardware. Encontre
+          cursos online gratuitos e pagos com certificado'
+      data_science:
+        meta:
+          title: 'Cursos Online de Ciência de Dados | Classpert'
+          description: 'Avance na carreira de cientista de dados com cursos online das melhores
+          plataformas do mundo. Extraia conhecimento e insights de grandes quantidades de dados.
+          Encontre cursos online gratuitos e pagos com certificado.'
+      language_and_communication:
+        meta:
+          title: 'Cursos Online de Idiomas e Comunicação | Classpert'
+          description: 'Desenvolva habilidades de ouvir, ler, falar e escrever em outras línguas.
+          Domine técnicas de comunicação verbal e não verbal. Encontre cursos online gratuitos e pagos
+          com certificado.'
+      life_sciences:
+        meta:
+          title: 'Cursos Online de Ciências da Vida | Classpert'
+          description: 'Compreenda estruturas físicas, processos químicos e interações moleculares
+          de estruturas vivas. Expanda suas fronteiras com cursos das melhores universidades do
+          mundo. Encontre cursos online gratuitos e pagos com certificado'
+      math_and_logic:
+        meta:
+          title: 'Cursos Online de Matemática e Lógica | Classpert'
+          description: 'Estude álgebra, geometria, aritmética, estatística e muito mais. Desenvolva
+          seu raciocínio e pensamento analítico. Encontre cursos online gratuitos e pagos com
+          certificado.'
+      personal_development:
+        meta:
+          title: 'Cursos Online de Desenvolvimento Pessoal | Classpert'
+          description: 'O desenvolvimento pessoal é crucial para a evolução em todos os aspectos da
+          vida. Atinja o seu potencial máximo na vida pessoal e na carreira profissional. Encontre
+          cursos online gratuitos e pagos com certificado.'
+      physical_science_and_engineering:
+        meta:
+          title: 'Cursos Online de Física e Engenharia | Classpert'
+          description: 'Aprenda a resolver problemas e realizar projetos que beneficiem a humanidade.
+          Explore todas as áreas das Ciência Físicas e Engenharia. Encontre cursos online gratuitos e
+          pagos com certificado.'
+      social_sciences:
+        meta:
+          title: 'Cursos Online de Ciências Sociais | Classpert'
+          description: 'Estude todas as particularidades da sociedade humana e da vida social. Entenda
+          muitos dos maiores problemas do mundo. Encontre cursos online gratuitos e pagos com
+          certificado.'
+      health_and_fitness:
+        meta:
+          title: 'Cursos Online de Saúde e Bem-estar | Classpert'
+          description: 'Aumente seu conhecimento sobre manutenção da saúde, prevenção de doenças e
+          redução de comportamentos de risco. Viva mais e atinja seus objetivos. Encontre cursos
+          online gratuitos e pagos com certificado.'
   pages:
     home_index:
       meta:
@@ -318,8 +396,8 @@ pt-BR:
         Faça cursos online de desenvolvimento pessoal e torne-se a melhor versão de você.'
         physical_science_and_engineering_text: 'Aprenda a resolver problemas e realizar projetos
         que beneficiem a humanidade. Explore todas as áreas das Ciências Físicas e Engenharia
-        com cursos online.'
-        social_science_text: 'Estude todos os aspectos da sociedade humana e
+        com cursos online.' 
+        social_sciences_text: 'Estude todos os aspectos da sociedade humana e
         da vida social. Entenda muitos dos maiores problemas do mundo com cursos online de
         Ciências Sociais.'
         health_and_fitness_text: 'Aumente seus conhecimentos sobre melhorias

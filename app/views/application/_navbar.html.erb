@@ -5,23 +5,19 @@
     class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
   <h4 class='c-off-canvas-menu__section'>Categories</h4>
   <ul class='c-list c-list--unstyled'>
-    {{#categories}}
-      <a href={{ path }}  style='text-decoration:none;color:initial'>
+    <% NavigationalTag.all.map do |t| %>
+      <%= link_to(send("#{t.id}_path"), style: 'text-decoration:none;color:initial') do %>
         <li style='padding:4px 0px'>
           <span class='c-label'>
             <svg class='c-label__icon'>
-              <use xlink:href=<%= asset_pack_url('icons-lib.svg', host: '//') %>#{{icon}}></use>
+              <use xlink:href=<%= asset_pack_url('icons-lib.svg', host: '//') %>#<%= t.icon %>></use>
             </svg>
-            <span class='c-label__text'>{{text}}</span>
+            <span class='c-label__text'><%= t.name %></span>
           </span>
         </li>
-      </a>
-    {{/categories}}
+      <% end %>
+    <% end %>
   </ul>
-</script>
-
-<script id='locale-dropdown' type='x-vue-template'>
-  <locale-dropdown def-locale="<%= I18n.locale  %>"></locale-dropdown>
 </script>
 
 <div class='c-navbar' role='header-nav'>
@@ -45,14 +41,13 @@
   <nav style='float:right;line-height:40px;display:inline-block;vertical-align:middle'>
 
     <% unless user_account_signed_in? %>
-      <div class='c-navbar__slot mx-D(n)@phone' style='margin-right(10px)'>
-        <div data-vue-cpt='locale-dropdown'></div>
+      <div class='c-navbar__slot mx-D(n)@phone' style='margin-right:5px'>
+        <%= render 'language_dropdown' %>
       </div>
     <% end %>
 
     <a data-off-canvas-menu='#main-menu'
        data-off-canvas-menu-tpl='#main-menu-tpl'
-       data-off-canvas-menu-tpl-data='<%= JSON.generate({categories: LabelPrinter.new.labels }) %>'
       class='mx-D(n)@desktop mx-D(n)@tv mx-D(n)@tablet c-navbar__offcanvas-menu-btn'></a>
 
     <%- if user_account_signed_in? %>

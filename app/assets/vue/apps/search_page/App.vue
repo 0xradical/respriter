@@ -48,10 +48,6 @@
 
         <div class='[9x12]@desktop|[12x12]@tablet'>
 
-          <button class='btn btn--blue-flat btn--tiny btn--block mx-Mb(10px) mx-D(n)@desktop mx-D(n)@tv' @click='showPhoneSearchFilter'>
-            {{ $t('dictionary.display_filter') }}
-          </button>
-
           <template v-if="data.records.length > 0">
             <div v-for='course in data.records' :key="course.id" style='margin-bottom:10px'>
               <course :course='course'></course>
@@ -84,6 +80,11 @@
       recordsPerPage: {
         type: Number,
         default: 25
+      },
+
+      category: {
+        type: String,
+        default: ''
       },
 
       showCategoriesFilter: {
@@ -176,21 +177,15 @@
 
     mounted () {
       this.$i18n.locale = this.locale
-      var category      = this.extractCategoryFromPath()
       var cat = {}
-      if (category) {
-        cat = { filter: { categories: category } }
+      if (this.category) {
+        cat = { filter: { categories: this.category } }
       }
       this.params       = _.merge(this.params, cat, qs.parse(window.location.search.replace('?', ''), { arrayFormat: 'brackets' }))
       this.fetchResults()
     },
 
     methods: {
-
-      extractCategoryFromPath () {
-        var regex = /\/search\/?([a-z-]*)\??/
-        return regex.exec(window.location.pathname)[1]
-      },
 
       changeParams (param) {
         this.params = Object.assign(this.params, param)

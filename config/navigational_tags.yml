@@ -1,0 +1,60 @@
+- {
+    id: 'arts_and_design',
+    icon: 'rule-and-pencil',
+    act_as_category: true
+  }
+- {
+    id: 'business',
+    icon: 'business',
+    act_as_category: true
+  }
+- {
+    id: 'marketing',
+    icon: 'target',
+    act_as_category: true
+  }
+- {
+    id: 'computer_science',
+    icon: 'card',
+    act_as_category: true
+  }
+- {
+    id: 'data_science',
+    icon: 'data',
+    act_as_category: true
+  }
+- {
+    id: 'language_and_communication',
+    icon: 'dialog',
+    act_as_category: true
+  }
+- {
+    id: 'life_sciences',
+    icon: 'atom',
+    act_as_category: true
+  }
+- {
+    id: 'math_and_logic',
+    icon: 'categories',
+    act_as_category: true
+  }
+- {
+    id: 'personal_development',
+    icon: 'graph',
+    act_as_category: true
+  }
+- {
+    id: 'physical_science_and_engineering',
+    icon: 'gear',
+    act_as_category: true
+  }
+- {
+    id: 'social_sciences',
+    icon: 'user',
+    act_as_category: true
+  }
+- {
+    id: 'health_and_fitness',
+    icon: 'cross',
+    act_as_category: true
+  }

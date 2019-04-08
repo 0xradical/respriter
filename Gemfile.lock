@@ -493,6 +493,7 @@ DEPENDENCIES
   elasticsearch-model
   elasticsearch-rails
   execjs
+  factory_bot
   factory_bot_rails
   fast_jsonapi
   fivemat

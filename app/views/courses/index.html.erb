@@ -1,11 +1,20 @@
+<% if params[:tag].present? %>
+  <% content_for :meta do %>
+    <title><%= t(".#{params[:tag]}.meta.title") %></title>
+    <meta name='description' content='<%= t(".#{params[:tag]}.meta.description") %>' />
+    <meta property='og:description' content='<%= t(".#{params[:tag]}.meta.description") %>' />
+  <% end %>
+<% end %>
+
 <script type='text/javascript'>
-  window.env_context = { params: { category: "<%= params[:category] %>" } }
+  window.env_context = { params: { category: "<%= params[:tag] %>" } }
 </script>
 
 <script id='vue-search-app-props' type='x-vue-props'>
   {
     "containerClass": "l-container mx-Pb(60px)",
-    "showCategoriesFilter": <%= params[:category].present? %>,
+    "category": "<%= params[:tag] %>",
+    "showCategoriesFilter": <%= params[:tag].present? %>,
     "locale": "<%= I18n.locale %>"
   }
 </script>
@@ -19,17 +28,16 @@
   id='results' class='mx-Bc(lighter-gray)'
 <% end %>
 
-<% if params[:category].present? %>
-  <% category = params[:category].gsub("-","_") %>
+<% if params[:tag].present? %>
   <div class='mx-Bc(white)'>
     <div class='l-container mx-Pt(10px) mx-Pb(10px)'>
 
       <div class='l-grid-2-3'>
         <div class='centerize'>
           <div>
-            <h1 class='' style='line-height:1em;font-size:calc(1em + 2vw)'><%= t("categories.#{category}")%></h1>
+            <h1 class='' style='line-height:1em;font-size:calc(1em + 2vw)'><%= t("tags.#{params[:tag]}")%></h1>
             <p class='mx-D(n)@phone'>
-              <%= t("pages.courses_index.html.#{category}_text")%>
+              <%= t("pages.courses_index.html.#{params[:tag]}_text")%>
             </p>
           </div>
         </div>
@@ -37,7 +45,7 @@
 
       <div class='l-grid-1-3'>
         <div class='centerize'>
-          <%= image_pack_tag("media/svg/#{params[:category]}_art.svg", class: 'c-art--reponsive-orientation') %>
+          <%= image_pack_tag("media/svg/#{params[:tag].gsub('_','-')}_art.svg", class: 'c-art--reponsive-orientation') %>
         </div>
       </div>
 

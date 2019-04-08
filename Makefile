@@ -4,7 +4,7 @@ IMG    :=	${NAME}\:${TAG}
 LATEST :=	${NAME}\:latest
 HEROKU_APP_NAME := classpert-web-app
 
-ENV = development
+ENV ?= development
 
 .PHONY: help bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push cucumber
 
