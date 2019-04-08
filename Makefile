@@ -2,7 +2,7 @@ NAME   :=	classpert/rails
 TAG    :=	2.0.1
 IMG    :=	${NAME}\:${TAG}
 LATEST :=	${NAME}\:latest
-HEROKU_APP_NAME := quero-web-app
+HEROKU_APP_NAME := classpert-web-app
 
 ENV = development
 
@@ -19,7 +19,7 @@ lazy: bootstrap db_restore ## Build your application from scratch and restores t
 	@docker-compose run app_$(ENV) bundle exec rake system:elasticsearch:import_courses
 	@docker-compose run -p 3000:3000 app_$(ENV)
 
-rails: down ## Run rails server
+rails: ## Run rails server
 	@docker-compose run -p 3000:3000 app_$(ENV)
 
 console: ## Run rails console. Usage e.g: ENV="test" make console
