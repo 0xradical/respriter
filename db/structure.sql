@@ -150,21 +150,21 @@ CREATE TYPE public.source AS ENUM (
 CREATE FUNCTION public._insert_or_add_to_provider() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-            DECLARE
-              _provider providers%ROWTYPE;
-              _new_provider_id int;
-            BEGIN
-              SELECT * FROM providers INTO _provider where providers.name = NEW.__provider_name__;
-              IF (NOT FOUND) THEN
-                INSERT INTO providers (name, published, created_at, updated_at) VALUES (NEW.__provider_name__, false, NOW(), NOW()) RETURNING id INTO _new_provider_id;
-                NEW.published = false;
-                NEW.provider_id = _new_provider_id;
-              ELSE
-                NEW.provider_id = _provider.id;
-              END IF;
-              RETURN NEW;
-            END;
-            $$;
+      DECLARE
+        _provider providers%ROWTYPE;
+        _new_provider_id int;
+      BEGIN
+        SELECT * FROM providers INTO _provider where providers.name = NEW.__provider_name__;
+        IF (NOT FOUND) THEN
+          INSERT INTO providers (name, published, created_at, updated_at) VALUES (NEW.__provider_name__, false, NOW(), NOW()) RETURNING id INTO _new_provider_id;
+          NEW.published = false;
+          NEW.provider_id = _new_provider_id;
+        ELSE
+          NEW.provider_id = _provider.id;
+        END IF;
+        RETURN NEW;
+      END;
+      $$;
 
 
 --
@@ -174,11 +174,11 @@ CREATE FUNCTION public._insert_or_add_to_provider() RETURNS trigger
 CREATE FUNCTION public.gen_compound_ext_id() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-            BEGIN
-              NEW.compound_ext_id = concat(NEW.source,'_',NEW.ext_id);
-              return NEW;
-            END
-            $$;
+      BEGIN
+        NEW.compound_ext_id = concat(NEW.source,'_',NEW.ext_id);
+        return NEW;
+      END
+      $$;
 
 
 --
@@ -188,11 +188,11 @@ CREATE FUNCTION public.gen_compound_ext_id() RETURNS trigger
 CREATE FUNCTION public.md5_url() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-            BEGIN
-              NEW.url_md5=md5(NEW.url);
-              return NEW;
-            END
-            $$;
+      BEGIN
+        NEW.url_md5=md5(NEW.url);
+        return NEW;
+      END
+      $$;
 
 
 --
@@ -202,33 +202,33 @@ CREATE FUNCTION public.md5_url() RETURNS trigger
 CREATE FUNCTION public.sort_prices() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-            DECLARE
-            price jsonb;
-            prices jsonb[];
-            results jsonb[];
-            single_course_prices jsonb[];
-            subscription_prices jsonb[];
-            BEGIN
-              FOR price IN SELECT * FROM jsonb_array_elements((NEW.__source_schema__ -> 'content' ->> 'prices')::jsonb)
-              LOOP
-                IF (price ->> 'type' = 'single_course') THEN
-                  single_course_prices := array_append(single_course_prices,price);
-                ELSIF (price ->> 'type' = 'subscription') THEN
-                  IF (price -> 'subscription_period' ->> 'unit' = 'months') THEN
-                    subscription_prices := array_prepend(price,subscription_prices);
-                  ELSIF (price -> 'subscription_period' ->> 'unit' = 'years') THEN
-                    subscription_prices := array_append(subscription_prices,price);
-                  END IF;
-                END IF;
-              END LOOP;
-              results := (single_course_prices || subscription_prices);
-              IF array_length(results,1) > 0 THEN
-                NEW.pricing_models = to_jsonb(results);
-              END IF;
-              NEW.__source_schema__ = NULL;
-              RETURN NEW;
-            END;
-            $$;
+      DECLARE
+      price jsonb;
+      prices jsonb[];
+      results jsonb[];
+      single_course_prices jsonb[];
+      subscription_prices jsonb[];
+      BEGIN
+        FOR price IN SELECT * FROM jsonb_array_elements((NEW.__source_schema__ -> 'content' ->> 'prices')::jsonb)
+        LOOP
+          IF (price ->> 'type' = 'single_course') THEN
+            single_course_prices := array_append(single_course_prices,price);
+          ELSIF (price ->> 'type' = 'subscription') THEN
+            IF (price -> 'subscription_period' ->> 'unit' = 'months') THEN
+              subscription_prices := array_prepend(price,subscription_prices);
+            ELSIF (price -> 'subscription_period' ->> 'unit' = 'years') THEN
+              subscription_prices := array_append(subscription_prices,price);
+            END IF;
+          END IF;
+        END LOOP;
+        results := (single_course_prices || subscription_prices);
+        IF array_length(results,1) > 0 THEN
+          NEW.pricing_models = to_jsonb(results);
+        END IF;
+        NEW.__source_schema__ = NULL;
+        RETURN NEW;
+      END;
+      $$;
 
 
 SET default_tablespace = '';
@@ -419,6 +419,7 @@ CREATE VIEW public.earnings AS
     (enrollments.tracking_data ->> 'utm_campaign'::text) AS utm_campaign,
     (enrollments.tracking_data ->> 'utm_medium'::text) AS utm_medium,
     (enrollments.tracking_data ->> 'utm_term'::text) AS utm_term,
+    (enrollments.tracking_data ->> 'country'::text) AS country,
     tracked_actions.created_at
    FROM (((public.tracked_actions
      LEFT JOIN public.enrollments ON ((tracked_actions.enrollment_id = enrollments.id)))
@@ -1091,6 +1092,47 @@ ALTER TABLE ONLY public.favorites
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20180405131603'),
+('20180405131604'),
+('20180523201233'),
+('20180523201244'),
+('20180525023807'),
+('20180607040455'),
+('20180607042446'),
+('20181015193451'),
+('20181015193452'),
+('20181102111502'),
+('20181113000000'),
+('20181115164155'),
+('20181115164156'),
+('20181127193928'),
+('20181128123550'),
+('20181205214627'),
+('20181206020722'),
+('20181213172406'),
+('20181214163153'),
+('20181217193900'),
+('20181219141415'),
+('20181220182109'),
+('20181226142754'),
+('20190122215523'),
+('20190208194421'),
+('20190216154846'),
+('20190217234501'),
+('20190218212408'),
+('20190220000225'),
+('20190222125654'),
+('20190226205725'),
+('20190226205726'),
+('20190226223828'),
+('20190228203835'),
+('20190228220559'),
+('20190306194201'),
+('20190310005126'),
+('20190310024220'),
+('20190310031745'),
+('20190310032740'),
+('20190310062807'),
 ('20190313223626'),
 ('20190328144400');
 

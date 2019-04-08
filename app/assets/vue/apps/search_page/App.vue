@@ -48,10 +48,6 @@
 
         <div class='[9x12]@desktop|[12x12]@tablet'>
 
-          <button class='btn btn--blue-flat btn--tiny btn--block mx-Mb(10px) mx-D(n)@desktop mx-D(n)@tv' @click='showPhoneSearchFilter'>
-            {{ $t('dictionary.display_filter') }}
-          </button>
-
           <div v-if='data.records.length > 0' v-for='course in data.records' style='margin-bottom:10px'>
             <course :course='course'></course>
           </div>
