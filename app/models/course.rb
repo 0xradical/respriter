@@ -48,6 +48,7 @@ class Course < ApplicationRecord
   scope :by_provider,   -> (provider) { joins(:provider).where("providers.slug = ?", provider)  }
   scope :free,          -> { where(free_content: true) }
   scope :featured,      -> { order('enrollments_count DESC') }
+  scope :locales,       -> (l) { where("audio @> ?", "{#{l.join(',')}}") }
 
   def root_languages_for_audio
     audio.map { |lang| lang.split('-')[0] }.uniq
