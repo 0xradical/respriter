@@ -71,7 +71,7 @@
 <script id='career-paths-carousel' type='x-vue-template'>
   <swiper :options='{"preventClicks": false, "preventClicksPropagation": false, "wrapperClass": "swiper-wrapper"}'>
     <swiper-slide>
-      <div class='m-career-path m-career-path--data-scientist'>
+      <div class='m-career-path'>
         <%= link_to landing_pages_path('become-a-data-scientist'), { target: '_blank' } do %>
           <span class='m-career-path__arrow'></span>
           <span class='m-career-path__title'><%= t('.careers.data_scientist') %></span>
@@ -83,7 +83,7 @@
     </swiper-slide>
 
     <swiper-slide>
-      <div class='m-career-path m-career-path--game-developer'>
+      <div class='m-career-path'>
         <%= link_to landing_pages_path('become-a-game-developer'), { target: '_blank' } do %>
           <span class='m-career-path__arrow'></span>
           <span class='m-career-path__title'><%= t('.careers.game_developer') %></span>
@@ -95,7 +95,7 @@
     </swiper-slide>
 
     <swiper-slide>
-      <div class='m-career-path m-career-path--mobile-app-developer'>
+      <div class='m-career-path'>
         <%= link_to landing_pages_path('become-a-mobile-app-developer'), { target: '_blank' } do %>
           <span class='m-career-path__arrow'></span>
           <span class='m-career-path__title'><%= t('.careers.mobile_app_developer') %></span>
@@ -107,7 +107,7 @@
     </swiper-slide>
 
     <swiper-slide>
-      <div class='m-career-path m-career-path--software-developer'>
+      <div class='m-career-path'>
         <%= link_to landing_pages_path('become-a-software-developer'), { target: '_blank' } do %>
           <span class='m-career-path__arrow'></span>
           <span class='m-career-path__title'><%= t('.careers.software_developer') %></span>
@@ -119,7 +119,7 @@
     </swiper-slide>
 
     <swiper-slide>
-      <div class='m-career-path m-career-path--web-developer'>
+      <div class='m-career-path'>
         <%= link_to landing_pages_path('become-a-web-developer'), { target: '_blank' } do %>
           <span class='m-career-path__arrow'></span>
           <span class='m-career-path__title'><%= t('.careers.web_developer') %></span>
@@ -144,7 +144,7 @@
   </div>
 
   <div class='o-career-paths mx-D(n)@phone mx-D(n)@tablet'>
-    <%= link_to landing_pages_path('become-a-data-scientist'), { target: '_blank', class: 'm-career-path m-career-path--data-scientist' } do %>
+    <%= link_to landing_pages_path('become-a-data-scientist'), { target: '_blank', class: 'm-career-path' } do %>
       <span class='m-career-path__arrow'></span>
       <span class='m-career-path__title'><%= t('.careers.data_scientist') %></span>
       <div class='m-career-path__character'>
@@ -152,7 +152,7 @@
       </div>
     <% end %>
 
-    <%= link_to landing_pages_path('become-a-game-developer'), { target: '_blank', class: 'm-career-path m-career-path--game-developer' } do %>
+    <%= link_to landing_pages_path('become-a-game-developer'), { target: '_blank', class: 'm-career-path' } do %>
       <span class='m-career-path__arrow'></span>
       <span class='m-career-path__title'><%= t('.careers.game_developer') %></span>
       <div class='m-career-path__character'>
@@ -160,7 +160,7 @@
       </div>
     <% end %>
 
-    <%= link_to landing_pages_path('become-a-mobile-app-developer'), { target: '_blank', class: 'm-career-path m-career-path--mobile-app-developer' } do %>
+    <%= link_to landing_pages_path('become-a-mobile-app-developer'), { target: '_blank', class: 'm-career-path' } do %>
       <span class='m-career-path__arrow'></span>
       <span class='m-career-path__title'><%= t('.careers.mobile_app_developer') %></span>
       <div class='m-career-path__character'>
@@ -168,7 +168,7 @@
       </div>
     <% end %>
 
-    <%= link_to landing_pages_path('become-a-software-developer'), { target: '_blank', class: 'm-career-path m-career-path--software-developer' } do %>
+    <%= link_to landing_pages_path('become-a-software-developer'), { target: '_blank', class: 'm-career-path' } do %>
       <span class='m-career-path__arrow'></span>
       <span class='m-career-path__title'><%= t('.careers.software_developer') %></span>
       <div class='m-career-path__character'>
@@ -176,7 +176,7 @@
       </div>
     <% end %>
 
-    <%= link_to landing_pages_path('become-a-web-developer'), { target: '_blank', class: 'm-career-path m-career-path--web-developer' } do %>
+    <%= link_to landing_pages_path('become-a-web-developer'), { target: '_blank', class: 'm-career-path' } do %>
       <span class='m-career-path__arrow'></span>
       <span class='m-career-path__title'><%= t('.careers.web_developer') %></span>
       <div class='m-career-path__character'>
