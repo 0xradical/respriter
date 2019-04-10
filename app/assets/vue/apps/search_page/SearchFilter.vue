@@ -6,7 +6,7 @@
       <div class='mx-Bc(light-gray)' style='padding:15px;font-size:0.875rem'>
         <ul style='list-style:none;margin:0;padding:0;font-size:0.875rem'>
           <li class='filter' style='margin-bottom:10px'>
-            {{ $t('dictionary.min') }} 
+            {{ $t('dictionary.min') }}
               $<input v-model.lazy='priceModel.input.min' type='number' min='0' name='price' style='vertical-align:middle;margin:0;font-size:0.75rem;max-width:54px;'>
             {{ $t('dictionary.max') }} $
             <input v-model.lazy='priceModel.input.max' type='number' min='0' name='price' style='vertical-align:middle;margin:0;font-size:0.75rem;max-width:54px;'>
@@ -62,7 +62,7 @@
         </ul>
       </div>
     </fieldset>
-    
+
     <fieldset style='border:0;padding:0;margin:0'>
       <legend style='padding:10px 15px'>{{$t("dictionary.provider")}}</legend>
       <div class='mx-Bc(light-gray)' style='padding:15px;font-size:0.75em'>

@@ -43,8 +43,7 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
 .course-description  {
 overflow-y: scroll;
     height: 150px;

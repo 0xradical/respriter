@@ -7,12 +7,12 @@
 
     <li class='c-pagination__page' v-if='currentPage - pace > 1'>
       <a :href='paginationAnchor' @click='$emit("paginate", 1)'>
-        1 
+        1
       </a>
     </li>
     <li class='c-pagination__page' v-if='currentPage - pace > 1'> ... </li>
 
-    <li :class='{ "c-pagination__page--current": (currentPage === page) }' class='c-pagination__page' v-for='page in pages'>
+    <li :class='{ "c-pagination__page--current": (currentPage === page) }' class='c-pagination__page' v-for='(page, index) in pages' :key="index">
       <a :href='paginationAnchor' @click='$emit("paginate", page)'>
         {{ page }}
       </a>
@@ -26,7 +26,7 @@
       </a>
     </li>
 
-    <li class='c-pagination__page' v-if='currentPage != numOfPages'> 
+    <li class='c-pagination__page' v-if='currentPage != numOfPages'>
       <a :href='paginationAnchor' @click='$emit("paginate", currentPage + 1)'></a>
     </li>
 

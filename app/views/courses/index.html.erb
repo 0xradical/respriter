@@ -45,6 +45,14 @@
   </div>
 <% end %>
 
+
+<%
+  base_locales   = YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.base.yml"))
+  custom_locales = YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.yml"))
+  locales        = base_locales.deep_merge(custom_locales)
+%>
+
 <div data-vue-search-app
-     data-vue-search-app-translations='<%= YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.yml" )).to_json %>'
-  data-vue-search-app-props='vue-search-app-props'></div>
+     data-vue-search-app-translations='<%= locales.to_json %>'
+     data-vue-search-app-props='vue-search-app-props'>
+</div>
