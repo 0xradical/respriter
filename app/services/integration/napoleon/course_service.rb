@@ -25,6 +25,7 @@ module Integration
               course.syllabus           = resource['content']['syllabus']
               course.certificate        = resource['content']['certificate']
               course.offered_by         = resource['content']['offered_by']
+              course.instructors        = resource['content']['instructors']
               course.video              = resource['content']['video']
               course.category           = resource['content']['category']
               course.tags               = resource['content']['tags']

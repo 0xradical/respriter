@@ -336,7 +336,8 @@ CREATE TABLE public.courses (
     paid_content boolean DEFAULT true,
     level public.level[] DEFAULT '{}'::public.level[],
     __provider_name__ character varying,
-    __source_schema__ jsonb
+    __source_schema__ jsonb,
+    instructors jsonb DEFAULT '[]'::jsonb
 );
 
 
@@ -1134,6 +1135,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190310032740'),
 ('20190310062807'),
 ('20190313223626'),
-('20190328144400');
+('20190328144400'),
+('20190408141738'),
+('20190408173350');
 
 
