@@ -34,13 +34,36 @@ class Course < ApplicationRecord
         indexes :es, analyzer: 'spanish'
       end
 
-      indexes :price,         type: 'double'
-      indexes :audio,         type: 'keyword'
-      indexes :subtitles,     type: 'keyword'
-      indexes :category,      type: 'keyword'
-      indexes :tags,          type: 'keyword'
-      indexes :provider_name, type: 'keyword'
+      indexes :syllabus_markdown, type: 'text' do
+        indexes :en, analyzer: 'english'
+        indexes :br, analyzer: 'brazilian'
+        indexes :es, analyzer: 'spanish'
+      end
 
+      # indexes :syllabus_toc, type: 'keyword'
+
+      indexes :pace,                type: 'keyword'
+      indexes :price,               type: 'double'
+      indexes :effort,              type: 'integer'
+      indexes :free_content,        type: 'boolean'
+      indexes :paid_content,        type: 'boolean'
+      indexes :subscription_type,   type: 'boolean'
+      indexes :has_free_trial,      type: 'boolean'
+      indexes :audio,               type: 'keyword'
+      indexes :root_audio,          type: 'keyword'
+      indexes :subtitles,           type: 'keyword'
+      indexes :root_subtitles,      type: 'keyword'
+      indexes :offered_by,          type: 'keyword'
+      indexes :instructors,         type: 'keyword'
+      indexes :category,            type: 'keyword'
+      indexes :certificate,         type: 'keyword'
+      indexes :level,               type: 'keyword'
+      indexes :tags,                type: 'keyword'
+      indexes :provider_name,       type: 'keyword'
+      indexes :provider_slug,       type: 'keyword'
+      indexes :trial_period,        type: 'object'
+      indexes :subscription_period, type: 'object'
+      indexes :video,               type: 'object'
     end
   end
 
@@ -52,10 +75,14 @@ class Course < ApplicationRecord
 
   def root_languages_for_audio
     audio.map { |lang| lang.split('-')[0] }.uniq
+  rescue
+    []
   end
 
   def root_languages_for_subtitles
     subtitles.map { |lang| lang.split('-')[0] }.uniq
+  rescue
+    []
   end
 
   def video_thumbnail
@@ -94,9 +121,9 @@ class Course < ApplicationRecord
   end
 
   def forwarding_url(click_id)
-    (provider.afn_url_template || url ) % { 
-      click_id: click_id, 
-      course_url: provider.encoded_deep_linking? ? ERB::Util.url_encode(url) : url 
+    (provider.afn_url_template || url ) % {
+      click_id: click_id,
+      course_url: provider.encoded_deep_linking? ? ERB::Util.url_encode(url) : url
     }
   end
 
@@ -106,29 +133,44 @@ class Course < ApplicationRecord
 
   def as_indexed_json(options={})
     {
-      id:             id,
-      name:           name,
-      description:    description,
-      price:          price,
-      url:            url,
-      gateway_path:   gateway_path,
-      url_id:         url_md5,
-      video_url:      nil,
-      tags:           tags,
-      audio:          audio,
-      subtitles:      subtitles,
-      category:       category,
-      provider_name:  provider_name,
-      provider_slug:  provider_slug
+      id:                  id,
+      name:                name,
+      description:         description,
+      certificate:         certificate,
+      price:               price,
+      url:                 url,
+      pace:                pace,
+      effort:              effort,
+      gateway_path:        gateway_path,
+      offered_by:          offered_by,
+      instructors:         instructors,
+      free_content:        free_content?,
+      paid_content:        paid_content?,
+      subscription_type:   subscription_type?,
+      trial_period:        trial_period,
+      subscription_period: subscription_period,
+      has_free_trial:      has_free_trial?,
+      url_id:              url_md5,
+      level:               level,
+      video_url:           nil,
+      video:               (video && video.merge(thumbnail_url: video_thumbnail)),
+      tags:                tags,
+      audio:               audio,
+      root_audio:          root_languages_for_audio,
+      subtitles:           subtitles,
+      root_subtitles:      root_languages_for_subtitles,
+      category:            category,
+      provider_name:       provider_name,
+      provider_slug:       provider_slug,
+      syllabus_markdown:   syllabus,
     }
   end
-
 
   class << self
 
     def bulk_upsert(values)
       result = import values, validate: false, on_duplicate_key_update: {
-        conflict_target: [:global_id], columns: [:duration_in_hours, :name] 
+        conflict_target: [:global_id], columns: [:duration_in_hours, :name]
       }
       bulk_index_async(result.ids)
     end
