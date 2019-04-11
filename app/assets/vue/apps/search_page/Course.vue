@@ -20,7 +20,7 @@
         <template v-else>
           <div class='c-video__content'>
             <svg class='c-video__icon c-video__icon--small@<tablet-half' viewBox='0 0 50 50'>
-              <use :xlink:href="playIcon"></use>
+              <use :xlink:href="noVideoIcon"></use>
             </svg>
             <span class='c-video__subtitle mx-Mt-0d125@<tablet-half mx-D(n)@>tablet-half'>{{ $t('dictionary.preview_not_available.short') }}</span>
             <span class='c-video__subtitle mx-D(n)@<tablet-half'>{{ $t('dictionary.preview_not_available.long') }}</span>
@@ -444,6 +444,10 @@ export default {
 
     playIcon () {
       return `${window.iconsLibPath}#play`
+    },
+
+    noVideoIcon () {
+      return `${window.iconsLibPath}#no-video`
     },
 
     audioIcon () {
