@@ -20,7 +20,6 @@ en:
     preview_not_available:
       short: "Unavailable"
       long: "Preview not available"
-    see_syllabus: "See syllabus"
     trial_period: "%{period} trial"
     free_trial: "Free trial"
     certificate:
@@ -66,6 +65,12 @@ en:
     favorite: "Favorite"
     go_to_course: "Go to course"
     search:
+    details:
+      show: 'Show Details'
+      hide: 'Hide Details'
+    syllabus:
+      header: 'Course Syllabus'
+      view: 'See Syllabus'
   meta:
     icons:
       user_and_monitor: 'Course pace'

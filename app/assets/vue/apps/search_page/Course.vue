@@ -91,10 +91,10 @@
         </template>
       </template>
       <div class="mx-FxOrd(5) mx-D(n)@>desktop c-hcard(2.0)__details-expander c-hcard(2.0)--shown-on-collapse" @click="expanded = true">
-        Show Details
+        {{ $t('dictionary.details.show') }}
       </div>
       <div class="mx-FxOrd(5) mx-D(n)@>desktop c-hcard(2.0)__details-expander c-hcard(2.0)--shown-on-expand" @click="expanded = false">
-        Hide Details
+        {{ $t('dictionary.details.hide') }}
       </div>
     </div>
     <!-- Details -->
@@ -345,7 +345,7 @@
         <template v-if="course.syllabus_markdown">
           <syllabus :cssClasses="modalCssClasses" :course="syllabusCourse" :name="modalName" height="80%">
             <template #caller>
-              See Syllabus
+              {{ $t('dictionary.syllabus.view') }}
             </template>
             <template #dismisser>
               <span></span>
@@ -368,7 +368,7 @@
               <h5 class='o-syllabus__course-name'>{{ course.name }}</h5>
               <p class='o-syllabus__course-description' v-html='course.description'></p>
               <span class='o-syllabus__course-syllabus-header'>
-                Course syllabus
+                {{ $t('dictionary.syllabus.header') }}
               </span>
               <div class='o-syllabus__course-syllabus' v-html='course.syllabus' v-bar></div>
             </template>
@@ -432,7 +432,7 @@ export default {
     }
   },
 
-  mounted() {
+  created() {
     this.mdRenderer.heading = () => ``;
     this.mdRenderer.list    = (body, ordered) => {
       let type = ordered ? 'ol' : 'ul';

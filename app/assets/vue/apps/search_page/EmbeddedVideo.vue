@@ -1,12 +1,12 @@
 <template>
   <div>
     <template v-if="mode == 'html5'">
-      <video oncontextmenu='return false;' controls controlsList='nodownload' autoplay width='100%' height='auto'>
+      <video oncontextmenu='return false;' controls controlsList='nodownload' autoplay width='100%' height='100%'>
         <source :src="url" type='video/mp4'>
       </video>
     </template>
     <template v-else>
-      <iframe width='100%' height='auto' :src="url" frameBorder=0 />
+      <iframe width='100%' height='100%' :src="url" frameBorder=0 />
     </template>
   </div>
 </template>

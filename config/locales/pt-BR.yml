@@ -20,9 +20,12 @@ pt-BR:
       intermediate: "Intermediário"
       advanced: "Avançado"
       all: "Todos os níveis"
-    preview_this_course: "Visualizar este curso"
-    preview_not_available: "Vídeo não disponível"
-    see_syllabus: "Ver plano de estudos"
+    preview_this_course:
+      short: "Visualizar"
+      long: "Visualizar este curso"
+    preview_not_available:
+      short: "Indisponível"
+      long: "Vídeo não disponível"
     trial_period: "%{period} grátis"
     free_trial: "Grátis por"
     certificate:
@@ -67,6 +70,12 @@ pt-BR:
     top_reviewed: 'Melhor avaliados'
     favorite: 'Favoritar'
     go_to_course: 'Ir para o curso'
+    details:
+      show: 'Exibir Detalhes'
+      hide: 'Esconder Detalhes'
+    syllabus:
+      header: 'Plano de estudos'
+      view: 'Ver plano de estudos'
   meta:
     icons:
       user_and_monitor: 'Ritmo do curso'
