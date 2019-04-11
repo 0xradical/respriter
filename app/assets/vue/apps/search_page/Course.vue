@@ -341,8 +341,8 @@
           {{ $t('dictionary.go_to_course') }}
         </a>
       </div>
-      <div class='c-hcard(2.0)__syllabus mx-D(b)@phone mx-D(b)@tablet'>
-        <template v-if="course.syllabus_markdown">
+      <!-- <div class='c-hcard(2.0)__syllabus mx-D(b)@phone mx-D(b)@tablet'>
+        <template v-if="false">
           <syllabus :cssClasses="modalCssClasses" :course="syllabusCourse" :name="modalName" height="80%">
             <template #caller>
               {{ $t('dictionary.syllabus.view') }}
@@ -374,7 +374,7 @@
             </template>
           </syllabus>
         </template>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
