@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import VueCurrencyFilter from 'vue-currency-filter'
 import VueJsModal from 'vue-js-modal'
+import Vuebar from 'vuebar'
 
 Vue.use(VueI18n);
 Vue.use(VueJsModal);
@@ -13,6 +14,7 @@ Vue.use(VueCurrencyFilter, {
   symbolPosition: 'front',
   symbolSpacing: true
 });
+Vue.use(Vuebar);
 
 import SearchPage from '../vue/apps/search_page/App.vue'
 

@@ -48,9 +48,15 @@
 
         <div class='[9x12]@desktop|[12x12]@tablet'>
 
-          <div v-if='data.records.length > 0' v-for='course in data.records' style='margin-bottom:10px'>
-            <course :course='course'></course>
-          </div>
+          <button class='btn btn--blue-flat btn--tiny btn--block mx-Mb(10px) mx-D(n)@desktop mx-D(n)@tv' @click='showPhoneSearchFilter'>
+            {{ $t('dictionary.display_filter') }}
+          </button>
+
+          <template v-if="data.records.length > 0">
+            <div v-for='course in data.records' :key="course.id" style='margin-bottom:10px'>
+              <course :course='course'></course>
+            </div>
+          </template>
 
           <pagination @paginate='paginate' pagination-anchor='#results' :current-page='page' :num-of-pages='numOfPages'></pagination>
 
