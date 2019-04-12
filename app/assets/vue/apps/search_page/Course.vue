@@ -15,7 +15,7 @@
               <span class='c-video__subtitle mx-D(n)@<tablet-half'>{{ $t('dictionary.preview_this_course.long') }}</span>
             </div>
           </div>
-          <component :is="videoComponent" :url="videoUrl" :mode="videoMode"></component>
+          <component :is="videoComponent" :url="videoUrl" :embed="videoEmbed"></component>
         </template>
         <template v-else>
           <div class='c-video__content'>
@@ -402,7 +402,7 @@ export default {
       videoComponent: null,
       videoClicked: false,
       videoUrl: '',
-      videoMode: '',
+      videoEmbed: '',
       modalCssClasses: {
         rootClass: ["o-syllabus"],
         callerClass: ["o-syllabus__caller"],
@@ -424,9 +424,9 @@ export default {
 
       fetch(`/videos/${this.course.id}`).then((response) => {
         response.json().then((json) => {
-          this.videoUrl       = json.url;
-          this.videoMode      = json.mode;
-          this.videoComponent = "embedded-video";
+          this.videoUrl        = json.url;
+          this.videoEmbed      = json.embed;
+          this.videoComponent  = "embedded-video";
         })
       });
     }

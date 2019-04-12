@@ -60,7 +60,7 @@ hrk_stg_db_restore: ## Dumps latest production dump from production and restores
 	@heroku pg:backups:restore `heroku pg:backups:url --app=$(HEROKU_APP_NAME)-prd` DATABASE_URL --app=$(HEROKU_APP_NAME)-stg
 
 tty: ## Attach a tty to the app container. Usage e.g: ENV=test make tty
-	@docker-compose run -p 3000:3000 --entrypoint /bin/bash app_$(ENV)
+	@docker-compose run --entrypoint /bin/bash app_$(ENV)
 
 down: ## Run docker-compose down
 	@docker-compose down

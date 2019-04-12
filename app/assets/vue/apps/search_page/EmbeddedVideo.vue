@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="mode == 'html5'">
+    <template v-if="!embed">
       <video oncontextmenu='return false;' controls controlsList='nodownload' autoplay width='100%' height='100%'>
         <source :src="url" type='video/mp4'>
       </video>
@@ -19,10 +19,10 @@ export default {
       required: true,
       default: ''
     },
-    mode: {
-      type: String,
+    embed: {
+      type: Boolean,
       required: false,
-      default: 'html5'
+      default: false
     }
   }
 }

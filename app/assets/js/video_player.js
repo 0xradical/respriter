@@ -9,11 +9,7 @@ window.initVideoPlayers = () => {
       fetch(this.getAttribute('data-embedded-video')).then(function (response) {
         response.json().then(function (json) {
           document.querySelectorAll(node.getAttribute('data-embedded-video-target')).forEach(function (node) {
-            if (json.mode == 'html5') {
-              node.innerHTML = videoJST(json)
-            } else {
-              node.innerHTML = iframeJST(json)
-            }
+            node.innerHTML = json.embed ? iframeJST(json) : videoJST(json)
           })
         })
       });

@@ -5,7 +5,7 @@ class Video::SelfHosted
       key_pair_id: ENV['AWS_KEY_PAIR_ID'],
       private_key: ENV['AWS_PRIVATE_KEY'].gsub('\\n', "\n")
     )
-    { url: signer.signed_url(video_struct.url, expires: 30.minutes.from_now), mode: 'html5' }
+    { url: signer.signed_url(video_struct.url, expires: 30.minutes.from_now), embed: video_struct.embed }
   end
 
 end
