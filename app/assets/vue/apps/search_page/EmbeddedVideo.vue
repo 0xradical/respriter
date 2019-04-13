@@ -2,11 +2,11 @@
   <div>
     <template v-if="!embed">
       <video oncontextmenu='return false;' controls controlsList='nodownload' autoplay width='100%' height='100%'>
-        <source :src="url" type='video/mp4'>
+        <source :src="videoUrl" type='video/mp4'>
       </video>
     </template>
     <template v-else>
-      <iframe width='100%' height='100%' :src="url" frameBorder=0 />
+      <iframe width='100%' height='100%' :src="videoUrl" frameBorder=0 />
     </template>
   </div>
 </template>
@@ -23,6 +23,21 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    autoplay: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+
+  computed: {
+    videoUrl() {
+      if(this.autoplay && this.embed) {
+        return this.url + (this.url.indexOf('?') < 0 ? '?' : '&') + 'autoplay=true';
+      } else {
+        return this.url;
+      }
     }
   }
 }

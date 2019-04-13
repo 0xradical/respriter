@@ -4,10 +4,10 @@
     <div class='c-hcard(2.0)__video-preview mx-Mr-0d5@phone mx-Mr-0d5@tablet mx-Mr-1@>desktop mx-Fx(100%)@>desktop mx-FxOrd(1)'>
       <div class='c-video'>
         <template v-if="course.video">
-          <div :class="{ 'mx-D(n) ': videoComponent }">
+          <div :class="{ 'mx-D(n) ': !videoMobileUx && videoComponent }">
             <div class='c-video__bg-img' :style="{ 'background-image': course.video.thumbnail_url && `url(${course.video.thumbnail_url})` }"></div>
             <div class="c-video__mask"></div>
-            <div @click="fetchVideo" class='c-video__content' :class="{'mx-D(n)': videoClicked}">
+            <div @click="fetchVideo" class='c-video__content' :class="{'mx-D(n)': !videoMobileUx && videoClicked}">
               <svg class='c-video__icon c-video__icon--small@<tablet-half' viewBox='0 0 50 50'>
                 <use :xlink:href="playIcon"></use>
               </svg>
@@ -15,7 +15,10 @@
               <span class='c-video__subtitle mx-D(n)@<tablet-half'>{{ $t('dictionary.preview_this_course.long') }}</span>
             </div>
           </div>
-          <component :is="videoComponent" :url="videoUrl" :embed="videoEmbed"></component>
+          <component :is="!videoMobileUx && videoComponent" :url="videoUrl" :embed="videoEmbed"></component>
+          <modal :adaptive="true" width='80%' :name='`mobile-video-${course.id}`'>
+            <component :is="videoMobileUx && videoComponent" :url="videoUrl" :embed="videoEmbed" :autoplay="true"></component>
+          </modal>
         </template>
         <template v-else>
           <div class='c-video__content'>
@@ -403,6 +406,8 @@ export default {
       videoClicked: false,
       videoUrl: '',
       videoEmbed: '',
+      videoMobileUx: false,
+      videoLoaded: false,
       modalCssClasses: {
         rootClass: ["o-syllabus"],
         callerClass: ["o-syllabus__caller"],
@@ -419,16 +424,33 @@ export default {
   },
 
   methods: {
+    mobileViewport: function() {
+      let width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      return width < 800;
+    },
+
     fetchVideo: function() {
       this.videoClicked = true;
+      if (this.mobileViewport()) {
+        this.videoMobileUx = true;
+      } else {
+        this.videoMobileUx = false;
+      }
 
-      fetch(`/videos/${this.course.id}`).then((response) => {
-        response.json().then((json) => {
-          this.videoUrl        = json.url;
-          this.videoEmbed      = json.embed;
-          this.videoComponent  = "embedded-video";
-        })
-      });
+      if (!this.videoLoaded) {
+        fetch(`/videos/${this.course.id}`).then((response) => {
+          response.json().then((json) => {
+            this.videoUrl        = json.url;
+            this.videoEmbed      = json.embed;
+            this.videoComponent  = "embedded-video";
+            this.videoLoaded     = true
+          })
+        });
+      }
+
+      if (this.videoMobileUx) {
+        this.$modal.show(`mobile-video-${this.course.id}`);
+      }
     }
   },
 
