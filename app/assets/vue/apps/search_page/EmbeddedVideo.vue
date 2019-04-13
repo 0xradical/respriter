@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="!embed">
-      <video oncontextmenu='return false;' controls controlsList='nodownload' autoplay width='100%' height='100%'>
+      <video oncontextmenu='return false;' controls controlsList='nodownload' autoplay="true" width='100%' height='100%'>
         <source :src="videoUrl" type='video/mp4'>
       </video>
     </template>
