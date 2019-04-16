@@ -394,7 +394,8 @@ CREATE TABLE public.tracked_actions (
     ext_id character varying,
     compound_ext_id character varying,
     ext_sku_id character varying,
-    ext_sku_name character varying
+    ext_sku_name character varying,
+    ext_product_name character varying
 );
 
 
@@ -1137,6 +1138,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190313223626'),
 ('20190328144400'),
 ('20190408141738'),
-('20190408173350');
+('20190408173350'),
+('20190416123653');
 
 

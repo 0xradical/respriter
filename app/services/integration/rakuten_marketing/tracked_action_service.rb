@@ -23,6 +23,8 @@ module Integration
                 action.sale_amount      = resource['sale_amount']
                 action.earnings_amount  = resource['commissions']
                 action.ext_click_date   = resource['transaction_date']
+                action.ext_sku_id       = resource['ext_sku_id']
+                action.ext_product_name = resource['product_name']
                 action.source           = 'rakuten'
                 action.payload          = resource
               end.upsert
