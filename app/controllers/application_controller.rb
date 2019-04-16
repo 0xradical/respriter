@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   prepend_before_action :parse_browser_session
   before_action :set_locale
+
   layout :fetch_layout
 
   protected
@@ -16,15 +17,13 @@ class ApplicationController < ActionController::Base
   private
 
   def set_locale
-    parsed_locale = I18nHelper.sanitize_locale(request.subdomains.first)
-    locales = [parsed_locale, @browser_languages].flatten.compact.map(&:to_sym)
-    I18n.locale = (locales & I18n.available_locales).first || :en
+    parsed_locale = I18nHelper.strict_locale(request.subdomains.first)
+    I18n.locale = ([parsed_locale] & I18n.available_locales).present? ? parsed_locale : :en
   end
 
   def parse_browser_session
-    browser_session = BrowserSessionParser.new(request).call
-    @browser_languages = browser_session[:preferred_languages]
-    session[:tracking_data] ||= browser_session
+    @browser_session = BrowserSessionParser.new(request).call
+    session[:tracking_data] ||= @browser_session
   end
 
   def fetch_layout

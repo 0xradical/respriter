@@ -7,7 +7,7 @@
     <ul class='c-menu'>
       <span class='c-menu__arrow-up'></span>
       <li>
-        <%= link_to (root_url(subdomain: '').chomp('/') + request.path) do %>
+        <%= link_to (root_url(subdomain: params[:subdomain]).chomp('/') + request.path + '?intl=true') do %>
           <span class='c-label'>
             <%= svg_icons_lib('en', class: 'c-label__icon') %>
             <span class='c-label__text c-label__text--shrink-25%'>EN</span>
@@ -15,7 +15,7 @@
         <% end %>
       </li>
       <li>
-        <%= link_to (root_url(subdomain: 'pt-BR').chomp('/') + request.path) do %>
+        <%= link_to (root_url(subdomain: ['pt-BR', params[:subdomain]].join('.')).chomp('/') + request.path) do %>
           <span class='c-label'>
             <%= svg_icons_lib('pt', class: 'c-label__icon') %>
             <span class='c-label__text c-label__text--shrink-25%'>PT</span>

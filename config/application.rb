@@ -10,6 +10,8 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 
+require_relative "../app/middlewares/locale_router"
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -25,6 +27,8 @@ module App
       "#{Rails.root}/app/models/reports",
       "#{Rails.root}/app/services"
     ]
+
+    config.middleware.use LocaleRouter
 
     config.action_mailer.default_url_options = { host: 'classpert.com' }
 

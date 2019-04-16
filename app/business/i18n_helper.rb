@@ -2,7 +2,7 @@ class I18nHelper
 
   class << self
 
-    def sanitize_locale(locale)
+    def strict_locale(locale)
       return nil unless locale.present?
       root, region = locale.to_s.split('-')
       [root, region&.upcase].compact.join('-').to_sym
