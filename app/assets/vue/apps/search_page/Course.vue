@@ -17,7 +17,19 @@
           </div>
           <component :is="!videoMobileUx && videoComponent" :url="videoUrl" :embed="videoEmbed"></component>
           <modal :adaptive="true" width='80%' :name='`mobile-video-${course.id}`'>
-            <component :is="videoMobileUx && videoComponent" :url="videoUrl" :embed="videoEmbed" :autoplay="true"></component>
+            <div class='c-hcard(2.0)__mobile-modal'>
+              <div class='c-hcard(2.0)__mobile-modal-title-slot'>
+                <div class='c-hcard(2.0)__mobile-modal-title'>{{ course.name }}</div>
+              </div>
+              <div class='c-hcard(2.0)__mobile-modal-body-slot'>
+                <component :is="videoMobileUx && videoComponent" :url="videoUrl" :embed="videoEmbed" :autoplay="true"></component>
+              </div>
+              <div class='c-hcard(2.0)__mobile-modal-footer-slot'>
+                <a target='_blank' :href='course.gateway_path' class='btn btn--rounded btn--tiny btn--blue-flat'>
+                  {{ $t('dictionary.go_to_course') }}
+                </a>
+              </div>
+            </div>
           </modal>
         </template>
         <template v-else>
@@ -32,12 +44,12 @@
       </div>
     </div>
     <!-- Title -->
-    <div class='c-hcard(2.0)__details-group mx-D(fx) mx-FxFd(col) mx-Fx(70%) mx-Fx(50%)@>desktop mx-FxOrd(2)'>
+    <div class='c-hcard(2.0)__details-group mx-D(fx) mx-FxFd(col) mx-FxOrd(2) mx-Fs-0d875@desktop'>
       <div class='mx-Mr-1@>desktop'>
         <div class='mx-D(fx) mx-FxJc(sb)'>
-          <div class='c-hcard(2.0)__provider mx-Fs-0d875@>tablet'>
+          <div class='c-hcard(2.0)__provider'>
             <span class='c-label'>
-              <svg class='c-label__icon c-label__icon--circled-border c-label__icon--px-based'>
+              <svg class='c-label__icon c-label__icon--circled-border c-label__icon--dec-50%'>
                 <use :xlink:href="logo"></use>
               </svg>
               <span class='c-label__text'>
@@ -56,7 +68,7 @@
       </div>
     </div>
     <!-- Price -->
-    <div class='c-hcard(2.0)__details-expander-group mx-D(fx) mx-FxAi(fs) mx-FxFd(col) mx-Bc(white) mx-Fx(100%) mx-Fx(50%)@>desktop mx-FxOrd(3) mx-FxOrd(4)@>desktop'>
+    <div class='c-hcard(2.0)__details-expander-group mx-D(fx) mx-FxAi(fs) mx-FxFd(col) mx-Bc(white) mx-Fx(100%) mx-Fx(50%)@>desktop mx-FxOrd(3) mx-FxOrd(4)@>desktop mx-Fs-0d875@desktop'>
       <div class="c-hcard(2.0)__price mx-FxOrd(1) mx-FxOrd(2)@>desktop">
         {{ course.free_content ? "free" : `$${formattedPrice}` }}
       </div>
@@ -101,7 +113,7 @@
       </div>
     </div>
     <!-- Details -->
-    <div class='c-hcard(2.0)__details-group mx-Pos(r) mx-Fx(100%) mx-Fx(50%)@>desktop mx-FxOrd(4) mx-FxOrd(3)@>desktop mx-Fs-0d75@phone mx-Fs-0d75@tablet'>
+    <div class='c-hcard(2.0)__details-group mx-Pos(r) mx-FxOrd(4) mx-FxOrd(3)@>desktop mx-Fs-0d75@phone mx-Fs-0d75@tablet mx-Fs-0d875@desktop'>
       <div class='mx-Mr-1@>desktop'>
         <div class='c-hcard(2.0)__details mx-D(fx) mx-FxFd(col)'>
           <div class='mx-FxFd(col) c-hcard(2.0)--flexed-on-expand'>
@@ -338,9 +350,9 @@
       </div>
     </div>
     <!-- Action -->
-    <div class='c-hcard(2.0)__action-group mx-D(fx) mx-FxFd(col) mx-FxJc(sb) mx-FxAi(c) mx-Fx(50%) mx-FxOrd(5)'>
+    <div class='c-hcard(2.0)__action-group mx-D(fx) mx-FxFd(col) mx-FxJc(sb) mx-FxAi(c) mx-Fx(50%) mx-FxOrd(5) mx-Fs-0d875@desktop'>
       <div class='c-hcard(2.0)__call-to-action'>
-        <a target='_blank' :href='course.gateway_path' class='btn btn--tiny@phone btn--rounded btn--blue-flat btn--expandable@>desktop'>
+        <a target='_blank' :href='course.gateway_path' class='btn btn--tiny@phone btn--small@tablet btn--rounded btn--blue-flat btn--expandable@>desktop'>
           {{ $t('dictionary.go_to_course') }}
         </a>
       </div>
@@ -553,6 +565,7 @@ export default {
     @media (--desktop-min) {
       // horrible hack, coupling presentation with structure
       // TODO: refactor
+
       ul {
         width: calc(100% - 120px);
 
@@ -561,9 +574,9 @@ export default {
           max-width: calc(50%);
 
           .c-label__text {
-            min-width: 25px;
+            min-width: 24px;
             width: auto;
-            max-width: calc(100% - 25px);
+            max-width: calc(100% - 24px);
             max-height: 1em;
             overflow: hidden;
           }
