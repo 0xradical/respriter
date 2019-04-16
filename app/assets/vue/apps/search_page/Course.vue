@@ -49,7 +49,7 @@
           </div>
         </div>
         <div class='c-hcard(2.0)__title-box'>
-          <a :href='course.id' target='_blank' :title='course.name' class='c-hcard(2.0)__title'>
+          <a :href='course.gateway_path' target='_blank' :title='course.name' class='c-hcard(2.0)__title'>
             {{ course.name }}
           </a>
         </div>
@@ -357,7 +357,7 @@
               <div class='o-syllabus__provider'>
                 <span class='c-label'>
                   <svg class='c-label__icon c-label__icon--circled-border'>
-                    <use :xlink:href="course.provider_logo"></use>
+                    <use :xlink":href=""course.provider_logo"></use>
                   </svg>
                   <span class='c-label__text'>
                     <span class='c-tags c-tags--gray'>
