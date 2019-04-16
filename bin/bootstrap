@@ -39,11 +39,8 @@ end
 
 exit(1) if confirm == 'n'
 
-puts "** installing gems **".ansi(:blue)
-system 'bundle install'
-
-puts "** installing npm packages **".ansi(:blue)
-system 'yarn install'
+puts "** linking node_modules **".ansi(:blue)
+system 'rm -rf node_modules && ln -s ~/.config/yarn/global/node_modules /app/node_modules'
 
 puts "** resetting database **".ansi(:blue)
 system 'DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:drop db:create db:migrate'

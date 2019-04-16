@@ -1,15 +1,20 @@
 NAME   :=	classpert/rails
-TAG    :=	2.0.1
+TAG    :=	2.1.0
 IMG    :=	${NAME}\:${TAG}
 LATEST :=	${NAME}\:latest
 HEROKU_APP_NAME := classpert-web-app
 
 ENV ?= development
 
-.PHONY: help bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push cucumber
+.PHONY: help update-packages bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push cucumber
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+update-packages: Gemfile Gemfile.lock package.json yarn.lock ## Updates packages from Gemfile and package.json
+	yarn install --modules-folder=$NODE_PATH
+	bundle install
+	make docker-build
 
 bootstrap: docker-compose.yml .env .env.test
 	@docker-compose run --service-ports app_$(ENV) bin/bootstrap
@@ -64,6 +69,10 @@ tty: ## Attach a tty to the app container. Usage e.g: ENV=test make tty
 
 down: ## Run docker-compose down
 	@docker-compose down
+
+clean: ## Stop containers, remove old images and prune docker unused resources
+	@docker-compose down -v --rmi local --remove-orphans
+	@docker system prune -f
 
 docker-build: Dockerfile ## Builds the docker image
 	@docker build -t ${IMG} .
