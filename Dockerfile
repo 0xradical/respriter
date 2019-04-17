@@ -67,10 +67,10 @@ RUN echo 'export PS1="\[\033[01;34m\]\u\[\033[0m\] @ \[\033[01;32m\]\W\[\033[0m\
     cd /app                                                                                                    && \
     rm -rf ~/build
 
-COPY package.json /app
-COPY yarn.lock    /app
-RUN  yarn install --modules-folder=$NODE_PATH
-
 COPY Gemfile      /app
 COPY Gemfile.lock /app
 RUN  bundle install
+
+COPY package.json /app
+COPY yarn.lock    /app
+RUN  yarn install --modules-folder=$NODE_PATH
