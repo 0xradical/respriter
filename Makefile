@@ -6,14 +6,17 @@ HEROKU_APP_NAME := classpert-web-app
 
 ENV ?= development
 
-.PHONY: help update-packages bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push cucumber
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% cucumber
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-update-packages: Gemfile Gemfile.lock package.json yarn.lock ## Updates packages from Gemfile and package.json
-	yarn install --modules-folder=$NODE_PATH
+update-packages: Gemfile Gemfile.lock package.json yarn.lock ## Updates packages from Gemfile.lock and yarn.lock
+	yarn install --modules-folder=/home/developer/.config/yarn/global/node_modules
 	bundle install
+
+rebuild-and-update-packages: ## Install new packages and rebuild image
+	make docker-update-packages
 	make docker-build
 
 bootstrap: docker-compose.yml .env .env.test
@@ -80,6 +83,9 @@ docker-build: Dockerfile ## Builds the docker image
 
 docker-push: ## Pushes the docker image to Dockerhub
 	@docker push ${NAME}
+
+docker-%: ## When running `make docker-SOMETHING` it executes `make SOMETHING` inside docker context
+	@docker-compose run --service-ports app_$(ENV) make -s $*
 
 system.svg: system.gv ## Use graphviz to build system architecture graph
 	@dot -Tsvg $< -o $@
