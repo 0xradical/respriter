@@ -409,7 +409,7 @@ CREATE VIEW public.earnings AS
     tracked_actions.earnings_amount,
     tracked_actions.ext_click_date,
     tracked_actions.ext_sku_id,
-    tracked_actions.ext_sku_name,
+    tracked_actions.ext_product_name,
     tracked_actions.ext_id,
     tracked_actions.source AS affiliate_network,
     providers.name AS provider_name,

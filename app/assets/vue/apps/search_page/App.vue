@@ -1,23 +1,21 @@
 <template>
   <div>
-
     <div v-show='phoneSearchFilter'
       class='mx-D(n)@desktop mx-D(n)@tv'
       style='position:fixed;width:100%;min-height:calc(120px + 100%);z-index:1;background-color:#FFF'>
 
-      <div class='l-container'>
+      <div class='container'>
         <search-filter :aggregations='data.meta.aggregations' @changeFilter='filter'></search-filter>
         <button class='btn' @click='phoneSearchFilter = false'>Search</button>
       </div>
-
     </div>
 
-    <div class='l-container mx-Pb(60px)'>
-      <div class='grid'>
-        <div class='[3x12]@desktop|[0x12]@tablet'>
+    <div class='container mx-Pb(60px)'>
+      <div class='row'>
+        <div class='mx-D(n)@<medium col-lg-3'>
           <span style='font-size:0.875em;display:inline-block;line-height:1.15em;padding:20px 0'></span>
         </div>
-        <div class='[9x12]@desktop|[12x12]@tablet'>
+        <div class='col-12 col-lg-9'>
           <span style='display:inline-block;line-height:1em;font-size:calc(0.4em + 0.5vw);padding:20px 0;width:100%'>
             {{ $t('dictionary.search_results', { total: data.meta.total }) }}
 
@@ -38,16 +36,15 @@
         </div>
       </div>
 
-      <div class='grid'>
-        <div class='[3x12]@desktop|[0x12]@tablet'>
+      <div class='row'>
+        <div class='mx-D(n)@<medium col-lg-3'>
           <div class='filter-nav' style='background-color:#fff;width:100%;padding: 10px 0px'>
             <h5 style='padding:10px 15px;border-bottom'>{{ $t('dictionary.filters') }}</h5>
             <search-filter :aggregations='data.meta.aggregations' :filter='params.filter' @changeFilter='filter'></search-filter>
           </div>
         </div>
 
-        <div class='[9x12]@desktop|[12x12]@tablet'>
-
+        <div class='col-12 col-lg-9'>
           <template v-if="data.records.length > 0">
             <div v-for='course in data.records' :key="course.id" style='margin-bottom:10px'>
               <course :course='course'></course>
