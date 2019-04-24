@@ -186,6 +186,8 @@ en:
     details:
       show: 'Show Details'
       hide: 'Hide Details'
+    description:
+      view: 'See Description'
     syllabus:
       header: 'Course Syllabus'
       view: 'See Syllabus'
@@ -196,7 +198,7 @@ en:
     pace:
       instructor_paced: "Instructor-paced"
       self_paced: "Self-paced"
-    subscription_period: 
+    subscription_period:
       months: "Monthly subscription"
       years: "Annual subscription"
     for_this_course: "For this course"

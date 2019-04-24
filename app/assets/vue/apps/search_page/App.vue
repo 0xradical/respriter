@@ -1,14 +1,28 @@
 <template>
   <div>
-    <div v-show='phoneSearchFilter'
-      class='mx-D(n)@desktop mx-D(n)@tv'
-      style='position:fixed;width:100%;min-height:calc(120px + 100%);z-index:1;background-color:#FFF'>
-
-      <div class='container'>
-        <search-filter :aggregations='data.meta.aggregations' @changeFilter='filter'></search-filter>
-        <button class='btn' @click='phoneSearchFilter = false'>Search</button>
+    <modal :adaptive="true" width='90%' height='90%' name='mobileFilter'>
+      <div class='filter-nav--mobile'>
+        <div class='mx-D(Fx) mx-FxJc(sb)' style='height: 15%;'>
+          <h5>{{ $t('dictionary.filters') }}</h5>
+          <a href='#' @click="$modal.hide('mobileFilter')">
+            <icon width='1.05rem' height='1.05rem' name='close'></icon>
+          </a>
+        </div>
+        <div style='height: 85%;'>
+          <search-filter :aggregations='data.meta.aggregations'
+                         :total='data.meta.total'
+                         :filter='params.filter'
+                         :mobileUx='true'
+                         @showResultsClicked="$modal.hide('mobileFilter')"
+                         @clearFiltersClicked="clearFilters"
+                         @optionAddedToFilter="addOptionToFilter"
+                         @optionRemovedFromFilter="removeOptionFromFilter"
+                         @priceUpperValueChanged="changeUpperPriceValue"
+                         @priceLowerValueChanged="changeLowerPriceValue">
+          </search-filter>
+        </div>
       </div>
-    </div>
+    </modal>
 
     <div class='container mx-Pb(60px)'>
       <div class='row'>
@@ -16,20 +30,12 @@
           <span style='font-size:0.875em;display:inline-block;line-height:1.15em;padding:20px 0'></span>
         </div>
         <div class='col-12 col-lg-9'>
-          <span style='display:inline-block;line-height:1em;font-size:calc(0.4em + 0.5vw);padding:20px 0;width:100%'>
+          <span style='display:inline-block;line-height:1em;font-size:0.875em;padding:20px 0;width:100%'>
             {{ $t('dictionary.search_results', { total: data.meta.total }) }}
 
             <template v-if='params.q'>
               {{ $t('dictionary.for') }} <span class='query-tag'>{{ this.params.q }}</span>
             </template>
-
-            <span style='display:inline-block;float:right'>
-              {{ $t('dictionary.sort_by') }}
-              <select v-model='params.order.price'>
-                <option value='asc'>{{ $t('dictionary.lowest_price') }}</option>
-                <option value='desc'>{{ $t('dictionary.highest_price') }}</option>
-              </select>
-            </span>
 
           </span>
           <pagination @paginate='paginate' pagination-anchor='#body-anchor' :current-page='page' :num-of-pages='numOfPages'></pagination>
@@ -38,9 +44,36 @@
 
       <div class='row'>
         <div class='mx-D(n)@<medium col-lg-3'>
-          <div class='filter-nav' style='background-color:#fff;width:100%;padding: 10px 0px'>
-            <h5 style='padding:10px 15px;border-bottom'>{{ $t('dictionary.filters') }}</h5>
-            <search-filter :aggregations='data.meta.aggregations' :filter='params.filter' @changeFilter='filter'></search-filter>
+          <div class='filter-nav'>
+            <div class='mx-D(Fx) mx-FxJc(sb)'>
+              <h4>{{ $t('dictionary.filters') }}</h4>
+              <a href='#' class='mx-C(magenta) mx-Fw(b)' @click.prevent="clearFilters" style="margin: auto 0;text-align:right;">
+                Clear all filters
+              </a>
+            </div>
+            <search-filter :aggregations='data.meta.aggregations'
+                           :filter='params.filter'
+                           @clearFilterClicked='clearFilter'
+                           @optionAddedToFilter="addOptionToFilter"
+                           @optionRemovedFromFilter="removeOptionFromFilter"
+                           @priceUpperValueChanged="changeUpperPriceValue"
+                           @priceLowerValueChanged="changeLowerPriceValue">
+            </search-filter>
+          </div>
+        </div>
+
+        <div class='col-12 mx-D(n)@>desktop mx-Mb-1'>
+          <hr/>
+          <div class='mx-D(Fx) mx-FxJc(sb)'>
+            <span class='mx-C(blue) mx-Fw(b)'>
+              {{ $t('dictionary.sort_by') }}
+              <select v-model='params.order.price'>
+                <option value='asc'>{{ $t('dictionary.lowest_price') }}</option>
+                <option value='desc'>{{ $t('dictionary.highest_price') }}</option>
+              </select>
+            </span>
+            <!-- <a class='mx-C(blue) mx-Fw(b)' href='#'>Sort By (Relevance)</a> -->
+            <a class='mx-C(blue) mx-Fw(b)' href='#' @click="$modal.show('mobileFilter')">Filter Results</a>
           </div>
         </div>
 
@@ -68,6 +101,7 @@
   import CourseModal from './CourseModal.vue';
   import Pagination from './Pagination.vue';
   import SearchFilter from './SearchFilter.vue';
+  import Icon from './Icon.vue';
   import qs from 'qs';
 
   export default {
@@ -105,24 +139,13 @@
       course: Course,
       searchFilter: SearchFilter,
       pagination: Pagination,
-      courseModal: CourseModal
+      courseModal: CourseModal,
+      icon: Icon
     },
 
     data () {
       return {
-        phoneSearchFilter: false,
-
-        params: {
-          order: {},
-          filter: {
-            providers:  [],
-            categories: [],
-            audio:      [],
-            subtitles:  [],
-            price:      []
-          },
-          p: 1
-        },
+        params: this.paramsConstructor(),
 
         numOfPages: 0,
         data: {
@@ -196,17 +219,47 @@
         this.changeParams({p: page})
       },
 
-      showPhoneSearchFilter () {
-        document.querySelector('body').style = 'overflow-y:hidden';
-        this.phoneSearchFilter = true;
+      clearFilters () {
+        this.params = this.paramsConstructor();
       },
 
-      hidePhoneSearchFilterFilter () {
-        document.querySelector('body').style = 'overflow-y:auto';
-        this.phoneSearchFilter = false;
+      clearFilter (filter) {
+        if (filter === 'price') {
+          this.params.filter.price = [0, 2500];
+        } else {
+          this.params.filter[filter] = [];
+        }
       },
 
-      clear () {},
+      addOptionToFilter (key, option) {
+        this.params.filter[key].push(option);
+      },
+
+      removeOptionFromFilter (key, option) {
+        this.params.filter[key] = this.params.filter[key].filter((e) => e !== option);
+      },
+
+      changeUpperPriceValue (value) {
+        this.params.filter.price = [ this.params.filter.price[0] , value ];
+      },
+
+      changeLowerPriceValue (value) {
+        this.params.filter.price = [ value, this.params.filter.price[1] ];
+      },
+
+      paramsConstructor () {
+        return Object.assign({},{
+          order: {},
+          filter: {
+            providers:  [],
+            categories: [],
+            audios:     [],
+            subtitles:  [],
+            price:      [0, 2500]
+          },
+          p: 1
+        });
+      },
 
       fetchResults () {
         var vm  = this
@@ -227,12 +280,23 @@
 </script>
 
 <style scoped lang='scss'>
-
-.filter-nav {
-  position: sticky;
-  top: 50;
+hr {
+  margin-bottom: 1em;
+  border: none;
+  border-top: 1px solid #DEE7ED;
 }
 
+.filter-nav {
+  top: 50;
+  background-color: white;
+  padding: 1.5em;
+}
+
+.filter-nav--mobile {
+  padding: 1.25em;
+  height: calc(100% - 2 * 1.25em);
+  box-sizing: content-box;
+}
 
 .query-tag {
   padding:5px 10px;

@@ -195,6 +195,8 @@ pt-BR:
     details:
       show: 'Exibir Detalhes'
       hide: 'Esconder Detalhes'
+    description:
+      view: 'Ver descrição'
     syllabus:
       header: 'Plano de estudos'
       view: 'Ver plano de estudos'
@@ -202,7 +204,7 @@ pt-BR:
     pace:
       instructor_paced: "Rítmo fixo"
       self_paced: "Rítmo flexível"
-    subscription_period: 
+    subscription_period:
       months: "Assinatura mensal"
       years: "Assinatura anual"
     for_this_course: "Por este curso"
@@ -431,7 +433,7 @@ pt-BR:
         Faça cursos online de desenvolvimento pessoal e torne-se a melhor versão de você.'
         physical_science_and_engineering_text: 'Aprenda a resolver problemas e realizar projetos
         que beneficiem a humanidade. Explore todas as áreas das Ciências Físicas e Engenharia
-        com cursos online.' 
+        com cursos online.'
         social_sciences_text: 'Estude todos os aspectos da sociedade humana e
         da vida social. Entenda muitos dos maiores problemas do mundo com cursos online de
         Ciências Sociais.'
