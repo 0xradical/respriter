@@ -24,5 +24,4 @@ module ApplicationHelper
   def svg_providers_lib(provider_name, svg_options={})
     svg_lib("#{asset_pack_url('providers-lib.svg', host: '//')}##{provider_name}", svg_options)
   end
-
 end

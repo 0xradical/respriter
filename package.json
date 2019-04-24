@@ -5,6 +5,7 @@
   "dependencies": {
     "@rails/webpacker": "^4.0.0-rc.8",
     "blocks": "https://github.com/codextremist/blocks.git",
+    "bootstrap": "^4.3.1",
     "ejs-loader": "^0.3.1",
     "elements": "https://github.com/codextremist/elements.git",
     "expose-loader": "^0.7.5",
