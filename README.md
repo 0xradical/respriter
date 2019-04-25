@@ -8,6 +8,7 @@
 ### Requirements
 
 * Docker & Docker Compose
+* [Heroku CLI tool](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
 
 ### Setup your environment
 
