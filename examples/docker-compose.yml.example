@@ -1,7 +1,7 @@
 version: '3'
 services:
   base: &base
-    image: classpert/rails:2.0.1
+    image: classpert/rails:2.1.0
     volumes:
       - .:/app
 
@@ -35,6 +35,8 @@ services:
   sidekiq:
     <<: *base
     command: bundle exec sidekiq
+    env_file:
+      - .env
 
   webpacker:
     <<: *base

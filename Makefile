@@ -1,18 +1,33 @@
 NAME   :=	classpert/rails
-TAG    :=	2.0.1
+TAG    :=	2.1.1
 IMG    :=	${NAME}\:${TAG}
 LATEST :=	${NAME}\:latest
 HEROKU_APP_NAME := classpert-web-app
-
 ENV ?= development
 
-.PHONY: help bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push cucumber
+UNAME := $(shell uname)
+ifeq ($(UNAME), Darwin)
+	DETECTED_OS := mac
+else
+	# assume linux
+	DETECTED_OS := linux
+endif
+
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% cucumber
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-bootstrap: docker-compose.yml .env .env.test
-	@docker-compose run --service-ports app_$(ENV) bin/bootstrap
+update-packages: Gemfile Gemfile.lock package.json yarn.lock ## Updates packages from Gemfile.lock and yarn.lock
+	yarn install --modules-folder=/home/developer/.config/yarn/global/node_modules
+	bundle install
+
+rebuild-and-update-packages: ## Install new packages and rebuild image
+	make docker-update-packages
+	make docker-build
+
+bootstrap: Dockerfile docker-compose.yml .env .env.test
+	@docker-compose run --service-ports -e DETECTED_OS=$(DETECTED_OS) app_$(ENV) bin/bootstrap
 
 lazy: bootstrap db_restore ## Build your application from scratch and restores the latest dump
 	@docker-compose run app_$(ENV) bundle exec rake db:migrate
@@ -65,6 +80,10 @@ tty: ## Attach a tty to the app container. Usage e.g: ENV=test make tty
 down: ## Run docker-compose down
 	@docker-compose down
 
+clean: ## Stop containers, remove old images and prune docker unused resources
+	@docker-compose down -v --rmi local --remove-orphans
+	@docker system prune -f
+
 docker-build: Dockerfile ## Builds the docker image
 	@docker build -t ${IMG} .
 	@docker tag ${IMG} ${LATEST}
@@ -72,8 +91,17 @@ docker-build: Dockerfile ## Builds the docker image
 docker-push: ## Pushes the docker image to Dockerhub
 	@docker push ${NAME}
 
+docker-compose.yml: ### Copies docker-compose.yml from examples
+	cp examples/docker-compose.yml.example docker-compose.yml
+
+docker-%: ## When running `make docker-SOMETHING` it executes `make SOMETHING` inside docker context
+	@docker-compose run --service-ports app_$(ENV) make -s $*
+
 system.svg: system.gv ## Use graphviz to build system architecture graph
 	@dot -Tsvg $< -o $@
+
+Dockerfile: Dockerfile.$(DETECTED_OS)
+	mv $< $@
 
 %: | examples/%.example
 	cp $| $@

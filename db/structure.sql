@@ -150,21 +150,21 @@ CREATE TYPE public.source AS ENUM (
 CREATE FUNCTION public._insert_or_add_to_provider() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-      DECLARE
-        _provider providers%ROWTYPE;
-        _new_provider_id int;
-      BEGIN
-        SELECT * FROM providers INTO _provider where providers.name = NEW.__provider_name__;
-        IF (NOT FOUND) THEN
-          INSERT INTO providers (name, published, created_at, updated_at) VALUES (NEW.__provider_name__, false, NOW(), NOW()) RETURNING id INTO _new_provider_id;
-          NEW.published = false;
-          NEW.provider_id = _new_provider_id;
-        ELSE
-          NEW.provider_id = _provider.id;
-        END IF;
-        RETURN NEW;
-      END;
-      $$;
+            DECLARE
+              _provider providers%ROWTYPE;
+              _new_provider_id int;
+            BEGIN
+              SELECT * FROM providers INTO _provider where providers.name = NEW.__provider_name__;
+              IF (NOT FOUND) THEN
+                INSERT INTO providers (name, published, created_at, updated_at) VALUES (NEW.__provider_name__, false, NOW(), NOW()) RETURNING id INTO _new_provider_id;
+                NEW.published = false;
+                NEW.provider_id = _new_provider_id;
+              ELSE
+                NEW.provider_id = _provider.id;
+              END IF;
+              RETURN NEW;
+            END;
+            $$;
 
 
 --
@@ -174,11 +174,11 @@ CREATE FUNCTION public._insert_or_add_to_provider() RETURNS trigger
 CREATE FUNCTION public.gen_compound_ext_id() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-      BEGIN
-        NEW.compound_ext_id = concat(NEW.source,'_',NEW.ext_id);
-        return NEW;
-      END
-      $$;
+            BEGIN
+              NEW.compound_ext_id = concat(NEW.source,'_',NEW.ext_id);
+              return NEW;
+            END
+            $$;
 
 
 --
@@ -188,11 +188,11 @@ CREATE FUNCTION public.gen_compound_ext_id() RETURNS trigger
 CREATE FUNCTION public.md5_url() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-      BEGIN
-        NEW.url_md5=md5(NEW.url);
-        return NEW;
-      END
-      $$;
+            BEGIN
+              NEW.url_md5=md5(NEW.url);
+              return NEW;
+            END
+            $$;
 
 
 --
@@ -202,33 +202,33 @@ CREATE FUNCTION public.md5_url() RETURNS trigger
 CREATE FUNCTION public.sort_prices() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-      DECLARE
-      price jsonb;
-      prices jsonb[];
-      results jsonb[];
-      single_course_prices jsonb[];
-      subscription_prices jsonb[];
-      BEGIN
-        FOR price IN SELECT * FROM jsonb_array_elements((NEW.__source_schema__ -> 'content' ->> 'prices')::jsonb)
-        LOOP
-          IF (price ->> 'type' = 'single_course') THEN
-            single_course_prices := array_append(single_course_prices,price);
-          ELSIF (price ->> 'type' = 'subscription') THEN
-            IF (price -> 'subscription_period' ->> 'unit' = 'months') THEN
-              subscription_prices := array_prepend(price,subscription_prices);
-            ELSIF (price -> 'subscription_period' ->> 'unit' = 'years') THEN
-              subscription_prices := array_append(subscription_prices,price);
-            END IF;
-          END IF;
-        END LOOP;
-        results := (single_course_prices || subscription_prices);
-        IF array_length(results,1) > 0 THEN
-          NEW.pricing_models = to_jsonb(results);
-        END IF;
-        NEW.__source_schema__ = NULL;
-        RETURN NEW;
-      END;
-      $$;
+            DECLARE
+            price jsonb;
+            prices jsonb[];
+            results jsonb[];
+            single_course_prices jsonb[];
+            subscription_prices jsonb[];
+            BEGIN
+              FOR price IN SELECT * FROM jsonb_array_elements((NEW.__source_schema__ -> 'content' ->> 'prices')::jsonb)
+              LOOP
+                IF (price ->> 'type' = 'single_course') THEN
+                  single_course_prices := array_append(single_course_prices,price);
+                ELSIF (price ->> 'type' = 'subscription') THEN
+                  IF (price -> 'subscription_period' ->> 'unit' = 'months') THEN
+                    subscription_prices := array_prepend(price,subscription_prices);
+                  ELSIF (price -> 'subscription_period' ->> 'unit' = 'years') THEN
+                    subscription_prices := array_append(subscription_prices,price);
+                  END IF;
+                END IF;
+              END LOOP;
+              results := (single_course_prices || subscription_prices);
+              IF array_length(results,1) > 0 THEN
+                NEW.pricing_models = to_jsonb(results);
+              END IF;
+              NEW.__source_schema__ = NULL;
+              RETURN NEW;
+            END;
+            $$;
 
 
 SET default_tablespace = '';
@@ -394,7 +394,6 @@ CREATE TABLE public.tracked_actions (
     ext_id character varying,
     compound_ext_id character varying,
     ext_sku_id character varying,
-    ext_sku_name character varying,
     ext_product_name character varying
 );
 
@@ -1136,6 +1135,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190310032740'),
 ('20190310062807'),
 ('20190313223626'),
+('20190313223627'),
 ('20190328144400'),
 ('20190408141738'),
 ('20190408173350'),
