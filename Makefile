@@ -27,7 +27,7 @@ rebuild-and-update-packages: ## Install new packages and rebuild image
 	make docker-build
 
 bootstrap: Dockerfile docker-compose.yml .env .env.test
-	@docker-compose run --service-ports app_$(ENV) -e DETECTED_OS=$(DETECTED_OS) bin/bootstrap
+	@docker-compose run --service-ports -e DETECTED_OS=$(DETECTED_OS) app_$(ENV) bin/bootstrap
 
 lazy: bootstrap db_restore ## Build your application from scratch and restores the latest dump
 	@docker-compose run app_$(ENV) bundle exec rake db:migrate
