@@ -190,7 +190,7 @@ class Course < ApplicationRecord
   end
 
   def price
-    (main_pricing_model.try(:[],'price') || super).to_f
+    (main_pricing_model.try(:[],'price') || self[:price]).to_f
   end
 
   def main_pricing_model
