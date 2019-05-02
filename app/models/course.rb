@@ -6,8 +6,6 @@ class Course < ApplicationRecord
 
   SUPPORTED_LANGUAGES = %w(pt en es ru it de fr)
 
-  upsert_keys [:id]
-
   paginates_per 25
 
   belongs_to  :provider, optional: true
@@ -15,32 +13,123 @@ class Course < ApplicationRecord
   has_many    :enrollments
   has_many    :user_accounts, through: :enrollments
 
-  delegate :name, :slug,  to: :provider, prefix: true
+  delegate :name, :slug, to: :provider, prefix: true
 
   index_name "courses_#{Rails.env}" unless Rails.env.production?
 
-  settings index: { number_of_shards: 1 } do
+  index_config = {
+    number_of_shards:   1,
+    number_of_replicas: 0,
+    analysis: {
+      filter: {
+        programming_synonyms: {
+          type: 'synonym',
+          lenient: false,
+          synonyms: [
+            '@formula, at formula, atformula',
+            'a# => asharp',
+            'a sharp => asharp',
+            'a+ => aplus',
+            'a plus => aplus',
+            'a plus plus => aplusplus',
+            'a++ => aplusplus',
+            'c sharp => csharp',
+            'c# => csharp',
+            'c star => cstar',
+            'c* => cstar',
+            'c plus plus => cplusplus',
+            'c++ => cplusplus',
+            'c minus minus => cminusminus',
+            'c-- => cminusminus',
+            'c/alc al, cal',
+            'f# => fsharp',
+            'f sharp => fsharp',
+            'f star => fstar',
+            'f* => fstar',
+            'hal/s, hal s, hals',
+            'j sharp => jsharp',
+            'j# => jsharp',
+            'f plus plus => fplusplus',
+            'j++ => fplusplus',
+            'lc-3, lc 3, lc3',
+            'lite-c, lite c, litec',
+            'mad/i, mad i, madi',
+            'objective-c => objectivec',
+            'objective-j => objectivej',
+            'objective c => objectivec',
+            'objective j => objectivej',
+            'pl-11, pl 11, pl11',
+            'pl/0, pl 0, pl0',
+            'pl/b, pl b, plb',
+            'pl/c, pl c, plc',
+            'pl/i, pl i, pli',
+            'pl/m, pl m, plm',
+            'pl/p, pl p, plp',
+            'pl/sql, pl sql, plsql',
+            'pgplsql, pg pl sql, pgplsql',
+            'pro*c, proc',
+            'pro star c => proc',
+            'rtl/2, rtl 2, rtl2',
+            'java virtual machine, jvm',
+            'postscript, post script',
+            'javascript, js, java script',
+            'node.js, node js, nodejs',
+            'ruby on rails, ror'
+          ]
+        },
+        english_stemmer: {
+          type: 'stemmer',
+          language: 'english'
+        },
+        brazilian_stemmer: {
+          type: 'stemmer',
+          language: 'brazilian'
+        },
+        spanish_stemmer: {
+          type: 'stemmer',
+          language: 'spanish'
+        }
+      },
+      analyzer: {
+        english_programmer: {
+          tokenizer:   'whitespace',
+          filter:      ['lowercase', 'programming_synonyms', 'english_stemmer'],
+          char_filter: ['html_strip']
+        },
+        brazilian_programmer: {
+          tokenizer:   'whitespace',
+          filter:      ['lowercase', 'programming_synonyms', 'brazilian_stemmer'],
+          char_filter: ['html_strip']
+        },
+        spanish_programmer: {
+          tokenizer:   'whitespace',
+          filter:      ['lowercase', 'programming_synonyms', 'spanish_stemmer'],
+          char_filter: ['html_strip']
+        }
+      }
+    }
+  }
+
+  settings index: index_config do
     mappings dynamic: 'false' do
 
-      indexes :name, type: 'text' do
-        indexes :en, analyzer: 'english'
-        indexes :br, analyzer: 'brazilian'
-        indexes :es, analyzer: 'spanish'
+      indexes :name, type: 'text', analyzer: 'english_programmer' do
+        indexes :en, analyzer: 'english_programmer'
+        indexes :br, analyzer: 'brazilian_programmer'
+        indexes :es, analyzer: 'spanish_programmer'
       end
 
-      indexes :description, type: 'text' do
-        indexes :en, analyzer: 'english'
-        indexes :br, analyzer: 'brazilian'
-        indexes :es, analyzer: 'spanish'
+      indexes :description, type: 'text', analyzer: 'english_programmer' do
+        indexes :en, analyzer: 'english_programmer'
+        indexes :br, analyzer: 'brazilian_programmer'
+        indexes :es, analyzer: 'spanish_programmer'
       end
 
-      indexes :syllabus_markdown, type: 'text' do
-        indexes :en, analyzer: 'english'
-        indexes :br, analyzer: 'brazilian'
-        indexes :es, analyzer: 'spanish'
+      indexes :syllabus_markdown, type: 'text', analyzer: 'english_programmer' do
+        indexes :en, analyzer: 'english_programmer'
+        indexes :br, analyzer: 'brazilian_programmer'
+        indexes :es, analyzer: 'spanish_programmer'
       end
-
-      # indexes :syllabus_toc, type: 'keyword'
 
       indexes :pace,                type: 'keyword'
       indexes :price,               type: 'double'
@@ -53,10 +142,10 @@ class Course < ApplicationRecord
       indexes :root_audio,          type: 'keyword'
       indexes :subtitles,           type: 'keyword'
       indexes :root_subtitles,      type: 'keyword'
-      indexes :offered_by,          type: 'keyword'
-      indexes :instructors,         type: 'keyword'
+      indexes :offered_by,          type: 'object'
+      indexes :instructors,         type: 'object'
       indexes :category,            type: 'keyword'
-      indexes :certificate,         type: 'keyword'
+      indexes :certificate,         type: 'object'
       indexes :level,               type: 'keyword'
       indexes :tags,                type: 'keyword'
       indexes :provider_name,       type: 'keyword'
@@ -132,18 +221,17 @@ class Course < ApplicationRecord
   end
 
   def as_indexed_json(options={})
-    {
+    indexed_json = {
       id:                  id,
       name:                name,
       description:         description,
-      certificate:         certificate,
       price:               price,
       url:                 url,
       pace:                pace,
       effort:              effort,
       gateway_path:        gateway_path,
-      offered_by:          offered_by,
-      instructors:         instructors,
+      offered_by:          offered_by || [],
+      instructors:         instructors || [],
       free_content:        free_content?,
       paid_content:        paid_content?,
       subscription_type:   subscription_type?,
@@ -164,6 +252,16 @@ class Course < ApplicationRecord
       provider_slug:       provider_slug,
       syllabus_markdown:   syllabus,
     }
+
+    if certificate.present?
+      indexed_json[:certificate] = {
+        type:     certificate[:type],
+        price:    certificate[:price],
+        currency: certificate[:currency],
+      }
+    end
+
+    indexed_json
   end
 
   class << self
@@ -188,8 +286,9 @@ class Course < ApplicationRecord
       __elasticsearch__.create_index!
     end
 
-    def default_import_to_search_index
-      import_to_search_index({published: true})
+    def reindex!
+      reset_index!
+      default_import_to_search_index
     end
 
     def search(query:, filter: nil, order: nil)
@@ -286,6 +385,8 @@ class Course < ApplicationRecord
 
       end
       __elasticsearch__.search(search_exp)
+    def default_import_to_search_index
+      import_to_search_index({published: true})
     end
 
     def bulk_index_async(records)
@@ -295,9 +396,8 @@ class Course < ApplicationRecord
     private
 
     def import_to_search_index(scope = nil)
-      __elasticsearch__.import query: -> { where(scope) }
+      __elasticsearch__.import query: -> { where(scope).includes(:provider) }
     end
 
   end
-
 end

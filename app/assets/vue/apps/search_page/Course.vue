@@ -151,12 +151,12 @@
               </div>
             </template>
             <!-- Certificate -->
-            <div v-if="course.certificate" class='c-hcard(2.0)__certificate-details mx-D(n)@>desktop mx-Fs-1d125 mx-Mt-0d75'>
+            <div v-if="course.certificate && course.certificate.type" class='c-hcard(2.0)__certificate-details mx-D(n)@>desktop mx-Fs-1d125 mx-Mt-0d75'>
               {{ $t(`dictionary.certificate.${course.certificate.type}`, {price: course.certificate.price})  }}
             </div>
             <!-- Localization Details Desktop and TV -->
             <div class='mx-D(fx) mx-D(n)@phone mx-D(n)@tablet c-hcard(2.0)__localization-details mx-Fs-0d75'>
-              <div v-if="course.certificate" class='c-hcard(2.0)__certificate-details mx-Fs-1d125'>
+              <div v-if="course.certificate && course.certificate.type" class='c-hcard(2.0)__certificate-details mx-Fs-1d125'>
                 {{ $t(`dictionary.certificate.${course.certificate.type}`, {price: course.certificate.price})  }}
               </div>
               <ul class='c-list c-list--unstyled'>
