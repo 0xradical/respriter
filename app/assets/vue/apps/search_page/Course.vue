@@ -176,7 +176,9 @@
                       <use :xlink:href="subtitleIcon"></use>
                     </svg>
                     <span class='c-label__text c-label__text--uppercase mx-Fs-1d125'>
-                      {{ course.root_subtitles.length && course.root_subtitles.slice(0,1).join(",") }}
+                      <template v-if="course.root_subtitles && course.root_subtitles.length > 0">
+                        {{ course.root_subtitles.slice(0,1).join(",") }}
+                      </template>
                     </span>
                   </span>
                 </li>
@@ -339,7 +341,9 @@
                       <use :xlink:href="subtitleIcon"></use>
                     </svg>
                     <span class='c-label__text c-label__text--uppercase c-label__text--bottom'>
-                      {{ course.root_subtitles.length && course.root_subtitles.slice(0,5).join(",") }}
+                      <template v-if="course.root_subtitles && course.root_subtitles.length > 0">
+                        {{ course.root_subtitles.slice(0,5).join(",") }}
+                      </template>
                     </span>
                   </span>
                 </li>
