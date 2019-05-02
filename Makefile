@@ -13,7 +13,7 @@ else
 	DETECTED_OS := linux
 endif
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% cucumber
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% watch
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -94,14 +94,17 @@ docker-push: ## Pushes the docker image to Dockerhub
 docker-compose.yml: ### Copies docker-compose.yml from examples
 	cp examples/docker-compose.yml.example docker-compose.yml
 
+Dockerfile: Dockerfile.$(DETECTED_OS)
+	mv $< $@
+
 docker-%: ## When running `make docker-SOMETHING` it executes `make SOMETHING` inside docker context
 	@docker-compose run --service-ports app_$(ENV) make -s $*
 
 system.svg: system.gv ## Use graphviz to build system architecture graph
 	@dot -Tsvg $< -o $@
 
-Dockerfile: Dockerfile.$(DETECTED_OS)
-	mv $< $@
+watch:
+	watch -n 3 docker-compose ps
 
 %: | examples/%.example
 	cp $| $@
