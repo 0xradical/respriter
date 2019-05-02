@@ -242,13 +242,15 @@ module Search
     end
 
     def format_selected_buckets(key, buckets)
-      formatted_buckets = format_buckets buckets
-      return formatted_buckets if @filter[key].blank?
+      return [] if @filter[key].blank?
 
-      missing_keys = @filter[key].map(&:to_sym) - formatted_buckets.map(&:first)
+      formatted_buckets = format_buckets buckets
+      selected_keys     = @filter[key].map(&:to_sym)
+      missing_keys      = selected_keys - formatted_buckets.map(&:first)
+
       [
-        *formatted_buckets,
-        *missing_keys.map{ |key| [key, 0] }
+        *formatted_buckets.find_all{ |k, c| selected_keys.include?(k) },
+        *missing_keys.map{ |k| [k, 0] }
       ]
     end
 
