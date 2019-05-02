@@ -22,7 +22,7 @@
     "svgo": "^1.1.1",
     "svgo-loader": "^2.2.0",
     "tippy.js": "^3.4.1",
-    "transliteration": "^2.0.4",
+    "transliteration": "^2.1.0",
     "vue": "^2.6.10",
     "vue-avatar-cropper": "^0.0.28",
     "vue-currency-filter": "^3.2.0",

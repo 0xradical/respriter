@@ -210,7 +210,7 @@
 
       fetchResults () {
         var vm  = this
-        var stringifyedParams = qs.stringify(this.params, {indices: false, arrayFormat: 'brackets', encode: false})
+        var stringifyedParams = qs.stringify(this.params, {indices: false, arrayFormat: 'brackets', encode: true})
         var url = `/search.json?${stringifyedParams}`
         window.history.replaceState({}, 'foo', url.replace('.json', ''))
         fetch(url, { method: 'GET' }).then(function (resp) {
