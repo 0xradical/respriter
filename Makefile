@@ -1,9 +1,9 @@
 NAME   :=	classpert/rails
-TAG    :=	2.1.1
+TAG    :=	2.2.0
 IMG    :=	${NAME}\:${TAG}
 LATEST :=	${NAME}\:latest
 HEROKU_APP_NAME := classpert-web-app
-ENV ?= development
+ENV    ?= development
 
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)

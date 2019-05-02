@@ -1,7 +1,7 @@
 version: '3'
 services:
   base: &base
-    image: classpert/rails:2.1.0
+    image: classpert/rails:2.2.0
     volumes:
       - .:/app
 
@@ -43,7 +43,7 @@ services:
     command: bin/webpack-dev-server
     environment:
       - "WEBPACKER_DEV_SERVER_HOST=0.0.0.0"
-      - "WEBPACKER_DEV_SERVER_PUBLIC=webpacker:3035"
+      - "WEBPACKER_DEV_SERVER_PUBLIC=localhost:3035"
     ports:
       - "3035:3035"
 
