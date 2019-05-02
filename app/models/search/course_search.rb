@@ -235,23 +235,28 @@ module Search
     end
 
     def format_aggregation_term(key, aggregation)
+      selected_buckets   = format_buckets aggregation.selected&._&.buckets
+      unselected_buckets = format_buckets aggregation.unselected&._&.buckets
+
+      selected_keys   = (@filter[key] || []).map(&:to_sym)
+      missing_keys    = selected_keys - selected_buckets.map(&:first)
+      unselected_keys = selected_buckets.find_all{ |k, c| !selected_keys.include?(k) }.to_h
+
+      selected_buckets = selected_buckets.find_all{ |k, c| selected_keys.include?(k) }
+      selected_buckets.concat( missing_keys.map{ |k| [k, 0] } )
+
+      unselected_buckets = unselected_buckets.map do |key, count|
+        if unselected_keys[key]
+          [ key, count + unselected_keys[key] ]
+        else
+          [ key, count ]
+        end
+      end
+
       {
-        selected:   format_selected_buckets(key, aggregation.selected&._&.buckets),
-        unselected: format_buckets(aggregation.unselected&._&.buckets)
+        selected:   selected_buckets.find_all{ |k, c| selected_keys.include?(k) },
+        unselected: unselected_buckets.sort_by(&:last).reverse
       }
-    end
-
-    def format_selected_buckets(key, buckets)
-      return [] if @filter[key].blank?
-
-      formatted_buckets = format_buckets buckets
-      selected_keys     = @filter[key].map(&:to_sym)
-      missing_keys      = selected_keys - formatted_buckets.map(&:first)
-
-      [
-        *formatted_buckets.find_all{ |k, c| selected_keys.include?(k) },
-        *missing_keys.map{ |k| [k, 0] }
-      ]
     end
 
     def format_aggregation_range(key, aggregation)
