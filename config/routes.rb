@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { false }
+  root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { '' }
 
   get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
   get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
