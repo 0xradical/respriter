@@ -168,6 +168,21 @@ CREATE FUNCTION public._insert_or_add_to_provider() RETURNS trigger
 
 
 --
+-- Name: course_normalize_languages_trigger(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.course_normalize_languages_trigger() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  NEW.audio     = normalize_languages(NEW.audio);
+  NEW.subtitles = normalize_languages(NEW.subtitles);
+  RETURN NEW;
+END;
+$$;
+
+
+--
 -- Name: gen_compound_ext_id(); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -193,6 +208,39 @@ CREATE FUNCTION public.md5_url() RETURNS trigger
         return NEW;
       END
       $$;
+
+
+--
+-- Name: normalize_languages(text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.normalize_languages(languages text[]) RETURNS text[]
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  upcased_languages text[];
+BEGIN
+  WITH
+  subtitles AS (
+    SELECT DISTINCT unnest(languages) AS subtitle
+  ),
+  subtitle_arrays AS (
+    SELECT regexp_split_to_array(subtitle, '-') AS subtitle_array
+    FROM subtitles
+  )
+  SELECT DISTINCT
+    ARRAY_AGG(
+      CASE WHEN array_length(subtitle_array, 1) = 2
+      THEN subtitle_array[1] || '-' || upper(subtitle_array[2])
+      ELSE subtitle_array[1]
+      END
+    )
+  FROM subtitle_arrays
+  INTO upcased_languages;
+
+  RETURN upcased_languages;
+END;
+$$;
 
 
 --
@@ -1043,6 +1091,13 @@ CREATE UNIQUE INDEX index_user_accounts_on_unlock_token ON public.user_accounts 
 
 
 --
+-- Name: courses course_normalize_languages; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER course_normalize_languages BEFORE INSERT OR UPDATE ON public.courses FOR EACH ROW EXECUTE PROCEDURE public.course_normalize_languages_trigger();
+
+
+--
 -- Name: tracked_actions set_compound_ext_id; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -1094,52 +1149,12 @@ ALTER TABLE ONLY public.favorites
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20180405131603'),
-('20180405131604'),
-('20180523201233'),
-('20180523201244'),
-('20180525023807'),
-('20180607040455'),
-('20180607042446'),
-('20181015193451'),
-('20181015193452'),
-('20181102111502'),
-('20181113000000'),
-('20181115164155'),
-('20181115164156'),
-('20181127193928'),
-('20181128123550'),
-('20181205214627'),
-('20181206020722'),
-('20181213172406'),
-('20181214163153'),
-('20181217193900'),
-('20181219141415'),
-('20181220182109'),
-('20181226142754'),
-('20190122215523'),
-('20190208194421'),
-('20190216154846'),
-('20190217234501'),
-('20190218212408'),
-('20190220000225'),
-('20190222125654'),
-('20190226205725'),
-('20190226205726'),
-('20190226223828'),
-('20190228203835'),
-('20190228220559'),
-('20190306194201'),
-('20190310005126'),
-('20190310024220'),
-('20190310031745'),
-('20190310032740'),
-('20190310062807'),
 ('20190313223626'),
 ('20190313223627'),
 ('20190328144400'),
 ('20190408141738'),
 ('20190408173350'),
-('20190416123653');
+('20190416123653'),
+('20190503093752');
 
 
