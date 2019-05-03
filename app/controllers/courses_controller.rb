@@ -54,15 +54,25 @@ class CoursesController < ApplicationController
 
   def prepare_filter(filter)
     return Hash.new if filter.blank?
-    {
+    filters = {
       root_audio:    filter[:audio],
       subtitles:     filter[:subtitles],
-      category:      filter[:categories],
+      category:      ensure_array_filter_query(filter[:categories]),
       tags:          filter[:tags],
       provider_name: filter[:providers],
       price:         filter[:price],
       paid_content:  filter[:paid_content],
     }
+
+    filters.find_all{ |k,v| v.present? }.to_h
+  end
+
+  def ensure_array_filter_query(data)
+    if data.is_a?(Array)
+      data.uniq.compact
+    else
+      [ data ].uniq.compact
+    end
   end
 
   def format_bucket(key, aggregation)

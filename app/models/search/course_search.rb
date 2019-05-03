@@ -136,7 +136,7 @@ module Search
         selected: {
           filter: filters_by_key[key],
           aggs: {
-            _: { terms: { field: key } }
+            _: { terms: { field: key, size: 100 } }
           }
         },
         unselected: {
