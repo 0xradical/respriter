@@ -17,7 +17,6 @@ class CoursesController < ApplicationController
           search_query_params[:order] = search_params[:order].to_h.to_a
         end
 
-        # binding.pry
         results = Search::CourseSearch.new(search_query_params).search
 
         render json: format_aggregations(results)
