@@ -13,7 +13,7 @@ else
 	DETECTED_OS := linux
 endif
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% watch
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% watch
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -64,6 +64,9 @@ db_up: ## Run the database server
 
 db_reset: ## Reset your database
 	@docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec rake db:drop db:create db:migrate
+
+db_migrate: ## Run database migration
+	@docker-compose run app_$(ENV) bundle exec rake db:migrate
 
 db_restore: ## Downloads latest production dump from Heroku and restores locally
 	@heroku pg:backups:download --app=$(HEROKU_APP_NAME)-prd --output=./db/backups/latest.dump
