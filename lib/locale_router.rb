@@ -6,14 +6,12 @@ class LocaleRouter
 
   def call(env)
 
-    @app.call(env) if env['REQUEST_PATH'] =~ /^\/api\/admin\//
-
-    @env = env
+    @path, @env = env['REQUEST_PATH'], env
     @subdomains, @tld_domain = extract_subdomains, extract_tld_domain
     @request = Rack::Request.new(env)
 
     env['rack.session']['intl'] ||= @request.params['intl']
-    if intl_subdomain?
+    if (intl_subdomain? && !whitelisted_routes)
       if (supported_locale.present? && !env['rack.session']['intl'])
         return [301, { "Location" => redirection_url, "Cache-Control" => "no-cache"}, {}]
       end
@@ -32,7 +30,7 @@ class LocaleRouter
   end
 
   def redirection_url
-    "//#{[supported_locale&.downcase, @subdomains, @tld_domain].flatten.join('.')}#{@env['REQUEST_PATH']}"
+    "//#{[supported_locale&.downcase, @subdomains, @tld_domain].flatten.join('.')}#{@path}"
   end
 
   def supported_locale
@@ -48,6 +46,10 @@ class LocaleRouter
   def intl_subdomain?
     subdomain = @subdomains&.first&.downcase
     subdomain.blank? || subdomain.eql?('www') || subdomain.eql?('staging')
+  end
+
+  def whitelisted_routes
+    @path =~ /^\/api\/admin\// || @path =~ /^\/admin_accounts\/sign_in/
   end
 
   def i18n_subdomains
