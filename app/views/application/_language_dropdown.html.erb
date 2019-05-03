@@ -15,7 +15,7 @@
         <% end %>
       </li>
       <li>
-        <%= link_to (root_url(subdomain: ['pt-BR', params[:subdomain]].join('.')).chomp('/') + request.path) do %>
+        <%= link_to (root_url(subdomain: ['pt-BR', params[:subdomain]].join('.').chomp('.')).chomp('/') + request.path) do %>
           <span class='c-label'>
             <%= svg_icons_lib('pt', class: 'c-label__icon') %>
             <span class='c-label__text c-label__text--shrink-25%'>PT</span>

@@ -10,7 +10,8 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 
-require_relative "../app/middlewares/locale_router"
+# Middlewares
+require_relative "../lib/locale_router"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

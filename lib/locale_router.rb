@@ -6,6 +6,8 @@ class LocaleRouter
 
   def call(env)
 
+    @app.call(env) if env['REQUEST_PATH'] =~ /^\/api\/admin\//
+
     @env = env
     @subdomains, @tld_domain = extract_subdomains, extract_tld_domain
     @request = Rack::Request.new(env)
@@ -30,7 +32,7 @@ class LocaleRouter
   end
 
   def redirection_url
-    "//#{[supported_locale&.downcase, @subdomains, @tld_domain].flatten.join('.')}"
+    "//#{[supported_locale&.downcase, @subdomains, @tld_domain].flatten.join('.')}#{@env['REQUEST_PATH']}"
   end
 
   def supported_locale
