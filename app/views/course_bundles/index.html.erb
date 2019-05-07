@@ -1,0 +1,83 @@
+<% content_for :meta do %>
+  <title><%= t(".meta.title_html", tag: t("tags.#{@tag}")) %></title>
+  <meta name='description' content='<%= t(".meta.description_html", tag: t("tags.#{@tag}")) %>' />
+  <meta property='og:description' content='<%= t(".meta.description_html", tag: t("tags.#{@tag}")) %>' />
+<% end %>
+
+<%= content_for :x_vue_templates do %>
+<%= render 'application/x_vue_templates/social_share',
+title: t(".meta.title_html", tag: t("tags.#{@tag}")),
+quote: t(".meta.description_html", tag: t("tags.#{@tag}")),
+description: t(".meta.description_html", tag: t("tags.#{@tag}")), 
+hashtags: "classpert,online courses,#{@tag}" %>
+<% end %>
+
+<%= content_for :body_html_attributes do %>
+  id='results' class='mx-Bc(lighter-gray)'
+<% end %>
+
+<div class='mx-Bc(white)'>
+  <div class='container'>
+    <div class="c-hero(2.0) c-hero(2.0)--bg-white">
+      <div class="c-hero(2.0)__art c-hero(2.0)__art--center-right"
+        style='background-image:url(<%= asset_pack_path("media/svg/#{@tag.gsub('_','-')}_art.svg") %>);background-size:auto 50%'>
+        <div class="c-hero(2.0)__content c-hero(2.0)__content--giant-1">
+
+          <h1 class="mx-Fs-2@large mx-Fs-1d5@extra-small">
+            <%= t(".meta.title_html", tag: t("tags.#{@tag}")) %>
+          </h1>
+
+          <p class="mx-D(n)@phone c-hero(2.0)__text-slot mx-Mt(0d875)">
+          <%= t(".meta.description_html", tag: t("tags.#{@tag}")) %>
+            <div class='mx-Pt-0d75 mx-Pb-0d5 mx-Fs-0d875@extra-small'>
+              <span class='mx-D(n)@extra-small' style='font-weight:700'>Share it!</span> &nbsp;
+              <div class='mx-D(ib) mx-Va(m)'><div data-vue-cpt='social-share'></div></div>
+            </div>
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='container mx-Mb-1d5'>
+
+  <div class='mx-D(n)@phone row'>
+    <div class='col-12'>
+      <div class='mx-Pt-1d5'>
+        <ul class='c-list c-list--unstyled c-list--inline mx-Fs-1d25@>small'>
+          <% ('A'..'Z').each do |letter| %>
+            <li style='margin-right:10px'>
+              <a href='#<%= letter%>'>
+                <%= letter %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+        <div class='mx-Cl(b)'></div>
+      </div>
+    </div>
+  </div>
+
+  <% @bundles_by_letter.each do |bundles| %>
+    <h4 class='mx-Pt-2' id='<%= bundles.keys.first[0].upcase %>'><%= bundles.keys.first[0].upcase %></h4>
+    <div class='row'>
+      <% bundles.each do |name,count| %>
+        <div class='col-lg-4'>
+          <%= link_to course_bundle_path(name.dasherize), class: 'c-label c-label--double-line' do %>
+            <div style='background-color:#FFF;padding:10px;margin-top:10px'>
+              <%= svg_use('tags', name, { class: 'c-label__icon' }) %>
+              <span class='c-label__text' style='font-size:0.40em'>
+                <b><%= t("tags.#{name}") %></b>
+                <br />
+                <span style='font-size:0.75em;display:inline-block;margin-top:4px'> <%= count %> online courses</span>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+</div>

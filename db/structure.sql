@@ -5,7 +5,6 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -386,7 +385,8 @@ CREATE TABLE public.courses (
     level public.level[] DEFAULT '{}'::public.level[],
     __provider_name__ character varying,
     __source_schema__ jsonb,
-    instructors jsonb DEFAULT '[]'::jsonb
+    instructors jsonb DEFAULT '[]'::jsonb,
+    curated_tags character varying[] DEFAULT '{}'::character varying[]
 );
 
 
@@ -1229,6 +1229,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190408173350'),
 ('20190416123653'),
 ('20190503093752'),
+('20190506184046'),
 ('20190515101502'),
 ('20190515104037');
 

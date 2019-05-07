@@ -9,19 +9,18 @@ module ApplicationHelper
     link_to(label, send("user_account_#{provider.to_s}_omniauth_authorize_path"))
   end
 
-  # Important: SVG use has a very strong CORS restriction (it does not serve SVG from
-  # other domains). That is the reason host: '//´ is being used to bypass the CDN
-  def svg_lib(svg_path, svg_options={})
+  def svg_use(sprite_name, vector_name, svg_options={})
     tag.svg(svg_options) do
-      tag.use 'xlink:href': svg_path
+      tag.use 'xlink:href': "##{sprite_name}-#{vector_name}"
     end
   end
 
-  def svg_icons_lib(icon_name, svg_options={})
-    svg_lib("#{asset_pack_url('icons-lib.svg', host: '//')}##{icon_name}", svg_options)
+  def home_controller?
+    params[:controller].eql?('home')
   end
 
-  def svg_providers_lib(provider_name, svg_options={})
-    svg_lib("#{asset_pack_url('providers-lib.svg', host: '//')}##{provider_name}", svg_options)
+  def sticky_navbar?
+    !(%w(home static_pages).include?(params[:controller]) || devise_controller?)
   end
+
 end

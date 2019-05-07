@@ -1,163 +1,4 @@
 pt-BR:
-  tags: &tags
-    arts_and_design: 'Artes e Design'
-    business: 'Negócios'
-    marketing: 'Marketing'
-    computer_science: 'Ciência da Computação'
-    data_science: 'Ciência de Dados'
-    language_and_communication: 'Idiomas e Comunicação'
-    life_sciences: 'Ciências da Vida'
-    math_and_logic: 'Matemática e Lógica'
-    personal_development: 'Desenvolvimento Pessoal'
-    physical_science_and_engineering: 'Ciências Físicas e Engenharia'
-    social_sciences: 'Ciências Sociais'
-    health_and_fitness: 'Saúde e Bem Estar'
-    design: 'Design'
-    art_culture: 'Arte & Cultura'
-    architecture: 'Arquitetura'
-    history: 'História'
-    humanities: 'Humanidades'
-    literature: 'Literatura'
-    music: 'Música'
-    photography: 'Fotografia'
-    design_sprint_foundations: 'Princípios de Design Sprint'
-    design_and_creativity: 'Design e Criatividade'
-    visual_arts: 'Artes Visuais'
-    film_and_theater: 'Cinema e Teatro'
-    digital_media: 'Mídias Digitais'
-    business_management: 'Gestão de Negócios'
-    economics_finance: 'Economia e Finanças'
-    business_analyst: 'Análise de Negócios'
-    office_productivity: 'Produtividade'
-    hr: 'RH'
-    management_and_leadership: 'Gestão e Liderança'
-    accouting: 'Contabilidade'
-    project_management: 'Gestão de Projetos'
-    strategic_management: 'Gestão Estratégica'
-    industry_specific: 'Indústria Específica'
-    entrepreneurship: 'Empreendedorismo'
-    human_resources: 'Recursos Humanos'
-    finance: 'Finanças'
-    business_intelligence: 'Business Intelligence'
-    profesional_development: 'Desenvolvimento Profissional'
-    excel: 'Excel'
-    digital_marketing: 'Marketing Digital'
-    content_marketing: 'Marketing de Conteúdo'
-    marketing_analytics: 'Marketing Analítico'
-    sales: 'Vendas'
-    android_basics: 'Noções Básicas de Android'
-    android_developer: 'Desenvolvedor Android'
-    artificial_intelligence: 'Inteligência Artificial'
-    computer_vision: 'Visão Computacional'
-    frontend_developer: 'Desenvolvedor Front End'
-    full_stack_developer: 'Desenvolvedor Full Stack'
-    intro_self_driving_car: 'Introdução a Carros Autônomos'
-    intro_to_programming: 'Introdução à Programação'
-    ios: 'IOS'
-    deep_learning: 'Deep Learning'
-    machine_learning: 'Machine Learning'
-    react: 'React'
-    school_of_ai: 'Escola de IA'
-    autonomous_system: 'Sistemas Autônomos'
-    self_driving_car: 'Carros Autônomos'
-    unreal: 'Unreal'
-    it_and_software: 'TI & Software'
-    mobile_web: 'Mobile Web'
-    vr: 'RV'
-    virtual_reality: 'Realidade Virtual'
-    python: 'Python'
-    internet_of_things: 'Internet da Coisas'
-    ios_development: 'Desenvolvimento IOS'
-    information_technology: 'Tecnologia da Informação'
-    devops: 'Devops'
-    software_development: 'Desenvolvimento de Software'
-    android_development: 'Desenvolvimento Android'
-    mobile_development: 'Desenvolvimento Mobile'
-    game_development: 'Desenvolvimento de Jogos'
-    programming_languages: 'Linguagens de Programação'
-    computer_networking: 'Rede de Computadores'
-    web_development: 'Desenvolvimento Web'
-    cybersecurity: 'Segurança Cibernética'
-    algorithms_and_data_structure: 'Algorítmos e Estrutura de Dados'
-    databases: 'Banco de Dados'
-    blockchain_and_cryptocurrencies: 'Blockchain e Criptomoedas'
-    data_analytics_statistics: 'Análise Estatística de Dados'
-    data_foundations: 'Princípios de Dados'
-    data_scientist: 'Cientista de Dados'
-    big_data: 'Big Data'
-    data_analysis: 'Análise de Dados'
-    bioinformatics: 'Bioinformática'
-    data_mining: 'Mineração de Dados'
-    data_visualization: 'Visualização de Dados'
-    language: 'Idiomas'
-    communication: 'Comunicação'
-    nlp: 'PNL'
-    teacher_training: 'Treinamento de Professores'
-    writing: 'Redação'
-    esl: 'Inglês como 2ª língua'
-    grammar_and_writing: 'Gramática e Redação'
-    climate_change: 'Mudança Climática'
-    environmental_science: 'Ciência Ambiental'
-    biology: 'Biologia'
-    energy_and_earth_sciences: 'Energia e Ciências da Terra'
-    environmental_studies: 'Estudos Ambientais'
-    math: 'Matemática'
-    logic: 'Lógica'
-    algorithms: 'Algorítmos'
-    algebra_and_geometry: 'Álgebra e Geometría'
-    statistics_and_probability: 'Estatística e Probabilidade'
-    calculus: 'Cálculo'
-    lifestyle: 'Lifestyle'
-    cooking: 'Culinária'
-    coaching: 'Coaching'
-    test_prep: 'Curso Preparatório'
-    teacher_development: 'Desenvolvimento de Professores'
-    stem: 'STEM'
-    higher_education: 'Ensino Superior'
-    k12: 'Educação Primária e Secundária'
-    course_development: 'Desenvolvimento de Cursos'
-    online_education: 'Educação Online'
-    career_development: 'Desenvolvimento de Carreira'
-    communication_skills: 'habilidades de comunicação'
-    engineering: 'Engenharia'
-    physics: 'Física'
-    robotics: 'Robótica'
-    chemistry: 'Química'
-    electronics: 'Eletrônicos'
-    mechanical_engineering: 'Engenharia Mecânica'
-    electrical_engineering: 'Engenharia Eletrônica'
-    civil_engineering: 'Engenharia Civíl'
-    astronomy: 'Astronomia'
-    gis: 'SIG'
-    quantum_mechanics: 'Mecânica Quântica'
-    nanotechnology: 'Nanotecnologia'
-    culture: 'Cultura'
-    religion: 'Religião'
-    philosophy: 'Filosofia'
-    law: 'Direito'
-    ethics: 'Ética'
-    philosophy_ethics: 'Ética Filosófica'
-    anthropology: 'Antropologia'
-    behavioral_sciences: 'Ciências Comportamentais'
-    economics: 'Economia'
-    geography: 'Geografia'
-    international_studies: 'Estudos Internacionais'
-    politics: 'Política'
-    psichology: 'Psicologia'
-    sociology: 'Sociologia'
-    urban_planning: 'Planejamento Urbano'
-    political_science: 'Ciência Política'
-    human_rights: 'Direitos Humanos'
-    sustainability: 'Sustentabilidade'
-    sports: 'Esportes'
-    food_nutrition: 'Nutriçao'
-    health_and_safety: 'Saúde e Segurança'
-    medicine: 'Medicina'
-    health_care: 'Cuidados com a Saúde'
-    disease_and_disorder: 'Doenças e Enfermidades'
-    nutrition_and_wellness: 'Nutrição e Bem Estar'
-    public_health: 'Saúde Pública'
-    nursing: 'Enfermagem'
   careers: &careers
     data_scientist: Cientista de Dados
     game_developer: Desenvolvedor de Jogos
@@ -172,6 +13,7 @@ pt-BR:
         password_confirmation: "Confirmação de senha"
   dictionary: &dictionary
     terms_and_conditions: "Termos e Condições"
+    providers: 'Plataformas'
     privacy_policy: "Política de Privacidade"
     blog: "Blog"
     levels:
@@ -243,7 +85,6 @@ pt-BR:
     highest_price: 'Maior preço'
     no_suggestions_message: "Desculpe, não foi possível encontrar <b>%{term}</b>"
     no_options_available: "Nenhuma opção disponível para o filtro atual"
-    providers: 'Plataformas'
     top_reviewed: 'Melhor avaliados'
     favorite: 'Favoritar'
     go_to_course: 'Ir para o curso'
@@ -314,6 +155,7 @@ pt-BR:
       ser cancelada a qualquer momento"
   home:
     index:
+      hero_html: 'Encontre e compare <b>cursos online</b> <br/> de diversas plataformas'
       new_to_classpert: 'Novo na Classpert?'
       watch_the_video: 'Assista ao nosso video!'
       kickstart_your_career: 'Inicie sua carreira'
@@ -332,34 +174,28 @@ pt-BR:
           description: 'Aprenda habilidades e conhecimentos artísticos práticos. Explore uma ampla
           variedade de assuntos em Artes e Design. Encontre cursos online gratuitos e pagos com
           certificado'
+        html:
+          hero_title: 'Aprenda habilidades e conhecimentos artísticos práticos. Explore uma ampla
+          variedade de assuntos em Artes e Design. Encontre cursos online gratuitos e pagos com
+          certificado'
       business:
         meta:
           title: 'Cursos Online de Negócios | Classpert'
           description: 'Melhore suas habilidades em todos os aspectos do ambiente empresarial
           moderno. Cultive competências valiosas em finanças, operações, gerenciamento e estratégia.
           Encontre cursos online gratuitos e pagos com certificado'
-      marketing:
-        meta:
-          title: 'Cursos Online de Marketing | Classpert'
-          description: 'Desenvolva suas habilidades em marketing com os melhores cursos online.
-          Aprenda táticas para alcançar, atrair, engajar e reter clientes. Encontre cursos online
-          gratuitos e pagos com certificado.'
-      computer_science:
-        meta:
-          title: 'Cursos Online de Ciência da Computação | Classpert'
-          description: 'Descubra cursos e especializações de ciência da computação das mais renomadas
-          plataformas. Estude o design, desenvolvimento e análise de software e hardware. Encontre
-          cursos online gratuitos e pagos com certificado'
-      data_science:
-        meta:
-          title: 'Cursos Online de Ciência de Dados | Classpert'
-          description: 'Avance na carreira de cientista de dados com cursos online das melhores
-          plataformas do mundo. Extraia conhecimento e insights de grandes quantidades de dados.
-          Encontre cursos online gratuitos e pagos com certificado.'
+        html:
+          hero_title: 'Melhore suas habilidades em todos os aspectos do ambiente empresarial
+          moderno. Cultive competências valiosas em finanças, operações, gerenciamento e estratégia.
+          Encontre cursos online gratuitos e pagos com certificado'
       language_and_communication:
         meta:
           title: 'Cursos Online de Idiomas e Comunicação | Classpert'
           description: 'Desenvolva habilidades de ouvir, ler, falar e escrever em outras línguas.
+          Domine técnicas de comunicação verbal e não verbal. Encontre cursos online gratuitos e pagos
+          com certificado.'
+        html:
+          hero_title: 'Desenvolva habilidades de ouvir, ler, falar e escrever em outras línguas.
           Domine técnicas de comunicação verbal e não verbal. Encontre cursos online gratuitos e pagos
           com certificado.'
       life_sciences:
@@ -368,10 +204,18 @@ pt-BR:
           description: 'Compreenda estruturas físicas, processos químicos e interações moleculares
           de estruturas vivas. Expanda suas fronteiras com cursos das melhores universidades do
           mundo. Encontre cursos online gratuitos e pagos com certificado'
+        html:
+          hero_title: 'Compreenda estruturas físicas, processos químicos e interações moleculares
+          de estruturas vivas. Expanda suas fronteiras com cursos das melhores universidades do
+          mundo. Encontre cursos online gratuitos e pagos com certificado'
       math_and_logic:
         meta:
           title: 'Cursos Online de Matemática e Lógica | Classpert'
           description: 'Estude álgebra, geometria, aritmética, estatística e muito mais. Desenvolva
+          seu raciocínio e pensamento analítico. Encontre cursos online gratuitos e pagos com
+          certificado.'
+        html:
+          hero_title: 'Estude álgebra, geometria, aritmética, estatística e muito mais. Desenvolva
           seu raciocínio e pensamento analítico. Encontre cursos online gratuitos e pagos com
           certificado.'
       personal_development:
@@ -380,16 +224,18 @@ pt-BR:
           description: 'O desenvolvimento pessoal é crucial para a evolução em todos os aspectos da
           vida. Atinja o seu potencial máximo na vida pessoal e na carreira profissional. Encontre
           cursos online gratuitos e pagos com certificado.'
-      physical_science_and_engineering:
-        meta:
-          title: 'Cursos Online de Física e Engenharia | Classpert'
-          description: 'Aprenda a resolver problemas e realizar projetos que beneficiem a humanidade.
-          Explore todas as áreas das Ciência Físicas e Engenharia. Encontre cursos online gratuitos e
-          pagos com certificado.'
+        html:
+          hero_title: 'O desenvolvimento pessoal é crucial para a evolução em todos os aspectos da
+          vida. Atinja o seu potencial máximo na vida pessoal e na carreira profissional. Encontre
+          cursos online gratuitos e pagos com certificado.'
       social_sciences:
         meta:
           title: 'Cursos Online de Ciências Sociais | Classpert'
           description: 'Estude todas as particularidades da sociedade humana e da vida social. Entenda
+          muitos dos maiores problemas do mundo. Encontre cursos online gratuitos e pagos com
+          certificado.'
+        html:
+          hero_title: 'Estude todas as particularidades da sociedade humana e da vida social. Entenda
           muitos dos maiores problemas do mundo. Encontre cursos online gratuitos e pagos com
           certificado.'
       health_and_fitness:
@@ -398,6 +244,23 @@ pt-BR:
           description: 'Aumente seu conhecimento sobre manutenção da saúde, prevenção de doenças e
           redução de comportamentos de risco. Viva mais e atinja seus objetivos. Encontre cursos
           online gratuitos e pagos com certificado.'
+        html:
+          hero_title: 'Aumente seu conhecimento sobre manutenção da saúde, prevenção de doenças e
+          redução de comportamentos de risco. Viva mais e atinja seus objetivos. Encontre cursos
+          online gratuitos e pagos com certificado.'
+  course_bundles:
+    index:
+      meta:
+        title_html: "Cursos de %{tag}"
+        description_html: "Encontre cursos online gratuitos e pagos de %{tag}. <br /> 
+        Escolha entre tópicos selecionados e aprenda com os melhores instrutores e instituições."
+
+    show:
+      meta:
+        title_html: "Cursos de %{tag}"
+        description_html: "Encontre cursos online gratuitos e pagos de %{tag}. <br />
+        Escolha entre tópicos selecionados e aprenda com os melhores instrutores e instituições."
+
   pages:
     home_index:
       meta:

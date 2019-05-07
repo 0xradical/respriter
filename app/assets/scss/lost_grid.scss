@@ -1,4 +1,4 @@
-$container-size: 1025px 0.8rem;
+$container-size: 1140px 0.8rem;
 
 body {
   //lost-utility: edit;
@@ -47,8 +47,6 @@ body {
 }
 
 footer {
-
-  padding: 40px 0px;
 
   ul {
     list-style:none;
@@ -100,15 +98,6 @@ footer {
     }
   }
 
-}
-
-#providers {
-  padding: 80px 0px;
-  height: 405px;
-  @media(--tablet-max) {
-    padding:40px 0px 20px;
-  }
-  background-color: #FFF;
 }
 
 .l-grid\[4w\@desktop\|3w\@tablet\|1w\@phone\] {

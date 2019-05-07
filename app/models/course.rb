@@ -10,7 +10,7 @@ class Course < ApplicationRecord
     en: 'en',
   }
 
-  paginates_per 25
+  paginates_per 50
 
   belongs_to  :provider, optional: true
 
@@ -175,6 +175,33 @@ class Course < ApplicationRecord
   scope :free,          -> { where(free_content: true) }
   scope :featured,      -> { order('enrollments_count DESC') }
   scope :locales,       -> (l) { where("audio @> ?", "{#{l.join(',')}}") }
+  scope :by_tags,       -> (tags) { where("curated_tags @> ARRAY[?]::varchar[]", tags) }
+
+  def self.unnest_curated_tags(sub_query='courses')
+    select('*').from(select("unnest(curated_tags) as tag").from(sub_query), :unnested_curated_tags)
+  end
+
+  def self.count_by_bundle(tag)
+    query = <<-SQL
+      select tag, count(*) FROM (
+        select unnest(curated_tags) as tag FROM (
+          select * from courses where ? = ANY(curated_tags)
+        ) t 
+      ) tags GROUP by tag
+    SQL
+    connection.select_all(sanitize_sql_array([query,tag]))
+  end
+
+  def self.count_by_bundlea(tag)
+    query = <<-SQL
+      select * FROM (
+        select unnest(curated_tags) as tag FROM (
+          select * from courses where ? = ANY(curated_tags)
+        ) t 
+      ) tags
+    SQL
+    connection.select_all(sanitize_sql_array([query,tag]))
+  end
 
   def root_languages_for_audio
     audio.map { |lang| lang.split('-')[0] }.uniq

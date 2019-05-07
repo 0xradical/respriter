@@ -1,0 +1,40 @@
+ <script type='x-vue-template' id='social-share'>
+   <social-sharing url="<%= request.url %>"
+      title="<%= title %>"
+      description="<%= description %>"
+      quote="<%= quote %>"
+      hashtags="<%= hashtags %>"
+      twitter-user="classpert"
+      inline-template>
+    <ul class='c-list c-list--unstyled c-list--inline'>
+      <li>
+        <network network="linkedin">
+          <svg width='1.5em' height='1.5em'>
+            <use xlink:href='#icons-linkedin_share'></use>
+          </svg>
+        </network>
+      </li>
+      <li class='mx-Ml-0d875'>
+        <network network="twitter">
+          <svg width='1.5em' height='1.5em'>
+            <use xlink:href='#icons-twitter_share'></use>
+          </svg>
+        </network>
+      </li>
+      <li class='mx-Ml-0d875'>
+        <network network="facebook">
+          <svg width='1.5em' height='1.5em'>
+            <use xlink:href='#icons-facebook_share'></use>
+          </svg>
+        </network>
+      </li>
+      <li class='mx-Ml-0d875'>
+        <network network="reddit">
+          <svg width='1.5em' height='1.5em'>
+            <use xlink:href='#icons-reddit_share'></use>
+          </svg>
+        </network>
+      </li>
+    </ul>
+  </social-sharing>
+</script>

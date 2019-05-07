@@ -2,12 +2,14 @@
 import 'elements/build/dist/elements.bundle.css'
 import 'elements/build/dist/elements.bundle.js'
 import 'elements/build/icon-font.css'
-import iconsLibPath from '!file-loader?name=[name]-[hash].[ext]!elements/build/dist/svgs/icons-lib'
-import providersLibPath from '!file-loader?name=[name]-[hash].[ext]!elements/build/dist/svgs/providers-lib'
+import iconsLibPath from '!file-loader?name=[name]-[hash].[ext]!elements/build/dist/svgs/lib/icons.svg'
+import providersLibPath from '!file-loader?name=[name]-[hash].[ext]!elements/build/dist/svgs/packs/providers.svg'
+import '!file-loader?name=[name]-[hash].[ext]!elements/build/dist/svgs/packs/tags.svg'
 
 // Import single svgs
 import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/logo'
 import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/logo_negative'
+import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/logo_bw-negative'
 import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/logo_symbol'
 import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/logo_symbol-negative'
 import '!file-loader?name=[name].[ext]!elements/build/dist/svgs/no-video'

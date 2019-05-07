@@ -13,7 +13,7 @@ else
 	DETECTED_OS := linux
 endif
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% watch
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_download db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% watch
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -66,14 +66,22 @@ yarn-unlink-%: ## Unlink yarn from your local package copy. Usage e.g: yarn-unli
 db_up: ## Run the database server
 	@docker-compose run --service-ports postgres
 
-db_reset: ## Reset your database
-	@docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec rake db:drop db:create db:migrate
+db_drop: ## Drops local databases
+	@docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec rake db:drop
+
+db_create: ## Creates local databases
+	@docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec rake db:create
 
 db_migrate: ## Run database migration
 	@docker-compose run app_$(ENV) bundle exec rake db:migrate
 
-db_restore: ## Downloads latest production dump from Heroku and restores locally
+db_reset: ## Reset your database
+	@docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec rake db:drop db:create db:migrate
+
+db_download: ## Dowloads latest production dump from Heroku
 	@heroku pg:backups:download --app=$(HEROKU_APP_NAME)-prd --output=./db/backups/latest.dump
+
+db_restore: ## Restores lastest dump
 	@pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d quero_development ./db/backups/latest.dump
 	@docker-compose run --service-ports app_$(ENV) bundle exec rake db:migrate
 	@rm ./db/backups/latest.dump

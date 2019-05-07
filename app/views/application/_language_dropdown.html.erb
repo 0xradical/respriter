@@ -1,6 +1,6 @@
 <div data-dropdown class='c-dropdown'>
-  <a class='c-label' style='color:#FFF' href='javascript:void(0)'>
-    <%= svg_icons_lib(I18nHelper.root_language, class: 'c-label__icon') %>
+  <a class='c-label'href='javascript:void(0)'>
+    <%= svg_use('icons', I18nHelper.root_language, class: 'c-label__icon') %>
     <span class='c-label__text c-label__text--shrink-25% mx-Tt(u)'><%= I18nHelper.root_language %></span>
   </a>
   <div class='c-dropdown__menu-slot'>
@@ -9,7 +9,7 @@
       <li>
         <%= link_to (root_url(subdomain: params[:subdomain]).chomp('/') + request.path + '?intl=true') do %>
           <span class='c-label'>
-            <%= svg_icons_lib('en', class: 'c-label__icon') %>
+            <%= svg_use('icons', 'en', class: 'c-label__icon') %>
             <span class='c-label__text c-label__text--shrink-25%'>EN</span>
           </span>
         <% end %>
@@ -17,7 +17,7 @@
       <li>
         <%= link_to (root_url(subdomain: ['pt-BR', params[:subdomain]].join('.').chomp('.')).chomp('/') + request.path) do %>
           <span class='c-label'>
-            <%= svg_icons_lib('pt', class: 'c-label__icon') %>
+            <%= svg_use('icons', 'pt', class: 'c-label__icon') %>
             <span class='c-label__text c-label__text--shrink-25%'>PT</span>
           </span>
         <% end %>

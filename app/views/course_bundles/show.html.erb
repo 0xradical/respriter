@@ -1,0 +1,96 @@
+<% content_for :meta do %>
+  <title><%#= t(".#{@root_tag}.meta.title") %></title>
+  <meta name='description' content='<%#= t(".#{@root_tag}.meta.description") %>' />
+  <meta property='og:description' content='<%#= t(".#{@root_tag}.meta.description") %>' />
+<% end %>
+
+<%= content_for :x_vue_templates do %>
+
+  <%= render 'application/x_vue_templates/social_share',
+    title: t(".meta.title_html", tag: t("tags.#{@tag}")),
+    quote: t(".meta.description_html", tag: t("tags.#{@tag}")),
+    description: t(".meta.description_html", tag: t("tags.#{@tag}")), 
+    hashtags: "classpert,online courses,#{@tag}" %>
+
+  <script id='vue-search-app-props' type='x-vue-props'>
+    {
+      "tag": "<%= params[:tag] %>",
+      "showCategoriesFilter": <%= params[:tag].present? %>,
+      "locale": "<%= I18n.locale %>"
+    }
+  </script>
+
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_pack_tag 'course-bundle' %>
+  <%= stylesheet_pack_tag 'course-bundle' %>
+<% end %>
+
+<%
+  base_locales   = YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.base.yml"))
+  tags           = YAML::load_file(Rails.root.join('config', 'locales', "tags.#{I18n.locale}.yml"))
+  custom_locales = YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.yml"))
+  locales        = base_locales.deep_merge(custom_locales).deep_merge(tags)
+%>
+
+<div class='mx-Bc(white)'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-9 col-md-10'>
+        <div class='mx-vertical-center'>
+          <h1 class="mx-Fs-1d875@>small mx-Fs-1d5@extra-small">
+            <%= t(".meta.title_html", tag: t("tags.#{@tag}")) %>
+          </h1>
+
+          <div class="c-hero(2.0)__text-slot mx-Mt(0d875)">
+            <span class='mx-D(n)@phone'>
+              <%= t(".meta.description_html", tag: t("tags.#{@tag}")) %>
+            </span>
+            <div class='mx-Pt-0d75 mx-Pb-0d5 mx-Fs-0d875@extra-small'>
+              <span style='font-weight:700'>
+                Share it! &nbsp;
+              </span>
+              <div class='mx-D(ib) mx-Va(m)'><div data-vue-cpt='social-share'></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='col-3 col-md-2'>
+        <%= svg_use('tags', @tag, { width: '100%', style: 'max-width:100px'}) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='mx-Bc(white) mx-Bt(light-gray)'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <div class='mx-Pt-0d875 mx-Pb-0d875'>
+          <ul class='c-breadcrumb mx-Fs-0d875 mx-Fs-0d625@extra-small'>
+            <% @root_tags.each_with_index do |root_tag, index| %>
+              <li class='c-breadcrumb__item'><%= link_to t("tags.#{root_tag}"), course_bundles_path(tag: root_tag.dasherize) %></li> 
+              <% if (index + 1 ) != @root_tags.length %>
+                <li class='c-breadcrumb__item'> | </li>
+              <% end %>
+            <% end %>
+            <li class='c-breadcrumb__separator'></li>
+            <li class='c-breadcrumb__item'><%= t("tags.#{@tag}") %></li>
+            <li class='mx-Cl(b)'></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='mx-Mt-1 mx-Mb-2'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-md-12'>
+        <div data-vue-course-bundle-app data-vue-course-bundle-app-translations='<%= locales.to_json %>'></div>
+      </div>
+    </div>
+  </div>
+</div>

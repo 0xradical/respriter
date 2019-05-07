@@ -1,7 +1,14 @@
-<% %w(udemy coursera lynda udacity pluralsight edx mit-opencourseware treehouse alison
-khan-academy babbel memrise futurelearn open-culture opensap hubspot-academy general-assembly masterclass tuts+ code-school desire2learn
-codecademy datacamp platzi skillshare).each do |p| %>
-  <div class='waffle'>
-    <%= svg_providers_lib(p, { width: '24px', height: '24px'} ) %>
-  </div>
+<ul class='c-list c-list--unstyled c-list--inline mx-Fs-0d75@extra-small mx-Fs-0d75@<small mx-Fs-0d75'>
+<% @providers.each do |key, value| %>
+    <li class='mx-Wd(25%)@>extra-small mx-Wd(25%)@<medium mx-Wd(10%)@>large' style='margin-top:1em;height:42px'>
+    <span class='c-label c-label--double-line'>
+      <%= svg_use('providers', I18n.transliterate(key).downcase.gsub(' ','-'), { class: 'c-label__icon' }) %>
+      <span class='c-label__text' style='word-break:break-word;'>
+        <b><%= key %></b>
+        <br />
+        <span style='font-size:0.625em'> <%= value %> courses</span>
+      </span>
+    </span>
+  </li>
 <% end %>
+</ul>

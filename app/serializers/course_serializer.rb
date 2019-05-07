@@ -1,4 +1,4 @@
 class CourseSerializer
-  #attributes *Course.attribute_names
-  #belongs_to :provider
+  include FastJsonapi::ObjectSerializer
+  attributes *Course.attribute_names
 end

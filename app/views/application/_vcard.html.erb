@@ -8,7 +8,7 @@
         <div class="c-video__bg-img" style="background-image:url(<%= course.video_thumbnail %>)"></div>
         <div class="c-video__mask"></div>
         <div data-embedded-video='/videos/<%= course.id %>' data-embedded-video-target='#embed-<%= uniq %>' class='swiper-no-swiping c-video__content'>
-          <%= svg_icons_lib('play', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
+          <%= svg_use('icons-', 'play', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
           <span class='c-video__subtitle'><%= t('dictionary.preview_this_course.long') %></span>
         </div>
       <% else %>
@@ -24,9 +24,7 @@
 
     <div class='c-vcard__content-row'>
       <span class='c-label'>
-        <svg class='c-label__icon c-label__icon--inc-25% c-label__icon--circled-border'>
-          <use xlink:href='<%= "#{asset_pack_url('providers-lib.svg', host: '//')}##{course.provider.slug}" %>' />
-        </svg>
+        <%= svg_use('providers-',course.provider.slug, {class: 'c-label__icon c-label__icon--inc-25% c-label__icon--circled-border' }) %>
         <span class='c-label__text' style='font-size:0.875em'>
           <span class='c-tags c-tags--gray mx-Ml(4px)'>
             <%= course.provider.name %>
@@ -50,7 +48,7 @@
       <ul class='c-list c-list--unstyled'>
         <li>
           <span class='c-label'>
-            <%= svg_icons_lib('velocimeter', {
+            <%= svg_use('icons-', 'velocimeter', {
               alt: t('meta.icons.user_and_monitor'),
               class: 'c-label__icon c-label__icon--inc-25%',
               title: t('meta.icons.user_and_monitor')
@@ -64,7 +62,7 @@
         </li>
         <li>
           <span class='c-label'>
-            <%= svg_icons_lib('level', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+            <%= svg_use('icons-', 'level', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
             <span class='c-label__text' style='font-size:0.75em'>
             <span class='c-tags c-tags--gray mx-Ml(4px)'>
                 <% if !course.level.empty? %>

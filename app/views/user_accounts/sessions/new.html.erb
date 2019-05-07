@@ -7,14 +7,14 @@
       <div>
         <%= link_to t('components.omniauth_sign_in', { provider: 'LinkedIn' }), 
           user_account_linkedin_omniauth_authorize_path,
-          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'LinkedIn' }) }, style: 'margin-bottom:5px', class: 'btn btn--linkedin' } %>
+          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'LinkedIn' }) }, style: 'margin-bottom:10px', class: 'btn btn--linkedin btn--medium' } %>
 
         <%= link_to t('components.omniauth_sign_in', { provider: 'Facebook' }), 
           user_account_facebook_omniauth_authorize_path,
-          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Facebook' }) }, style: 'margin-bottom:5px', class: 'btn btn--facebook' } %>
+          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Facebook' }) }, style: 'margin-bottom:10px', class: 'btn btn--facebook btn--medium' } %>
 
         <%= link_to t('components.omniauth_sign_in', { provider: 'Github' }),  user_account_github_omniauth_authorize_path,
-          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Github' }) }, style: 'margin-bottom:5px', class: 'btn btn--github' } %>
+          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Github' }) }, class: 'btn btn--github btn--medium' } %>
 
       </div>
       <div>

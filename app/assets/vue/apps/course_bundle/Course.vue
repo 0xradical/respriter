@@ -354,39 +354,11 @@
       </div>
     </div>
     <!-- Action -->
-    <div class='c-hcard(2.0)__action-group mx-D(fx) mx-FxFd(col) mx-FxJc(sb) mx-FxAi(c) mx-Fx(50%) mx-FxOrd(5) mx-Fs-0d75@phone mx-Fs-0d75@tablet mx-Fs-0d875@desktop'>
+    <div class='c-hcard(2.0)__action-group mx-D(fx) mx-FxFd(col) mx-FxJc(sb) mx-FxAi(c) mx-Fx(50%) mx-FxOrd(5) mx-Fs-0d875@desktop'>
       <div class='c-hcard(2.0)__call-to-action'>
         <a target='_blank' :href='course.gateway_path' class='btn btn--tiny@phone btn--small@tablet btn--rounded btn--blue-flat btn--expandable@>desktop'>
           {{ $t('dictionary.go_to_course') }}
         </a>
-      </div>
-      <div class='c-hcard(2.0)__syllabus' v-if="course.description">
-        <syllabus :cssClasses="modalCssClasses" :course="syllabusCourse" :name="modalName" height="auto">
-          <template #caller>
-            {{ $t('dictionary.description.view') }}
-          </template>
-          <template #dismisser>
-            <span></span>
-          </template>
-          <template #header="{ course }">
-            <div class='o-syllabus__provider'>
-              <span class='c-label'>
-                <svg class='c-label__icon c-label__icon--circled-border'>
-                  <use :xlink:href="course.provider_logo"></use>
-                </svg>
-                <span class='c-label__text'>
-                  <span class='c-tags c-tags--gray'>
-                    {{ course.provider_name }}
-                  </span>
-                </span>
-              </span>
-            </div>
-          </template>
-          <template #body="{ course }">
-            <h6 class='o-syllabus__course-name'>{{ course.name }}</h6>
-            <p class='o-syllabus__course-description' v-html='course.description'></p>
-          </template>
-        </syllabus>
       </div>
     </div>
   </div>
@@ -394,6 +366,7 @@
 
 <script>
 import _ from 'lodash';
+import marked from 'marked';
 import { slugify } from 'transliteration';
 import Syllabus from 'blocks/src/vue/Syllabus.vue';
 import EmbeddedVideo from './EmbeddedVideo.vue';
@@ -410,6 +383,7 @@ export default {
   data () {
     return {
       expanded: false,
+      mdRenderer: new marked.Renderer(),
       videoComponent: null,
       videoClicked: false,
       videoUrl: '',
@@ -462,58 +436,66 @@ export default {
     }
   },
 
+  created() {
+    this.mdRenderer.heading = () => ``;
+    this.mdRenderer.list    = (body, ordered) => {
+      let type = ordered ? 'ol' : 'ul';
+      return `<${type}>\n${body}</${type}>\n`;
+    };
+  },
+
   computed: {
 
     playIcon () {
-      return '#icons-play'
+      return `#icons-play`
     },
 
     noVideoIcon () {
-      return '#icons-no-video'
+      return `#icons-no-video`
     },
 
     audioIcon () {
-      return '#icons-audio'
+      return `#icons-audio`
     },
 
     subtitleIcon () {
-      return '#icons-subtitle'
+      return `#icons-subtitle`
     },
 
     currencyIcon() {
-      return '#icons-currency'
+      return `#icons-currency`
     },
 
     renewIcon () {
-      return '#icons-renew'
+      return `#icons-renew`
     },
 
     subtitleIcon () {
-      return '#icons-subtitle'
+      return `#icons-subtitle`
     },
 
     velocimeterIcon () {
-      return '#icons-velocimeter'
+      return `#icons-velocimeter`
     },
 
     clockIcon () {
-      return '#icons-clock'
+      return `#icons-clock`
     },
 
     userIcon () {
-      return '#icons-user'
+      return `#icons-user`
     },
 
     userAndMonitorIcon () {
-      return '#icons-user-and-monitor'
+      return `#icons-user-and-monitor`
     },
 
     levelIcon () {
-      return '#icons-level'
+      return `#icons-level`;
     },
 
     institutionIcon () {
-      return '#icons-institution';
+      return `#icons-institution`
     },
 
     logo () {
@@ -531,6 +513,7 @@ export default {
     syllabusCourse () {
       return Object.assign({
         provider_logo: this.logo,
+        syllabus: (this.course.syllabus_markdown && marked(this.course.syllabus_markdown, {renderer: this.mdRenderer}))
       }, this.course)
     },
 
@@ -543,6 +526,10 @@ export default {
 
 <style lang="scss">
   @import '~elements/src/scss/config/variables.scss';
+
+  .o-syllabus__course-syllabus > ul {
+    width: auto !important;
+  }
 
   .c-hcard\(2\.0\)__localization-details {
     @media (--desktop-min) {

@@ -33,12 +33,12 @@ SitemapGenerator::Sitemap.create do
     }
   })
 
-  NavigationalTag.all.each do |tag|
-    add("/#{tag.slugify}", {
-      changefreq: 'daily',
-      priority: 0.7,
+  Course.unnest_curated_tags.distinct.map(&:tag).each do |tag|
+    add("/#{tag}", {
+      changefreq: 'daily', 
+      priority: 1,
       alternate: {
-        href: "https://pt-BR.classpert.com/#{tag.slugify}",
+        href: "https://pt-BR.classpert.com/courses/#{tag}",
         lang: 'pt-BR'
       }
     })

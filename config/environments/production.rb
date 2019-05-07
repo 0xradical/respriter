@@ -5,8 +5,9 @@ Rails.application.configure do
   config.middleware.insert_before 0, Rack::Cors do
 
     allow do
-      origins /https?:\/\/admin.classpert.com/, 'https?:\/\/blog.classpert.com','https?:\/\/classpert.com', 'https?:\/\/staging.classpert.com'
-      resource '*', headers: :any, expose: %w(Authorization), methods: [:get, :put, :post, :options]
+      origins '*'
+      #origins /https?:\/\/admin.classpert.com/, /https?:\/\/blog.classpert.com/,/https?:\/\/classpert.com/, /https?:\/\/staging.classpert.com/
+      resource '*', headers: :any, methods: [:get, :put, :post, :head, :patch, :options]
     end
 
   end

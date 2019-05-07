@@ -5,10 +5,6 @@ Rails.application.routes.draw do
   get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
   get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
 
-  NavigationalTag.all.each do |tag|
-    get "/#{tag.slugify}", to: 'courses#index', tag: tag.id, as: tag.id
-  end
-
   get '/search', to: 'courses#index',  as: :courses 
 
   # Devise
@@ -28,9 +24,19 @@ Rails.application.routes.draw do
 
   resources :videos, only: :show
 
-  get '/forward/:id',           to: 'gateway#index',  as: :gateway
+  # Fallback until we create all categories' bundle
+  RootTag.all.reject { |rt| ['computer_science', 'data_science', 'marketing', 'physical_science_and_engineering'].include?(rt.id) }.each do |tag|
+    get "/#{tag.slugify}", to: 'courses#index', tag: tag.id, as: tag.id
+  end
 
-  get '/:id', to: 'landing_pages#show', as: :landing_pages
+  get '/forward/:id', to: 'gateway#index', as: :gateway
+
+  get '/:tag',
+  to: 'course_bundles#index',
+  constraints: {
+    tag: RootTag.all.map { |t| t.slugify }.join('|') 
+  },
+  as: :course_bundles
 
   concern :import do
     collection do 
@@ -77,5 +83,48 @@ Rails.application.routes.draw do
     end
 
   end
+
+  # Redirects
+  get 'arduino-for-beginners'                                       => redirect('/arduino')
+  get 'the-complete-arduino-courses-catalog'                        => redirect('/arduino')
+  get 'autocad-for-beginners'                                       => redirect('/autocad')
+  get 'c-for-beginners'                                             => redirect('/c-programming')
+  get 'cplusplus-for-beginners'                                     => redirect('/cplusplus-programming')
+  get 'excel-for-beginners'                                         => redirect('/excel')
+  get 'horas-complementares-administracao'                          => redirect('/')
+  get 'horas-complementares-analise-desenvolvimento-sistemas'       => redirect('/')
+  get 'horas-complementares-ciencias-contabeis'                     => redirect('/')
+  get 'horas-complementares-direito'                                => redirect('/')
+  get 'horas-complementares-educacao-fisica'                        => redirect('/')
+  get 'horas-complementares-enfermagem'                             => redirect('/')
+  get 'horas-complementares-engenharia-civil'                       => redirect('/')
+  get 'horas-complementares-engenharia-producao'                    => redirect('/')
+  get 'horas-complementares-letras-en'                              => redirect('/')
+  get 'horas-complementares-pedagogia'                              => redirect('/')
+  get 'horas-complementares-recursos-humanos'                       => redirect('/')
+  get 'html-and-css-for-beginners'                                  => redirect('/html')
+  get 'java-for-beginners'                                          => redirect('/java-programming')
+  get 'javascript-for-beginners'                                    => redirect('/javascript-programming')
+  get 'learn-angular'                                               => redirect('/angularjs')
+  get 'learn-bootstrap'                                             => redirect('/bootstrap')
+  get 'learn-csharp'                                                => redirect('/csharp-programming')
+  get 'learn-data-structures-and-algorithms'                        => redirect('/data-structures-and-algorithms')
+  get 'learn-git'                                                   => redirect('/git')
+  get 'learn-node-js'                                               => redirect('/nodejs')
+  get 'python-for-beginners'                                        => redirect('/python-programming')
+  get 'the-complete-python-courses-catalog'                         => redirect('/python-programming')
+  get 'seo-for-beginners'                                           => redirect('/seo')
+  get 'the-complete-computer-networking-courses-catalog'            => redirect('/computer-networks')
+  get 'the-complete-php-courses-catalog'                            => redirect('/php-programming')
+  get 'the-complete-postgresql-courses-catalog'                     => redirect('/postgresql')
+  get 'the-complete-r-programming-language-courses-catalog'         => redirect('/r-programming')
+  get 'the-complete-raspberry-pi-courses-catalog'                   => redirect('/raspberry-pi')
+  get 'the-complete-vuejs-courses-catalog'                          => redirect('/vuejs')
+  get 'the-complete-webpack-courses-catalog'                        => redirect('/webpack')
+
+  # LandingPages
+  get '/', to: 'landing_pages#show', as: :landing_pages
+
+  get '/:tag', to: 'course_bundles#show', as: :course_bundle
 
 end

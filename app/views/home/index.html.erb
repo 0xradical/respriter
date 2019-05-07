@@ -18,10 +18,13 @@
   </search-bar>
 </script>
 
-<div class='c-hero-impact mx-C(white) mx-BgI(lg(#0c4977,#1686B6))'>
-  <div class='c-hero-impact__art' style="background-image:url(<%= asset_pack_path('media/svg/illustration_blue.svg')%>);">
+<div class='c-hero-impact mx-C(dark-gray)' style='border-bottom:1px solid #eee'>
+  <div class='c-hero-impact__art'>
     <div class='c-hero-impact__slot'>
-      <h1 class='mx-Fs-2d5@>desktop mx-Fs-2@tablet mx-Fs-1d5@phone'><%= t('pages.home_index.html.main_header').html_safe %></h1>
+      <img src="<%= asset_pack_path('logo.svg') %>" class='mx-Wd(33%)@>small mx-Wd(60%)@extra-small'>
+      <h1 style='font-weight:400;' class='mx-Mt-1d25 mx-Fs-1d5@>desktop mx-Fs-2@tablet mx-Fs-1d25@extra-small'>
+        <%= t('.hero_html').html_safe %>
+      </h1>
       <div class='mx-Mt-1d25 mx-Ml-0d875@phone mx-Mr-0d875@phone'>
         <div data-vue-cpt='search-impact'></div>
       </div>
@@ -29,260 +32,49 @@
   </div>
 </div>
 
-<script id='promo-video-modal' type='x-vue-template'>
-  <modal :adaptive=true name='promo-video-modal'>
-  <iframe width="100%" height="100%"
-    src="https://www.youtube.com/embed/d-Fr05mWRto"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-  </iframe>
-  </modal>
-</script>
-
-<div class='c-alert c-alert--full c-alert--darkest-blue mx-Fs-1d25 mx-Plr(0)'>
-  <div class='l-container'>
-    <div style='position:relative'>
-      <%= image_pack_tag("media/svg/squerol-inside-phone.svg", style: 'position:absolute;bottom:0;') %>
-      <span style='margin-left:65px;'>
-        <span class='mx-D(n)@phone'><%= t('.new_to_classpert') %></span>
-        <b>
-          <span onclick="window.__vms__['promo-video-modal'].$modal.show('promo-video-modal')" class='mx-C(yellow)'>
-            <%= t('.watch_the_video') %>
-          </span>
-        </b>
-      </span>
+<div class='mx-Pt-2@>medium mx-Pt-1@>extra-small' style='background-color:#FFF;padding-bottom:45px'>
+  <div class='container'>
+    <div class='row'>
+      <% (RootTag.all).each_with_index do |t, index| %>
+        <div class='col-12 col-md-3'>
+          <%# Remove this hack as soon as all bundles are created %>
+          <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
+          <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "#{t.slugify}") do %>
+            <div class='mx-Bc(white) mx-Mt-2 mx-Mt-1@extra-small' style='height:50px;'>
+              <span class='c-label c-label--double-line' style='height:60px;text-align:left'>
+                <%= svg_use('icons', t.icon, { class: 'c-label__icon' }) %>
+                <span class='c-label__text' class='mx-C(blue)' style='word-break:break-word;max-width:160px'>
+                  <b><%= t("tags.#{t.id}") %></b>
+                  <br />
+                  <span style='color:black;font-size:0.625em'> <%= @count_by_category[t.id] %> online courses</span>
+                </span>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
 
-<div class='mx-D(n)@phone' style='padding:50px 0px;background-color:#fff;'>
-  <div class='l-container'>
-    <nav>
-      <ul class='c-list c-list--unstyled c-list--inline' style='margin-top:-25px'>
-        <% NavigationalTag.all.each do |t| %>
-          <li style='margin-top:25px'>
-            <%= link_to send("#{t.id}_path"), class: 'c-label c-label--double-line' do %>
-
-              <svg class='c-label__icon' viewbox='0 0 100 100'>
-                <use xlink:href='<%= "#{asset_pack_url('icons-lib.svg', host: '//')}##{t.icon}"  %>'></use>
-              </svg>
-              <span style='width:125px' class='c-label__text'><%= t.name %></span>
-            <% end %>
-          </li>
-        <% end %>
-        <div class='mx-Cl(b)'></div>
-      </ul>
-    </nav>
-
+<div class='mx-Bc(light-gray)' style='padding-top:42px;padding-bottom:74px'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-md-5'>
+        <%= image_pack_tag("media/svg/space-providers_art.svg", width: '100%' ) %>
+      </div>
+      <div class='col-md-6'>
+        <h2 style='margin-top:58'>Classpert's global online course search</h2>
+        <p>
+          Classpert is an online course search engine that allows users to find the ideal online
+          course for the subject they want to study. Compare online course prices, certificates,
+          language, subtitles, and duration in just a few clicks. Watch video previews and read the
+          syllabus in only one place. Find more than 140,000 courses from more than 30 online course
+          providers in over 15 languages. Get information on online courses from Udemy, Coursera,
+          Edx, Pluralsight, Treehouse, Skillshare, FutureLearn and more. Classpert`s database also
+          includes free online classes from Harvard, Stanford, Yale, UC Berkeley, MIT and many more 
+        </p>
+      </div>
+    </div>
   </div>
 </div>
-
-<script id='career-paths-carousel' type='x-vue-template'>
-  <swiper :options='{"preventClicks": false, "preventClicksPropagation": false, "wrapperClass": "swiper-wrapper", "spaceBetween": -30}'>
-    <swiper-slide>
-      <div class='career-path' style="width: 190px">
-        <div class='career-path__header'>
-          <%= link_to landing_pages_path('become-a-data-scientist'), { target: '_blank' } do %>
-            <span class='career-path__arrow'></span>
-            <span class='career-path__title'><%= t('.careers.data_scientist') %></span>
-          <% end %>
-        </div>
-        <div class='career-path__body'>
-          <div class='career-path__character' style="background: url(<%= asset_pack_path('media/svg/squerol-data-scientist_character.svg') %>) 0 0 / 421px"></div>
-        </div>
-      </div>
-    </swiper-slide>
-
-    <swiper-slide>
-      <div class='career-path' style="width: 190px">
-        <div class='career-path__header'>
-          <%= link_to landing_pages_path('become-a-game-developer'), { target: '_blank' } do %>
-            <span class='career-path__arrow'></span>
-            <span class='career-path__title'><%= t('.careers.game_developer') %></span>
-          <% end %>
-        </div>
-        <div class='career-path__body'>
-          <div class='career-path__character' style="background: url(<%= asset_pack_path('media/svg/squerol-game-developer_character.svg') %>) 0 0 / 421px"></div>
-        </div>
-      </div>
-    </swiper-slide>
-
-    <swiper-slide>
-      <div class='career-path' style="width: 190px">
-        <div class='career-path__header'>
-          <%= link_to landing_pages_path('become-a-mobile-app-developer'), { target: '_blank' } do %>
-            <span class='career-path__arrow'></span>
-            <span class='career-path__title'><%= t('.careers.mobile_app_developer') %></span>
-          <% end %>
-        </div>
-        <div class='career-path__body'>
-          <div class='career-path__character' style="background: url(<%= asset_pack_path('media/svg/squerol-mobile-app-developer_character.svg') %>) 0 0 / 421px"></div>
-        </div>
-      </div>
-    </swiper-slide>
-
-    <swiper-slide>
-      <div class='career-path' style="width: 190px">
-        <div class='career-path__header'>
-          <%= link_to landing_pages_path('become-a-software-developer'), { target: '_blank' } do %>
-            <span class='career-path__arrow'></span>
-            <span class='career-path__title'><%= t('.careers.software_developer') %></span>
-          <% end %>
-        </div>
-        <div class='career-path__body'>
-          <div class='career-path__character' style="background: url(<%= asset_pack_path('media/svg/squerol-software-developer_character.svg') %>) 0 0 / 421px"></div>
-        </div>
-      </div>
-    </swiper-slide>
-
-    <swiper-slide>
-      <div class='career-path' style="width: 190px">
-        <div class='career-path__header'>
-          <%= link_to landing_pages_path('become-a-web-developer'), { target: '_blank' } do %>
-            <span class='career-path__arrow'></span>
-            <span class='career-path__title'><%= t('.careers.web_developer') %></span>
-          <% end %>
-        </div>
-        <div class='career-path__body'>
-          <div class='career-path__character' style="background: url(<%= asset_pack_path('media/svg/squerol-web-developer_character.svg') %>) 0 0 / 421px"></div>
-        </div>
-      </div>
-    </swiper-slide>
-  </swiper>
-</script>
-
-<section id='career-paths' class='l-container' style='padding-top:50px;padding-bottom:70px;'>
-  <h2 class='c-header c-header__large mx-Mb-0d125'>
-    <%= t('.kickstart_your_career') %>
-  </h2>
-
-  <span class='mx-D(ib) mx-Mb-1d25'><%= t('.kickstart_your_career_sub') %></span>
-
-  <div class='mx-D(n)@desktop mx-D(n)@tv'>
-    <div data-vue-cpt='career-paths-carousel'></div>
-  </div>
-
-  <div class='container-fluid mx-D(n)@phone mx-D(n)@tablet' style="padding: 0">
-    <div class='row no-gutters'>
-      <%= link_to landing_pages_path('become-a-data-scientist'), { target: '_blank', class: 'career-path col mr-4' } do %>
-        <div class='career-path__header'>
-          <span class='career-path__arrow'></span>
-          <span class='career-path__title'><%= t('.careers.data_scientist') %></span>
-        </div>
-        <div class='career-path__body'>
-          <div class='career-path__character' style="background: url(<%= asset_pack_path('media/svg/squerol-data-scientist_character.svg') %>) 0 0 / 421px"></div>
-        </div>
-      <% end %>
-
-      <%= link_to landing_pages_path('become-a-game-developer'), { target: '_blank', class: 'career-path col mr-4' } do %>
-        <div class='career-path__header'>
-          <span class='career-path__arrow'></span>
-          <span class='career-path__title'><%= t('.careers.game_developer') %></span>
-        </div>
-        <div class='career-path__body'>
-          <div class='career-path__character' style="background: url(<%= asset_pack_path('media/svg/squerol-game-developer_character.svg') %>) 0 0 / 421px"></div>
-        </div>
-      <% end %>
-
-      <%= link_to landing_pages_path('become-a-mobile-app-developer'), { target: '_blank', class: 'career-path col mr-4' } do %>
-        <div class='career-path__header'>
-          <span class='career-path__arrow'></span>
-          <span class='career-path__title'><%= t('.careers.mobile_app_developer') %></span>
-        </div>
-        <div class='career-path__body'>
-          <div class='career-path__character' style="background: url(<%= asset_pack_path('media/svg/squerol-mobile-app-developer_character.svg') %>) 0 0 / 421px"></div>
-        </div>
-      <% end %>
-
-      <%= link_to landing_pages_path('become-a-software-developer'), { target: '_blank', class: 'career-path col mr-4' } do %>
-        <div class='career-path__header'>
-          <span class='career-path__arrow'></span>
-          <span class='career-path__title'><%= t('.careers.software_developer') %></span>
-        </div>
-        <div class='career-path__body'>
-          <div class='career-path__character' style="background: url(<%= asset_pack_path('media/svg/squerol-software-developer_character.svg') %>) 0 0 / 421px"></div>
-        </div>
-      <% end %>
-
-      <%= link_to landing_pages_path('become-a-web-developer'), { target: '_blank', class: 'career-path col' } do %>
-        <div class='career-path__header'>
-          <span class='career-path__arrow'></span>
-          <span class='career-path__title'><%= t('.careers.web_developer') %></span>
-        </div>
-        <div class='career-path__body'>
-          <div class='career-path__character' style="background: url(<%= asset_pack_path('media/svg/squerol-web-developer_character.svg') %>) 0 0 / 421px"></div>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</section>
-
-<script id='most-popular-carousel' type='x-vue-template'>
-  <swiper @ready="function(){this.window.initVideoPlayers()}" :options='{"preventClicks": false, "preventClicksPropagation": false}'>
-    <% @most_popular.each do |course| %>
-      <swiper-slide>
-        <%= render partial: 'vcard', locals: { course: course } %>
-      </swiper-slide>
-    <% end %>
-  </swiper>
-</script>
-
-<section id='most-popular' class='l-container' style='padding-bottom:70px;'>
-  <h2 class='c-header c-header__large mx-Mb-1d25'><%= t('pages.home_index.html.most_popular_header') %></h2>
-
-  <div class='mx-D(n)@desktop mx-D(n)@tv'>
-    <div data-vue-cpt='most-popular-carousel'></div>
-  </div>
-
-  <div class='mx-D(n)@phone mx-D(n)@tablet l-grid[4w@desktop|3w@tablet|1w@phone]'>
-    <% @most_popular.each do |course| %>
-      <div class='l-col' style='height:448px'>
-        <%= render partial: 'vcard', locals: { course: course } %>
-      </div>
-    <% end %>
-  </div>
-
-</section>
-
-<script id='free-courses-carousel' type='x-vue-template'>
-  <swiper @ready="function(){this.window.initVideoPlayers()}" :options='{"preventClicks": false, "preventClicksPropagation": false}'>
-    <% @free_courses.each do |course| %>
-      <swiper-slide>
-        <%= render partial: 'vcard', locals: { course: course } %>
-      </swiper-slide>
-    <% end %>
-  </swiper>
-</script>
-
-<section id='free-courses' class='l-container' style='padding-bottom: 50px'>
-  <h2 class='c-header c-header__large' style='margin-bottom: 20px'><%= t('pages.home_index.html.free_courses_header')%></h2>
-
-  <div class='mx-D(n)@desktop mx-D(n)@tv'>
-    <div data-vue-cpt='free-courses-carousel'></div>
-  </div>
-
-  <div class='mx-D(n)@phone mx-D(n)@tablet l-grid[4w@desktop|3w@tablet|1w@phone]'>
-    <% @free_courses.each do |course| %>
-      <div class='l-col' style='height:448px'>
-        <%= render 'vcard', course: course %>
-      </div>
-    <% end %>
-  </div>
-
-</section>
-
-<section id='prov'>
-  <div class='l-container l-grid'>
-    <div class='a'>
-      <h1 class='mx-C(light-blue)'><%= t('pages.home_index.html.partners_header') %></h1>
-      <p>
-        <%= t('pages.home_index.html.partners_text') %>
-      </p>
-    </div>
-    <div class='b'>
-      <%= render 'partners' %>
-    </div>
-  </div>
-</section>
-
-<div data-vue-cpt='promo-video-modal'></div>

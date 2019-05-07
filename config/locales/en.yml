@@ -1,163 +1,4 @@
 en:
-  tags: &tags
-    arts_and_design: 'Arts and Design'
-    business: 'Business'
-    marketing: 'Marketing'
-    computer_science: 'Computer Science'
-    data_science: 'Data Science'
-    language_and_communication: 'Language and Communication'
-    life_sciences: 'Life Sciences'
-    math_and_logic: 'Math and Logic'
-    personal_development: 'Personal Development'
-    physical_science_and_engineering: 'Physical Science and Engineering'
-    social_sciences: 'Social Sciences'
-    health_and_fitness: 'Health and Fitness'
-    design: 'Design'
-    art_culture: 'Art and Culture'
-    architecture: 'Architecture'
-    history: 'History'
-    humanities: 'Humanities'
-    literature: 'Literature'
-    music: 'Music'
-    photography: 'Photography'
-    design_sprint_foundations: 'Design Sprint Foundations'
-    design_and_creativity: 'Design and Creativity'
-    visual_arts: 'Visual Arts'
-    film_and_theatre: 'Film and Theatre'
-    digital_media: 'Digital Media'
-    business_management: 'Business Management'
-    economics_finance: 'Economics and Finance'
-    business_analisys: 'Business Analisys'
-    office_productivity: 'Office Productivity'
-    hr: 'HR'
-    management_and_leadership: 'Management and Leadership'
-    accounting: 'Accounting'
-    project_management: 'Project Management'
-    strategic_management: 'Strategic Management'
-    industry_specific: 'Industry Specific'
-    entrepreneurship: 'Entrepreneurship'
-    human_resources: 'Human Resources'
-    finance: 'Finance'
-    business_intelligence: 'Business Intelligence'
-    professional_development: 'Professional Development'
-    excel: 'Excel'
-    digital_marketing: 'Digital Marketing'
-    content_marketing: 'Content Marketing'
-    marketing_analytics: 'Marketing Analytics'
-    sales: 'Sales'
-    android_basics: 'Android Basics'
-    android_developer: 'Android Developer'
-    artificial_intelligence: 'Artificial Intelligence'
-    computer_vision: 'Computer Vision'
-    front_end_developer: 'Front End Developer'
-    full_stack_developer: 'Full Stack Developer'
-    intro_to_self_driving_car: 'Intro to Self Driving Car'
-    intro_to_programming: 'Intro to Programming'
-    ios: 'IOS'
-    deep_learning: 'Deep Learning'
-    machine_learning: 'Machine Learning'
-    school_of_ai: 'School of AI'
-    react: 'React'
-    autonomous_system: 'Autonomous System'
-    self_driving_car: 'Self-driving car'
-    unreal: 'Unreal'
-    it_and_software: 'IT and Software'
-    mobile_web: 'Mobile Web'
-    vr: 'VR'
-    virtual_reality: 'Virtual Reality'
-    python: 'Python'
-    internet_of_things: 'Internet of Things'
-    ios_development: 'IOS Development'
-    information_technology: 'Information Technology'
-    devops: 'Devops'
-    software_development: 'Software Development'
-    android_development: 'Android Development'
-    mobile_development: 'Mobile Development'
-    game_development: 'Game Development'
-    programming_languages: 'Programming Languages'
-    computer_networking: 'Computer Networking'
-    cybersecurity: 'Cybersecurity'
-    web_development: 'Web Development'
-    algorithms_and_data_structures: 'Algorithms and Data Structures'
-    databases: 'Databases'
-    blockchain_and_cryptocurrency: 'Blockchain and Cryptocurrency'
-    data_analysis_statistics: 'Data Analysis Statistics'
-    data_foundations: 'Data Foundations'
-    data_scientist: 'Data Scientist'
-    big_data: 'Big Data'
-    data_analysis: 'Data Analysis'
-    bioinformatics: 'Bioinformatics'
-    data_mining: 'Data Mining'
-    data_visualization: 'Data Visualization'
-    language: 'Language'
-    communication: 'Communication'
-    nlp: 'NLP'
-    teacher_training: 'Teacher Training'
-    writing: 'Writing'
-    esl: 'ESL'
-    grammar_and_writing: 'Grammar and Writing'
-    climate_change: 'Climate Change'
-    environmental_science: 'Environmental Science'
-    biology: 'Biology'
-    energy_and_earth_sciences:  'Energy and Earth Sciences'
-    environmental_studies: 'Environmental Studies'
-    math: 'Math'
-    logic: 'Logic'
-    algorithms: 'Algorithms'
-    algebra_and geometry: 'Algebra and Geometry'
-    statistics_and_probability: 'Statistics and Probability'
-    calculus: 'Calculus'
-    lifestyle: 'Lifestyle'
-    cooking: 'Cooking'
-    coaching: 'Coaching'
-    test_prep: 'Test Prep'
-    teacher_development: 'Teacher Development'
-    stem: 'STEM'
-    higher_education: 'Higher Education'
-    k12: 'K12'
-    course_development: 'Course Development'
-    online_education: 'Online Education'
-    career_development: 'Career Development'
-    communication_skills: 'Communication Skills'
-    engineering: 'Engineering'
-    physics: 'Physics'
-    robotics: 'Robotics'
-    chemistry: 'Chemistry'
-    electronics: 'Electronics'
-    mechanical_engineering: 'Mechanical Engineering'
-    electrical_engineering: 'Electrical Engineering'
-    civil_engineering: 'Civil Engineering'
-    astronomy: 'Astronomy'
-    gis: 'GIS'
-    quantum_mechanics: 'Quantum Mechanics'
-    nanotechnology: 'nanotechnology'
-    culture: 'Culture'
-    religion: 'Religion'
-    philosophy: 'Philosophy'
-    law: 'Law'
-    ethics: 'Ethics'
-    philosophy_ethics: 'Philosophy Ethics'
-    anthropology: 'Anthropology'
-    behavioral_sciences: 'Behavioral Sciences'
-    economics: 'Economics'
-    geography: 'Geography'
-    international_studies: 'International Studies'
-    politics: 'Politics'
-    psichology: 'Psichology'
-    sociology: 'Sociology'
-    urban_planning: 'Urban Planning'
-    political_science: 'Political Science'
-    human_rights: 'Human Rights'
-    sustainability: 'Sustainability '
-    sports: 'Sports'
-    food_nutrition: 'Food Nutrition'
-    health_and_safety: 'Health and Safety'
-    medicine: 'Medicine'
-    health_care: 'Health Care'
-    disease_and_disorder: 'Disease and Disorder'
-    nutrition_and_wellness: 'Nutrition and Wellness'
-    public_health: 'Public Health'
-    nursing: 'Nursing'
   careers: &careers
     data_scientist: Data Scientist
     game_developer: Game Developer
@@ -168,6 +9,7 @@ en:
     terms_and_conditions: "Terms and Conditions"
     privacy_policy: "Privacy Policy"
     blog: "Blog"
+    share: "Share"
     levels:
       beginner: "Beginner"
       intermediate: "Intermediate"
@@ -407,6 +249,7 @@ en:
 
   home:
     index:
+      hero_html: 'Find and compare <b>online courses</b> <br/> from multiple providers'
       new_to_classpert: 'New to Classpert?'
       watch_the_video: 'Watch the video!'
       kickstart_your_career: 'Kickstart your career'
@@ -425,34 +268,27 @@ en:
           description: 'Learn practical artistic skills and knowledge. Explore a wide variety of
           subjects to choose from in Arts and Design. Find paid and free online courses with
           certificate'
+        html:
+          hero_title: 'Learn practical artistic skills and knowledge. Explore a wide variety of
+          subjects to choose from in Arts and Design. Find paid and free online courses with
+          certificate'
       business:
         meta:
           title: 'Business Online Courses | Classpert'
           description: 'Advance in every aspect of the modern Business environment. Nurture valuable
           abilities in finance, operations, management, and strategy. Find paid and free online
           courses with certificate'
-      marketing:
-        meta:
-          title: 'Marketing Online Courses | Classpert'
-          description: 'Master your Marketing skills with the best online courses. Learn tactics to
-          reach, attract, engage and retain customers. Find paid and free online courses with
-          certificate'
-      computer_science:
-        meta:
-          title: 'Computer Science Online Courses | Classpert'
-          description: 'Discover computer science courses and specializations from the most renowned
-          providers. Study the design, development, and analysis of software and hardware. Find paid
-          and free online courses with certificate'
-      data_science:
-        meta:
-          title: 'Data Science Online Courses | Classpert'
-          description: 'Advance your career in data science with online courses from the world’s best
-          providers. Extract knowledge and insights from large amounts of data.  Find paid and free
-          online courses with certificate'
+        html:
+          hero_title: 'Advance in every aspect of the modern Business environment. Nurture valuable
+          abilities in finance, operations, management, and strategy. Find paid and free online
+          courses with certificate'
       language_and_communication:
         meta:
           title: 'Language and Communication Online Courses | Classpert'
           description: 'Develop skills of listening, reading, speaking and writing. Master your verbal
+          and non-verbal communication abilities. Find paid and free online courses with certificate'
+        html:
+          hero_title: 'Develop skills of listening, reading, speaking and writing. Master your verbal
           and non-verbal communication abilities. Find paid and free online courses with certificate'
       life_sciences:
         meta:
@@ -460,10 +296,17 @@ en:
           description: 'Understand physical structures, chemical processes and molecular interactions
           of living structures. Push your frontiers with courses from top universities worldwide. Find
           paid and free online courses with certificate'
+        html:
+          hero_title: 'Understand physical structures, chemical processes and molecular interactions
+          of living structures. Push your frontiers with courses from top universities worldwide. Find
+          paid and free online courses with certificate'
       math_and_logic:
         meta:
           title: 'Math and Logic Online Courses | Classpert'
           description: 'Study algebra, geometry, arithmetic, statistics and more. Develop your
+          reasoning and analytical thinking. Find paid and free online courses with certificate'
+        html:
+          hero_title: 'Study algebra, geometry, arithmetic, statistics and more. Develop your
           reasoning and analytical thinking. Find paid and free online courses with certificate'
       personal_development:
         meta:
@@ -471,16 +314,17 @@ en:
           description: 'Personal development is decisive to growth in all aspects of life. Achieve
           your full potential in personal life and professional career. Find paid and free online
           courses with certificate'
-      physical_science_and_engineering:
-        meta:
-          title: 'Physical Science and Engineering | Classpert'
-          description: 'Learn how to solve problems and build creations that benefit humanity. Explore
-          all areas of physical science and engineering. Find paid and free online courses with
-          certificate'
+        html:
+          hero_title: 'Personal development is decisive to growth in all aspects of life. Achieve
+            your full potential in personal life and professional career. Find paid and free online
+            courses with certificate'
       social_sciences:
         meta:
           title: 'Social Sciences | Classpert'
           description: 'Study all aspects of human society and social life. Understand many of the
+          worlds biggest issues. Find paid and free online courses with certificate'
+        html:
+          hero_title: 'Study all aspects of human society and social life. Understand many of the
           worlds biggest issues. Find paid and free online courses with certificate'
       health_and_fitness:
         meta:
@@ -488,6 +332,20 @@ en:
           description: 'Increase your knowledge about health maintenance, disease prevention, and
           risky behaviors reduction. Live longer and achieve your goals. Find paid and free online
           courses with certificate'
+        html:
+          hero_title: 'Increase your knowledge about health maintenance, disease prevention, and
+          risky behaviors reduction. Live longer and achieve your goals. Find paid and free online
+          courses with certificate'
+  course_bundles:
+    index:
+      meta:
+        title_html: "%{tag} Courses"
+        description_html: "Find paid and free %{tag} tutorial and courses. Choose from select topics and learn from the best instructors and instituitions."
+
+    show:
+      meta:
+        title_html: "%{tag} Courses"
+        description_html: "Find paid and free %{tag} tutorial and courses. Choose from select topics and learn from the best instructors and instituitions."
 
   pages:
     home_index:
@@ -507,37 +365,6 @@ en:
         partners_text: 'Udemy, Khan Academy, Coursera, EdX and Lynda are some of our partners.
         Find the best online courses with certificate. More than 50 platforms and more than 100,000
         options. Free online courses from Harvard, MIT, Yale and more'
-    courses_index:
-      meta:
-      html:
-        arts_and_design_text: 'Strengthen and widen perceptions, observations and critical thinking.
-        Learn from home at your own pace with online Art and Design courses.'
-        business_text: 'Nurture valuable abilities in markets, finance, operations and strategy.
-        Advance in the world of business with online Business courses.'
-        marketing_text: 'Learn tactics to reach, attract, engage and retain customers . Keep up with
-        the best practices with online Marketing Courses.'
-        computer_science_text: 'Study the design, development and analysis of software and hardware.
-        Keep your set of skills updated with online Computer Science courses.'
-        data_science_text: 'Extract knowledge and insights
-        from large amounts of data. Accelerate your learning curve with online Data Science
-        courses.'
-        language_and_communication_text: 'Develop skills of listening, reading, speaking
-        and writing. Master your Language and Communication abilities with online courses.'
-        life_sciences_text: 'Understand physical structures, chemical processes and molecular
-        interactions of living structures. Push your frontiers with online Life Sciences courses.'
-        math_and_logic_text: 'Study Algebra, Geometry , Arithmetic, Statistics and more. Develop
-        your reasoning and analytical thinking with online Math and Logic courses.'
-        personal_development_text: 'Achieve your fully potential in your personal life and
-        professional career. Take online Personal Development courses and become the greatest
-        version of you.'
-        physical_science_and_engineering_text: 'Learn how to solve problems and
-        build creations that benefit humanity. Explore all areas of Physical Science and Engineering
-        with online courses.'
-        social_sciences_text: 'Study all aspects of human society and social
-        life. Understand many of the worlds biggest issues with online Social Science courses.'
-        health_and_fitness_text: 'Increase your knowledge about health maintenance, disease
-        prevention and risky behaviors reduction. Live longer and achieve your goals with online
-        Health and Fitness courses.'
     dashboard_index:
       meta:
         title: 'Member Area | Classpert'

@@ -5,14 +5,16 @@
     class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
   <h4 class='c-off-canvas-menu__section'>Categories</h4>
   <ul class='c-list c-list--unstyled'>
-    <% NavigationalTag.all.map do |t| %>
-      <%= link_to(send("#{t.id}_path"), style: 'text-decoration:none;color:initial') do %>
-        <li style='padding:4px 0px'>
-          <span class='c-label'>
-            <svg class='c-label__icon'>
-              <use xlink:href=<%= asset_pack_url('icons-lib.svg', host: '//') %>#<%= t.icon %>></use>
-            </svg>
-            <span class='c-label__text'><%= t.name %></span>
+    <% (RootTag.all).each_with_index do |t, index| %>
+      <%# Remove this hack as soon as all bundles are created %>
+      <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
+      <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "#{t.slugify}") do %>
+        <li class='mx-Fs-0d875' style='padding:4px 0px'>
+          <span class='c-label c-label--double-line' style='height:60px;text-align:left'>
+            <%= svg_use('icons', t.icon, { class: 'c-label__icon' }) %>
+            <span class='c-label__text' class='mx-C(blue)' style='word-break:break-word;max-width:160px'>
+              <b><%= t("tags.#{t.id}") %></b>
+            </span>
           </span>
         </li>
       <% end %>
@@ -20,14 +22,16 @@
   </ul>
 </script>
 
-<div class='c-navbar' role='header-nav'>
+<div class='c-navbar c-navbar--white <%= 'c-navbar--has-border' unless home_controller? %> <%= "c-navbar--sticky" if sticky_navbar? %> mx-Pl-0d5 mx-Pr-0d5' <%= 'data-sticky' if sticky_navbar? %> role='header-nav'>
 
-  <%= link_to root_url do %>
-    <img src="<%= asset_pack_path('logo_negative.svg') %>" class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet' width='156px'>
-    <img src="<%= asset_pack_path('logo_symbol-negative.svg') %>" class='c-navbar__slot mx-D(n)@>desktop' width='40px'>
+  <% unless home_controller? %>
+    <%= link_to root_url do %>
+      <img src="<%= asset_pack_path('logo.svg') %>" class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet' width='156px'>
+      <img src="<%= asset_pack_path('logo_symbol.svg') %>" class='c-navbar__slot mx-D(n)@>desktop' width='40px'>
+    <% end %>
   <% end %>
 
-  <div class='c-navbar__slot mx-Ml-1d25@>tablet mx-Ml-0d5@phone'>
+  <div class='c-navbar__slot mx-Ml-1d25@>tablet mx-Ml-0d5@phone' style='<%= home_controller? ? "visibility:hidden" : "" %>'>
     <script id='navbar-search' type='x-vue-template'>
       <search-bar placeholder="<%= t('components.searchbar_placeholder') %>"
       :css-classes='{container: "c-search-slim c-search-slim--negative", form:
@@ -63,7 +67,7 @@
     <% else %>
       <span class='c-navbar__slot mx-D(n)@phone' style='margin-right:4px;margin-left:10px;'>
         <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
-          class: 'btn btn--white-border btn--rounded btn--small btn--uppercase' %>
+          class: 'btn btn--dark-gray-border btn--rounded btn--small btn--uppercase' %>
       </span>
 
       <span class='c-navbar__slot mx-D(n)@phone'>
