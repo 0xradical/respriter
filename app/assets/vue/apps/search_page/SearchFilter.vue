@@ -3,10 +3,10 @@
     <template v-if='mobileUx'>
       <div class='mobile-filter-wrapper'>
         <transition-group name='mobile-filter' tag='div'>
-          <div v-show='!(isFiltering.audios || isFiltering.subtitles || isFiltering.categories || isFiltering.providers || isFiltering.price)' class='mobile-filter-view mobile-filter-facets-view' key='mobile-filter-facets__audio'>
-            <search-fieldset :title='$t("dictionary.audio")' :subtitle="filter.audios.map(audioValue).join(', ')" :stand-out='filter.audios.length > 0'>
+          <div v-show='!(isFiltering.root_audio || isFiltering.subtitles || isFiltering.category || isFiltering.provider_name || isFiltering.price)' class='mobile-filter-view mobile-filter-facets-view' key='mobile-filter-facets__audio'>
+            <search-fieldset :title='$t("dictionary.audios")' :subtitle="filter.root_audio.map(audioValue).join(', ')" :stand-out='filter.root_audio.length > 0'>
               <template #action>
-                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.audios = true'>
+                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.root_audio = true'>
                   <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
                 </a>
               </template>
@@ -24,9 +24,9 @@
 
             <hr/>
 
-            <search-fieldset :title='$t("dictionary.categories")' v-if="showCategoriesFilter" :subtitle="filter.categories.map(categoryValue).join(', ')" :stand-out='filter.categories.length > 0'>
+            <search-fieldset :title='$t("dictionary.categories")' v-if="showCategoriesFilter" :subtitle="filter.category.map(categoryValue).join(', ')" :stand-out='filter.category.length > 0'>
               <template #action>
-                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.categories = true'>
+                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.category = true'>
                   <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
                 </a>
               </template>
@@ -34,9 +34,9 @@
 
             <hr/>
 
-            <search-fieldset :title='$t("dictionary.provider")' :subtitle="filter.providers.map(providerValue).join(', ')" :stand-out='filter.providers.length > 0'>
+            <search-fieldset :title='$t("dictionary.providers")' :subtitle="filter.provider_name.map(providerValue).join(', ')" :stand-out='filter.provider_name.length > 0'>
               <template #action>
-                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.providers = true'>
+                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.provider_name = true'>
                   <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
                 </a>
               </template>
@@ -64,15 +64,15 @@
               </a>
             </div>
           </div>
-          <div v-show='isFiltering.audios' v-bar class='mobile-filter-view mobile-filter-options-view' key='mobile-filter-options__audio'>
-            <search-facet-options :options='suggestions.audios.filtered'
-                                  :filter='filter.audios'
+          <div v-show='isFiltering.root_audio' v-bar class='mobile-filter-view mobile-filter-options-view' key='mobile-filter-options__audio'>
+            <search-facet-options :options='suggestions.root_audio.filtered'
+                                  :filter='filter.root_audio'
                                   :rootClasses="['scrollable-ul--mobile']"
-                                  @includeFacetOption="$emit('optionAddedToFilter', 'audios', $event)"
-                                  @excludeFacetOption="$emit('optionRemovedFromFilter', 'audios', $event)">
+                                  @includeFacetOption="$emit('optionAddedToFilter', 'root_audio', $event)"
+                                  @excludeFacetOption="$emit('optionRemovedFromFilter', 'root_audio', $event)">
             </search-facet-options>
             <div class='mx-Pos(a) mx-B(0) mx-D(fx) mx-FxJc(c) mx-Wd(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.audios = false'>
+              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.root_audio = false'>
                 OK
               </a>
             </div>
@@ -90,28 +90,28 @@
               </a>
             </div>
           </div>
-          <div v-show='isFiltering.categories' v-bar class='mobile-filter-view mobile-filter-options-view' key='mobile-filter-options__category'>
-            <search-facet-options :options='suggestions.categories.filtered'
-                                  :filter='filter.categories'
+          <div v-show='isFiltering.category' v-bar class='mobile-filter-view mobile-filter-options-view' key='mobile-filter-options__category'>
+            <search-facet-options :options='suggestions.category.filtered'
+                                  :filter='filter.category'
                                   :rootClasses="['scrollable-ul--mobile']"
-                                  @includeFacetOption="$emit('optionAddedToFilter', 'categories', $event)"
-                                  @excludeFacetOption="$emit('optionRemovedFromFilter', 'categories', $event)">
+                                  @includeFacetOption="$emit('optionAddedToFilter', 'category', $event)"
+                                  @excludeFacetOption="$emit('optionRemovedFromFilter', 'category', $event)">
             </search-facet-options>
             <div class='mx-Pos(a) mx-B(0) mx-D(fx) mx-FxJc(c) mx-Wd(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.categories = false'>
+              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.category = false'>
                 OK
               </a>
             </div>
           </div>
-          <div v-show='isFiltering.providers' v-bar class='mobile-filter-view mobile-filter-options-view' key='mobile-filter-options__provider'>
-            <search-facet-options :options='suggestions.providers.filtered'
-                                  :filter='filter.providers'
+          <div v-show='isFiltering.provider_name' v-bar class='mobile-filter-view mobile-filter-options-view' key='mobile-filter-options__provider'>
+            <search-facet-options :options='suggestions.provider_name.filtered'
+                                  :filter='filter.provider_name'
                                   :rootClasses="['scrollable-ul--mobile']"
-                                  @includeFacetOption="$emit('optionAddedToFilter', 'providers', $event)"
-                                  @excludeFacetOption="$emit('optionRemovedFromFilter', 'providers', $event)">
+                                  @includeFacetOption="$emit('optionAddedToFilter', 'provider_name', $event)"
+                                  @excludeFacetOption="$emit('optionRemovedFromFilter', 'provider_name', $event)">
             </search-facet-options>
             <div class='mx-Pos(a) mx-B(0) mx-D(fx) mx-FxJc(c) mx-Wd(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.providers = false'>
+              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.provider_name = false'>
                 OK
               </a>
             </div>
@@ -163,23 +163,23 @@
 
       <hr/>
 
-      <search-fieldset :title='$t("dictionary.audio")' :stand-out="true">
+      <search-fieldset :title='$t("dictionary.audios")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','audios')">Clear filter</a>
+          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','root_audio')">Clear filter</a>
         </template>
         <div class='c-fieldset-frame__item'>
-          <search-facet-options-filter name='audios'
-                                       placeholder='Search language ...'
-                                       :suggestions='suggestions.audios.filtered'
-                                       @changedInputFacetOptionSuggestion="suggestionInputChange('audios', ...$event)">
+          <search-facet-options-filter name='root_audio'
+                                       placeholder='Search languages ...'
+                                       :suggestions='suggestions.root_audio.filtered'
+                                       @changedInputFacetOptionSuggestion="suggestionInputChange('root_audio', ...$event)">
           </search-facet-options-filter>
         </div>
         <div class='c-fieldset-frame__item' v-bar>
-          <search-facet-options :options='suggestions.audios.filtered'
-                                :filter='filter.audios'
+          <search-facet-options :options='suggestions.root_audio.filtered'
+                                :filter='filter.root_audio'
                                 :rootClasses="['scrollable-ul']"
-                                @includeFacetOption="$emit('optionAddedToFilter', 'audios', $event)"
-                                @excludeFacetOption="$emit('optionRemovedFromFilter', 'audios', $event)">
+                                @includeFacetOption="$emit('optionAddedToFilter', 'root_audio', $event)"
+                                @excludeFacetOption="$emit('optionRemovedFromFilter', 'root_audio', $event)">
           </search-facet-options>
         </div>
       </search-fieldset>
@@ -192,7 +192,7 @@
         </template>
         <div class='c-fieldset-frame__item'>
           <search-facet-options-filter name='subtitles'
-                                       placeholder='Search subtitle ...'
+                                       placeholder='Search subtitles ...'
                                        :suggestions='suggestions.subtitles.filtered'
                                        @changedInputFacetOptionSuggestion="suggestionInputChange('subtitles', ...$event)">
           </search-facet-options-filter>
@@ -212,21 +212,21 @@
 
         <search-fieldset :title='$t("dictionary.categories")' :stand-out="true">
           <template #action>
-            <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','categories')">Clear filter</a>
+            <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','category')">Clear filter</a>
           </template>
           <div class='c-fieldset-frame__item'>
-            <search-facet-options-filter name='categories'
-                                        placeholder='Search category ...'
-                                        :suggestions='suggestions.categories.filtered'
-                                        @changedInputFacetOptionSuggestion="suggestionInputChange('categories', ...$event)">
+            <search-facet-options-filter name='category'
+                                        placeholder='Search categories ...'
+                                        :suggestions='suggestions.category.filtered'
+                                        @changedInputFacetOptionSuggestion="suggestionInputChange('category', ...$event)">
             </search-facet-options-filter>
           </div>
           <div class='c-fieldset-frame__item' v-bar>
-            <search-facet-options :options='suggestions.categories.filtered'
-                                  :filter='filter.categories'
+            <search-facet-options :options='suggestions.category.filtered'
+                                  :filter='filter.category'
                                   :rootClasses="['scrollable-ul']"
-                                  @includeFacetOption="$emit('optionAddedToFilter', 'categories', $event)"
-                                  @excludeFacetOption="$emit('optionRemovedFromFilter', 'categories', $event)">
+                                  @includeFacetOption="$emit('optionAddedToFilter', 'category', $event)"
+                                  @excludeFacetOption="$emit('optionRemovedFromFilter', 'category', $event)">
             </search-facet-options>
           </div>
         </search-fieldset>
@@ -234,23 +234,23 @@
 
       <hr/>
 
-      <search-fieldset :title='$t("dictionary.provider")' :stand-out="true">
+      <search-fieldset :title='$t("dictionary.providers")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','providers')">Clear filter</a>
+          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','provider_name')">Clear filter</a>
         </template>
         <div class='c-fieldset-frame__item'>
-          <search-facet-options-filter name='providers'
-                                      placeholder='Search provider ...'
-                                      :suggestions='suggestions.providers.filtered'
-                                      @changedInputFacetOptionSuggestion="suggestionInputChange('providers', ...$event)">
+          <search-facet-options-filter name='provider_name'
+                                      placeholder='Search providers ...'
+                                      :suggestions='suggestions.provider_name.filtered'
+                                      @changedInputFacetOptionSuggestion="suggestionInputChange('provider_name', ...$event)">
           </search-facet-options-filter>
         </div>
         <div class='c-fieldset-frame__item' v-bar>
-          <search-facet-options :options='suggestions.providers.filtered'
-                                :filter='filter.providers'
+          <search-facet-options :options='suggestions.provider_name.filtered'
+                                :filter='filter.provider_name'
                                 :rootClasses="['scrollable-ul']"
-                                @includeFacetOption="$emit('optionAddedToFilter', 'providers', $event)"
-                                @excludeFacetOption="$emit('optionRemovedFromFilter', 'providers', $event)">
+                                @includeFacetOption="$emit('optionAddedToFilter', 'provider_name', $event)"
+                                @excludeFacetOption="$emit('optionRemovedFromFilter', 'provider_name', $event)">
           </search-facet-options>
         </div>
       </search-fieldset>
@@ -279,10 +279,10 @@
         type: Object,
         default () {
           return {
-            audios: [],
+            root_audio: [],
             subtitles: [],
-            categories: [],
-            providers: []
+            category: [],
+            provider_name: []
           }
         }
       },
@@ -310,10 +310,10 @@
     data () {
       return {
         isFiltering: {
-          audios: false,
+          root_audio: false,
           subtitles: false,
-          categories: false,
-          providers: false,
+          category: false,
+          provider_name: false,
           price: false
         },
         priceModel: {
@@ -321,7 +321,7 @@
           max: 2500
         },
         suggestions: {
-          audios: {
+          root_audio: {
             source: [],
             filtered: []
           },
@@ -329,11 +329,11 @@
             source: [],
             filtered: []
           },
-          categories: {
+          category: {
             source: [],
             filtered: []
           },
-          providers: {
+          provider_name: {
             source: [],
             filtered: []
           }
@@ -355,17 +355,17 @@
 
     methods: {
       copyAggregationBuckets: function(aggregations){
-        this.suggestions.audios.source      = aggregations.audios.buckets.map(({key, doc_count}) => Object.assign({}, {id: key, name: this.audioValue(key), count: doc_count}));
-        this.suggestions.audios.filtered    = this.suggestions.audios.source;
+        this.suggestions.root_audio.source      = aggregations.root_audio.buckets.map(({key, doc_count}) => Object.assign({}, {id: key, name: this.audioValue(key), count: doc_count}));
+        this.suggestions.root_audio.filtered    = this.suggestions.root_audio.source;
 
         this.suggestions.subtitles.source   = aggregations.subtitles.buckets.map(({key, doc_count}) => Object.assign({}, {id: key, name: this.subtitleValue(key), count: doc_count}));
         this.suggestions.subtitles.filtered = this.suggestions.subtitles.source;
 
-        this.suggestions.categories.source   = aggregations.categories.buckets.map(({key, doc_count}) => Object.assign({}, {id: key, name: this.categoryValue(key), count: doc_count}));
-        this.suggestions.categories.filtered = this.suggestions.categories.source;
+        this.suggestions.category.source   = aggregations.category.buckets.map(({key, doc_count}) => Object.assign({}, {id: key, name: this.categoryValue(key), count: doc_count}));
+        this.suggestions.category.filtered = this.suggestions.category.source;
 
-        this.suggestions.providers.source   = aggregations.providers.buckets.map(({key, doc_count}) => Object.assign({}, {id: key, name: this.providerValue(key), count: doc_count}));
-        this.suggestions.providers.filtered = this.suggestions.providers.source;
+        this.suggestions.provider_name.source   = aggregations.provider_name.buckets.map(({key, doc_count}) => Object.assign({}, {id: key, name: this.providerValue(key), count: doc_count}));
+        this.suggestions.provider_name.filtered = this.suggestions.provider_name.source;
       },
       suggestionInputChange: function(key, text, _) {
         if (text === null) {

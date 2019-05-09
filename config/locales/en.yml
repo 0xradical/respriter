@@ -213,14 +213,14 @@ en:
     max: "Max"
     cancel_search: "Cancel search"
     filters: "Filters"
-    audio: "Language"
+    audios: "Language"
     subtitles: "Subtitles"
     categories: "Categories"
     max_price: "Max. $"
-    provider: 'Providers'
+    providers: 'Providers'
     length: "length"
     previous_page: "Previous page"
-    next_ page: "Next page"
+    next_page: "Next page"
     search_results: "Showing %{total} results"
     only_free: "Only free"
     free: "Free"

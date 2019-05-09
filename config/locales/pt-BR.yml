@@ -215,13 +215,13 @@ pt-BR:
     price: 'Preço'
     cancel_search: 'Sair da pesquisa'
     filters: 'Filtros'
-    audio: 'Idioma do áudio'
+    audios: 'Idioma do áudio'
     subtitles: 'Legendas'
     categories: 'Categorias'
     max_price: 'Até R$'
     length: 'Tempo de duração'
     previous_page: 'Página anterior'
-    next_ page: 'Próxima página'
+    next_page: 'Próxima página'
     search_results: "Exibindo %{total} resultados"
     for: "para"
     from: "De"
@@ -234,7 +234,7 @@ pt-BR:
     display_filter: 'Mostrar filtro'
     lowest_price: 'Menor preço'
     highest_price: 'Maior preço'
-    provider: 'Plataformas'
+    providers: 'Plataformas'
     top_reviewed: 'Melhor avaliados'
     favorite: 'Favoritar'
     go_to_course: 'Ir para o curso'

@@ -38,7 +38,22 @@
             </template>
 
           </span>
-          <pagination @paginate='paginate' pagination-anchor='#body-anchor' :current-page='page' :num-of-pages='numOfPages'></pagination>
+
+          <div class='mx-D(Fx) mx-FxJc(sb) mx-FxAi(c)'>
+            <div>
+              <pagination @paginate='paginate' pagination-anchor='#body-anchor' :current-page='page' :num-of-pages='numOfPages'></pagination>
+            </div>
+            <div class='mx-D(n)@<medium'>
+              <span>
+                {{ $t('dictionary.sort_by') }}
+                <select v-model='params.order.price'>
+                  <option value='asc'>{{ $t('dictionary.lowest_price') }}</option>
+                  <option value='desc'>{{ $t('dictionary.highest_price') }}</option>
+                </select>
+              </span>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -72,7 +87,6 @@
                 <option value='desc'>{{ $t('dictionary.highest_price') }}</option>
               </select>
             </span>
-            <!-- <a class='mx-C(blue) mx-Fw(b)' href='#'>Sort By (Relevance)</a> -->
             <a class='mx-C(blue) mx-Fw(b)' href='#' @click="$modal.show('mobileFilter')">Filter Results</a>
           </div>
         </div>
@@ -151,19 +165,19 @@
         data: {
           meta: {
             aggregations: {
-              audios: {
+              root_audio: {
                 buckets: []
               },
               subtitles: {
                 buckets: []
               },
-              providers: {
+              provider_name: {
                 buckets: []
               },
               max_price: {
                 value: undefined
               },
-              categories: {
+              category: {
                 buckets: []
               }
             }
@@ -199,7 +213,7 @@
       this.$i18n.locale = this.locale
       var cat = {}
       if (this.category) {
-        cat = { filter: { categories: this.category } }
+        cat = { filter: { category: this.category } }
       }
       this.params       = _.merge(this.params, cat, qs.parse(window.location.search.replace('?', ''), { arrayFormat: 'brackets' }))
       this.fetchResults()
@@ -251,11 +265,11 @@
         return Object.assign({},{
           order: {},
           filter: {
-            providers:  [],
-            categories: [],
-            audios:     [],
-            subtitles:  [],
-            price:      [0, 2500]
+            provider_name: [],
+            category:      [],
+            root_audio:    [],
+            subtitles:     [],
+            price:         [0, 2500]
           },
           p: 1
         });
