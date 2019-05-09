@@ -140,9 +140,32 @@
     <template v-else>
       <hr/>
 
+      <search-fieldset :title='$t("dictionary.price")' :stand-out="true">
+        <template #action>
+          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','price')">Clear filter</a>
+        </template>
+        <div class='c-fieldset-frame__item'>
+          <search-facet-price-filter :current-min='parseFloat(filter.price[0])'
+                                     :current-max='parseFloat(filter.price[1])'
+                                     :marks='[0,625,1250,1875,2500]'
+                                     @priceLowerValueChanged="$emit('priceLowerValueChanged', $event)"
+                                     @priceUpperValueChanged="$emit('priceUpperValueChanged', $event)"
+          >
+          </search-facet-price-filter>
+
+          <div style='margin-top: 2em;display:flex;'>
+            <number-input :value='parseFloat(filter.price[0])' size="small" inline :min='0' :max='2500' @change="$emit('priceLowerValueChanged', $event)"></number-input>
+            <span class='mx-D(ib)' style='margin: auto 0.5em; font-size: 0.875em; flex-basis: 150px;text-align:center;'> in USD </span>
+            <number-input :value='parseFloat(filter.price[1])' size="small" inline :min='0' :max='2500' @change="$emit('priceUpperValueChanged', $event)"></number-input>
+          </div>
+        </div>
+      </search-fieldset>
+
+      <hr/>
+
       <search-fieldset :title='$t("dictionary.audio")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','audios')">Clear filters</a>
+          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','audios')">Clear filter</a>
         </template>
         <div class='c-fieldset-frame__item'>
           <search-facet-options-filter name='audios'
@@ -165,7 +188,7 @@
 
       <search-fieldset :title='$t("dictionary.subtitles")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','subtitles')">Clear filters</a>
+          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','subtitles')">Clear filter</a>
         </template>
         <div class='c-fieldset-frame__item'>
           <search-facet-options-filter name='subtitles'
@@ -189,7 +212,7 @@
 
         <search-fieldset :title='$t("dictionary.categories")' :stand-out="true">
           <template #action>
-            <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','categories')">Clear filters</a>
+            <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','categories')">Clear filter</a>
           </template>
           <div class='c-fieldset-frame__item'>
             <search-facet-options-filter name='categories'
@@ -213,7 +236,7 @@
 
       <search-fieldset :title='$t("dictionary.provider")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','providers')">Clear filters</a>
+          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','providers')">Clear filter</a>
         </template>
         <div class='c-fieldset-frame__item'>
           <search-facet-options-filter name='providers'
@@ -229,29 +252,6 @@
                                 @includeFacetOption="$emit('optionAddedToFilter', 'providers', $event)"
                                 @excludeFacetOption="$emit('optionRemovedFromFilter', 'providers', $event)">
           </search-facet-options>
-        </div>
-      </search-fieldset>
-
-      <hr/>
-
-      <search-fieldset :title='$t("dictionary.price")' :stand-out="true">
-        <template #action>
-          <a class='c-fieldset-frame__action' href='#' @click.prevent="$emit('clearFilterClicked','price')">Clear filters</a>
-        </template>
-        <div class='c-fieldset-frame__item'>
-          <search-facet-price-filter :current-min='parseFloat(filter.price[0])'
-                                     :current-max='parseFloat(filter.price[1])'
-                                     :marks='[0,625,1250,1875,2500]'
-                                     @priceLowerValueChanged="$emit('priceLowerValueChanged', $event)"
-                                     @priceUpperValueChanged="$emit('priceUpperValueChanged', $event)"
-          >
-          </search-facet-price-filter>
-
-          <div style='margin-top: 2em;display:flex;'>
-            <number-input :value='parseFloat(filter.price[0])' size="small" inline :min='0' :max='2500' @change="$emit('priceLowerValueChanged', $event)"></number-input>
-            <span class='mx-D(ib)' style='margin: auto 0.5em; font-size: 0.875em; flex-basis: 150px;text-align:center;'> in USD </span>
-            <number-input :value='parseFloat(filter.price[1])' size="small" inline :min='0' :max='2500' @change="$emit('priceUpperValueChanged', $event)"></number-input>
-          </div>
         </div>
       </search-fieldset>
 
