@@ -5,6 +5,10 @@ class Course < ApplicationRecord
   #include Elasticsearch::Model::Callbacks
 
   SUPPORTED_LANGUAGES = %w(pt en es ru it de fr)
+  SITE_LOCALES = {
+    br: 'pt-BR',
+    en: 'en',
+  }
 
   paginates_per 25
 
@@ -131,6 +135,16 @@ class Course < ApplicationRecord
         indexes :es, analyzer: 'spanish_programmer'
       end
 
+      indexes :category_text do
+        indexes :en, type: 'text', analyzer: 'english_programmer'
+        indexes :br, type: 'text', analyzer: 'brazilian_programmer'
+      end
+
+      indexes :tags_text do
+        indexes :en, type: 'text', analyzer: 'english_programmer'
+        indexes :br, type: 'text', analyzer: 'brazilian_programmer'
+      end
+
       indexes :pace,                type: 'keyword'
       indexes :price,               type: 'double'
       indexes :effort,              type: 'integer'
@@ -225,7 +239,6 @@ class Course < ApplicationRecord
       id:                  id,
       name:                name,
       description:         description,
-      price:               price,
       url:                 url,
       pace:                pace,
       effort:              effort,
@@ -253,6 +266,27 @@ class Course < ApplicationRecord
       syllabus_markdown:   syllabus,
     }
 
+    if category.present?
+      indexed_json[:category_text] = SITE_LOCALES.map do |key, locale|
+        [key, I18n.t("tags.#{category}", locale: locale)]
+      end.to_h
+    end
+
+    if tags.present?
+      indexed_json[:tags_text] = SITE_LOCALES.map do |key, locale|
+        [
+          key,
+          tags.map{ |tag| I18n.t("tags.#{tag}", locale: locale, default: tag) }
+        ]
+      end.to_h
+    end
+
+    if free_content? && !paid_content?
+      indexed_json[:price] = 0
+    else
+      indexed_json[:price] = price
+    end
+
     if certificate.present?
       indexed_json[:certificate] = {
         type:     certificate[:type],
@@ -277,6 +311,7 @@ class Course < ApplicationRecord
       maximum(:global_sequence)
     end
 
+    # TODO: Is this dead code? Same holds for SUPPORTED_LANGUAGES constant?
     def is_language_supported?(lang)
       !(SUPPORTED_LANGUAGES & [lang].flatten.map { |l| l.split('-') }.flatten).empty?
     end

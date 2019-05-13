@@ -67,12 +67,23 @@ module Search
           must: {
             multi_match: {
               query: @query,
-              fields: [ 'name^2', 'tags.keyword^2', 'description' ]
+              fields: [
+                'name.en^2', 'description.en', 'tags_text.en^2',
+                'name.br^2', 'description.br', 'tags_text.br^2',
+                'name.es^2', 'description.es'
+              ]
             }
           },
           should: [
-            { term: { 'tags.keyword'     => @query } },
-            { term: { 'category.keyword' => @query } }
+            {
+              multi_match: {
+                query: @query,
+                fields: [
+                  'category_text.en',
+                  'category_text.br',
+                ]
+              }
+            }
           ]
         }
       }
@@ -121,12 +132,14 @@ module Search
     end
 
     def aggregation_for_field(key)
+      unselected_aggregation_options = { field: key }.merge unselected_aggregation_options_for_field(key)
+
       if filters_by_key[key].blank?
         return {
           unselected: {
             filter: { match_all: {} },
             aggs: {
-              _: { terms: { field: key } }
+              _: { terms: unselected_aggregation_options }
             }
           }
         }
@@ -142,10 +155,21 @@ module Search
         unselected: {
           filter: must_not_filter(filters_by_key[key]),
           aggs: {
-            _: { terms: { field: key } }
+            _: { terms: unselected_aggregation_options }
           }
         }
       }
+    end
+
+    def unselected_aggregation_options_for_field(key)
+      case key
+      when :category
+        { size: 15 }
+      when :provider_name
+        { size: 50 }
+      else
+        Hash.new
+      end
     end
 
     def price_aggregation_query
