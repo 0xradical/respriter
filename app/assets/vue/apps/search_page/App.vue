@@ -127,8 +127,8 @@
         default: 25
       },
       category: {
-        type: String,
-        default: ''
+        type: Array,
+        default: []
       },
       showCategoriesFilter: {
         type: Boolean,
@@ -204,13 +204,13 @@
     mounted () {
       this.$i18n.locale = this.locale
 
-      let cat = {}
+      let categoryFilter = {}
       if (this.category) {
-        cat = { filter: { category: this.category } }
+        categoryFilter = { filter: { category: this.category } }
       }
 
       let queryParams   = qs.parse(window.location.search.replace('?', ''), { arrayFormat: 'brackets' });
-      this.params       = _.merge(this.params, cat, queryParams);
+      this.params       = _.merge(this.params, categoryFilter, queryParams);
       this.fetchResults()
     },
     methods: {

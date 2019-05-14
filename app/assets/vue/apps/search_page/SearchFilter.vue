@@ -416,7 +416,7 @@
     computed: {
 
       showCategoriesFilter () {
-        return !window.env_context.params.category
+        return !window.env_context.params.category.length
       },
 
       priceUpperBound () {
