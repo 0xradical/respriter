@@ -92,7 +92,7 @@
         </div>
 
         <div class='col-12 col-lg-9 vld-parent'>
-          <loading :active.sync="isFetchingRecords" :is-full-page='true' color='#4C636F'></loading>
+          <loading :active.sync="isLoadable" :is-full-page='true' color='#4C636F'></loading>
           <template v-if="data.records.length > 0">
             <div v-for='course in data.records' :key="course.id" style='margin-bottom:10px'>
               <course :course='course'></course>
@@ -121,36 +121,28 @@
   import 'vue-loading-overlay/dist/vue-loading.css';
 
   export default {
-
     props: {
-
       recordsPerPage: {
         type: Number,
         default: 25
       },
-
       category: {
         type: String,
         default: ''
       },
-
       showCategoriesFilter: {
         type: Boolean,
         default: true
       },
-
       containerClass: {
         type: String,
         default: ''
       },
-
       locale: {
         type: String,
         default: 'en'
       }
-
     },
-
     components: {
       course: Course,
       searchFilter: SearchFilter,
@@ -159,11 +151,11 @@
       icon: Icon,
       loading: Loading
     },
-
     data () {
       return {
         params: this.paramsConstructor(null),
         isFetchingRecords: false,
+        isMobile: this.isCurrentViewportMobile(),
         numOfPages: 0,
         data: {
           meta: {
@@ -190,7 +182,6 @@
         }
       }
     },
-
     watch: {
       'data.meta.total': function (nVal, oVal) {
         this.numOfPages = parseInt(Math.ceil(nVal/this.recordsPerPage))
@@ -202,13 +193,14 @@
         deep: true
       }
     },
-
     computed: {
       page () {
         return (parseInt(this.params.p) || 1)
+      },
+      isLoadable() {
+        return !this.isMobile && this.isFetchingRecords;
       }
     },
-
     mounted () {
       this.$i18n.locale = this.locale
 
@@ -221,25 +213,23 @@
       this.params       = _.merge(this.params, cat, queryParams);
       this.fetchResults()
     },
-
     methods: {
-
+      isCurrentViewportMobile() {
+        let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        return w < parseInt(window.Elements.breakpoints.lg);
+      },
       changeParams (param) {
         this.params = Object.assign(this.params, param)
       },
-
       filter (filter) {
         this.changeParams({filter: filter, p: 1})
       },
-
       paginate (page) {
         this.changeParams({p: page})
       },
-
       clearFilters () {
         this.params = this.paramsConstructor(this.params.q);
       },
-
       clearFilter (filter) {
         if (filter === 'price') {
           this.params.filter.price = [0, 2500];
@@ -247,23 +237,18 @@
           this.params.filter[filter] = [];
         }
       },
-
       addOptionToFilter (key, option) {
         this.params.filter[key].push(option);
       },
-
       removeOptionFromFilter (key, option) {
         this.params.filter[key] = this.params.filter[key].filter((e) => e !== option);
       },
-
       changePriceValue (value) {
         this.params.filter.price = value;
       },
-
       changeLowerPriceValue (value) {
         this.params.filter.price = [ value, this.params.filter.price[1] ];
       },
-
       paramsConstructor: function (currentQuery) {
         return Object.assign({},{
           order: {},
@@ -278,7 +263,6 @@
           q: currentQuery
         });
       },
-
       fetchResults () {
         var vm  = this
         var stringifiedParams = qs.stringify(this.params, {indices: false, arrayFormat: 'brackets', encode: true})
@@ -294,9 +278,7 @@
           })
         });
       }
-
     }
-
   }
 </script>
 
