@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   http_basic_authenticate_with(name: ENV['BASIC_AUTH_USER'], password: ENV['BASIC_AUTH_PASSWORD']) if ENV['BASIC_AUTH_REQUIRED']
 
   protect_from_forgery with: :exception
-  prepend_before_action :parse_browser_session
+  prepend_before_action :track_session
   before_action :set_locale
 
   layout :fetch_layout
@@ -21,13 +21,12 @@ class ApplicationController < ActionController::Base
     I18n.locale = ([parsed_locale] & I18n.available_locales).present? ? parsed_locale : :en
   end
 
-  def parse_browser_session
-    @browser_session = BrowserSessionParser.new(request).call
-    session[:tracking_data] ||= @browser_session
+  def session_tracker
+    @session_tracker ||= SessionTracker.track self
   end
+  alias :track_session :session_tracker
 
   def fetch_layout
-    devise_controller? ? "devise" : "application"
+    devise_controller? ? 'devise' : 'application'
   end
-
 end
