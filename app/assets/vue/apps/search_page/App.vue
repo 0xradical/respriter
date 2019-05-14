@@ -91,7 +91,8 @@
           </div>
         </div>
 
-        <div class='col-12 col-lg-9'>
+        <div class='col-12 col-lg-9 vld-parent'>
+          <loading :active.sync="isFetchingRecords" :is-full-page='true' color='#4C636F'></loading>
           <template v-if="data.records.length > 0">
             <div v-for='course in data.records' :key="course.id" style='margin-bottom:10px'>
               <course :course='course'></course>
@@ -109,7 +110,6 @@
 </template>
 
 <script>
-
   import _ from 'lodash';
   import Course from './Course.vue';
   import CourseModal from './CourseModal.vue';
@@ -117,6 +117,8 @@
   import SearchFilter from './SearchFilter.vue';
   import Icon from './Icon.vue';
   import qs from 'qs';
+  import Loading from "vue-loading-overlay";
+  import 'vue-loading-overlay/dist/vue-loading.css';
 
   export default {
 
@@ -154,12 +156,14 @@
       searchFilter: SearchFilter,
       pagination: Pagination,
       courseModal: CourseModal,
-      icon: Icon
+      icon: Icon,
+      loading: Loading
     },
 
     data () {
       return {
         params: this.paramsConstructor(null),
+        isFetchingRecords: false,
         numOfPages: 0,
         data: {
           meta: {
@@ -280,10 +284,13 @@
         var stringifiedParams = qs.stringify(this.params, {indices: false, arrayFormat: 'brackets', encode: true})
         var url = `/search.json?${stringifiedParams}`
         window.history.replaceState({}, 'foo', url.replace('.json', ''))
+
+        vm.isFetchingRecords = true;
         fetch(url, { method: 'GET' }).then(function (resp) {
           resp.json().then(function (json) {
-            vm.data.records = json.data;
-            vm.data.meta    = json.meta;
+            vm.data.records      = json.data;
+            vm.data.meta         = json.meta;
+            vm.isFetchingRecords = false;
           })
         });
       }
