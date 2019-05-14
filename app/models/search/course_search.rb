@@ -1,5 +1,7 @@
 module Search
   class CourseSearch
+    VERSION = '1.0.0'
+
     attr_reader :query, :filter, :page, :per_page, :order, :boost
 
     FILTER_BY_FIELD = {
@@ -22,9 +24,11 @@ module Search
       @boost    = boost
     end
 
-    def search
+    def results
+      return @results if @results.present?
+
       response = Course.__elasticsearch__.search self.to_h
-      {
+      @results = {
         data: response.results.map(&:_source),
         meta: {
           total:        response.results.total,

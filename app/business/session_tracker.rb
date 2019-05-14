@@ -14,10 +14,40 @@ class SessionTracker
     @action = action
   end
 
+  def track
+    session[:tracking_data]                  = session_payload
+    cookies.signed.permanent[:tracking_data] = Base64.encode64 Marshal.dump(cookies_payload)
+  end
+
   def [](key)
     payload[key]
   end
 
+  def session_payload
+    payload
+  end
+
+  def cookies_payload
+    return @cookies_payload if @cookies_payload.present?
+
+    @cookies_payload = (tracking_cookies.blank? ? payload : tracking_cookies).deep_dup
+    @cookies_payload.merge! session_payload.slice(:session_count, :last_access_at)
+    @cookies_payload
+  end
+
+  def tracking_cookies
+    @tracking_cookies ||= if cookies.signed[:tracking_data].present?
+      Marshal.load Base64.decode64 cookies.signed[:tracking_data]
+    else
+      Hash.new
+    end
+  end
+
+  def tracking_session
+    @tracking_session ||= (session[:tracking_data].deep_dup || Hash.new).with_indifferent_access
+  end
+
+  protected
   def payload
     return @payload if @payload.present?
 
@@ -25,13 +55,6 @@ class SessionTracker
       tracking_obj.merge send("parse_#{property}")
     end.with_indifferent_access
   end
-
-  def track
-    session[:tracking_data] = payload
-    cookies.signed.permanent[:tracking_data] = Base64.encode64 Marshal.dump(payload)
-  end
-
-  protected
 
   def raw
     {
@@ -86,7 +109,7 @@ class SessionTracker
   end
 
   def parse_first_access_at
-    time = tracking_cookies&.[](:first_access_at) || tracking_session[:first_access_at] || Time.current
+    time = tracking_cookies[:first_access_at] || tracking_session[:first_access_at] || Time.current
     { first_access_at: time }
   end
 
@@ -99,7 +122,7 @@ class SessionTracker
       if tracking_session.present?
         tracking_cookies[:session_count]
       else
-        tracking_cookies[:session_count] = (tracking_cookies&.[](:session_count) || 0) + 1
+        (tracking_cookies[:session_count] || 0) + 1
       end
     else
       1
@@ -113,19 +136,6 @@ class SessionTracker
   end
 
   private
-
-  def tracking_cookies
-    @tracking_cookies ||= if cookies.signed[:tracking_data].present?
-      Marshal.load Base64.decode64 cookies.signed[:tracking_data]
-    else
-      Hash.new
-    end
-  end
-
-  def tracking_session
-    @tracking_session = (session[:tracking_data] || Hash.new).with_indifferent_access
-  end
-
   def request
     @action.send :request
   end
@@ -135,7 +145,7 @@ class SessionTracker
   end
 
   def cookies
-    @action.send(:cookies)
+    @action.send :cookies
   end
 
   def self.track(action)

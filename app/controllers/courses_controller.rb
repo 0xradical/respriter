@@ -17,9 +17,10 @@ class CoursesController < ApplicationController
           search_query_params[:order] = search_params[:order].to_h.to_a
         end
 
-        results = Search::CourseSearch.new(search_query_params).search
+        search  = Search::CourseSearch.new search_query_params
+        tracker = SearchTracker.new(session_tracker, search).store!
 
-        render json: format_aggregations(results)
+        render json: format_aggregations(tracker.tracked_results)
       end
     end
   end

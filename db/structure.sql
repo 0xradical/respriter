@@ -402,7 +402,9 @@ CREATE TABLE public.enrollments (
     course_id uuid,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    tracked_search_id uuid,
+    tracking_cookies jsonb
 );
 
 
@@ -442,7 +444,6 @@ CREATE TABLE public.tracked_actions (
     ext_id character varying,
     compound_ext_id character varying,
     ext_sku_id character varying,
-    ext_sku_name character varying,
     ext_product_name character varying
 );
 
@@ -457,19 +458,19 @@ CREATE VIEW public.earnings AS
     tracked_actions.earnings_amount,
     tracked_actions.ext_click_date,
     tracked_actions.ext_sku_id,
-    tracked_actions.ext_sku_name,
+    tracked_actions.ext_product_name,
     tracked_actions.ext_id,
     tracked_actions.source AS affiliate_network,
     providers.name AS provider_name,
     courses.name AS course_name,
     courses.url AS course_url,
+    (enrollments.tracking_data ->> 'country'::text) AS country,
     (enrollments.tracking_data ->> 'query_string'::text) AS qs,
     (enrollments.tracking_data ->> 'referer'::text) AS referer,
     (enrollments.tracking_data ->> 'utm_source'::text) AS utm_source,
     (enrollments.tracking_data ->> 'utm_campaign'::text) AS utm_campaign,
     (enrollments.tracking_data ->> 'utm_medium'::text) AS utm_medium,
     (enrollments.tracking_data ->> 'utm_term'::text) AS utm_term,
-    (enrollments.tracking_data ->> 'country'::text) AS country,
     tracked_actions.created_at
    FROM (((public.tracked_actions
      LEFT JOIN public.enrollments ON ((tracked_actions.enrollment_id = enrollments.id)))
@@ -679,6 +680,21 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: tracked_searches; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tracked_searches (
+    id uuid DEFAULT public.uuid_generate_v1() NOT NULL,
+    version character varying,
+    request jsonb,
+    results jsonb,
+    tracked_data jsonb,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
 -- Name: user_accounts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -880,6 +896,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: tracked_searches tracked_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tracked_searches
+    ADD CONSTRAINT tracked_searches_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_accounts user_accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -962,6 +986,13 @@ CREATE UNIQUE INDEX index_courses_on_url_md5 ON public.courses USING btree (url_
 --
 
 CREATE INDEX index_enrollments_on_course_id ON public.enrollments USING btree (course_id);
+
+
+--
+-- Name: index_enrollments_on_tracked_search_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_enrollments_on_tracked_search_id ON public.enrollments USING btree (tracked_search_id);
 
 
 --
@@ -1196,6 +1227,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190408141738'),
 ('20190408173350'),
 ('20190416123653'),
-('20190503093752');
+('20190503093752'),
+('20190515101502'),
+('20190515104037');
 
 
