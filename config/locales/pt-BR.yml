@@ -213,6 +213,8 @@ pt-BR:
     sign_up: 'Cadastre-se'
     sign_out: 'Sair'
     price: 'Preço'
+    in_currency: "em %{currency}"
+    search: 'Pesquisar'
     cancel_search: 'Sair da pesquisa'
     filters: 'Filtros'
     audios: 'Idioma do áudio'
@@ -231,9 +233,14 @@ pt-BR:
     free: 'Grátis'
     only_free: 'Somente grátis'
     sort_by: 'Ordenar por'
+    clear_all_filters: "Limpar filtros"
+    clear_filter: "Limpar filtro"
+    filter_results: "Filtrar resultados"
+    show_results: "Resultados"
     display_filter: 'Mostrar filtro'
     lowest_price: 'Menor preço'
     highest_price: 'Maior preço'
+    no_suggestions_message: "Desculpe, não foi possível encontrar <b>%{term}</b>"
     providers: 'Plataformas'
     top_reviewed: 'Melhor avaliados'
     favorite: 'Favoritar'

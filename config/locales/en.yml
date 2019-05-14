@@ -207,10 +207,12 @@ en:
     sign_up: "Sign Up"
     sign_out: 'Log out'
     price: "Price"
+    in_currency: "in %{currency}"
     from: "From"
     to: "To"
     min: "Min"
     max: "Max"
+    search: "Search"
     cancel_search: "Cancel search"
     filters: "Filters"
     audios: "Language"
@@ -226,13 +228,17 @@ en:
     free: "Free"
     for: "for"
     sort_by: "Sort by"
+    clear_all_filters: "Clear all filters"
+    clear_filter: "Clear filter"
+    filter_results: "Filter results"
+    show_results: "Show results"
     display_filter: 'Display filter'
     lowest_price: "Lowest price"
-    highest_price: "Highest Price"
+    highest_price: "Highest price"
+    no_suggestions_message: "Sorry, we couldn't find <b>%{term}</b>"
     top_reviewed: "Top reviewed"
     favorite: "Favorite"
     go_to_course: "Go to course"
-    search:
   meta:
     icons:
       user_and_monitor: 'Course pace'

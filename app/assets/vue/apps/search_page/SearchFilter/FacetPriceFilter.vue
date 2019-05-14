@@ -1,9 +1,9 @@
 <template>
   <vue-slider :value="value"
-              @input='[previousMin, previousMax] = [currentMin, currentMax]; [currentMin, currentMax] = $event.map(parseFloat)'
-              @change='emitChanges'
+              @dragging='updateCurrentValues'
+              @drag-end='emitChanges'
               :contained="true"
-              tooltip='none'
+              tooltip='focus'
               :enable-cross='false'
               :min='0'
               :max='2500'
@@ -25,11 +25,11 @@ export default {
       type: String,
       default: '14px'
     },
-    currentMin: {
+    initialMin: {
       type: Number,
       default: 0
     },
-    currentMax: {
+    initialMax: {
       type: Number,
       default: 2500
     },
@@ -43,18 +43,24 @@ export default {
   },
   data() {
     return {
-      previousMin: this.currentMin,
-      previousMax: this.currentMax,
+      currentMin: this.initialMin,
+      currentMax: this.initialMax
+    }
+  },
+  watch: {
+    'initialMin': function (nVal, oVal) {
+      this.currentMin = nVal;
+    },
+    'initialMax': function (nVal, oVal) {
+      this.currentMax = nVal;
     }
   },
   methods: {
-    emitChanges: function([ minVal, maxVal ]) {
-      if (minVal !== this.previousMin) {
-        this.$emit('priceLowerValueChanged', minVal);
-      }
-      if (maxVal !== this.previousMax) {
-        this.$emit('priceUpperValueChanged', maxVal);
-      }
+    updateCurrentValues: function(params) {
+      [this.currentMin, this.currentMax]   = params.map(parseFloat);
+    },
+    emitChanges: function() {
+      this.$emit('priceValueChanged', [this.currentMin, this.currentMax]);
     }
   },
   computed: {

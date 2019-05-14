@@ -1,5 +1,5 @@
 <template>
-  <svg :width='width' :height='height' :style='style'>
+  <svg :style='style'>
     <use :xlink:href='path' />
   </svg>
 </template>
@@ -27,7 +27,9 @@ export default {
   computed: {
     style() {
       return {
-        'transform': this.transform
+        'transform': this.transform,
+        'width': this.width,
+        'height': this.height
       }
     },
     path() {

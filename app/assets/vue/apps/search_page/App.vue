@@ -1,6 +1,6 @@
 <template>
   <div>
-    <modal :adaptive="true" width='90%' height='90%' name='mobileFilter'>
+    <modal :adaptive="true" width='100%' height='100%' name='mobileFilter'>
       <div class='filter-nav--mobile'>
         <div class='mx-D(Fx) mx-FxJc(sb)' style='height: 15%;'>
           <h5>{{ $t('dictionary.filters') }}</h5>
@@ -17,8 +17,7 @@
                          @clearFiltersClicked="clearFilters"
                          @optionAddedToFilter="addOptionToFilter"
                          @optionRemovedFromFilter="removeOptionFromFilter"
-                         @priceUpperValueChanged="changeUpperPriceValue"
-                         @priceLowerValueChanged="changeLowerPriceValue">
+                         @priceValueChanged="changePriceValue">
           </search-filter>
         </div>
       </div>
@@ -63,7 +62,7 @@
             <div class='mx-D(Fx) mx-FxJc(sb)'>
               <h4>{{ $t('dictionary.filters') }}</h4>
               <a href='#' class='mx-C(magenta) mx-Fw(b)' @click.prevent="clearFilters" style="margin: auto 0;text-align:right;">
-                Clear all filters
+                {{ $t('dictionary.clear_all_filters') }}
               </a>
             </div>
             <search-filter :aggregations='data.meta.aggregations'
@@ -71,15 +70,14 @@
                            @clearFilterClicked='clearFilter'
                            @optionAddedToFilter="addOptionToFilter"
                            @optionRemovedFromFilter="removeOptionFromFilter"
-                           @priceUpperValueChanged="changeUpperPriceValue"
-                           @priceLowerValueChanged="changeLowerPriceValue">
+                           @priceValueChanged="changePriceValue">
             </search-filter>
           </div>
         </div>
 
         <div class='col-12 mx-D(n)@>desktop mx-Mb-1'>
           <hr/>
-          <div class='mx-D(Fx) mx-FxJc(sb)'>
+          <div class='mx-D(Fx) mx-FxJc(sb) mx-FxAi(c)'>
             <span class='mx-C(blue) mx-Fw(b)'>
               {{ $t('dictionary.sort_by') }}
               <select v-model='params.order.price'>
@@ -87,11 +85,14 @@
                 <option value='desc'>{{ $t('dictionary.highest_price') }}</option>
               </select>
             </span>
-            <a class='mx-C(blue) mx-Fw(b)' href='#' @click="$modal.show('mobileFilter')">Filter Results</a>
+            <a class='mx-C(blue) mx-Fw(b) mx-Ws(nw)' href='#' @click="$modal.show('mobileFilter')">
+              {{ $t('dictionary.filter_results') }}
+            </a>
           </div>
         </div>
 
-        <div class='col-12 col-lg-9'>
+        <div class='col-12 col-lg-9 vld-parent'>
+          <loading :active.sync="isLoadable" :is-full-page='true' color='#4C636F'></loading>
           <template v-if="data.records.length > 0">
             <div v-for='course in data.records' :key="course.id" style='margin-bottom:10px'>
               <course :course='course'></course>
@@ -109,7 +110,6 @@
 </template>
 
 <script>
-
   import _ from 'lodash';
   import Course from './Course.vue';
   import CourseModal from './CourseModal.vue';
@@ -117,50 +117,45 @@
   import SearchFilter from './SearchFilter.vue';
   import Icon from './Icon.vue';
   import qs from 'qs';
+  import Loading from "vue-loading-overlay";
+  import 'vue-loading-overlay/dist/vue-loading.css';
 
   export default {
-
     props: {
-
       recordsPerPage: {
         type: Number,
         default: 25
       },
-
       category: {
         type: String,
         default: ''
       },
-
       showCategoriesFilter: {
         type: Boolean,
         default: true
       },
-
       containerClass: {
         type: String,
         default: ''
       },
-
       locale: {
         type: String,
         default: 'en'
       }
-
     },
-
     components: {
       course: Course,
       searchFilter: SearchFilter,
       pagination: Pagination,
       courseModal: CourseModal,
-      icon: Icon
+      icon: Icon,
+      loading: Loading
     },
-
     data () {
       return {
-        params: this.paramsConstructor(),
-
+        params: this.paramsConstructor(null),
+        isFetchingRecords: false,
+        isMobile: this.isCurrentViewportMobile(),
         numOfPages: 0,
         data: {
           meta: {
@@ -187,56 +182,54 @@
         }
       }
     },
-
     watch: {
-
       'data.meta.total': function (nVal, oVal) {
         this.numOfPages = parseInt(Math.ceil(nVal/this.recordsPerPage))
       },
-
       params: {
         handler (nVal, oVal) {
           this.fetchResults()
         },
         deep: true
       }
-
     },
-
     computed: {
       page () {
         return (parseInt(this.params.p) || 1)
+      },
+      isLoadable() {
+        return !this.isMobile && this.isFetchingRecords;
       }
     },
-
     mounted () {
       this.$i18n.locale = this.locale
-      var cat = {}
+
+      let cat = {}
       if (this.category) {
         cat = { filter: { category: this.category } }
       }
-      this.params       = _.merge(this.params, cat, qs.parse(window.location.search.replace('?', ''), { arrayFormat: 'brackets' }))
+
+      let queryParams   = qs.parse(window.location.search.replace('?', ''), { arrayFormat: 'brackets' });
+      this.params       = _.merge(this.params, cat, queryParams);
       this.fetchResults()
     },
-
     methods: {
-
+      isCurrentViewportMobile() {
+        let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        return w < parseInt(window.Elements.breakpoints.lg);
+      },
       changeParams (param) {
         this.params = Object.assign(this.params, param)
       },
-
       filter (filter) {
         this.changeParams({filter: filter, p: 1})
       },
-
       paginate (page) {
         this.changeParams({p: page})
       },
-
       clearFilters () {
-        this.params = this.paramsConstructor();
+        this.params = this.paramsConstructor(this.params.q);
       },
-
       clearFilter (filter) {
         if (filter === 'price') {
           this.params.filter.price = [0, 2500];
@@ -244,24 +237,19 @@
           this.params.filter[filter] = [];
         }
       },
-
       addOptionToFilter (key, option) {
         this.params.filter[key].push(option);
       },
-
       removeOptionFromFilter (key, option) {
         this.params.filter[key] = this.params.filter[key].filter((e) => e !== option);
       },
-
-      changeUpperPriceValue (value) {
-        this.params.filter.price = [ this.params.filter.price[0] , value ];
+      changePriceValue (value) {
+        this.params.filter.price = value;
       },
-
       changeLowerPriceValue (value) {
         this.params.filter.price = [ value, this.params.filter.price[1] ];
       },
-
-      paramsConstructor () {
+      paramsConstructor: function (currentQuery) {
         return Object.assign({},{
           order: {},
           filter: {
@@ -271,25 +259,26 @@
             subtitles:     [],
             price:         [0, 2500]
           },
-          p: 1
+          p: 1,
+          q: currentQuery
         });
       },
-
       fetchResults () {
         var vm  = this
-        var stringifyedParams = qs.stringify(this.params, {indices: false, arrayFormat: 'brackets', encode: true})
-        var url = `/search.json?${stringifyedParams}`
+        var stringifiedParams = qs.stringify(this.params, {indices: false, arrayFormat: 'brackets', encode: true})
+        var url = `/search.json?${stringifiedParams}`
         window.history.replaceState({}, 'foo', url.replace('.json', ''))
+
+        vm.isFetchingRecords = true;
         fetch(url, { method: 'GET' }).then(function (resp) {
           resp.json().then(function (json) {
-            vm.data.records = json.data;
-            vm.data.meta    = json.meta;
+            vm.data.records      = json.data;
+            vm.data.meta         = json.meta;
+            vm.isFetchingRecords = false;
           })
         });
       }
-
     }
-
   }
 </script>
 
