@@ -186,6 +186,8 @@ en:
     details:
       show: 'Show Details'
       hide: 'Hide Details'
+    description:
+      view: 'See Description'
     syllabus:
       header: 'Course Syllabus'
       view: 'See Syllabus'
@@ -196,7 +198,7 @@ en:
     pace:
       instructor_paced: "Instructor-paced"
       self_paced: "Self-paced"
-    subscription_period: 
+    subscription_period:
       months: "Monthly subscription"
       years: "Annual subscription"
     for_this_course: "For this course"
@@ -205,32 +207,39 @@ en:
     sign_up: "Sign Up"
     sign_out: 'Log out'
     price: "Price"
+    in_currency: "in %{currency}"
     from: "From"
     to: "To"
     min: "Min"
     max: "Max"
+    search: "Search"
     cancel_search: "Cancel search"
     filters: "Filters"
-    audio: "Language"
+    audios: "Language"
     subtitles: "Subtitles"
     categories: "Categories"
     max_price: "Max. $"
-    provider: 'Providers'
+    providers: 'Providers'
     length: "length"
     previous_page: "Previous page"
-    next_ page: "Next page"
+    next_page: "Next page"
     search_results: "Showing %{total} results"
     only_free: "Only free"
     free: "Free"
     for: "for"
     sort_by: "Sort by"
+    clear_all_filters: "Clear all filters"
+    clear_filter: "Clear filter"
+    filter_results: "Filter results"
+    show_results: "Show results"
     display_filter: 'Display filter'
     lowest_price: "Lowest price"
-    highest_price: "Highest Price"
+    highest_price: "Highest price"
+    no_suggestions_message: "Sorry, we couldn't find <b>%{term}</b>"
+    no_options_available: "No options available for current filter"
     top_reviewed: "Top reviewed"
     favorite: "Favorite"
     go_to_course: "Go to course"
-    search:
   meta:
     icons:
       user_and_monitor: 'Course pace'

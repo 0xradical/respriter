@@ -7,13 +7,13 @@
 <% end %>
 
 <script type='text/javascript'>
-  window.env_context = { params: { category: "<%= params[:tag] %>" } }
+  window.env_context = { params: { category: <%= raw(Array.wrap(params[:tag]).to_json) %> } }
 </script>
 
 <script id='vue-search-app-props' type='x-vue-props'>
   {
     "containerClass": "l-container mx-Pb(60px)",
-    "category": "<%= params[:tag] %>",
+    "category": <%= raw(Array.wrap(params[:tag]).to_json) %>,
     "showCategoriesFilter": <%= params[:tag].present? %>,
     "locale": "<%= I18n.locale %>"
   }

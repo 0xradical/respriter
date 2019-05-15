@@ -13,7 +13,7 @@ else
 	DETECTED_OS := linux
 endif
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% watch
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% watch
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -43,6 +43,10 @@ console: ## Run rails console. Usage e.g: ENV="test" make console
 tests: ## Run the complete test suite
 	@docker-compose run -e BROWSER_LANGUAGE=en --service-ports app_test bundle exec cucumber
 	@docker-compose run -e BROWSER_LANGUAGE=pt-BR --service-ports app_test bundle exec cucumber
+	@make rspec
+
+rspec:
+	@docker-compose run app_test bundle exec rspec
 
 cucumber: ## Run cucumber tests. Usage e.g: ARGS="--tags @user-signs-up" make cucumber
 	@docker-compose run --service-ports app_test bundle exec cucumber $(ARGS)

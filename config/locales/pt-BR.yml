@@ -195,6 +195,8 @@ pt-BR:
     details:
       show: 'Exibir Detalhes'
       hide: 'Esconder Detalhes'
+    description:
+      view: 'Ver descrição'
     syllabus:
       header: 'Plano de estudos'
       view: 'Ver plano de estudos'
@@ -202,7 +204,7 @@ pt-BR:
     pace:
       instructor_paced: "Rítmo fixo"
       self_paced: "Rítmo flexível"
-    subscription_period: 
+    subscription_period:
       months: "Assinatura mensal"
       years: "Assinatura anual"
     for_this_course: "Por este curso"
@@ -211,15 +213,17 @@ pt-BR:
     sign_up: 'Cadastre-se'
     sign_out: 'Sair'
     price: 'Preço'
+    in_currency: "em %{currency}"
+    search: 'Pesquisar'
     cancel_search: 'Sair da pesquisa'
     filters: 'Filtros'
-    audio: 'Idioma do áudio'
+    audios: 'Idioma do áudio'
     subtitles: 'Legendas'
     categories: 'Categorias'
     max_price: 'Até R$'
     length: 'Tempo de duração'
     previous_page: 'Página anterior'
-    next_ page: 'Próxima página'
+    next_page: 'Próxima página'
     search_results: "Exibindo %{total} resultados"
     for: "para"
     from: "De"
@@ -229,10 +233,16 @@ pt-BR:
     free: 'Grátis'
     only_free: 'Somente grátis'
     sort_by: 'Ordenar por'
+    clear_all_filters: "Limpar filtros"
+    clear_filter: "Limpar filtro"
+    filter_results: "Filtrar resultados"
+    show_results: "Resultados"
     display_filter: 'Mostrar filtro'
     lowest_price: 'Menor preço'
     highest_price: 'Maior preço'
-    provider: 'Plataformas'
+    no_suggestions_message: "Desculpe, não foi possível encontrar <b>%{term}</b>"
+    no_options_available: "Nenhuma opção disponível para o filtro atual"
+    providers: 'Plataformas'
     top_reviewed: 'Melhor avaliados'
     favorite: 'Favoritar'
     go_to_course: 'Ir para o curso'
@@ -431,7 +441,7 @@ pt-BR:
         Faça cursos online de desenvolvimento pessoal e torne-se a melhor versão de você.'
         physical_science_and_engineering_text: 'Aprenda a resolver problemas e realizar projetos
         que beneficiem a humanidade. Explore todas as áreas das Ciências Físicas e Engenharia
-        com cursos online.' 
+        com cursos online.'
         social_sciences_text: 'Estude todos os aspectos da sociedade humana e
         da vida social. Entenda muitos dos maiores problemas do mundo com cursos online de
         Ciências Sociais.'

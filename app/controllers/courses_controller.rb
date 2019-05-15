@@ -6,7 +6,7 @@ class CoursesController < ApplicationController
       format.json do
         search_query_params = {
           query:  search_params[:q],
-          filter: prepare_filter(search_params[:filter]),
+          filter: search_params[:filter],
           page:   search_params[:p],
           boost: {
             browser_languages: browser_languages
@@ -29,14 +29,14 @@ class CoursesController < ApplicationController
     aggregations = results[:meta][:aggregations]
 
     formatted_aggregations = {
-      audios: {
-        buckets: format_bucket(:audio, aggregations[:root_audio])
+      root_audio: {
+        buckets: format_bucket(:root_audio, aggregations[:root_audio])
       },
       subtitles: {
         buckets: format_bucket(:subtitles, aggregations[:subtitles])
       },
-      providers: {
-        buckets: format_bucket(:providers, aggregations[:provider_name])
+      provider_name: {
+        buckets: format_bucket(:provider_name, aggregations[:provider_name])
       },
       min_price: {
         value: aggregations[:min_price]
@@ -44,35 +44,12 @@ class CoursesController < ApplicationController
       max_price: {
         value: aggregations[:max_price]
       },
-      categories: {
-        buckets: format_bucket(:categories, aggregations[:category])
+      category: {
+        buckets: format_bucket(:category, aggregations[:category])
       }
     }
 
     results.deep_merge meta: { aggregations: formatted_aggregations }
-  end
-
-  def prepare_filter(filter)
-    return Hash.new if filter.blank?
-    filters = {
-      root_audio:    filter[:audio],
-      subtitles:     filter[:subtitles],
-      category:      ensure_array_filter_query(filter[:categories]),
-      tags:          filter[:tags],
-      provider_name: filter[:providers],
-      price:         filter[:price],
-      paid_content:  filter[:paid_content],
-    }
-
-    filters.find_all{ |k,v| v.present? }.to_h
-  end
-
-  def ensure_array_filter_query(data)
-    if data.is_a?(Array)
-      data.uniq.compact
-    else
-      [ data ].uniq.compact
-    end
   end
 
   def format_bucket(key, aggregation)

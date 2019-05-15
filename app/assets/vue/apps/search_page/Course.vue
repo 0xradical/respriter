@@ -354,53 +354,46 @@
       </div>
     </div>
     <!-- Action -->
-    <div class='c-hcard(2.0)__action-group mx-D(fx) mx-FxFd(col) mx-FxJc(sb) mx-FxAi(c) mx-Fx(50%) mx-FxOrd(5) mx-Fs-0d875@desktop'>
+    <div class='c-hcard(2.0)__action-group mx-D(fx) mx-FxFd(col) mx-FxJc(sb) mx-FxAi(c) mx-Fx(50%) mx-FxOrd(5) mx-Fs-0d75@phone mx-Fs-0d75@tablet mx-Fs-0d875@desktop'>
       <div class='c-hcard(2.0)__call-to-action'>
         <a target='_blank' :href='course.gateway_path' class='btn btn--tiny@phone btn--small@tablet btn--rounded btn--blue-flat btn--expandable@>desktop'>
           {{ $t('dictionary.go_to_course') }}
         </a>
       </div>
-      <!-- <div class='c-hcard(2.0)__syllabus mx-D(b)@phone mx-D(b)@tablet'>
-        <template v-if="false">
-          <syllabus :cssClasses="modalCssClasses" :course="syllabusCourse" :name="modalName" height="80%">
-            <template #caller>
-              {{ $t('dictionary.syllabus.view') }}
-            </template>
-            <template #dismisser>
-              <span></span>
-            </template>
-            <template #header="{ course }">
-              <div class='o-syllabus__provider'>
-                <span class='c-label'>
-                  <svg class='c-label__icon c-label__icon--circled-border'>
-                    <use :xlink":href=""course.provider_logo"></use>
-                  </svg>
-                  <span class='c-label__text'>
-                    <span class='c-tags c-tags--gray'>
-                      {{ course.provider_name }}
-                    </span>
+      <div class='c-hcard(2.0)__syllabus' v-if="course.description">
+        <syllabus :cssClasses="modalCssClasses" :course="syllabusCourse" :name="modalName" height="auto">
+          <template #caller>
+            {{ $t('dictionary.description.view') }}
+          </template>
+          <template #dismisser>
+            <span></span>
+          </template>
+          <template #header="{ course }">
+            <div class='o-syllabus__provider'>
+              <span class='c-label'>
+                <svg class='c-label__icon c-label__icon--circled-border'>
+                  <use :xlink:href="course.provider_logo"></use>
+                </svg>
+                <span class='c-label__text'>
+                  <span class='c-tags c-tags--gray'>
+                    {{ course.provider_name }}
                   </span>
                 </span>
-              </div>
-            </template>
-            <template #body="{ course }">
-              <h5 class='o-syllabus__course-name'>{{ course.name }}</h5>
-              <p class='o-syllabus__course-description' v-html='course.description'></p>
-              <span class='o-syllabus__course-syllabus-header'>
-                {{ $t('dictionary.syllabus.header') }}
               </span>
-              <div class='o-syllabus__course-syllabus' v-html='course.syllabus' v-bar></div>
-            </template>
-          </syllabus>
-        </template>
-      </div> -->
+            </div>
+          </template>
+          <template #body="{ course }">
+            <h6 class='o-syllabus__course-name'>{{ course.name }}</h6>
+            <p class='o-syllabus__course-description' v-html='course.description'></p>
+          </template>
+        </syllabus>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import _ from 'lodash';
-import marked from 'marked';
 import { slugify } from 'transliteration';
 import Syllabus from 'blocks/src/vue/Syllabus.vue';
 import EmbeddedVideo from './EmbeddedVideo.vue';
@@ -417,7 +410,6 @@ export default {
   data () {
     return {
       expanded: false,
-      mdRenderer: new marked.Renderer(),
       videoComponent: null,
       videoClicked: false,
       videoUrl: '',
@@ -468,14 +460,6 @@ export default {
         this.$modal.show(`mobile-video-${this.course.id}`);
       }
     }
-  },
-
-  created() {
-    this.mdRenderer.heading = () => ``;
-    this.mdRenderer.list    = (body, ordered) => {
-      let type = ordered ? 'ol' : 'ul';
-      return `<${type}>\n${body}</${type}>\n`;
-    };
   },
 
   computed: {
@@ -547,7 +531,6 @@ export default {
     syllabusCourse () {
       return Object.assign({
         provider_logo: this.logo,
-        syllabus: (this.course.syllabus_markdown && marked(this.course.syllabus_markdown, {renderer: this.mdRenderer}))
       }, this.course)
     },
 
@@ -560,10 +543,6 @@ export default {
 
 <style lang="scss">
   @import '~elements/src/scss/config/variables.scss';
-
-  .o-syllabus__course-syllabus > ul {
-    width: auto !important;
-  }
 
   .c-hcard\(2\.0\)__localization-details {
     @media (--desktop-min) {
