@@ -402,7 +402,9 @@ CREATE TABLE public.enrollments (
     course_id uuid,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    tracked_search_id uuid,
+    tracking_cookies jsonb
 );
 
 
@@ -678,6 +680,21 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: tracked_searches; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tracked_searches (
+    id uuid DEFAULT public.uuid_generate_v1() NOT NULL,
+    version character varying,
+    request jsonb,
+    results jsonb,
+    tracked_data jsonb,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
 -- Name: user_accounts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -879,6 +896,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: tracked_searches tracked_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tracked_searches
+    ADD CONSTRAINT tracked_searches_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_accounts user_accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -961,6 +986,13 @@ CREATE UNIQUE INDEX index_courses_on_url_md5 ON public.courses USING btree (url_
 --
 
 CREATE INDEX index_enrollments_on_course_id ON public.enrollments USING btree (course_id);
+
+
+--
+-- Name: index_enrollments_on_tracked_search_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_enrollments_on_tracked_search_id ON public.enrollments USING btree (tracked_search_id);
 
 
 --
@@ -1195,6 +1227,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190408141738'),
 ('20190408173350'),
 ('20190416123653'),
-('20190503093752');
+('20190503093752'),
+('20190515101502'),
+('20190515104037');
 
 
