@@ -11,12 +11,12 @@ describe Search::CourseSearch do
     end
 
     it 'should be able to get all resources' do
-      ids = Search::CourseSearch.new.search[:data].map{ |d| d[:id] }.sort
+      ids = Search::CourseSearch.new.results[:data].map{ |d| d[:id] }.sort
       expect(ids).to eq( @courses.map(&:id).sort )
     end
 
     it 'should not unmatched stuff' do
-      data = Search::CourseSearch.new(query: 'Xinforinfula').search[:data]
+      data = Search::CourseSearch.new(query: 'Xinforinfula').results[:data]
       expect(data).to be_blank
     end
   end
@@ -40,7 +40,7 @@ describe Search::CourseSearch do
     end
 
     it 'sort by search score' do
-      data = Search::CourseSearch.new(query: 'Beagle').search[:data]
+      data = Search::CourseSearch.new(query: 'Beagle').results[:data]
 
       beagle_score = data.map do |result|
         tally = result[:name].split.group_by(&:itself).map{ |name, names| [name, names.size] }.to_h
@@ -68,14 +68,14 @@ describe Search::CourseSearch do
     end
 
     it 'sort by lowest prices' do
-      prices = Search::CourseSearch.new(query: 'Beagle', order: [['price', 'asc']]).search[:data].map{ |d| d[:price] }
+      prices = Search::CourseSearch.new(query: 'Beagle', order: [['price', 'asc']]).results[:data].map{ |d| d[:price] }
       prices.each_cons(2) do |price, next_price|
         expect(price).to be <= next_price
       end
     end
 
     it 'sort by highest prices' do
-      prices = Search::CourseSearch.new(query: 'Beagle', order: [['price', 'desc']]).search[:data].map{ |d| d[:price] }
+      prices = Search::CourseSearch.new(query: 'Beagle', order: [['price', 'desc']]).results[:data].map{ |d| d[:price] }
       prices.each_cons(2) do |price, next_price|
         expect(price).to be >= next_price
       end
@@ -92,13 +92,13 @@ describe Search::CourseSearch do
     end
 
     it 'first page gets default size as number of results' do
-      first_ids = Search::CourseSearch.new.search[:data].map{ |d| d[:id] }.sort
+      first_ids = Search::CourseSearch.new.results[:data].map{ |d| d[:id] }.sort
       expect(first_ids.uniq.size).to eq DEFAULT_PAGE_SIZE
 
-      first_ids_again = Search::CourseSearch.new(page: 1).search[:data].map{ |d| d[:id] }.sort
+      first_ids_again = Search::CourseSearch.new(page: 1).results[:data].map{ |d| d[:id] }.sort
       expect(first_ids_again).to eq first_ids
 
-      second_ids = Search::CourseSearch.new(page: 2).search[:data].map{ |d| d[:id] }.sort
+      second_ids = Search::CourseSearch.new(page: 2).results[:data].map{ |d| d[:id] }.sort
       expect(second_ids.uniq.size).to eq DEFAULT_PAGE_SIZE
     end
 
@@ -106,11 +106,11 @@ describe Search::CourseSearch do
       full_pages = @courses.size / 5
 
       full_pages.times do |n|
-        ids = Search::CourseSearch.new(page: n+1, per_page: 5).search[:data].map{ |d| d[:id] }.sort
+        ids = Search::CourseSearch.new(page: n+1, per_page: 5).results[:data].map{ |d| d[:id] }.sort
         expect(ids.uniq.size).to eq 5
       end
 
-      data = Search::CourseSearch.new(page: full_pages + 1, per_page: 5).search[:data]
+      data = Search::CourseSearch.new(page: full_pages + 1, per_page: 5).results[:data]
       expect(data).to be_blank
     end
   end
@@ -125,16 +125,16 @@ describe Search::CourseSearch do
     end
 
     it 'first page gets default size as number of results' do
-      first_ids = Search::CourseSearch.new.search[:data].map{ |d| d[:id] }.sort
+      first_ids = Search::CourseSearch.new.results[:data].map{ |d| d[:id] }.sort
       expect(first_ids.uniq.size).to eq DEFAULT_PAGE_SIZE
 
-      first_ids_again = Search::CourseSearch.new(page: 1).search[:data].map{ |d| d[:id] }.sort
+      first_ids_again = Search::CourseSearch.new(page: 1).results[:data].map{ |d| d[:id] }.sort
       expect(first_ids_again).to eq first_ids
 
-      second_ids = Search::CourseSearch.new(page: 2).search[:data].map{ |d| d[:id] }.sort
+      second_ids = Search::CourseSearch.new(page: 2).results[:data].map{ |d| d[:id] }.sort
       expect(second_ids.uniq.size).to eq DEFAULT_PAGE_SIZE
 
-      third_ids = Search::CourseSearch.new(page: 3).search[:data].map{ |d| d[:id] }.sort
+      third_ids = Search::CourseSearch.new(page: 3).results[:data].map{ |d| d[:id] }.sort
       expect(third_ids.uniq.size).to eq(@courses.size % DEFAULT_PAGE_SIZE)
     end
 
@@ -142,11 +142,11 @@ describe Search::CourseSearch do
       full_pages = @courses.size / 5
 
       full_pages.times do |n|
-        ids = Search::CourseSearch.new(page: n+1, per_page: 5).search[:data].map{ |d| d[:id] }.sort
+        ids = Search::CourseSearch.new(page: n+1, per_page: 5).results[:data].map{ |d| d[:id] }.sort
         expect(ids.uniq.size).to eq 5
       end
 
-      ids = Search::CourseSearch.new(page: full_pages + 1, per_page: 5).search[:data].map{ |d| d[:id] }.sort
+      ids = Search::CourseSearch.new(page: full_pages + 1, per_page: 5).results[:data].map{ |d| d[:id] }.sort
       expect(ids.uniq.size).to eq(@courses.size % 5)
     end
   end
@@ -166,22 +166,22 @@ describe Search::CourseSearch do
     end
 
     it 'should be able to find by name, tag and description' do
-      ids = Search::CourseSearch.new(query: 'Ruby').search[:data].map{ |d| d[:id] }.sort
+      ids = Search::CourseSearch.new(query: 'Ruby').results[:data].map{ |d| d[:id] }.sort
       expect(ids).to eq( @courses[0..2].map(&:id).sort )
     end
 
     it 'should apply english stemmer' do
-      ids = Search::CourseSearch.new(query: 'Learns').search[:data].map{ |d| d[:id] }.sort
+      ids = Search::CourseSearch.new(query: 'Learns').results[:data].map{ |d| d[:id] }.sort
       expect(ids).to eq( @courses[0..2].map(&:id).sort )
     end
 
     it 'should not understand portuguese' do
-      data = Search::CourseSearch.new(query: 'Aprende').search[:data]
+      data = Search::CourseSearch.new(query: 'Aprende').results[:data]
       expect(data).to be_blank
     end
 
     it 'should be able to find tokenized tags' do
-      ids = Search::CourseSearch.new(query: 'ruby').search[:data].map{ |d| d[:id] }.sort
+      ids = Search::CourseSearch.new(query: 'ruby').results[:data].map{ |d| d[:id] }.sort
       expect(ids).to eq( @courses[0..2].map(&:id).sort )
     end
   end
@@ -201,12 +201,12 @@ describe Search::CourseSearch do
     end
 
     it 'should apply portuguese stemmer' do
-      ids = Search::CourseSearch.new(query: 'Aprender').search[:data].map{ |d| d[:id] }.sort
+      ids = Search::CourseSearch.new(query: 'Aprender').results[:data].map{ |d| d[:id] }.sort
       expect(ids).to eq( @courses[0..2].map(&:id).sort )
     end
 
     it 'should not understand english' do
-      data = Search::CourseSearch.new(query: 'Learn').search[:data]
+      data = Search::CourseSearch.new(query: 'Learn').results[:data]
       expect(data).to be_blank
     end
   end
@@ -226,12 +226,12 @@ describe Search::CourseSearch do
     end
 
     it 'should apply spanish stemmer' do
-      ids = Search::CourseSearch.new(query: 'Desarrollo').search[:data].map{ |d| d[:id] }.sort
+      ids = Search::CourseSearch.new(query: 'Desarrollo').results[:data].map{ |d| d[:id] }.sort
       expect(ids).to eq( @courses[0..2].map(&:id).sort )
     end
 
     it 'should not understand english' do
-      data = Search::CourseSearch.new(query: 'Learn').search[:data]
+      data = Search::CourseSearch.new(query: 'Learn').results[:data]
       expect(data).to be_blank
     end
   end
@@ -254,12 +254,13 @@ describe Search::CourseSearch do
     end
 
     it 'should include all categories on empty search' do
-      categories = Search::CourseSearch.new.search[:meta][:aggregations][:category][:unselected].map &:first
+      categories = Search::CourseSearch.new.results[:meta][:aggregations][:category][:unselected].map &:first
       expect(categories.sort).to eq( NavigationalTag.all.map(&:id).uniq.map(&:to_sym).sort )
     end
 
     it 'should include all matched categories on search' do
-      search = Search::CourseSearch.new(query: 'Selected').search
+      search = Search::CourseSearch.new(query: 'Selected').results
+
       selected_categories = search[:meta][:aggregations][:category][:selected].map   &:first
       missing_categories  = search[:meta][:aggregations][:category][:unselected].map &:first
 
@@ -272,7 +273,8 @@ describe Search::CourseSearch do
       filtered_categories   = all_categories.sample( rand(1..all_categories.size) ).sort
       unfiltered_categories = (all_categories - filtered_categories).sort
 
-      search = Search::CourseSearch.new(query: 'Selected', filter: { category: filtered_categories }).search
+      search = Search::CourseSearch.new(query: 'Selected', filter: { category: filtered_categories }).results
+
       selected_categories = search[ :meta ][ :aggregations ][ :category ][ :selected   ].map(&:first).map(&:to_sym).sort
       missing_categories  = search[ :meta ][ :aggregations ][ :category ][ :unselected ].map(&:first).map(&:to_sym).sort
 
@@ -305,12 +307,13 @@ describe Search::CourseSearch do
     end
 
     it 'should include all providers on empty search' do
-      provider_names = Search::CourseSearch.new.search[:meta][:aggregations][:provider_name][:unselected].map &:first
+      provider_names = Search::CourseSearch.new.results[:meta][:aggregations][:provider_name][:unselected].map &:first
       expect(provider_names.sort).to eq( @providers.map(&:name).uniq.map(&:to_sym).sort )
     end
 
     it 'should include all matched providers on search' do
-      search = Search::CourseSearch.new(query: 'Selected').search
+      search = Search::CourseSearch.new(query: 'Selected').results
+
       selected_providers = search[ :meta ][ :aggregations ][ :provider_name ][ :selected   ].map &:first
       missing_providers  = search[ :meta ][ :aggregations ][ :provider_name ][ :unselected ].map &:first
 
@@ -323,7 +326,8 @@ describe Search::CourseSearch do
       filtered_providers   = all_providers.sample( rand(1..all_providers.size) ).sort
       unfiltered_providers = (all_providers - filtered_providers).sort
 
-      search = Search::CourseSearch.new(query: 'Selected', filter: { provider_name: filtered_providers }).search
+      search = Search::CourseSearch.new(query: 'Selected', filter: { provider_name: filtered_providers }).results
+
       selected_providers = search[ :meta ][ :aggregations ][ :provider_name ][ :selected   ].map(&:first).sort
       missing_providers  = search[ :meta ][ :aggregations ][ :provider_name ][ :unselected ].map(&:first).sort
 

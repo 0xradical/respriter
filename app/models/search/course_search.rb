@@ -2,7 +2,7 @@ module Search
   class CourseSearch
     VERSION = '1.0.0'
 
-    attr_reader :query, :filter, :page, :per_page, :order, :boost
+    attr_reader :query, :filter, :page, :per_page, :order, :boost, :session_id
 
     FILTER_BY_FIELD = {
       root_audio:    :term,
@@ -15,13 +15,14 @@ module Search
     }
     TERM_AGGREGATIONS = FILTER_BY_FIELD.find_all{ |k,v| v == :term }.map &:first
 
-    def initialize(query: nil, filter: nil, page: 1, per_page: 25, order: nil, boost: nil)
-      @query    = query
-      @filter   = filter || Hash.new
-      @page     = ( page     || 1  ).to_i
-      @per_page = ( per_page || 25 ).to_i
-      @order    = order
-      @boost    = boost
+    def initialize(query: nil, filter: nil, page: 1, per_page: 25, order: nil, boost: nil, session_id: nil)
+      @query      = query
+      @filter     = filter || Hash.new
+      @page       = ( page     || 1  ).to_i
+      @per_page   = ( per_page || 25 ).to_i
+      @order      = order
+      @boost      = boost
+      @session_id = session_id
     end
 
     def results
@@ -42,8 +43,14 @@ module Search
     end
 
     def to_h
+      main_query = fulltext_query
+
+      if boost.present?
+        main_query[:bool][:should].concat boost_queries
+      end
+
       search_query = {
-        query:       fulltext_query,
+        query:       randomized_query(main_query),
         aggs:        aggregation_query,
         post_filter: filter_query,
         size:        @per_page,
@@ -54,15 +61,30 @@ module Search
         search_query.merge! sort_query
       end
 
-      if boost.present? && search_query[:query][:bool].present?
-        search_query[:query][:bool][:should].concat boost_queries
-      end
-
       search_query
     end
     alias :to_hash :to_h
 
     protected
+    def randomized_query(query)
+      return query if @session_id.blank?
+
+      {
+        function_score: {
+          query: query,
+          functions: [
+            {
+              random_score: {
+                seed: @session_id
+              },
+              weight: 0.5
+            }
+          ],
+          score_mode: 'sum',
+        }
+      }
+    end
+
     def fulltext_query
       return { match_all: Hash.new } if @query.blank?
 

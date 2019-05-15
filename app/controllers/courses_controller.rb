@@ -5,9 +5,10 @@ class CoursesController < ApplicationController
       format.html
       format.json do
         search_query_params = {
-          query:  search_params[:q],
-          filter: search_params[:filter],
-          page:   search_params[:p],
+          query:      search_params[:q],
+          filter:     search_params[:filter],
+          page:       search_params[:p],
+          session_id: session_tracker.session_payload[:id],
           boost: {
             browser_languages: browser_languages
           }
