@@ -1,16 +1,17 @@
 <template>
-  <vue-slider :value="value"
-              @dragging='updateCurrentValues'
-              @drag-end='emitChanges'
-              :contained="true"
-              tooltip='focus'
-              :enable-cross='false'
-              :min='0'
-              :max='2500'
-              :marks='marks'
-              :dot-style='dotStyle'
-              :lazy='true'>
-  </vue-slider>
+  <div class='facet-price-filter' :class='`facet-price-filter--${this.size}`'>
+    <vue-slider :value="value"
+                @dragging='updateCurrentValues'
+                @drag-end='emitChanges'
+                :contained="true"
+                tooltip='focus'
+                :enable-cross='false'
+                :min='0'
+                :max='2500'
+                :marks='marks'
+                :lazy='true'>
+    </vue-slider>
+  </div>
 </template>
 
 <script>
@@ -21,9 +22,9 @@ export default {
     VueSlider
   },
   props: {
-    dotSize: {
+    size: {
       type: String,
-      default: '14px'
+      default: 'normal'
     },
     initialMin: {
       type: Number,
@@ -64,12 +65,6 @@ export default {
     }
   },
   computed: {
-    dotStyle() {
-      return {
-        'width': this.dotSize,
-        'height': this.dotSize
-      }
-    },
     value(){
       return [this.currentMin, this.currentMax];
     }
@@ -87,6 +82,62 @@ export default {
 
   .vue-slider-dot-handle {
     background-color: $themeColor;
+  }
+
+  .facet-price-filter {
+    .vue-slider {
+      .vue-slider-rail {
+        height: 4px;
+
+        .vue-slider-marks {
+          .vue-slider-mark-active {
+            height: 4px;
+          }
+        }
+
+        .vue-slider-dot {
+          width: 14px !important;
+          height: 14px !important;
+
+          .vue-slider-dot-handle {
+            width: 14px;
+            height: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  .facet-price-filter {
+    &--big {
+      padding-left: 30px;
+      padding-right: 30px;
+
+      .vue-slider {
+        .vue-slider-rail {
+          height: 6px;
+
+          .vue-slider-marks {
+            .vue-slider-mark, .vue-slider-mark-active {
+              height: 6px !important;
+              width: 6px !important;
+            }
+          }
+
+          .vue-slider-dot {
+            padding-top: 20px;
+            width: 60px !important;
+            height: 40px !important;
+
+            .vue-slider-dot-handle {
+              margin: 0 auto;
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
+    }
   }
 </style>
 

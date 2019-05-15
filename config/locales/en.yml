@@ -236,6 +236,7 @@ en:
     lowest_price: "Lowest price"
     highest_price: "Highest price"
     no_suggestions_message: "Sorry, we couldn't find <b>%{term}</b>"
+    no_options_available: "No options available for current filter"
     top_reviewed: "Top reviewed"
     favorite: "Favorite"
     go_to_course: "Go to course"

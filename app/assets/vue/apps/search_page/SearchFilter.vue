@@ -3,54 +3,64 @@
     <template v-if='mobileUx'>
       <div class='mobile-filter-wrapper'>
         <transition-group name='mobile-filter' tag='div'>
-          <div v-show='!(isFiltering.root_audio || isFiltering.subtitles || isFiltering.category || isFiltering.provider_name || isFiltering.price)' class='mobile-filter-view mobile-filter-facets-view' key='mobile-filter-facets__audio'>
-            <search-fieldset :title='$t("dictionary.audios")' :subtitle="filter.root_audio.map(audioValue).join(', ')" :stand-out='filter.root_audio.length > 0'>
-              <template #action>
-                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.root_audio = true'>
-                  <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
-                </a>
-              </template>
-            </search-fieldset>
+          <div v-show='!(isFiltering.root_audio || isFiltering.subtitles || isFiltering.category || isFiltering.provider_name || isFiltering.price)' class='mobile-filter-view mobile-filter-facets-view' key='mobile-filter-facets'>
+            <div @click='isFiltering.root_audio = true' class='mobile-filter-facets__facet'>
+              <search-fieldset :title='$t("dictionary.audios")' :subtitle="filter.root_audio.map(audioValue).join(', ')" :stand-out='filter.root_audio.length > 0'>
+                <template #action>
+                  <a class='c-fieldset-frame__action' href='#'>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                  </a>
+                </template>
+              </search-fieldset>
+            </div>
 
             <hr/>
 
-            <search-fieldset :title='$t("dictionary.categories")' v-if="showCategoriesFilter" :subtitle="filter.category.map(categoryValue).join(', ')" :stand-out='filter.category.length > 0'>
-              <template #action>
-                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.category = true'>
-                  <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
-                </a>
-              </template>
-            </search-fieldset>
+            <div @click='isFiltering.category = true' class='mobile-filter-facets__facet'>
+              <search-fieldset :title='$t("dictionary.categories")' v-if="showCategoriesFilter" :subtitle="filter.category.map(categoryValue).join(', ')" :stand-out='filter.category.length > 0'>
+                <template #action>
+                  <a class='c-fieldset-frame__action' href='#'>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                  </a>
+                </template>
+              </search-fieldset>
+            </div>
 
             <hr/>
 
-            <search-fieldset :title='$t("dictionary.subtitles")' :subtitle="filter.subtitles.map(subtitleValue).join(', ')" :stand-out='filter.subtitles.length > 0'>
-              <template #action>
-                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.subtitles = true'>
-                  <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
-                </a>
-              </template>
-            </search-fieldset>
+            <div @click='isFiltering.subtitles = true' class='mobile-filter-facets__facet'>
+              <search-fieldset :title='$t("dictionary.subtitles")' :subtitle="filter.subtitles.map(subtitleValue).join(', ')" :stand-out='filter.subtitles.length > 0'>
+                <template #action>
+                  <a class='c-fieldset-frame__action' href='#'>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                  </a>
+                </template>
+              </search-fieldset>
+            </div>
 
             <hr/>
 
-            <search-fieldset :title='$t("dictionary.providers")' :subtitle="filter.provider_name.map(providerValue).join(', ')" :stand-out='filter.provider_name.length > 0'>
-              <template #action>
-                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.provider_name = true'>
-                  <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
-                </a>
-              </template>
-            </search-fieldset>
+            <div @click='isFiltering.provider_name = true' class='mobile-filter-facets__facet'>
+              <search-fieldset :title='$t("dictionary.providers")' :subtitle="filter.provider_name.map(providerValue).join(', ')" :stand-out='filter.provider_name.length > 0'>
+                <template #action>
+                  <a class='c-fieldset-frame__action' href='#'>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                  </a>
+                </template>
+              </search-fieldset>
+            </div>
 
             <hr/>
 
-            <search-fieldset :title='$t("dictionary.price")' :subtitle='`$ ${filter.price[0]} - $ ${filter.price[1]}`' :stand-out='filter.price[0] > 0 || filter.price[1] < 2500'>
-              <template #action>
-                <a class='c-fieldset-frame__action' href='#' @click='isFiltering.price = true'>
-                  <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
-                </a>
-              </template>
-            </search-fieldset>
+            <div @click='isFiltering.price = true' class='mobile-filter-facets__facet'>
+              <search-fieldset :title='$t("dictionary.price")' :subtitle='`$ ${filter.price[0]} - $ ${filter.price[1]}`' :stand-out='filter.price[0] > 0 || filter.price[1] < 2500'>
+                <template #action>
+                  <a class='c-fieldset-frame__action' href='#'>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                  </a>
+                </template>
+              </search-fieldset>
+            </div>
 
             <hr/>
 
@@ -68,6 +78,7 @@
             <search-facet-options :options='suggestions.root_audio.filtered'
                                   :filter='filter.root_audio'
                                   :rootClasses="['scrollable-ul--mobile']"
+                                  :noOptionsMessage="$t('dictionary.no_options_available')"
                                   :checkboxClasses="['mx-Fs-1d25@extra-small']"
                                   @includeFacetOption="$emit('optionAddedToFilter', 'root_audio', $event)"
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'root_audio', $event)">
@@ -82,6 +93,7 @@
             <search-facet-options :options='suggestions.subtitles.filtered'
                                   :filter='filter.subtitles'
                                   :rootClasses="['scrollable-ul--mobile']"
+                                  :noOptionsMessage="$t('dictionary.no_options_available')"
                                   :checkboxClasses="['mx-Fs-1d25@extra-small']"
                                   @includeFacetOption="$emit('optionAddedToFilter', 'subtitles', $event)"
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'subtitles', $event)">
@@ -96,6 +108,7 @@
             <search-facet-options :options='suggestions.category.filtered'
                                   :filter='filter.category'
                                   :rootClasses="['scrollable-ul--mobile']"
+                                  :noOptionsMessage="$t('dictionary.no_options_available')"
                                   :checkboxClasses="['mx-Fs-1d25@extra-small']"
                                   @includeFacetOption="$emit('optionAddedToFilter', 'category', $event)"
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'category', $event)">
@@ -110,6 +123,7 @@
             <search-facet-options :options='suggestions.provider_name.filtered'
                                   :filter='filter.provider_name'
                                   :rootClasses="['scrollable-ul--mobile']"
+                                  :noOptionsMessage="$t('dictionary.no_options_available')"
                                   :checkboxClasses="['mx-Fs-1d25@extra-small']"
                                   @includeFacetOption="$emit('optionAddedToFilter', 'provider_name', $event)"
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'provider_name', $event)">
@@ -127,6 +141,7 @@
               </div>
               <search-facet-price-filter :initial-min='parseFloat(filter.price[0])'
                                          :initial-max='parseFloat(filter.price[1])'
+                                         size='big'
                                          @priceValueChanged="$emit('priceValueChanged', $event)"
               >
               </search-facet-price-filter>
@@ -468,6 +483,10 @@ hr {
   position:absolute;
   width:100%;
   height:100%;
+}
+
+.mobile-filter-facets__facet {
+  cursor: pointer;
 }
 
 .mobile-filter-enter-active, .mobile-filter-enter, .mobile-filter-leave, .filter-leave-active {
