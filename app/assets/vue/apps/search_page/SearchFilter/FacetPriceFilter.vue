@@ -2,7 +2,9 @@
   <div class='facet-price-filter' :class='`facet-price-filter--${this.size}`'>
     <vue-slider :value="value"
                 @dragging='updateCurrentValues'
-                @drag-end='emitChanges'
+                @drag-start='dragStart'
+                @drag-end='dragEnd'
+                @change='onChange'
                 :contained="true"
                 tooltip='focus'
                 :enable-cross='false'
@@ -44,6 +46,7 @@ export default {
   },
   data() {
     return {
+      isDragging: false,
       currentMin: this.initialMin,
       currentMax: this.initialMax
     }
@@ -58,7 +61,22 @@ export default {
   },
   methods: {
     updateCurrentValues: function(params) {
-      [this.currentMin, this.currentMax]   = params.map(parseFloat);
+      [this.currentMin, this.currentMax] = params.map(parseFloat);
+    },
+    dragStart: function() {
+      this.isDragging = true;
+    },
+    dragEnd: function() {
+      this.isDragging = false;
+      this.emitChanges();
+    },
+    onChange: function(params) {
+      let [nMin, nMax] = params.map(parseFloat);
+
+      if(nMin !== this.currentMin || nMax !== this.currentMax) {
+        [this.currentMin, this.currentMax] = [nMin, nMax];
+        this.emitChanges();
+      }
     },
     emitChanges: function() {
       this.$emit('priceValueChanged', [this.currentMin, this.currentMax]);

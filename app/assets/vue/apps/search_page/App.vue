@@ -153,7 +153,8 @@
     },
     data () {
       return {
-        params: this.paramsConstructor(null),
+        params: this.defaultParams(null),
+        initialFetch: false,
         isFetchingRecords: false,
         isMobile: this.isCurrentViewportMobile(),
         numOfPages: 0,
@@ -188,7 +189,9 @@
       },
       params: {
         handler (nVal, oVal) {
-          this.fetchResults()
+          if (!_.isEqual(nVal,oVal)) {
+            this.fetchResults();
+          }
         },
         deep: true
       }
@@ -209,9 +212,19 @@
         categoryFilter = { filter: { category: this.category } }
       }
 
-      let queryParams   = qs.parse(window.location.search.replace('?', ''), { arrayFormat: 'brackets' });
-      this.params       = _.merge(this.params, categoryFilter, queryParams);
-      this.fetchResults()
+      let queryParams = qs.parse(window.location.search.replace('?', ''), { arrayFormat: 'brackets' });
+
+      if (_.get(queryParams, 'filter.price')) {
+        queryParams.filter.price = queryParams.filter.price.map(parseFloat);
+      }
+      // this will trigger watch and fetch results if categoryFilter or
+      // queryParams is not an empty object, therefore an "initialFetch"
+      // condition is needed here
+      this.params = _.merge(this.params, categoryFilter, queryParams);
+
+      if(!this.initialFetch) {
+        this.fetchResults();
+      }
     },
     methods: {
       isCurrentViewportMobile() {
@@ -221,36 +234,30 @@
       changeParams (param) {
         this.params = Object.assign(this.params, param)
       },
-      filter (filter) {
-        this.changeParams({filter: filter, p: 1})
-      },
       paginate (page) {
         this.changeParams({p: page})
       },
       clearFilters () {
-        this.params = this.paramsConstructor(this.params.q);
+        this.params = this.defaultParams(this.params.q);
       },
       clearFilter (filter) {
         if (filter === 'price') {
-          this.params.filter.price = [0, 2500];
+          this.params = _.set(_.cloneDeep(this.params), 'filter.price', [0, 2500]);
         } else {
-          this.params.filter[filter] = [];
+          this.params = _.set(_.cloneDeep(this.params), `filter.${filter}`, []);
         }
       },
       addOptionToFilter (key, option) {
-        this.params.filter[key].push(option);
+        this.params = _.set(_.cloneDeep(this.params), `filter.${key}`, _.concat(this.params.filter[key], [option]));
       },
       removeOptionFromFilter (key, option) {
-        this.params.filter[key] = this.params.filter[key].filter((e) => e !== option);
+        this.params = _.set(_.cloneDeep(this.params), `filter.${key}`, _.without(this.params.filter[key], option));
       },
       changePriceValue (value) {
-        this.params.filter.price = value;
+        this.params = _.set(_.cloneDeep(this.params), 'filter.price', value);
       },
-      changeLowerPriceValue (value) {
-        this.params.filter.price = [ value, this.params.filter.price[1] ];
-      },
-      paramsConstructor: function (currentQuery) {
-        return Object.assign({},{
+      defaultParams: function (currentQuery) {
+        return {
           order: {},
           filter: {
             provider_name: [],
@@ -261,7 +268,7 @@
           },
           p: 1,
           q: currentQuery
-        });
+        };
       },
       fetchResults () {
         var vm  = this
@@ -270,6 +277,7 @@
         window.history.replaceState({}, 'foo', url.replace('.json', ''))
 
         vm.isFetchingRecords = true;
+        vm.initialFetch      = true;
         fetch(url, { method: 'GET' }).then(function (resp) {
           resp.json().then(function (json) {
             vm.data.records      = json.data;

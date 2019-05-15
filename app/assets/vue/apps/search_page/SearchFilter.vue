@@ -139,8 +139,8 @@
               <div style='font-weight: bold; margin-bottom: 0.5em;text-align: center'>
                 <span>$ {{ filter.price[0] }}</span> - <span>$ {{ filter.price[1] }}</span>
               </div>
-              <search-facet-price-filter :initial-min='parseFloat(filter.price[0])'
-                                         :initial-max='parseFloat(filter.price[1])'
+              <search-facet-price-filter :initial-min='filter.price[0]'
+                                         :initial-max='filter.price[1]'
                                          size='big'
                                          @priceValueChanged="$emit('priceValueChanged', $event)"
               >
@@ -165,17 +165,17 @@
           </a>
         </template>
         <div class='c-fieldset-frame__item'>
-          <search-facet-price-filter :initial-min='parseFloat(filter.price[0])'
-                                     :initial-max='parseFloat(filter.price[1])'
+          <search-facet-price-filter :initial-min='filter.price[0]'
+                                     :initial-max='filter.price[1]'
                                      :marks='[0,625,1250,1875,2500]'
                                      @priceValueChanged="$emit('priceValueChanged', $event)"
           >
           </search-facet-price-filter>
 
           <div style='margin-top: 2em;display:flex;'>
-            <number-input :value='parseFloat(filter.price[0])' size="small" inline :min='0' :max='2500' @change="$emit('priceValueChanged', [$event, filter.price[1]])"></number-input>
+            <number-input :value='filter.price[0]' size="small" inline :min='0' :max='2500' @change="$emit('priceValueChanged', [$event, filter.price[1]])"></number-input>
             <span class='mx-D(ib)' style='margin: auto 0.5em; font-size: 0.875em; flex-basis: 150px;text-align:center;'> {{ $t('dictionary.in_currency',{currency: 'USD'}) }} </span>
-            <number-input :value='parseFloat(filter.price[1])' size="small" inline :min='0' :max='2500' @change="$emit('priceValueChanged', [filter.price[0],$event])"></number-input>
+            <number-input :value='filter.price[1]' size="small" inline :min='0' :max='2500' @change="$emit('priceValueChanged', [filter.price[0], $event])"></number-input>
           </div>
         </div>
       </search-fieldset>
@@ -348,10 +348,6 @@
           category: false,
           provider_name: false,
           price: false
-        },
-        priceModel: {
-          min: 0,
-          max: 2500
         },
         suggestions: {
           root_audio: {
