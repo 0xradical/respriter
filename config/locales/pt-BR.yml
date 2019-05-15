@@ -204,6 +204,7 @@ pt-BR:
     pace:
       instructor_paced: "Rítmo fixo"
       self_paced: "Rítmo flexível"
+      live_class: "Aulas ao vivo"
     subscription_period:
       months: "Assinatura mensal"
       years: "Assinatura anual"

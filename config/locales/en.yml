@@ -198,6 +198,7 @@ en:
     pace:
       instructor_paced: "Instructor-paced"
       self_paced: "Self-paced"
+      live_class: "Live Class"
     subscription_period:
       months: "Monthly subscription"
       years: "Annual subscription"
