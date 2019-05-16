@@ -86,31 +86,37 @@ module Search
     end
 
     def fulltext_query
-      return { match_all: Hash.new } if @query.blank?
+      text_query   = nil
+      should_query = []
+      if @query.blank?
+        text_query = { match_all: Hash.new }
+      else
+        text_query = {
+          multi_match: {
+            query: @query,
+            fields: [
+              'name.en^2', 'description.en', 'tags_text.en^2',
+              'name.br^2', 'description.br', 'tags_text.br^2',
+              'name.es^2', 'description.es'
+            ]
+          }
+        }
+
+        should_query << {
+          multi_match: {
+            query: @query,
+            fields: [
+              'category_text.en',
+              'category_text.br',
+            ]
+          }
+        }
+      end
 
       {
         bool: {
-          must: {
-            multi_match: {
-              query: @query,
-              fields: [
-                'name.en^2', 'description.en', 'tags_text.en^2',
-                'name.br^2', 'description.br', 'tags_text.br^2',
-                'name.es^2', 'description.es'
-              ]
-            }
-          },
-          should: [
-            {
-              multi_match: {
-                query: @query,
-                fields: [
-                  'category_text.en',
-                  'category_text.br',
-                ]
-              }
-            }
-          ]
+          must:   text_query,
+          should: should_query
         }
       }
     end
