@@ -42,7 +42,7 @@
             <div>
               <pagination @paginate='paginate' pagination-anchor='#body-anchor' :current-page='page' :num-of-pages='numOfPages'></pagination>
             </div>
-            <div class='mx-D(n)@<medium mx-D(Fx) mx-FxAi(c) sort'>
+            <div v-show='false' class='mx-D(n)@<medium mx-D(Fx) mx-FxAi(c) sort'>
               <span class='mx-D(b) mx-Mr-1 sort__label'>{{ $t('dictionary.sort_by') }}</span>
               <multiselect  :value="orderCurrentOption"
                             @select="sortByChanged"
