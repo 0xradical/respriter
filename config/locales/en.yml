@@ -348,12 +348,12 @@ en:
     index:
       meta:
         title_html: "%{tag} Courses"
-        description_html: "Find paid and free %{tag} tutorial and courses. Choose from select topics and learn from the best instructors and instituitions."
+        description_html: "Find paid and free %{tag} tutorial and courses. <br/> Choose from select topics and learn from the best instructors and instituitions."
 
     show:
       meta:
         title_html: "%{tag} Courses"
-        description_html: "Find paid and free %{tag} tutorial and courses. Choose from select topics and learn from the best instructors and instituitions."
+        description_html: "Find paid and free %{tag} tutorial and courses. <br/> Choose from select topics and learn from the best instructors and instituitions."
 
   pages:
     dashboard_index:
