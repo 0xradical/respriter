@@ -31,6 +31,8 @@ pt-BR:
     blockchain_and_cryptocurrency: 'Blockchain e Criptomoedas'
     bootstrap: 'Bootstrap'
     bower: 'Bower'
+    browserify: 'Browserify'
+    cake_php: 'CakePHP'
     business: 'Negócios'
     business_analisys: 'Análise de Negócios'
     business_intelligence: 'Business Intelligence'

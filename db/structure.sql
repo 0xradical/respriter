@@ -941,6 +941,13 @@ CREATE UNIQUE INDEX index_admin_accounts_on_unlock_token ON public.admin_account
 
 
 --
+-- Name: index_courses_on_curated_tags; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_courses_on_curated_tags ON public.courses USING gin (curated_tags);
+
+
+--
 -- Name: index_courses_on_dataset_sequence; Type: INDEX; Schema: public; Owner: -
 --
 

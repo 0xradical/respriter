@@ -30,6 +30,8 @@ en:
     bitcoin: 'Bitcoin'
     blockchain_and_cryptocurrency: 'Blockchain and Cryptocurrency'
     bootstrap: 'Bootstrap'
+    browserify: 'Browserify'
+    cake_php: 'CakePHP'
     bower: 'Bower'
     business: 'Business'
     business_analisys: 'Business Analisys'
