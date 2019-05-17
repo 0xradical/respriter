@@ -94,14 +94,40 @@
           </div>
 
           <div class='col-12 col-md-3'>
-            <h2 class='mx-Fs-1d125 mx-Mt-0d875@extra-small mx-C(blue)' style='margin-bottom:10px'><%= t('dictionary.providers') %></h2>
+            <h2 class='mx-Fs-1d125 mx-Mt-0d875@extra-small mx-C(blue)' style='margin-bottom:10px'>
+              <%= t('dictionary.providers') %>
+            </h2>
             <ul class='c-list c-list--unstyled mx-Fs-0d875'>
-              <li style='margin-bottom:8px'>Udemy</li>
-              <li style='margin-bottom:8px'>Pluralsight</li>
-              <li style='margin-bottom:8px'>Coursera</li>
-              <li style='margin-bottom:8px'>Linkedin Learning</li>
-              <li style='margin-bottom:8px'>Edx</li>
-              <li style='margin-bottom:8px'>Treehouse</li>
+              <li style='margin-bottom:8px'>
+                <%= link_to "https://www.udemy.com", target: '_blank', class: 'c-link c-link--white', rel: 'nofollow' do %>
+                  Udemy
+                <% end %>
+              </li>
+              <li style='margin-bottom:8px'>
+                <%= link_to "https://www.pluralsight.com", target: '_blank', class: 'c-link c-link--white', rel: 'nofollow' do %>
+                  Pluralsight
+                <% end %>
+              </li>
+              <li style='margin-bottom:8px'>
+                <%= link_to "https://www.coursera.org", target: '_blank', class: 'c-link c-link--white', rel: 'nofollow' do %>
+                  Coursera
+                <% end %>
+              </li>
+              <li style='margin-bottom:8px'>
+                <%= link_to "https://www.linkedin.com/learning", target: '_blank', class: 'c-link c-link--white', rel: 'nofollow' do %>
+                  Linkedin Learning
+                <% end %>
+              </li>
+              <li style='margin-bottom:8px'>
+                <%= link_to "https://edx.org", target: '_blank', class: 'c-link c-link--white', rel: 'nofollow' do %>
+                  Edx
+                <% end %>
+              </li>
+              <li style='margin-bottom:8px'>
+                <%= link_to "https://teamtreehouse.com", target: '_blank', class: 'c-link c-link--white', rel: 'nofollow' do %>
+                  Treehouse
+                <% end %>
+              </li>
               <li>and 20+</li>
             </ul>
           </div>
@@ -139,12 +165,12 @@
     <div class='mx-Bc(darkest-blue)' style='padding:16px 0px'>
       <div class='container'>
         <div class='row'>
-          <div class='col-12'>
-            <%= link_to t('dictionary.terms_and_conditions'), terms_and_conditions_path, class: 'mx-C(white) mx-Fs-0d875', style: 'line-height:32px' %> &nbsp; &nbsp;
-            <%= link_to t('dictionary.privacy_policy'), privacy_policy_path, class: 'mx-C(white) mx-Fs-0d875', style: 'line-height:32px' %>
+          <div class='col-12 mx-Fs-0d875'>
+            <%= link_to t('dictionary.terms_and_conditions'), terms_and_conditions_path, class: 'c-link c-link--white mx-Fs-0d875', style: 'line-height:32px' %> &nbsp; &nbsp;
+            <%= link_to t('dictionary.privacy_policy'), privacy_policy_path, class: 'c-link c-link--white mx-Fs-0d875', style: 'line-height:32px' %>
                 <%#= link_to t('dictionary.blog'), 'http://blog.classpert.com', class: 'mx-C(white)' %>
             <img src="<%= asset_pack_path('logo_negative.svg') %>" width='126px' class='mx-D(n)@extra-small' style='float:right;vertical-align:middle'>
-            <img src="<%= asset_pack_path('logo_symbol-negative.svg') %>" width='64px' class='mx-D(n)@>extra-small' style='float:right;vertical-align:middle'>
+            <img src="<%= asset_pack_path('logo_symbol-negative.svg') %>" width='32px' class='mx-D(n)@>small' style='float:right;vertical-align:middle'>
           </div>
         </div>
       </div>
