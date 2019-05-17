@@ -192,17 +192,6 @@ class Course < ApplicationRecord
     connection.select_all(sanitize_sql_array([query,tag]))
   end
 
-  def self.count_by_bundlea(tag)
-    query = <<-SQL
-      select * FROM (
-        select unnest(curated_tags) as tag FROM (
-          select * from courses where ? = ANY(curated_tags)
-        ) t 
-      ) tags
-    SQL
-    connection.select_all(sanitize_sql_array([query,tag]))
-  end
-
   def root_languages_for_audio
     audio.map { |lang| lang.split('-')[0] }.uniq
   rescue
