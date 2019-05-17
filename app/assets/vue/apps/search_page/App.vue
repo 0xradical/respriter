@@ -301,8 +301,6 @@ hr {
   top: 50;
   background-color: white;
   padding: 1.5em;
-  position: sticky;
-  top: 90;
 }
 
 .filter-nav--mobile {
