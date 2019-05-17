@@ -68,7 +68,7 @@
       </div>
     </div>
     <!-- Price -->
-    <div class='c-hcard(2.0)__details-expander-group mx-D(fx) mx-FxAi(fs) mx-FxFd(col) mx-Bc(white) mx-Fx(100%) mx-Fx(50%)@>desktop mx-FxOrd(3) mx-FxOrd(4)@>desktop mx-Fs-0d875@desktop'>
+    <div class='c-hcard(2.0)__details-expander-group mx-D(fx) mx-FxAi(fs) mx-FxFd(col) mx-Bc(white) mx-Fx(100%) mx-Fx(40%)@>desktop mx-FxOrd(3) mx-FxOrd(4)@>desktop mx-Fs-0d875@desktop'>
       <div class="c-hcard(2.0)__price mx-FxOrd(1) mx-FxOrd(2)@>desktop">
         {{ course.free_content ? "free" : `$${formattedPrice}` }}
       </div>
@@ -354,7 +354,7 @@
       </div>
     </div>
     <!-- Action -->
-    <div class='c-hcard(2.0)__action-group mx-D(fx) mx-FxFd(col) mx-FxJc(sb) mx-FxAi(c) mx-Fx(50%) mx-FxOrd(5) mx-Fs-0d875@desktop'>
+    <div class='c-hcard(2.0)__action-group mx-D(fx) mx-FxFd(col) mx-FxJc(sb) mx-FxAi(c) mx-Fx(60%) mx-FxOrd(5)'>
       <div class='c-hcard(2.0)__call-to-action'>
         <a target='_blank' :href='course.gateway_path' class='btn btn--tiny@phone btn--small@tablet btn--rounded btn--blue-flat btn--expandable@>desktop'>
           {{ $t('dictionary.go_to_course') }}
