@@ -257,18 +257,14 @@ pt-BR:
           redução de comportamentos de risco. Viva mais e atinja seus objetivos. Encontre cursos
           online gratuitos e pagos com certificado.'
   course_bundles:
+    meta: &meta
+      title_html: "Cursos de %{tag}"
+      description_html: "Encontre cursos online gratuitos e pagos de %{tag}. <br /> 
+        Escolha entre tópicos selecionados e aprenda com os melhores instrutores e instituições."
+    social_share:
+      <<: *meta
     index:
-      meta:
-        title_html: "Cursos de %{tag}"
-        description_html: "Encontre cursos online gratuitos e pagos de %{tag}. <br /> 
-        Escolha entre tópicos selecionados e aprenda com os melhores instrutores e instituições."
-
-    show:
-      meta:
-        title_html: "Cursos de %{tag}"
-        description_html: "Encontre cursos online gratuitos e pagos de %{tag}. <br />
-        Escolha entre tópicos selecionados e aprenda com os melhores instrutores e instituições."
-
+      <<: *meta
   pages:
     home_index:
       meta:

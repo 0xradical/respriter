@@ -345,15 +345,13 @@ en:
           risky behaviors reduction. Live longer and achieve your goals. Find paid and free online
           courses with certificate'
   course_bundles:
+    meta: &meta
+      title_html: "%{tag} Courses"
+      description_html: "Find paid and free %{tag} tutorial and courses. <br/> Choose from select topics and learn from the best instructors and institutions."
+    social_share:
+      <<: *meta
     index:
-      meta:
-        title_html: "%{tag} Courses"
-        description_html: "Find paid and free %{tag} tutorial and courses. <br/> Choose from select topics and learn from the best instructors and instituitions."
-
-    show:
-      meta:
-        title_html: "%{tag} Courses"
-        description_html: "Find paid and free %{tag} tutorial and courses. <br/> Choose from select topics and learn from the best instructors and instituitions."
+      <<: *meta
 
   pages:
     dashboard_index:

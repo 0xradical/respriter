@@ -1,0 +1,5 @@
+<% content_for :meta do %>
+  <title><%= t(".title_html", tag: t("tags.#{@tag}")) %></title>
+  <meta name='description' content='<%= t(".description_html", tag: t("tags.#{@tag}")) %>' />
+  <meta property='og:description' content='<%= t(".description_html", tag: t("tags.#{@tag}")) %>' />
+<% end %>
