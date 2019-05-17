@@ -266,6 +266,8 @@ pt-BR:
       <<: *meta
     index:
       <<: *meta
+    show:
+      <<: *meta
   pages:
     home_index:
       meta:

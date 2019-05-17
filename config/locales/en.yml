@@ -353,6 +353,8 @@ en:
       <<: *meta
     index:
       <<: *meta
+    show:
+      <<: *meta
 
   pages:
     dashboard_index:
