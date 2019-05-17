@@ -19,8 +19,12 @@ module ApplicationHelper
     params[:controller].eql?('home')
   end
 
+  def borderless_navbar?
+    %w(home posts).include?(params[:controller] || devise_controller?)
+  end
+
   def sticky_navbar?
-    !(%w(home static_pages).include?(params[:controller]) || devise_controller?)
+    !(%w(home static_pages posts).include?(params[:controller]) || devise_controller?)
   end
 
 end

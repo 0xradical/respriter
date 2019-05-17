@@ -1,0 +1,30 @@
+<div class='mx-Bc(white) mx-Pt-2 mx-Pb-2'>
+  <div class='blog-container'>
+    <div class='row'>
+      <div class='col-12'>
+        <% @posts.each do |post| %>
+          <div style='margin-bottom:2rem'>
+            <%= link_to post_path(post.slug) do %>
+              <h1 class='mx-Fs-1d75 mx-Mb-0d25 mx-C(black)' style='color:#000;line-height:1em'><%= post.title %></h1>
+            <% end %>
+            <span class='mx-Fs-0d875'><%= post.admin_account.name %></span>&nbsp; | &nbsp;<span class='mx-Fs-0d875'><%= l(post.published_at.to_date, format: :long) %></span>
+            <p class='mx-Fs-0d875'>
+              <%= truncate(strip_tags(post.body.html_safe), length: 350) { "&nbsp".html_safe + link_to("Read more", post_path(post)) } %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+ .blog-container {
+   width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 768px;
+ }
+</style>

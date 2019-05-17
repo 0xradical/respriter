@@ -1,0 +1,50 @@
+<%= render 'application/x_vue_templates/social_share', title: @post.meta['title'], quote:
+  @post.meta['description'], description: @post.meta['description'], hashtags: @post.tags.join(',') %>
+
+
+<div class='mx-Bc(white) mx-Pt-2' style='padding-bottom:60px'>
+  <div class='blog-container'>
+    <div class='row'>
+      <div class='col-12'>
+        <div class='mx-Fs-0d75 mx-Mb-0d5'>
+          <span class='mx-Tt(u)'><%= link_to 'Blog', posts_path %></span> / <span class='mx-C(blue) mx-Tt(u)'><%= @post.tags.map { |t| t("tags.#{t}") }.join(',') %></span>
+        </div>
+        <h1 class='mx-Fs-1d75 mx-Mb-0d5 mx-C(black)' style='color:#000;line-height:1em'><%= @post.title %></h1>
+        <div class='mx-Fs-0d75 mx-Mb-0d5'>
+          <span class='mx-Fs-1d25' style='font-weight:600'>
+            <%= @post.admin_account.name %>
+          </span> - <span class='mx-Fs-1d25'>
+            <%= publication_time(@post) %>
+          </span>
+        </div>
+        <div class='mx-Fs-0d875 mx-Mb-1 mx-Mt-1'>
+          <div data-vue-cpt='social-share'></div>
+          <div class='mx-Cl(b)'></div>
+        </div>
+        <div class='mx-Fs-1d125' style='line-height:1.5em;color:#000'>
+          <%= @post.body.html_safe %>
+        </div>
+        <div style='margin-top:40px'>
+          <% if @post.admin_account.avatar %>
+            <%= image_tag @post.admin_account.avatar.thumbor.file_url(width: 64), style: 'vertical-align:middle;border-radius:50%;margin-right:10px' %>
+          <% end %><div style='vertical-align:middle;display:inline-block;max-width:280px'>
+            <span style='font-weight:600;display:block' class='mx-Mb-0d5'><%= @post.admin_account.name %></span>
+            <span class='mx-Fs-0d75'><%= @post.admin_account.bio %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+ .blog-container {
+   width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 768px;
+ }
+</style>
+

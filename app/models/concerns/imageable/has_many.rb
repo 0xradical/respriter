@@ -3,8 +3,7 @@ module Imageable
     extend ActiveSupport::Concern
 
     included do
-      has_many :images,   -> { order(pos: :asc)     }, as: :imageable, class_name: 'Image', dependent: :destroy
-      scope :with_images, -> { includes(:images)    }
+      has_many :images, -> { order(pos: :asc) }, as: :imageable, class_name: 'Image', dependent: :destroy
     end
 
     def main_image

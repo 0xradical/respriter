@@ -87,6 +87,155 @@ CREATE TYPE public.category AS ENUM (
 
 
 --
+-- Name: iso639_code; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.iso639_code AS ENUM (
+    'ar-EG',
+    'ar-JO',
+    'ar-LB',
+    'ar-SY',
+    'de-DE',
+    'en-AU',
+    'en-BZ',
+    'en-CA',
+    'en-GB',
+    'en-IN',
+    'en-NZ',
+    'en-US',
+    'en-ZA',
+    'es-AR',
+    'es-BO',
+    'es-CL',
+    'es-CO',
+    'es-EC',
+    'es-ES',
+    'es-GT',
+    'es-MX',
+    'es-PE',
+    'es-VE',
+    'fr-BE',
+    'fr-CH',
+    'fr-FR',
+    'it-IT',
+    'jp-JP',
+    'nl-BE',
+    'nl-NL',
+    'pl-PL',
+    'pt-BR',
+    'pt-PT',
+    'sv-SV',
+    'zh-CN',
+    'zh-CMN',
+    'zh-HANS',
+    'zh-HANT',
+    'zh-TW',
+    'af',
+    'am',
+    'ar',
+    'az',
+    'be',
+    'bg',
+    'bn',
+    'bo',
+    'bs',
+    'ca',
+    'co',
+    'cs',
+    'cy',
+    'da',
+    'de',
+    'el',
+    'en',
+    'eo',
+    'es',
+    'et',
+    'eu',
+    'fa',
+    'fi',
+    'fil',
+    'fr',
+    'fy',
+    'ga',
+    'gd',
+    'gl',
+    'gu',
+    'ha',
+    'he',
+    'hi',
+    'hr',
+    'ht',
+    'hu',
+    'hy',
+    'id',
+    'ig',
+    'is',
+    'it',
+    'iw',
+    'ja',
+    'jp',
+    'ka',
+    'kk',
+    'km',
+    'kn',
+    'ko',
+    'ku',
+    'ky',
+    'lb',
+    'lo',
+    'lt',
+    'lv',
+    'mg',
+    'mi',
+    'mk',
+    'ml',
+    'mn',
+    'mr',
+    'ms',
+    'mt',
+    'my',
+    'nb',
+    'ne',
+    'nl',
+    'no',
+    'pa',
+    'pl',
+    'ps',
+    'pt',
+    'ro',
+    'ru',
+    'rw',
+    'sd',
+    'si',
+    'sk',
+    'sl',
+    'sn',
+    'so',
+    'sq',
+    'sr',
+    'st',
+    'sv',
+    'sw',
+    'ta',
+    'te',
+    'tg',
+    'th',
+    'tl',
+    'tr',
+    'tt',
+    'uk',
+    'ur',
+    'uz',
+    'vi',
+    'xh',
+    'yi',
+    'yo',
+    'zh',
+    'zu'
+);
+
+
+--
 -- Name: level; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -130,6 +279,17 @@ CREATE TYPE public.payment_status AS ENUM (
     'open',
     'locked',
     'paid'
+);
+
+
+--
+-- Name: post_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.post_status AS ENUM (
+    'void',
+    'draft',
+    'published'
 );
 
 
@@ -330,6 +490,40 @@ CREATE SEQUENCE public.admin_accounts_id_seq
 --
 
 ALTER SEQUENCE public.admin_accounts_id_seq OWNED BY public.admin_accounts.id;
+
+
+--
+-- Name: admin_profiles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.admin_profiles (
+    id bigint NOT NULL,
+    name character varying,
+    bio text,
+    preferences jsonb,
+    admin_account_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: admin_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.admin_profiles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: admin_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.admin_profiles_id_seq OWNED BY public.admin_profiles.id;
 
 
 --
@@ -621,6 +815,47 @@ ALTER SEQUENCE public.oauth_accounts_id_seq OWNED BY public.oauth_accounts.id;
 
 
 --
+-- Name: posts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.posts (
+    id bigint NOT NULL,
+    slug character varying,
+    title character varying,
+    body text,
+    tags character varying[] DEFAULT '{}'::character varying[],
+    meta jsonb DEFAULT '{}'::jsonb,
+    locale public.iso639_code DEFAULT 'en'::public.iso639_code,
+    status public.post_status DEFAULT 'draft'::public.post_status,
+    content_fingerprint character varying,
+    published_at timestamp without time zone,
+    content_changed_at timestamp without time zone,
+    admin_account_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.posts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
+
+
+--
 -- Name: profiles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -755,6 +990,13 @@ ALTER TABLE ONLY public.admin_accounts ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: admin_profiles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.admin_profiles ALTER COLUMN id SET DEFAULT nextval('public.admin_profiles_id_seq'::regclass);
+
+
+--
 -- Name: favorites id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -809,6 +1051,14 @@ ALTER TABLE ONLY public.user_accounts ALTER COLUMN id SET DEFAULT nextval('publi
 
 ALTER TABLE ONLY public.admin_accounts
     ADD CONSTRAINT admin_accounts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: admin_profiles admin_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.admin_profiles
+    ADD CONSTRAINT admin_profiles_pkey PRIMARY KEY (id);
 
 
 --
@@ -941,6 +1191,13 @@ CREATE UNIQUE INDEX index_admin_accounts_on_reset_password_token ON public.admin
 --
 
 CREATE UNIQUE INDEX index_admin_accounts_on_unlock_token ON public.admin_accounts USING btree (unlock_token);
+
+
+--
+-- Name: index_admin_profiles_on_admin_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_admin_profiles_on_admin_account_id ON public.admin_profiles USING btree (admin_account_id);
 
 
 --
@@ -1209,6 +1466,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190515101502'),
 ('20190515104037'),
 ('20190521153938'),
-('20190529190629');
+('20190529190629'),
+('20190606133958'),
+('20190607133958'),
+('20190610174143');
 
 

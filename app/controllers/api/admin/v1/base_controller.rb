@@ -9,7 +9,7 @@ module Api
 
         def index
           @collection = @resource_klass.order(created_at: :desc).page(params[:p]).per(params[:_limit])
-          options = { meta: { total: @collection.total_count } }
+          options = { meta: { count: @collection.total_count } }
           render json: @serializer_klass.new(@collection, options).serialized_json
         end
 

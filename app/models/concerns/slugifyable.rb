@@ -5,7 +5,7 @@ module Slugifyable
 
   def build_slug
     string = self.class._transform_.kind_of?(Proc) ? self.class._transform_.call(self) : send(self.class._transform_)
-    self[self.class._persist_on_] = transliterate(string.downcase).gsub(/\W+/, '-').chomp('-')
+    self[self.class._persist_on_] = string.downcase.parameterize
   end
 
   class_methods do

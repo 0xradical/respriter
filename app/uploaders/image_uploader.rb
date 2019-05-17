@@ -2,10 +2,8 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
 
-  storage :aws
-
   def store_dir
-    'uploads/'
+    Rails.env.production? ? 'uploads/' : Rails.root.join('tmp', 'uploads')
   end
 
   version :sm do
@@ -29,7 +27,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    @name ||= "#{md5}#{File.extname(super)}" if super
+    @name ||= "#{File.basename(file.original_filename, '.*')}-#{md5}#{File.extname(super)}" if super
   end
 
   protected

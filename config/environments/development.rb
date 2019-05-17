@@ -52,9 +52,11 @@ Rails.application.configure do
   config.middleware.insert_before 0, Rack::Cors do
     allow do
       origins '*'
-      resource '*', headers: :any, expose: %w(Authorization), methods: [:get, :put, :post, :options]
+      resource '*', headers: :any, expose: %w(Authorization), methods: [:get, :put, :patch, :post, :delete, :options]
     end
   end
+
+  config.action_mailer.default_url_options = { host: ENV.fetch('HOST') { 'localhost:3000' } }
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

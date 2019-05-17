@@ -1,4 +1,5 @@
 require 'csv'
+
 module CSVImport
   extend ActiveSupport::Concern
 
@@ -11,7 +12,4 @@ module CSVImport
     end
 
   end
-
 end
-
-

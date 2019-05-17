@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
   get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
 
-  get '/search', to: 'courses#index',  as: :courses 
+  get '/search', to: 'courses#index',  as: :courses
+
+  resources :posts, path: 'blog'
 
   # Devise
   devise_for :admin_accounts, controllers: { 
@@ -38,36 +40,45 @@ Rails.application.routes.draw do
   },
   as: :course_bundles
 
-  concern :import do
-    collection do 
-      post 'import'
-    end
+  concern :imageable do
+    resources :images, shallow: true
   end
 
   namespace :api do
-
     namespace :admin do
+
       namespace :v1 do
-        resource :profile, only: :update
-        resources :user_accounts
+        resource  :profile, only: :update
+        resources :courses
         resources :earnings
         resources :enrollments
-        resources :courses, concerns: [:import]
         resources :providers
-        resources :landing_pages
-        resources :landing_page_templates, only: [:index, :show]
         resources :rake_tasks do
           collection do
             put 'run', action: :run
           end
         end
+        resources :user_accounts
       end
-    end
 
-    namespace :bot do
-      namespace :v1 do
-        resources :courses
+      authenticated :admin_account do
+        namespace :v2 do
+
+          resource :profile do
+            resource :avatar, only: :create
+          end
+
+          resources :images
+          resources :posts, concerns: [:imageable] do
+            member do
+              put 'publish',    action: :publish
+              put 'unpublish',  action: :unpublish
+            end
+          end
+
+        end
       end
+
     end
 
     namespace :user do

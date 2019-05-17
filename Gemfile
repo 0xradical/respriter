@@ -77,27 +77,25 @@ gem 'sitemap_generator'
 gem "valid_email2"
 
 group :test do
-  gem 'cucumber-rails', require: false
-  gem 'guard-cucumber'
-  gem 'guard-rspec'
-  gem 'webmock'
   gem 'capybara'
-  gem 'selenium-webdriver'
-  gem 'vcr'
+  gem 'capybara-email'
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'fivemat'
-  gem 'rspec-its'
+  gem 'guard-rspec'
   gem 'rspec-mocks'
-  gem 'shoulda'
-  gem 'capybara-email'
+  gem 'rspec-rails'
+  gem 'selenium-webdriver'
+  gem 'simplecov', require: false
+  gem 'shoulda-matchers'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development, :test do
   gem 'pry'
   gem 'pry-rails'
   gem 'spring'
-  gem 'listen'
-  gem 'rspec-rails'
   gem 'factory_bot'
   gem 'factory_bot_rails'
 end

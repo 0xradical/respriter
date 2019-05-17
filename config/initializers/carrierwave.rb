@@ -1,6 +1,6 @@
 CarrierWave.configure do |config|
-  config.enable_processing    = true
-  config.storage              = :aws
+  config.enable_processing    = Rails.env.production?
+  config.storage              = Rails.env.production? ? :aws : :file
   config.aws_bucket           = ENV['AWS_S3_BUCKET_NAME']
   config.aws_acl              = :public_read
   config.aws_credentials      = {

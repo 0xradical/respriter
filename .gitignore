@@ -20,8 +20,9 @@
 *.pem
 *.dump
 
-Dockerfile
 Guardfile
+Dockerfile
+/coverage
 docker-compose.yml
 
 /node_modules
