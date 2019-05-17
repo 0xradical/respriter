@@ -20,6 +20,9 @@ Vue.use(VueAutosuggest);
 
 import SearchPage from '../vue/apps/search_page/App.vue'
 
+// Define namespace to avoid global scope pollution
+Vue.prototype.$classpert = {};
+
 document.addEventListener('DOMContentLoaded', () => {
   var nodes = document.querySelectorAll('[data-vue-search-app]')
   for(var i = 0; i < nodes.length; ++i) {

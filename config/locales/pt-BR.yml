@@ -83,6 +83,7 @@ pt-BR:
     display_filter: 'Mostrar filtro'
     lowest_price: 'Menor preço'
     highest_price: 'Maior preço'
+    relevance: "Relevância"
     no_suggestions_message: "Desculpe, não foi possível encontrar <b>%{term}</b>"
     no_options_available: "Nenhuma opção disponível para o filtro atual"
     top_reviewed: 'Melhor avaliados'

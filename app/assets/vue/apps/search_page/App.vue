@@ -4,7 +4,7 @@
       <div class='filter-nav--mobile'>
         <div class='mx-D(Fx) mx-FxJc(sb)' style='height: 15%;'>
           <h5>{{ $t('dictionary.filters') }}</h5>
-          <a href='#' @click="$modal.hide('mobileFilter')">
+          <a href='#' @click="hideMobileFilter">
             <icon width='1.05rem' height='1.05rem' name='close'></icon>
           </a>
         </div>
@@ -13,7 +13,7 @@
                          :total='data.meta.total'
                          :filter='params.filter'
                          :mobileUx='true'
-                         @showResultsClicked="$modal.hide('mobileFilter')"
+                         @showResultsClicked="hideMobileFilter"
                          @clearFiltersClicked="clearFilters"
                          @optionAddedToFilter="addOptionToFilter"
                          @optionRemovedFromFilter="removeOptionFromFilter"
@@ -42,21 +42,33 @@
             <div>
               <pagination @paginate='paginate' pagination-anchor='#body-anchor' :current-page='page' :num-of-pages='numOfPages'></pagination>
             </div>
-            <div class='mx-D(n)@<medium'>
-              <span>
-                {{ $t('dictionary.sort_by') }}
-                <select v-model='params.order.price'>
-                  <option value='asc'>{{ $t('dictionary.lowest_price') }}</option>
-                  <option value='desc'>{{ $t('dictionary.highest_price') }}</option>
-                </select>
-              </span>
+            <div class='mx-D(n)@<medium mx-D(Fx) mx-FxAi(c) sort'>
+              <span class='mx-D(b) mx-Mr-1 sort__label'>{{ $t('dictionary.sort_by') }}</span>
+              <multiselect  :value="orderCurrentOption"
+                            @select="sortByChanged"
+                            track-by='key'
+                            label='label'
+                            select-label=''
+                            selected-label=''
+                            deselect-label=''
+                            :show-pointer='true'
+                            @open='orderOptionsToggled = true'
+                            @close='orderOptionsToggled = false'
+                            :options='orderOptions'
+                            :searchable='false'
+                            :allow-empty='false'>
+                <template slot='caret' slot-scope="{toggle}">
+                  <div @mousedown.prevent.stop="orderOptionsToggle(toggle)" class='sort__caret'>
+                    <icon width='1rem' height='1rem' :transform='`rotate(${orderOptionsToggled ? 180 : 0}deg)`'  name='arrow-down'></icon>
+                  </div>
+                </template>
+              </multiselect>
             </div>
           </div>
-
         </div>
       </div>
 
-      <div class='row'>
+      <div class='row mx-Mt-1@>large'>
         <div class='mx-D(n)@<medium col-lg-3'>
           <div class='filter-nav'>
             <div class='mx-D(Fx) mx-FxJc(sb)'>
@@ -80,12 +92,13 @@
           <div class='mx-D(Fx) mx-FxJc(sb) mx-FxAi(c)'>
             <span class='mx-C(blue) mx-Fw(b)'>
               {{ $t('dictionary.sort_by') }}
-              <select v-model='params.order.price'>
-                <option value='asc'>{{ $t('dictionary.lowest_price') }}</option>
-                <option value='desc'>{{ $t('dictionary.highest_price') }}</option>
+              <select :value="orderCurrentOption.key" @change='sortByChanged({key: $event.target.value})'>
+                <option v-for='option in orderOptions' :key='option.key' :value='option.key'>
+                  {{ option.label }}
+                </option>
               </select>
             </span>
-            <a class='mx-C(blue) mx-Fw(b) mx-Ws(nw)' href='#' @click="$modal.show('mobileFilter')">
+            <a class='mx-C(blue) mx-Fw(b) mx-Ws(nw)' href='#' @click="showMobileFilter">
               {{ $t('dictionary.filter_results') }}
             </a>
           </div>
@@ -94,7 +107,7 @@
         <div class='col-12 col-lg-9 vld-parent'>
           <loading :active.sync="isLoadable" :is-full-page='true' color='#4C636F'></loading>
           <template v-if="data.records.length > 0">
-            <div v-for='course in data.records' :key="course.id" style='margin-bottom:10px'>
+            <div class='mx-Mb-0d625' v-for='course in data.records' :key="course.id" style='margin-bottom:10px'>
               <course :course='course'></course>
             </div>
           </template>
@@ -119,6 +132,8 @@
   import qs from 'qs';
   import Loading from "vue-loading-overlay";
   import 'vue-loading-overlay/dist/vue-loading.css';
+  import Multiselect from 'vue-multiselect';
+  import 'vue-multiselect/dist/vue-multiselect.min.css';
 
   export default {
     props: {
@@ -149,15 +164,19 @@
       pagination: Pagination,
       courseModal: CourseModal,
       icon: Icon,
-      loading: Loading
+      loading: Loading,
+      multiselect: Multiselect
     },
     data () {
       return {
         params: this.defaultParams(null),
-        initialFetch: false,
         isFetchingRecords: false,
+        mobileFilterHidden: true,
         isMobile: this.isCurrentViewportMobile(),
         numOfPages: 0,
+        orderCurrentOption: this.orderOptionByKey("rel"),
+        orderOptionsToggled: false,
+        orderOptionsToggle: function(callback) { this.orderOptionsToggled = !this.orderOptionsToggled; callback(); },
         data: {
           meta: {
             aggregations: {
@@ -186,14 +205,6 @@
     watch: {
       'data.meta.total': function (nVal, oVal) {
         this.numOfPages = parseInt(Math.ceil(nVal/this.recordsPerPage))
-      },
-      params: {
-        handler (nVal, oVal) {
-          if (!_.isEqual(nVal,oVal)) {
-            this.fetchResults();
-          }
-        },
-        deep: true
       }
     },
     computed: {
@@ -201,8 +212,18 @@
         return (parseInt(this.params.p) || 1)
       },
       isLoadable() {
-        return !this.isMobile && this.isFetchingRecords;
+        return (!this.isMobile || (this.isMobile && this.mobileFilterHidden)) && this.isFetchingRecords;
+      },
+      orderOptions() {
+        return this.$classpert.orderOptions;
       }
+    },
+    beforeCreate() {
+      this.$classpert.orderOptions = [
+        { key: 'rel',        value: {}, label: this.$t('dictionary.relevance') },
+        { key: 'price.asc',  value: { price: "asc" }, label: this.$t('dictionary.lowest_price') },
+        { key: 'price.desc', value: { price: "desc" }, label: this.$t('dictionary.highest_price') }
+      ];
     },
     mounted () {
       this.$i18n.locale = this.locale
@@ -217,25 +238,40 @@
       if (_.get(queryParams, 'filter.price')) {
         queryParams.filter.price = queryParams.filter.price.map(parseFloat);
       }
-      // this will trigger watch and fetch results if categoryFilter or
-      // queryParams is not an empty object, therefore an "initialFetch"
-      // condition is needed here
+
+      if (_.get(queryParams, 'order')) {
+        this.orderCurrentOption = this.orderOptionByValue(_.get(queryParams, 'order')) || this.orderOptionByKey("rel");
+      }
+
       this.params = _.merge(this.params, categoryFilter, queryParams);
 
-      if(!this.initialFetch) {
-        this.fetchResults();
-      }
+      // only start watching params after initial setup during mount
+      // otherwise will double trigger record fetching
+      this.$watch('params', function (nVal, oVal) { if (!_.isEqual(nVal,oVal)) { this.fetchResults(); } }, {deep: true});
+
+      this.fetchResults();
     },
     methods: {
       isCurrentViewportMobile() {
         let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         return w < parseInt(window.Elements.breakpoints.lg);
       },
-      changeParams (param) {
-        this.params = Object.assign(this.params, param)
+      showMobileFilter() {
+        this.mobileFilterHidden = false;
+        this.$modal.show('mobileFilter');
+      },
+      hideMobileFilter() {
+        this.mobileFilterHidden = true;
+        this.$modal.hide('mobileFilter');
+      },
+      orderOptionByKey(key) {
+        return _.find(this.$classpert.orderOptions, (o) => { return o.key === key });
+      },
+      orderOptionByValue(value) {
+        return _.find(this.$classpert.orderOptions, (o) => { return _.isEqual(o.value, value);  });
       },
       paginate (page) {
-        this.changeParams({p: page})
+        this.params = _.set(_.cloneDeep(this.params), 'p', parseInt(page || 0));
       },
       clearFilters () {
         this.params = this.defaultParams(this.params.q);
@@ -255,6 +291,11 @@
       },
       changePriceValue (value) {
         this.params = _.set(_.cloneDeep(this.params), 'filter.price', value);
+      },
+      sortByChanged ({key}) {
+        let orderOption         = this.orderOptionByKey(key);
+        this.orderCurrentOption = orderOption;
+        this.params             = _.set(_.cloneDeep(this.params), 'order', orderOption.value);
       },
       defaultParams: function (currentQuery) {
         return {
@@ -277,7 +318,6 @@
         window.history.replaceState({}, 'foo', url.replace('.json', ''))
 
         vm.isFetchingRecords = true;
-        vm.initialFetch      = true;
         fetch(url, { method: 'GET' }).then(function (resp) {
           resp.json().then(function (json) {
             vm.data.records      = json.data;
@@ -295,6 +335,27 @@ hr {
   margin-bottom: 1em;
   border: none;
   border-top: 1px solid #DEE7ED;
+}
+
+.sort {
+  flex-basis: 260px;
+
+  .sort__label {
+    white-space: nowrap;
+  }
+
+  .sort__caret {
+    position: absolute;
+    width: 40px;
+    right: 1px;
+    top: 8px;
+    padding: 4px 8px;
+    text-align: center;
+    cursor: pointer;
+    svg {
+      transition: transform .2s ease;
+    }
+  }
 }
 
 .filter-nav {
