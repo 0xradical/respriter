@@ -28,5 +28,4 @@ document.addEventListener('DOMContentLoaded', () => {
     const i18n = new VueI18n({ locale: 'en', messages})
     const app = new Vue({el: nodes[i], i18n, render: h => h(SearchPage, {props: props})})
   }
-
 });

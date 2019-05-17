@@ -75,6 +75,7 @@
 
     <%= yield :body %>
 
+    <footer>
     <div class='mx-C(white) mx-Bc(darker-blue) mx-Pt-2 mx-Pb-2'> 
       <div class='container'>
         <div class='row'>
@@ -83,7 +84,7 @@
             <ul class='c-list c-list--unstyled mx-C(white)'>
               <% (RootTag.all).each_with_index do |t, index| %>
                 <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
-                <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "#{t.slugify}"), class: 'mx-C(white)' do %>
+                <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "#{t.slugify}"), class: 'c-link c-link--white' do %>
                   <li class='mx-Fs-0d875' style='padding:4px 0px'>
                     <%= t("tags.#{t.id}") %>
                   </li>
@@ -108,10 +109,26 @@
             <span style='display:inline-block;vertical-align:middle'>
               <span>Follow us!</span> &nbsp; 
               <ul style='display:inline-block;vertical-align:middle' class='c-list c-list--unstyled c-list--inline mx-Fs-0d875'>
-                <li class='mx-Pr-0d5'><%= svg_use('icons', 'facebook_white', width: '32px', height: '32px') %></li>
-                <li class='mx-Pr-0d5'><%= svg_use('icons', 'linkedin_white', width: '32px', height: '32px') %></li>
-                <li class='mx-Pr-0d5'><%= svg_use('icons', 'reddit_white',   width: '32px', height: '32px') %></li>
-                <li><%= svg_use('icons', 'twitter_white',  width: '32px', height: '32px') %></li>
+                <li class='mx-Pr-0d5'>
+                  <%= link_to "https://facebook.com/classpert", target: '_blank' do %>
+                    <%= svg_use('icons', 'facebook_white', width: '32px', height: '32px') %>
+                  <% end %>
+                </li>
+                <li class='mx-Pr-0d5'>
+                  <%= link_to "https://linkedin.com/company/classpert", target: '_blank' do %>
+                    <%= svg_use('icons', 'linkedin_white', width: '32px', height: '32px') %>
+                  <% end %>
+                </li>
+                <li class='mx-Pr-0d5'>
+                  <%= link_to "https://instagram.com/classpert", target: '_blank' do %>
+                    <%= svg_use('icons', 'instagram_white',   width: '32px', height: '32px') %>
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to "https://twitter.com/classpert", target: '_blank' do %>
+                    <%= svg_use('icons', 'twitter_white',  width: '32px', height: '32px') %>
+                  <% end %>
+                </li>
               </ul>
             </span>
           </div>
@@ -126,11 +143,13 @@
             <%= link_to t('dictionary.terms_and_conditions'), terms_and_conditions_path, class: 'mx-C(white) mx-Fs-0d875', style: 'line-height:32px' %> &nbsp; &nbsp;
             <%= link_to t('dictionary.privacy_policy'), privacy_policy_path, class: 'mx-C(white) mx-Fs-0d875', style: 'line-height:32px' %>
                 <%#= link_to t('dictionary.blog'), 'http://blog.classpert.com', class: 'mx-C(white)' %>
-            <img src="<%= asset_pack_path('logo_negative.svg') %>" width='126px' style='float:right;vertical-align:middle'>
+            <img src="<%= asset_pack_path('logo_negative.svg') %>" width='126px' class='mx-D(n)@extra-small' style='float:right;vertical-align:middle'>
+            <img src="<%= asset_pack_path('logo_symbol-negative.svg') %>" width='64px' class='mx-D(n)@>extra-small' style='float:right;vertical-align:middle'>
           </div>
         </div>
       </div>
     </div>
+    </footer>
 
     <%= javascript_pack_tag 'vendor', 'application' %> 
     <%= yield :javascript  %>

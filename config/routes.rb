@@ -121,6 +121,7 @@ Rails.application.routes.draw do
   get 'the-complete-raspberry-pi-courses-catalog'                   => redirect('/raspberry-pi')
   get 'the-complete-vuejs-courses-catalog'                          => redirect('/vuejs')
   get 'the-complete-webpack-courses-catalog'                        => redirect('/webpack')
+  get 'the-complete-matlab-courses-catalog'                         => redirect('/matlab')
 
   # LandingPages
   get '/', to: 'landing_pages#show', as: :landing_pages

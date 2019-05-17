@@ -22,6 +22,17 @@ html {
 @import '~bootstrap/scss/mixins/grid';
 @import '~bootstrap/scss/grid';
 
+.c-link {
+
+  &--white {
+    color: #FFF !important;
+    &:hover {
+      color: #FFF !important;
+    }
+  }
+
+}
+
 .c-art {
 
   &--responsive-orientation {

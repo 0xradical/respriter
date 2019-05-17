@@ -254,6 +254,14 @@ en:
       watch_the_video: 'Watch the video!'
       kickstart_your_career: 'Kickstart your career'
       kickstart_your_career_sub: 'Our experts have handpicked the best online courses to start your career'
+      about_title: "Classpert's online course search engine"
+      about_text: 'Classpert is an online course search engine that allows users to find the
+      ideal online course for the subject they want to study. Compare online course prices, watch
+      video previews, and read the syllabus side-by-side. Find more than 140,000 courses from more
+      than 30 online course providers in over 15 languages. Get all relevant information on online
+      courses from Udemy, Coursera, Edx, Pluralsight, Treehouse, Skillshare, FutureLearn and more.
+      Classpert`s database also includes free online classes from Harvard, Stanford, Yale, UC
+      Berkeley, MIT and many more.'
       careers:
         <<: *careers
       meta:
@@ -348,23 +356,6 @@ en:
         description_html: "Find paid and free %{tag} tutorial and courses. Choose from select topics and learn from the best instructors and instituitions."
 
   pages:
-    home_index:
-      meta:
-        title: 'Online Courses with Certificate - Free Registration | Classpert'
-        meta_description: 'Find the best Online Courses with Certificate. More than 50 platforms and
-        institutions and more than 500.000 courses. Including free courses from Harvard, MIT, Yale and many more'
-      html:
-        main_header: 'Find and compare online courses from multiple providers'
-        main_sub_header: 'More than 100,000 courses available. Free options with certificate'
-        top_reviewed_header: 'Top Reviews'
-        browse_by_category_header: 'Browse by Category'
-        best_prices_header: 'Best Prices'
-        most_popular_header: 'Most Popular'
-        free_courses_header: 'Free Courses'
-        partners_header: 'Find 100.000+ online courses'
-        partners_text: 'Udemy, Khan Academy, Coursera, EdX and Lynda are some of our partners.
-        Find the best online courses with certificate. More than 50 platforms and more than 100,000
-        options. Free online courses from Harvard, MIT, Yale and more'
     dashboard_index:
       meta:
         title: 'Member Area | Classpert'

@@ -160,6 +160,14 @@ pt-BR:
       watch_the_video: 'Assista ao nosso video!'
       kickstart_your_career: 'Inicie sua carreira'
       kickstart_your_career_sub: 'Nossos especialistas escolheram os melhores cursos para que você inicie sua carreira'
+      about_title: 'O buscador de cursos online da Classpert'
+      about_text: 'A Classpert é um buscador de cursos online que permite aos usuários encontrarem o
+      curso online ideal para o assunto que desejam aprender. Compare os preços dos cursos online,
+      assista previews das aulas e leia o plano de estudos em um só lugar. Encontre mais de 150.000 cursos
+      de mais de 30 plataformas de cursos online em mais de 15 idiomas. Obtenha todas as informações
+      relevantes sobre cursos online da Udemy, Coursera, Edx, Pluralsight, Treehouse, Skillshare,
+      FutureLearn e muito mais. Encontre, também, aulas online gratuitas de Harvard, Stanford, Yale,
+      UC Berkeley, MIT e muito mais.'
       careers:
         <<: *careers
       meta:

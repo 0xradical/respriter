@@ -3,3 +3,14 @@
   margin:0;
   padding:0;
 }
+
+.c-link {
+
+  &--white {
+    color: #FFF !important;
+    &:hover {
+      color: #FFF !important;
+    }
+  }
+
+}

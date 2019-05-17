@@ -21,10 +21,10 @@ import CourseBundleApp from '../vue/apps/course_bundle/App.vue'
 document.addEventListener('DOMContentLoaded', () => {
   var nodes = document.querySelectorAll('[data-vue-course-bundle-app]')
   for(var i = 0; i < nodes.length; ++i) {
+    var props = JSON.parse(document.getElementById(nodes[i].getAttribute('data-vue-course-bundle-app-props')).innerHTML);
     const messages = JSON.parse(nodes[i].getAttribute('data-vue-course-bundle-app-translations'))
     const i18n = new VueI18n({ locale: 'en', messages})
-    const app = new Vue({el: nodes[i], i18n, render: h => h(CourseBundleApp)})
+    const app = new Vue({el: nodes[i], i18n, render: h => h(CourseBundleApp, {props: props})})
   }
-
 });
 

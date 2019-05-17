@@ -33,7 +33,7 @@ export default {
       }
     },
     path() {
-      return `${window.iconsLibPath}#${this.name}`
+      return `#icons-${this.name}`
     }
   }
 }

@@ -38,7 +38,7 @@ SitemapGenerator::Sitemap.create do
       changefreq: 'daily', 
       priority: 1,
       alternate: {
-        href: "https://pt-BR.classpert.com/courses/#{tag}",
+        href: "https://pt-BR.classpert.com/#{tag}",
         lang: 'pt-BR'
       }
     })

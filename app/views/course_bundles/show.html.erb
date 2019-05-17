@@ -12,7 +12,7 @@
     description: t(".meta.description_html", tag: t("tags.#{@tag}")), 
     hashtags: "classpert,online courses,#{@tag}" %>
 
-  <script id='vue-search-app-props' type='x-vue-props'>
+  <script id='vue-course-bundle-app-props' type='x-vue-props'>
     {
       "tag": "<%= params[:tag] %>",
       "showCategoriesFilter": <%= params[:tag].present? %>,
@@ -89,7 +89,7 @@
   <div class='container'>
     <div class='row'>
       <div class='col-md-12'>
-        <div data-vue-course-bundle-app data-vue-course-bundle-app-translations='<%= locales.to_json %>'></div>
+        <div data-vue-course-bundle-app data-vue-course-bundle-app-props='vue-course-bundle-app-props' data-vue-course-bundle-app-translations='<%= locales.to_json %>'></div>
       </div>
     </div>
   </div>

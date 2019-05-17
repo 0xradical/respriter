@@ -1,5 +1,5 @@
 <template>
-  <div class='col-12 col-md-9'>
+  <div class='col-12'>
     <div v-for='course in data.records' :key="course.id" class='row'>
       <div class='col-12 mx-Mt-1'>
         <course :course='course'></course>
@@ -45,6 +45,7 @@
     },
 
     mounted () {
+      this.$i18n.locale = this.locale
       this.fetchResults()
     },
 
