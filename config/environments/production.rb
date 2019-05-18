@@ -7,7 +7,8 @@ Rails.application.configure do
     allow do
       origins '*'
       #origins /https?:\/\/admin.classpert.com/, /https?:\/\/blog.classpert.com/,/https?:\/\/classpert.com/, /https?:\/\/staging.classpert.com/
-      resource '*', headers: :any, methods: [:get, :put, :post, :head, :patch, :options]
+      # The admin app depends on the authorization header being exposed
+      resource '*', headers: :any, expose: %w(Authorization), methods: [:get, :put, :post, :head, :patch, :options]
     end
 
   end
