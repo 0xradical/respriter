@@ -7,7 +7,6 @@ class CourseBundlesController < ApplicationController
 
   def show
     @course_bundle = Course.by_tags([@tag])
-    not_found if @course_bundle.empty?
     @root_tags = (@course_bundle.map { |cb| cb.curated_tags  }.flatten & RootTag.all.map(&:id)).uniq
     respond_to do |format|
       format.html
