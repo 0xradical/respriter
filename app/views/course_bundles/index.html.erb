@@ -59,7 +59,7 @@
     <div class='row'>
       <% bundles.each do |name,data| %>
         <div class='col-lg-4'>
-          <%= link_to course_bundle_path(name.dasherize), class: 'c-label c-label--double-line' do %>
+          <%= link_to course_bundle_path(data[:tag].dasherize), class: 'c-label c-label--double-line' do %>
             <div style='background-color:#FFF;padding:10px;margin-top:10px'>
               <%= svg_use('tags', data[:tag], { class: 'c-label__icon' }) %>
               <span class='c-label__text' style='font-size:0.40em'>
