@@ -204,7 +204,8 @@
     },
     watch: {
       'data.meta.total': function (nVal, oVal) {
-        this.numOfPages = parseInt(Math.ceil(nVal/this.recordsPerPage))
+        let total       = Math.min(nVal, 10000); // 10000 is the default max window for ES
+        this.numOfPages = parseInt(Math.ceil(total/this.recordsPerPage));
       }
     },
     computed: {
