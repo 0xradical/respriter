@@ -23,7 +23,7 @@ class CourseBundlesController < ApplicationController
   end
 
   def normalize_params
-    @tag = params[:tag]&.underscore
+    @tag = params[:tag]&.downcase.underscore
   end
 
 end
