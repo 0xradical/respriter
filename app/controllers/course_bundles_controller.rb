@@ -7,6 +7,7 @@ class CourseBundlesController < ApplicationController
 
   def show
     @course_bundle = Course.by_tags([@tag])
+    not_found if @course_bundle.empty?
     @root_tags = (@course_bundle.map { |cb| cb.curated_tags  }.flatten & RootTag.all.map(&:id)).uniq
     respond_to do |format|
       format.html
@@ -19,7 +20,7 @@ class CourseBundlesController < ApplicationController
   def load_bundles
     bundles  = Course.unnest_curated_tags(Course.by_tags(@tag)).group(:tag).count
     RootTag.all.each { |rt| bundles.delete(rt.id) }
-    @bundles_by_letter = bundles.group_by { |k,v| k[0] }.sort.map { |k,v| Hash[v] }
+    @bundles_by_letter = bundles.map { |k,v| [t("tags.#{k}"), { tag: k, count: v }]}.to_h.group_by { |k,v| k[0] }.sort.map { |k,v| Hash[v] }
   end
 
   def normalize_params
