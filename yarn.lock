@@ -2475,7 +2475,7 @@ electron-to-chromium@^1.3.116:
 
 "elements@https://github.com/codextremist/elements.git":
   version "1.3.1"
-  resolved "https://github.com/codextremist/elements.git#be3cfd16f794aa34849502e415a2db315775f1f6"
+  resolved "https://github.com/codextremist/elements.git#9262bce462eb5c46a94c3da2573be3f4e0735813"
   dependencies:
     copy-webpack-plugin "^5.0.2"
     extract-loader "^3.1.0"

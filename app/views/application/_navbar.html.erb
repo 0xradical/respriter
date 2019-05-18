@@ -1,4 +1,7 @@
 <script id='main-menu-tpl' type='x-tmpl-mustache'>
+  <div style='display:inline-block;margin-right:5px'>
+    <%= render 'language_dropdown' %>
+  </div>
   <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
     class: 'btn btn--blue-border btn--rounded btn--small btn--uppercase' %>
   <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
@@ -13,7 +16,7 @@
           <span class='c-label c-label--double-line' style='height:60px;text-align:left'>
             <%= svg_use('icons', t.icon, { class: 'c-label__icon' }) %>
             <span class='c-label__text' class='mx-C(blue)' style='word-break:break-word;max-width:160px'>
-              <b><%= t("tags.#{t.id}") %></b>
+              <%= t("tags.#{t.id}") %>
             </span>
           </span>
         </li>
