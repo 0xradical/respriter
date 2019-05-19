@@ -105,6 +105,7 @@ Rails.application.routes.draw do
   get 'html-and-css-for-beginners'                                  => redirect('/html')
   get 'java-for-beginners'                                          => redirect('/java-programming')
   get 'javascript-for-beginners'                                    => redirect('/javascript-programming')
+  get 'learn-react-a-journey-from-beginner-to-advanced'             => redirect('/reactjs')
   get 'learn-angular'                                               => redirect('/angularjs')
   get 'learn-bootstrap'                                             => redirect('/bootstrap')
   get 'learn-csharp'                                                => redirect('/csharp-programming')
