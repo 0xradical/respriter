@@ -348,7 +348,7 @@ en:
   course_bundles:
     meta: &meta
       title_html: "%{tag} Courses"
-      description_html: "Find paid and free %{tag} tutorial and courses. <br/> Choose from select topics and learn from the best instructors and institutions."
+      description_html: "Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions."
     social_share:
       <<: *meta
     index:
