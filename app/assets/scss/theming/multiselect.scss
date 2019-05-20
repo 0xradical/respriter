@@ -1,0 +1,29 @@
+@import 'vue-multiselect/dist/vue-multiselect.min.css';
+
+.multiselect__option--selected {
+  color: color(dark-gray) !important;
+  background: color(white) !important;
+  font-weight: bold !important;
+}
+
+.multiselect__option--selected:after {
+  color: color(gray) !important;
+}
+
+.multiselect__option--highlight {
+  color: color(white) !important;
+  background: color(blue) !important;
+  font-weight: bold !important;
+}
+
+.multiselect__option--selected.multiselect__option--highlight {
+  color: color(dark-gray) !important;
+  background: color(lighter-gray) !important;
+  font-weight: bold !important;
+}
+
+.multiselect__option--selected.multiselect__option--highlight:after {
+  color: color(gray) !important;
+  background: color(lighter-gray) !important;
+  content: attr(data-selected) !important;
+}
