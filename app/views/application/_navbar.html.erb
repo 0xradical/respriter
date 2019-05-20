@@ -63,7 +63,7 @@
           <% if current_user_account.avatar.present? %>
             <%= image_tag(current_user_account.avatar, height: '37px', style: 'border-radius:50%;border:1px solid #ccc') %>
           <% else %>
-            <%= svg_icons_lib('avatar', { width: '37px', height: '37px' } ) %>
+            <%= svg_use('icons', 'avatar', { width: '37px', height: '37px' } ) %>
           <% end %>
         <% end %>
       </div>
