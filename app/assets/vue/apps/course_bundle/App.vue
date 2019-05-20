@@ -22,6 +22,11 @@
       locale: {
         type: String,
         default: 'en'
+      },
+
+      tag: {
+        type: String,
+        require: true
       }
 
     },
@@ -53,7 +58,7 @@
 
       fetchResults () {
         var vm = this
-        fetch(window.location.href + '.json', { method: 'GET' }).then(function (resp) {
+        fetch(this.tag +'.json', { method: 'GET' }).then(function (resp) {
           resp.json().then(function (json) {
             vm.data.records = json.data
           });
