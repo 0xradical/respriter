@@ -1,17 +1,19 @@
 module Search
   class CourseSearch
-    VERSION = '1.0.0'
+    VERSION = '1.0.1'
 
     attr_reader :query, :filter, :page, :per_page, :order, :boost, :session_id
 
     FILTER_BY_FIELD = {
-      root_audio:    :term,
-      subtitles:     :term,
-      category:      :term,
-      tags:          :term,
-      provider_name: :term,
-      price:         :range,
-      paid_content:  :paid_content
+      root_audio:        :term,
+      subtitles:         :term,
+      category:          :term,
+      tags:              :term,
+      provider_name:     :term,
+      curated_tags:      :term,
+      curated_root_tags: :term,
+      price:             :range,
+      paid_content:      :paid_content
     }
     TERM_AGGREGATIONS = FILTER_BY_FIELD.find_all{ |k,v| v == :term }.map &:first
 
@@ -54,7 +56,7 @@ module Search
         aggs:        aggregation_query,
         post_filter: filter_query,
         size:        @per_page,
-        from:        (page - 1)*@per_page
+        from:        (@page - 1)*@per_page
       }
 
       if order.present?

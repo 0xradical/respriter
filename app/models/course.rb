@@ -162,6 +162,8 @@ class Course < ApplicationRecord
       indexes :certificate,         type: 'object'
       indexes :level,               type: 'keyword'
       indexes :tags,                type: 'keyword'
+      indexes :curated_tags,        type: 'keyword'
+      indexes :curated_root_tags,   type: 'keyword'
       indexes :provider_name,       type: 'keyword'
       indexes :provider_slug,       type: 'keyword'
       indexes :trial_period,        type: 'object'
@@ -278,6 +280,8 @@ class Course < ApplicationRecord
       root_subtitles:      root_languages_for_subtitles,
       category:            category,
       provider_name:       provider_name,
+      curated_tags:        curated_tags,
+      curated_root_tags:   (curated_tags & RootTag.all.map(&:id)),
       provider_slug:       provider_slug,
       syllabus_markdown:   syllabus,
     }
