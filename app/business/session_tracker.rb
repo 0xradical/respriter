@@ -20,23 +20,37 @@ class SessionTracker
   end
 
   def [](key)
-    payload[key]
+    session_payload[key]
   end
 
   def session_payload
-    payload
+    return @session_payload if @session_payload.present?
+
+    @session_payload = if session[:tracking_data].present?
+      session[:tracking_data].deep_dup
+    else
+      TRACKED_PROPERTIES.inject(raw) do |tracking_obj, property|
+        tracking_obj.merge send("parse_#{property}")
+      end.with_indifferent_access
+    end
   end
 
   def cookies_payload
     return @cookies_payload if @cookies_payload.present?
 
-    @cookies_payload = (tracking_cookies.blank? ? payload : tracking_cookies).deep_dup
-    @cookies_payload.merge! session_payload.slice(:session_count, :last_access_at)
-    @cookies_payload
+    @cookies_payload = if had_cookies?
+      tracking_cookies.merge session_payload.slice(:session_count, :last_access_at)
+    else
+      session_payload.deep_dup
+    end
+  end
+
+  def had_cookies?
+    cookies.signed[:tracking_data].present?
   end
 
   def tracking_cookies
-    @tracking_cookies ||= if cookies.signed[:tracking_data].present?
+    @tracking_cookies ||= if had_cookies?
       Marshal.load Base64.decode64 cookies.signed[:tracking_data]
     else
       Hash.new
@@ -48,14 +62,6 @@ class SessionTracker
   end
 
   protected
-  def payload
-    return @payload if @payload.present?
-
-    @payload = TRACKED_PROPERTIES.inject(raw) do |tracking_obj, property|
-      tracking_obj.merge send("parse_#{property}")
-    end.with_indifferent_access
-  end
-
   def raw
     {
       raw: {
