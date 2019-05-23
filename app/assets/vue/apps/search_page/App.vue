@@ -137,26 +137,37 @@
 
   export default {
     props: {
+
       recordsPerPage: {
         type: Number,
         default: 25
       },
+
       category: {
         type: Array,
         default: []
       },
+
       showCategoriesFilter: {
         type: Boolean,
         default: true
       },
+
       containerClass: {
         type: String,
         default: ''
       },
+
       locale: {
         type: String,
         default: 'en'
+      },
+
+      searchEndpoint: {
+        type: String,
+        default: 'search.json'
       }
+
     },
     components: {
       course: Course,
@@ -315,7 +326,7 @@
       fetchResults () {
         var vm  = this
         var stringifiedParams = qs.stringify(this.params, {indices: false, arrayFormat: 'brackets', encode: true})
-        var url = `/search.json?${stringifiedParams}`
+        var url = `${this.searchEndpoint}?${stringifiedParams}`
         window.history.replaceState({}, 'foo', url.replace('.json', ''))
 
         vm.isFetchingRecords = true;

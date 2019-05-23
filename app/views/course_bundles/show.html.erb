@@ -4,18 +4,24 @@
 
 <%= content_for :x_vue_templates do %>
   <%= render 'social_share' %>
-  <script id='vue-course-bundle-app-props' type='x-vue-props'>
-    {
-      "tag": "<%= params[:tag] %>",
-      "showCategoriesFilter": <%= params[:tag].present? %>,
-      "locale": "<%= I18n.locale %>"
-    }
-  </script>
+<script id='vue-search-app-props' type='x-vue-props'>
+  {
+    "containerClass": "l-container mx-Pb(60px)",
+    "searchEndpoint": "<%= params[:tag] %>.json",
+    "showCategoriesFilter": <%= params[:tag].present? %>,
+    "locale": "<%= I18n.locale %>"
+  }
+</script>
 <% end %>
 
+<script type='text/javascript'>
+  window.env_context = { params: { category: <%= raw(Array.wrap(params[:tag]).to_json) %> } }
+</script>
+
+
 <%= content_for :javascript do %>
-  <%= javascript_pack_tag 'course-bundle' %>
-  <%= stylesheet_pack_tag 'course-bundle' %>
+  <%= javascript_pack_tag 'search-page' %>
+  <%= stylesheet_pack_tag 'search-page' %>
 <% end %>
 
 <%
@@ -80,7 +86,7 @@
   <div class='container'>
     <div class='row'>
       <div class='col-md-12'>
-        <div data-vue-course-bundle-app data-vue-course-bundle-app-props='vue-course-bundle-app-props' data-vue-course-bundle-app-translations='<%= locales.to_json %>'></div>
+        <div data-vue-search-app data-vue-search-app-props='vue-search-app-props' data-vue-search-app-translations='<%= locales.to_json %>'></div>
       </div>
     </div>
   </div>
