@@ -1,8 +1,8 @@
 class SearchTracker
-  attr_reader :session_tracker, :search
+  attr_reader :session_tracker, :search, :action
 
-  def initialize(session_tracker, search)
-    @session_tracker, @search = session_tracker, search
+  def initialize(session_tracker, search, action: nil)
+    @session_tracker, @search, @action = session_tracker, search, action
   end
 
   def id
@@ -44,7 +44,8 @@ class SearchTracker
       tracked_data: {
         session: @session_tracker.session_payload,
         cookies: @session_tracker.cookies_payload,
-      }
+      },
+      action: @action
     }
   end
 end
