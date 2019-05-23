@@ -1,15 +1,14 @@
 <template>
-<div class='l-container'>
-  <div class='logged'>
-    <div style='position:fixed;background-color:#FFF;border-right: 1px solid #CCC;width:220px;height:100%;padding:20px 40px 0px 0px' class='side-nav'>
-
-      <div style="text-align:center;margin-bottom:40px">
+<div class='container'>
+  <div class='row logged'>
+    <div class='col-3' style='border-right: 1px solid #DEE7ED;height:100%;'>
+      <div class='mx-Mt-1' style="margin-bottom:40px;display:flex;flex-direction:column;align-items:center;">
         <img v-if="account.profile.attributes.avatar" :src="account.profile.attributes.avatar"
         width='76px' style='border-radius:50%;border:1px solid #eee'>
         <svg v-else width='76px' height='76px'>
-          <use xlink:href='#avatar'></use>
+          <use xlink:href='#icons-avatar'></use>
         </svg>
-        <button style='margin-top:10px' id="pick-avatar">
+        <button class='btn btn--blue-flat btn--tiny' style='margin-top:10px' id="pick-avatar">
           {{ $t('pages.dashboard_index.html.upload_image_button') }}
         </button>
         <avatar-cropper
@@ -51,8 +50,10 @@
       </div>
 
     </div>
-    <div class='content'>
-      <router-view @removeTag='removeTagFromInterests' :account='account' :prefs='account.profile.attributes.interests'></router-view>
+    <div class='col-9'>
+      <div class='mx-Mt-1'>
+        <router-view @removeTag='removeTagFromInterests' :account='account' :prefs='account.profile.attributes.interests'></router-view>
+      </div>
     </div>
   </div>
 </div>
@@ -98,7 +99,7 @@
       var vm = this
 
       fetch('/api/user/v1/account.json?include=profile',
-        { 
+        {
           method: 'GET',
           headers: { 'Content-Type': 'application/vnd.api+json'}
         }).then(function (resp) {
@@ -122,7 +123,7 @@
         var vm = this
         fetch(`/api/user/v1/interests/${tag}.json`, { method: 'DELETE' }).then(function (resp) {
           resp.json().then(function (json) {
-            vm.account.profile.interests = json.length > 0 ? json : []
+            vm.account.profile.attributes.interests = json.length > 0 ? json : []
           })
         });
       }
@@ -134,12 +135,8 @@
 </script>
 
 <style scoped lang='scss'>
-  .side-nav {
-    box-sizing: border-box;
-  }
-  .content {
-    padding-left: 40px;
-    padding-top: 20px;
-    margin-left: 220px;
-  }
+hr {
+  border: 0px;
+  border-bottom: 1px solid #DEE7ED;
+}
 </style>

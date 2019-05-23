@@ -5,22 +5,22 @@
       @select='addToPreferences'
       track-by='id'
       label='label'
-      :options="tags" 
-      :searchable="false" 
+      :options="tags"
+      :searchable="false"
       :close-on-select="true"
-      :show-labels="false" 
+      :show-labels="false"
       placeholder="Pick a value">
     </multiselect>
 
     <h5 style='margin-top:20px;margin-bottom:20px'>Preferences</h5>
     <ul style='list-style:none;margin:0;padding:0'>
-      <li v-for='pref in prefs' style='float:left;margin-bottom:10px'>
+      <li v-for='pref in prefs' style='float:left;margin-bottom:10px' :key='pref'>
         <span class='c-tag c-tag--blue-flat'>
           {{ $t(`tags.${pref}`) }}
         </span>
         <a @click="removeTag(pref)" href='javascript:void(0)' style='margin-left:-5px'>
           <svg width='2em' height='2em' style='vertical-align:middle'>
-            <use xlink:href='/assets/icons-lib.svg#close_thin' />
+            <use xlink:href='#icons-close_thin' />
           </svg>
         </a>
       </li>
@@ -71,10 +71,10 @@
 
     addToPreferences (selected) {
       var vm = this
-      fetch(`/api/user/v1/interests.json`, { 
+      fetch(`/api/user/v1/interests.json`, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
-        method: 'POST', 
-        body: JSON.stringify({ id: selected.id }) 
+        method: 'POST',
+        body: JSON.stringify({ id: selected.id })
       }).then(function (resp) {
         resp.json().then(function (json) {
           vm.prefs.push(selected.id)

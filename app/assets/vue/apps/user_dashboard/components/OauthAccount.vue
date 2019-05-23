@@ -1,7 +1,7 @@
 <template>
   <div>
-    <a v-if='!connected' :href='authorizeUrl' :class='btnClass' style='max-width:150px'>  Connect with {{ provider }}</a>
-    <a v-else @click="$emit('destroyOauth', provider)" :class='btnClass' style='max-width:150px'>  Connected with {{ provider }}</a>
+    <a v-if='!connected' :href='authorizeUrl' :class='btnClass' style='max-width:200px'>  Connect with {{ provider }}</a>
+    <a v-else @click="$emit('destroyOauth', provider)" :class='btnClass' style='max-width:200px'>  Connected with {{ provider }}</a>
   </div>
 </template>
 <script>
@@ -28,7 +28,7 @@
     computed: {
 
       btnClass () {
-        return `btn btn--tiny btn--${this.provider}`
+        return `btn btn--small btn--${this.provider}`
       },
 
       label () {
