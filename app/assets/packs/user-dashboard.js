@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let nodes = document.querySelectorAll('[data-vue-app]')
   for(var i = 0; i < nodes.length; ++i) {
     let props = JSON.parse(nodes[i].getAttribute('data-vue-props'))
+    const messages = JSON.parse(nodes[i].getAttribute('data-vue-search-app-translations'))
     new Vue({el: nodes[i], router, i18n, render: h => h(App, { props: props } ) })
   }
 });

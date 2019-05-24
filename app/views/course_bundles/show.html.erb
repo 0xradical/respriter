@@ -26,7 +26,7 @@
 
 <%
   base_locales   = YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.base.yml"))
-  tags           = YAML::load_file(Rails.root.join('config', 'locales', "tags.#{I18n.locale}.yml"))
+  tags           = YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.tags.yml"))
   custom_locales = YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.yml"))
   locales        = base_locales.deep_merge(custom_locales).deep_merge(tags)
 %>

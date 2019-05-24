@@ -15,6 +15,14 @@
         <% end %>
       </li>
       <li>
+        <%= link_to (root_url(subdomain: ['es', params[:subdomain]].join('.').chomp('.')).chomp('/') + request.path) do %>
+          <span class='c-label'>
+            <%= svg_use('icons', 'es', class: 'c-label__icon') %>
+            <span class='c-label__text c-label__text--shrink-25%'>ES</span>
+          </span>
+        <% end %>
+      </li>
+      <li>
         <%= link_to (root_url(subdomain: ['pt-BR', params[:subdomain]].join('.').chomp('.')).chomp('/') + request.path) do %>
           <span class='c-label'>
             <%= svg_use('icons', 'pt', class: 'c-label__icon') %>

@@ -3,44 +3,74 @@ SitemapGenerator::Sitemap.create do
 
   add('/', {
     changefreq: 'weekly',
-    alternate: {
-      href: 'https://pt-BR.classpert.com',
-      lang: 'pt-BR'
-    }
+    alternate: [
+      {
+        href: 'https://pt-BR.classpert.com',
+        lang: 'pt-BR'
+      },
+      {
+        href: 'https://es.classpert.com',
+        lang: 'es'
+      }
+    ]
   })
 
   add('/privacy-policy', {
     changefreq: 'monthly',
-    alternate: {
-      href: 'https://pt-BR.classpert.com/privacy-policy',
-      lang: 'pt-BR'
-    }
+    alternate: [
+      {
+        href: 'https://pt-BR.classpert.com/privacy-policy',
+        lang: 'pt-BR'
+      },
+      {
+        href: 'https://es.classpert.com/privacy-policy',
+        lang: 'es'
+      }
+    ]
   })
 
   add('/terms-and-conditions', {
     changefreq: 'monthly',
-    alternate: {
-      href: 'https://pt-BR.classpert.com/terms-and-conditions',
-      lang: 'pt-BR'
-    }
+    alternate: [
+      {
+        href: 'https://pt-BR.classpert.com/terms-and-conditions',
+        lang: 'pt-BR'
+      },
+      {
+        href: 'https://es.classpert.com/terms-and-conditions',
+        lang: 'es'
+      }
+    ]
   })
 
   add('/search', {
     changefreq: 'daily',
-    alternate: {
-      href: 'https://pt-BR.classpert.com/search',
-      lang: 'pt-BR'
-    }
+    alternate: [
+      {
+        href: 'https://pt-BR.classpert.com/search',
+        lang: 'pt-BR'
+      },
+      {
+        href: 'https://es.classpert.com/search',
+        lang: 'es'
+      }
+    ]
   })
 
   Course.unnest_curated_tags.distinct.map(&:tag).each do |tag|
     add("/#{tag}", {
       changefreq: 'daily', 
       priority: 1,
-      alternate: {
-        href: "https://pt-BR.classpert.com/#{tag}",
-        lang: 'pt-BR'
-      }
+      alternate: [
+        {
+          href: "https://pt-BR.classpert.com/#{tag}",
+          lang: 'pt-BR'
+        },
+        {
+          href: "https://es.classpert.com/#{tag}",
+          lang: 'es'
+        }
+      ]
     })
   end
 

@@ -1,0 +1,408 @@
+es:
+  careers: &careers
+    data_scientist: 'Científico de datos'
+    game_developer: 'Desarrollador de videojuegos'
+    mobile_app_developer: 'Desarrollador de aplicaciones móviles'
+    software_developer: 'Desarrollador de software'
+    web_developer: 'Desarrollador web'
+  dictionary: &dictionary
+    terms_and_conditions: 'Términos y Condiciones'
+    privacy_policy: 'Política de Privacidad'
+    blog: 'Blog'
+    share: 'Compartir'
+    levels:
+      beginner: 'Principiante'
+      intermediate: 'Intermedio'
+      advanced: 'Avanzado'
+      all: 'Todos'
+    preview_this_course:
+      short: 'Previa'
+      long: 'Vista previa'
+    preview_not_available:
+      short: 'No disponible'
+      long: 'Vista previa no disponible'
+    certificate:
+      included: 'Incluido'
+      free: 'Gratis'
+      paid: 'Pagados'
+    details:
+      show: 'Mostrar'
+      hide: 'Ocultar'
+    description:
+      view: 'Ver'
+    syllabus:
+      header: 'Título'
+      view: 'Ver'
+    see_syllabus: 'Ver plan de estudios'
+    trial_period: 'Periodo de prueba'
+    free_trial: 'Prueba gratis'
+    extra_paid_content: 'Contenido extra pagado'
+    pace:
+      instructor_paced: ''
+      self_paced: 'Ritmo propio'
+      live_class: 'Clase en vivo'
+    subscription_period:
+      months: 'meses'
+      years: 'años'
+    for_this_course: 'Por este curso'
+    not_available: 'No disponible'
+    sign_in: 'Entrar'
+    sign_up: 'Registrate'
+    sign_out: 'Salir'
+    price: 'Precio'
+    in_currency: 'USD'
+    from: 'De'
+    to: 'A'
+    min: "Min"
+    max: "Max"
+    search: 'Buscar'
+    cancel_search: 'Cerrar la pesquisa'
+    filters: 'Filtros'
+    audios: 'Audios'
+    subtitles: 'Leyendas'
+    categories: 'Categorías'
+    max_price: 'Max. $'
+    providers: 'Plataformas'
+    length: 'Tiempo de duración'
+    previous_page: 'Página anterior'
+    next_ page: 'Segiuente página'
+    search_results: "Mostrando %{total} resultados"
+    only_free: 'Solo gratis'
+    free: 'Gratis'
+    for: "para"
+    sort_by: 'Ordenar por'
+    clear_all_filters: 'Limpiar todos los filtros'
+    clear_filter: 'Limpiar filtro'
+    filter_results: 'Filtrar resultados'
+    show_results: 'Mostrar Resultados'
+    display_filter: 'Mostrar filtro'
+    lowest_price: 'Precio más bajo'
+    highest_price: 'Precio más alto'
+    relevance: 'Relevancia'
+    no_suggestions_message: 'No sugerencias'
+    no_options_available: 'No opciones disponibles'
+    top_reviewed: 'Mejor evaluados'
+    favorite: 'Favorito'
+    go_to_course: 'Ir al curso'
+  meta:
+    icons:
+      user_and_monitor: 'Usuario y monitor'
+      clock: 'Reloj'
+      level: 'Nivel'
+      institution: 'Institución'
+  iso639_codes:
+    ar-EG: 'Árabe (EG)'
+    ar-JO: 'Árabe (JO)'
+    ar-LB: 'Árabe (LB)'
+    ar-SY: 'Árabe (EG)'
+    de-DE: 'Alemán (Alemania)'
+    en-AU: 'Inglés (Australia)'
+    en-BZ: 'Inglés (Belize)'
+    en-CA: 'Inglés (Canada)'
+    en-GB: 'Inglés (Reino Unido)'
+    en-IN: 'Inglés (India)'
+    en-NZ: 'Inglés (Nueva Zelanda)'
+    en-US: 'Inglés (EE.UU.)'
+    en-ZA: 'Inglés (Sudáfrica)'
+    es-AR: 'Español (Argentina)'
+    es-BO: 'Español (Bolivia)'
+    es-CL: 'Español (Chile)'
+    es-CO: 'Español (Colombia)'
+    es-EC: 'Español (Ecuador)'
+    es-ES: 'Español (España)'
+    es-GT: 'Español (Guatemala)'
+    es-MX: 'Español (Mexico)'
+    es-PE: 'Español (Peru)'
+    es-VE: 'Español (Venezuela)'
+    fr-BE: 'Francés (Bélgica)'
+    fr-CH: 'Francés (Suiza)'
+    fr-FR: 'Francés (Francia)'
+    it-IT: 'Italiano (Italia)'
+    jp-JP: 'Japonés (Japón)'
+    nl-BE: 'Holandés (Belgica)'
+    nl-NL: 'Holandés (Holanda)'
+    pl-PL: 'Polaco (Polonia)'
+    pt-BR: 'Portugués (Brasil)'
+    pt-PT: 'Portugués (Portugal)'
+    sv-SV: 'Sueco (Suiza)'
+    zh-CN: 'Chino (China)'
+    zh-CMN: 'Chino'
+    zh-HANS: 'Chino'
+    zh-HANT: 'Chino'
+    zh-TW:  'Chino (Taiwan)'
+    af: 'Afrikáans'
+    am: 'Amhárico'
+    ar: 'Árabe'
+    az: 'Azerí'
+    be: 'Bielorruso'
+    bg: 'Búlgaro'
+    bn: 'Bengalí'
+    bo: 'Tibetano'
+    bs: 'Bosnio'
+    ca: 'Catalán'
+    co: 'Corso'
+    cs: 'Checo'
+    cy: 'Galés'
+    da: 'Danés'
+    de: 'Alemán'
+    el: 'Griego (moderno)'
+    en: 'Inglés'
+    eo: 'Esperanto'
+    es: 'Español'
+    et: 'Estonio'
+    eu: 'Euskera'
+    fa: 'Persa'
+    fi: 'Finlandés'
+    fil: 'Filipino'
+    fr: 'Francés'
+    fy: 'Frisón'
+    ga: 'Irlandés'
+    gd: 'Gaélico Escocés'
+    gl: 'Gallego'
+    gu: 'Guyaratí'
+    ha: 'Hausa'
+    he: 'Hebreo'
+    hi: 'Hindú'
+    hr: 'Croata'
+    ht: 'Haitiano'
+    hu: 'Húngaro'
+    hy: 'Armenio'
+    id: 'Indonesio'
+    ig: 'Igbo'
+    is: 'Islandés'
+    it: 'Italiano'
+    ja: 'Japonés'
+    jp: 'Japonés'
+    ka: 'Georgiano'
+    kk: 'Kazajo'
+    km: 'Camboyano'
+    kn: 'Canarés'
+    ko: 'Coreano'
+    ku: 'Kurdo'
+    ky: 'Kirguís'
+    lb: 'Luxemburgués'
+    lo: 'Lao'
+    lt: 'Lituano'
+    lv: 'Letón'
+    mg: 'Malgache'
+    mi: 'Maorí'
+    mk: 'Macedonio'
+    ml: 'Malayalam'
+    mn: 'Mongol'
+    mr: 'Maratí'
+    ms: 'Malayo'
+    mt: 'Maltés'
+    my: 'Birmano'
+    nb: 'Noruego Bokmål'
+    ne: 'Nepalí'
+    nl: 'Holandés'
+    no: 'Noruego'
+    pa: 'Panyabí'
+    pl: 'Polaco'
+    ps: 'Pastú '
+    pt: 'Portugués'
+    ro: 'Rumano'
+    ru: 'Ruso'
+    rw: 'Ruandés'
+    sd: 'Sindhi'
+    si: 'Cingalés'
+    sk: 'Eslovaco'
+    sl: 'Esloveno'
+    sn: 'Shona'
+    so: 'Somalí'
+    sq: 'Albanés'
+    sr: 'Serbio'
+    st: 'Sesotho'
+    sv: 'Sueco'
+    sw: 'Suajili'
+    ta: 'Tamil'
+    te: 'Télugu'
+    tg: 'Tayiko'
+    th: 'Tailandés'
+    tl: 'Tagalo'
+    tr: 'Turco'
+    tt: 'Tártaro'
+    uk: 'Ucraniano'
+    ur: 'Urdu'
+    uz: 'Uzbeko'
+    vi: 'Vietnamita'
+    xh: 'Xhosa'
+    yi: 'Yídish'
+    yo: 'Yoruba'
+    zh: 'Chino'
+    zu: 'Zulú'
+  components:
+    omniauth_sign_in: 'Conectar con %{provider}'
+    omniauth_signin_in: 'Conectando con %{provider}'
+    searchbar_placeholder: "Buscar cursos ..."
+    icons:
+      user_and_monitor: 'Course pace'
+      level: 'Nível'
+      clock: 'Duracion'
+    card:
+      subscription_tip: "This provider offers a %{period} free trial. At the end of this period, the
+      subscription fee will be charged.It gives you unlimited access to their courses. You may cancel
+      the subscription at any time."
+      free_course_tip: "You can take this course for free. Certificates, group discussions, exercises,
+      offline viewing, among others may not be included. To unlock all features and get full access
+      you must subscribe to the paid plan"
+
+  home:
+    index:
+      hero_html: 'Busca y compara <b>cursos en línea</b> <br/> de varios plataformas'
+      new_to_classpert: '¿Nuevo en Classpert?'
+      watch_the_video: 'Ver el video'
+      kickstart_your_career: 'Impulsa tu carrera'
+      kickstart_your_career_sub: 'Nuestros expertos han seleccionado los mejores cursos en línea para comenzar su carrera'
+      about_title: 'El buscador de cursos en línea de Classpert'
+      about_text: 'Classpert es un motor de búsqueda de cursos en línea que permite a los usuarios
+      encontrar el curso en línea ideal para el tema que desean estudiar. Compare los precios de los
+      cursos en línea, vea las vistas previas de los cursos y lea el programa de estudios. Encuentre
+      más de 140,000 cursos de más de 30 proveedores de cursos en línea en más de 15 idiomas.
+      Obtenga toda la información relevante sobre los cursos en línea de Udemy, Coursera, Edx,
+      Pluralsight, Treehouse, Skillshare, FutureLearn y más. La base de datos de Classpert también
+      incluye clases en línea gratuitas de Harvard, Stanford, Yale, UC Berkeley, MIT y muchas más.'
+      careers:
+        <<: *careers
+      meta:
+        title: 'Cursos en línea con Certificado - Gratuitos y Pagados | Classpert'
+        description: 'Encuentra los mejores cursos en línea con certificado. Más de 50 plataformas e
+        instituciones y más de 500.000 cursos. Incluyendo cursos gratuitos de Harvard, MIT, Yale y
+        muchos más'
+  courses:
+    index:
+      arts_and_design:
+        meta:
+          title: 'Cursos en línea de Artes y Diseño | Classpert'
+          description: 'Aprender habilidades y conocimientos artísticos prácticos. Explore una
+          amplia variedad de temas para elegir en Artes y Diseño. Encuentra cursos online pagados y
+          gratuitos con certificado'
+        html:
+          hero_title: 'Aprender habilidades y conocimientos artísticos prácticos. Explore una amplia
+          variedad de temas para elegir en Artes y Diseño. Encuentra cursos online pagados y
+          gratuitos con certificado'
+      business:
+        meta:
+          title: 'Cursos en línea de Business | Classpert'
+          description: 'Avanza en todos los aspectos del mundo empresarial moderno. Fomente
+          habilidades valiosas en finanzas, operaciones, administración y estrategia. Encuentra
+          cursos online pagados y gratuitos con certificado'
+        html:
+          hero_title: 'Avanza en todos los aspectos del mundo empresarial moderno. Fomente
+          habilidades valiosas en finanzas, operaciones, administración y estrategia. Encuentra
+          cursos online pagados y gratuitos con certificado'
+      language_and_communication:
+        meta:
+          title: 'Cursos en línea de Lengua y Comunicación | Classpert'
+          description: 'Desarrolla habilidades de escucha, lectura, expresión oral y escritura.
+          Domina tus habilidades de comunicación verbal y no verbal. Encuentra cursos online pagados
+          y gratuitos con certificado'
+        html:
+          hero_title: 'Desarrolla habilidades de escucha, lectura, expresión oral y escritura.
+          Domina tus habilidades de comunicación verbal y no verbal. Encuentra cursos online pagados
+          y gratuitos con certificado'
+      life_sciences:
+        meta:
+          title: 'Cursos en línea de Ciencias de la Vida | Classpert'
+          description: 'Comprende las estructuras físicas, los procesos químicos y las interacciones
+          moleculares de las estructuras vivas. Empuja tus fronteras con cursos de las mejores
+          universidades del mundo. Encuentra cursos online pagados y gratuitos con certificado'
+        html:
+          hero_title: 'Comprender las estructuras físicas, los procesos químicos y las interacciones
+          moleculares de las estructuras vivas. Empuja tus fronteras con cursos de las mejores
+          universidades del mundo. Encuentra cursos online pagados y gratuitos con certificado'
+      math_and_logic:
+        meta:
+          title: 'Cursos en línea de Matemáticas y Lógica | Classpert'
+          description: 'Estudia álgebra, geometría, aritmética, estadística y más. Desarrolla tu
+          razonamiento y pensamiento analítico. Encuentra cursos online pagados y gratuitos con
+          certificado'
+        html:
+          hero_title: 'Estudia álgebra, geometría, aritmética, estadística y más. Desarrolla tu
+          razonamiento y pensamiento analítico. Encuentra cursos online pagados y gratuitos con
+          certificado'
+      personal_development:
+        meta:
+          title: 'Cursos en línea de Desarrollo Personal | Classpert'
+          description: 'El desarrollo personal es decisivo para el crecimiento en todos los aspectos
+          de la vida. Alcanza todo tu potencial en la vida personal y profesional. Encuentra cursos
+          online pagados y gratuitos con certificado'
+        html:
+          hero_title: 'El desarrollo personal es decisivo para el crecimiento en todos los aspectos
+          de la vida. Alcanza todo tu potencial en la vida personal y profesional. Encuentra cursos
+          online pagados y gratuitos con certificado'
+      social_sciences:
+        meta:
+          title: 'Cursos en línea de Ciencias Sociales | Classpert'
+          description: 'Estudia todos los aspectos de la sociedad humana y la vida social. Comprende
+          muchos de los problemas más grandes del mundo. Encuentra cursos online pagados y gratuitos
+          con certificado'
+        html:
+          hero_title: 'Estudia todos los aspectos de la sociedad humana y la vida social. Comprende
+          muchos de los problemas más grandes del mundo. Encuentra cursos online pagados y gratuitos
+          con certificado'
+      health_and_fitness:
+        meta:
+          title: 'Cursos en línea de Salud y Belleza | Classpert'
+          description: 'Aumenta su conocimiento sobre el mantenimiento de la salud, la prevención de
+          enfermedades y la reducción de conductas de riesgo. Vive más tiempo y consigue tus
+          objetivos. Encuentra cursos online pagados y gratuitos con certificado'
+        html:
+          hero_title: 'Aumenta su conocimiento sobre el mantenimiento de la salud, la prevención de
+          enfermedades y la reducción de conductas de riesgo. Vive más tiempo y consigue tus
+          objetivos. Encuentra cursos online pagados y gratuitos con certificado'
+      computer_science:
+        meta:
+          title: 'Cursos en línea de Ciencias de la Computación | Classpert'
+          description: ''
+        html:
+          hero_title: ''
+      data_science:
+        meta:
+          title: 'Cursos en línea de Ciencia de los Datos | Classpert'
+          description: ''
+        html:
+          hero_title: ''
+      physical_science_and_engineering:
+        meta:
+          title: 'Cursos en línea de Ciencia Física y Ingenieria | Classpert'
+          description: ''
+        html:
+          hero_title: ''
+      marketing:
+        meta:
+          title: 'Cursos en línea de Marketing | Classpert'
+          description: ''
+        html:
+          hero_title: ''
+  course_bundles:
+    meta: &meta
+      title_html: "Cursos de %{tag}"
+      description_html: "Encuentra tutoriales y cursos gratuitos o pagados de %{tag}. <br/> Elija
+      entre los temas seleccionados y aprenda con los mejores instructores e instituciones"
+    social_share:
+      <<: *meta
+    index:
+      <<: *meta
+    show:
+      <<: *meta
+
+  pages:
+    dashboard_index:
+      meta:
+        title: 'Zona para Miembros | Quero'
+      html:
+        account_settings_header: 'Configuraciones de la Cuenta'
+        secure_your_account_header: ''
+        secure_your_account_button: ''
+        account_settings_link: 'Configuraciones de la Cuenta'
+        account_settings_form_button: 'Salvar'
+        profile_link: 'Perfil'
+        interests_link: 'Áreas de Interés'
+        language_preferences_header: 'Preferencias de Idioma'
+        connected_oauth_accounts_header: 'Cuentas Conectadas'
+        add_oauth_accounts_header: 'Agregar otras cuentas'
+        destroy_account_header: 'Cancelar Cuenta'
+        destroy_account_button: 'Cancelar Cuenta'
+        upload_image_button: 'Elegir foto'
+        select_interest_placeholder: 'Elija sus áreas de interés'
