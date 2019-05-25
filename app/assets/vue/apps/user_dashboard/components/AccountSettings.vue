@@ -2,7 +2,7 @@
   <div id='account-settings'>
 
     <div v-if='!account.password_missing'>
-      <h4 style='margin-bottom:10px'>
+      <h4 class='mx-D(n)@<large' style='margin-bottom:10px'>
          {{ $t('pages.dashboard_index.html.account_settings_header')  }}
       </h4>
       <form class='c-form'>
@@ -10,12 +10,12 @@
           <label class='c-form-ctrl__label' >E-mail</label>
           <input v-model='account.email' class='c-form-ctrl__input' type='text' />
         </div>
-        <br />
-        <div class='c-form-ctrl c-form-ctrl--vertical'>
+        <div class='c-form-ctrl c-form-ctrl--vertical mx-Mt-0d625'>
           <label class='c-form-ctrl__label' >Password</label>
           <input class='c-form-ctrl__input' type='text' />
         </div>
-        <input type='submit' class='btn btn--gray-flat mx-Mt(10px)'>
+        <input type='submit' class='btn btn--blue-flat mx-Mt-0d625 mx-D(n)@<medium'>
+        <input type='submit' class='btn btn--blue-flat mx-Mt-0d625 btn--block mx-D(n)@>large'>
       </form>
     </div>
 
@@ -25,7 +25,7 @@
       </h4>
       <div style='margin-bottom:10px'>
         <ul style='list-style:none;margin:0;padding:0'>
-          <li v-for='oauth in account.oauths' style='margin-bottom:10px'>
+          <li v-for='oauth in account.oauths' style='margin-bottom:10px' :key='oauth.attributes.provider'>
             <oauth-account @destroyOauth='destroyOauth' :provider='oauth.attributes.provider'
               :connected='true'
               ></oauth-account>
@@ -37,8 +37,8 @@
     <h5 style='margin-bottom:10px'>{{ $t('pages.dashboard_index.html.add_oauth_accounts_header')  }}</h5>
     <div>
       <ul style='list-style:none;margin:0;padding:0'>
-        <li style='margin-bottom:10px' v-for='provider in otherProviders'>
-          <oauth-account 
+        <li style='margin-bottom:10px' v-for='provider in otherProviders' :key='provider'>
+          <oauth-account
             :provider='provider'
             :authorize-url='`/user_accounts/auth/${provider}`'
             :connected='false'
@@ -123,10 +123,10 @@
 
     saveLocalePreferences () {
       var vm = this
-      fetch(`/api/user/v1/profile.json`, { 
+      fetch(`/api/user/v1/profile.json`, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
         method: 'PUT',
-        body: JSON.stringify({ preferences: { locale: vm.account.profile.preferences } }) 
+        body: JSON.stringify({ preferences: { locale: vm.account.profile.preferences } })
       }).then(function (resp) {
         resp.json().then(function (json) {
         })
@@ -137,3 +137,13 @@
 
  }
 </script>
+
+<style lang="scss" scoped>
+.c-form-ctrl {
+  box-sizing: border-box;
+}
+.c-form-ctrl__input {
+  border-color: #DEE7ED;
+  width: 100%;
+}
+</style>

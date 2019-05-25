@@ -30,7 +30,7 @@ pt-BR:
       failure: "Não foi possível autenticá-lo como %{kind} porque %{reason}."
       success: "Autenticado com sucesso com uma conta de %{kind}."
     passwords:
-      new: 
+      new:
         section: "Esqueceu sua senha?"
         send_me_reset_password_instructions: "Enviar instruções para o meu e-mail"
       no_token: "Você só pode acessar essa página através de um e-mail de troca de senha. Se já estiver acessando por um e-mail, verifique se a URL fornecida está completa."
