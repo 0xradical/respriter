@@ -16,9 +16,9 @@ es:
         the subscription fee will be charged.It gives you unlimited access to
         their courses. You may cancel the subscription at any time.
     icons:
-      clock: Duracion
-      level: Nível
-      user_and_monitor: Course pace
+      clock: 'Duración'
+      level: 'Nivel'
+      user_and_monitor: 'Ritmo del curso'
     omniauth_sign_in: 'Conectar con %{provider}'
     omniauth_signin_in: 'Conectando con %{provider}'
     searchbar_placeholder: Buscar cursos ...
@@ -216,7 +216,7 @@ es:
     max: Max
     max_price: Max. $
     min: Min
-    next_ page: Segiuente página
+    next_page: Segiuente página
     no_options_available: No opciones disponibles
     no_suggestions_message: No sugerencias
     not_available: No disponible
@@ -245,6 +245,7 @@ es:
     sign_out: Salir
     sign_up: Registrate
     sort_by: Ordenar por
+    sort_by_selected: Seleccionado
     subscription_period:
       months: meses
       years: años
@@ -292,10 +293,10 @@ es:
     af: Afrikáans
     am: Amhárico
     ar: Árabe
-    ar-EG: Árabe (EG)
-    ar-JO: Árabe (JO)
-    ar-LB: Árabe (LB)
-    ar-SY: Árabe (EG)
+    ar-EG: Árabe (Egipto)
+    ar-JO: Árabe (Jordán)
+    ar-LB: Árabe (Líbano)
+    ar-SY: Árabe (Siria)
     az: Azerí
     be: Bielorruso
     bg: Búlgaro
@@ -354,6 +355,7 @@ es:
     hy: Armenio
     id: Indonesio
     ig: Igbo
+    iw: Hebreu
     is: Islandés
     it: Italiano
     it-IT: Italiano (Italia)
@@ -385,7 +387,7 @@ es:
     nl: Holandés
     nl-BE: Holandés (Belgica)
     nl-NL: Holandés (Holanda)
-    'no': Noruego
+    no: Noruego
     pa: Panyabí
     pl: Polaco
     pl-PL: Polaco (Polonia)
@@ -431,10 +433,10 @@ es:
     zu: Zulú
   meta:
     icons:
-      clock: Reloj
+      clock: Duración
       institution: Institución
       level: Nivel
-      user_and_monitor: Usuario y monitor
+      user_and_monitor: Instructor
   pages:
     dashboard_index:
       html:
