@@ -2,7 +2,7 @@
   <div id='account-settings'>
 
     <div v-if='!account.password_missing'>
-      <h4 style='margin-bottom:10px'>
+      <h4 class='mx-D(n)@<large' style='margin-bottom:10px'>
          {{ $t('pages.dashboard_index.html.account_settings_header')  }}
       </h4>
       <form class='c-form'>
@@ -14,7 +14,8 @@
           <label class='c-form-ctrl__label' >Password</label>
           <input class='c-form-ctrl__input' type='text' />
         </div>
-        <input type='submit' class='btn btn--gray-flat mx-Mt-0d625'>
+        <input type='submit' class='btn btn--blue-flat mx-Mt-0d625 mx-D(n)@<medium'>
+        <input type='submit' class='btn btn--blue-flat mx-Mt-0d625 btn--block mx-D(n)@>large'>
       </form>
     </div>
 
@@ -136,3 +137,13 @@
 
  }
 </script>
+
+<style lang="scss" scoped>
+.c-form-ctrl {
+  box-sizing: border-box;
+}
+.c-form-ctrl__input {
+  border-color: #DEE7ED;
+  width: 100%;
+}
+</style>

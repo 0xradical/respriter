@@ -1,11 +1,21 @@
 <script id='main-menu-tpl' type='x-tmpl-mustache'>
-  <div style='display:inline-block;margin-right:5px'>
-    <%= render 'language_dropdown' %>
-  </div>
-  <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
-    class: 'btn btn--blue-border btn--rounded btn--small btn--uppercase' %>
-  <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
-    class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
+  <%- if user_account_signed_in? %>
+    <%= link_to user_accounts_dashboard_path("dashboard") do %>
+      <% if current_user_account.avatar.present? %>
+        <%= image_tag(current_user_account.avatar, height: '37px', style: 'border-radius:50%;border:1px solid #ccc') %>
+      <% else %>
+        <%= svg_use('icons', 'avatar', { width: '37px', height: '37px' } ) %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <div style='display:inline-block;margin-right:5px'>
+      <%= render 'language_dropdown' %>
+    </div>
+    <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
+      class: 'btn btn--blue-border btn--rounded btn--small btn--uppercase' %>
+    <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
+      class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
+  <% end %>
   <h4 class='c-off-canvas-menu__section'>Categories</h4>
   <ul class='c-list c-list--unstyled'>
     <% (RootTag.all).each_with_index do |t, index| %>
@@ -58,7 +68,7 @@
       class='mx-D(n)@desktop mx-D(n)@tv mx-D(n)@tablet c-navbar__offcanvas-menu-btn'></a>
 
     <%- if user_account_signed_in? %>
-      <div class='c-navbar__slot'>
+      <div class='c-navbar__slot mx-D(n)@phone'>
         <%= link_to user_accounts_dashboard_path("dashboard") do %>
           <% if current_user_account.avatar.present? %>
             <%= image_tag(current_user_account.avatar, height: '37px', style: 'border-radius:50%;border:1px solid #ccc') %>

@@ -2,13 +2,13 @@
   <%= t("devise.registrations.new.section") %>
 <% end %>
 
-<div class='l-cgrid' >
-  <div class='l-cgrid__col'>
+<div class='row justify-content-center'>
+  <div class='col-12 col-sm-8 col-md-6 col-lg-4'>
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
   <%# if session[:omniauth_data].empty? %>
-    <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
+    <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical' style='box-sizing:border-box'>
       <%= f.label :email, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
       <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
@@ -17,13 +17,13 @@
     <%#= f.hidden_field :email, session[:omniauth_data]['email'] %>
   <%# end %>
 
-  <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
+  <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical' style='box-sizing:border-box'>
     <%= f.label :password, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
     <%= f.password_field :password, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
     <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
   </div>
 
-  <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
+  <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical' style='box-sizing:border-box'>
     <%= f.label :password_confirmation, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
     <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
     <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>

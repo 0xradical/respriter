@@ -2,49 +2,47 @@
   <%= "Log in" %>
 <% end %>
 
-  <div class='l-container__shrinker'>
-    <div class='l-hgrid-2c@desktop-1c@phone'>
-      <div>
-        <%= link_to t('components.omniauth_sign_in', { provider: 'LinkedIn' }), 
-          user_account_linkedin_omniauth_authorize_path,
-          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'LinkedIn' }) }, style: 'margin-bottom:10px', class: 'btn btn--linkedin btn--medium' } %>
+  <div class='row justify-content-center'>
+    <div class='col-12 col-sm-8 col-md-6 col-lg-4'>
+      <%= link_to t('components.omniauth_sign_in', { provider: 'LinkedIn' }),
+        user_account_linkedin_omniauth_authorize_path,
+        { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'LinkedIn' }) }, style: 'margin-bottom:10px', class: 'btn btn--linkedin btn--medium' } %>
 
-        <%= link_to t('components.omniauth_sign_in', { provider: 'Facebook' }), 
-          user_account_facebook_omniauth_authorize_path,
-          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Facebook' }) }, style: 'margin-bottom:10px', class: 'btn btn--facebook btn--medium' } %>
+      <%= link_to t('components.omniauth_sign_in', { provider: 'Facebook' }),
+        user_account_facebook_omniauth_authorize_path,
+        { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Facebook' }) }, style: 'margin-bottom:10px', class: 'btn btn--facebook btn--medium' } %>
 
-        <%= link_to t('components.omniauth_sign_in', { provider: 'Github' }),  user_account_github_omniauth_authorize_path,
-          { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Github' }) }, class: 'btn btn--github btn--medium' } %>
+      <%= link_to t('components.omniauth_sign_in', { provider: 'Github' }),  user_account_github_omniauth_authorize_path,
+        { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Github' }) }, class: 'btn btn--github btn--medium' } %>
 
-      </div>
-      <div>
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    </div>
 
-          <%#= devise_error_messages! %>
+    <div class='col-12 mx-Mt-1 mx-D(n)@>medium'></div>
 
-          <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
-            <%= f.label :email, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
-            <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+    <div class='col-12 col-sm-8 col-md-6 col-lg-4'>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical' style='box-sizing:border-box'>
+          <%= f.label :email, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+          <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+        </div>
+
+        <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical' style='box-sizing:border-box'>
+          <%= f.label :password, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+          <%= f.password_field :password, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+          <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+        </div>
+
+        <% if devise_mapping.rememberable? -%>
+          <div class="field">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
           </div>
+        <% end -%>
 
-          <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical'>
-            <%= f.label :password, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
-            <%= f.password_field :password, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
-            <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
-          </div>
+        <%= f.submit "Log in", class: 'btn btn--blue-flat btn--block mx-Mt-1' %>
 
-          <% if devise_mapping.rememberable? -%>
-            <div class="field">
-              <%= f.check_box :remember_me %>
-              <%= f.label :remember_me %>
-            </div>
-          <% end -%>
-
-          <%= f.submit "Log in", class: 'btn btn--blue-flat btn--block' %>
-
-        <% end %>
-        <%= render "user_accounts/shared/links" %>
-      </div>
+      <% end %>
+      <%= render "user_accounts/shared/links" %>
     </div>
   </div>
