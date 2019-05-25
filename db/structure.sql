@@ -691,7 +691,8 @@ CREATE TABLE public.tracked_searches (
     results jsonb,
     tracked_data jsonb,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    action character varying
 );
 
 
@@ -1102,6 +1103,13 @@ CREATE INDEX index_tracked_actions_on_status ON public.tracked_actions USING btr
 
 
 --
+-- Name: index_tracked_searches_on_action; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tracked_searches_on_action ON public.tracked_searches USING btree (action);
+
+
+--
 -- Name: index_user_accounts_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1238,6 +1246,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190503093752'),
 ('20190506184046'),
 ('20190515101502'),
-('20190515104037');
+('20190515104037'),
+('20190521153938');
 
 

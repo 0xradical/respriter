@@ -84,7 +84,7 @@
             <ul class='c-list c-list--unstyled mx-C(white)'>
               <% (RootTag.all).each_with_index do |t, index| %>
                 <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
-                <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "#{t.slugify}"), class: 'c-link c-link--white' do %>
+                <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "/#{t.slugify}"), class: 'c-link c-link--white' do %>
                   <li class='mx-Fs-0d875' style='padding:4px 0px'>
                     <%= t("tags.#{t.id}") %>
                   </li>

@@ -42,12 +42,13 @@
             <div>
               <pagination @paginate='paginate' pagination-anchor='#body-anchor' :current-page='page' :num-of-pages='numOfPages'></pagination>
             </div>
-            <div v-show='false' class='mx-D(n)@<medium mx-D(Fx) mx-FxAi(c) sort'>
+            <div class='mx-D(n)@<medium mx-D(Fx) mx-FxAi(c) sort'>
               <span class='mx-D(b) mx-Mr-1 sort__label'>{{ $t('dictionary.sort_by') }}</span>
               <multiselect  :value="orderCurrentOption"
                             @select="sortByChanged"
                             track-by='key'
-                            label='label'
+                            label='i18n_key'
+                            :custom-label="({i18n_key}) => { return $t(`dictionary.${i18n_key}`); }"
                             select-label=''
                             selected-label=''
                             deselect-label=''
@@ -94,7 +95,7 @@
               {{ $t('dictionary.sort_by') }}
               <select :value="orderCurrentOption.key" @change='sortByChanged({key: $event.target.value})'>
                 <option v-for='option in orderOptions' :key='option.key' :value='option.key'>
-                  {{ option.label }}
+                  {{ $t(`dictionary.${option.i18n_key}`) }}
                 </option>
               </select>
             </span>
@@ -133,30 +134,40 @@
   import Loading from "vue-loading-overlay";
   import 'vue-loading-overlay/dist/vue-loading.css';
   import Multiselect from 'vue-multiselect';
-  import 'vue-multiselect/dist/vue-multiselect.min.css';
 
   export default {
     props: {
+
       recordsPerPage: {
         type: Number,
         default: 25
       },
+
       category: {
         type: Array,
         default: []
       },
+
       showCategoriesFilter: {
         type: Boolean,
         default: true
       },
+
       containerClass: {
         type: String,
         default: ''
       },
+
       locale: {
         type: String,
         default: 'en'
+      },
+
+      searchEndpoint: {
+        type: String,
+        default: 'search.json'
       }
+
     },
     components: {
       course: Course,
@@ -221,9 +232,9 @@
     },
     beforeCreate() {
       this.$classpert.orderOptions = [
-        { key: 'rel',        value: {}, label: this.$t('dictionary.relevance') },
-        { key: 'price.asc',  value: { price: "asc" }, label: this.$t('dictionary.lowest_price') },
-        { key: 'price.desc', value: { price: "desc" }, label: this.$t('dictionary.highest_price') }
+        { key: 'rel',        value: {},                i18n_key: 'relevance' },
+        { key: 'price.asc',  value: { price: "asc" },  i18n_key: 'lowest_price' },
+        { key: 'price.desc', value: { price: "desc" }, i18n_key: 'highest_price' }
       ];
     },
     mounted () {
@@ -315,7 +326,7 @@
       fetchResults () {
         var vm  = this
         var stringifiedParams = qs.stringify(this.params, {indices: false, arrayFormat: 'brackets', encode: true})
-        var url = `/search.json?${stringifiedParams}`
+        var url = `${this.searchEndpoint}?${stringifiedParams}`
         window.history.replaceState({}, 'foo', url.replace('.json', ''))
 
         vm.isFetchingRecords = true;

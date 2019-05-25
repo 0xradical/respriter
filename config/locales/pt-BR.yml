@@ -76,13 +76,14 @@ pt-BR:
     free: 'Grátis'
     only_free: 'Somente grátis'
     sort_by: 'Ordenar por'
+    sort_by_selected: "Selecionado"
     clear_all_filters: "Limpar filtros"
     clear_filter: "Limpar filtro"
     filter_results: "Filtrar resultados"
     show_results: "Resultados"
     display_filter: 'Mostrar filtro'
-    lowest_price: 'Menor preço'
-    highest_price: 'Maior preço'
+    lowest_price: "Menor preço"
+    highest_price: "Maior preço"
     relevance: "Relevância"
     no_suggestions_message: "Desculpe, não foi possível encontrar <b>%{term}</b>"
     no_options_available: "Nenhuma opção disponível para o filtro atual"
@@ -260,7 +261,7 @@ pt-BR:
   course_bundles:
     meta: &meta
       title_html: "Cursos de %{tag}"
-      description_html: "Encontre cursos online gratuitos e pagos de %{tag}. <br /> 
+      description_html: "Encontre cursos online gratuitos e pagos de %{tag}. <br />
         Escolha entre tópicos selecionados e aprenda com os melhores instrutores e instituições."
     social_share:
       <<: *meta

@@ -10,7 +10,14 @@
   class="mx-Bc(white)"
 <% end %>
 
-<div data-vue-app data-vue-props='{ "locale": "<%= I18n.locale %>" }'></div>
+<%
+  base_locales   = YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.base.yml"))
+  tags           = YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.tags.yml"))
+  custom_locales = YAML::load_file(Rails.root.join('config', 'locales', "#{I18n.locale}.yml"))
+  locales        = base_locales.deep_merge(custom_locales).deep_merge(tags)
+%>
+
+<div data-vue-app data-vue-app-translations='<%= locales.to_json %>' data-vue-props='{ "locale": "<%= I18n.locale %>" }'></div>
 
 <script type='text/javascript'>
   window.env_context = {

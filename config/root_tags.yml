@@ -1,6 +1,14 @@
 - {
-    id: 'arts_and_design',
-    icon: 'rule-and-pencil'
+    id: 'computer_science',
+    icon: 'card'
+  }
+- {
+    id: 'data_science',
+    icon: 'data'
+  }
+- {
+    id: 'physical_science_and_engineering',
+    icon: 'gear'
   }
 - {
     id: 'business',
@@ -11,16 +19,12 @@
     icon: 'target'
   }
 - {
-    id: 'computer_science',
-    icon: 'card'
-  }
-- {
-    id: 'data_science',
-    icon: 'data'
-  }
-- {
     id: 'language_and_communication',
     icon: 'dialog'
+  }
+- {
+    id: 'arts_and_design',
+    icon: 'rule-and-pencil'
   }
 - {
     id: 'life_sciences',
@@ -33,10 +37,6 @@
 - {
     id: 'personal_development',
     icon: 'graph'
-  }
-- {
-    id: 'physical_science_and_engineering',
-    icon: 'gear'
   }
 - {
     id: 'social_sciences',
