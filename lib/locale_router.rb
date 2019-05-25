@@ -11,8 +11,8 @@ class LocaleRouter
     @request = Rack::Request.new(env)
 
     env['rack.session']['intl'] ||= @request.params['intl']
-    if (intl_subdomain? && !whitelisted_routes)
-      if (supported_locale.present? && !env['rack.session']['intl'])
+    if (intl_subdomain? && !whitelisted_routes && preferred_locale != :en)
+      if (preferred_locale.present? && !env['rack.session']['intl'])
         return [301, { "Location" => redirection_url, "Cache-Control" => "no-cache"}, {}]
       end
     end
@@ -30,11 +30,11 @@ class LocaleRouter
   end
 
   def redirection_url
-    "//#{[supported_locale&.downcase, @subdomains, @tld_domain].flatten.join('.')}#{@path}"
+    "//#{[i18n_subdomains[preferred_locale], @subdomains, @tld_domain].compact.flatten.join('.')}#{@path}"
   end
 
-  def supported_locale
-    (browser_language & i18n_subdomains).first
+  def preferred_locale
+    (browser_language & I18n.available_locales).first
   end
 
   def browser_language
@@ -53,7 +53,9 @@ class LocaleRouter
   end
 
   def i18n_subdomains
-    I18n.available_locales.reject { |l| l == :en }
+    locale_subdomain_map = Hash[I18n.available_locales.map { |k| [k, k.to_s] }]
+    locale_subdomain_map[:en] = nil
+    locale_subdomain_map
   end
 
 end
