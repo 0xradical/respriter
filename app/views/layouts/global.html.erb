@@ -37,6 +37,13 @@
     <%= yield :stylesheets %>
     <%= yield :jsts %>
     <!-- x-vue-templates -->
+    <script id='promo-video-modal' type='x-vue-template'>
+      <modal :adaptive=true name='promo-video-modal'>
+        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/p6_Uim8OXvQ"
+          frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+        </iframe>
+      </modal>
+    </script>
     <%= yield :x_vue_templates %>
 
   </head>
@@ -93,7 +100,7 @@
             </ul>
           </div>
 
-          <div class='col-12 col-md-3'>
+          <div class='col-12 col-md-2'>
             <h2 class='mx-Fs-1d125 mx-Mt-0d875@extra-small mx-C(blue)' style='margin-bottom:10px'>
               <%= t('dictionary.providers') %>
             </h2>
@@ -131,7 +138,21 @@
               <li>and 20+</li>
             </ul>
           </div>
-          <div class='col-12 col-md-6 mx-Ta(r)'>
+
+          <div class='col-12 col-md-2'>
+            <h2 class='mx-Fs-1d125 mx-Mt-0d875@extra-small mx-C(blue)' style='margin-bottom:10px'>
+              About
+            </h2>
+            <ul class='c-list c-list--unstyled mx-Fs-0d875'>
+              <li style='margin-bottom:8px'>
+                <%= link_to "javascript:void(0)", onclick: "window.__vms__['promo-video-modal'].$modal.show('promo-video-modal')", target: '_blank', class: 'c-link c-link--white', rel: 'nofollow' do %>
+                  <%= t('home.index.new_to_classpert') %><%= t('home.index.watch_the_video') %>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+
+          <div class='col-12 col-md-5 mx-Ta(r)'>
             <span style='display:inline-block;vertical-align:middle'>
               <span>Follow us!</span> &nbsp; 
               <ul style='display:inline-block;vertical-align:middle' class='c-list c-list--unstyled c-list--inline mx-Fs-0d875'>
@@ -178,6 +199,7 @@
     </footer>
 
     <%= render 'offcanvas_menu' %>
+    <div data-vue-cpt='promo-video-modal'></div>
     <%= javascript_pack_tag 'vendor', 'application' %> 
     <%= yield :javascript  %>
   </body>
