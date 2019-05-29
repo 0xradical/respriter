@@ -284,6 +284,7 @@ class Course < ApplicationRecord
       curated_root_tags:   (curated_tags & RootTag.all.map(&:id)),
       provider_slug:       provider_slug,
       syllabus_markdown:   syllabus,
+      refinement_tags:     refinement_tags
     }
 
     if category.present?

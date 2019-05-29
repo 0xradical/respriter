@@ -12,6 +12,7 @@ module Search
       provider_name:     :term,
       curated_tags:      :term,
       curated_root_tags: :term,
+      refinement_tags:   :term,
       price:             :range,
       paid_content:      :paid_content
     }
