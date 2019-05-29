@@ -16,17 +16,19 @@
 
             <hr/>
 
-            <div @click='isFiltering.category = true' class='mobile-filter-facets__facet'>
-              <search-fieldset :title='$t("dictionary.categories")' v-if="showCategoriesFilter" :subtitle="filter.category.map(categoryValue).join(', ')" :stand-out='filter.category.length > 0'>
-                <template #action>
-                  <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
-                  </a>
-                </template>
-              </search-fieldset>
-            </div>
+            <template v-if="showCategoriesFilter">
+              <div @click='isFiltering.category = true' class='mobile-filter-facets__facet'>
+                <search-fieldset :title='$t("dictionary.categories")' v-if="showCategoriesFilter" :subtitle="filter.category.map(categoryValue).join(', ')" :stand-out='filter.category.length > 0'>
+                  <template #action>
+                    <a class='c-fieldset-frame__action' href='#'>
+                      <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                    </a>
+                  </template>
+                </search-fieldset>
+              </div>
 
-            <hr/>
+              <hr/>
+            </template>
 
             <div @click='isFiltering.subtitles = true' class='mobile-filter-facets__facet'>
               <search-fieldset :title='$t("dictionary.subtitles")' :subtitle="filter.subtitles.map(subtitleValue).join(', ')" :stand-out='filter.subtitles.length > 0'>
