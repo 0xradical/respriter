@@ -240,7 +240,7 @@ describe Search::CourseSearch do
     database_clean
 
     before :all do
-      @courses = NavigationalTag.all.map(&:id).uniq.map do |category|
+      @courses = RootTag.all.map(&:id).uniq.map do |category|
         name =  "Course of #{I18n.t "tag.#{category}"} #{(rand > 0.5) ? 'Selected' : 'Missing' }"
         create :course, category: category, name: name
       end
@@ -255,7 +255,7 @@ describe Search::CourseSearch do
 
     it 'should include all categories on empty search' do
       categories = Search::CourseSearch.new.results[:meta][:aggregations][:category][:unselected].map &:first
-      expect(categories.sort).to eq( NavigationalTag.all.map(&:id).uniq.map(&:to_sym).sort )
+      expect(categories.sort).to eq( RootTag.all.map(&:id).uniq.map(&:to_sym).sort )
     end
 
     it 'should include all matched categories on search' do
