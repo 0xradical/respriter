@@ -241,6 +241,7 @@ en:
       user_and_monitor: 'Course pace'
       level: 'Level'
       clock: 'Duration'
+      institution: 'Institution'
     card:
       subscription_tip: "This provider offers a %{period} free trial. At the end of this period, the
       subscription fee will be charged.It gives you unlimited access to their courses. You may cancel

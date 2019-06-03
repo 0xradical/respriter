@@ -19,6 +19,7 @@ es:
       clock: 'Duración'
       level: 'Nivel'
       user_and_monitor: 'Ritmo del curso'
+      institution: 'Institución'
     omniauth_sign_in: 'Conectar con %{provider}'
     omniauth_signin_in: 'Conectando con %{provider}'
     searchbar_placeholder: Buscar cursos ...
@@ -75,18 +76,6 @@ es:
             estrategia. Encuentra cursos online pagados y gratuitos con
             certificado
           title: Cursos en línea de Business | Classpert
-      computer_science:
-        html:
-          hero_title: ''
-        meta:
-          description: ''
-          title: Cursos en línea de Ciencias de la Computación | Classpert
-      data_science:
-        html:
-          hero_title: ''
-        meta:
-          description: ''
-          title: Cursos en línea de Ciencia de los Datos | Classpert
       health_and_fitness:
         html:
           hero_title: >-
@@ -127,12 +116,6 @@ es:
             fronteras con cursos de las mejores universidades del mundo.
             Encuentra cursos online pagados y gratuitos con certificado
           title: Cursos en línea de Ciencias de la Vida | Classpert
-      marketing:
-        html:
-          hero_title: ''
-        meta:
-          description: ''
-          title: Cursos en línea de Marketing | Classpert
       math_and_logic:
         html:
           hero_title: >-
@@ -159,12 +142,6 @@ es:
             profesional. Encuentra cursos online pagados y gratuitos con
             certificado
           title: Cursos en línea de Desarrollo Personal | Classpert
-      physical_science_and_engineering:
-        html:
-          hero_title: ''
-        meta:
-          description: ''
-          title: Cursos en línea de Ciencia Física y Ingenieria | Classpert
       social_sciences:
         html:
           hero_title: >-
