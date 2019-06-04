@@ -1,5 +1,5 @@
 <template>
-  <div :id='course.url_id' class='c-hcard(2.0) mx-D(fx) mx-FxWp(w) mx-FxFd(col)@>desktop' :class="{ 'js-expanded' : expanded }">
+  <div data-chrome-ext='clsp-tagger' :data-chrome-ext-data='chromeExtData' :id='course.id' class='c-hcard(2.0) mx-D(fx) mx-FxWp(w) mx-FxFd(col)@>desktop' :class="{ 'js-expanded' : expanded }">
     <!-- Video  -->
     <div class='c-hcard(2.0)__video-preview mx-Mr-0d5@phone mx-Mr-0d5@tablet mx-Mr-1@>desktop mx-Fx(100%)@>desktop mx-FxOrd(1)'>
       <div class='c-video'>
@@ -463,6 +463,12 @@ export default {
   },
 
   computed: {
+
+    chromeExtData () {
+      return JSON.stringify({
+          curated_tags: this.course.curated_tags
+      })
+    },
 
     playIcon () {
       return '#icons-play'
