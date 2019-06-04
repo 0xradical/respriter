@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_locale
-    parsed_locale = I18nHelper.strict_locale(request.subdomains.first)
+    parsed_locale = I18nHelper.sanitize_locale(request.subdomains.first)
     I18n.locale = ([parsed_locale] & I18n.available_locales).present? ? parsed_locale : :en
   end
 
