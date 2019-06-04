@@ -5,6 +5,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -386,7 +387,8 @@ CREATE TABLE public.courses (
     __provider_name__ character varying,
     __source_schema__ jsonb,
     instructors jsonb DEFAULT '[]'::jsonb,
-    curated_tags character varying[] DEFAULT '{}'::character varying[]
+    curated_tags character varying[] DEFAULT '{}'::character varying[],
+    refinement_tags character varying
 );
 
 
@@ -465,13 +467,13 @@ CREATE VIEW public.earnings AS
     providers.name AS provider_name,
     courses.name AS course_name,
     courses.url AS course_url,
+    (enrollments.tracking_data ->> 'country'::text) AS country,
     (enrollments.tracking_data ->> 'query_string'::text) AS qs,
     (enrollments.tracking_data ->> 'referer'::text) AS referer,
     (enrollments.tracking_data ->> 'utm_source'::text) AS utm_source,
     (enrollments.tracking_data ->> 'utm_campaign'::text) AS utm_campaign,
     (enrollments.tracking_data ->> 'utm_medium'::text) AS utm_medium,
     (enrollments.tracking_data ->> 'utm_term'::text) AS utm_term,
-    (enrollments.tracking_data ->> 'country'::text) AS country,
     tracked_actions.created_at
    FROM (((public.tracked_actions
      LEFT JOIN public.enrollments ON ((tracked_actions.enrollment_id = enrollments.id)))
@@ -992,6 +994,13 @@ CREATE UNIQUE INDEX index_admin_accounts_on_reset_password_token ON public.admin
 --
 
 CREATE UNIQUE INDEX index_admin_accounts_on_unlock_token ON public.admin_accounts USING btree (unlock_token);
+
+
+--
+-- Name: index_courses_on_curated_tags; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_courses_on_curated_tags ON public.courses USING gin (curated_tags);
 
 
 --
