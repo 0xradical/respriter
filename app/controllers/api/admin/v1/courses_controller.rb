@@ -4,20 +4,19 @@ module Api
 
       class CoursesController < BaseController
 
-        def create
-          @posts = Course.create(request.parameters[:data])
-          render json: @posts
-        end
-
-        def import
-          @courses = Course.import_from_csv(csv_file[:file], [:url])
-          render json: @courses
+        def update
+          @course = Course.find(params[:id])
+          @course.update(course_params)
+          @course.__elasticsearch__.index_document
+          render json: CourseSerializer.new(@course)
         end
 
         private
 
-        def csv_file
-          params.permit(:file)
+        def course_params
+          params.require(:course).permit(:curated_tags).tap do |param|
+            param[:curated_tags] = param[:curated_tags].split(',')
+          end
         end
 
       end
