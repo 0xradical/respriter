@@ -5,12 +5,6 @@ pt-BR:
     mobile_app_developer: Desenvolvedor de Aplicativos
     software_developer: Desenvolvedor de Software
     web_developer: Desenvolvedor Web
-  activerecord:
-    attributes:
-      user_account:
-        password: "Senha"
-        email: "Email"
-        password_confirmation: "Confirmação de senha"
   dictionary: &dictionary
     terms_and_conditions: "Termos e Condições"
     providers: 'Plataformas'
@@ -370,12 +364,6 @@ pt-BR:
     show:
       <<: *meta
   pages:
-    home_index:
-      meta:
-        title: 'Cursos Online com Certificado - Cadastro Grátis | Classpert'
-        meta_description: 'Encontre os melhores cursos com certificado. Mais de 50 plataformas e
-        instituições e mais de 100.000 cursos. Incluindo cursos grátis de Harvard, MIT, Yale entre
-        outros'
     dashboard_index:
       meta:
         title: 'Área do Usuário | Classpert'
