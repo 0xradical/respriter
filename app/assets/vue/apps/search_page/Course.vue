@@ -76,13 +76,13 @@
         <div class="c-hcard(2.0)__price-trial-details mx-FxOrd(2) mx-FxOrd(1)@>desktop mx-D(n)@phone mx-D(n)@tablet">
           <template v-if="course.subscription_type">
             <span class="mx-Tt(u) mx-Fs-0d625">
-              {{ $t(`datetime.distance_in_words.x_${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value}) }} TRIAL
+              {{ $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) }}
             </span>
           </template>
         </div>
         <template v-if="course.subscription_type && course.has_free_trial">
           <div class="c-hcard(2.0)__price-subscription-details mx-FxOrd(3) mx-D(n)@phone mx-D(n)@tablet mx-Mt-0d25@>desktop">
-            <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.distance_in_words.x_${course.trial_period.unit}`, { count: course.trial_period.value })})" class='c-label mx-Fs-0d625 mx-Mt-0d25'>
+            <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) })" class='c-label mx-Fs-0d625 mx-Mt-0d25'>
               <svg class='c-label__icon'>
                 <use :xlink:href="renewIcon"></use>
               </svg>
@@ -94,7 +94,7 @@
         </template>
         <template v-if="false && course.free_content && course.paid_content">
           <div class="c-hcard(2.0)__price-subscription-details mx-FxOrd(3) mx-D(n)@phone mx-D(n)@tablet mx-Mt-0d25@>desktop">
-            <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.distance_in_words.x_${course.trial_period.unit}`, { count: course.trial_period.value })})" class='c-label mx-Fs-0d625 mx-Mt-0d25'>
+            <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) })" class='c-label mx-Fs-0d625 mx-Mt-0d25'>
               <svg class='c-label__icon'>
                 <use :xlink:href="currencyIcon"></use>
               </svg>
@@ -121,12 +121,12 @@
               <div class="c-hcard(2.0)__price-details mx-D(fx) mx-FxFd(col) mx-Mt-0d625 mx-D(n)@>desktop">
                 <template v-if="course.subscription_type">
                   <span class="mx-Tt(u) mx-Fs-0d875">
-                    {{ $t(`datetime.distance_in_words.x_${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value}) }} TRIAL
+                    {{ $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) }}
                   </span>
                 </template>
                 <template v-if="course.subscription_type && course.has_free_trial">
                   <div class="c-hcard(2.0)__price-subscription-details mx-FxOrd(3) mx-D(n)@phone mx-D(n)@tablet mx-Mt-0d25@>desktop">
-                    <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.distance_in_words.x_${course.trial_period.unit}`, { count: course.trial_period.value })})" class='c-label mx-Fs-0d875 mx-Mt-0d25'>
+                    <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) })" class='c-label mx-Fs-0d875 mx-Mt-0d25'>
                       <svg class='c-label__icon'>
                         <use :xlink:href="renewIcon"></use>
                       </svg>
@@ -138,7 +138,7 @@
                 </template>
                 <template v-if="false && course.free_content && course.paid_content">
                   <div class="c-hcard(2.0)__price-subscription-details mx-FxOrd(3) mx-D(n)@phone mx-D(n)@tablet mx-Mt-0d25@>desktop">
-                    <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.distance_in_words.x_${course.trial_period.unit}`, { count: course.trial_period.value })})" class='c-label mx-Fs-0d625 mx-Mt-0d25'>
+                    <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) })" class='c-label mx-Fs-0d625 mx-Mt-0d25'>
                       <svg class='c-label__icon'>
                         <use :xlink:href="currencyIcon"></use>
                       </svg>

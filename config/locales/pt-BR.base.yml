@@ -109,6 +109,25 @@ pt-BR:
       day: Dia
       month: Mês
       year: Ano
+    adjectives:
+      seconds:
+        one: "%{noun} de %{count} segundo"
+        other: "%{noun} de %{count} segundos"
+      minutes:
+        one: "%{noun} de %{count} minuto"
+        other: "%{noun} de %{count} minutos"
+      hours:
+        one: "%{noun} de %{count} hora"
+        other: "%{noun} de %{count} horas"
+      days:
+        one: "%{noun} de %{count} dia"
+        other: "%{noun} de %{count} dias"
+      months:
+        one: "%{noun} de %{count} mês"
+        other: "%{noun} de %{count} meses"
+      years:
+        one: "%{noun} de %{count} ano"
+        other: "%{noun} de %{count} anos"
   errors:
     format: "%{attribute} %{message}"
     messages:
