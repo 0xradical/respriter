@@ -108,7 +108,11 @@
         <div class='col-12 col-lg-9 vld-parent'>
           <loading :active.sync="isLoadable" :is-full-page='true' color='#4C636F'></loading>
           <template v-if="data.records.length > 0">
-            <div class='mx-Mb-0d625' v-for='course in data.records' :key="course.id" style='margin-bottom:10px'>
+            <div class='mx-Mb-0d625' v-for='course in data.records.slice(0, Math.floor(data.records.length / 2))' :key="course.id" style='margin-bottom:10px'>
+              <course :course='course'></course>
+            </div>
+            <adsense v-if='false'  data-ad-client='ca-pub-7807822317367529' data-ad-slot="1234567890"></adsense>
+            <div class='mx-Mb-0d625' v-for='course in data.records.slice(Math.floor(data.records.length / 2), data.records.length)' :key="course.id" style='margin-bottom:10px'>
               <course :course='course'></course>
             </div>
           </template>
