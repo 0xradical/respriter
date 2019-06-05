@@ -207,7 +207,7 @@ class Course < ApplicationRecord
       select tag, count(*) FROM (
         select unnest(curated_tags) as tag FROM (
           select * from courses where ? = ANY(curated_tags)
-        ) t 
+        ) t
       ) tags GROUP by tag
     SQL
     connection.select_all(sanitize_sql_array([query,tag]))
@@ -321,7 +321,7 @@ class Course < ApplicationRecord
       end.to_h
     end
 
-    if free_content? && !paid_content?
+    if free_content?
       indexed_json[:price] = 0
     else
       indexed_json[:price] = price
