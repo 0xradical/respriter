@@ -13,7 +13,27 @@ else
 	DETECTED_OS := linux
 endif
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_download db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% watch
+PG_HOST ?= localhost
+PG_USER ?= postgres
+PG_PORT ?= 5432
+
+LATEST_PG_DUMP := ./db/backups/latest.dump
+
+DOCKER_COMPOSE_PATH := $(shell which docker-compose)
+ifeq ($(DOCKER_COMPOSE_PATH),)
+  RAKE := bundle exec rake
+else
+  RAKE := docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec rake
+endif
+
+PG_RESTORE_PATH := $(shell which pg_restore)
+ifeq ($(PG_RESTORE_PATH),)
+  PG_RESTORE := docker-compose run app_$(ENV) pg_restore
+else
+  PG_RESTORE := pg_restore
+endif
+
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_capture db_download db_restore hrk_stg_db_restore tty down docker-build docker-push docker-% watch
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -67,24 +87,27 @@ db_up: ## Run the database server
 	@docker-compose run --service-ports postgres
 
 db_drop: ## Drops local databases
-	@docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec rake db:drop
+	@$(RAKE) db:drop
 
 db_create: ## Creates local databases
-	@docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec rake db:create
+	@$(RAKE) db:create
 
 db_migrate: ## Run database migration
-	@docker-compose run app_$(ENV) bundle exec rake db:migrate
+	@$(RAKE) db:migrate
 
 db_reset: ## Reset your database
-	@docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec rake db:drop db:create db:migrate
+	@$(RAKE) db:{drop,create,migrate}
+
+db_capture: ## Capture a new production dump from Heroku
+	@heroku pg:backups:capture --app $(HEROKU_APP_NAME)-prd
 
 db_download: ## Dowloads latest production dump from Heroku
-	@heroku pg:backups:download --app=$(HEROKU_APP_NAME)-prd --output=./db/backups/latest.dump
+	@heroku pg:backups:download --app $(HEROKU_APP_NAME)-prd --output $(LATEST_PG_DUMP)
 
 db_restore: ## Restores lastest dump
-	@pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d quero_development ./db/backups/latest.dump
-	@docker-compose run --service-ports app_$(ENV) bundle exec rake db:migrate
-	@rm ./db/backups/latest.dump
+	@make db_create
+	@$(PG_RESTORE) --verbose --clean --no-acl --no-owner -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV) $(LATEST_PG_DUMP); exit 0
+	@make db_migrate
 
 hrk_stg_db_restore: ## Dumps latest production dump from production and restores in staging
 	@heroku pg:backups:restore `heroku pg:backups:url --app=$(HEROKU_APP_NAME)-prd` DATABASE_URL --app=$(HEROKU_APP_NAME)-stg
