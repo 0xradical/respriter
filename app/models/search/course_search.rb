@@ -1,6 +1,6 @@
 module Search
   class CourseSearch
-    VERSION = '1.0.1'
+    VERSION = '1.1.0'
 
     attr_reader :query, :filter, :page, :per_page, :order, :boost, :session_id
 
@@ -97,6 +97,8 @@ module Search
         text_query = {
           multi_match: {
             query: @query,
+            type: 'cross_fields',
+            operator: 'and',
             fields: [
               'name.en^2', 'description.en', 'tags_text.en^2',
               'name.br^2', 'description.br', 'tags_text.br^2',

@@ -78,7 +78,10 @@ class Course < ApplicationRecord
             'postscript, post script',
             'javascript, js, java script',
             'node.js, node js, nodejs',
-            'ruby on rails, ror'
+            'ruby on rails, ror',
+            'angular.js, angular js, angularjs, angular',
+            'react.js, react js, reactjs, react',
+            'vue.js, vue js, vuejs, vue'
           ]
         },
         english_stemmer: {
@@ -92,22 +95,38 @@ class Course < ApplicationRecord
         spanish_stemmer: {
           type: 'stemmer',
           language: 'spanish'
+        },
+        all_stopwords: {
+          type:      'stop',
+          stopwords: ['_english_', '_portuguese_', '_spanish_']
+        },
+        english_stopwords: {
+          type:      'stop',
+          stopwords: '_english_'
+        },
+        portuguese_stopwords: {
+          type:      'stop',
+          stopwords: '_portuguese_'
+        },
+        spanish_stopwords: {
+          type:      'stop',
+          stopwords: '_spanish_'
         }
       },
       analyzer: {
         english_programmer: {
           tokenizer:   'whitespace',
-          filter:      ['lowercase', 'programming_synonyms', 'english_stemmer'],
+          filter:      ['lowercase', 'programming_synonyms', 'all_stopwords', 'english_stemmer'],
           char_filter: ['html_strip']
         },
         brazilian_programmer: {
           tokenizer:   'whitespace',
-          filter:      ['lowercase', 'programming_synonyms', 'brazilian_stemmer'],
+          filter:      ['lowercase', 'programming_synonyms', 'all_stopwords', 'brazilian_stemmer'],
           char_filter: ['html_strip']
         },
         spanish_programmer: {
           tokenizer:   'whitespace',
-          filter:      ['lowercase', 'programming_synonyms', 'spanish_stemmer'],
+          filter:      ['lowercase', 'programming_synonyms', 'all_stopwords', 'spanish_stemmer'],
           char_filter: ['html_strip']
         }
       }
