@@ -57,9 +57,9 @@ SitemapGenerator::Sitemap.create do
     ]
   })
 
-  Course.unnest_curated_tags.distinct.map(&:tag).each do |tag|
+  Course.unnest_curated_tags.distinct.map {|c| c.tag.dasherize } .each do |tag|
     add("/#{tag}", {
-      changefreq: 'daily', 
+      changefreq: 'weekly', 
       priority: 1,
       alternate: [
         {
