@@ -5,6 +5,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -150,21 +151,21 @@ CREATE TYPE public.source AS ENUM (
 CREATE FUNCTION public._insert_or_add_to_provider() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-      DECLARE
-        _provider providers%ROWTYPE;
-        _new_provider_id int;
-      BEGIN
-        SELECT * FROM providers INTO _provider where providers.name = NEW.__provider_name__;
-        IF (NOT FOUND) THEN
-          INSERT INTO providers (name, published, created_at, updated_at) VALUES (NEW.__provider_name__, false, NOW(), NOW()) RETURNING id INTO _new_provider_id;
-          NEW.published = false;
-          NEW.provider_id = _new_provider_id;
-        ELSE
-          NEW.provider_id = _provider.id;
-        END IF;
-        RETURN NEW;
-      END;
-      $$;
+            DECLARE
+              _provider providers%ROWTYPE;
+              _new_provider_id int;
+            BEGIN
+              SELECT * FROM providers INTO _provider where providers.name = NEW.__provider_name__;
+              IF (NOT FOUND) THEN
+                INSERT INTO providers (name, published, created_at, updated_at) VALUES (NEW.__provider_name__, false, NOW(), NOW()) RETURNING id INTO _new_provider_id;
+                NEW.published = false;
+                NEW.provider_id = _new_provider_id;
+              ELSE
+                NEW.provider_id = _provider.id;
+              END IF;
+              RETURN NEW;
+            END;
+            $$;
 
 
 --
@@ -189,11 +190,11 @@ $$;
 CREATE FUNCTION public.gen_compound_ext_id() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-      BEGIN
-        NEW.compound_ext_id = concat(NEW.source,'_',NEW.ext_id);
-        return NEW;
-      END
-      $$;
+            BEGIN
+              NEW.compound_ext_id = concat(NEW.source,'_',NEW.ext_id);
+              return NEW;
+            END
+            $$;
 
 
 --
@@ -203,11 +204,11 @@ CREATE FUNCTION public.gen_compound_ext_id() RETURNS trigger
 CREATE FUNCTION public.md5_url() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-      BEGIN
-        NEW.url_md5=md5(NEW.url);
-        return NEW;
-      END
-      $$;
+            BEGIN
+              NEW.url_md5=md5(NEW.url);
+              return NEW;
+            END
+            $$;
 
 
 --
@@ -250,33 +251,33 @@ $$;
 CREATE FUNCTION public.sort_prices() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-      DECLARE
-      price jsonb;
-      prices jsonb[];
-      results jsonb[];
-      single_course_prices jsonb[];
-      subscription_prices jsonb[];
-      BEGIN
-        FOR price IN SELECT * FROM jsonb_array_elements((NEW.__source_schema__ -> 'content' ->> 'prices')::jsonb)
-        LOOP
-          IF (price ->> 'type' = 'single_course') THEN
-            single_course_prices := array_append(single_course_prices,price);
-          ELSIF (price ->> 'type' = 'subscription') THEN
-            IF (price -> 'subscription_period' ->> 'unit' = 'months') THEN
-              subscription_prices := array_prepend(price,subscription_prices);
-            ELSIF (price -> 'subscription_period' ->> 'unit' = 'years') THEN
-              subscription_prices := array_append(subscription_prices,price);
-            END IF;
-          END IF;
-        END LOOP;
-        results := (single_course_prices || subscription_prices);
-        IF array_length(results,1) > 0 THEN
-          NEW.pricing_models = to_jsonb(results);
-        END IF;
-        NEW.__source_schema__ = NULL;
-        RETURN NEW;
-      END;
-      $$;
+            DECLARE
+            price jsonb;
+            prices jsonb[];
+            results jsonb[];
+            single_course_prices jsonb[];
+            subscription_prices jsonb[];
+            BEGIN
+              FOR price IN SELECT * FROM jsonb_array_elements((NEW.__source_schema__ -> 'content' ->> 'prices')::jsonb)
+              LOOP
+                IF (price ->> 'type' = 'single_course') THEN
+                  single_course_prices := array_append(single_course_prices,price);
+                ELSIF (price ->> 'type' = 'subscription') THEN
+                  IF (price -> 'subscription_period' ->> 'unit' = 'months') THEN
+                    subscription_prices := array_prepend(price,subscription_prices);
+                  ELSIF (price -> 'subscription_period' ->> 'unit' = 'years') THEN
+                    subscription_prices := array_append(subscription_prices,price);
+                  END IF;
+                END IF;
+              END LOOP;
+              results := (single_course_prices || subscription_prices);
+              IF array_length(results,1) > 0 THEN
+                NEW.pricing_models = to_jsonb(results);
+              END IF;
+              NEW.__source_schema__ = NULL;
+              RETURN NEW;
+            END;
+            $$;
 
 
 SET default_tablespace = '';
@@ -466,13 +467,13 @@ CREATE VIEW public.earnings AS
     providers.name AS provider_name,
     courses.name AS course_name,
     courses.url AS course_url,
-    (enrollments.tracking_data ->> 'country'::text) AS country,
     (enrollments.tracking_data ->> 'query_string'::text) AS qs,
     (enrollments.tracking_data ->> 'referer'::text) AS referer,
     (enrollments.tracking_data ->> 'utm_source'::text) AS utm_source,
     (enrollments.tracking_data ->> 'utm_campaign'::text) AS utm_campaign,
     (enrollments.tracking_data ->> 'utm_medium'::text) AS utm_medium,
     (enrollments.tracking_data ->> 'utm_term'::text) AS utm_term,
+    (enrollments.tracking_data ->> 'country'::text) AS country,
     tracked_actions.created_at
    FROM (((public.tracked_actions
      LEFT JOIN public.enrollments ON ((tracked_actions.enrollment_id = enrollments.id)))
@@ -617,44 +618,6 @@ CREATE SEQUENCE public.oauth_accounts_id_seq
 --
 
 ALTER SEQUENCE public.oauth_accounts_id_seq OWNED BY public.oauth_accounts.id;
-
-
---
--- Name: posts; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.posts (
-    id bigint NOT NULL,
-    slug character varying,
-    title character varying,
-    body text,
-    tags text[] DEFAULT '{}'::text[],
-    meta jsonb DEFAULT '{}'::jsonb,
-    published boolean,
-    published_at timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    admin_account_id bigint
-);
-
-
---
--- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.posts_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
 
 
 --
@@ -820,13 +783,6 @@ ALTER TABLE ONLY public.oauth_accounts ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
--- Name: posts id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_id_seq'::regclass);
-
-
---
 -- Name: profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -917,14 +873,6 @@ ALTER TABLE ONLY public.oauth_accounts
 
 ALTER TABLE ONLY public.tracked_actions
     ADD CONSTRAINT payments_pkey PRIMARY KEY (id);
-
-
---
--- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
 
 
 --
@@ -1108,27 +1056,6 @@ CREATE INDEX index_oauth_accounts_on_user_account_id ON public.oauth_accounts US
 
 
 --
--- Name: index_posts_on_admin_account_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_posts_on_admin_account_id ON public.posts USING btree (admin_account_id);
-
-
---
--- Name: index_posts_on_slug; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_posts_on_slug ON public.posts USING btree (slug);
-
-
---
--- Name: index_posts_on_tags; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_posts_on_tags ON public.posts USING gin (tags);
-
-
---
 -- Name: index_profiles_on_user_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1271,47 +1198,6 @@ ALTER TABLE ONLY public.favorites
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20180405131603'),
-('20180405131604'),
-('20180523201233'),
-('20180523201244'),
-('20180525023807'),
-('20180607040455'),
-('20180607042446'),
-('20181015193451'),
-('20181015193452'),
-('20181102111502'),
-('20181113000000'),
-('20181115164155'),
-('20181115164156'),
-('20181127193928'),
-('20181128123550'),
-('20181205214627'),
-('20181206020722'),
-('20181213172406'),
-('20181214163153'),
-('20181217193900'),
-('20181219141415'),
-('20181220182109'),
-('20181226142754'),
-('20190122215523'),
-('20190208194421'),
-('20190216154846'),
-('20190217234501'),
-('20190218212408'),
-('20190220000225'),
-('20190222125654'),
-('20190226205725'),
-('20190226205726'),
-('20190226223828'),
-('20190228203835'),
-('20190228220559'),
-('20190306194201'),
-('20190310005126'),
-('20190310024220'),
-('20190310031745'),
-('20190310032740'),
-('20190310062807'),
 ('20190313223626'),
 ('20190313223627'),
 ('20190328144400'),
@@ -1322,7 +1208,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190506184046'),
 ('20190515101502'),
 ('20190515104037'),
-('20190517191015'),
 ('20190521153938'),
 ('20190529190629');
 
