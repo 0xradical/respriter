@@ -127,6 +127,6 @@ Rails.application.routes.draw do
   # LandingPages
   get '/', to: 'landing_pages#show', as: :landing_pages
 
-  get '/:tag', to: 'course_bundles#show', as: :course_bundle
+  get '/:tag', to: 'course_bundles#show', as: :course_bundle, constraints: { tag: /[a-zA-Z0-9-]*/ }
 
 end
