@@ -21,6 +21,7 @@
 *.dump
 
 Dockerfile
+Guardfile
 docker-compose.yml
 
 /node_modules
