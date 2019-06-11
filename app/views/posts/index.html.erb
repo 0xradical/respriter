@@ -9,7 +9,7 @@
             <% end %>
             <span class='mx-Fs-0d875'><%= post.admin_account.name %></span>&nbsp; | &nbsp;<span class='mx-Fs-0d875'><%= l(post.published_at.to_date, format: :long) %></span>
             <p class='mx-Fs-0d875'>
-              <%= truncate(strip_tags(post.body.html_safe), length: 350) { "&nbsp".html_safe + link_to("Read more", post_path(post)) } %>
+              <%= truncate(strip_tags(post.body.html_safe), length: 350) { "&nbsp".html_safe + link_to("Read more", post_path(post.slug)) } %>
             </p>
           </div>
         <% end %>
