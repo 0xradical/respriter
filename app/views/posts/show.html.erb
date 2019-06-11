@@ -27,7 +27,7 @@
         <div style='margin-top:40px'>
           <% if @post.admin_account.avatar %>
             <%= image_tag @post.admin_account.avatar.thumbor.file_url(width: 64), style: 'vertical-align:middle;border-radius:50%;margin-right:10px' %>
-          <% end %><div style='vertical-align:middle;display:inline-block;max-width:280px'>
+          <% end %><div style='vertical-align:middle;display:inline-block;max-width:calc(100% - 84px)'>
             <span style='font-weight:600;display:block' class='mx-Mb-0d5'><%= @post.admin_account.name %></span>
             <span class='mx-Fs-0d75'><%= @post.admin_account.bio %></span>
           </div>
