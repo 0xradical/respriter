@@ -5,7 +5,7 @@
     </div>
     <adsense root-class='mx-Mb-0d625 adswrapper'
              data-ad-client='ca-pub-7807822317367529'
-             data-ad-slot='4638454797'
+             data-ad-slot='2861606178'
              data-ad-format='auto'
              :data-full-width-responsive='true'>
     </adsense>
