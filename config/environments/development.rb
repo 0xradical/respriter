@@ -63,21 +63,23 @@ Rails.application.configure do
       username: ENV["MEMCACHEDCLOUD_USERNAME"].presence,
       password: ENV["MEMCACHEDCLOUD_PASSWORD"].presence,
       compress: true,
-      expires_in: 5 * 24 * 60 * 60
+      expires_in: 5 * 24 * 60 * 60,
+      cache_nils: false
     })
 
     config.middleware.use Rack::Prerender, {
       # protocol: 'https',
       before_render: (Proc.new do |env|
         url    = Rack::Request.new(env).url
-        mobile = (env['HTTP_USER_AGENT'] =~ /mobile/i || env['HTTP_USER_AGENT'] =~ /android/i)
+        mobile = (env['HTTP_USER_AGENT'].to_s =~ /(mobile|android)/i)
         key    = [url, mobile ? "mobile" : "desktop"].join('@')
 
-        $dalli.get(key)
+        val = $dalli.get(key)
+        val == "Not Found" ? nil : val
       end),
       after_render: (Proc.new do |env, response|
         url    = Rack::Request.new(env).url
-        mobile = (env['HTTP_USER_AGENT'] =~ /mobile/i || env['HTTP_USER_AGENT'] =~ /android/i)
+        mobile = (env['HTTP_USER_AGENT'].to_s =~ /(mobile|android)/i)
         key    = [url, mobile ? "mobile" : "desktop"].join('@')
 
         $dalli.set(key, response.body)
