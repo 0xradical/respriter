@@ -76,6 +76,12 @@ gem 'sitemap_generator'
 # Email
 gem "valid_email2"
 
+# SEO
+gem 'prerender_rails'
+
+# Caching
+gem 'dalli'
+
 group :test do
   gem 'capybara'
   gem 'capybara-email'

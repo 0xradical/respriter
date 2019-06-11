@@ -58,6 +58,33 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: ENV.fetch('HOST') { 'localhost:3000' } }
 
+  if ENV['PRERENDER_SERVICE_URL'] && ENV['MEMCACHEDCLOUD_SERVERS']
+    $dalli = Dalli::Client.new(ENV["MEMCACHEDCLOUD_SERVERS"].split(','), {
+      username: ENV["MEMCACHEDCLOUD_USERNAME"].presence,
+      password: ENV["MEMCACHEDCLOUD_PASSWORD"].presence,
+      compress: true,
+      expires_in: 5 * 24 * 60 * 60
+    })
+
+    config.middleware.use Rack::Prerender, {
+      # protocol: 'https',
+      before_render: (Proc.new do |env|
+        url    = Rack::Request.new(env).url
+        mobile = (env['HTTP_USER_AGENT'] =~ /mobile/i || env['HTTP_USER_AGENT'] =~ /android/i)
+        key    = [url, mobile ? "mobile" : "desktop"].join('@')
+
+        $dalli.get(key)
+      end),
+      after_render: (Proc.new do |env, response|
+        url    = Rack::Request.new(env).url
+        mobile = (env['HTTP_USER_AGENT'] =~ /mobile/i || env['HTTP_USER_AGENT'] =~ /android/i)
+        key    = [url, mobile ? "mobile" : "desktop"].join('@')
+
+        $dalli.set(key, response.body)
+      end)
+    }
+  end
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 

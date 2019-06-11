@@ -79,6 +79,11 @@ services:
     volumes:
       - redis:/data
 
+  memcached:
+    image: memcached:1.5-alpine
+    ports:
+      - "11211:11211"
+
   postgres:
     image: postgres:9.6
     ports:
