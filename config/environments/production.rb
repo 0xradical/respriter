@@ -74,7 +74,7 @@ Rails.application.configure do
     user_name:            ENV['SMTP_USER_NAME'],
     password:             ENV['SMTP_PASSWORD'],
     authentication:       'plain',
-    enable_starttls_auto: true 
+    enable_starttls_auto: true
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -97,6 +97,10 @@ Rails.application.configure do
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  if ENV['PRERENDER_SERVICE_URL']
+    config.middleware.use Rack::Prerender, protocol: 'https'
   end
 
   # Do not dump schema after migrations.
