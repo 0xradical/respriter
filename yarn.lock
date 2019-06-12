@@ -7244,6 +7244,14 @@ vue-currency-filter@^3.2.0:
   dependencies:
     accounting "0.4.1"
 
+vue-google-adsense@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/vue-google-adsense/-/vue-google-adsense-1.6.0.tgz#908fa493ded367e7126d5ba74006baddb0ae86e7"
+  integrity sha512-y3+f91N2jsPntEUGCqxGHY0sdo0uxR1SzCEvthYzBi5JiOpHKzdIsEMIvAa1Vd/YZGVa3x8Fw9kKCGhpi1xYDA==
+  dependencies:
+    vue "^2.6.10"
+    vue-script2 "2.0.3"
+
 vue-hot-reload-api@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.1.tgz#b2d3d95402a811602380783ea4f566eb875569a2"
@@ -7285,6 +7293,11 @@ vue-property-decorator@^8.0.0:
 vue-router@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.2.tgz#dedc67afe6c4e2bc25682c8b1c2a8c0d7c7e56be"
+
+vue-script2@2.0.3, vue-script2@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/vue-script2/-/vue-script2-2.0.3.tgz#74a53a51cc72eeb0c8935f40f0155968a94a2d7c"
+  integrity sha512-sGsFbqCIZDbPq140X1p8T6Y72MoCtkFpQ7CfhknZLqDZxMGWavFqIY/5YsnhqxxatWnYy0us/IoHSDr5l2JZzQ==
 
 vue-slider-component@^3.0.31:
   version "3.0.31"

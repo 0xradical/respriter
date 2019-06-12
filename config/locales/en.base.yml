@@ -109,6 +109,25 @@ en:
       day: Day
       month: Month
       year: Year
+    adjectives:
+      seconds:
+        one: "%{count}-second %{noun}"
+        other: "%{count}-second %{noun}"
+      minutes:
+        one: "%{count}-minute %{noun}"
+        other: "%{count}-minute %{noun}"
+      hours:
+        one: "%{count}-hour %{noun}"
+        other: "%{count}-hour %{noun}"
+      days:
+        one: "%{count}-day %{noun}"
+        other: "%{count}-day %{noun}"
+      months:
+        one: "%{count}-month %{noun}"
+        other: "%{count}-month %{noun}"
+      years:
+        one: "%{count}-years %{noun}"
+        other: "%{count}-years %{noun}"
   errors:
     format: "%{attribute} %{message}"
     messages:

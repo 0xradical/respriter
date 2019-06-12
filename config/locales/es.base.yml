@@ -106,6 +106,25 @@ es:
       day: Día
       month: Mes
       year: Año
+    adjectives:
+      seconds:
+        one: "%{noun} de %{count} segundo"
+        other: "%{noun} de %{count} segundos"
+      minutes:
+        one: "%{noun} de %{count} minuto"
+        other: "%{noun} de %{count} minutos"
+      hours:
+        one: "%{noun} de %{count} hora"
+        other: "%{noun} de %{count} horas"
+      days:
+        one: "%{noun} de %{count} día"
+        other: "%{noun} de %{count} días"
+      months:
+        one: "%{noun} de %{count} mes"
+        other: "%{noun} de %{count} meses"
+      years:
+        one: "%{noun} de %{count} año"
+        other: "%{noun} de %{count} años"
   errors:
     format: "%{attribute} %{message}"
     messages:
