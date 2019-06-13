@@ -14,8 +14,10 @@
 !/tmp/.keep
 
 .env
+.env.sh
 .env.production
 .env.test
+.env.test.sh
 
 *.pem
 *.dump
