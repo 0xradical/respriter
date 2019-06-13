@@ -173,7 +173,7 @@ describe Post do
 
     context 'when only markup has been changed' do
 
-      let(:content_fingerprint) { Digest::MD5.hexdigest("Some random content") }
+      let(:content_fingerprint) { Digest::MD5.hexdigest("some random content") }
 
       before(:example) do
         freeze_time do
@@ -194,7 +194,7 @@ describe Post do
 
     context 'when actual content has been changed' do
 
-      let(:new_content_fingerprint) { Digest::MD5.hexdigest("Some cool content") }
+      let(:new_content_fingerprint) { Digest::MD5.hexdigest("some cool content") }
 
       before(:example) do
         freeze_time do

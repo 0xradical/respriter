@@ -61,8 +61,12 @@ class Post < ApplicationRecord
     self.content_changed_at = Time.now
   end
 
+  def body_content
+    strip_tags(body).strip.squeeze(' ').downcase
+  end
+
   def set_content_fingerprint
-    new_fingerprint = Digest::MD5.hexdigest(strip_tags(body))
+    new_fingerprint = Digest::MD5.hexdigest(body_content)
     if content_fingerprint != new_fingerprint
       self.content_fingerprint = new_fingerprint
     end

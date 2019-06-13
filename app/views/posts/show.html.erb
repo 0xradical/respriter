@@ -21,7 +21,7 @@
             </span> -
             <time class='mx-C(dark-gray)' datetime='<%= @post.content_changed_at.utc %>' itemprop='dateModified'>
               <%= l(@post.published_at.to_date, format: :long) %>
-              <% if @post.content_changed_at.to_date > @post.published_at.to_date %> 
+              <% if content_changed_after_period?(@post) %> 
                 <span class='mx-Tt(u)'>updated on</span>
                 <%= l(@post.content_changed_at.to_date, format: :long) %>
               <% end %>
