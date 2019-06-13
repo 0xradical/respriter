@@ -32,7 +32,15 @@ FactoryBot.define do
     end
 
     trait :published do
-      status { 'published' }
+      status             { 'published' }
+      published_at       { Time.now }
+      content_changed_at { Time.now }
+    end
+
+    trait :disabled do
+      status              { 'disabled' }
+      published_at        { Time.now } 
+      content_changed_at  { Time.now }
     end
 
     trait :draft do
@@ -45,6 +53,7 @@ FactoryBot.define do
     factory :void_post,       traits: [:void]
     factory :draft_post,      traits: [:filled, :draft]
     factory :published_post,  traits: [:filled, :published]
+    factory :disabled_post,   traits: [:filled, :disabled]
 
   end
 end

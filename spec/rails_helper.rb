@@ -50,6 +50,7 @@ RSpec.configure do |config|
 
   config.extend   Support::DatabaseCleaner
   config.include  FactoryBot::Syntax::Methods
+  config.include  ActiveSupport::Testing::TimeHelpers
   config.include  Support::Elasticsearch
   config.include  Devise::Test::IntegrationHelpers, type: :request
   config.include  RequestSpecHelper,                type: :request

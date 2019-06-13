@@ -27,14 +27,10 @@ module Api
 
         def update
           @post = Post.find(params[:id])
-          if @post.void?
-            if @post.save_as_draft(post_params)
-              render json: PostSerializer.new(@post)
-            else
-              render json: ErrorSerializer.new(@post), status: 422 
-            end
+          if @post.update(post_params)
+            render json: PostSerializer.new(@post)
           else
-            @post.update(post_params)
+            render json: ErrorSerializer.new(@post), status: 422 
           end
         end
 
@@ -50,9 +46,9 @@ module Api
           render json: PostSerializer.new(@post)
         end
 
-        def unpublish
+        def disable
           @post = Post.find(params[:id])
-          @post.draft!
+          @post.disable!
           render json: PostSerializer.new(@post)
         end
 

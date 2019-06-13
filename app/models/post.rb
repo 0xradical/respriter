@@ -6,28 +6,23 @@ class Post < ApplicationRecord
 
   slugify :title, callback_options: { if: -> { slug.blank? }, unless: :void? }
 
-  with_options unless: :void? do
-    validates :title, :body,  presence: true
-    before_save :save_content_fingerprint
-    before_save :update_content_changed_at!, if: :content_changed?
+  with_options unless: :untouched? do
+    validates :title, :body, :locale, presence: true
+    before_save :set_content_fingerprint
+    before_save :set_content_changed_at, if: :content_changed?
   end
 
-  belongs_to :admin_account 
+  after_validation -> { self.status = 'draft' }, if: :may_change_to_draft?
+
+  belongs_to :admin_account
 
   scope :tags,      -> (tags=nil) {  where("tags @> ARRAY[?]::varchar[]", tags) unless tags.nil? }
   scope :published, -> { where(status: 'published') }
   scope :locale,    -> (locale) { where(locale: locale) }
 
-  %w(published draft void).each do |s|
+  %w(void draft published disabled).each do |s|
     define_method "#{s}?" do
       status.eql?(s)
-    end
-  end
-
-  def save_as_draft(attributes)
-    if void?
-      self.status = 'draft'
-      update(attributes)
     end
   end
 
@@ -35,27 +30,42 @@ class Post < ApplicationRecord
     content_fingerprint_changed? && published_at.present?
   end
 
-  def update_content_changed_at!
-    update_column(:content_changed_at, Time.now.utc)
-  end
-
   def publish!
-    update_columns(status: 'published', published_at: (self.published_at || Time.now.utc)) if draft?
+    now = Time.now
+    if may_change_to_published?
+      self.published_at, self.content_changed_at = now, now if draft?
+      self.status = 'published'
+      save!
+    end
   end
 
-  def draft!
-    update_column(:status, 'draft') if published?
+  def disable!
+    update(status: 'disabled') if published?
   end
 
   private
 
-  def generate_content_fingerprint
-    Digest::MD5.hexdigest(strip_tags(body))
+  def untouched?
+    new_record? && void?
   end
 
-  def save_content_fingerprint
-    fingerprint = generate_content_fingerprint
-    self.content_fingerprint = fingerprint if (content_fingerprint != fingerprint)
+  def may_change_to_draft?
+    persisted? && void?
+  end
+
+  def may_change_to_published?
+    disabled? || draft?
+  end
+
+  def set_content_changed_at
+    self.content_changed_at = Time.now
+  end
+
+  def set_content_fingerprint
+    new_fingerprint = Digest::MD5.hexdigest(strip_tags(body))
+    if content_fingerprint != new_fingerprint
+      self.content_fingerprint = new_fingerprint
+    end
   end
 
 end

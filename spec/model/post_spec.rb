@@ -1,86 +1,218 @@
 describe Post do
 
-  context 'a void post' do
+  describe 'creating a record' do
 
-    before(:context) do
-      @post = create(:void_post)
+    let(:post) { build(:filled_post) }
+
+    it 'is draft' do
+      post.save
+      expect(post).to be_draft
     end
 
-    it 'has a void status' do
-      expect(@post).to be_void
+    it 'is persisted' do
+      post.save
+      expect(post).to be_persisted
     end
 
-    it 'has a blank slug' do
-      expect(@post.slug).to be_blank
+    %w(title body locale).each do |val|
+      describe "validates presence of #{val}" do
+
+        it 'is not valid if nil' do
+          post[val] = nil
+          post.save
+          expect(post).not_to be_valid
+        end
+
+        it 'is not valid if blank' do
+          post[val] = ''
+          post.save
+          expect(post).not_to be_valid
+        end
+
+      end
     end
 
-    it 'has a blank title' do
-      expect(@post.title).to be_blank
-    end
+    context 'when status is void' do
 
-    it 'has a blank body' do
-      expect(@post.body).to be_blank
-    end
+      subject { create(:void_post) }
 
-    it 'has a blank published_at' do
-      expect(@post.published_at).to be_blank
-    end
+      context 'and it is a new record' do
 
-    it 'has empty tags' do
-      expect(@post.tags).to be_empty
-    end
+        it 'bypasses validation' do
+          expect(subject).to be_persisted
+        end
 
-    it 'has empty meta' do
-      expect(@post.meta).to be_empty
-    end
+        it { is_expected.to be_void }
 
-    it 'has an admin account' do
-      expect(@post.admin_account_id).to be_present
-    end
+      end
 
-    it 'persists a post instance' do
-      expect(@post.id).to be_truthy
+      context 'and it is a persisted record' do
+
+        it 'validates the model' do
+          subject.title = 'Foo bar'
+          expect { subject.save! }.to raise_exception(ActiveRecord::RecordInvalid)
+        end
+
+        context 'and it is valid' do
+
+          let!(:valid_attributes) { attributes_for(:filled_post) }
+
+          before(:example) do
+            subject.assign_attributes(valid_attributes)
+            subject.save
+            subject.reload
+          end
+
+          it 'changes the status to draft' do
+            expect(subject).to be_draft
+          end
+
+          it 'updates the record' do
+            expect(subject).to have_attributes(valid_attributes)
+          end
+
+        end
+
+      end
+
     end
 
   end
 
   describe '.tags' do
 
-    before(:example) do
-      @posts = create_list(:draft_post, 5, tags: [])
+    let!(:draft_posts) { create_list(:draft_post, 5, tags: []) }
+
+    it 'find all posts when tags are empty' do
+      expect(described_class.tags.count).to eq(5)
     end
 
-    it 'returns all posts when tags are empty' do
-      expect(Post.tags.count).to eq(5)
-    end
-
-    it 'returns posts with one or more tags' do
-      @posts.each { |p| p.update(tags: ['computer_science']) }
-      @posts[0].update_column(:tags, ['computer_science','python'])
-      @posts[1].update_column(:tags, ['computer_science','python', 'test'])
-      expect(Post.tags(['computer_science','python']).count).to eq(2)
-      expect(Post.tags(['computer_science','python', 'test']).count).to eq(1)
-      expect(Post.tags(['computer_science']).count).to eq(5)
+    it 'find posts containing one or more tags' do
+      draft_posts.each { |p| p.update(tags: ['computer_science']) }
+      draft_posts[0].update_column(:tags, ['computer_science','python'])
+      draft_posts[1].update_column(:tags, ['computer_science','python', 'test'])
+      expect(described_class.tags(['computer_science','python']).count).to eq(2)
+      expect(described_class.tags(['computer_science','python', 'test']).count).to eq(1)
+      expect(described_class.tags(['computer_science']).count).to eq(5)
     end
 
   end
 
-  describe '#save_as_draft' do
+  describe '#publish!' do
 
-    before(:example) do
-      @post = build(:void_post)
-      @post_attributes = attributes_for(:filled_post)
+    context 'when it is a draft post' do
+
+      subject { create(:draft_post) }
+
+      before(:example) do
+        freeze_time do
+          @time_now = Time.now
+          subject.publish!
+        end
+      end
+
+      it 'sets the status to published' do
+        expect(subject).to be_published
+      end
+
+      it 'sets published_at with current time' do
+        expect(subject.published_at).to eq(@time_now)
+      end
+
+      it 'sets content_changed_at with current time' do
+        expect(subject.content_changed_at).to eq(@time_now)
+      end
+
     end
 
-    it 'has a draft status' do
-      @post.save_as_draft(@post_attributes)
-      expect(@post).to be_draft
+    context 'when it is a disabled post' do
+
+      subject { create(:disabled_post) } 
+
+      it 'sets the status to published' do
+        subject.publish!
+        expect(subject).to be_published
+      end
+
+      it 'does not change published_at' do
+        subject.publish!
+        expect(subject).not_to be_published_at_changed
+      end
+
     end
 
-    it 'updates post with attributes' do
-      expect(@post).to receive(:update).with(@post_attributes)
-      @post.save_as_draft(@post_attributes)
+  end
+
+  describe '#disable!' do
+
+    subject { create(:published_post) }
+
+    context 'when a post is published' do
+      it 'sets the status to disabled' do
+        post = create(:published_post)
+        post.disable!
+        expect(post).to be_disabled
+      end
     end
+
+    %w(void draft disabled).each do |status|
+      context "when a post status is #{status}" do
+        it 'does not change to disabled' do
+          post = create("#{status}_post")
+          post.disable!
+          expect(post).to send("be_#{status}")
+        end
+      end
+    end
+
+  end
+
+  describe 'changes to body' do
+
+    subject! { create(:published_post, body: "<p>Some random content</p>") }
+
+    context 'when only markup has been changed' do
+
+      let(:content_fingerprint) { Digest::MD5.hexdigest("Some random content") }
+
+      before(:example) do
+        freeze_time do
+          @now = Time.now
+          subject.update(body: "<p style='color:red'>Some random <b>content</b></p>")
+        end
+      end
+
+      it 'does not update content_fingerprint' do
+        expect(subject.content_fingerprint).to eq(content_fingerprint)
+      end
+
+      it 'does not update content_changed_at' do
+        expect(subject.content_changed_at).not_to eq(@now)
+      end
+
+    end
+
+    context 'when actual content has been changed' do
+
+      let(:new_content_fingerprint) { Digest::MD5.hexdigest("Some cool content") }
+
+      before(:example) do
+        freeze_time do
+          @now = Time.now
+          subject.update(body: "<p>Some cool content</p>")
+        end
+      end
+
+      it 'updates content_fingerprint' do
+        expect(subject.content_fingerprint).to eq(new_content_fingerprint)
+      end
+
+      it 'updates content_changed_at' do
+        expect(subject.content_changed_at).to eq(@now)
+      end
+
+    end
+
 
   end
 

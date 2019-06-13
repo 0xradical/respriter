@@ -72,7 +72,7 @@ Rails.application.routes.draw do
           resources :posts, concerns: [:imageable] do
             member do
               put 'publish',    action: :publish
-              put 'unpublish',  action: :unpublish
+              put 'disable',    action: :disable
             end
           end
 
