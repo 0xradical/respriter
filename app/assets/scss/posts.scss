@@ -1,0 +1,40 @@
+.post {
+
+  color: #353535;
+  font-size: 1rem;
+  line-height: 1.5em;
+
+  &__title {
+    line-height: 1em;
+    font-size: 1.75em;
+  }
+
+  h2 { font-size: 1.5em; line-height: 1em;  }
+  h3 { font-size: 1.25em; line-height: 1em; }
+
+  &__meta-slot0 {
+    font-size: 0.875em;
+    margin: 0.5em 0;
+  }
+
+  &__meta-slot1 {
+  }
+
+  &__content {
+    margin-top:1em;
+    p {
+
+      font-size: 1em;
+      line-height: 1.75em;
+      margin-top: 15px;
+      margin-bottom: 30px;
+
+      &:first-child {
+        margin-top:0;
+      }
+
+    }
+
+  }
+
+}
