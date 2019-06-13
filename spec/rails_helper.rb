@@ -42,6 +42,13 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
+WebMock.disable_net_connect!({
+  allow_localhost: true,
+  allow: [
+    /#{ENV['ELASTICSEARCH_URL']}/
+  ]
+})
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
