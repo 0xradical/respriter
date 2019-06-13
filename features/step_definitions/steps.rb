@@ -18,8 +18,13 @@ end
 When(/^I fill my email "([^"]*)" and my password "([^"]*)"$/) do |email, password|
   fill_in "user_account[email]",                  with: email
   fill_in "user_account[password]",               with: password
-  fill_in "user_account[password_confirmation]",  with: password
 end
+
+# When(/^I fill my email "([^"]*)" and my password "([^"]*)"$/) do |email, password|
+  # fill_in "user_account[email]",                  with: email
+  # fill_in "user_account[password]",               with: password
+  # fill_in "user_account[password_confirmation]",  with: password
+# end
 
 When(/^I click on "([^"]*)"$/) do |arg1|
   click_on arg1
@@ -69,4 +74,24 @@ Then("I'm forwarded to the course provider") do
   # within_window @gateway_window do
     # expect(Enrollment.find_by(course_id: @course.id)).to exist
   # end
+end
+
+Given("A spiderbot requests robots.txt") do
+  visit root_path
+end
+
+When("It requests requests") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Given("that each subdomain has its specific robots.txt") do; end
+
+When("a spiderbot requests robots.txt from {string}") do |string|
+  visit root_url(subdomain: string) + 'robots.txt'
+end
+
+Then("the spiderbot gets a robots.txt with content {string}, {string}, {string}") do |sitemap, user_agent, disallow|
+  expect(page.body).to match(/#{sitemap}/)
+  expect(page.body).to match(/#{user_agent}/)
+  expect(page.body).to match(/#{disallow}/)
 end
