@@ -100,7 +100,7 @@ Rails.application.configure do
   end
 
   if ENV['PRERENDER_SERVICE_URL']
-    config.middleware.use Rack::Prerender, protocol: 'https'
+    config.middleware.use Rack::Prerender
   end
 
   # Do not dump schema after migrations.
