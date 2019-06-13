@@ -51,17 +51,19 @@
   <body <%= content_for(:body_html_attributes) ? yield(:body_html_attributes) : 'class="mx-Bc(light-gray)"' %> >
 
     <!-- svg sprites -->
-    <!-- 
+    <!--
       display:none won't work here as it breaks gradients. Check
       https://stackoverflow.com/questions/23966452/svg-icon-changes-when-svg-sprite-set-to-displaynone
     -->
 
+    <% unless rendertron? %>
     <div style='width:0;height:0'>
       <div data-svg-sprite="<%= asset_pack_path('icons.svg') %>"></div>
       <div data-svg-sprite="<%= asset_pack_path('tags.svg') %>"></div>
       <div data-svg-sprite="<%= asset_pack_path('providers.svg') %>"></div>
       <%= yield :svg_sprites %>
     </div>
+    <% end %>
 
     <% if Rails.env.production? %>
       <!-- Google Tag Manager (noscript) -->
@@ -83,7 +85,7 @@
     <%= yield :body %>
 
     <footer>
-    <div class='mx-C(white) mx-Bc(darker-blue) mx-Pt-2 mx-Pb-2'> 
+    <div class='mx-C(white) mx-Bc(darker-blue) mx-Pt-2 mx-Pb-2'>
       <div class='container'>
         <div class='row'>
           <div class='col-12 col-md-3'>
@@ -154,7 +156,7 @@
 
           <div class='col-12 col-md-5 mx-Ta(r)'>
             <span style='display:inline-block;vertical-align:middle'>
-              <span>Follow us!</span> &nbsp; 
+              <span>Follow us!</span> &nbsp;
               <ul style='display:inline-block;vertical-align:middle' class='c-list c-list--unstyled c-list--inline mx-Fs-0d875'>
                 <li class='mx-Pr-0d5'>
                   <%= link_to "https://facebook.com/classpert", target: '_blank' do %>
@@ -200,7 +202,7 @@
 
     <%= render 'offcanvas_menu' %>
     <div data-vue-cpt='promo-video-modal'></div>
-    <%= javascript_pack_tag 'vendor', 'application' %> 
+    <%= javascript_pack_tag 'vendor', 'application' %>
     <%= yield :javascript  %>
   </body>
 

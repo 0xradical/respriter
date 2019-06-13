@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   prepend_before_action :track_session
   before_action :set_locale
+  before_action :rendertron?
 
   layout :fetch_layout
 
@@ -25,6 +26,11 @@ class ApplicationController < ActionController::Base
     @session_tracker ||= SessionTracker.track self
   end
   alias :track_session :session_tracker
+
+  def rendertron?
+    request.headers['HTTP_X_RENDERTRON_USER_AGENT'] == 'true'
+  end
+  helper_method :rendertron?
 
   def fetch_layout
     devise_controller? ? 'devise' : 'application'
