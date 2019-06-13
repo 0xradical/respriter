@@ -15,16 +15,20 @@ module ApplicationHelper
     end
   end
 
+  def viewport_content
+    controller_name.eql?('posts') ? 'width=device-width user-scalable=yes' : 'width=device-width user-scalable=no'
+  end
+
   def home_controller?
-    params[:controller].eql?('home')
+    controller_name.eql?('home')
   end
 
   def borderless_navbar?
-    %w(home posts).include?(params[:controller] || devise_controller?)
+    %w(home posts).include?(controller_name || devise_controller?)
   end
 
   def sticky_navbar?
-    !(%w(home static_pages posts).include?(params[:controller]) || devise_controller?)
+    !(%w(home static_pages posts).include?(controller_name) || devise_controller?)
   end
 
 end
