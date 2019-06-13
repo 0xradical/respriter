@@ -44,10 +44,18 @@ class CourseBundlesController < ApplicationController
       boost: {
         browser_languages: browser_languages
       }
-    }
+    }.merge(search_order_params)
   end
 
   def normalize_params
     @tag = params[:tag]&.downcase.underscore
+  end
+
+  def search_order_params
+    if search_params[:order].present?
+      { order: search_params[:order].to_h.to_a }
+    else
+      {}
+    end
   end
 end

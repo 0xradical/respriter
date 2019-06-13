@@ -10,14 +10,14 @@ Rails.application.routes.draw do
   resources :posts, path: 'blog'
 
   # Devise
-  devise_for :admin_accounts, controllers: { 
-    sessions: 'admin_accounts/sessions' 
+  devise_for :admin_accounts, controllers: {
+    sessions: 'admin_accounts/sessions'
   }, defaults: { format: :json }
 
   devise_for :user_accounts, controllers: {
     sessions: 'user_accounts/sessions',
     registrations: 'user_accounts/registrations',
-    omniauth_callbacks: 'user_accounts/omniauth_callbacks' 
+    omniauth_callbacks: 'user_accounts/omniauth_callbacks'
   }
 
   namespace :user_accounts do
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   get '/:tag',
   to: 'course_bundles#index',
   constraints: {
-    tag: RootTag.all.map { |t| t.slugify }.join('|') 
+    tag: RootTag.all.map { |t| t.slugify }.join('|')
   },
   as: :course_bundles
 
@@ -101,6 +101,7 @@ Rails.application.routes.draw do
   get 'autocad-for-beginners'                                       => redirect('/autocad')
   get 'c-for-beginners'                                             => redirect('/c-programming')
   get 'cplusplus-for-beginners'                                     => redirect('/cplusplus-programming')
+  get 'computer_science'                                            => redirect('/computer-science')
   get 'excel-for-beginners'                                         => redirect('/excel')
   get 'horas-complementares-administracao'                          => redirect('/')
   get 'horas-complementares-analise-desenvolvimento-sistemas'       => redirect('/')

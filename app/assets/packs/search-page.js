@@ -4,6 +4,11 @@ import VueCurrencyFilter from 'vue-currency-filter'
 import VueJsModal from 'vue-js-modal'
 import Vuebar from 'vuebar'
 import VueAutosuggest from 'vue-autosuggest'
+import Ads from 'vue-google-adsense'
+
+Vue.use(require('vue-script2'))
+Vue.use(Ads.Adsense)
+Vue.use(Ads.InFeedAdsense)
 
 Vue.use(VueI18n);
 Vue.use(VueJsModal);
