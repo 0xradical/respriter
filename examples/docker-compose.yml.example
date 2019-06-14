@@ -23,8 +23,8 @@ services:
   app_test:
     <<: *base
     ports:
-      - '3000:3000'
-      - '9222:9222'
+      - 3000:3000
+      - 9222:9222
     env_file:
       - .env.test
     depends_on:
@@ -44,15 +44,15 @@ services:
     command: bin/webpack-dev-server
     environment:
       - "WEBPACKER_DEV_SERVER_HOST=0.0.0.0"
-      - "WEBPACKER_DEV_SERVER_PUBLIC=localhost:3035"
+      - "WEBPACKER_DEV_SERVER_PUBLIC=webpacker:3035"
     ports:
-      - "3035:3035"
+      - 3035:3035
 
   mailcatcher:
     image: schickling/mailcatcher
     ports:
-      - "1025:1025"
-      - "1080:1080"
+      - 1025:1025
+      - 1080:1080
 
   thumbor:
     image: dalthon/thumbor-s3-storage
@@ -91,14 +91,14 @@ services:
   redis:
     image: redis
     ports:
-      - "6379:6379"
+      - 6379:6379
     volumes:
       - redis:/data
 
   postgres:
     image: postgres:9.6
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - postgres-9.6:/var/lib/postgresql/data
 
@@ -107,9 +107,9 @@ services:
     environment:
       - "discovery.type=single-node"
     ports:
-      - "9200:9200"
-      - "9300:9300"
-      - "5601:5601"
+      - 9200:9200
+      - 9300:9300
+      - 5601:5601
     volumes:
       - esdata:/usr/share/elasticsearch/data
 
