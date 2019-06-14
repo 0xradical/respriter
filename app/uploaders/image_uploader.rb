@@ -2,10 +2,6 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
 
-  def store_dir
-    Rails.env.production? ? 'uploads/' : Rails.root.join('tmp', 'uploads')
-  end
-
   version :sm do
     process resize_to_limit: [64,64]
   end
