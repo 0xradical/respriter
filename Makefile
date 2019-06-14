@@ -1,6 +1,3 @@
-include .env
-export
-
 NAME   :=	classpert/rails
 TAG    :=	2.2.0
 IMG    :=	${NAME}\:${TAG}
@@ -24,9 +21,14 @@ PG_DUMP_FILE ?= ./db/backups/latest.dump
 DOCKER_COMPOSE_PATH := $(shell which docker-compose)
 ifeq ($(DOCKER_COMPOSE_PATH),)
   BUNDLE_EXEC        := bundle exec
+  BUNDLE_EXEC_TEST   := ENV=test bundle exec
   DOCKER_COMPOSE_RUN := 
 else
+  include .env
+  export
+
   BUNDLE_EXEC        := docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec
+  BUNDLE_EXEC_TEST   := docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_test bundle exec
   DOCKER_COMPOSE_RUN := docker-compose run app_$(ENV)
 endif
 RAKE := $(BUNDLE_EXEC) rake
@@ -70,7 +72,7 @@ tests: ## Run the complete test suite
 	@make rspec
 
 rspec: ## Run rspec tests
-	@$(BUNDLE_EXEC) rspec
+	@$(BUNDLE_EXEC_TEST) rspec
 
 cucumber: ## Run cucumber tests. Usage e.g: ARGS="--tags @user-signs-up" make cucumber
 	@docker-compose run --service-ports app_test bundle exec cucumber $(ARGS)
