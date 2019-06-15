@@ -45,7 +45,9 @@ end
 WebMock.disable_net_connect!({
   allow_localhost: true,
   allow: [
-    /#{ENV['ELASTICSEARCH_URL']}/
+    /#{ENV['ELASTICSEARCH_URL']}/,
+    /https?\:\/\/assets\.s3/,
+    /#{ENV['AWS_S3_ENDPOINT']}/
   ]
 })
 
