@@ -35,6 +35,8 @@ module App
     config.middleware.insert_before(ActionDispatch::Static, SitemapXmlInterceptor)
     config.middleware.use LocaleRouter
 
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml')]
+
     config.action_mailer.default_url_options = { host: 'classpert.com' }
 
     # Settings in config/environments/* take precedence over those specified here.
