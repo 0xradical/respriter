@@ -33,12 +33,7 @@ else
 endif
 RAKE := $(BUNDLE_EXEC) rake
 
-PG_RESTORE_PATH := $(shell which pg_restore)
-ifeq ($(PG_RESTORE_PATH),)
-  PG_RESTORE := docker-compose run app_$(ENV) pg_restore
-else
-  PG_RESTORE := pg_restore
-endif
+PG_RESTORE := docker-compose run app_$(ENV) pg_restore
 
 .PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_capture db_download db_restore index_courses hrk_stg_db_restore tty down docker-build docker-push docker-% watch
 
