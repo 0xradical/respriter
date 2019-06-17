@@ -24,9 +24,6 @@ ifeq ($(DOCKER_COMPOSE_PATH),)
   BUNDLE_EXEC_TEST   := ENV=test bundle exec
   DOCKER_COMPOSE_RUN := 
 else
-  include .env
-  export
-
   BUNDLE_EXEC        := docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec
   BUNDLE_EXEC_TEST   := docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_test bundle exec
   DOCKER_COMPOSE_RUN := docker-compose run app_$(ENV)
