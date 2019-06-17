@@ -20,6 +20,11 @@
 
   <nav style='float:right;line-height:40px;display:inline-block;vertical-align:middle'>
 
+    <div class='c-navbar__slot mx-Fs-0d875 mx-D(n)@<small'>
+      <%= link_to 'Blog', posts_path,
+      class: "el:m-link el:m-link[section] el:m-link[blue] mx-Mr-1d5 #{controller_name.eql?('posts') ? 'el:m-link[active:blue]' : ''}" %>
+    </div>
+
     <% unless user_account_signed_in? %>
       <div class='c-navbar__slot mx-D(n)@phone' style='margin-right:5px'>
         <%= render 'language_dropdown' %>
