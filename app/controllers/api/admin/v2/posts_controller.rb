@@ -6,7 +6,7 @@ module Api
 
         def index
           @posts = Post.order(created_at: :desc).page(params[:p]).per(params[:_limit])
-          options = { meta: { count: @posts.total_count } }
+          options = { meta: { count: @posts.total_count } }.merge(include_params)
           render json: PostSerializer.new(@posts, options)
         end
 
@@ -17,12 +17,14 @@ module Api
 
         def show
           @post = Post.find(params[:id])
-          render json: PostSerializer.new(@post)
+          options = include_params.to_hash
+          render json: PostSerializer.new(@post, include: ['images'])
         end
 
         def edit
           @post = Post.find(params[:id])
-          render json: PostSerializer.new(@post)
+          options = include_params.to_hash
+          render json: PostSerializer.new(@post, include: ['images'])
         end
 
         def update
@@ -56,6 +58,10 @@ module Api
 
         def post_params
           params.require(:post).permit(:title, :body, :slug, :locale, tags: [], meta: {})
+        end
+
+        def include_params
+          params.permit(:include)
         end
 
       end

@@ -4,47 +4,62 @@
   description: @post.meta['description'], 
   hashtags: @post.tags.join(',') %>
 
+<% content_for :meta do %>
+  <title><%= @post.meta['title'] %> | Blog - Classpert </title>
+  <meta name="description" content="<%= @post.meta['description'] %>">
+  <meta property="og:title" content="<%= @post.meta['title'] %> | Blog - Classpert">
+  <meta property="og:description" content="<%= @post.meta['description'] %>">
+<% end %>
 
-<div class='post mx-Bc(white) mx-Pt-2' style='padding-bottom:60px'>
-  <div class='blog-container'>
+<% content_for :meta_hreflang do %>
+  <% @post.versions.each do |post| %>
+    <!--<link ref='alternate' hreflang='<%#= post.locale %>' href='<%#= post_url(post.slug, host: I18nHost.new('classpert.com').each[post.locale]) %>' /> -->
+  <% end %>
+<% end %>
+
+<div class='el:amx-Bc_white el:amx-Pt(2em) el:amx-Pb(3.5em)'>
+  <div class='l-blog-container'>
     <div class='row'>
       <div class='col-12'>
-        <article>
-          <div class='mx-Fs-0d75 mx-Mb-0d5'>
-            <span class='mx-Tt(u)'>
+        <article class='el:o-article'>
+
+          <div class='el:amx-Fs(0.75em) el:amx-Mb(0.5em)'>
+            <span class='el:amx-Tt(u)'>
               <%= link_to 'Blog', posts_path %>
-            </span> / <span class='mx-C(blue) mx-Tt(u)'><%= @post.tags.map { |t| t("tags.#{t}") }.join(',') %></span>
+            </span> / <span class='el:amx-C_blue el:amx-Tt(u)'><%= @post.tags.map { |t| t("tags.#{t}") }.join(',') %></span>
           </div>
 
           <h1 class='post__title'><%= @post.title %></h1>
 
-          <div class='post__meta-slot0'>
-            <span class='mx-C(dark-gray)'>
+          <div class='el:o-article__meta-slot el:o-article__meta-slot[width:70%]'>
+            <span class='el:amx-C(dark-gray)'>
               <%= @post.admin_account.name %>
             </span> -
-            <time class='mx-C(dark-gray)' datetime='<%= @post.content_changed_at.utc %>' itemprop='dateModified'>
+            <time class='el:amx-C_dark-gray' datetime='<%= @post.content_changed_at.utc %>' itemprop='dateModified'>
               <%= l(@post.published_at.to_date, format: :long) %>
               <% if content_changed_after?(@post) %> 
-                <span class='mx-Tt(u)'>updated on</span>
+                <span class='el:amx-Tt(u)'>updated on</span>
                 <%= l(@post.content_changed_at.to_date, format: :long) %>
               <% end %>
             </time>
+          </div><div class='el:o-article__meta-slot el:o-article__meta-slot[width:30%] el:o-article__meta-slot[right] el:amx-Tt(u)'>
+            <%= @post.versions.published.map { |post| link_to(post.locale, post_path(post.slug)) }.join(' | ').html_safe %>
           </div>
 
           <div class='post__meta-slot1'>
             <div data-vue-cpt='social-share'></div>
           </div>
 
-          <div class='post__content'>
+          <div class='el:o-article__body'>
             <%= @post.body.html_safe %>
           </div>
 
-          <div style='margin-top:40px'>
-            <% if @post.admin_account.avatar %>
-              <%= image_tag @post.admin_account.avatar.thumbor.file_url(width: 64), style: 'vertical-align:middle;border-radius:50%;margin-right:10px' %>
-            <% end %><div style='vertical-align:middle;display:inline-block;max-width:calc(100% - 84px)'>
-              <span style='font-weight:600;display:block' class='mx-Mb-0d5'><%= @post.admin_account.name %></span>
-              <span class='mx-Fs-0d75'><%= @post.admin_account.bio %></span>
+          <div class='el:amx-Mt(2.5em)'>
+            <div class='el:m-media-object'>
+              <%= image_tag @post.admin_account.avatar.thumbor.file_url(width: 64), class: 'el:m-media-object__image' %><div class='el:m-media-object__body el:m-media-object__body--W(80%)'>
+                <div class='el:amx-Fw(b) el:amx-Mb(0.5em)'><%= @post.admin_account.name %></div>
+                <span class='el:amx-Fs(0.75em)'><%= @post.admin_account.bio %></span>
+              </div>
             </div>
           </div>
         </article>
@@ -53,15 +68,3 @@
     </div>
   </div>
 </div>
-
-<style>
- .blog-container {
-   width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 768px;
- }
-</style>
-

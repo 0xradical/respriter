@@ -5,7 +5,6 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -825,7 +824,7 @@ CREATE TABLE public.posts (
     title character varying,
     body text,
     tags character varying[] DEFAULT '{}'::character varying[],
-    meta jsonb DEFAULT '{}'::jsonb,
+    meta jsonb DEFAULT '"{\"title\": \"\", \"description\": \"\"}"'::jsonb,
     locale public.iso639_code DEFAULT 'en'::public.iso639_code,
     status public.post_status DEFAULT 'draft'::public.post_status,
     content_fingerprint character varying,
@@ -833,7 +832,8 @@ CREATE TABLE public.posts (
     content_changed_at timestamp without time zone,
     admin_account_id bigint,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    original_post_id bigint
 );
 
 
@@ -1336,6 +1336,13 @@ CREATE INDEX index_posts_on_admin_account_id ON public.posts USING btree (admin_
 
 
 --
+-- Name: index_posts_on_original_post_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_posts_on_original_post_id ON public.posts USING btree (original_post_id);
+
+
+--
 -- Name: index_posts_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1548,6 +1555,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190606133958'),
 ('20190607133958'),
 ('20190610174143'),
-('20190611223206');
+('20190611223206'),
+('20190615220137'),
+('20190616024703');
 
 

@@ -22,7 +22,7 @@ class Post < ApplicationRecord
   scope :tags,      -> (tags=nil) {  where("tags @> ARRAY[?]::varchar[]", tags) unless tags.nil? }
   scope :published, -> { where(status: 'published') }
   scope :locale,    -> (locale) { where(locale: locale) }
-  scope :versions,  -> (id) { where(original_post_id: id).or(where(id: id)) }
+  scope :versions,  -> (id) { where("original_post_id IS NOT NULL AND original_post_id = ?", id).or(where(id: id)) }
   scope :originals, -> { where(original_post_id: nil) }
 
   %w(void draft published disabled).each do |s|
@@ -36,7 +36,7 @@ class Post < ApplicationRecord
   end
 
   def versions
-    self.class.versions(original_post_id).where.not(id: id)
+    self.class.versions(id).where.not(id: id)
   end
 
   def sibling_versions

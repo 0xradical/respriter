@@ -1,6 +1,6 @@
-import en from '../../../config/locales/en.yml'
-import es from '../../../config/locales/es.yml'
-import ptBr from '../../../config/locales/pt-BR.yml'
+import en from '../../../config/locales/en/en.yml'
+import es from '../../../config/locales/es/es.yml'
+import ptBr from '../../../config/locales/pt-BR/pt-BR.yml'
 
 let i18n = Object.assign({},en,es,ptBr)
 

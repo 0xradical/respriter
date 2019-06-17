@@ -1,8 +1,8 @@
 <html>
   <head>
 
+    <!-- Metas -->
     <%= csrf_meta_tags %>
-    <!-- Common Metas -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="<%= request.original_url %>">
     <meta property="og:image" content="[img url]">
@@ -11,10 +11,14 @@
     <meta name="copyright" content="Classpert">
     <meta name="designer" content="Classpert">
     <meta name="abstract" content="Classpert.com - Find and Compare Online Courses from Multiple Providers">
-    <link ref='alternate' hreflang='pt-BR' href='https://pt-BR.classpert.com<%= request.path %>' />
+    <% if content_for(:meta_hreflang) %>
+      <%= yield(:meta_hreflang) %>
+    <% else %>
+      <link ref='alternate' hreflang='pt-BR' href='https://pt-br.classpert.com<%= request.path %>' />
+      <link ref='alternate' hreflang='es'    href='https://es.classpert.com<%= request.path %>' />
+    <% end %>
     <meta name="viewport" content="<%= viewport_content %>">
     <meta name="verification" content="898f8f25672b3d4f1acbb0228a862b98">
-    <!-- Google Search Console -->
     <meta name="google-site-verification" content="frJWYLKLhn2TNmNSFXsY_N34EKr2sAfK3TE-M9ogE1o" />
     <%= yield :meta %>
 
