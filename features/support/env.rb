@@ -5,10 +5,9 @@ require 'webmock/cucumber'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-Capybara.server = :puma, { Silent: true }
-
 Capybara.configure do |config|
-  config.server_port            = ENV['CAPYBARA_SERVER_PORT'] || 3000
+  config.app_host               = 'http://classpert.com'
+  config.server_port            = 3000
   config.server_host            = '0.0.0.0'
   config.default_max_wait_time  = 15
 end
@@ -21,16 +20,11 @@ Capybara.register_driver :chrome do |app|
   browser_options.add_argument("--lang=#{ENV.fetch('BROWSER_LANGUAGE') { 'en' } }")
   browser_options.add_argument('--remote-debugging-port=9222')
   browser_options.add_argument('--remote-debugging-address=0.0.0.0')
-
-  Capybara::Selenium::Driver.new(
-    app, 
-    browser: :chrome, 
-    options: browser_options
-  )
-
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
 
-Capybara.javascript_driver = :chrome
+Capybara.server             = :puma
+Capybara.javascript_driver  = :chrome
 
 # Allow only local requests for Capybara
 WebMock.disable_net_connect!({

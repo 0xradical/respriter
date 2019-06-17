@@ -1,5 +1,8 @@
-<%= render 'application/x_vue_templates/social_share', title: @post.meta['title'], quote:
-  @post.meta['description'], description: @post.meta['description'], hashtags: @post.tags.join(',') %>
+<%= render 'application/x_vue_templates/social_share', 
+  title: @post.meta['title'],
+  quote: @post.meta['description'],
+  description: @post.meta['description'], 
+  hashtags: @post.tags.join(',') %>
 
 
 <div class='post mx-Bc(white) mx-Pt-2' style='padding-bottom:60px'>

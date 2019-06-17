@@ -1,77 +1,30 @@
-SitemapGenerator::Sitemap.default_host = "https://classpert.com"
-SitemapGenerator::Sitemap.create do
+I18nHost.new('classpert.com').each do |locale, host|
+  SitemapGenerator::Sitemap.default_host  = "https://#{host}"
+  SitemapGenerator::Sitemap.sitemaps_path = "sitemaps/#{locale}"
+  SitemapGenerator::Sitemap.create_index  = :auto
+  SitemapGenerator::Sitemap.create include_root: false do
 
-  add('/', {
-    changefreq: 'weekly',
-    alternate: [
-      {
-        href: 'https://pt-BR.classpert.com',
-        lang: 'pt-BR'
-      },
-      {
-        href: 'https://es.classpert.com',
-        lang: 'es'
-      }
-    ]
-  })
+    add(root_path,                 { changefreq: 'weekly' })
+    add(privacy_policy_path,       { changefreq: 'yearly' })
+    add(terms_and_conditions_path, { changefreq: 'yearly' })
+    add(courses_path,              { changefreq: 'daily'  })
 
-  add('/privacy-policy', {
-    changefreq: 'monthly',
-    alternate: [
-      {
-        href: 'https://pt-BR.classpert.com/privacy-policy',
-        lang: 'pt-BR'
-      },
-      {
-        href: 'https://es.classpert.com/privacy-policy',
-        lang: 'es'
-      }
-    ]
-  })
-
-  add('/terms-and-conditions', {
-    changefreq: 'monthly',
-    alternate: [
-      {
-        href: 'https://pt-BR.classpert.com/terms-and-conditions',
-        lang: 'pt-BR'
-      },
-      {
-        href: 'https://es.classpert.com/terms-and-conditions',
-        lang: 'es'
-      }
-    ]
-  })
-
-  add('/search', {
-    changefreq: 'daily',
-    alternate: [
-      {
-        href: 'https://pt-BR.classpert.com/search',
-        lang: 'pt-BR'
-      },
-      {
-        href: 'https://es.classpert.com/search',
-        lang: 'es'
-      }
-    ]
-  })
-
-  Course.unnest_curated_tags.distinct.map {|c| c.tag.dasherize } .each do |tag|
-    add("/#{tag}", {
-      changefreq: 'weekly', 
-      priority: 1,
-      alternate: [
-        {
-          href: "https://pt-BR.classpert.com/#{tag}",
-          lang: 'pt-BR'
-        },
-        {
-          href: "https://es.classpert.com/#{tag}",
-          lang: 'es'
-        }
-      ]
+    # Blog
+    add(posts_path, {
+      changefreq: 'weekly',
+      lastmod: Post.locale(I18nHelper.sanitize_locale(locale)).order(published_at: :desc).first&.published_at&.strftime('%Y-%m-%d') 
     })
-  end
+    Post.locale(I18nHelper.sanitize_locale(locale)).published.each do |post|
+      add(post_path(post.slug), { changefreq: 'monthly', lastmod: post.content_changed_at })
+    end
 
+    # Bundles
+    Course.unnest_curated_tags.distinct.map {|c| c.tag.dasherize } .each do |tag|
+      add(course_bundle_path(tag), {
+        changefreq: 'weekly',
+        priority: 1
+      })
+    end
+
+  end
 end
