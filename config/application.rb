@@ -11,7 +11,9 @@ require "action_view/railtie"
 require "action_cable/engine"
 
 # Middlewares
-require_relative "../lib/locale_router"
+require_relative "../lib/middlewares/locale_router"
+require_relative "../lib/middlewares/robots_txt_interceptor"
+require_relative "../lib/middlewares/sitemap_xml_interceptor"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -29,6 +31,8 @@ module App
       "#{Rails.root}/app/services"
     ]
 
+    config.middleware.insert_before(ActionDispatch::Static, RobotsTxtInterceptor)
+    config.middleware.insert_before(ActionDispatch::Static, SitemapXmlInterceptor)
     config.middleware.use LocaleRouter
 
     config.action_mailer.default_url_options = { host: 'classpert.com' }
