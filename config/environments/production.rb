@@ -103,6 +103,12 @@ Rails.application.configure do
     config.middleware.use Rack::Prerender
   end
 
+  # Sentry settings
+  Raven.configure do |sentry_config|
+    sentry_config.dsn = ENV['SENTRY_DSN']
+    sentry_config.sanitize_fields = config.filter_parameters.map(&:to_s)
+  end
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end

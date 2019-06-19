@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   prepend_before_action :track_session
   before_action :set_locale
   before_action :rendertron?
+  before_action :set_sentry_raven_context
 
   layout :fetch_layout
 
@@ -35,4 +36,10 @@ class ApplicationController < ActionController::Base
   def fetch_layout
     devise_controller? ? 'devise' : 'application'
   end
+
+  def set_sentry_raven_context
+    Raven.user_context(id: @session_tracker&.session_payload&.send(:[], 'id'))
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+  end
+
 end
