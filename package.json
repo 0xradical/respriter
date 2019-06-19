@@ -9,7 +9,7 @@
     "bootstrap": "^4.3.1",
     "deepmerge": "^3.2.0",
     "ejs-loader": "^0.3.1",
-    "elements": "https://github.com/codextremist/elements.git",
+    "elements": "git+https://7d12b077c98890abd66f41944901afcd4192f04a:x-oauth-basic@github.com/querocourses/elements.git",
     "expose-loader": "^0.7.5",
     "extract-loader": "^3.0.0",
     "html-webpack-plugin": "^4.0.0-beta.1",
