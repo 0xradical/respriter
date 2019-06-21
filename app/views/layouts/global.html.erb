@@ -9,7 +9,7 @@
     <meta name="author" content="Classpert">
     <meta name="copyright" content="Classpert">
     <meta name="designer" content="Classpert">
-    <meta name="abstract" content="Classpert.com - Find and Compare Online Courses from Multiple Providers">
+    <meta name="abstract" content="Classpert - Find and Compare Online Courses from Multiple Providers">
     <% if content_for(:meta_hreflang) %>
       <%= yield(:meta_hreflang) %>
     <% else %>
@@ -21,6 +21,10 @@
     <meta name="google-site-verification" content="frJWYLKLhn2TNmNSFXsY_N34EKr2sAfK3TE-M9ogE1o" />
     <%= yield :meta %>
 
+    <!-- Elements css-->
+    <%= elements_stylesheet_link_tag 'bundle' %>
+
+    <!-- App css -->
     <%= stylesheet_pack_tag 'vendor', 'application' %>
 
     <script type='text/javascript'>
@@ -39,6 +43,7 @@
 
     <%= yield :stylesheets %>
     <%= yield :jsts %>
+
     <!-- x-vue-templates -->
     <script id='promo-video-modal' type='x-vue-template'>
       <modal :adaptive=true name='promo-video-modal'>
@@ -53,19 +58,19 @@
 
   <body <%= content_for(:body_html_attributes) ? yield(:body_html_attributes) : 'class="mx-Bc(light-gray)"' %> >
 
-    <!-- svg sprites -->
-    <!--
+    <%#
+      #### SVG sprites ####
       display:none won't work here as it breaks gradients. Check
-      https://stackoverflow.com/questions/23966452/svg-icon-changes-when-svg-sprite-set-to-displaynone
-    -->
+      https://stackoverflow.com/questions/23966452/svg-icon-changes-when-svg-sprite-set-to-displaynone 
+    %>
 
     <% unless rendertron? %>
-    <div style='width:0;height:0'>
-      <div data-svg-sprite="<%= asset_pack_path('icons.svg') %>"></div>
-      <div data-svg-sprite="<%= asset_pack_path('tags.svg') %>"></div>
-      <div data-svg-sprite="<%= asset_pack_path('providers.svg') %>"></div>
-      <%= yield :svg_sprites %>
-    </div>
+      <div style='width:0;height:0'>
+        <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
+        <div data-svg-sprite="<%= elements_asset_path('svgs/packs/tags.svg') %>"></div>
+        <div data-svg-sprite="<%= elements_asset_path('svgs/packs/providers.svg') %>"></div>
+        <%= yield :svg_sprites %>
+      </div>
     <% end %>
 
     <% if Rails.env.production? %>
@@ -195,8 +200,8 @@
             <%= link_to t('dictionary.terms_and_conditions'), terms_and_conditions_path, class: 'c-link c-link--white mx-Fs-0d875', style: 'line-height:32px' %> &nbsp; &nbsp;
             <%= link_to t('dictionary.privacy_policy'), privacy_policy_path, class: 'c-link c-link--white mx-Fs-0d875', style: 'line-height:32px' %>
                 <%#= link_to t('dictionary.blog'), 'http://blog.classpert.com', class: 'mx-C(white)' %>
-            <img src="<%= asset_pack_path('logo_negative.svg') %>" width='126px' class='mx-D(n)@extra-small' style='float:right;vertical-align:middle'>
-            <img src="<%= asset_pack_path('logo_symbol-negative.svg') %>" width='32px' class='mx-D(n)@>small' style='float:right;vertical-align:middle'>
+            <img src="<%= elements_asset_path('svgs/logo_negative.svg') %>" width='126px' class='mx-D(n)@extra-small' style='float:right;vertical-align:middle'>
+            <img src="<%= elements_asset_path('svgs/logo_symbol-negative.svg') %>" width='32px' class='mx-D(n)@>small' style='float:right;vertical-align:middle'>
           </div>
         </div>
       </div>
@@ -206,6 +211,7 @@
     <%= render 'offcanvas_menu' %>
     <div data-vue-cpt='promo-video-modal'></div>
     <%= javascript_pack_tag 'vendor', 'application' %>
+    <%= elements_javascript_include_tag 'bundle' %>
     <%= yield :javascript  %>
   </body>
 

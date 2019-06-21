@@ -15,6 +15,9 @@ require_relative "../lib/middlewares/locale_router"
 require_relative "../lib/middlewares/robots_txt_interceptor"
 require_relative "../lib/middlewares/sitemap_xml_interceptor"
 
+# Extensions
+require_relative "../lib/elements/elements"
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -38,6 +41,11 @@ module App
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml')]
 
     config.action_mailer.default_url_options = { host: 'classpert.com' }
+
+    Elements.configure do |elements_config|
+      elements_config.asset_host    = ENV.fetch('ELEMENTS_ASSET_HOST') { '//elements.classpert.com' }
+      elements_config.asset_version = '1.4.2'
+    end
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
