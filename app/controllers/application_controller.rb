@@ -6,9 +6,13 @@ class ApplicationController < ActionController::Base
   prepend_before_action :track_session
   before_action :set_locale
   before_action :rendertron?
-  before_action :set_sentry_raven_context
-
   layout :fetch_layout
+
+  unless Rails.application.config.consider_all_requests_local
+    before_action :set_sentry_raven_context
+    rescue_from ActionController::UnknownFormat,  with: :render_406
+    rescue_from ActionController::RoutingError,   with: :render_404
+  end
 
   protected
 
@@ -40,6 +44,14 @@ class ApplicationController < ActionController::Base
   def set_sentry_raven_context
     Raven.user_context(id: @session_tracker&.session_payload&.send(:[], 'id'))
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+  end
+
+  def render_404(exception)
+    render plain: "404 - not found: #{exception.message}", status: 404
+  end
+
+  def render_406(exception)
+    render plain: "406 - not acceptable", status: 406
   end
 
 end

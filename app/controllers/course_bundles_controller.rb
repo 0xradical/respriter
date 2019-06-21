@@ -18,10 +18,14 @@ class CourseBundlesController < ApplicationController
   def show
     respond_to do |format|
       format.html do
+
         search = Search::CourseSearch.new search_query_params.merge(per_page: 0)
         @root_tags = search.results[:meta][:aggregations][:curated_root_tags].values.map do |results|
           results.map &:first
         end.flatten.compact.uniq.map &:to_s
+
+        raise ActionController::RoutingError, "No courses bundles for the term #{@tag}" if @root_tags.empty?
+
       end
 
       format.json do
