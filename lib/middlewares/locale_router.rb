@@ -38,9 +38,7 @@ class LocaleRouter
   end
 
   def browser_language
-    return [:en] if @env['HTTP_ACCEPT_LANGUAGE'].nil?
-    http_accept_language_parser = HTTP::Accept::Languages.parse(@env['HTTP_ACCEPT_LANGUAGE'])
-    http_accept_language_parser&.map { |l| l&.locale.to_sym }
+    SessionTracker.parse_http_accept_language_header(@env['HTTP_ACCEPT_LANGUAGE_HEADER'])
   end
 
   def intl_subdomain?

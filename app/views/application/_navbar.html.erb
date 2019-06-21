@@ -2,8 +2,8 @@
 
   <% unless home_controller? %>
     <%= link_to root_path do %>
-      <img src="<%= asset_pack_path('logo.svg') %>" class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet' width='156px'>
-      <img src="<%= asset_pack_path('logo_symbol.svg') %>" class='c-navbar__slot mx-D(n)@>desktop' width='40px'>
+      <img src="<%= elements_asset_path('svgs/logo.svg') %>" class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet' width='156px'>
+      <img src="<%= elements_asset_path('svgs/logo_symbol.svg') %>" class='c-navbar__slot mx-D(n)@>desktop' width='40px'>
     <% end %>
   <% end %>
 
