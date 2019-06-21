@@ -61,7 +61,17 @@ class SessionTracker
     @tracking_session ||= (session[:tracking_data].deep_dup || Hash.new).with_indifferent_access
   end
 
+  def self.parse_http_accept_language_header(http_accept_language_header)
+    return [:en] if http_accept_language_header.nil?
+    http_accept_language_parser = HTTP::Accept::Languages.parse(http_accept_language_header)
+    http_accept_language_parser&.map { |l| l&.locale.to_sym }
+    rescue HTTP::Accept::ParseError => e
+      Rails.logger.error "#{e.class} - #{e.message} (args: #{http_accept_language_header})".ansi(:red)
+      return [:en]
+  end
+
   protected
+
   def raw
     {
       raw: {
@@ -83,9 +93,9 @@ class SessionTracker
   end
 
   def parse_http_accept_language
-    return { preferred_languages: [:en] } if request.env['HTTP_ACCEPT_LANGUAGE'].nil?
-    http_accept_language_parser = HTTP::Accept::Languages.parse(request.env['HTTP_ACCEPT_LANGUAGE'])
-    { preferred_languages: http_accept_language_parser&.map { |l| l&.locale.to_sym } }
+    {
+      preferred_languages: self.class.parse_http_accept_language_header(request.env['HTTP_ACCEPT_LANGUAGE']) 
+    }
   end
 
   # Cloudflare's GeoIP special header
