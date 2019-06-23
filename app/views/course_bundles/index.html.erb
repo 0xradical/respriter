@@ -17,11 +17,11 @@
         style='background-image:url(<%= asset_pack_path("media/svg/#{@tag.gsub('_','-')}_art.svg") %>);background-size:auto 50%'>
         <div class="c-hero(2.0)__content c-hero(2.0)__content--giant-1">
 
-          <h1 class="mx-Fs-2@large mx-Fs-1d5@extra-small">
+          <h1 class="el:amx-Fs(1.875em)@>small el:amx-Fs(1.5em)@extra-small">
             <%= t(".title_html", tag: t("tags.#{@tag}")) %>
           </h1>
 
-          <p class="mx-D(n)@phone c-hero(2.0)__text-slot mx-Mt(0d875)">
+          <p class="mx-D(n)@<medium c-hero(2.0)__text-slot mx-Mt(0d875)">
           <%= t(".description_html", tag: t("tags.#{@tag}")) %>
             <div class='mx-Pt-0d75 mx-Pb-0d5 mx-Fs-0d875@extra-small'>
               <span class='mx-D(n)@extra-small' style='font-weight:700'>Share it!</span> &nbsp;
