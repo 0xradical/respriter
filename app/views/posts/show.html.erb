@@ -17,7 +17,7 @@
   <% else %>
     <% @post.versions.published.map do |post| %>
       <link ref='alternate' hreflang='<%= post.locale %>'
-      href="<%= post_url(post.slug, host: I18nHost.new(request.url).members[post.locale.downcase]) %>" />
+      href="<%= post_url(post.slug, host: I18nHost.new('classpert.com').members[post.locale.downcase]) %>" />
       <% end.join.html_safe %>
   <% end %>
 <% end %>
