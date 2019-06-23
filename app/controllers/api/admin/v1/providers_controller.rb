@@ -6,7 +6,7 @@ module Api
 
         def index
           @providers = Provider.page(params[:p]).per(params[:limit])
-          render json: ProviderSerializer.new(@providers, { meta: { total: @providers.total_count } })
+          render json: ProviderSerializer.new(@providers, { meta: { count: @providers.total_count } })
         end
 
       end
