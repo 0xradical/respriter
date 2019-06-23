@@ -14,15 +14,14 @@ class Post < ApplicationRecord
 
   after_validation -> { self.status = 'draft' }, if: :may_change_to_draft?
 
-  belongs_to  :original_version,    class_name: :Post, foreign_key: :original_post_id, optional: true
-  has_many    :localized_versions,  class_name: :Post, foreign_key: :original_post_id
+  belongs_to :original_version, class_name: :Post, foreign_key: :original_post_id, optional: true
+  has_many :localized_versions, class_name: :Post, foreign_key: :original_post_id
 
   belongs_to  :admin_account
 
   scope :tags,      -> (tags=nil) {  where("tags @> ARRAY[?]::varchar[]", tags) unless tags.nil? }
   scope :published, -> { where(status: 'published') }
   scope :locale,    -> (locale) { where(locale: locale) }
-  scope :versions,  -> (id) { where("original_post_id IS NOT NULL AND original_post_id = ?", id).or(where(id: id)) }
   scope :originals, -> { where(original_post_id: nil) }
 
   %w(void draft published disabled).each do |s|
@@ -35,12 +34,12 @@ class Post < ApplicationRecord
     original_post_id.nil?
   end
 
-  def versions
-    self.class.versions(id).where.not(id: id)
+  def siblings
+    self.class.where.not(id: id).where(original_post_id: original_post_id).or(self.class.where(id: original_post_id))
   end
 
-  def sibling_versions
-    self.class.where(original_post_id: original_post_id)
+  def versions
+    original_version? ? localized_versions : siblings
   end
 
   def content_changed?

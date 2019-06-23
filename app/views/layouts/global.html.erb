@@ -3,6 +3,7 @@
 
     <!-- Metas -->
     <%= csrf_meta_tags %>
+    <%= content_for?(:meta_hreflang) ? yield(:meta_hreflang) : default_meta_alternate_hreflang %>
     <meta property="og:type" content="website">
     <meta property="og:url" content="<%= request.original_url %>">
     <meta property="og:locale" content="<%= I18n.locale %>">
@@ -10,12 +11,6 @@
     <meta name="copyright" content="Classpert">
     <meta name="designer" content="Classpert">
     <meta name="abstract" content="Classpert - Find and Compare Online Courses from Multiple Providers">
-    <% if content_for(:meta_hreflang) %>
-      <%= yield(:meta_hreflang) %>
-    <% else %>
-      <link ref='alternate' hreflang='pt-BR' href='https://pt-br.classpert.com<%= request.path %>' />
-      <link ref='alternate' hreflang='es'    href='https://es.classpert.com<%= request.path %>' />
-    <% end %>
     <meta name="viewport" content="<%= viewport_content %>">
     <meta name="verification" content="898f8f25672b3d4f1acbb0228a862b98">
     <meta name="google-site-verification" content="frJWYLKLhn2TNmNSFXsY_N34EKr2sAfK3TE-M9ogE1o" />

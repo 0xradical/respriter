@@ -12,8 +12,13 @@
 <% end %>
 
 <% content_for :meta_hreflang do %>
-  <% @post.versions.each do |post| %>
-    <!--<link ref='alternate' hreflang='<%#= post.locale %>' href='<%#= post_url(post.slug, host: I18nHost.new('classpert.com').each[post.locale]) %>' /> -->
+  <% if @post.versions.published.empty? %>
+    <link rel="alternate" href="<%= request.url %>" hreflang="x-default" />
+  <% else %>
+    <% @post.versions.published.map do |post| %>
+      <link ref='alternate' hreflang='<%= post.locale %>'
+      href="<%= post_url(post.slug, host: I18nHost.new(request.url).members[post.locale.downcase]) %>" />
+      <% end.join.html_safe %>
   <% end %>
 <% end %>
 
@@ -38,13 +43,18 @@
             <time class='el:amx-C_dark-gray' datetime='<%= @post.content_changed_at.utc %>' itemprop='dateModified'>
               <%= l(@post.published_at.to_date, format: :long) %>
               <% if content_changed_after?(@post) %> 
-                <span class='el:amx-Tt(u)'>updated on</span>
+                <span class='el:amx-Fs(0.75em) el:amx-P(0|0.75em)'>updated on</span>
                 <%= l(@post.content_changed_at.to_date, format: :long) %>
               <% end %>
             </time>
-          </div><div class='el:o-article__meta-slot el:o-article__meta-slot[width:30%] el:o-article__meta-slot[right] el:amx-Tt(u)'>
-            <%= @post.versions.published.map { |post| link_to(post.locale, post_path(post.slug)) }.join(' | ').html_safe %>
+          </div><% if @post.versions.published.any? %><div class='el:o-article__meta-slot el:o-article__meta-slot[width:30%] el:o-article__meta-slot[right] el:amx-Fs(0.875em)'>
+            <span class='el:amx-Fs(0.875em)'>
+              versions:&nbsp;
+            </span><span class='el:amx-Fs(0.75em) el:amx-Tt(u)'>
+              <%= @post.versions.published.map { |post| link_to(post.locale, post_path(post.slug)) }.join(' | ').html_safe %>
+            </span>
           </div>
+        <% end %>
 
           <div class='post__meta-slot1'>
             <div data-vue-cpt='social-share'></div>

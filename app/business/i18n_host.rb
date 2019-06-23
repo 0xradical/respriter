@@ -1,23 +1,30 @@
 class I18nHost
 
-  attr_reader :tld
+  include Enumerable
+
+  attr_reader :tld, :members
 
   def initialize(host)
-    set_tld(host)
+    @tld      = extract_tld(host)
+    @members  = map_locales_to_subdomains
   end
 
-  def each
-    Hash[I18n.available_locales.map do |locale|
-      item = locale.eql?(:en) ? [locale.downcase.to_s, tld] : [locale.downcase.to_s, [locale.downcase,tld].join('.').chomp('.')]
-      yield item if block_given?
-      item
-    end]
+  def each(&block)
+    members.each do |item|
+      block.call(item)
+    end
   end
 
   private
 
-  def set_tld(host)
-    @tld = ActionDispatch::Http::URL.extract_domain(host,1)
+  def map_locales_to_subdomains
+    Hash[I18n.available_locales.map do |locale|
+      locale.eql?(:en) ? [locale.downcase.to_s, tld] : [locale.downcase.to_s, [locale.downcase,tld].join('.').chomp('.')]
+    end]
+  end
+
+  def extract_tld(host)
+    ActionDispatch::Http::URL.extract_domain(host,1)
   end
 
 end

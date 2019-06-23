@@ -9,6 +9,12 @@ module ApplicationHelper
     link_to(label, send("user_account_#{provider.to_s}_omniauth_authorize_path"))
   end
 
+  def default_meta_alternate_hreflang(current_locale=I18n.locale, host='classpert.com')
+    I18nHost.new(host).reject { |k,v| k == current_locale.to_s.downcase }.map do |locale, subdomain|
+      tag.link(rel: 'alternate', hreflang: locale, href: "https://#{subdomain}#{request.path}")
+    end.join.html_safe
+  end
+
   def svg_use(sprite_name, vector_name, svg_options={})
     tag.svg(svg_options) do
       tag.use 'xlink:href': "##{sprite_name}-#{vector_name}"
