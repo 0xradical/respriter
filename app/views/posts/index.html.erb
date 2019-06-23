@@ -8,7 +8,6 @@
               <h1 class='el:amx-Fs(1.75em) el:amx-Mb(0.25em) el:amx-C_blackish-gray' style='line-height:1em'><%= post.title %></h1>
             <% end %>
             <span class='mx-Fs-0d875'><%= post.admin_account.name %></span>&nbsp; | &nbsp;<span class='mx-Fs-0d875'><%= l(post.published_at.to_date, format: :long) %></span>
-            <%= image_tag post.images.first.thumbor.file_url(width: 768) %>
             <p class='el:amx-C_blackish-gray el:amx-Fs(0.875em)'>
               <%= truncate(strip_tags(post.body.html_safe), length: 350) { "&nbsp".html_safe + link_to("Read more", post_path(post.slug)) } %>
             </p>
