@@ -37,6 +37,7 @@ pt-BR:
     ansible: 'Ansible'
     anthropology: 'Antropologia'
     apache: 'Apache'
+    apache_spark: 'Apache Spark'
     arch_linux: 'Arch Linux'
     architecture: 'Arquitetura'
     arduino: 'Arduino'

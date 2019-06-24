@@ -26,11 +26,6 @@ Rails.application.routes.draw do
 
   resources :videos, only: :show
 
-  # Fallback until we create all categories' bundle
-  RootTag.all.reject { |rt| ['computer_science', 'business', 'data_science', 'marketing', 'physical_science_and_engineering'].include?(rt.id) }.each do |tag|
-    get "/#{tag.slugify}", to: 'courses#index', tag: tag.id, as: tag.id
-  end
-
   get '/forward/:id', to: 'gateway#index', as: :gateway
 
   get '/:tag',

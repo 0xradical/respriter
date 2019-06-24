@@ -37,6 +37,7 @@ es:
     ansible: 'Ansible'
     anthropology: 'Antropología'
     apache: 'Apache'
+    apache_spark: 'Apache Spark'
     arch_linux: 'Arch Linux'
     architecture: 'Arquitectura'
     arduino: 'Arduino'

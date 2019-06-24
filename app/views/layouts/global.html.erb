@@ -62,8 +62,8 @@
     <% unless rendertron? %>
       <div style='width:0;height:0'>
         <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
-        <div data-svg-sprite="<%= elements_asset_path('svgs/packs/tags.svg') %>"></div>
         <div data-svg-sprite="<%= elements_asset_path('svgs/packs/providers.svg') %>"></div>
+        <div data-svg-sprite="<%= elements_asset_path('svgs/packs/tags.svg') %>"></div>
         <%= yield :svg_sprites %>
       </div>
     <% end %>

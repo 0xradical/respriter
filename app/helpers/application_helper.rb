@@ -29,10 +29,6 @@ module ApplicationHelper
     controller_name.eql?('home')
   end
 
-  def borderless_navbar?
-    %w(home posts).include?(controller_name || devise_controller?)
-  end
-
   def sticky_navbar?
     !(%w(home static_pages posts).include?(controller_name) || devise_controller?)
   end

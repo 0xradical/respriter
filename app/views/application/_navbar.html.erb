@@ -1,4 +1,4 @@
-<div class='c-navbar c-navbar--white <%= 'c-navbar--has-border' unless borderless_navbar? %> <%= "c-navbar--sticky" if sticky_navbar? %> mx-Pl-0d5 mx-Pr-0d5' <%= 'data-sticky' if sticky_navbar? %> role='header-nav'>
+<div class='c-navbar c-navbar--white <%= "c-navbar--sticky" if sticky_navbar? %> el:amx-Pl(0.5em) el:amx-Pr(0.5em)' <%= 'data-sticky' if sticky_navbar? %> role='header-nav'>
 
   <% unless home_controller? %>
     <%= link_to root_path do %>

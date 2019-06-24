@@ -10,37 +10,19 @@
   id='results' class='mx-Bc(lighter-gray)'
 <% end %>
 
-<div class='mx-Bc(white)'>
-  <div class='container'>
-    <div class="c-hero(2.0) c-hero(2.0)--bg-white">
-      <div class="c-hero(2.0)__art c-hero(2.0)__art--center-right"
-        style='background-image:url(<%= asset_pack_path("media/svg/#{@tag.gsub('_','-')}_art.svg") %>);background-size:auto 50%'>
-        <div class="c-hero(2.0)__content c-hero(2.0)__content--giant-1">
-
-          <h1 class="el:amx-Fs(1.875em)@>small el:amx-Fs(1.5em)@extra-small">
-            <%= t(".title_html", tag: t("tags.#{@tag}")) %>
-          </h1>
-
-          <p class="mx-D(n)@<medium c-hero(2.0)__text-slot mx-Mt(0d875)">
-          <%= t(".description_html", tag: t("tags.#{@tag}")) %>
-            <div class='mx-Pt-0d75 mx-Pb-0d5 mx-Fs-0d875@extra-small'>
-              <span class='mx-D(n)@extra-small' style='font-weight:700'>Share it!</span> &nbsp;
-              <div class='mx-D(ib) mx-Va(m)'><div data-vue-cpt='social-share'></div></div>
-            </div>
-          </p>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'hero',
+  title: t(".title_html", tag: t("tags.#{@tag}")),
+  description: t(".description_html", tag: t("tags.#{@tag}")),
+  share_it: t("dictionary.share", tag: t("tags.#{@tag}")), 
+  art_html: image_pack_tag("media/svg/#{@tag}.svg", style: 'width:100%;display:block;margin:auto')
+%>
 
 <div class='container mx-Mb-1d5'>
 
   <div class='mx-D(n)@phone row'>
     <div class='col-12'>
       <div class='mx-Pt-1d5'>
-        <ul class='c-list c-list--unstyled c-list--inline mx-Fs-1d25@>small'>
+        <ul class='c-list c-list--unstyled c-list--inline mx-Fs-1@>small'>
           <% ('A'..'Z').each do |letter| %>
             <li style='margin-right:10px'>
               <a href='#<%= letter%>'>

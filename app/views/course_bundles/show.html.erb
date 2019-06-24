@@ -31,35 +31,12 @@
   locales        = base_locales.deep_merge(custom_locales).deep_merge(tags)
 %>
 
-<div class='mx-Bc(white)'>
-  <div class='container'>
-    <div class='row'>
-      <div class='col-9 col-md-10'>
-        <div class='mx-vertical-center'>
-          <h1 class="mx-Fs-1d875@>small mx-Fs-1d5@extra-small">
-            <%= t(".title_html", tag: t("tags.#{@tag}")) %>
-          </h1>
-
-          <div class="c-hero(2.0)__text-slot el:amx-Mt(0.75em)@>small">
-            <span class='el:amx-Fs(0.875em) mx-D(n)@phone'>
-              <%= t(".description_html", tag: t("tags.#{@tag}")) %>
-            </span>
-            <div class='mx-Pt-0d75 mx-Pb-0d5 mx-Fs-0d875@extra-small'>
-              <span style='font-weight:700'>
-                Share it! &nbsp;
-              </span>
-              <div class='mx-D(ib) mx-Va(m)'><div data-vue-cpt='social-share'></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class='col-3 col-md-2'>
-        <%= svg_use('tags', @tag, { width: '100%', style: 'max-width:100px'}) %>
-      </div>
-    </div>
-  </div>
-</div>
-
+<%= render 'hero',
+  title: t(".title_html", tag: t("tags.#{@tag}")),
+  description: t(".description_html", tag: t("tags.#{@tag}")),
+  share_it: t("dictionary.share", tag: t("tags.#{@tag}")), 
+  art_html: svg_use('tags', @tag, { width: '100%', style: 'max-width:100px'})
+%>
 <div class='mx-Bc(white) mx-Bt(light-gray)'>
   <div class='container'>
     <div class='row'>

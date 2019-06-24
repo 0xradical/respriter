@@ -216,7 +216,7 @@ es:
     search: Buscar
     search_results: 'Mostrando %{total} resultados'
     see_syllabus: Ver plan de estudios
-    share: Compartir
+    share: Compartir !
     show_results: Mostrar Resultados
     sign_in: Entrar
     sign_out: Salir
