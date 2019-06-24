@@ -79,6 +79,9 @@ gem "valid_email2"
 # SEO
 gem 'prerender_rails'
 
+# LogRage
+gem 'lograge'
+
 group :test do
   gem 'capybara'
   gem 'capybara-email'

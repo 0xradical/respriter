@@ -103,6 +103,17 @@ Rails.application.configure do
     config.middleware.use Rack::Prerender
   end
 
+  # LogRage settings
+  config.lograge.enabled = true
+  config.lograge.custom_payload do |controller|
+    controller.request.params.extract!(:controller, :action, :format)
+    {
+      query_string: controller.request.params.map { |k,v| "#{k}=#{v}"}.join('&'),
+      ip: controller.request.ip,
+      user_agent: controller.request.user_agent
+    }
+  end
+
   # Sentry settings
   Raven.configure do |sentry_config|
     sentry_config.dsn = ENV['SENTRY_DSN']
