@@ -13,7 +13,7 @@ else
 	DETECTED_OS := linux
 endif
 
-PG_HOST      ?= localhost
+PG_HOST      ?= postgres
 PG_USER      ?= postgres
 PG_PORT      ?= 5432
 PG_DUMP_FILE ?= ./db/backups/latest.dump
@@ -30,9 +30,7 @@ else
 endif
 RAKE := $(BUNDLE_EXEC) rake
 
-PG_RESTORE := docker-compose run app_$(ENV) pg_restore
-
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_capture db_download db_restore index_courses hrk_stg_db_restore tty down docker-build docker-push docker-% watch
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_capture db_download db_load db_restore index_courses hrk_stg_db_restore tty down docker-build docker-push docker-% watch
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -102,10 +100,11 @@ db_capture: ## Capture a new production dump from Heroku
 db_download: ## Dowloads latest production dump from Heroku
 	@heroku pg:backups:download --app $(HEROKU_APP_NAME)-prd --output $(PG_DUMP_FILE)
 
-db_restore: ## Restores lastest dump
-	@make db_create
-	@$(PG_RESTORE) --verbose --clean --no-acl --no-owner -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV) < $(PG_DUMP_FILE); exit 0;
-	@make db_migrate
+db_load: ## Loads lastest dump creating database
+	@$(DOCKER_COMPOSE_RUN) pg_restore --verbose --clean --no-acl --no-owner -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV) < $(PG_DUMP_FILE); exit 0;
+
+db_restore: ## Restores lastest dump creating database (if needed), migrates after restore and load elastic_search
+	@make db_create db_load db_migrate index_courses
 
 index_courses:
 	@$(BUNDLE_EXEC) rails runner "Course.reindex!"

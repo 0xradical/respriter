@@ -387,7 +387,7 @@ module Search
             paid_content << true
             free_content << true
           else
-            raise 'Something went wrong'
+            raise InvalidFilterError.new("Invalid query value #{v} at #{key} filter")
           end
         end
 
@@ -408,8 +408,17 @@ module Search
           }
         }
       else
-        raise 'Something went wrong'
+        raise InvalidFilterError.new("Invalid query filter #{key}")
       end
+    end
+
+    class SearchBadRequest < ActionController::BadRequest
+    end
+
+    class InvalidFilterError < SearchBadRequest
+    end
+
+    class InvalidFilterValueError < SearchBadRequest
     end
   end
 end
