@@ -46,9 +46,6 @@ gem 'affiliate_hub_rakuten_marketing',  git: 'https://github.com/codextremist/af
 gem 'affiliate_hub_impact_radius',      git: 'https://github.com/codextremist/affiliate_hub_impact_radius'
 gem 'affiliate_hub_awin',               git: 'https://github.com/codextremist/affiliate_hub_awin'
 
-# Exceptions
-gem 'sentry-raven'
-
 # Browser
 gem 'browser'
 gem 'user_agent_parser'
@@ -81,6 +78,11 @@ gem 'prerender_rails'
 
 # LogRage
 gem 'lograge'
+
+group :production do
+  # Exceptions
+  gem 'sentry-raven'
+end
 
 group :test do
   gem 'capybara'

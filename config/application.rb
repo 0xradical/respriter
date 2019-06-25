@@ -56,5 +56,32 @@ module App
 
     config.active_record.schema_format = :sql
 
+    # LogRage settings
+    config.lograge.enabled = ENV.fetch('ENABLE_LOGRAGE') { false }
+    config.lograge.custom_payload do |controller|
+      if controller.kind_of? ApplicationController
+
+        env = controller.instance_variable_get("@session_tracker") || {}
+
+        qs            = env['query_string']
+        ua            = env['user_agent']&.map { |k,v| v }&.join('|')
+        ip            = env['ip']
+        cf_country    = env['country']
+        session_count = env['session_count']
+        accept_lang   = env['raw']['accept_language']
+
+        custom_payload  = {}
+
+        custom_payload['qs']            = qs                if qs.present?
+        custom_payload['ip']            = ip&.ansi(:yellow) if ip.present?
+        custom_payload['ua']            = ua&.ansi(:blue)   if ua.present?
+        custom_payload['cf_country']    = cf_country        if cf_country.present?
+        custom_payload['session_count'] = session_count     if session_count.present?
+        custom_payload['accept_lang']   = accept_lang       if accept_lang.present?
+        custom_payload
+
+      end
+    end
+
   end
 end
