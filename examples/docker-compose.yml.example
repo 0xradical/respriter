@@ -108,7 +108,7 @@ services:
       - postgres-9.6:/var/lib/postgresql/data
 
   elasticsearch:
-    image: nshou/elasticsearch-kibana:latest
+    image: nshou/elasticsearch-kibana:kibana6
     environment:
       - "discovery.type=single-node"
     ports:
