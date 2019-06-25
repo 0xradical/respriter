@@ -1,4 +1,10 @@
 module CourseSearchHelper
+  extend ActiveSupport::Concern
+
+  included do
+    rescue_from Search::CourseSearch::SearchBadRequest, with: :bad_request
+  end
+
   def format_aggregations(results)
     aggregations = results[:meta][:aggregations]
 
@@ -43,5 +49,9 @@ module CourseSearchHelper
 
   def search_params
     params.permit(:q, :p, order: {}, filter: {})
+  end
+
+  def bad_request(exception)
+    render status: 400, json: { error: exception.message }.to_json
   end
 end
