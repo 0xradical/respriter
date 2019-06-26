@@ -23,9 +23,14 @@
 
   <% end %>
 
-  <h4 class='c-off-canvas-menu__section'>Categories</h4>
+  <ul class='c-list c-list--unstyled el:amx-Mt(1em) el:amx-Mb(0.5em)'>
+    <li class='el:amx-Fs(1em) el:amx-Fw(b)'>
+      <%= link_to 'Blog', posts_path %>
+    </li>
+  </ul>
 
-  <ul class='c-list c-list--unstyled'>
+  <h4 style='margin:0;' class='el:amx-Fs(1em) c-off-canvas-menu__section'>Categories</h4>
+  <ul class='c-list c-list--unstyled el:amx-Fs(0.875em)'>
     <% (RootTag.all).each_with_index do |t, index| %>
       <%# Remove this hack as soon as all bundles are created %>
       <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
