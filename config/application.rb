@@ -68,7 +68,7 @@ module App
         ip            = env['ip']
         cf_country    = env['country']
         session_count = env['session_count']
-        accept_lang   = env['raw']['accept_language']
+        accept_lang   = env['raw'].send(:[], 'accept_language')
 
         custom_payload  = {}
 
