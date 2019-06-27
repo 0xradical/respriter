@@ -267,9 +267,10 @@ pt-BR:
       careers:
         <<: *careers
       meta:
-        title: 'Cursos Online com Certificado - Gratuitos e Pagos | Classpert'
-        description: 'Encontre os Melhores Cursos Online com Certificado. Descubra Mais de 50
-        Plataformas e 500.000 Cursos. Incluindo Cursos Gratuitos de Harvard, MIT, Yale e muito mais'
+        title: 'Buscador de cursos online - Gratuitos e Pagos | Classpert'
+        description: 'Busque e compare cursos online de plataformas como: Udemy, Coursera,
+        Pluralsight, Edx, Linkedin Learning e muitos outros. Economize tempo e dinheiro com a
+        Classpert!'
   courses:
     index:
       arts_and_design:

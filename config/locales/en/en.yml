@@ -268,9 +268,9 @@ en:
       careers:
         <<: *careers
       meta:
-        title: 'Online Courses with Certificate - Free And Paid | Classpert'
-        description: 'Find the best Online Courses with Certificate. More than 50 platforms and
-        institutions and more than 500.000 courses. Including free courses from Harvard, MIT, Yale and many more'
+        title: 'Online Course Search Engine - Free And Paid | Classpert'
+        description: 'Search and compare online courses from Udemy, Coursera, Pluralsight, edX,
+        LinkedIn Learning and others side-by-side. Save time and money with Classpert!'
   courses:
     index:
       arts_and_design:
