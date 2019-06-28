@@ -14,7 +14,7 @@ class Image < ApplicationRecord
         @file_url = file_url
       else
         public_host     = ENV.fetch 'AWS_S3_ASSET_HOST'
-        dockerized_host = ENV.values_at('AWS_S3_ENDPOINT', 'AWS_S3_BUCKET_NAME').join '/'
+        dockerized_host = ENV.fetch 'AWS_S3_PROXY_ASSET_HOST'
         @file_url = file_url.gsub public_host, dockerized_host
       end
     end
