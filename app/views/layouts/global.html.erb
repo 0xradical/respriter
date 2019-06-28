@@ -56,7 +56,7 @@
     <%#
       #### SVG sprites ####
       display:none won't work here as it breaks gradients. Check
-      https://stackoverflow.com/questions/23966452/svg-icon-changes-when-svg-sprite-set-to-displaynone 
+      https://stackoverflow.com/questions/23966452/svg-icon-changes-when-svg-sprite-set-to-displaynone
     %>
 
     <% unless rendertron? %>
@@ -151,7 +151,7 @@
             <ul class='c-list c-list--unstyled mx-Fs-0d875'>
               <li style='margin-bottom:8px'>
                 <%= link_to "javascript:void(0)", onclick: "window.__vms__['promo-video-modal'].$modal.show('promo-video-modal')", target: '_blank', class: 'c-link c-link--white', rel: 'nofollow' do %>
-                  <%= t('home.index.new_to_classpert') %><%= t('home.index.watch_the_video') %>
+                  <%= t('home.index.new_to_classpert') %> <%= t('home.index.watch_the_video') %>
                 <% end %>
               </li>
             </ul>

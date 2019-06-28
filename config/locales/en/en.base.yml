@@ -111,23 +111,23 @@ en:
       year: Year
     adjectives:
       seconds:
-        one: "%{count}-second %{noun}"
-        other: "%{count}-second %{noun}"
+        one: "%{count}-second"
+        other: "%{count}-second"
       minutes:
-        one: "%{count}-minute %{noun}"
-        other: "%{count}-minute %{noun}"
+        one: "%{count}-minute"
+        other: "%{count}-minute"
       hours:
-        one: "%{count}-hour %{noun}"
-        other: "%{count}-hour %{noun}"
+        one: "%{count}-hour"
+        other: "%{count}-hour"
       days:
-        one: "%{count}-day %{noun}"
-        other: "%{count}-day %{noun}"
+        one: "%{count}-day"
+        other: "%{count}-day"
       months:
-        one: "%{count}-month %{noun}"
-        other: "%{count}-month %{noun}"
+        one: "%{count}-month"
+        other: "%{count}-month"
       years:
-        one: "%{count}-years %{noun}"
-        other: "%{count}-years %{noun}"
+        one: "%{count}-years"
+        other: "%{count}-years"
   errors:
     format: "%{attribute} %{message}"
     messages:

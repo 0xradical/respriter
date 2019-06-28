@@ -166,10 +166,13 @@ es:
     clear_all_filters: Limpiar todos los filtros
     clear_filter: Limpiar filtro
     description:
-      view: Ver
+      view: Ver descripción
+      show: Ver descripción
+      hide: Ocultar descripción
     details:
-      hide: Ocultar
-      show: Mostrar
+      see:  Ver detalles
+      hide: Ocultar detalles
+      show: Mostrar detalles
     display_filter: Mostrar filtro
     extra_paid_content: Contenido extra pagado
     favorite: Favorito
@@ -178,7 +181,7 @@ es:
     for: para
     for_this_course: Por este curso
     free: Gratis
-    free_trial: Prueba gratis
+    free_trial: prueba gratis
     from: De
     go_to_course: Ir al curso
     highest_price: Precio más alto
@@ -210,6 +213,10 @@ es:
       short: Previa
     previous_page: Página anterior
     price: Precio
+    pricing:
+      all_courses: "todos los cursos"
+      this_course_only: "solo este curso"
+      tooltip: '%{provider} ofrece %{offer}. Al final de este período, se cobrará el precio de la inscripción. Este pago le dará acceso ilimitado a los cursos y la cancelación se puede hacer en cualquier momento.'
     privacy_policy: Política de Privacidad
     providers: Plataformas
     relevance: Relevancia
@@ -224,8 +231,8 @@ es:
     sort_by: Ordenar por
     sort_by_selected: Seleccionado
     subscription_period:
-      months: meses
-      years: años
+      months: mes
+      years: año
     subtitles: Leyendas
     syllabus:
       header: Título

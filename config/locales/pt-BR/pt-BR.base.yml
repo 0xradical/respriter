@@ -111,23 +111,23 @@ pt-BR:
       year: Ano
     adjectives:
       seconds:
-        one: "%{noun} de %{count} segundo"
-        other: "%{noun} de %{count} segundos"
+        one: "%{count} segundo de"
+        other: "%{count} segundos de"
       minutes:
-        one: "%{noun} de %{count} minuto"
-        other: "%{noun} de %{count} minutos"
+        one: "%{count} minuto de"
+        other: "%{count} minutos de"
       hours:
-        one: "%{noun} de %{count} hora"
-        other: "%{noun} de %{count} horas"
+        one: "%{count} hora de"
+        other: "%{count} horas de"
       days:
-        one: "%{noun} de %{count} dia"
-        other: "%{noun} de %{count} dias"
+        one: "%{count} dia de"
+        other: "%{count} dias de"
       months:
-        one: "%{noun} de %{count} mês"
-        other: "%{noun} de %{count} meses"
+        one: "%{count} mês de"
+        other: "%{count} meses de"
       years:
-        one: "%{noun} de %{count} ano"
-        other: "%{noun} de %{count} anos"
+        one: "%{count} ano de"
+        other: "%{count} anos de"
   errors:
     format: "%{attribute} %{message}"
     messages:

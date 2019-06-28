@@ -1,5 +1,5 @@
 <template>
-  <svg :style='style'>
+  <svg :class='iconClasses' :style='style'>
     <use :xlink:href='path' />
   </svg>
 </template>
@@ -11,29 +11,46 @@ export default {
       type: String,
       required: true
     },
+    scope: {
+      type: String,
+      default: "icons"
+    },
     width: {
       type: String,
-      default: '1em'
+      default: "1em"
     },
     height: {
       type: String,
-      default: '1em'
+      default: "1em"
     },
     transform: {
       type: String,
       default: 'initial'
+    },
+
+    cursor: {
+      type: String,
+      defaul: 'initial'
+    },
+    iconClasses: {
+      type: Array,
+      default() {
+        return [];
+      }
     }
   },
   computed: {
     style() {
       return {
         'transform': this.transform,
+        'transition': 'all .5s',
         'width': this.width,
-        'height': this.height
+        'height': this.height,
+        'cursor': this.cursor
       }
     },
     path() {
-      return `#icons-${this.name}`
+      return `#${this.scope}-${this.name}`
     }
   }
 }

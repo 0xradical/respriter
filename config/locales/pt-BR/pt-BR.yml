@@ -23,16 +23,19 @@ pt-BR:
       long: "Vídeo não disponível"
     see_syllabus: "Ver plano de estudos"
     trial_period: "%{period} grátis"
-    free_trial: "Grátis por"
+    free_trial: "trial grátis"
     certificate:
       included: "Certificado incluso"
       free: "Certificado gratuito"
       paid: "Certificado pago (%{price})"
     details:
+      see: 'Ver Detalhes'
       show: 'Exibir Detalhes'
       hide: 'Esconder Detalhes'
     description:
       view: 'Ver descrição'
+      show: 'Ver Descrição'
+      hide: 'Esconder Descrição'
     syllabus:
       header: 'Plano de estudos'
       view: 'Ver plano de estudos'
@@ -42,14 +45,18 @@ pt-BR:
       self_paced: "Rítmo flexível"
       live_class: "Aulas ao vivo"
     subscription_period:
-      months: "Assinatura mensal"
-      years: "Assinatura anual"
+      months: "mês"
+      years: "ano"
     for_this_course: "Por este curso"
     not_available: "N/D"
     sign_in: 'Entrar'
     sign_up: 'Cadastre-se'
     sign_out: 'Sair'
     price: 'Preço'
+    pricing:
+      all_courses: "todos os cursos"
+      this_course_only: "apenas este curso"
+      tooltip: '%{provider} oferece %{offer}. No fim desse período, será cobrado o valor da inscrição. Você terá acesso ilimitado aos cursos, podendo cancelar a qualquer momento.'
     in_currency: "em %{currency}"
     search: 'Pesquisar'
     cancel_search: 'Sair da pesquisa'
