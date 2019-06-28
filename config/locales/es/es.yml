@@ -431,4 +431,15 @@ es:
         select_interest_placeholder: Elija sus áreas de interés
         upload_image_button: Elegir foto
       meta:
-        title: Zona para Miembros | Quero
+        title: Zona para Miembros | Classpert
+  posts:
+    base: &post_base
+      tags:
+        computer_science: 'Computer Science'
+        e_learning: 'E-Learning'
+        blockchain_and_cryptocurrency: 'Blockchain and Cryptocurrency'
+    index:
+      <<: *post_base
+    show:
+      <<: *post_base
+

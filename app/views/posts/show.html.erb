@@ -29,9 +29,9 @@
         <article class='el:o-article'>
 
           <div class='el:amx-Fs(0.75em) el:amx-Mb(0.5em)'>
-            <span class='el:amx-Tt(u)'>
-              <%= link_to 'Blog', posts_path %>
-            </span> / <span class='el:amx-C_blue el:amx-Tt(u)'><%= @post.tags.map { |t| t("tags.#{t}") }.join(',') %></span>
+            <%= link_to 'Blog', posts_path %> / <span class='el:amx-C_blue3'>
+              <%= @post.tags.map { |t| link_to(t(".tags.#{t}"), posts_path(tags: t)) }.join(',').html_safe %> 
+            </span>
           </div>
 
           <h1 class='post__title'><%= @post.title %></h1>
@@ -61,7 +61,7 @@
           </div>
 
           <div class='el:o-article__body'>
-            <%= @post.body.html_safe %>
+            <%= @post.render_body.html_safe %>
           </div>
 
           <div class='el:amx-Mt(2.5em)'>

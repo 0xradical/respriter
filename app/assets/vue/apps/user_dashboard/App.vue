@@ -8,7 +8,7 @@
         <svg v-else width='76px' height='76px'>
           <use xlink:href='#icons-avatar'></use>
         </svg>
-        <button class='btn btn--blue-flat btn--tiny' style='margin-top:10px' id="pick-avatar">
+        <button class='btn btn--blue-flat btn--small' style='margin-top:10px' id="pick-avatar">
           {{ $t('pages.dashboard_index.html.upload_image_button') }}
         </button>
         <avatar-cropper
@@ -57,7 +57,7 @@
         <svg v-else width='76px' height='76px'>
           <use xlink:href='#icons-avatar'></use>
         </svg>
-        <button class='btn btn--blue-flat btn--tiny' style='margin-top:10px' id="pick-avatar">
+        <button class='btn btn--blue-flat btn--small' style='margin-top:10px' id="pick-avatar">
           {{ $t('pages.dashboard_index.html.upload_image_button') }}
         </button>
         <avatar-cropper

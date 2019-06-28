@@ -67,6 +67,30 @@ html {
 
 }
 
+.c-pagination {
+
+  list-style: none;
+  margin: 10px 0px;
+  padding: 0;
+  clear: both;
+
+  &__page {
+
+    float: left;
+    margin-right: 10px;
+
+    &--current {
+      background-color: #4C636F;
+      color: #FFF;
+      padding: 0px 4px;
+      border-radius: 3px;
+    }
+
+  }
+
+}
+
+
 .v--modal-overlay {
   background: #00000095 !important;
 }

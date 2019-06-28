@@ -57,7 +57,7 @@ module Api
         private
 
         def post_params
-          params.require(:post).permit(:title, :body, :slug, :locale, tags: [], meta: {})
+          params.require(:post).permit(:title, :body, :slug, :locale, :use_cover_image, tags: [], meta: {})
         end
 
         def include_params
