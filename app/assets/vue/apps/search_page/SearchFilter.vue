@@ -184,6 +184,32 @@
 
       <hr/>
 
+      <search-fieldset :title='$t("dictionary.providers")' :stand-out="true">
+        <template #action>
+          <a class='c-fieldset-frame__action mx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','provider_name')">
+            {{ $t('dictionary.clear_filter') }}
+          </a>
+        </template>
+        <div class='c-fieldset-frame__item'>
+          <search-facet-options-filter name='provider_name'
+                                      :placeholder="`${$t('dictionary.search')} ${$t('dictionary.providers')} ...`"
+                                      :suggestions='suggestions.provider_name.filtered'
+                                      @changedInputFacetOptionSuggestion="suggestionInputChange('provider_name', ...$event)">
+          </search-facet-options-filter>
+        </div>
+        <div class='c-fieldset-frame__item'>
+          <search-facet-options :options='suggestions.provider_name.filtered'
+                                :filter='filter.provider_name'
+                                :noOptionsMessage="this.suggestions.provider_name.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.provider_name.current})"
+                                :noOptionsClasses="['mx-C(magenta) mx-Fs-0d75']"
+                                @includeFacetOption="$emit('optionAddedToFilter', 'provider_name', $event)"
+                                @excludeFacetOption="$emit('optionRemovedFromFilter', 'provider_name', $event)">
+          </search-facet-options>
+        </div>
+      </search-fieldset>
+
+      <hr/>
+
       <search-fieldset :title='$t("dictionary.audios")' :stand-out="true">
         <template #action>
           <a class='c-fieldset-frame__action mx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','root_audio')">
@@ -263,33 +289,6 @@
           </search-facet-options>
         </div>
       </search-fieldset>
-
-      <hr/>
-
-      <search-fieldset :title='$t("dictionary.providers")' :stand-out="true">
-        <template #action>
-          <a class='c-fieldset-frame__action mx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','provider_name')">
-            {{ $t('dictionary.clear_filter') }}
-          </a>
-        </template>
-        <div class='c-fieldset-frame__item'>
-          <search-facet-options-filter name='provider_name'
-                                      :placeholder="`${$t('dictionary.search')} ${$t('dictionary.providers')} ...`"
-                                      :suggestions='suggestions.provider_name.filtered'
-                                      @changedInputFacetOptionSuggestion="suggestionInputChange('provider_name', ...$event)">
-          </search-facet-options-filter>
-        </div>
-        <div class='c-fieldset-frame__item'>
-          <search-facet-options :options='suggestions.provider_name.filtered'
-                                :filter='filter.provider_name'
-                                :noOptionsMessage="this.suggestions.provider_name.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.provider_name.current})"
-                                :noOptionsClasses="['mx-C(magenta) mx-Fs-0d75']"
-                                @includeFacetOption="$emit('optionAddedToFilter', 'provider_name', $event)"
-                                @excludeFacetOption="$emit('optionRemovedFromFilter', 'provider_name', $event)">
-          </search-facet-options>
-        </div>
-      </search-fieldset>
-
     </template>
   </form>
 </template>

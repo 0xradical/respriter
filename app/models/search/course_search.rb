@@ -1,6 +1,6 @@
 module Search
   class CourseSearch
-    VERSION = '1.1.0'
+    VERSION = '1.1.1'
 
     attr_reader :query, :filter, :page, :per_page, :order, :boost, :session_id
 
