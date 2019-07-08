@@ -1,402 +1,192 @@
 <template>
-  <div data-chrome-ext='clsp-tagger' :data-chrome-ext-data='chromeExtData' :id='course.id' class='c-hcard(2.0) mx-D(fx) mx-FxWp(w) mx-FxFd(col)@>desktop' :class="{ 'js-expanded' : expanded }">
-    <!-- Video  -->
-    <div class='c-hcard(2.0)__video-preview mx-Mr-0d5@phone mx-Mr-0d5@tablet mx-Mr-1@>desktop mx-Fx(100%)@>desktop mx-FxOrd(1)'>
-      <div class='c-video'>
-        <template v-if="course.video">
-          <div :class="{ 'mx-D(n) ': !videoMobileUx && videoComponent }">
-            <div class='c-video__bg-img' :style="{ 'background-image': course.video.thumbnail_url && `url(${course.video.thumbnail_url})` }"></div>
-            <div class="c-video__mask"></div>
-            <div @click="fetchVideo" class='c-video__content' :class="{'mx-D(n)': !videoMobileUx && videoClicked}">
-              <svg class='c-video__icon c-video__icon--small@<tablet-half' viewBox='0 0 50 50'>
-                <use :xlink:href="playIcon"></use>
-              </svg>
-              <span class='c-video__subtitle mx-Mt-0d125@<tablet-half mx-D(n)@>tablet-half'>{{ $t('dictionary.preview_this_course.short') }}</span>
-              <span class='c-video__subtitle mx-D(n)@<tablet-half'>{{ $t('dictionary.preview_this_course.long') }}</span>
+  <div>
+    <!-- desktop offcanvas -->
+    <modal :adaptive="true" width='50%' height="auto" :scrollable="true" :name='offCanvasId'>
+      <div class='el:o-hcard-offcanvas el:amx-Pt(1.875em) el:amx-Pr(1.875em) el:amx-Pb(1.875em) el:amx-Pl(1.875em)'>
+        <div class='el:o-hcard-offcanvas__content-slot'>
+          <div class='el:o-hcard-offcanvas__header-slot el:amx-Mb(1.5em)'>
+            <course-provider :logoClasses="['el:amx-Fs(1.5em)']"
+                             :nameClasses="['el:amx-Fs(0.875em)']"
+                             :course="course">
+            </course-provider>
+
+            <div aria-label="Close" @click='$modal.hide(offCanvasId)'>
+              <icon name='close' width='1rem' height='1rem' cursor='pointer'></icon>
             </div>
           </div>
-          <component :is="!videoMobileUx && videoComponent" :url="videoUrl" :embed="videoEmbed"></component>
-          <modal :adaptive="true" width='80%' :name='`mobile-video-${course.id}`'>
-            <div class='c-hcard(2.0)__mobile-modal'>
-              <div class='c-hcard(2.0)__mobile-modal-title-slot'>
-                <div class='c-hcard(2.0)__mobile-modal-title'>{{ course.name }}</div>
-              </div>
-              <div class='c-hcard(2.0)__mobile-modal-body-slot'>
-                <component :is="videoMobileUx && videoComponent" :url="videoUrl" :embed="videoEmbed" :autoplay="true"></component>
-              </div>
-              <div class='c-hcard(2.0)__mobile-modal-footer-slot'>
-                <a target='_blank' :href='course.gateway_path' class='btn btn--rounded btn--tiny btn--blue-flat'>
-                  {{ $t('dictionary.go_to_course') }}
-                </a>
-              </div>
+
+          <div class='el:o-hcard-offcanvas__body-slot'>
+            <course-title :course='course'
+                          :rootClasses="['el:amx-Mb(1.75em)']"
+                          :titleClasses="['el:amx-Fs(1.25em)']">
+            </course-title>
+
+            <div class='el:amx-D(f)'>
+              <video-preview :course='course'
+                              :rootClasses="['el:amx-Mr(1.75em)']"
+                              style='flex: 50%;'>
+              </video-preview>
+
+              <course-attribute-list :course='course'
+                                     :rootClasses="['el:amx-D(f)','el:amx-FxJc(sb)','el:amx-FxDi(c)']"
+                                     :attributeClasses="['el:amx-Fs(0.875em)']"
+                                     :attributeIconClasses="['el:amx-Mr(0.5em)']"
+                                     style='flex: 50%'>
+              </course-attribute-list>
             </div>
-          </modal>
-        </template>
-        <template v-else>
-          <div class='c-video__content'>
-            <svg class='c-video__icon c-video__icon--small@<tablet-half' viewBox='0 0 50 50'>
-              <use :xlink:href="noVideoIcon"></use>
-            </svg>
-            <span class='c-video__subtitle mx-Mt-0d125@<tablet-half mx-D(n)@>tablet-half'>{{ $t('dictionary.preview_not_available.short') }}</span>
-            <span class='c-video__subtitle mx-D(n)@<tablet-half'>{{ $t('dictionary.preview_not_available.long') }}</span>
-          </div>
-        </template>
-      </div>
-    </div>
-    <!-- Title -->
-    <div class='c-hcard(2.0)__details-group mx-D(fx) mx-FxFd(col) mx-FxOrd(2) mx-Fs-0d875@desktop'>
-      <div class='mx-Mr-1@>desktop'>
-        <div class='mx-D(fx) mx-FxJc(sb)'>
-          <div class='c-hcard(2.0)__provider'>
-            <span class='c-label'>
-              <svg class='c-label__icon c-label__icon--circled-border c-label__icon--dec-50%'>
-                <use :xlink:href="logo"></use>
-              </svg>
-              <span class='c-label__text'>
-                <span class='c-tags c-tags--gray'>
-                  {{ course.provider_name }}
-                </span>
-              </span>
-            </span>
-          </div>
-        </div>
-        <div class='c-hcard(2.0)__title-box'>
-          <a :href='course.gateway_path' target='_blank' :title='course.name' class='c-hcard(2.0)__title'>
-            {{ course.name }}
-          </a>
-        </div>
-      </div>
-    </div>
-    <!-- Price -->
-    <div class='c-hcard(2.0)__details-expander-group mx-D(fx) mx-FxAi(fs) mx-FxFd(col) mx-Bc(white) mx-Fx(100%) mx-Fx(40%)@>desktop mx-FxOrd(3) mx-FxOrd(4)@>desktop mx-Fs-0d875@desktop'>
-      <div class="c-hcard(2.0)__price mx-FxOrd(1) mx-FxOrd(2)@>desktop">
-        {{ course.free_content ? "free" : `$${formattedPrice}` }}
-      </div>
-      <template v-if="course.price > 0">
-        <div class="c-hcard(2.0)__price-trial-details mx-FxOrd(2) mx-FxOrd(1)@>desktop mx-D(n)@phone mx-D(n)@tablet">
-          <template v-if="course.subscription_type">
-            <span class="mx-Tt(u) mx-Fs-0d625">
-              {{ $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) }}
-            </span>
-          </template>
-        </div>
-        <template v-if="course.subscription_type && course.has_free_trial">
-          <div class="c-hcard(2.0)__price-subscription-details mx-FxOrd(3) mx-D(n)@phone mx-D(n)@tablet mx-Mt-0d25@>desktop">
-            <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) })" class='c-label mx-Fs-0d625 mx-Mt-0d25'>
-              <svg class='c-label__icon'>
-                <use :xlink:href="renewIcon"></use>
-              </svg>
-              <span class='c-label__text'>
-                {{ $t(`dictionary.subscription_period.${course.subscription_period.unit}`) }}
-              </span>
-            </span>
-          </div>
-        </template>
-        <template v-if="false && course.free_content && course.paid_content">
-          <div class="c-hcard(2.0)__price-subscription-details mx-FxOrd(3) mx-D(n)@phone mx-D(n)@tablet mx-Mt-0d25@>desktop">
-            <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) })" class='c-label mx-Fs-0d625 mx-Mt-0d25'>
-              <svg class='c-label__icon'>
-                <use :xlink:href="currencyIcon"></use>
-              </svg>
-              <span class='c-label__text'>
-                {{ $t('dictionary.extra_paid_content') }}
-              </span>
-            </span>
-          </div>
-        </template>
-      </template>
-      <div class="mx-FxOrd(5) mx-D(n)@>desktop c-hcard(2.0)__details-expander c-hcard(2.0)--shown-on-collapse" @click="expanded = true">
-        {{ $t('dictionary.details.show') }}
-      </div>
-      <div class="mx-FxOrd(5) mx-D(n)@>desktop c-hcard(2.0)__details-expander c-hcard(2.0)--shown-on-expand" @click="expanded = false">
-        {{ $t('dictionary.details.hide') }}
-      </div>
-    </div>
-    <!-- Details -->
-    <div class='c-hcard(2.0)__details-group mx-Pos(r) mx-FxOrd(4) mx-FxOrd(3)@>desktop mx-Fs-0d75@phone mx-Fs-0d75@tablet mx-Fs-0d875@desktop'>
-      <div class='mx-Mr-1@>desktop'>
-        <div class='c-hcard(2.0)__details mx-D(fx) mx-FxFd(col)'>
-          <div class='mx-FxFd(col) c-hcard(2.0)--flexed-on-expand'>
-            <template v-if="course.price > 0">
-              <div class="c-hcard(2.0)__price-details mx-D(fx) mx-FxFd(col) mx-Mt-0d625 mx-D(n)@>desktop">
-                <template v-if="course.subscription_type">
-                  <span class="mx-Tt(u) mx-Fs-0d875">
-                    {{ $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) }}
-                  </span>
-                </template>
-                <template v-if="course.subscription_type && course.has_free_trial">
-                  <div class="c-hcard(2.0)__price-subscription-details mx-FxOrd(3) mx-D(n)@phone mx-D(n)@tablet mx-Mt-0d25@>desktop">
-                    <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) })" class='c-label mx-Fs-0d875 mx-Mt-0d25'>
-                      <svg class='c-label__icon'>
-                        <use :xlink:href="renewIcon"></use>
-                      </svg>
-                      <span class='c-label__text'>
-                        {{ $t(`dictionary.subscription_period.${course.subscription_period.unit}`) }}
-                      </span>
-                    </span>
-                  </div>
-                </template>
-                <template v-if="false && course.free_content && course.paid_content">
-                  <div class="c-hcard(2.0)__price-subscription-details mx-FxOrd(3) mx-D(n)@phone mx-D(n)@tablet mx-Mt-0d25@>desktop">
-                    <span :data-tippy="$t('components.card.subscription_tip', {period: $t(`datetime.adjectives.${course.trial_period.unit}.${course.trial_period.value == 1 ? 'one' : 'other'}`, {count: course.trial_period.value, noun: 'TRIAL'}) })" class='c-label mx-Fs-0d625 mx-Mt-0d25'>
-                      <svg class='c-label__icon'>
-                        <use :xlink:href="currencyIcon"></use>
-                      </svg>
-                      <span class='c-label__text'>
-                        {{ $t('dictionary.extra_paid_content') }}
-                      </span>
-                    </span>
-                  </div>
-                </template>
-              </div>
-            </template>
-            <!-- Certificate -->
-            <div v-if="course.certificate && course.certificate.type" class='c-hcard(2.0)__certificate-details mx-D(n)@>desktop mx-Fs-1d125 mx-Mt-0d75'>
-              {{ $t(`dictionary.certificate.${course.certificate.type}`, {price: course.certificate.price})  }}
-            </div>
-            <!-- Localization Details Desktop and TV -->
-            <div class='mx-D(fx) mx-D(n)@phone mx-D(n)@tablet c-hcard(2.0)__localization-details mx-Fs-0d75'>
-              <div v-if="course.certificate && course.certificate.type" class='c-hcard(2.0)__certificate-details mx-Fs-1d125'>
-                {{ $t(`dictionary.certificate.${course.certificate.type}`, {price: course.certificate.price})  }}
-              </div>
-              <ul class='c-list c-list--unstyled'>
-                <li class='mx-F(l) mx-D(ib)'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-40%'>
-                      <use :xlink:href="audioIcon"></use>
-                    </svg>
-                    <span class='c-label__text c-label__text--uppercase mx-Fs-1d125'>
-                      {{ course.root_audio.join(",") }}
-                    </span>
-                  </span>
-                </li>
-                <li class='mx-D(ib)'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-40%'>
-                      <use :xlink:href="subtitleIcon"></use>
-                    </svg>
-                    <span class='c-label__text c-label__text--uppercase mx-Fs-1d125'>
-                      <template v-if="course.root_subtitles && course.root_subtitles.length > 0">
-                        {{ course.root_subtitles.slice(0,1).join(",") }}
-                      </template>
-                    </span>
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <!-- Details Phone and Tablet -->
-            <div class='mx-D(fx) mx-D(n)@>desktop c-hcard(2.0)__course-details mx-Mt-0d75 mx-Mb-0d75'>
-              <ul class='mx-Wd(50%) c-list c-list--unstyled'>
-                <li class='c-hcard(2.0)__course-details-pacing'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="velocimeterIcon"></use>
-                    </svg>
-                    <span class='c-label__text'>
-                      {{ course.pace ? $t(`dictionary.pace.${course.pace}`) : $t("dictionary.not_available") }}
-                    </span>
-                  </span>
-                </li>
 
-                <li class='c-hcard(2.0)__course-details-effort'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="clockIcon"></use>
-                    </svg>
-                    <span class='c-label__text'>
-                      {{ course.effort? $t(`datetime.distance_in_words.x_hours.${course.effort == 1 ? 'one' : 'other'}`, {count: course.effort}) : $t("dictionary.not_available") }}
-                    </span>
-                  </span>
-                </li>
+            <course-description :course='course'
+                                :rootClasses="['el:amx-Mt(1.75em)','el:amx-Pt(0.5em)','el:amx-Pb(0.5em)']">
+            </course-description>
 
-                <li class='c-hcard(2.0)__course-details-instructor'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="userAndMonitorIcon"></use>
-                    </svg>
-                    <span class='c-label__text c-label__text--truncated c-label__text--unwrapped'>
-                      {{ course.instructors.length ? course.instructors.map(i => i.name).join(",") : $t("dictionary.not_available") }}
-                    </span>
-                  </span>
-                </li>
-              </ul>
-              <ul class='mx-Wd(50%) c-list c-list--unstyled'>
-                <li class='c-hcard(2.0)__course-details-level'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="levelIcon"></use>
-                    </svg>
-                    <span class='c-label__text'>
-                      <template v-if="course.level.length">
-                        {{ course.level.map(l => $t(`dictionary.levels.${l}`)).join(",")  }}
-                      </template>
-                      <template v-else>
-                        {{ $t("dictionary.not_available") }}
-                      </template>
-                    </span>
-                  </span>
-                </li>
-
-                <li class='c-hcard(2.0)__course-details-institution'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="institutionIcon"></use>
-                    </svg>
-                    <span v-if="course.offered_by.length" class='c-label__text c-label__text--truncated c-label__text--unwrapped'>
-                      {{ course.offered_by.map(i => i.name).join(",") }}
-                    </span>
-                    <span v-else class='c-label__text'>
-                      {{ $t("dictionary.not_available") }}
-                    </span>
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <!-- Details Desktop and TV -->
-            <div class='mx-D(fx) mx-Fs-0d75 mx-D(n)@phone mx-D(n)@tablet c-hcard(2.0)__course-details mx-Mt-0d5'>
-              <ul class='mx-Fx(33%) mx-mWd(33%) c-list c-list--unstyled'>
-                <li class='c-hcard(2.0)__course-details-pacing'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="velocimeterIcon"></use>
-                    </svg>
-                    <span class='c-label__text c-label__text--truncated'>
-                      {{ course.pace ? $t(`dictionary.pace.${course.pace}`) : $t("dictionary.not_available") }}
-                    </span>
-                  </span>
-                </li>
-
-                <li class='c-hcard(2.0)__course-details-effort'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="clockIcon"></use>
-                    </svg>
-                    <span class='c-label__text c-label__text--truncated'>
-                      {{ course.effort? $t(`datetime.distance_in_words.x_hours.${course.effort == 1 ? 'one' : 'other'}`, {count: course.effort}) : $t("dictionary.not_available") }}
-                    </span>
-                  </span>
-                </li>
-              </ul>
-              <ul class='mx-Fx(33%) mx-mWd(33%) c-list c-list--unstyled'>
-                <li class='c-hcard(2.0)__course-details-instructor'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="userAndMonitorIcon"></use>
-                    </svg>
-                    <span class='c-label__text c-label__text--truncated'>
-                      {{ course.instructors.length ? course.instructors.map(i => i.name).join(",") : $t("dictionary.not_available") }}
-                    </span>
-                  </span>
-                </li>
-
-                <li class='c-hcard(2.0)__course-details-level'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="levelIcon"></use>
-                    </svg>
-                    <span class='c-label__text c-label__text--truncated'>
-                      <template v-if="course.level.length">
-                        {{ course.level.map(l => $t(`dictionary.levels.${l}`)).join(",")  }}
-                      </template>
-                      <template v-else>
-                        {{ $t("dictionary.not_available") }}
-                      </template>
-                    </span>
-                  </span>
-                </li>
-              </ul>
-
-              <ul class='c-list c-list--unstyled'>
-                <li class='c-hcard(2.0)__course-details-institution'>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="institutionIcon"></use>
-                    </svg>
-                    <span v-if="course.offered_by.length" class='c-label__text c-label__text--truncated c-label__text--unwrapped'>
-                      {{ course.offered_by.map(i => i.name).join(",") }}
-                    </span>
-                    <span v-else class='c-label__text'>
-                      {{ $t("dictionary.not_available") }}
-                    </span>
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <!-- Localization Details Phone and Tablet -->
-            <div class='mx-D(n)@>desktop c-hcard(2.0)__localization-details'>
-              <ul class='c-list c-list--unstyled'>
-                <li>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="audioIcon"></use>
-                    </svg>
-                    <span class='c-label__text c-label__text--uppercase c-label__text--bottom'>
-                      {{ course.root_audio.join(",") }}
-                    </span>
-                  </span>
-                </li>
-                <li>
-                  <span class='c-label'>
-                    <svg class='c-label__icon c-label__icon--inc-60%'>
-                      <use :xlink:href="subtitleIcon"></use>
-                    </svg>
-                    <span class='c-label__text c-label__text--uppercase c-label__text--bottom'>
-                      <template v-if="course.root_subtitles && course.root_subtitles.length > 0">
-                        {{ course.root_subtitles.slice(0,5).join(",") }}
-                      </template>
-                    </span>
-                  </span>
-                </li>
-              </ul>
+            <div class='el:amx-D(f) el:amx-Mt(1.75em)'>
+              <course-pricing :course="course"
+                              :rootClasses="['el:amx-Mr(1.75em)']"
+                              style='flex: 50%;'>
+              </course-pricing>
+              <course-button :course="course"
+                              :rootClasses="['el:amx-Mt(a)', 'el:amx-Mb(a)', 'el:amx-Ta(c)']"
+                              :buttonClasses="['el:amx-Fs(0.75em)','btn--block']"
+                              style='flex: 50%;'>
+              </course-button>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Action -->
-    <div class='c-hcard(2.0)__action-group mx-D(fx) mx-FxFd(col) mx-FxJc(sb) mx-FxAi(c) mx-Fx(60%) mx-FxOrd(5)'>
-      <div class='c-hcard(2.0)__call-to-action'>
-        <a target='_blank' :href='course.gateway_path' class='btn btn--tiny@phone btn--small@tablet btn--rounded btn--blue-flat btn--expandable@>desktop'>
-          {{ $t('dictionary.go_to_course') }}
-        </a>
+    </modal>
+
+    <!-- desktop card -->
+    <div data-chrome-ext='clsp-tagger' :data-chrome-ext-data='chromeExtData' :id='course.id' class='el:o-hcard el:amx-Pr(0.75em) el:amx-Pl(0.75em) el:amx-Pb(0.75em) el:amx-Pt(0.75em) el:amx-Bc_white el:amx-D(n)@<medium el:amx-Fs(0.875em)@<large el:amx-Fs(1em)@extra-large' :class="{ 'js-expanded' : expanded }">
+      <div class='el:o-hcard__slot-0 el:amx-Mr(0.75em)'>
+        <video-preview :course='course'></video-preview>
       </div>
-      <div class='c-hcard(2.0)__syllabus' v-if="course.description">
-        <syllabus :cssClasses="modalCssClasses" :course="syllabusCourse" :name="modalName" height="auto">
-          <template #caller>
-            {{ $t('dictionary.description.view') }}
-          </template>
-          <template #dismisser>
-            <span></span>
-          </template>
-          <template #header="{ course }">
-            <div class='o-syllabus__provider'>
-              <span class='c-label'>
-                <svg class='c-label__icon c-label__icon--circled-border'>
-                  <use :xlink:href="course.provider_logo"></use>
-                </svg>
-                <span class='c-label__text'>
-                  <span class='c-tags c-tags--gray'>
-                    {{ course.provider_name }}
-                  </span>
-                </span>
-              </span>
+
+      <div class='el:o-hcard__slot-1'>
+        <course-provider :rootClasses="['el:amx-Mb(0.5em)']"
+                         :logoClasses="['el:amx-Fs(1.25em)']"
+                         :nameClasses="['el:amx-Fs(0.875em)']"
+                         :course="course">
+        </course-provider>
+
+        <course-title :course='course'></course-title>
+
+        <course-attribute icon='clock'
+                          :rootClasses="['el:amx-Mt(a)']"
+                          :iconClasses="['el:amx-Fs(0.75em)']"
+                          :valueClasses="['el:amx-Fs(0.75em)']"
+                          v-if="course.effort">
+          {{ $t(`datetime.distance_in_words.x_hours.${course.effort == 1 ? 'one' : 'other'}`, {count: course.effort}) }}
+        </course-attribute>
+      </div>
+
+      <div class='el:o-hcard__slot-2'>
+        <course-pricing :course="course" style='flex: 1 1 60%;'></course-pricing>
+
+        <div class='el:amx-D(f) el:amx-FxDi(c) el:amx-FxJc(c) el:amx-Ta(c) el:amx-Ml(0.75em)' style='flex: 0 0 40%;'>
+          <course-button :course="course" :buttonClasses="['el:amx-Mb(0.75em)','el:amx-Fs(0.625em)','btn--block']"></course-button>
+          <button type='button' @click='$modal.show(offCanvasId)' class='el:amx-Fs(0.625em) btn btn--rounded btn--blue-border'>
+            {{ $t('dictionary.details.see') }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- mobile offcanvas -->
+    <modal :adaptive="true" width='100%' height="auto" :scrollable="true" :name='mobileOffCanvasId'>
+      <div class='el-mb:o-hcard-offcanvas el:amx-Pt(1em) el:amx-Pr(1em) el:amx-Pb(1em) el:amx-Pl(1em)'>
+        <div class='el-mb:o-hcard-offcanvas__content-slot'>
+          <div class='el-mb:o-hcard-offcanvas__header-slot'>
+            <course-provider :rootClasses="['el:amx-Mb(0.5em)']"
+                              :nameClasses="['el:amx-Fs(0.875em)']"
+                              :course="course">
+            </course-provider>
+
+            <div aria-label="Close" @click='$modal.hide(mobileOffCanvasId)'>
+              <icon name='close' width='1rem' height='1rem'></icon>
             </div>
-          </template>
-          <template #body="{ course }">
-            <h6 class='o-syllabus__course-name'>{{ course.name }}</h6>
-            <p class='o-syllabus__course-description' v-html='course.description'></p>
-          </template>
-        </syllabus>
+          </div>
+
+          <div class='el-mb:o-hcard-offcanvas__body-slot'>
+            <course-title :course='course'
+                          :rootClasses="['el:amx-Mb(1em)']">
+            </course-title>
+
+            <video-preview :course='course'
+                            :rootClasses="['el:amx-Mb(1em)','el:amx-W(100%)']">
+            </video-preview>
+
+            <div class='el:amx-D(f) el:amx-FxDi(c) el:amx-Mb(0.75em) el:amx-Pos(r)'>
+              <course-pricing :course="course"
+                              :rootClasses="['el:amx-Pos(a)','el:amx-Pos-b(0)', 'el:amx-Pos-r(0)']">
+              </course-pricing>
+
+              <course-attribute-list :course='course'
+                                      :attributeClasses="['el:amx-Fs(0.75em)','el:amx-Mb(0.5em)']"
+                                      :attributeIconClasses="['el:amx-Mr(0.5em)']"
+                                      style="max-width: 60%">
+              </course-attribute-list>
+            </div>
+
+            <course-description :course='course'
+                                :rootClasses="['el:amx-Pt(0.5em)','el:amx-Pb(0.5em)']">
+            </course-description>
+
+            <div class='el:amx-D(f)' style='flex: 1;'>
+              <course-button :course='course'
+                              :rootClasses="['el:amx-Mt(a)','el:amx-Mb(a)', 'el:amx-Ta(c)', 'el:amx-W(100%)']"
+                              :buttonClasses="['btn--block','el:amx-Fs(1em)']"
+                              style="width: 100%;">
+              </course-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal>
+
+    <!-- mobile card -->
+    <div :id='`mobile-${course.id}`' @click='$modal.show(mobileOffCanvasId)' class='el-mb:o-hcard el:amx-Pr(0.875em) el:amx-Pb(0.875em) el:amx-Pt(0.875em) el:amx-Pl(0.875em) el:amx-Bc_white el:amx-Cur(p) el:amx-D(n)@>large'>
+      <div class='el-mb:o-hcard__slot-0'>
+        <course-provider :rootClasses="['el:amx-Mb(0.5em)']"
+                        :nameClasses="['el:amx-Fs(0.75em)']"
+                        :course="course">
+        </course-provider>
+
+        <course-title :course='course'
+                      :titleClasses="['el:amx-Fs(0.875em)']"
+                      :href="false">
+        </course-title>
+
+        <course-attribute icon='clock'
+                          :rootClasses="['el:amx-Mt(0.5em)']"
+                          :iconClasses="['el:amx-Fs(0.75em)']"
+                          :valueClasses="['el:amx-Fs(0.75em)']"
+                          v-if="course.effort">
+          {{ $t(`datetime.distance_in_words.x_hours.${course.effort == 1 ? 'one' : 'other'}`, {count: course.effort}) }}
+        </course-attribute>
+      </div>
+
+      <div class='el-mb:o-hcard__slot-1'>
+        <course-rating :rootClasses="['el:amx-Mb(0.75em)']"></course-rating>
+        <course-pricing :course="course"
+                        :rootClasses="['el:amx-Ta(r)']"
+                        :trial-callout="false">
+        </course-pricing>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import _ from 'lodash';
-import { slugify } from 'transliteration';
-import Syllabus from 'blocks/src/vue/Syllabus.vue';
-import EmbeddedVideo from './EmbeddedVideo.vue';
+import Icon from './Icon.vue';
+import VideoPreview from './VideoPreview.vue';
+import CourseProvider from './CourseProvider.vue';
+import CourseTitle from './CourseTitle.vue';
+import CourseAttribute from './CourseAttribute.vue';
+import CourseAttributeList from './CourseAttributeList.vue';
+import CoursePricing from './CoursePricing.vue';
+import CourseButton from './CourseButton.vue';
+import CourseDescription from './CourseDescription.vue';
+import CourseRating from './CourseRating.vue';
 
 export default {
 
@@ -409,168 +199,42 @@ export default {
 
   data () {
     return {
-      expanded: false,
-      videoComponent: null,
-      videoClicked: false,
-      videoUrl: '',
-      videoEmbed: '',
-      videoMobileUx: false,
-      videoLoaded: false,
-      modalCssClasses: {
-        rootClass: ["o-syllabus"],
-        callerClass: ["o-syllabus__caller"],
-        wrapperClass: ["o-syllabus__wrapper"],
-        dismisserClass: ["o-syllabus__dismisser"],
-        bodyClass: ["o-syllabus__body"]
-      }
+      expanded: false
     }
   },
 
   components: {
-    syllabus: Syllabus,
-    embeddedVideo: EmbeddedVideo
+    icon: Icon,
+    videoPreview: VideoPreview,
+    courseProvider: CourseProvider,
+    courseTitle: CourseTitle,
+    courseAttribute: CourseAttribute,
+    courseAttributeList: CourseAttributeList,
+    coursePricing: CoursePricing,
+    courseButton: CourseButton,
+    courseDescription: CourseDescription,
+    courseRating: CourseRating
   },
 
   methods: {
     mobileViewport: function() {
       let width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
       return width < 800;
-    },
-
-    fetchVideo: function() {
-      this.videoClicked = true;
-      if (this.mobileViewport()) {
-        this.videoMobileUx = true;
-      } else {
-        this.videoMobileUx = false;
-      }
-
-      if (!this.videoLoaded) {
-        fetch(`/videos/${this.course.id}`).then((response) => {
-          response.json().then((json) => {
-            this.videoUrl        = json.url;
-            this.videoEmbed      = json.embed;
-            this.videoComponent  = "embedded-video";
-            this.videoLoaded     = true
-          })
-        });
-      }
-
-      if (this.videoMobileUx) {
-        this.$modal.show(`mobile-video-${this.course.id}`);
-      }
     }
   },
 
   computed: {
-
     chromeExtData () {
       return JSON.stringify({
           curated_tags: this.course.curated_tags
       })
     },
-
-    playIcon () {
-      return '#icons-play'
+    offCanvasId() {
+      return `offcanvas-${this.course.id}`;
     },
-
-    noVideoIcon () {
-      return '#icons-no-video'
-    },
-
-    audioIcon () {
-      return '#icons-audio'
-    },
-
-    subtitleIcon () {
-      return '#icons-subtitle'
-    },
-
-    currencyIcon() {
-      return '#icons-currency'
-    },
-
-    renewIcon () {
-      return '#icons-renew'
-    },
-
-    subtitleIcon () {
-      return '#icons-subtitle'
-    },
-
-    velocimeterIcon () {
-      return '#icons-velocimeter'
-    },
-
-    clockIcon () {
-      return '#icons-clock'
-    },
-
-    userIcon () {
-      return '#icons-user'
-    },
-
-    userAndMonitorIcon () {
-      return '#icons-user-and-monitor'
-    },
-
-    levelIcon () {
-      return '#icons-level'
-    },
-
-    institutionIcon () {
-      return '#icons-institution';
-    },
-
-    logo () {
-      return `#providers-${slugify(this.course.provider_name)}`
-    },
-
-    price () {
-      return parseFloat(this.course.price)
-    },
-
-    formattedPrice() {
-      return this.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    },
-
-    syllabusCourse () {
-      return Object.assign({
-        provider_logo: this.logo,
-      }, this.course)
-    },
-
-    modalName () {
-      return `syllabus-modal-${this.course.id}`;
+    mobileOffCanvasId() {
+      return `mobile-offcanvas-${this.course.id}`;
     }
   }
 }
 </script>
-
-<style lang="scss">
-  @import '~elements/src/scss/config/variables.scss';
-
-  .c-hcard\(2\.0\)__localization-details {
-    @media (--desktop-min) {
-      // horrible hack, coupling presentation with structure
-      // TODO: refactor
-
-      ul {
-        width: calc(100% - 120px);
-
-        li {
-          width: auto;
-          max-width: calc(50%);
-
-          .c-label__text {
-            min-width: 24px;
-            width: auto;
-            max-width: calc(100% - 24px);
-            max-height: 1em;
-            overflow: hidden;
-          }
-        }
-      }
-    }
-  }
-</style>

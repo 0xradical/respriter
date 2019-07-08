@@ -113,14 +113,12 @@
 
       </div>
     </div>
-    <course-modal></course-modal>
   </div>
 </template>
 
 <script>
   import _ from 'lodash';
   import CourseList from './CourseList.vue';
-  import CourseModal from './CourseModal.vue';
   import Pagination from './Pagination.vue';
   import SearchFilter from './SearchFilter.vue';
   import Icon from './Icon.vue';
@@ -139,7 +137,9 @@
 
       category: {
         type: Array,
-        default: []
+        default() {
+          return [];
+        }
       },
 
       showCategoriesFilter: {
@@ -167,7 +167,6 @@
       courseList: CourseList,
       searchFilter: SearchFilter,
       pagination: Pagination,
-      courseModal: CourseModal,
       icon: Icon,
       loading: Loading,
       multiselect: Multiselect

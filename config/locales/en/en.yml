@@ -26,30 +26,37 @@ en:
       free: "Free certificate"
       paid: "Paid certificate (%{price})"
     details:
+      see: 'See Details'
       show: 'Show Details'
       hide: 'Hide Details'
     description:
       view: 'See Description'
+      show: 'Show Description'
+      hide: 'Hide Description'
     syllabus:
       header: 'Course Syllabus'
       view: 'See Syllabus'
     see_syllabus: "See syllabus"
     trial_period: "%{period} trial"
-    free_trial: "Free trial"
+    free_trial: "free trial"
     extra_paid_content: "Extra paid content"
     pace:
       instructor_paced: "Instructor-paced"
       self_paced: "Self-paced"
       live_class: "Live Class"
     subscription_period:
-      months: "Monthly subscription"
-      years: "Annual subscription"
+      months: "month"
+      years: "year"
     for_this_course: "For this course"
     not_available: "N/A"
     sign_in: "Log In"
     sign_up: "Sign Up"
     sign_out: 'Log out'
     price: "Price"
+    pricing:
+      all_courses: "all courses"
+      this_course_only: "for this course only"
+      tooltip: '%{provider} offers a %{offer}. At the end of this period, the subscription fee will be charged. It gives you unlimited access to their courses. You may cancel the subscription at any time.'
     in_currency: "in %{currency}"
     from: "From"
     to: "To"

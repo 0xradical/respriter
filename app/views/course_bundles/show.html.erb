@@ -44,7 +44,7 @@
         <div class='mx-Pt-0d875 mx-Pb-0d875'>
           <ul class='c-breadcrumb mx-Fs-0d875 mx-Fs-0d625@extra-small'>
             <% @root_tags.each_with_index do |root_tag, index| %>
-              <li class='c-breadcrumb__item'><%= link_to t("tags.#{root_tag}"), course_bundles_path(tag: root_tag.dasherize) %></li> 
+              <li class='c-breadcrumb__item'><%= link_to t("tags.#{root_tag}"), course_bundles_path(tag: root_tag.dasherize) %></li>
               <% if (index + 1 ) != @root_tags.length %>
                 <li class='c-breadcrumb__item'> | </li>
               <% end %>
@@ -60,11 +60,5 @@
 </div>
 
 <div class='mx-Mt-1 mx-Mb-2'>
-  <div class='container'>
-    <div class='row'>
-      <div class='col-md-12'>
-        <div data-vue-search-app data-vue-search-app-props='vue-search-app-props' data-vue-search-app-translations='<%= locales.to_json %>'></div>
-      </div>
-    </div>
-  </div>
+  <div data-vue-search-app data-vue-search-app-props='vue-search-app-props' data-vue-search-app-translations='<%= locales.to_json %>'></div>
 </div>

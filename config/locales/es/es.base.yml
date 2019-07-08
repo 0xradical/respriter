@@ -93,6 +93,9 @@ es:
       x_days:
         one: 1 día
         other: "%{count} días"
+      x_hours:
+        one: 1 hora
+        other: "%{count} horas"
       x_months:
         one: 1 mes
         other: "%{count} meses"
@@ -108,23 +111,23 @@ es:
       year: Año
     adjectives:
       seconds:
-        one: "%{noun} de %{count} segundo"
-        other: "%{noun} de %{count} segundos"
+        one: "%{count} segundo de"
+        other: "%{count} segundos de"
       minutes:
-        one: "%{noun} de %{count} minuto"
-        other: "%{noun} de %{count} minutos"
+        one: "%{count} minuto de"
+        other: "%{count} minutos de"
       hours:
-        one: "%{noun} de %{count} hora"
-        other: "%{noun} de %{count} horas"
+        one: "%{count} hora de"
+        other: "%{count} horas de"
       days:
-        one: "%{noun} de %{count} día"
-        other: "%{noun} de %{count} días"
+        one: "%{count} día de"
+        other: "%{count} días de"
       months:
-        one: "%{noun} de %{count} mes"
-        other: "%{noun} de %{count} meses"
+        one: "%{count} mes de"
+        other: "%{count} meses de"
       years:
-        one: "%{noun} de %{count} año"
-        other: "%{noun} de %{count} años"
+        one: "%{count} año de"
+        other: "%{count} años de"
   errors:
     format: "%{attribute} %{message}"
     messages:
