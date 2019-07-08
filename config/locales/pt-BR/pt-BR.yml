@@ -390,3 +390,13 @@ pt-BR:
         destroy_account_button: 'Deletar Conta'
         upload_image_button: 'Escolher foto'
         select_interest_placeholder: 'Escolha as áreas de seu interesse'
+  posts:
+    base: &post_base
+      tags:
+        computer_science: 'Ciência da Computação'
+        e_learning: 'E-Learning'
+        blockchain_and_cryptocurrency: 'Blockchain e Criptomoeda'
+    index:
+      <<: *post_base
+    show:
+      <<: *post_base

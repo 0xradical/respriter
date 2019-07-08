@@ -7,12 +7,12 @@ module Api
           api_admin_v2_image_url(object.id, host: host)
         end
 
-        attributes :file_url, :caption, :pos
+        attributes :id, :file_url, :caption, :pos
 
         attribute :thumbor do |object|
           {
-            size: "64x64",
-            url: object.thumbor.file_url(width:64, height:64)
+            size: "128x128",
+            url: object.thumbor.file_url(width: 128, height: 128)
           }
         end
 

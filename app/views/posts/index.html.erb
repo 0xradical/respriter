@@ -3,16 +3,30 @@
     <div class='row'>
       <div class='col-12'>
         <% @posts.each do |post| %>
-          <div class='el:amx-Mb(2em)'>
+          <div style='margin-bottom:64px'>
+            <div class='el:amx-Fs(0.625em) el:amx-Mb(0.5em) el:amx-Tt(u)'>
+              <%= post.admin_account.name %> / 
+              <span> <%= l(post.published_at.to_date, format: :long) %> </span> /
+              <% post.tags.each do |tag| %>
+                <%= link_to t(".tags.#{tag}"), posts_path(tags: tag), class: 'el:amx-C_blue3' %>
+              <% end %>
+            </div>
+
             <%= link_to post_path(post.slug) do %>
-              <h1 class='el:amx-Fs(1.75em) el:amx-Mb(0.25em) el:amx-C_blackish-gray' style='line-height:1em'><%= post.title %></h1>
+              <h1 class='el:amx-Fs(1.5em) el:amx-C_blackish-gray' style='line-height:1em'><%= post.title %></h1>
             <% end %>
-            <span class='mx-Fs-0d875'><%= post.admin_account.name %></span>&nbsp; | &nbsp;<span class='mx-Fs-0d875'><%= l(post.published_at.to_date, format: :long) %></span>
-            <p class='el:amx-C_blackish-gray el:amx-Fs(0.875em)'>
-              <%= truncate(strip_tags(post.body.html_safe), length: 350) { "&nbsp".html_safe + link_to("Read more", post_path(post.slug)) } %>
+
+            <%= image_tag(post.images&.first&.thumbor&.file_url(width: 728), class: 'el:amx-Mt(1em)') if post.use_cover_image? %>
+            <p class='el:amx-C_blackish-gray el:amx-Mt(0.5em)' style='line-height:1.5em'>
+              <%= truncate(strip_tags(post.body.html_safe), length: 350) { "&nbsp".html_safe + link_to("Read more", post_path(post.slug), class: 'el:amx-C_blue3') } %>
             </p>
           </div>
         <% end %>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-12'>
+        <%= paginate @posts %>
       </div>
     </div>
   </div>

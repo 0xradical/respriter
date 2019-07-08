@@ -56,7 +56,7 @@
         <input name="utf8" type="hidden" value="✓">
         <input type="hidden" name="authenticity_token" :value="formAuthenticityToken">
         <input type="submit" name="commit" value="Create a password" class="btn btn--magenta-border
-        btn--small btn--rounded">
+        btn--small">
       </form>
 
     </div>

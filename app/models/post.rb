@@ -1,5 +1,7 @@
 class Post < ApplicationRecord
 
+  paginates_per 10
+
   include Imageable::HasMany
   include Slugifyable
   include ActionView::Helpers::TextHelper
@@ -59,6 +61,11 @@ class Post < ApplicationRecord
     update(status: 'disabled') if published?
   end
 
+  def render_body
+    @processor = HTMLMagicCommentProcessor.new(self)
+    @processor.render
+  end
+
   private
 
   def untouched?
@@ -86,6 +93,37 @@ class Post < ApplicationRecord
     if content_fingerprint != new_fingerprint
       self.content_fingerprint = new_fingerprint
     end
+  end
+
+  class HTMLMagicCommentProcessor
+
+    include ActionView::Helpers::AssetTagHelper
+
+    def initialize(post)
+      @post = post
+    end
+
+    # Place a HTML magic comment directly in your html to translate a model to a html tag
+    # <!-- #[tag]:[model_id]:[options] -->
+    # entity    - valid html tag. Must implement render_[tag]_template method. Supported tag: img
+    # model_id: - a record id
+    # options:  - options as url params. Options will be passed to the render_[tag]_template method
+    # i.e: <!-- #img:1:thumbor[width]=10&thumbor[height]=20 -->
+    def render
+      @post.body.gsub(/(<!-- #(img):([a-z0-9\-_]*):?(.*)? -->)/) do |match|
+        entity, entity_id, options = $2, $3, Rack::Utils.parse_nested_query(URI.encode($4)).deep_symbolize_keys
+        send(:"render_#{entity}_template", entity_id, options)
+      end
+    end
+
+    private
+
+    def render_img_template(entity_id, options)
+      image = @post.images.find(entity_id)
+      default_html_opts, default_thumbor_opts = { alt: image.caption }, { width: 728 }
+      image_tag(image.thumbor.file_url(default_thumbor_opts.merge(options[:thumbor] || {})), default_html_opts.merge(options[:html] || {}))
+    end
+
   end
 
 end

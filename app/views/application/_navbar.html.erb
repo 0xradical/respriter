@@ -22,7 +22,7 @@
 
     <div class='c-navbar__slot mx-Fs-0d875 mx-D(n)@<small'>
       <%= link_to 'Blog', posts_path,
-      class: "el:m-link el:m-link[section] el:m-link[blue] mx-Mr-1d5 #{controller_name.eql?('posts') ? 'el:m-link[active:blue]' : ''}" %>
+      class: "el:m-link-nav el:m-link-nav--section el:amx-Mr(1.5em) #{controller_name.eql?('posts') ? 'el:m-link-nav--active' : ''}" %>
     </div>
 
     <% unless user_account_signed_in? %>
@@ -47,7 +47,7 @@
     <% else %>
       <span class='c-navbar__slot mx-D(n)@phone' style='margin-right:4px;margin-left:10px;'>
         <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
-          class: 'btn btn--dark-gray-border btn--rounded btn--small btn--uppercase' %>
+          class: 'btn btn--gray-border btn--rounded btn--small btn--uppercase' %>
       </span>
 
       <span class='c-navbar__slot mx-D(n)@phone'>

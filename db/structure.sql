@@ -833,7 +833,8 @@ CREATE TABLE public.posts (
     admin_account_id bigint,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    original_post_id bigint
+    original_post_id bigint,
+    use_cover_image boolean DEFAULT false
 );
 
 
@@ -1557,6 +1558,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190610174143'),
 ('20190611223206'),
 ('20190615220137'),
-('20190616024703');
+('20190616024703'),
+('20190705153206');
 
 

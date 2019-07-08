@@ -364,6 +364,16 @@ en:
       <<: *meta
     show:
       <<: *meta
+  posts:
+    base: &post_base
+      tags:
+        computer_science: 'Computer Science'
+        e_learning: 'E-Learning'
+        blockchain_and_cryptocurrency: 'Blockchain and Cryptocurrency'
+    index:
+      <<: *post_base
+    show:
+      <<: *post_base
 
   pages:
     dashboard_index:

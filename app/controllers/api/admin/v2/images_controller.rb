@@ -40,7 +40,7 @@ module Api
         end
 
         def image_params
-          params.require(:image).permit(:file, :id, :caption, :pos)
+          params.require(:image).permit(:file, :id, :caption, :pos, browser_meta: {})
         end
 
       end
