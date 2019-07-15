@@ -121,7 +121,7 @@
   import CourseList from './CourseList.vue';
   import Pagination from './Pagination.vue';
   import SearchFilter from './SearchFilter.vue';
-  import Icon from './Icon.vue';
+  import Icon from '../../shared/Icon.vue';
   import qs from 'qs';
   import Loading from "vue-loading-overlay";
   import 'vue-loading-overlay/dist/vue-loading.css';

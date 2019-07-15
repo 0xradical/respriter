@@ -26,10 +26,14 @@ en:
       free: "Free certificate"
       paid: "Paid certificate (%{price})"
     details:
+      header: 'Course Details'
       see: 'See Details'
       show: 'Show Details'
       hide: 'Hide Details'
+    tags:
+      header: 'Related Tags'
     description:
+      header: 'Course Description'
       view: 'See Description'
       show: 'Show Description'
       hide: 'Hide Description'

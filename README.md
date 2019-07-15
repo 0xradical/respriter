@@ -75,3 +75,17 @@ If you want to debug your running tests, open Chrome and type `http://localhost:
 - [Blocks - A reactive component library](http:/github.com/querocourses/blocks)
 
 <img src='system.svg'/>
+
+## SSR
+
+If you want to compile SSR js file, run:
+
+```bash
+  yarn ssr
+```
+
+Then run the following command to start serving ssr content:
+
+```bash
+  node ssr/ssr.js
+```

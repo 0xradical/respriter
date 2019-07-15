@@ -296,7 +296,7 @@
 <script>
   import _ from 'lodash';
   import VueNumberInput from '@chenfengyuan/vue-number-input';
-  import Icon from './Icon.vue';
+  import Icon from '../../shared/Icon.vue';
   import Fieldset from './SearchFilter/Fieldset.vue';
   import FacetOptions from './SearchFilter/FacetOptions.vue';
   import FacetOptionsFilter from './SearchFilter/FacetOptionsFilter.vue';

@@ -1,7 +1,6 @@
 const { environment } = require('@rails/webpacker')
 const { VueLoaderPlugin } = require('vue-loader')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const vue   = require('./loaders/vue')
 const yaml  = require('./loaders/yaml')

@@ -35,9 +35,9 @@
               </course-attribute-list>
             </div>
 
-            <course-description :course='course'
-                                :rootClasses="['el:amx-Mt(1.75em)','el:amx-Pt(0.5em)','el:amx-Pb(0.5em)']">
-            </course-description>
+            <course-description-toggler :course='course'
+                                :rootClasses="['el:amx-Mt(1.75em)','el:amx-Pt(0.5em)','el:amx-Pb(0.5em)','el:amx-Cur(p)']">
+            </course-description-toggler>
 
             <div class='el:amx-D(f) el:amx-Mt(1.75em)'>
               <course-pricing :course="course"
@@ -127,9 +127,9 @@
               </course-attribute-list>
             </div>
 
-            <course-description :course='course'
+            <course-description-toggler :course='course'
                                 :rootClasses="['el:amx-Pt(0.5em)','el:amx-Pb(0.5em)']">
-            </course-description>
+            </course-description-toggler>
 
             <div class='el:amx-D(f)' style='flex: 1;min-height:100px;'>
               <course-button :course='course'
@@ -152,7 +152,7 @@
 
         <course-title :course='course'
                       :titleClasses="['el:amx-Fs(0.875em)']"
-                      :href="false">
+                      :hyperlink="false">
         </course-title>
 
         <course-attribute icon='clock'
@@ -176,16 +176,17 @@
 </template>
 
 <script>
-import Icon from './Icon.vue';
-import VideoPreview from './VideoPreview.vue';
-import CourseProvider from './CourseProvider.vue';
-import CourseTitle from './CourseTitle.vue';
-import CourseAttribute from './CourseAttribute.vue';
-import CourseAttributeList from './CourseAttributeList.vue';
-import CoursePricing from './CoursePricing.vue';
-import CourseButton from './CourseButton.vue';
-import CourseDescription from './CourseDescription.vue';
-import CourseRating from './CourseRating.vue';
+import Icon from '../../shared/Icon.vue';
+import VideoPreview from '../../shared/VideoPreview.vue';
+import CourseProvider from '../../shared/CourseProvider.vue';
+import CourseTitle from '../../shared/CourseTitle.vue';
+import CourseAttribute from '../../shared/CourseAttribute.vue';
+import CourseAttributeList from '../../shared/CourseAttributeList.vue';
+import CoursePricing from '../../shared/CoursePricing.vue';
+import CourseButton from '../../shared/CourseButton.vue';
+import CourseDescription from '../../shared/CourseDescription.vue';
+import CourseDescriptionToggler from './CourseDescriptionToggler.vue';
+import CourseRating from '../../shared/CourseRating.vue';
 
 export default {
 
@@ -212,6 +213,7 @@ export default {
     coursePricing: CoursePricing,
     courseButton: CourseButton,
     courseDescription: CourseDescription,
+    courseDescriptionToggler: CourseDescriptionToggler,
     courseRating: CourseRating
   },
 

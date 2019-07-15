@@ -234,6 +234,8 @@ GEM
     httparty (0.16.4)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
+    hypernova (1.4.0)
+      faraday (~> 0.8)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     jmespath (1.4.0)
@@ -455,6 +457,7 @@ GEM
       activemodel (>= 3.2)
       mail (~> 2.5)
     vcr (4.0.0)
+    vueonrails (1.0.0.beta5)
     warden (1.2.7)
       rack (>= 1.0)
     warden-jwt_auth (0.3.5)
@@ -508,6 +511,7 @@ DEPENDENCIES
   guard-rspec
   http
   http-accept
+  hypernova
   kaminari
   lograge
   mini_magick
@@ -540,6 +544,7 @@ DEPENDENCIES
   user_agent_parser
   valid_email2
   vcr
+  vueonrails (~> 1.x)
   webmock
   webpacker (>= 4.0.x)
 

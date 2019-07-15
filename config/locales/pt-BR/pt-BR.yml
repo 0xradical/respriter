@@ -29,10 +29,14 @@ pt-BR:
       free: "Certificado gratuito"
       paid: "Certificado pago (%{price})"
     details:
+      header: 'Detalhes do Curso'
       see: 'Ver Detalhes'
       show: 'Exibir Detalhes'
       hide: 'Esconder Detalhes'
+    tags:
+      header: 'Tags Relacionadas'
     description:
+      header: 'Descrição do Curso'
       view: 'Ver descrição'
       show: 'Ver Descrição'
       hide: 'Esconder Descrição'
