@@ -1,6 +1,6 @@
 <template>
   <div class='el:m-text-clipbox' :class='rootClasses'>
-    <a v-if='href' class='el:m-text-clipbox__text el:amx-Fw(b)' :class='titleClasses' :href='course.gateway_path' target='_blank' :title='course.name'>
+    <a v-if='href' class='el:m-text-clipbox__text el:amx-Fw(b)' :class='titleClasses' :href='course.gateway_path' rel='nofollow' target='_blank' :title='course.name'>
       {{ course.name }}
     </a>
     <span v-else class='el:m-text-clipbox__text el:amx-Fw(b)' :class='titleClasses'>
