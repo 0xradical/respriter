@@ -81,7 +81,7 @@
 
       pages () {
         var pages = []
-        for (var i=(Math.max(this.currentPage - this.pace, 1)); i < Math.min(this.currentPage + this.pace, this.numOfPages); i++) {
+        for (var i=(Math.max(this.currentPage - this.pace, 1)); i <= Math.min(this.currentPage + this.pace, this.numOfPages); i++) {
           pages.push(i)
         }
         return pages
