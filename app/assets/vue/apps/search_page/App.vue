@@ -40,7 +40,7 @@
 
           <div class='mx-D(Fx) mx-FxJc(sb) mx-FxAi(c)'>
             <div>
-              <pagination @paginate='paginate' pagination-anchor='#body-anchor' :current-page='page' :num-of-pages='numOfPages'></pagination>
+              <pagination @paginate='paginate' pagination-anchor='#body-anchor' :current-page='page' :num-of-pages='numOfPages' :records-per-page='recordsPerPage'></pagination>
             </div>
             <div class='mx-D(n)@<medium mx-D(Fx) mx-FxAi(c) sort'>
               <span class='mx-D(b) mx-Mr-1 sort__label'>{{ $t('dictionary.sort_by') }}</span>
@@ -108,7 +108,7 @@
         <div class='col-12 col-lg-9 vld-parent'>
           <loading :active.sync="isLoadable" :is-full-page='true' color='#4C636F'></loading>
           <course-list :courses='data.records'></course-list>
-          <pagination @paginate='paginate' pagination-anchor='#results' :current-page='page' :num-of-pages='numOfPages'></pagination>
+          <pagination @paginate='paginate' pagination-anchor='#results' :records-per-page='recordsPerPage' :current-page='page' :num-of-pages='numOfPages'></pagination>
         </div>
 
       </div>
@@ -276,31 +276,66 @@
         return _.find(this.$classpert.orderOptions, (o) => { return _.isEqual(o.value, value);  });
       },
       paginate (page) {
-        this.params = _.set(_.cloneDeep(this.params), 'p', parseInt(page || 0));
+        this.params = this.changeFilters([
+          {
+            filter: 'p',
+            value: parseInt(page || 1)
+          }
+        ]);
       },
       clearFilters () {
         this.params = this.defaultParams(this.params.q);
       },
       clearFilter (filter) {
         if (filter === 'price') {
-          this.params = _.set(_.cloneDeep(this.params), 'filter.price', [0, 2500]);
+          this.params = this.changePriceValue([0, 2500]);
         } else {
-          this.params = _.set(_.cloneDeep(this.params), `filter.${filter}`, []);
+          this.params = this.changeFilters([
+            {
+              filter: `filter.${filter}`,
+              value: []
+            }
+          ]);
         }
       },
       addOptionToFilter (key, option) {
-        this.params = _.set(_.cloneDeep(this.params), `filter.${key}`, _.concat(this.params.filter[key], [option]));
+        this.params = this.changeFilters([
+          {
+            filter: `filter.${key}`,
+            value: _.concat(this.params.filter[key], [option])
+          }
+        ]);
       },
       removeOptionFromFilter (key, option) {
-        this.params = _.set(_.cloneDeep(this.params), `filter.${key}`, _.without(this.params.filter[key], option));
+        this.params = this.changeFilters([
+          {
+            filter: `filter.${key}`,
+            value: _.without(this.params.filter[key], option)
+          }
+        ]);
       },
       changePriceValue (value) {
-        this.params = _.set(_.cloneDeep(this.params), 'filter.price', value);
+        this.params = this.changeFilters([
+          {
+            filter: 'filter.price',
+            value: value
+          }
+        ]);
+      },
+      changeFilters(filters) {
+        // go back to first page when filtering
+        filters.unshift({ filter: 'p', value: 1 });
+        return filters.reduce((acc, {filter, value}) => _.set(acc, filter, value), _.cloneDeep(this.params));
       },
       sortByChanged ({key}) {
         let orderOption         = this.orderOptionByKey(key);
         this.orderCurrentOption = orderOption;
-        this.params             = _.set(_.cloneDeep(this.params), 'order', orderOption.value);
+        this.params             = this.changeFilters([
+          {
+            filter: 'order',
+            value: orderOption.value
+          }
+        ]);
       },
       defaultParams: function (currentQuery) {
         return {
