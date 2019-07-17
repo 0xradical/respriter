@@ -9,7 +9,6 @@ class LocaleRouter
     @path, @env = env['REQUEST_PATH'], env
     @subdomains, @tld_domain = extract_subdomains, extract_tld_domain
     @request = Rack::Request.new(env)
-
     env['rack.session']['intl'] ||= @request.params['intl']
     if (intl_subdomain? && !whitelisted_routes && preferred_locale != :en)
       if (preferred_locale.present? && !env['rack.session']['intl'])
@@ -38,7 +37,7 @@ class LocaleRouter
   end
 
   def browser_language
-    SessionTracker.parse_http_accept_language_header(@env['HTTP_ACCEPT_LANGUAGE_HEADER'])
+    SessionTracker.parse_http_accept_language_header(@env['HTTP_ACCEPT_LANGUAGE'])
   end
 
   def intl_subdomain?
