@@ -1,5 +1,6 @@
 class CourseBundlesController < ApplicationController
   include CourseSearchHelper
+  PER_PAGE = 75
 
   prepend_before_action :normalize_params
 
@@ -29,7 +30,7 @@ class CourseBundlesController < ApplicationController
       end
 
       format.json do
-        search_query_params[:per_page] ||= 75
+        search_query_params[:per_page] ||= PER_PAGE
         search  = Search::CourseSearch.new search_query_params
         tracker = SearchTracker.new(session_tracker, search, action: :course_bundle_search).store!
 
