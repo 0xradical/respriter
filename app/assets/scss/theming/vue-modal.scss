@@ -1,0 +1,8 @@
+.v--modal-overlay {
+  background: #00000095 !important;
+}
+
+// safari issue
+.v--modal-box {
+  overflow-y: auto !important;
+}

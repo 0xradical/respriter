@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='clspt:course'>
     <!-- desktop offcanvas -->
     <modal :adaptive="true" width='50%' height="auto" :scrollable="true" :name='offCanvasId'>
       <div class='el:o-hcard-offcanvas el:amx-Pt(1.875em) el:amx-Pr(1.875em) el:amx-Pb(1.875em) el:amx-Pl(1.875em)'>
@@ -92,7 +92,7 @@
     </div>
 
     <!-- mobile offcanvas -->
-    <modal :adaptive="true" width='100%' height="auto" :scrollable="true" :name='mobileOffCanvasId'>
+    <modal :id='mobileOffCanvasId' :adaptive="true" width='100%' height="auto" :scrollable="true" :name='mobileOffCanvasId'>
       <div class='el-mb:o-hcard-offcanvas el:amx-Pt(1em) el:amx-Pr(1em) el:amx-Pb(1em) el:amx-Pl(1em)'>
         <div class='el-mb:o-hcard-offcanvas__content-slot'>
           <div class='el-mb:o-hcard-offcanvas__header-slot'>
@@ -115,7 +115,7 @@
                             :rootClasses="['el:amx-Mb(1em)','el:amx-W(100%)']">
             </video-preview>
 
-            <div class='el:amx-D(f) el:amx-FxDi(c) el:amx-Mb(0.75em) el:amx-Pos(r)'>
+            <div class='el:amx-Mb(0.75em) el:amx-Pos(r)'>
               <course-pricing :course="course"
                               :rootClasses="['el:amx-Pos(a)','el:amx-Pos-b(0)', 'el:amx-Pos-r(0)']">
               </course-pricing>
@@ -131,11 +131,10 @@
                                 :rootClasses="['el:amx-Pt(0.5em)','el:amx-Pb(0.5em)']">
             </course-description>
 
-            <div class='el:amx-D(f)' style='flex: 1;'>
+            <div class='el:amx-D(f)' style='flex: 1;min-height:100px;'>
               <course-button :course='course'
-                              :rootClasses="['el:amx-Mt(a)','el:amx-Mb(a)', 'el:amx-Ta(c)', 'el:amx-W(100%)']"
-                              :buttonClasses="['btn--block','el:amx-Fs(1em)']"
-                              style="width: 100%;">
+                              :rootClasses="['el:amx-Ta(c)', 'el:amx-W(100%)']"
+                              :buttonClasses="['el:cmx-vcenter','btn--block','el:amx-Fs(1em)']">
               </course-button>
             </div>
           </div>
