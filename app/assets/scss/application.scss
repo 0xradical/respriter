@@ -30,6 +30,7 @@ html {
 
 @import 'theming/vuebar.scss';
 @import 'theming/multiselect.scss';
+@import 'theming/vue-modal.scss';
 
 .l-blog-container {
   width: 100%;
@@ -88,11 +89,6 @@ html {
 
   }
 
-}
-
-
-.v--modal-overlay {
-  background: #00000095 !important;
 }
 
 // tippy
