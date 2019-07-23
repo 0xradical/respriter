@@ -20,6 +20,7 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  schema_search_path: api,app,jwt,triggers,settings,public
 
 local: &local
   username: <%= ENV.fetch('PG_USER')  { 'postgres' } %>
@@ -29,11 +30,13 @@ local: &local
 development:
   <<: *default
   <<: *local
+  host: postgres
   database: <%= ENV.fetch('PG_DATABASE') { 'quero_development' } %>
 
 test:
   <<: *default
   <<: *local
+  host: postgres_test
   database: <%= ENV.fetch('PG_DATABASE') { 'quero_test' } %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
