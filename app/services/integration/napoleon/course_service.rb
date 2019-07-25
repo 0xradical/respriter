@@ -13,6 +13,7 @@ module Integration
               global_sequence:   resource['global_sequence'],
               name:              resource['content']['course_name'],
               audio:             resource['content']['audio'],
+              slug:              resource['content']['slug'],
               subtitles:         resource['content']['subtitles'],
               price:             resource['content']['price'],
               url:               resource['content']['url'],
