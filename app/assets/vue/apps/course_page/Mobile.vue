@@ -32,7 +32,7 @@
           <div class='col-4 el:amx-D(f) el:amx-FxDi(c)'>
             <course-pricing :course="course"
                             :rootClasses="['el:amx-D(f)','el:amx-FxDi(c)','el:amx-FxAi(fe)','el:amx-FxJc(c)']"
-                            style="height: 100%;">
+                            style="flex: 1;">
             </course-pricing>
           </div>
           <div class='col-8 el:amx-D(f) el:amx-FxDi(c) el:amx-FxJc(c)'>
@@ -62,7 +62,8 @@
                 <course-attribute-list :course='course'
                                       :rootClasses="['el:amx-Mt(1.5em)']"
                                       :attributeClasses="['el:amx-Mb(1.125em)']"
-                                      :attributeIconClasses="['el:amx-Mr(0.5em)']">
+                                      :attributeIconClasses="['el:amx-Mr(0.5em)']"
+                                      :showUnavailable="false">
                 </course-attribute-list>
               </lazy-hydrate>
             </div>

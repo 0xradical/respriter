@@ -1,5 +1,5 @@
 <template>
-  <ul class='c-list c-list--unstyled c-list--inline' :class='rootClasses'>
+  <ul class='clspt:social-sharing c-list c-list--unstyled c-list--inline' :class='rootClasses'>
     <li v-if='callOut' class='callout' :class='callOutClasses'>{{ callOut }}</li>
     <li class='el:amx-Ml(0.5em) el:amx-Cur(p)' :class='iconClasses'>
       <network network="linkedin">
@@ -37,12 +37,14 @@ VueSocialSharing.props.iconClasses = { type: Array, default() { return []; } }
 export default VueSocialSharing;
 </script>
 
-<style lang="scss" scoped>
-li {
-  height: 1.25em;
-}
+<style lang="scss">
+.clspt\:social-sharing {
+  li {
+    height: 1.25em;
+  }
 
-li.callout {
-  margin: auto 0;
+  li.callout {
+    margin: auto 0;
+  }
 }
 </style>

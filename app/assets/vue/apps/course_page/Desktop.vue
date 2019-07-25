@@ -46,9 +46,9 @@
     <div class='el:amx-Pt(4em) el:amx-Pb(4em)'>
       <div class='container'>
         <div class="row">
-          <div class="col-8 el:amx-D(f) el:amx-FxDi(c)">
+          <div class="col-8">
             <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.description.header') }}</span>
-            <div class='el:amx-D(f) el:amx-FxDi(c) el:amx-FxJc(sb)' style='height:100%;'>
+            <div>
               <course-description :rootClasses="['el:amx-Pt(0.5em)']"
                                   :course="course">
               </course-description>
@@ -71,7 +71,8 @@
                 <course-attribute-list :course='course'
                                       :rootClasses="['el:amx-Mt(1.5em)']"
                                       :attributeClasses="['el:amx-Mb(1.125em)']"
-                                      :attributeIconClasses="['el:amx-Mr(0.5em)']">
+                                      :attributeIconClasses="['el:amx-Mr(0.5em)']"
+                                      :showUnavailable="false">
                 </course-attribute-list>
               </lazy-hydrate>
             </div>

@@ -154,6 +154,10 @@ es:
             Comprende muchos de los problemas más grandes del mundo. Encuentra
             cursos online pagados y gratuitos con certificado
           title: Cursos en línea de Ciencias Sociales | Classpert
+    show:
+      meta:
+        title: "Curso en Línea %{course} | Classpert"
+        description: "Tome el Curso en Línea %{course} con certificado. Consulte la información del curso y las evaluaciones de los estudiantes que han asistido."
   dictionary:
     audios: Audios
     blog: Blog

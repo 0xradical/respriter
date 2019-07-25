@@ -358,6 +358,10 @@ en:
           hero_title: 'Increase your knowledge about health maintenance, disease prevention, and
           risky behaviors reduction. Live longer and achieve your goals. Find paid and free online
           courses with certificate'
+    show:
+      meta:
+        title: "%{course} Online Course | Classpert"
+        description: "Learn %{course} on this Online Course with certificate. Find information about the course and read reviews left by students who have already taken it."
   course_bundles:
     meta: &meta
       title_html: "%{tag} Courses"

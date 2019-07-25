@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
 
   get '/search', to: 'courses#index',  as: :courses
-  get '/learn/:slug', to: 'courses#show', as: :course
 
   resources :posts, path: 'blog'
 
@@ -36,6 +35,8 @@ Rails.application.routes.draw do
     tag: RootTag.all.map { |t| t.slugify }.join('|')
   },
   as: :course_bundles
+
+  get '/:provider/:course', to: 'courses#show', as: :course
 
   concern :imageable do
     resources :images, shallow: true

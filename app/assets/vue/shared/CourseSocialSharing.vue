@@ -6,7 +6,6 @@
       :quote="quote"
       :hashtags="hashtags"
       twitter-user="classpert"
-      :call-out="$t('dictionary.share')"
       :callOutClasses='callOutClasses'
       :iconClasses='iconClasses'
       :rootClasses='rootClasses'
