@@ -508,6 +508,7 @@ DEPENDENCIES
   guard-rspec
   http
   http-accept
+  httparty
   kaminari
   lograge
   mini_magick
