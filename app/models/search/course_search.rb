@@ -18,9 +18,9 @@ module Search
     }
     TERM_AGGREGATIONS = FILTER_BY_FIELD.find_all{ |k,v| v == :term }.map &:first
 
-    def initialize(query: nil, filter: nil, page: 1, per_page: 25, order: nil, boost: nil, session_id: nil)
+    def initialize(query: nil, filter: Hash.new, page: 1, per_page: 25, order: nil, boost: nil, session_id: nil)
       @query      = query
-      @filter     = filter || Hash.new
+      @filter     = normalize_filter filter
       @page       = ( page     || 1  ).to_i
       @per_page   = ( per_page || 25 ).to_i
       @order      = order
@@ -69,6 +69,32 @@ module Search
     alias :to_hash :to_h
 
     protected
+    def normalize_filter(filter)
+      return Hash.new if filter.blank?
+
+      FILTER_BY_FIELD.map do |key, type|
+        next unless filter.has_key?(key)
+
+        value = filter[key]
+        case type
+        when :term
+          [
+            key,
+            ( value.is_a?(Array) ? value : [ value ] )
+          ]
+        when :range
+          [
+            key,
+            ( value.is_a?(Array) ? value : [ 0, value ] )
+          ]
+        when :paid_content
+          [ key, value ]
+        else
+          STDERR.puts "Unrecognized key #{key}"
+        end
+      end.compact.to_h
+    end
+
     def randomized_query(query)
       return query if @session_id.blank?
 
