@@ -8,7 +8,6 @@ class TrackedAction < ApplicationRecord
   after_create :trigger_webhook, if: :id_changed?
 
   def trigger_webhook
-    puts "Called for #{self.ext_id}".ansi(:red)
     data = self.as_json(include: {
       enrollment: {
         include: {
