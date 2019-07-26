@@ -29,10 +29,14 @@ pt-BR:
       free: "Certificado gratuito"
       paid: "Certificado pago (%{price})"
     details:
+      header: 'Detalhes do Curso'
       see: 'Ver Detalhes'
       show: 'Exibir Detalhes'
       hide: 'Esconder Detalhes'
+    tags:
+      header: 'Tags Relacionadas'
     description:
+      header: 'Descrição do Curso'
       view: 'Ver descrição'
       show: 'Ver Descrição'
       hide: 'Esconder Descrição'
@@ -360,6 +364,10 @@ pt-BR:
           hero_title: 'Aumente seu conhecimento sobre manutenção da saúde, prevenção de doenças e
           redução de comportamentos de risco. Viva mais e atinja seus objetivos. Encontre cursos
           online gratuitos e pagos com certificado.'
+    show:
+      meta:
+        title: "Curso Online %{course} | Classpert"
+        description: "Faça o Curso Online de %{course} com certificado. Confira informações sobre o curso e avaliações de alunos que já cursaram."
   course_bundles:
     meta: &meta
       title_html: "Cursos de %{tag}"

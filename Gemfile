@@ -21,6 +21,10 @@ gem 'http'
 gem 'ejs'
 gem 'execjs'
 
+# SSR
+gem 'vueonrails', '~> 1.x'
+gem 'hypernova'
+
 # Pagination
 gem 'kaminari'
 

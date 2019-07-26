@@ -154,6 +154,10 @@ es:
             Comprende muchos de los problemas más grandes del mundo. Encuentra
             cursos online pagados y gratuitos con certificado
           title: Cursos en línea de Ciencias Sociales | Classpert
+    show:
+      meta:
+        title: "Curso en Línea %{course} | Classpert"
+        description: "Tome el Curso en Línea %{course} con certificado. Consulte la información del curso y las evaluaciones de los estudiantes que han asistido."
   dictionary:
     audios: Audios
     blog: Blog
@@ -166,13 +170,17 @@ es:
     clear_all_filters: Limpiar todos los filtros
     clear_filter: Limpiar filtro
     description:
-      view: Ver descripción
-      show: Ver descripción
-      hide: Ocultar descripción
+      header: 'Descripción del Curso'
+      view: 'Ver descripción'
+      show: 'Ver descripción'
+      hide: 'Ocultar descripción'
     details:
-      see:  Ver detalles
-      hide: Ocultar detalles
-      show: Mostrar detalles
+      header: 'Detalles del Curso'
+      see:  'Ver detalles'
+      hide: 'Ocultar detalles'
+      show: 'Mostrar detalles'
+    tags:
+      header: 'Tags Relacionadas'
     display_filter: Mostrar filtro
     extra_paid_content: Contenido extra pagado
     favorite: Favorito

@@ -8,14 +8,15 @@
         </div>
       </div>
       <transition name="fade">
-        <div class='el:amx-Pt(0.5em) clspt:course-description__content' v-show='toggled' v-html='purifiedDescription'></div>
+        <course-description :rootClasses="['el:amx-Pt(0.5em)']" v-show='toggled' :course="course"></course-description>
       </transition>
     </div>
   </div>
 </template>
 
 <script>
-import Icon from './Icon.vue';
+import Icon from '../../shared/Icon.vue';
+import CourseDescription from '../../shared/CourseDescription.vue';
 
 export default {
   props: {
@@ -35,48 +36,19 @@ export default {
       toggled: false
     }
   },
-  computed: {
-    purifiedDescription() {
-      const html = this.$marked(this.course.description);
-      const purified = this.$dompurify.sanitize(html, {
-        ALLOWED_TAGS: [
-          'h1','h2','h3','h4','h4',
-          'p','div','table','thead',
-          'tbody','tr','td','ul','li',
-          'ol','br','hr','em','strong',
-          'b','i','u','span','small'
-        ]
-      });
-
-      return purified;
-    }
-  },
   methods: {
     toggle() {
       this.toggled = !this.toggled;
     },
   },
   components: {
-    icon: Icon
+    icon: Icon,
+    courseDescription: CourseDescription
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.clspt\:course-description {
-  cursor: pointer;
-  position: relative;
-
-  &__content {
-    /deep/ h1, /deep/ h2, /deep/ h3, /deep/ h4, /deep/ h5 {
-      font-size: 1.25em;
-    }
-    /deep/ p, /deep/ ul, /deep/ ol, /deep/ div, /deep/ table {
-      font-size: 1em;
-    }
-  }
-}
-
 .fade-enter-active, .fade-leave-active {
   transition: all 5s;
 }

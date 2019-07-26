@@ -1,5 +1,5 @@
 <template>
-  <svg :class='iconClasses' :style='style'>
+  <svg :class='iconClasses' :style='style' :width='width' :height='height' viewbox='0 0 24 24'>
     <use :xlink:href='path' />
   </svg>
 </template>

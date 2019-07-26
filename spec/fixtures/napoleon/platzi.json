@@ -1,0 +1,141 @@
+{
+    "id": "ff9e8d4e-9744-11e9-8047-22000a959160",
+    "status": "active",
+    "content": {
+        "url": "https://platzi.com/cursos/django-avanzado/",
+        "pace": "self_paced",
+        "slug": "platzi-curso-avanzado-de-django-2wthOV",
+        "audio": [
+            "es",
+            "es-ES"
+        ],
+        "stale": false,
+        "video": {
+            "id": "WOld7IBVGCI",
+            "type": "youtube"
+        },
+        "prices": [
+            {
+                "type": "single_course",
+                "price": "49",
+                "currency": "USD"
+            },
+            {
+                "type": "subscription",
+                "price": "39",
+                "currency": "USD",
+                "total_price": "39",
+                "payment_period": {
+                    "unit": "months",
+                    "value": 1
+                },
+                "subscription_period": {
+                    "unit": "months",
+                    "value": 1
+                }
+            },
+            {
+                "type": "subscription",
+                "price": "299",
+                "currency": "USD",
+                "total_price": "299",
+                "payment_period": {
+                    "unit": "years",
+                    "value": 1
+                },
+                "subscription_period": {
+                    "unit": "years",
+                    "value": 1
+                }
+            }
+        ],
+        "rating": {
+            "type": "stars",
+            "range": 5
+        },
+        "status": "available",
+        "json_ld": {
+            "course": {
+                "name": "django-avanzado",
+                "@type": "Course",
+                "image": "https://static.platzi.com/media/achievements/badges-django-avanzado-45e0f52b-5a5c-4b5d-9941-afd76cc58677.png",
+                "creator": {
+                    "name": "Platzi",
+                    "@type": "Organization",
+                    "sameAs": "https://platzi.com/"
+                },
+                "@context": "http://schema.org",
+                "provider": {
+                    "name": "Platzi",
+                    "@type": "Organization",
+                    "sameAs": "https://platzi.com/"
+                },
+                "description": "Sitios increíbles como Platzi, Instagram, Pinterest o el portal del New York Times tienen algo en común: todos usan Django. Aprovecha su versatilidad, potencia y rapidez para mostrar tus ideas y dar rienda suelta a tu creatividad. Aprende Django con Platzi y ¡haz de tu próximo sitio web el mejor que el mundo haya visto!",
+                "datePublished": "2019-01-29",
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "bestRating": "5",
+                    "ratingCount": "3",
+                    "ratingValue": "4.812500",
+                    "worstRating": "1"
+                },
+                "isAccessibleForFree": "false"
+            },
+            "organization": {
+                "url": "https://platzi.com/",
+                "name": "Platzi",
+                "@type": "Organization",
+                "sameAs": [
+                    "https://www.facebook.com/platzi/",
+                    "https://twitter.com/Platzi",
+                    "https://www.youtube.com/channel/UC55-mxUj5Nj3niXFReG44OQ",
+                    "https://www.linkedin.com/school/2822346"
+                ],
+                "@context": "http://schema.org",
+                "founders": [
+                    {
+                        "name": "John Freddy Vega",
+                        "@type": "Person"
+                    },
+                    {
+                        "name": "Christian Van Der Henst",
+                        "@type": "Person"
+                    }
+                ],
+                "description": "Aprende de expertos en programación, diseño, marketing, startups, video y web. Suscríbete hoy.",
+                "foundingDate": "2013-01-01"
+            }
+        },
+        "version": "1.1.0",
+        "language": [
+            "es",
+            "es-ES"
+        ],
+        "syllabus": "# Bienvenida\n\n* ¡Bienvenidos!\n\n# Cimientos\n\n* The Twelve-Factor App\n* Arquitectura de una aplicación\n* Codebase: Settings modular\n* Codebase: Dependencias y archivos de docker\n* Codebase: Docker\n* Setups alternativos\n\n# Modelos\n\n* Solución del reto: arreglando la migración de users a user\n* Herencia de modelos\n* Proxy models\n* App de usuarios\n* Organizando modelos en un paquete de Django\n* Creando el modelo de perfil de usuario\n* Aplicación y modelo de círculos\n* Migraciones y admin de círculos\n\n# Introducción a Django REST Framework\n\n* Aprende cómo construir tu propio API con Django Rest Framework\n* Vistas, URLs y Parsers de DRF\n* Serializers\n* Buenas prácticas para el diseño de un API REST\n* Request, response, renderers y parsers\n\n# Real DRF\n\n* Autenticación y tipos de autenticación\n* APIView\n* Creando el token de autorización\n* User sign up\n* Limitar login a usuarios con cuenta verificada\n* Configurar envío de email\n* Instalar PyJWT y generar tokens\n* Verificar cuenta usando JWT\n* Actualizar modelo de circle (membership)\n* Crear CircleViewSet\n* Añadiendo autorización y paginación\n* Creación de circulos\n* Update de círculo, custom permissions y DRF Mixins\n* Migración de vistas de usuarios a ViewSets\n* Detalle de usuario\n* Update profile data\n* List members - Recursos anidado\n* Retrieve destroy member\n* Modelo de invitaciones y manager\n* Obtener invitaciones de un miembro\n* Unirse a grupo\n* Filtrado\n* App de rides y modelos\n* Implementar la publicación de un ride\n* Validación de campos de un serializer\n* Listado de rides\n* Editar un ride\n* Unirse a viaje\n* Terminar viaje\n* Calificar viaje\n\n# Tareas asíncronas\n\n* Creando tarea asíncrona\n* Creando tarea periódica\n\n# Testing\n\n* Python unittest y Django TestCase\n* DRF APITestCase\n\n# Django Admin\n\n* Admin actions: Modificar datos de un query\n* Admin actions: Regresando una respuesta HTTP\n\n# Deployment\n\n* Instalación de la aplicación\n* Configuración del dominio en Mailgun y del Bucket en Amazon S3\n* Configuración final de Docker Container usando Supervisor\n* Tutorial de despliegue de la aplicación\n* Futuros pasos y cierre del curso",
+        "published": true,
+        "subtitles": [
+            "es",
+            "es-ES"
+        ],
+        "offered_by": [],
+        "certificate": {
+            "type": "free"
+        },
+        "course_name": "Curso Avanzado de Django",
+        "instructors": [
+            {
+                "main": true,
+                "name": "Pablo Trinidad",
+                "distinguished": false
+            }
+        ],
+        "free_content": false,
+        "paid_content": true,
+        "provider_name": "Platzi",
+        "last_fecthed_at": "2019/07/10"
+    },
+    "relations": null,
+    "global_sequence": 1957726,
+    "dataset_sequence": 786629,
+    "resource_sequence": 6
+}

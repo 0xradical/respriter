@@ -59,7 +59,6 @@
   </head>
 
   <body <%= content_for(:body_html_attributes) ? yield(:body_html_attributes) : 'class="mx-Bc(light-gray)"' %> >
-
     <%#
       #### SVG sprites ####
       display:none won't work here as it breaks gradients. Check
@@ -68,9 +67,14 @@
 
     <% unless rendertron? %>
       <div style='width:0;height:0'>
-        <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
-        <div data-svg-sprite="<%= elements_asset_path('svgs/packs/providers.svg') %>"></div>
-        <div data-svg-sprite="<%= elements_asset_path('svgs/packs/tags.svg') %>"></div>
+        <% if content_for(:base_svg_sprites) %>
+          <%= yield :base_svg_sprites %>
+        <% else %>
+          <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
+          <div data-svg-sprite="<%= elements_asset_path('svgs/packs/providers.svg') %>"></div>
+          <div data-svg-sprite="<%= elements_asset_path('svgs/packs/tags.svg') %>"></div>
+        <% end %>
+
         <%= yield :svg_sprites %>
       </div>
     <% end %>

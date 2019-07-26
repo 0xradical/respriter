@@ -27,4 +27,9 @@ class CoursesController < ApplicationController
       end
     end
   end
+
+  def show
+    @provider = Provider.find_by!(slug: params[:provider])
+    @course   = @provider.courses.find_by!(slug: "#{params[:provider]}-#{params[:course]}")
+  end
 end

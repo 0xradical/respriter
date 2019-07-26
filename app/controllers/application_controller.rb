@@ -1,3 +1,5 @@
+require 'hypernova'
+
 class ApplicationController < ActionController::Base
 
   http_basic_authenticate_with(name: ENV['BASIC_AUTH_USER'], password: ENV['BASIC_AUTH_PASSWORD']) if ENV['BASIC_AUTH_REQUIRED']
@@ -6,6 +8,7 @@ class ApplicationController < ActionController::Base
   prepend_before_action :track_session
   before_action :set_locale
   before_action :rendertron?
+  around_action :hypernova_render_support
   layout :fetch_layout
 
   unless Rails.application.config.consider_all_requests_local
