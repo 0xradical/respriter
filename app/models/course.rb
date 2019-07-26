@@ -180,6 +180,7 @@ class Course < ApplicationRecord
       indexes :category,            type: 'keyword'
       indexes :certificate,         type: 'object'
       indexes :level,               type: 'keyword'
+      indexes :slug,                type: 'keyword'
       indexes :tags,                type: 'keyword'
       indexes :curated_tags,        type: 'keyword'
       indexes :curated_root_tags,   type: 'keyword'
@@ -276,6 +277,7 @@ class Course < ApplicationRecord
       id:                  id,
       name:                name,
       description:         description,
+      slug:                slug,
       url:                 url,
       pace:                pace,
       effort:              effort,
