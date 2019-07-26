@@ -512,6 +512,7 @@ DEPENDENCIES
   http
   http-accept
   hypernova
+  httparty
   kaminari
   lograge
   mini_magick

@@ -83,6 +83,9 @@ gem 'prerender_rails'
 # LogRage
 gem 'lograge'
 
+# HTTParty
+gem 'httparty'
+
 group :production do
   # Exceptions
   gem 'sentry-raven'
