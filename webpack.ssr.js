@@ -6,7 +6,8 @@ module.exports = {
   entry: path.join(__dirname, 'app/assets/js/ssr/server.js'),
   output: {
     path: path.join(__dirname, '/ssr'),
-    filename: 'ssr.js'
+    filename: 'ssr.js',
+    libraryTarget: 'commonjs2'
   },
   externals: {
 		canvas: "commonjs canvas"

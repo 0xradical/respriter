@@ -7,6 +7,7 @@ export const Vue = vue;
 export const renderVue = (name, Component) => hypernova({
   server() {
     return async (propsData) => {
+      var context = {};
       let componentProperties = { propsData };
 
       if(Component.__instanceLevelProperties) {
@@ -17,7 +18,14 @@ export const renderVue = (name, Component) => hypernova({
 
       const renderer = createRenderer();
 
-      const contents = await renderer.renderToString(vm);
+      const contents = await renderer.renderToString(vm, context).then(html => {
+        return `
+        ${context.renderStyles()}
+        ${html}
+        `;
+      }).catch(err => {
+        console.error(err)
+      })
 
       return serialize(name, contents, propsData);
     };
