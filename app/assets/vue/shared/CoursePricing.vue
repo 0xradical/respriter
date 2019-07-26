@@ -1,6 +1,6 @@
 <template>
   <div :class="[...rootClassesBase, ...rootClasses]">
-    <span class='el:amx-Tt(u) el:amx-Mb(0.25em) el:amx-Ta(r)' v-if="course.subscription_type && trialCallout">
+    <span :class='marginClass' class='el:amx-Tt(u) el:amx-Ta(r)' v-if="course.subscription_type && trialCallout">
       <span class='el:amx-Fs(0.75em)'>
         {{ trialLocale }}
       </span>
@@ -8,12 +8,12 @@
         {{ $t('dictionary.free_trial') }}
       </span>
     </span>
-    <div class='el:amx-Mb(0.25em)' v-if="price > 0">
+    <div :class='marginClass' v-if="price > 0">
       <span :class='priceClasses'>
         <span class='el:amx-Fs(0.875em) el:amx-Mr(0.25em) el:amx-C_green3 el:amx-Fw(b)'>$ {{ formattedPrice }}</span><span class='el:amx-Fs(0.75em)' v-if="course.subscription_type">/{{ $t(`dictionary.subscription_period.${course.subscription_period.unit}`) }}</span>
       </span>
     </div>
-    <div class='el:amx-Mb(0.25em)' v-else>
+    <div :class='marginClass' v-else>
       <span class='el:amx-Fs(0.875em) el:amx-C_green3 el:amx-Fw(b) el:amx-Tt(u)'>
         {{ $t('dictionary.free') }}
       </span>
@@ -62,6 +62,10 @@ export default {
       default() {
         return [];
       }
+    },
+    spacing: {
+      type: String,
+      default: '0.25em'
     }
   },
   components: {
@@ -79,6 +83,9 @@ export default {
   computed: {
     price() {
       return parseFloat(this.course.price);
+    },
+    marginClass() {
+      return [`el:amx-Mb(${this.spacing})`];
     },
     formattedPrice() {
       return this.price.toLocaleString(this.$i18n.locale, {minimumFractionDigits: 2, maximumFractionDigits: 2});

@@ -37,7 +37,7 @@
           </div>
           <div class='col-8 el:amx-D(f) el:amx-FxDi(c) el:amx-FxJc(c)'>
             <course-button :course="course"
-                           :buttonClasses="['btn--medium','btn--block']">
+                           :buttonClasses="['btn--large','btn--block']">
             </course-button>
           </div>
         </div>
@@ -45,7 +45,7 @@
           <div class='col'>
             <course-social-sharing :course="course"
                                    :iconClasses="['el:amx-Fs(1.6em)']"
-                                   :rootClasses="['el:amx-Mt(0.5em)','el:cmx-aright']">
+                                   :rootClasses="['el:cmx-aright']">
             </course-social-sharing>
           </div>
         </div>

@@ -28,13 +28,15 @@
           <div class='col-3 el:amx-D(f)'>
             <div style='position:relative;flex:1;'>
               <div style='position:absolute; bottom: 0; width: 100%;'>
-                <course-pricing :course="course" :priceClasses="['el:amx-Fs(1.8em)']"></course-pricing>
+                <course-pricing :course="course"
+                                :priceClasses="['el:amx-Fs(1.8em)']"
+                                spacing="0em"></course-pricing>
                 <course-button :course="course"
                               :rootClasses="['el:amx-Mt(0.5em)']"
                               :buttonClasses="['btn--medium','btn--block']">
                 </course-button>
                 <course-social-sharing :course="course"
-                                      :rootClasses="['el:amx-Mt(0.5em)','el:cmx-aright']">
+                                      :rootClasses="['el:amx-Mt(1em)','el:cmx-aright']">
                 </course-social-sharing>
               </div>
             </div>
