@@ -10,6 +10,8 @@ end
 Hypernova.add_plugin!(HypernovaPlugin.new)
 
 Hypernova.configure do |config|
-  config.host = "0.0.0.0"
-  config.port = 7777            # The port where the node service is listening
+  config.host = "127.0.0.1"
+  config.port = 7777
+  config.open_timeout = 1
+  config.timeout = 2
 end
