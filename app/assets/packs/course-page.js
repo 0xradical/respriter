@@ -2,6 +2,7 @@ import Vue from 'vue';
 // common
 import { createI18n } from '../js/i18n';
 import CoursePage from '../vue/apps/course_page/App.vue';
+import _ from 'lodash';
 
 document.addEventListener('DOMContentLoaded', () => {
   // loaded by Rails, hydrated by Vue
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const jsonCdata = document.querySelector(`script[data-hypernova-id="${node.dataset['hypernovaId']}"]`).innerHTML;
-    const vueProps = JSON.parse(jsonCdata.slice(4, jsonCdata.length - 3));
+    const vueProps = JSON.parse(_.unescape(jsonCdata.slice(4, jsonCdata.length - 3)));
     return {
       node: vueNode,
       props: vueProps

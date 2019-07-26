@@ -72,18 +72,22 @@
         <div class="row el:amx-Mt(2em)">
           <div class="col">
             <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.description.header') }}</span>
-            <course-description :rootClasses="['el:amx-Pt(0.5em)']"
-                                :course="course">
-            </course-description>
+              <lazy-hydrate ssr-only>
+                <course-description :rootClasses="['el:amx-Pt(0.5em)']"
+                                    :course="course">
+                </course-description>
+              </lazy-hydrate>
           </div>
         </div>
         <div class='row el:amx-Mt(2em)' v-if='course.tags.length'>
           <div class="col">
             <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.tags.header') }}</span>
-            <course-tags  :course="course"
-                          :rootClasses="['el:amx-Mt(0.5em)']"
-                          :tagClasses="['el:amx-D(ib)','el:amx-Fs(0.75em)','el:amx-Mr(0.5em)','el:amx-Mt(0.5em)']">
-            </course-tags>
+              <lazy-hydrate ssr-only>
+                <course-tags  :course="course"
+                              :rootClasses="['el:amx-Mt(0.5em)']"
+                              :tagClasses="['el:amx-D(ib)','el:amx-Fs(0.75em)','el:amx-Mr(0.5em)','el:amx-Mt(0.5em)']">
+                </course-tags>
+              </lazy-hydrate>
           </div>
         </div>
       </div>
@@ -104,7 +108,6 @@ import CoursePricing from '../../shared/CoursePricing.vue';
 import CourseTitle from '../../shared/CourseTitle.vue';
 import CourseButton from '../../shared/CourseButton.vue';
 import CourseSocialSharing from '../../shared/CourseSocialSharing.vue';
-import CourseDescription from '../../shared/CourseDescription.vue';
 
 export default {
   props: {
@@ -120,7 +123,7 @@ export default {
     CourseTitle,
     CourseButton,
     CourseSocialSharing,
-    CourseDescription,
+    CourseDescription: () => import('../../shared/CourseDescription.vue'),
     CourseTags: () => import('../../shared/CourseTags.vue'),
     CoursePricing,
     CourseAttributeList: () => import('../../shared/CourseAttributeList.vue')
