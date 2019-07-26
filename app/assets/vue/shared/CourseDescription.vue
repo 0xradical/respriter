@@ -5,6 +5,7 @@
 <script>
 import marked from '../../js/marked';
 import domPurify from '../../js/dompurify';
+import _ from 'lodash';
 
 export default {
   props: {
@@ -21,7 +22,7 @@ export default {
   },
   computed: {
     purifiedDescription() {
-      const html = marked(this.course.description);
+      const html = marked(_.unescape(this.course.description));
       const purified = domPurify.sanitize(html, {
         ALLOWED_TAGS: [
           'h1','h2','h3','h4','h4',
