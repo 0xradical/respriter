@@ -3,7 +3,8 @@
 
     <!-- Metas -->
     <%= csrf_meta_tags %>
-    <%= content_for?(:meta_hreflang) ? yield(:meta_hreflang) : default_meta_alternate_hreflang %>
+
+    <!-- Global meta -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="<%= request.original_url %>">
     <meta property="og:locale" content="<%= I18n.locale %>">
@@ -14,6 +15,12 @@
     <meta name="viewport" content="<%= viewport_content %>">
     <meta name="verification" content="898f8f25672b3d4f1acbb0228a862b98">
     <meta name="google-site-verification" content="frJWYLKLhn2TNmNSFXsY_N34EKr2sAfK3TE-M9ogE1o" />
+
+    <!-- Custom meta with fallback -->
+    <%= content_for?(:meta_hreflang) ? yield(:meta_hreflang) : default_meta_alternate_hreflang %>
+    <%= content_for?(:meta_og_image) ? yield(:meta_og_image) : "<meta property='og:image' content='#{asset_url('/images/classpert-social.png')}'>".html_safe %>
+
+    <!-- Custom meta -->
     <%= yield :meta %>
 
     <!-- Elements css-->
