@@ -3,10 +3,12 @@ class TrackedAction < ApplicationRecord
   upsert_keys [:compound_ext_id]
   belongs_to :enrollment, optional: true
 
-  after_commit :trigger_webhook, on: :create
+  # the if is needed to emulate a normal after_create transition
+  # using the upsert gem
+  after_create :trigger_webhook, if: :id_changed?
 
   def trigger_webhook
-
+    puts "Called for #{self.ext_id}".ansi(:red)
     data = self.as_json(include: {
       enrollment: {
         include: {
@@ -24,7 +26,6 @@ class TrackedAction < ApplicationRecord
     }).to_json
 
     HTTParty.post(ENV['RAVEN_LORD_URI'], body: data, headers: { 'Content-Type' => 'application/json' })
-
   end
 
 end
