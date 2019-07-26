@@ -1,7 +1,13 @@
 require 'hypernova'
-# require 'hypernova/plugins/development_mode_plugin'
 
-# Hypernova.add_plugin!(DevelopmentModePlugin.new)
+class HypernovaPlugin
+  # NOTE: If an error happens in here, it won’t be caught.
+  def on_error(error, job, jobs_hash)
+    Rails.logger.error("[hypernova][error]: #{error}")
+  end
+end
+
+Hypernova.add_plugin!(HypernovaPlugin.new)
 
 Hypernova.configure do |config|
   config.host = "0.0.0.0"
