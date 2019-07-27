@@ -84,9 +84,16 @@
 
         <div class='el:amx-D(f) el:amx-FxDi(c) el:amx-FxJc(c) el:amx-Ta(c) el:amx-Ml(0.75em)' style='flex: 0 0 40%;'>
           <course-button :course="course" :buttonClasses="['el:amx-Mb(0.75em)','el:amx-Fs(0.625em)','btn--block']"></course-button>
-          <button type='button' @click='$modal.show(offCanvasId)' class='el:amx-Fs(0.625em) btn btn--rounded btn--blue-border'>
-            {{ $t('dictionary.details.see') }}
-          </button>
+          <template v-if='coursePageLink'>
+            <a class='el:amx-Fs(0.625em) btn btn--rounded btn--blue-border' :href='coursePageLink' target='_blank'>
+              {{ $t('dictionary.details.see') }}
+            </a>
+          </template>
+          <template v-else>
+            <button type='button' @click='$modal.show(offCanvasId)' class='el:amx-Fs(0.625em) btn btn--rounded btn--blue-border'>
+              {{ $t('dictionary.details.see') }}
+            </button>
+          </template>
         </div>
       </div>
     </div>
@@ -235,6 +242,22 @@ export default {
     },
     mobileOffCanvasId() {
       return `mobile-offcanvas-${this.course.id}`;
+    },
+    coursePageLink() {
+      if (this.course.slug) {
+        const separatorIndex = this.course.slug.indexOf("-");
+        if (separatorIndex > -1) {
+          const providerSlug = this.course.slug.slice(0, separatorIndex);
+          const courseSlug = this.course.slug.slice(separatorIndex + 1);
+
+          return `/${providerSlug}/courses/${courseSlug}`;
+
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
     }
   }
 }
