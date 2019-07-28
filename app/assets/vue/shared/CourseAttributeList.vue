@@ -1,7 +1,7 @@
 <template>
   <div class='clspt:course-attribute-list' :class='rootClasses'>
-    <course-attribute v-if='showUnavailable || course.root_audio.length > 0' icon='audio' :rootClasses='attributeClasses' :iconClasses='attributeIconClasses'>
-      <template v-if='course.root_audio.length > 0'>
+    <course-attribute v-if='showUnavailable || (course.root_audio && course.root_audio.length > 0)' icon='audio' :rootClasses='attributeClasses' :iconClasses='attributeIconClasses'>
+      <template v-if='(course.root_audio && course.root_audio.length > 0)'>
         <span class='el:amx-Tt(u)'>{{ course.root_audio.join(",") }}</span>
       </template>
       <template v-else>
@@ -9,8 +9,8 @@
       </template>
     </course-attribute>
 
-    <course-attribute v-if='showUnavailable || course.root_subtitles.length > 0'  icon='cc' :rootClasses='attributeClasses' :iconClasses='attributeIconClasses'>
-      <template v-if='course.root_subtitles.length > 0'>
+    <course-attribute v-if='showUnavailable || (course.root_subtitles && course.root_subtitles.length > 0)'  icon='cc' :rootClasses='attributeClasses' :iconClasses='attributeIconClasses'>
+      <template v-if='(course.root_subtitles && course.root_subtitles.length > 0)'>
         <span class='el:amx-Tt(u)'>{{ course.root_subtitles.slice(0,5).join(",") }}</span>
       </template>
       <template v-else>
@@ -27,8 +27,8 @@
       </template>
     </course-attribute>
 
-    <course-attribute v-if='showUnavailable || course.offered_by.length > 0' icon='building' :rootClasses='attributeClasses' :iconClasses='attributeIconClasses'>
-      <template v-if='course.offered_by.length > 0'>
+    <course-attribute v-if='showUnavailable || (course.offered_by && course.offered_by.length > 0)' icon='building' :rootClasses='attributeClasses' :iconClasses='attributeIconClasses'>
+      <template v-if='(course.offered_by && course.offered_by.length > 0)'>
         {{ course.offered_by.map(i => i.name).join(",") }}
       </template>
       <template v-else>
@@ -36,8 +36,8 @@
       </template>
     </course-attribute>
 
-    <course-attribute v-if='showUnavailable || course.instructors.length > 0' icon='nametag' :rootClasses='attributeClasses' :iconClasses='attributeIconClasses'>
-      <template v-if='course.instructors.length > 0'>
+    <course-attribute v-if='showUnavailable || (course.instructors && course.instructors.length > 0)' icon='nametag' :rootClasses='attributeClasses' :iconClasses='attributeIconClasses'>
+      <template v-if='(course.instructors && course.instructors.length > 0)'>
         {{ course.instructors.map(i => i.name).join(",") }}
       </template>
       <template v-else>
@@ -54,8 +54,8 @@
       </template>
     </course-attribute>
 
-    <course-attribute v-if='showUnavailable || course.level.length > 0' icon='level' :rootClasses='attributeClasses' :iconClasses='attributeIconClasses'>
-      <template v-if='course.level.length > 0'>
+    <course-attribute v-if='showUnavailable || (course.level && course.level.length > 0)' icon='level' :rootClasses='attributeClasses' :iconClasses='attributeIconClasses'>
+      <template v-if='(course.level && course.level.length > 0)'>
         {{ course.level.map(l => $t(`dictionary.levels.${l}`)).join(",") }}
       </template>
       <template v-else>

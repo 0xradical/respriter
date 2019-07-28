@@ -57,7 +57,7 @@
                 </course-description>
               </lazy-hydrate>
 
-              <div class='el:amx-Mt(2.75em)' v-if='course.tags.length'>
+              <div class='el:amx-Mt(2.75em)' v-if='course.tags && course.tags.length > 0'>
                 <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.tags.header') }}</span>
                 <lazy-hydrate ssr-only>
                   <course-tags :course="course"

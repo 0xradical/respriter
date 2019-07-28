@@ -79,7 +79,7 @@
               </lazy-hydrate>
           </div>
         </div>
-        <div class='row el:amx-Mt(2em)' v-if='course.tags.length'>
+        <div class='row el:amx-Mt(2em)' v-if='course.tags && course.tags.length > 0'>
           <div class="col">
             <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.tags.header') }}</span>
               <lazy-hydrate ssr-only>

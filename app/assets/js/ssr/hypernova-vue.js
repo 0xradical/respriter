@@ -25,6 +25,8 @@ export const renderVue = (name, Component) => hypernova({
         `;
       }).catch(err => {
         console.error(err)
+
+        return ``;
       })
 
       return serialize(name, contents, propsData);

@@ -58,7 +58,12 @@ export default {
       return "some quote";
     },
     hashtags() {
-      return this.course.tags.map((tag) => `#${tag}`).join(', ');
+      if(this.course.tags) {
+        return this.course.tags.map((tag) => `#${tag}`).join(', ');
+      } else {
+        return null;
+      }
+
     }
   }
 }
