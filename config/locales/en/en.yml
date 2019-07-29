@@ -269,13 +269,13 @@ en:
       kickstart_your_career: 'Kickstart your career'
       kickstart_your_career_sub: 'Our experts have handpicked the best online courses to start your career'
       about_title: "Classpert's online course search engine"
-      about_text: 'Classpert's online course search engine allows users to find the
+      about_text: "Classpert's online course search engine allows users to find the
       ideal online course for the subject they want to study. Compare online course prices, watch
       video previews, and read the syllabus side-by-side. Find more than 140,000 courses from more
       than 30 online course providers in over 15 languages. Get all relevant information on online
       courses from Udemy, Coursera, Edx, Pluralsight, Treehouse, Skillshare, FutureLearn and more.
       Classpert's database also includes free online classes from Harvard, Stanford, Yale, UC
-      Berkeley, MIT and many more.'
+      Berkeley, MIT and many more."
       careers:
         <<: *careers
       meta:
