@@ -4,7 +4,7 @@
 
   <div class='c-vcard__head'>
     <div id='embed-<%= uniq %>' class='c-video'>
-      <% if course.video %>
+      <% if course.video && (course.video.url || (course.video.type == "youtube" && course.video.id)) %>
         <div class="c-video__bg-img" style="background-image:url(<%= course.video_thumbnail %>)"></div>
         <div class="c-video__mask"></div>
         <div data-embedded-video='/videos/<%= course.id %>' data-embedded-video-target='#embed-<%= uniq %>' class='swiper-no-swiping c-video__content'>

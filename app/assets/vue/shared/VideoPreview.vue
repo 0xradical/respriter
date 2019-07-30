@@ -1,7 +1,7 @@
 <template>
   <div class='el:m-video-preview' :class="[...rootClassesBase, ...rootClasses]">
     <!-- video available -->
-    <template v-if="video">
+    <template v-if="videoExists">
       <div class='el:m-video-preview__wrapper' :class="{ 'el:amx-D(n)': videoComponent }" @click="fetchVideo">
         <div class='el:m-video-preview__background' :style='style'></div>
         <div class='el:m-video-preview__mask'></div>
@@ -59,6 +59,9 @@ export default {
   computed: {
     video() {
       return this.course.video;
+    },
+    videoExists() {
+      return this.video && (this.video.url || (this.video.type === "youtube" && this.video.id));
     },
     style() {
       const backgroundImage = this.video && this.video.thumbnail_url;
