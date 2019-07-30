@@ -17,7 +17,7 @@
 
     </div>
 
-    <div class='col-12 mx-Mt-1 mx-D(n)@>medium'></div>
+    <div class='col-12 el:amx-Mt(1em) el:amx-D(n)@>lg'></div>
 
     <div class='col-12 col-sm-8 col-md-6 col-lg-4'>
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -40,7 +40,7 @@
           </div>
         <% end -%>
 
-        <%= f.submit "Log in", class: 'btn btn--blue-flat btn--block mx-Mt-1' %>
+        <%= f.submit "Log in", class: 'btn btn--blue-flat btn--block el:amx-Mt(1em)' %>
 
       <% end %>
       <%= render "user_accounts/shared/links" %>

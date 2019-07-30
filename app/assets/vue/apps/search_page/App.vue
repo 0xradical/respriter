@@ -2,7 +2,7 @@
   <div>
     <modal :adaptive="true" width='100%' height='100%' name='mobileFilter'>
       <div class='filter-nav--mobile'>
-        <div class='mx-D(Fx) mx-FxJc(sb)' style='height: 15%;'>
+        <div class='el:amx-D(F) el:amx-FxJc(sb)' style='height: 15%;'>
           <h5>{{ $t('dictionary.filters') }}</h5>
           <a href='#' @click="hideMobileFilter">
             <icon width='1.05rem' height='1.05rem' name='close'></icon>
@@ -23,9 +23,9 @@
       </div>
     </modal>
 
-    <div class='container mx-Pb(60px)'>
+    <div class='container el:amx-Pb(3.75em)'>
       <div class='row'>
-        <div class='mx-D(n)@<medium col-lg-3'>
+        <div class='el:amx-D(n)@<sm col-lg-3'>
           <span style='font-size:0.875em;display:inline-block;line-height:1.15em;padding:20px 0'></span>
         </div>
         <div class='col-12 col-lg-9'>
@@ -38,12 +38,12 @@
 
           </span>
 
-          <div class='mx-D(Fx) mx-FxJc(sb) mx-FxAi(c)'>
+          <div class='el:amx-D(F) el:amx-FxJc(sb) el:amx-FxAi(c)'>
             <div>
               <pagination @paginate='paginate' pagination-anchor='#body-anchor' :current-page='page' :num-of-pages='numOfPages' :records-per-page='recordsPerPage'></pagination>
             </div>
-            <div class='mx-D(n)@<medium mx-D(Fx) mx-FxAi(c) sort'>
-              <span class='mx-D(b) mx-Mr-1 sort__label'>{{ $t('dictionary.sort_by') }}</span>
+            <div class='el:amx-D(n)@<sm el:amx-D(F) el:amx-FxAi(c) sort'>
+              <span class='el:amx-D(b) el:amx-Mr(1em) sort__label'>{{ $t('dictionary.sort_by') }}</span>
               <multiselect  :value="orderCurrentOption"
                             @select="sortByChanged"
                             track-by='key'
@@ -69,12 +69,12 @@
         </div>
       </div>
 
-      <div class='row mx-Mt-1@>large'>
-        <div class='mx-D(n)@<medium col-lg-3'>
+      <div class='row el:amx-Mt(1em)@>lg'>
+        <div class='el:amx-D(n)@<sm col-lg-3'>
           <div class='filter-nav'>
-            <div class='mx-D(Fx) mx-FxJc(sb)'>
+            <div class='el:amx-D(F) el:amx-FxJc(sb)'>
               <h4>{{ $t('dictionary.filters') }}</h4>
-              <a href='#' class='mx-C(magenta) mx-Fw(b)' @click.prevent="clearFilters" style="margin: auto 0;text-align:right;">
+              <a href='#' class='el:amx-C_red2 el:amx-Fw(b)' @click.prevent="clearFilters" style="margin: auto 0;text-align:right;">
                 {{ $t('dictionary.clear_all_filters') }}
               </a>
             </div>
@@ -88,10 +88,10 @@
           </div>
         </div>
 
-        <div class='col-12 mx-D(n)@>desktop mx-Mb-1'>
+        <div class='col-12 el:amx-D(n)@>lg el:amx-Mb(1em)'>
           <hr/>
-          <div class='mx-D(Fx) mx-FxJc(sb) mx-FxAi(c)'>
-            <span class='mx-C(blue) mx-Fw(b)'>
+          <div class='el:amx-D(F) el:amx-FxJc(sb) el:amx-FxAi(c)'>
+            <span class='el:amx-C_blue2 el:amx-Fw(b)'>
               {{ $t('dictionary.sort_by') }}
               <select :value="orderCurrentOption.key" @change='sortByChanged({key: $event.target.value})'>
                 <option v-for='option in orderOptions' :key='option.key' :value='option.key'>
@@ -99,7 +99,7 @@
                 </option>
               </select>
             </span>
-            <a class='mx-C(blue) mx-Fw(b) mx-Ws(nw)' href='#' @click="showMobileFilter">
+            <a class='el:amx-C_blue2 el:amx-Fw(b) el:amx-Ws(nw)' href='#' @click="showMobileFilter">
               {{ $t('dictionary.filter_results') }}
             </a>
           </div>
@@ -145,11 +145,6 @@
       showCategoriesFilter: {
         type: Boolean,
         default: true
-      },
-
-      containerClass: {
-        type: String,
-        default: ''
       },
 
       locale: {

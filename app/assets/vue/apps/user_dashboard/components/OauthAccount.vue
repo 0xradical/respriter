@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class='mx-D(n)@<medium'>
+    <div class='el:amx-D(n)@<sm'>
       <a v-if='!connected' :href='authorizeUrl' :class='btnClass' style='max-width:200px'>  Connect with {{ provider }}</a>
       <a v-else @click="$emit('destroyOauth', provider)" :class='btnClass' style='max-width:250px'>  Connected with {{ provider }}</a>
     </div>
-    <div class='mx-D(n)@>large'>
+    <div class='el:amx-D(n)@>lg'>
       <a v-if='!connected' :href='authorizeUrl' :class='btnClass'>  Connect with {{ provider }}</a>
       <a v-else @click="$emit('destroyOauth', provider)" :class='btnClass'>  Connected with {{ provider }}</a>
     </div>

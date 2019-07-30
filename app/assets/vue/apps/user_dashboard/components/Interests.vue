@@ -15,7 +15,7 @@
     <h5 style='margin-top:20px;margin-bottom:20px'>Preferences</h5>
     <ul style='list-style:none;margin:0;padding:0'>
       <li v-for='pref in prefs' style='float:left;margin-bottom:10px' :key='pref'>
-        <span class='c-tag c-tag--blue-flat'>
+        <span class='c-tag c-tag--blue2-flat'>
           {{ $t(`tags.${pref}`) }}
         </span>
         <a @click="removeTag(pref)" href='javascript:void(0)' style='margin-left:-5px'>

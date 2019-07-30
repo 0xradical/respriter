@@ -14,9 +14,9 @@
 
     <!-- video unavailable -->
     <template v-else>
-      <div class='el:m-video-preview__wrapper el:amx-Bc_gray clspt:m-video-preview--unavailable__wrapper'>
+      <div class='el:m-video-preview__wrapper el:amx-Bc_gray3 clspt:m-video-preview--unavailable__wrapper'>
         <div class='el:m-video-preview__background'></div>
-        <div class='el:m-video-preview__mask el:amx-Bc_dark-gray'></div>
+        <div class='el:m-video-preview__mask el:amx-Bc_gray3'></div>
         <div class='el:m-video-preview__content'>
           <icon :iconClasses="['el:m-video-preview__icon el:amx-C_white']" name='no-video' width="50%" height="50%" transform="translate(0%, 50%)" cursor="inherit"></icon>
         </div>
@@ -80,7 +80,7 @@ export default {
       if (this.video) {
         base.push('clspt:m-video-preview--available');
       } else {
-        base.push('clspt:m-video-preview--unavailable el:amx-Bc_dark-gray');
+        base.push('clspt:m-video-preview--unavailable el:amx-Bc_gray3');
       }
 
       return base;

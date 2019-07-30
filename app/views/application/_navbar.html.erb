@@ -2,12 +2,12 @@
 
   <% unless home_controller? %>
     <%= link_to root_path do %>
-      <img src="<%= elements_asset_path('svgs/logo.svg') %>" class='c-navbar__slot mx-D(n)@phone mx-D(n)@tablet' width='156px'>
-      <img src="<%= elements_asset_path('svgs/logo_symbol.svg') %>" class='c-navbar__slot mx-D(n)@>desktop' width='40px'>
+      <img src="<%= elements_asset_path('svgs/logo.svg') %>" class='c-navbar__slot el:amx-D(n)@<sm' width='156px'>
+      <img src="<%= elements_asset_path('svgs/logo_symbol.svg') %>" class='c-navbar__slot el:amx-D(n)@>lg' width='40px'>
     <% end %>
   <% end %>
 
-  <div class='c-navbar__slot mx-Ml-1d25@>tablet mx-Ml-0d5@phone' style='<%= home_controller? ? "visibility:hidden" : "" %>'>
+  <div class='c-navbar__slot el:amx-Ml(0.5em) el:amx-Ml(1.25em)@>lg' style='<%= home_controller? ? "visibility:hidden" : "" %>'>
     <script id='navbar-search' type='x-vue-template'>
       <search-bar placeholder="<%= t('components.searchbar_placeholder') %>"
       :css-classes='{container: "c-search-slim c-search-slim--negative", form:
@@ -20,22 +20,22 @@
 
   <nav style='float:right;line-height:40px;display:inline-block;vertical-align:middle'>
 
-    <div class='c-navbar__slot mx-Fs-0d875 mx-D(n)@<small'>
+    <div class='c-navbar__slot el:amx-Fs(0.875em) el:amx-D(n)@<sm'>
       <%= link_to 'Blog', posts_path,
       class: "el:m-link-nav el:m-link-nav--section el:amx-Mr(1.5em) #{controller_name.eql?('posts') ? 'el:m-link-nav--active' : ''}" %>
     </div>
 
     <% unless user_account_signed_in? %>
-      <div class='c-navbar__slot mx-D(n)@phone' style='margin-right:5px'>
+      <div class='c-navbar__slot el:amx-D(n)@sm' style='margin-right:5px'>
         <%= render 'language_dropdown' %>
       </div>
     <% end %>
 
     <a data-off-canvas-menu='#main-menu' data-off-canvas-menu-tpl='#main-menu-tpl'
-      class='mx-D(n)@desktop mx-D(n)@tv mx-D(n)@tablet c-navbar__offcanvas-menu-btn'></a>
+      class='el:amx-D(n)@>lg c-navbar__offcanvas-menu-btn'></a>
 
     <%- if user_account_signed_in? %>
-      <div class='c-navbar__slot mx-D(n)@phone'>
+      <div class='c-navbar__slot el:amx-D(n)@sm'>
         <%= link_to user_accounts_dashboard_path("dashboard") do %>
           <% if current_user_account.avatar.present? %>
             <%= image_tag(current_user_account.avatar, height: '37px', style: 'border-radius:50%;border:1px solid #ccc') %>
@@ -45,12 +45,12 @@
         <% end %>
       </div>
     <% else %>
-      <span class='c-navbar__slot mx-D(n)@phone' style='margin-right:4px;margin-left:10px;'>
+      <span class='c-navbar__slot el:amx-D(n)@sm' style='margin-right:4px;margin-left:10px;'>
         <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
           class: 'btn btn--gray-border btn--rounded btn--small btn--uppercase' %>
       </span>
 
-      <span class='c-navbar__slot mx-D(n)@phone'>
+      <span class='c-navbar__slot el:amx-D(n)@sm'>
         <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
           class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
       </span>

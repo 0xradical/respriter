@@ -1,8 +1,8 @@
 module ApplicationHelper
 
-  def alert_alias(name)
-    alert_map = { notice: 'blue', info: 'blue', alert: 'magenta', danger: 'magenta', warning: 'yellow', success: 'green' }
-    alert_map[name.to_sym]
+  def alert_alias(name, tone = 2)
+    alert_map = { notice: 'blue', info: 'blue', alert: 'red', danger: 'red', warning: 'yellow', success: 'green' }
+    "#{alert_map[name.to_sym]}#{tone}"
   end
 
   def omniauth_button(provider:, label:)

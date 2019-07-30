@@ -1,5 +1,5 @@
 <template>
-  <div v-if='course.description' class='el:amx-Bot_gray el:amx-Bob_gray' :class='rootClasses'>
+  <div v-if='course.description' class='el:amx-Bot_gray3 el:amx-Bob_gray' :class='rootClasses'>
     <div class='clspt:course-description' @click.prevent.stop="toggle">
       <div class='el:amx-D(f) el:amx-FxJc(sb)'>
         <a class='el:amx-C_blue'>{{ toggled ? $t('dictionary.description.hide') : $t('dictionary.description.show') }}</a>

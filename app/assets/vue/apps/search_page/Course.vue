@@ -56,7 +56,7 @@
     </modal>
 
     <!-- desktop card -->
-    <div data-chrome-ext='clsp-tagger' :data-chrome-ext-data='chromeExtData' :id='course.id' class='el:o-hcard el:amx-Pr(0.75em) el:amx-Pl(0.75em) el:amx-Pb(0.75em) el:amx-Pt(0.75em) el:amx-Bc_white el:amx-D(n)@<medium el:amx-Fs(0.875em)@<large el:amx-Fs(1em)@extra-large' :class="{ 'js-expanded' : expanded }">
+    <div data-chrome-ext='clsp-tagger' :data-chrome-ext-data='chromeExtData' :id='course.id' class='el:o-hcard el:amx-Pr(0.75em) el:amx-Pl(0.75em) el:amx-Pb(0.75em) el:amx-Pt(0.75em) el:amx-Bc_white el:amx-D(n)@<sm el:amx-Fs(0.875em) el:amx-Fs(1em)@>lg' :class="{ 'js-expanded' : expanded }">
       <div class='el:o-hcard__slot-0 el:amx-Mr(0.75em)'>
         <video-preview :course='course'></video-preview>
       </div>
@@ -150,7 +150,7 @@
     </modal>
 
     <!-- mobile card -->
-    <div :id='`mobile-${course.id}`' @click='$modal.show(mobileOffCanvasId)' class='el-mb:o-hcard el:amx-Pr(0.875em) el:amx-Pb(0.875em) el:amx-Pt(0.875em) el:amx-Pl(0.875em) el:amx-Bc_white el:amx-Cur(p) el:amx-D(n)@>large'>
+    <div :id='`mobile-${course.id}`' @click='$modal.show(mobileOffCanvasId)' class='el-mb:o-hcard el:amx-Pr(0.875em) el:amx-Pb(0.875em) el:amx-Pt(0.875em) el:amx-Pl(0.875em) el:amx-Bc_white el:amx-Cur(p) el:amx-D(n)@>lg'>
       <div class='el-mb:o-hcard__slot-0'>
         <course-provider :rootClasses="['el:amx-Mb(0.5em)']"
                         :nameClasses="['el:amx-Fs(0.75em)']"

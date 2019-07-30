@@ -1,8 +1,8 @@
 <template>
 <div class='container'>
-  <div class='row mx-D(n)@>large'>
+  <div class='row el:amx-D(n)@>lg'>
     <div class='col-12'>
-      <div class='mx-Mt-1d25' style="display:flex;flex-direction:column;align-items:center;">
+      <div class='el:amx-Mt(1.25em)' style="display:flex;flex-direction:column;align-items:center;">
         <img v-if="account.profile.attributes.avatar" :src="account.profile.attributes.avatar"
         width='76px' style='border-radius:50%;border:1px solid #eee'>
         <svg v-else width='76px' height='76px'>
@@ -19,12 +19,12 @@
       </div>
 
       <div style='display:flex;flex-direction:column;align-items:center;'>
-        <div style='mx-Mt-0d625' v-if='account.profile.name'>
+        <div style='el:amx-Mt(0.625em)' v-if='account.profile.name'>
           <h5 style='margin-top:20px'>Name</h5>
           <span>{{ account.profile.name }}</span>
         </div>
 
-        <div class='mx-Mt-0d625 mx-Mb-0d625'>
+        <div class='el:amx-Mt(0.625em) el:amx-Mb(0.625em)'>
           <h5 style='margin-top:20px;text-align:center;'>E-mail</h5>
           <span class='email'>{{ account.email }}</span>
         </div>
@@ -32,16 +32,16 @@
     </div>
   </div>
 
-  <div class='row mx-D(n)@>large'>
+  <div class='row el:amx-D(n)@>lg'>
     <div style='padding-top:2em;width:100%;'>
       <ul class="nav nav-tabs">
         <li class="nav-item" style='width:50%;text-align:center;'>
-          <router-link :to="{name: 'settings'}" style='border-right:none;' class="nav-link mx-Pt-1@>extra-small mx-Pb-1@>extra-small mx-C(blue)" exact-active-class="active mx-Fw(b)">
+          <router-link :to="{name: 'settings'}" style='border-right:none;' class="nav-link el:amx-Pt(1em) el:amx-Pb(1em) el:amx-C_blue2" exact-active-class="active el:amx-Fw(b)">
             {{ $t('pages.dashboard_index.html.account_settings_link') }}
           </router-link>
         </li>
         <li class="nav-item" style='width:50%;text-align:center;'>
-          <router-link :to="{name: 'interests'}" class="nav-link mx-Pt-1@>extra-small mx-Pb-1@>extra-small mx-C(blue)" exact-active-class="active mx-Fw(b)">
+          <router-link :to="{name: 'interests'}" class="nav-link el:amx-Pt(1em) el:amx-Pb(1em) el:amx-C_blue2" exact-active-class="active el:amx-Fw(b)">
             {{ $t('pages.dashboard_index.html.interests_link') }}
           </router-link>
         </li>
@@ -50,8 +50,8 @@
   </div>
 
   <div class='row logged'>
-    <div class='col-3 mx-D(n)@<medium' style='border-right: 1px solid #DEE7ED;height:100%;'>
-      <div class='mx-Mt-1d25' style="margin-bottom:40px;display:flex;flex-direction:column;align-items:center;">
+    <div class='col-3 el:amx-D(n)@<sm' style='border-right: 1px solid #DEE7ED;height:100%;'>
+      <div class='el:amx-Mt(1.25em)' style="margin-bottom:40px;display:flex;flex-direction:column;align-items:center;">
         <img v-if="account.profile.attributes.avatar" :src="account.profile.attributes.avatar"
         width='76px' style='border-radius:50%;border:1px solid #eee'>
         <svg v-else width='76px' height='76px'>
@@ -72,7 +72,7 @@
         <span>{{ account.profile.name }}</span>
       </div>
 
-      <div class='mx-Mt-1d25 mx-Mb-1d25'>
+      <div class='el:amx-Mt(1.25em) el:amx-Mb(1.25em)'>
         <h5>E-mail</h5>
         <span class='email'>{{ account.email }}</span>
       </div>
@@ -92,7 +92,7 @@
         </li>
       </ul>
 
-      <div class='mx-Mt-1d25'>
+      <div class='el:amx-Mt(1.25em)'>
         <a data-method='delete' href='/user_accounts/sign_out'>
           {{ $t('dictionary.sign_out') }}
         </a>
@@ -101,15 +101,15 @@
 
     </div>
     <div class='col-12 col-lg-9'>
-      <div class='mx-Mt-1d25'>
+      <div class='el:amx-Mt(1.25em)'>
         <router-view @removeTag='removeTagFromInterests' :account='account' :prefs='account.profile.attributes.interests'></router-view>
       </div>
     </div>
   </div>
 
-  <div class='row mx-D(n)@>large' style='border-top: 1px solid #DEE7ED;padding:2em;margin-top:1em;text-align:center;'>
+  <div class='row el:amx-D(n)@>lg' style='border-top: 1px solid #DEE7ED;padding:2em;margin-top:1em;text-align:center;'>
     <div class='col-12'>
-      <a class='mx-C(blue)' data-method='delete' href='/user_accounts/sign_out'>
+      <a class='el:amx-C_blue2' data-method='delete' href='/user_accounts/sign_out'>
         {{ $t('dictionary.sign_out') }}
       </a>
     </div>
@@ -207,10 +207,10 @@ hr {
   text-overflow: ellipsis;
 }
 .nav-tabs {
-  border-bottom: 1px solid color(light-gray);
+  border-bottom: 1px solid get-color("gray",2);
 
   .nav-link {
-    border-color: color(light-gray);
+    border-color: get-color("gray",2);
     border-radius: 0;
 
     &.active {

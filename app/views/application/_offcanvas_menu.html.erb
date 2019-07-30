@@ -33,10 +33,10 @@
   <ul class='c-list c-list--unstyled el:amx-Fs(0.875em)'>
     <% (RootTag.all).each_with_index do |t, index| %>
       <%= link_to (course_bundles_path(t.slugify)) do %>
-        <li class='mx-Fs-0d875' style='padding:4px 0px'>
+        <li class='el:amx-Fs(0.875em)' style='padding:4px 0px'>
           <span class='c-label c-label--double-line' style='height:60px;text-align:left'>
             <%= svg_use('icons', t.icon, { class: 'c-label__icon' }) %>
-            <span class='c-label__text' class='mx-C(blue)' style='word-break:break-word;max-width:160px'>
+            <span class='c-label__text' class='el:amx-C_blue2' style='word-break:break-word;max-width:160px'>
               <%= t("tags.#{t.id}") %>
             </span>
           </span>

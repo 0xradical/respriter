@@ -2,7 +2,7 @@
   <div id='account-settings'>
 
     <div v-if='!account.password_missing'>
-      <h4 class='mx-D(n)@<large' style='margin-bottom:10px'>
+      <h4 class='el:amx-D(n)@<large' style='margin-bottom:10px'>
          {{ $t('pages.dashboard_index.html.account_settings_header')  }}
       </h4>
       <form class='c-form'>
@@ -10,12 +10,12 @@
           <label class='c-form-ctrl__label' >E-mail</label>
           <input v-model='account.email' class='c-form-ctrl__input' type='text' />
         </div>
-        <div class='c-form-ctrl c-form-ctrl--vertical mx-Mt-0d625'>
+        <div class='c-form-ctrl c-form-ctrl--vertical el:amx-Mt(0.625em)'>
           <label class='c-form-ctrl__label' >Password</label>
           <input class='c-form-ctrl__input' type='text' />
         </div>
-        <input type='submit' class='btn btn--blue-flat mx-Mt-0d625 mx-D(n)@<medium'>
-        <input type='submit' class='btn btn--blue-flat mx-Mt-0d625 btn--block mx-D(n)@>large'>
+        <input type='submit' class='btn btn--blue-flat el:amx-Mt(0.625em) el:amx-D(n)@<sm'>
+        <input type='submit' class='btn btn--blue-flat el:amx-Mt(0.625em) btn--block el:amx-D(n)@>lg'>
       </form>
     </div>
 
