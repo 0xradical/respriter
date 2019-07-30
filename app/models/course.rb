@@ -198,6 +198,7 @@ class Course < ApplicationRecord
   scope :featured,      -> { order('enrollments_count DESC') }
   scope :locales,       -> (l) { where("audio @> ?", "{#{l.join(',')}}") }
   scope :by_tags,       -> (tags) { where("curated_tags @> ARRAY[?]::varchar[]", tags) }
+  scope :published,     -> { where(published: true) }
 
   def self.unnest_curated_tags(sub_query='courses')
     select('*').from(select("unnest(curated_tags) as tag").from(sub_query), :unnested_curated_tags)
