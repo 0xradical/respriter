@@ -1,8 +1,8 @@
 <template>
-  <div v-if='course.description' class='el:amx-Bot_gray3 el:amx-Bob_gray' :class='rootClasses'>
+  <div v-if='course.description' class='el:amx-Bot_gray3 el:amx-Bob_gray3' :class='rootClasses'>
     <div class='clspt:course-description' @click.prevent.stop="toggle">
       <div class='el:amx-D(f) el:amx-FxJc(sb)'>
-        <a class='el:amx-C_blue'>{{ toggled ? $t('dictionary.description.hide') : $t('dictionary.description.show') }}</a>
+        <a class='el:amx-C_blue2'>{{ toggled ? $t('dictionary.description.hide') : $t('dictionary.description.show') }}</a>
         <div>
           <icon width='1rem' height='1rem' :transform='`rotate(${toggled ? 180 : 0}deg)`' name='arrow-down'></icon>
         </div>
