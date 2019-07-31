@@ -2,7 +2,7 @@
 
 .multiselect__option--selected {
   color: get-color("gray") !important;
-  background: get-color("white") !important;
+  background: #FFFFFF !important;
   font-weight: bold !important;
 }
 
@@ -11,7 +11,7 @@
 }
 
 .multiselect__option--highlight {
-  color: get-color("white") !important;
+  color: #FFFFFF !important;
   background: get-color("blue",2) !important;
   font-weight: bold !important;
 }

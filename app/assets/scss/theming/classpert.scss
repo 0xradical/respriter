@@ -1,9 +1,13 @@
 .clspt\:c-hero-impact {
-  &--small {
-    width: 33% !important;
+  $lg: breakpoint('lg');
+
+  &__img {
+    width: 60%;
   }
 
-  &--extra-small {
-    width: 60% !important;
+  @media(min-width: $lg) {
+    &__img {
+      width: 33% !important;
+    }
   }
 }
