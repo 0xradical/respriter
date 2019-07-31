@@ -1,5 +1,9 @@
 <template>
   <div class='el:m-video-preview' :class="[...rootClassesBase, ...rootClasses]">
+    <span style='display:none'>
+      {{ this.video }}
+      {{ this.videoExists }}
+    </span>
     <!-- video available -->
     <template v-if="videoExists">
       <div class='el:m-video-preview__wrapper' :class="{ 'el:amx-D(n)': videoComponent }" @click="fetchVideo">
