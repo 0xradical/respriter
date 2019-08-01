@@ -2,7 +2,7 @@
   <div class='clspt:course-provider c-label' :class='rootClasses'>
     <icon class='c-label__icon c-label__icon--circled-border clspt:course-provider__logo' :class='logoClasses' scope="providers" :name="logo"></icon>
     <span class='c-label__text'>
-      <span class='c-tags c-tags--gray' :class='nameClasses'>
+      <span class='c-tags c-tags--gray3' :class='nameClasses'>
         {{ name }}
       </span>
     </span>

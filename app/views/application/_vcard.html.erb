@@ -26,7 +26,7 @@
       <span class='c-label'>
         <%= svg_use('providers-',course.provider.slug, {class: 'c-label__icon c-label__icon--inc-25% c-label__icon--circled-border' }) %>
         <span class='c-label__text' style='font-size:0.875em'>
-          <span class='c-tags c-tags--gray mx-Ml(4px)'>
+          <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
             <%= course.provider.name %>
           </span>
         </span>
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class='c-vcard__content-row mx-Fs-0d875'>
+    <div class='c-vcard__content-row el:amx-Fs(0.875em)'>
     </div>
 
     <div class='c-vcard__content-row c-vcard__content--spaced'>
@@ -54,7 +54,7 @@
               title: t('meta.icons.user_and_monitor')
             } ) %>
             <span class='c-label__text' style='font-size:0.75em'>
-              <span class='c-tags c-tags--gray mx-Ml(4px)'>
+              <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                 <%= course.pace ? t("dictionary.pace.#{course.pace}") : t("dictionary.not_available") %>
               </span>
             </span>
@@ -64,7 +64,7 @@
           <span class='c-label'>
             <%= svg_use('icons-', 'level', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
             <span class='c-label__text' style='font-size:0.75em'>
-            <span class='c-tags c-tags--gray mx-Ml(4px)'>
+            <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                 <% if !course.level.empty? %>
                   <%= course.level.map { |l| t("dictionary.levels.#{l}") }.join(',') %>
                 <% else %>
@@ -78,7 +78,7 @@
           <span class='c-label'>
             <%= svg_icons_lib('clock', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
             <span class='c-label__text' style='font-size:0.75em'>
-              <span class='c-tags c-tags--gray mx-Ml(4px)'>
+              <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                 <%= course.effort ? t("datetime.distance_in_words.about_x_hours", count: course.effort.ceil) : t('dictionary.not_available') %>
               </span>
             </span>
@@ -88,7 +88,7 @@
           <span class='c-label'>
             <%= svg_icons_lib('institution', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
             <span class='c-label__text' style='font-size:0.75em'>
-              <span class='c-tags c-tags--gray mx-Ml(4px)'>
+              <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                 <%= course.offered_by.present? ? course.offered_by.map { |i| i['name'] }.join(',') : t("dictionary.not_available") %>
               </span>
             </span>
@@ -104,7 +104,7 @@
             <span class='c-label'>
               <%= svg_icons_lib('audio', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
               <span class='c-label__text' style='font-size:0.75em'>
-                <span class='c-tags c-tags--gray mx-Ml(4px) mx-Tt(u)'>
+                <span class='c-tags c-tags--gray el:amx-Ml(0.25em) el:amx-Tt(u)'>
                   <%= course.root_languages_for_audio.join(',') %>
                 </span>
               </span>
@@ -114,7 +114,7 @@
             <span class='c-label'>
               <%= svg_icons_lib('subtitle', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
               <span class='c-label__text' style='font-size:0.75em'>
-                <span class='c-tags c-tags--gray mx-Ml(4px) mx-Tt(u)'>
+                <span class='c-tags c-tags--gray el:amx-Ml(0.25em) el:amx-Tt(u)'>
                   <% begin %>
                     <%= (course.subtitles & session[:tracking_data]['http_accept_language']).join(',') %>
                   <% rescue %>
@@ -128,22 +128,22 @@
       </div>
       <div class='c-vcard__content-rcol c-vcard__content-rcol--W(60%)'>
 
-        <div class='mx-Fs-0d625 mx-Tt(u) c-vcard__content-box c-vcard__content-box--Ta(r)'>
+        <div class='el:amx-Fs(0.625em) el:amx-Tt(u) c-vcard__content-box c-vcard__content-box--Ta(r)'>
           <% if course.subscription_type? %>
-            <span class='mx-C(dark-green)'><%= t("dictionary.free_trial")%></span>: <%= t("datetime.distance_in_words.x_#{course.trial_period['unit']}", count: course.trial_period['value']) %>
+            <span class='el:amx-C_green3'><%= t("dictionary.free_trial")%></span>: <%= t("datetime.distance_in_words.x_#{course.trial_period['unit']}", count: course.trial_period['value']) %>
           <% end %>
         </div>
 
-        <div class='c-vcard__content-box c-vcard__price mx-Tt(u) c-vcard__content-box--Ta(r)'>
+        <div class='c-vcard__content-box c-vcard__price el:amx-Tt(u) c-vcard__content-box--Ta(r)'>
           <%= course.free_content? ? 'free' : "$#{'%.2f' % course.price}" %>
         </div>
 
-        <div class='c-vcard__content-box c-vcard__content-box--Ta(r) mx-Fs-0d625'>
+        <div class='c-vcard__content-box c-vcard__content-box--Ta(r) el:amx-Fs(0.625em)'>
 
           <% if course.free_content? && course.paid_content? %>
             <span data-tippy="<%= t('components.card.free_course_tip') %>" class='c-label'>
               <%= svg_icons_lib('currency', { class: 'c-label__icon' } ) %>
-              <span class='c-tags c-tags--gray mx-Ml(4px)'>
+              <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                 <%= t('dictionary.extra_paid_content')%>
               </span>
             </span>
@@ -151,7 +151,7 @@
             <span data-tippy="<%= t('components.card.subscription_tip', period: t("datetime.distance_in_words.x_#{course.trial_period['unit']}", count: course.trial_period['value']) ) %>" class='c-label'>
               <%= svg_icons_lib('renew', { class: 'c-label__icon' } ) %>
               <span class='c-label__text'>
-                <span class='c-tags c-tags--gray mx-Ml(4px)'>
+                <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                   <%= t("dictionary.subscription_period.#{course.subscription_period['unit']}") %>
                 </span>
               </span>

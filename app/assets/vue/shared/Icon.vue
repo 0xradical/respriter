@@ -27,7 +27,6 @@ export default {
       type: String,
       default: 'initial'
     },
-
     cursor: {
       type: String,
       defaul: 'initial'

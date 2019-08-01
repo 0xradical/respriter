@@ -2,7 +2,7 @@
   <div class='clspt:course-attribute c-label' :class='rootClasses'>
     <icon :iconClasses="[...iconClassesBase, ...iconClasses]" :name="icon"></icon>
     <span class='clspt:course-attribute__label c-label__text'>
-      <span class='c-tags c-tags--gray' :class='valueClasses'>
+      <span class='c-tags c-tags--gray3' :class='valueClasses'>
         <slot></slot>
       </span>
     </span>

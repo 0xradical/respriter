@@ -6,7 +6,6 @@
   <%= render 'social_share' %>
 <script id='vue-search-app-props' type='x-vue-props'>
   {
-    "containerClass": "l-container mx-Pb(60px)",
     "searchEndpoint": "<%= params[:tag] %>.json",
     "showCategoriesFilter": <%= params[:tag].present? %>,
     "locale": "<%= I18n.locale %>",
@@ -38,12 +37,12 @@
   share_it: t("dictionary.share", tag: t("tags.#{@tag}")),
   art_html: svg_use('tags', @tag, { width: '100%', style: 'max-width:100px'})
 %>
-<div class='mx-Bc(white) mx-Bt(light-gray)'>
+<div class='el:amx-Bc_white el:amx-Bot_gray1'>
   <div class='container'>
     <div class='row'>
       <div class='col-12'>
-        <div class='mx-Pt-0d875 mx-Pb-0d875'>
-          <ul class='c-breadcrumb mx-Fs-0d875 mx-Fs-0d625@extra-small'>
+        <div class='el:amx-Pt(0.875em) el:amx-Pb(0.875em)'>
+          <ul class='c-breadcrumb el:amx-Fs(0.625em) el:amx-Fs(0.875em)@>lg'>
             <% @root_tags.each_with_index do |root_tag, index| %>
               <li class='c-breadcrumb__item'><%= link_to t("tags.#{root_tag}"), course_bundles_path(tag: root_tag.dasherize) %></li>
               <% if (index + 1 ) != @root_tags.length %>
@@ -52,7 +51,7 @@
             <% end %>
             <li class='c-breadcrumb__separator'></li>
             <li class='c-breadcrumb__item'><%= t("tags.#{@tag}") %></li>
-            <li class='mx-Cl(b)'></li>
+            <li class='el:amx-Cl(b)'></li>
           </ul>
         </div>
       </div>
@@ -60,6 +59,6 @@
   </div>
 </div>
 
-<div class='mx-Mt-1 mx-Mb-2'>
+<div class='el:amx-Mt(1em) el:amx-Mb(2em)'>
   <div data-vue-search-app data-vue-search-app-props='vue-search-app-props' data-vue-search-app-translations='<%= locales.to_json %>'></div>
 </div>

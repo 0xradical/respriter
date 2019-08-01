@@ -5,7 +5,7 @@ module DeviseHelper
     messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
 
     html = <<-HTML
-    <div class='c-alert c-alert--magenta' style='margin-bottom:20px' id="error_explanation">
+    <div class='c-alert c-alert--magenta2' style='margin-bottom:20px' id="error_explanation">
       <ul class='c-list c-list--unstyled'>#{messages}</ul>
     </div>
     HTML

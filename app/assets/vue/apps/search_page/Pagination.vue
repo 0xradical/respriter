@@ -109,14 +109,14 @@
   .c-pagination {
 
     list-style: none;
-    margin: 10px 0px;
+    margin: 1em 0 0 0;
     padding: 0;
     clear: both;
 
     &__page {
 
       float: left;
-      margin-right: 10px;
+      margin-right: 0.625em;
 
       &--current a {
         background-color: #4C636F;

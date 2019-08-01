@@ -1,5 +1,5 @@
 <template>
-  <div class='el:amx-D(n)@<medium'>
+  <div class='el:amx-D(n)@<sm'>
     <!-- video + title + pricing/cta -->
     <div class='el:amx-Bc_white el:amx-Pt(1.5em) el:amx-Pb(2.5em)'>
       <div class='container'>

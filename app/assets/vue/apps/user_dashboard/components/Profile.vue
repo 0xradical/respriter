@@ -22,7 +22,7 @@
         <input class='c-form-ctrl__input' type='text' />
       </div>
 
-      <input type='submit' class='btn btn--blue-border mx-Mt-0d625'>
+      <input type='submit' class='btn btn--blue-border el:amx-Mt(0.625em)'>
 
     </form>
 

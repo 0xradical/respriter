@@ -13,7 +13,6 @@ html {
 @import '~bootstrap/scss/variables';
 
 @import 'variables.scss';
-@import 'lost_grid.scss';
 @import 'posts.scss';
 
 @import '~bootstrap/scss/mixins/breakpoints';
@@ -31,6 +30,7 @@ html {
 @import 'theming/vuebar.scss';
 @import 'theming/multiselect.scss';
 @import 'theming/vue-modal.scss';
+@import 'theming/classpert.scss';
 
 .l-blog-container {
   width: 100%;
@@ -98,7 +98,7 @@ html {
 // tippy
 
 .tippy-tooltip.quero-theme {
-  background-color: color(dark-gray);
+  background-color: get-color("gray");
   color: #FFF;
   font-size: 0.75em;
 }
@@ -108,18 +108,18 @@ html {
 }
 
 .tippy-tooltip.quero-theme .tippy-backdrop {
-  background-color: color(dark-gray);
+  background-color: get-color("gray");
 }
 
 .tippy-popper[x-placement^='top'] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-top-color: color(dark-gray);
+  border-top-color: get-color("gray");
 }
 .tippy-popper[x-placement^='bottom'] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-bottom-color: color(dark-gray);
+  border-bottom-color: get-color("gray");
 }
 .tippy-popper[x-placement^='left'] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-left-color: color(dark-gray);
+  border-left-color: get-color("gray");
 }
 .tippy-popper[x-placement^='right'] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-right-color: color(dark-gray);
+  border-right-color: get-color("gray");
 }

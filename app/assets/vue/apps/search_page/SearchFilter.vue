@@ -8,7 +8,7 @@
               <search-fieldset :title='$t("dictionary.audios")' :subtitle="filter.root_audio.map(audioValue).join(', ')" :stand-out='filter.root_audio.length > 0'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -21,7 +21,7 @@
                 <search-fieldset :title='$t("dictionary.categories")' v-if="showCategoriesFilter" :subtitle="filter.category.map(categoryValue).join(', ')" :stand-out='filter.category.length > 0'>
                   <template #action>
                     <a class='c-fieldset-frame__action' href='#'>
-                      <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                      <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
                     </a>
                   </template>
                 </search-fieldset>
@@ -34,7 +34,7 @@
               <search-fieldset :title='$t("dictionary.subtitles")' :subtitle="filter.subtitles.map(subtitleValue).join(', ')" :stand-out='filter.subtitles.length > 0'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -46,7 +46,7 @@
               <search-fieldset :title='$t("dictionary.providers")' :subtitle="filter.provider_name.map(providerValue).join(', ')" :stand-out='filter.provider_name.length > 0'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -58,7 +58,7 @@
               <search-fieldset :title='$t("dictionary.price")' :subtitle='`$ ${filter.price[0]} - $ ${filter.price[1]}`' :stand-out='filter.price[0] > 0 || filter.price[1] < 2500'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -66,8 +66,8 @@
 
             <hr/>
 
-            <div class='mx-Pos(a) mx-B(0) mx-D(fx) mx-FxJc(sb) mx-FxAi(c) mx-Wd(100%)'>
-              <a href='#' class='mx-C(magenta) mx-Fw(b)' @click="$emit('clearFiltersClicked')">
+            <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(sb) el:amx-FxAi(c) el:amx-W(100%)'>
+              <a href='#' class='el:amx-C_red2 el:amx-Fw(b)' @click="$emit('clearFiltersClicked')">
                 {{ $t('dictionary.clear_all_filters') }}
               </a>
 
@@ -81,12 +81,12 @@
                                   :filter='filter.root_audio'
                                   :rootClasses="['scrollable-ul--mobile']"
                                   :noOptionsMessage="$t('dictionary.no_options_available')"
-                                  :checkboxClasses="['mx-Fs-1d25@extra-small']"
+                                  :checkboxClasses="['el:amx-Fs(1.25em)@sm']"
                                   @includeFacetOption="$emit('optionAddedToFilter', 'root_audio', $event)"
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'root_audio', $event)">
             </search-facet-options>
-            <div class='mx-Pos(a) mx-B(0) mx-D(fx) mx-FxJc(c) mx-Wd(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.root_audio = false'>
+            <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
+              <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.root_audio = false'>
                 OK
               </a>
             </div>
@@ -96,12 +96,12 @@
                                   :filter='filter.subtitles'
                                   :rootClasses="['scrollable-ul--mobile']"
                                   :noOptionsMessage="$t('dictionary.no_options_available')"
-                                  :checkboxClasses="['mx-Fs-1d25@extra-small']"
+                                  :checkboxClasses="['el:amx-Fs(1.25em)@sm']"
                                   @includeFacetOption="$emit('optionAddedToFilter', 'subtitles', $event)"
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'subtitles', $event)">
             </search-facet-options>
-            <div class='mx-Pos(a) mx-B(0) mx-D(fx) mx-FxJc(c) mx-Wd(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.subtitles = false'>
+            <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
+              <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%;" @click='isFiltering.subtitles = false'>
                 OK
               </a>
             </div>
@@ -111,12 +111,12 @@
                                   :filter='filter.category'
                                   :rootClasses="['scrollable-ul--mobile']"
                                   :noOptionsMessage="$t('dictionary.no_options_available')"
-                                  :checkboxClasses="['mx-Fs-1d25@extra-small']"
+                                  :checkboxClasses="['el:amx-Fs(1.25em)@sm']"
                                   @includeFacetOption="$emit('optionAddedToFilter', 'category', $event)"
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'category', $event)">
             </search-facet-options>
-            <div class='mx-Pos(a) mx-B(0) mx-D(fx) mx-FxJc(c) mx-Wd(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.category = false'>
+            <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
+              <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.category = false'>
                 OK
               </a>
             </div>
@@ -126,12 +126,12 @@
                                   :filter='filter.provider_name'
                                   :rootClasses="['scrollable-ul--mobile']"
                                   :noOptionsMessage="$t('dictionary.no_options_available')"
-                                  :checkboxClasses="['mx-Fs-1d25@extra-small']"
+                                  :checkboxClasses="['el:amx-Fs(1.25em)@sm']"
                                   @includeFacetOption="$emit('optionAddedToFilter', 'provider_name', $event)"
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'provider_name', $event)">
             </search-facet-options>
-            <div class='mx-Pos(a) mx-B(0) mx-D(fx) mx-FxJc(c) mx-Wd(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.provider_name = false'>
+            <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
+              <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.provider_name = false'>
                 OK
               </a>
             </div>
@@ -148,8 +148,8 @@
               >
               </search-facet-price-filter>
             </div>
-            <div class='mx-Pos(a) mx-B(0) mx-D(fx) mx-FxJc(c) mx-Wd(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block mx-Wd(30%) mx-Ta(c)' @click='isFiltering.price = false'>
+            <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
+              <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.price = false'>
                 OK
               </a>
             </div>
@@ -162,7 +162,7 @@
 
       <search-fieldset :title='$t("dictionary.price")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action mx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','price')">
+          <a class='c-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','price')">
             {{ $t('dictionary.clear_filter') }}
           </a>
         </template>
@@ -176,7 +176,7 @@
 
           <div style='margin-top: 2em;display:flex;'>
             <number-input :value='filter.price[0]' size="small" inline :min='0' :max='2500' @change="$emit('priceValueChanged', [$event, filter.price[1]])"></number-input>
-            <span class='mx-D(ib)' style='margin: auto 0.5em; font-size: 0.875em; flex-basis: 150px;text-align:center;'> {{ $t('dictionary.in_currency',{currency: 'USD'}) }} </span>
+            <span class='el:amx-D(ib)' style='margin: auto 0.5em; font-size: 0.875em; flex-basis: 150px;text-align:center;'> {{ $t('dictionary.in_currency',{currency: 'USD'}) }} </span>
             <number-input :value='filter.price[1]' size="small" inline :min='0' :max='2500' @change="$emit('priceValueChanged', [filter.price[0], $event])"></number-input>
           </div>
         </div>
@@ -186,7 +186,7 @@
 
       <search-fieldset :title='$t("dictionary.providers")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action mx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','provider_name')">
+          <a class='c-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','provider_name')">
             {{ $t('dictionary.clear_filter') }}
           </a>
         </template>
@@ -201,7 +201,7 @@
           <search-facet-options :options='suggestions.provider_name.filtered'
                                 :filter='filter.provider_name'
                                 :noOptionsMessage="this.suggestions.provider_name.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.provider_name.current})"
-                                :noOptionsClasses="['mx-C(magenta) mx-Fs-0d75']"
+                                :noOptionsClasses="['el:amx-C_red2 el:amx-Fs(0.75em)']"
                                 @includeFacetOption="$emit('optionAddedToFilter', 'provider_name', $event)"
                                 @excludeFacetOption="$emit('optionRemovedFromFilter', 'provider_name', $event)">
           </search-facet-options>
@@ -212,7 +212,7 @@
 
       <search-fieldset :title='$t("dictionary.audios")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action mx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','root_audio')">
+          <a class='c-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','root_audio')">
             {{ $t('dictionary.clear_filter') }}
           </a>
         </template>
@@ -228,7 +228,7 @@
                                 :filter='filter.root_audio'
                                 :rootClasses="['scrollable-ul']"
                                 :noOptionsMessage="this.suggestions.root_audio.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.root_audio.current})"
-                                :noOptionsClasses="['mx-C(magenta) mx-Fs-0d75']"
+                                :noOptionsClasses="['el:amx-C_red2 el:amx-Fs(0.75em)']"
                                 @includeFacetOption="$emit('optionAddedToFilter', 'root_audio', $event)"
                                 @excludeFacetOption="$emit('optionRemovedFromFilter', 'root_audio', $event)">
           </search-facet-options>
@@ -240,7 +240,7 @@
 
         <search-fieldset :title='$t("dictionary.categories")' :stand-out="true">
           <template #action>
-            <a class='c-fieldset-frame__action mx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','category')">
+            <a class='c-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','category')">
               {{ $t('dictionary.clear_filter') }}
             </a>
           </template>
@@ -255,7 +255,7 @@
             <search-facet-options :options='suggestions.category.filtered'
                                   :filter='filter.category'
                                   :noOptionsMessage="this.suggestions.category.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.category.current})"
-                                  :noOptionsClasses="['mx-C(magenta) mx-Fs-0d75']"
+                                  :noOptionsClasses="['el:amx-C_red2 el:amx-Fs(0.75em)']"
                                   @includeFacetOption="$emit('optionAddedToFilter', 'category', $event)"
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'category', $event)">
             </search-facet-options>
@@ -267,7 +267,7 @@
 
       <search-fieldset :title='$t("dictionary.subtitles")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action mx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','subtitles')">
+          <a class='c-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','subtitles')">
             {{ $t('dictionary.clear_filter') }}
           </a>
         </template>
@@ -283,7 +283,7 @@
                                 :filter='filter.subtitles'
                                 :rootClasses="['scrollable-ul']"
                                 :noOptionsMessage="this.suggestions.subtitles.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.subtitles.current})"
-                                :noOptionsClasses="['mx-C(magenta) mx-Fs-0d75']"
+                                :noOptionsClasses="['el:amx-C_red2 el:amx-Fs(0.75em)']"
                                 @includeFacetOption="$emit('optionAddedToFilter', 'subtitles', $event)"
                                 @excludeFacetOption="$emit('optionRemovedFromFilter', 'subtitles', $event)">
           </search-facet-options>
@@ -426,23 +426,9 @@
     },
 
     computed: {
-
       showCategoriesFilter () {
         return !window.env_context.params.category.length
-      },
-
-      priceUpperBound () {
-        return parseInt(this.aggregations.max_price.value)
-      },
-
-      priceFormat () {
-        return "$ {value}"
-      },
-
-      arrowDownIcon () {
-        return `${window.iconsLibPath}#arrow-down`;
       }
-
     }
 
   }

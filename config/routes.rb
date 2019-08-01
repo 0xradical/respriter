@@ -139,9 +139,6 @@ Rails.application.routes.draw do
   get 'the-complete-webpack-courses-catalog'                        => redirect('/webpack')
   get 'the-complete-matlab-courses-catalog'                         => redirect('/matlab')
 
-  # LandingPages
-  get '/', to: 'landing_pages#show', as: :landing_pages
-
   get '/:tag', to: 'course_bundles#show', as: :course_bundle, constraints: { tag: /[a-zA-Z0-9-]*/ }
 
 end

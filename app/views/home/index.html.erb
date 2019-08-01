@@ -18,21 +18,21 @@
   </search-bar>
 </script>
 
-<div class='c-hero-impact mx-C(dark-gray)' style='border-bottom:1px solid #eee'>
+<div class='c-hero-impact el:amx-C_gray3' style='border-bottom:1px solid #eee'>
   <div class='c-hero-impact__art'>
     <div class='c-hero-impact__slot'>
-      <img src="<%= elements_asset_path('svgs/logo.svg') %>" class='mx-Wd(33%)@>small mx-Wd(60%)@extra-small'>
-      <h1 style='font-weight:400;' class='mx-Mt-1d25 mx-Fs-1d5@>desktop mx-Fs-2@tablet mx-Fs-1d25@extra-small'>
+      <img src="<%= elements_asset_path('svgs/logo.svg') %>" class="clspt:c-hero-impact__img">
+      <h1 style='font-weight:400;' class='el:amx-Mt(1.25em) el:amx-Fs(1.25em) el:amx-Fs(1.5em)@>lg'>
         <%= t('.hero_html').html_safe %>
       </h1>
-      <div class='mx-Mt-1d25 mx-Ml-0d875@phone mx-Mr-0d875@phone'>
+      <div class='el:amx-Mt(1.25em) el:amx-Ml(0.875em)@sm el:amx-Mr(0.875em)@sm'>
         <div data-vue-cpt='search-impact'></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class='mx-Pt-2@>medium mx-Pt-1@>extra-small' style='background-color:#FFF;padding-bottom:45px'>
+<div class='el:amx-Pt(1em) el:amx-Pt(2em)@>lg' style='background-color:#FFF;padding-bottom:45px'>
   <div class='container'>
     <div class='row'>
       <% (RootTag.all).each_with_index do |t, index| %>
@@ -40,10 +40,10 @@
           <%# Remove this hack as soon as all bundles are created %>
           <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
           <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "#{t.slugify}") do %>
-            <div class='mx-Bc(white) mx-Mt-2 mx-Mt-1@extra-small' style='height:50px;'>
+            <div class='el:amx-Bc_white el:amx-Mt(1em) el:amx-Mt(2em)@>lg' style='height:50px;'>
               <span class='c-label c-label--double-line' style='height:60px;text-align:left'>
                 <%= svg_use('icons', t.icon, { class: 'c-label__icon' }) %>
-                <span class='c-label__text' class='mx-C(blue)' style='word-break:break-word;max-width:160px'>
+                <span class='c-label__text' class='el:amx-C_blue2' style='word-break:break-word;max-width:160px'>
                   <b><%= t("tags.#{t.id}") %></b>
                   <br />
                   <span style='color:black;font-size:0.625em'> <%= @count_by_category[t.id] %> online courses</span>
@@ -57,14 +57,14 @@
   </div>
 </div>
 
-<div class='mx-Bc(light-gray)' style='padding-top:42px;padding-bottom:74px'>
+<div class='el:amx-Bc_gray1' style='padding-top:42px;padding-bottom:74px'>
   <div class='container'>
     <div class='row'>
       <div class='col-12 col-sm-5 col-md-5'>
         <%= image_pack_tag("media/svg/space-providers_art.svg", width: '100%' ) %>
       </div>
       <div class='col-12 col-sm-7 col-md-6 offset-md-1'>
-        <h2 class='mx-Fs-2' style='margin-top:58px;line-height:1em'> <%= t('.about_title') %> </h2>
+        <h2 class='el:amx-Fs(2em)' style='margin-top:58px;line-height:1em'> <%= t('.about_title') %> </h2>
         <p style='line-height:1.5em'>
           <%= t(".about_text") %>
         </p>

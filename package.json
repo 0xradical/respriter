@@ -44,7 +44,6 @@
     "hypernova-vue": "^2.0.0",
     "jsdom": "^15.1.1",
     "json-loader": "^0.5.7",
-    "lost": "^8.3.0",
     "marked": "^0.6.1",
     "plyr": "^3.4.8",
     "postcss-cssnext": "^3.1.0",

@@ -7,22 +7,22 @@
 <% end %>
 
 <%= content_for :body_html_attributes do %>
-  id='results' class='mx-Bc(lighter-gray)'
+  id='results' class='el:amx-Bc_gray1'
 <% end %>
 
 <%= render 'hero',
   title: t(".title_html", tag: t("tags.#{@tag}")),
   description: t(".description_html", tag: t("tags.#{@tag}")),
-  share_it: t("dictionary.share", tag: t("tags.#{@tag}")), 
+  share_it: t("dictionary.share", tag: t("tags.#{@tag}")),
   art_html: image_pack_tag("media/svg/#{@tag}.svg", style: 'width:100%;display:block;margin:auto')
 %>
 
-<div class='container mx-Mb-1d5'>
+<div class='container el:amx-Mb(1.5em)'>
 
-  <div class='mx-D(n)@phone row'>
+  <div class='el:amx-D(n)@sm row'>
     <div class='col-12'>
-      <div class='mx-Pt-1d5'>
-        <ul class='c-list c-list--unstyled c-list--inline mx-Fs-1@>small'>
+      <div class='el:amx-Pt(1.5em)'>
+        <ul class='c-list c-list--unstyled c-list--inline el:amx-Fs(1em)@>lg'>
           <% ('A'..'Z').each do |letter| %>
             <li style='margin-right:10px'>
               <a href='#<%= letter%>'>
@@ -31,13 +31,13 @@
             </li>
           <% end %>
         </ul>
-        <div class='mx-Cl(b)'></div>
+        <div class='el:amx-Cl(b)'></div>
       </div>
     </div>
   </div>
 
   <% @bundles_by_letter.each do |bundles| %>
-    <h4 class='mx-Pt-2' id='<%= bundles.keys.first[0].upcase %>'><%= bundles.keys.first[0].upcase %></h4>
+    <h4 class='el:amx-Pt(2em)' id='<%= bundles.keys.first[0].upcase %>'><%= bundles.keys.first[0].upcase %></h4>
     <div class='row'>
       <% bundles.each do |name,data| %>
         <div class='col-lg-4'>
