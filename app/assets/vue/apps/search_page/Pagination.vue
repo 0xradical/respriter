@@ -109,7 +109,7 @@
   .c-pagination {
 
     list-style: none;
-    margin: 1em 0 2em 0;
+    margin: 1em 0 0 0;
     padding: 0;
     clear: both;
 

@@ -69,7 +69,7 @@
         </div>
       </div>
 
-      <div class='row el:amx-Mt(1em)@>lg'>
+      <div class='row el:amx-Mt(1em)@>lg el:amx-Mb(2em)@>lg'>
         <div class='el:amx-D(n)@<sm col-lg-3'>
           <div class='filter-nav'>
             <div class='el:amx-D(F) el:amx-FxJc(sb)'>
