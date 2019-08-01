@@ -16,7 +16,7 @@ module Integration
           api_connection.events '', mapper: -> (r) { JSON.parse(r) } do |payload, code, header|
             payload.each do |resource|
               next unless resource['is_event'] == 'N'
-              TrackedAction.new.tap do |action|
+              TrackedAction.find_or_initialize_by(compound_ext_id: "rakuten_#{resource['etransaction_id']}").tap do |action|
                 action.ext_id           = resource['etransaction_id']
                 action.ext_click_date   = resource['transaction_date']
                 action.enrollment_id    = resource['u1']
@@ -27,7 +27,7 @@ module Integration
                 action.ext_product_name = resource['product_name']
                 action.source           = 'rakuten'
                 action.payload          = resource
-              end.upsert
+              end.save
             end
           end
 

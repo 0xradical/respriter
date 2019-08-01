@@ -22,7 +22,8 @@ module Integration
 
           connection.transactions('/', mapper: ->(r) { JSON.parse(r) }, request_params: params) do |payload|
             payload.each do |resource|
-              TrackedAction.new.tap do |action|
+              TrackedAction.find_or_initialize_by(compound_ext_id: "awin_#{resource['id']}")
+              .tap do |action|
                 action.ext_id           = resource['id']
                 action.ext_click_date   = resource['clickDate']
                 action.enrollment_id    = resource['clickRef']
@@ -30,7 +31,7 @@ module Integration
                 action.earnings_amount  = resource.dig('commissionAmount', 'amount')
                 action.source           = 'awin'
                 action.payload          = resource
-              end.upsert
+              end.save
             end
           end
 
