@@ -16,7 +16,7 @@ class SessionTracker
 
   def track
     session[:tracking_data]                  = session_payload
-    cookies.signed.permanent[:tracking_data] = Base64.encode64 Marshal.dump(cookies_payload)
+    cookies.signed.permanent[:tracking_data] = Base64.encode64 Marshal.dump truncate_payload cookies_payload
   end
 
   def [](key)
@@ -71,6 +71,25 @@ class SessionTracker
   end
 
   protected
+  def truncate_payload(payload)
+    case payload
+    when Array
+      payload.map do |value|
+        truncate_payload(value)
+      end
+    when Hash
+      payload.map do |key, value|
+        [
+          key,
+          truncate_payload(value)
+        ]
+      end.to_h
+    when String
+      payload.truncate 1000
+    else
+      payload
+    end
+  end
 
   def raw
     {
