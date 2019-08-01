@@ -5,7 +5,7 @@
         <div class='el:amx-D(F) el:amx-FxJc(sb)' style='height: 15%;'>
           <h5>{{ $t('dictionary.filters') }}</h5>
           <a href='#' @click="hideMobileFilter">
-            <icon width='1.05rem' height='1.05rem' name='close'></icon>
+            <icon width='1.05rem' height='1.05rem' name='close' class='el:amx-C_blue2'></icon>
           </a>
         </div>
         <div style='height: 85%;'>
@@ -33,7 +33,7 @@
             {{ $t('dictionary.search_results', { total: data.meta.total }) }}
 
             <template v-if='params.q'>
-              {{ $t('dictionary.for') }} <span class='query-tag'>{{ this.params.q }}</span>
+              {{ $t('dictionary.for') }} <span class='query-tag el:amx-Bc_magenta5'>{{ this.params.q }}</span>
             </template>
 
           </span>
@@ -60,7 +60,7 @@
                             :allow-empty='false'>
                 <template slot='caret' slot-scope="{toggle}">
                   <div @mousedown.prevent.stop="orderOptionsToggle(toggle)" class='sort__caret'>
-                    <icon width='1rem' height='1rem' :transform='`rotate(${orderOptionsToggled ? 180 : 0}deg)`'  name='arrow-down'></icon>
+                    <icon width='1rem' height='1rem' :transform='`rotate(${orderOptionsToggled ? 180 : 0}deg)`'  name='arrow-down' class='el:amx-C_blue2'></icon>
                   </div>
                 </template>
               </multiselect>
@@ -406,11 +406,11 @@ hr {
 }
 
 .query-tag {
+  display: inline-block;
   padding:5px 10px;
   font-size:0.9em;
   color:#fff;
   border-radius:3px;
-  background-color:#4c71a5;
 }
 
 </style>

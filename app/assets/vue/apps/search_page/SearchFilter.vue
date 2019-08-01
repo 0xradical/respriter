@@ -8,7 +8,7 @@
               <search-fieldset :title='$t("dictionary.audios")' :subtitle="filter.root_audio.map(audioValue).join(', ')" :stand-out='filter.root_audio.length > 0'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -21,7 +21,7 @@
                 <search-fieldset :title='$t("dictionary.categories")' v-if="showCategoriesFilter" :subtitle="filter.category.map(categoryValue).join(', ')" :stand-out='filter.category.length > 0'>
                   <template #action>
                     <a class='c-fieldset-frame__action' href='#'>
-                      <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                      <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
                     </a>
                   </template>
                 </search-fieldset>
@@ -34,7 +34,7 @@
               <search-fieldset :title='$t("dictionary.subtitles")' :subtitle="filter.subtitles.map(subtitleValue).join(', ')" :stand-out='filter.subtitles.length > 0'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -46,7 +46,7 @@
               <search-fieldset :title='$t("dictionary.providers")' :subtitle="filter.provider_name.map(providerValue).join(', ')" :stand-out='filter.provider_name.length > 0'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -58,7 +58,7 @@
               <search-fieldset :title='$t("dictionary.price")' :subtitle='`$ ${filter.price[0]} - $ ${filter.price[1]}`' :stand-out='filter.price[0] > 0 || filter.price[1] < 2500'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -426,23 +426,9 @@
     },
 
     computed: {
-
       showCategoriesFilter () {
         return !window.env_context.params.category.length
-      },
-
-      priceUpperBound () {
-        return parseInt(this.aggregations.max_price.value)
-      },
-
-      priceFormat () {
-        return "$ {value}"
-      },
-
-      arrowDownIcon () {
-        return `${window.iconsLibPath}#arrow-down`;
       }
-
     }
 
   }

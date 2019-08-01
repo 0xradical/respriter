@@ -4,7 +4,7 @@
       <div class='el:amx-D(f) el:amx-FxJc(sb)'>
         <a class='el:amx-C_blue2'>{{ toggled ? $t('dictionary.description.hide') : $t('dictionary.description.show') }}</a>
         <div>
-          <icon width='1rem' height='1rem' :transform='`rotate(${toggled ? 180 : 0}deg)`' name='arrow-down'></icon>
+          <icon width='1rem' height='1rem' :transform='`rotate(${toggled ? 180 : 0}deg)`' name='arrow-down' class='el:amx-C_blue2'></icon>
         </div>
       </div>
       <transition name="fade">

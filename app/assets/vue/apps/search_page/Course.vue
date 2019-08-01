@@ -11,7 +11,7 @@
             </course-provider>
 
             <div aria-label="Close" @click='$modal.hide(offCanvasId)'>
-              <icon name='close' width='1rem' height='1rem' cursor='pointer'></icon>
+              <icon name='close' width='1rem' height='1rem' cursor='pointer' class='el:amx-C_blue2'></icon>
             </div>
           </div>
 
@@ -109,7 +109,7 @@
             </course-provider>
 
             <div aria-label="Close" @click='$modal.hide(mobileOffCanvasId)'>
-              <icon name='close' width='1rem' height='1rem'></icon>
+              <icon name='close' width='1rem' height='1rem' class='el:amx-C_blue2'></icon>
             </div>
           </div>
 

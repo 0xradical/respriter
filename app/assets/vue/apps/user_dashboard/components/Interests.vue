@@ -19,7 +19,7 @@
           {{ $t(`tags.${pref}`) }}
         </span>
         <a @click="removeTag(pref)" href='javascript:void(0)' style='margin-left:-5px'>
-          <svg width='2em' height='2em' style='vertical-align:middle'>
+          <svg width='2em' height='2em' style='vertical-align:middle' class='el:amx-C_blue2'>
             <use xlink:href='#icons-close_thin' />
           </svg>
         </a>
