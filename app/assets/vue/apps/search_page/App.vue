@@ -69,12 +69,12 @@
         </div>
       </div>
 
-      <div class='row el:amx-Mt(1em)@>lg el:amx-Mb(2em)@>lg'>
+      <div class='row el:amx-Mt(1em)@>lg el:amx-Mb(2em)'>
         <div class='el:amx-D(n)@<sm col-lg-3'>
           <div class='filter-nav'>
             <div class='el:amx-D(F) el:amx-FxJc(sb)'>
               <h4>{{ $t('dictionary.filters') }}</h4>
-              <a href='#' class='el:amx-C_red2 el:amx-Fw(b)' @click.prevent="clearFilters" style="margin: auto 0;text-align:right;">
+              <a href='#' class='el:amx-C_red2 el:amx-Fw(b) el:amx-Fs(0.625em)' @click.prevent="clearFilters" style="margin: auto 0;text-align:right;">
                 {{ $t('dictionary.clear_all_filters') }}
               </a>
             </div>
@@ -105,7 +105,7 @@
           </div>
         </div>
 
-        <div class='col-12 col-lg-9 vld-parent'>
+        <div id='results' class='col-12 col-lg-9 vld-parent'>
           <loading :active.sync="isLoadable" :is-full-page='true' color='#4C636F'></loading>
           <course-list :courses='data.records'></course-list>
           <pagination @paginate='paginate' pagination-anchor='#results' :records-per-page='recordsPerPage' :current-page='page' :num-of-pages='numOfPages'></pagination>

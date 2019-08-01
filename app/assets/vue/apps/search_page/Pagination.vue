@@ -2,18 +2,18 @@
   <ul class='c-pagination'>
 
     <li class='c-pagination__page' v-if='currentPage != 1'>
-      <a :href='paginationAnchor' @click.prevent='$emit("paginate", currentPage - 1)'></a>
+      <a :href='paginationAnchor' @click='$emit("paginate", currentPage - 1)'></a>
     </li>
 
     <li class='c-pagination__page' v-if='currentPage - pace > 1'>
-      <a :href='paginationAnchor' @click.prevent='$emit("paginate", 1)'>
+      <a :href='paginationAnchor' @click='$emit("paginate", 1)'>
         1
       </a>
     </li>
     <li class='c-pagination__page' v-if='currentPage - pace > 1'> ... </li>
 
     <li :class='{ "c-pagination__page--current": (currentPage === page) }' class='c-pagination__page' v-for='(page, index) in pages' :key="index">
-      <a :href='paginationAnchor' @click.prevent='$emit("paginate", page)'>
+      <a :href='paginationAnchor' @click='$emit("paginate", page)'>
         {{ page }}
       </a>
     </li>
@@ -21,13 +21,13 @@
     <li class='c-pagination__page' v-if='currentPage + pace < numOfPages'> ... </li>
 
     <li class='c-pagination__page' v-if='currentPage + pace < numOfPages'>
-      <a :href='paginationAnchor' @click.prevent='$emit("paginate", numOfPages)'>
+      <a :href='paginationAnchor' @click='$emit("paginate", numOfPages)'>
         {{ numOfPages }}
       </a>
     </li>
 
     <li class='c-pagination__page' v-if='currentPage != numOfPages'>
-      <a :href='paginationAnchor' @click.prevent='$emit("paginate", currentPage + 1)'></a>
+      <a :href='paginationAnchor' @click='$emit("paginate", currentPage + 1)'></a>
     </li>
 
     <li style='clear:both'></li>

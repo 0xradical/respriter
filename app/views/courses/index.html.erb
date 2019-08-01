@@ -14,7 +14,8 @@
   {
     "category": <%= raw(Array.wrap(params[:tag]).to_json) %>,
     "showCategoriesFilter": <%= params[:tag].present? %>,
-    "locale": "<%= I18n.locale %>"
+    "locale": "<%= I18n.locale %>",
+    "recordsPerPage": <%= CoursesController::PER_PAGE %>
   }
 </script>
 
