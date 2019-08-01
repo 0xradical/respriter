@@ -7,13 +7,11 @@ Rails.application.routes.draw do
   get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
 
   get '/search', to: 'courses#index',  as: :courses
-  get '/:provider/courses/:course', {
-    constraints: {
-      provider: Provider.slugged.pluck(:slug).join('|')
-    },
+  get '/:provider/courses/:course', constraints: lambda { |req|
+    Provider.slugged.pluck(:slug).include?(req.params[:provider]) } ,
     to: 'courses#show',
     as: :course
-  }
+
 
   resources :posts, path: 'blog'
 
