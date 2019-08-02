@@ -1,4 +1,10 @@
 en:
+  validations:
+    attributes:
+      name: "name"
+      email: "e-mail"
+      subject: "subject"
+      message: "message"
   careers: &careers
     data_scientist: Data Scientist
     game_developer: Game Developer
@@ -282,6 +288,35 @@ en:
         title: 'Online Course Search Engine - Free And Paid | Classpert'
         description: 'Search and compare online courses from Udemy, Coursera, Pluralsight, edX,
         LinkedIn Learning and others side-by-side. Save time and money with Classpert!'
+  contact_us:
+    new:
+      meta:
+        title: 'Online Course Search Engine - Free And Paid | Classpert'
+        description: 'Search and compare online courses from Udemy, Coursera, Pluralsight, edX,
+        LinkedIn Learning and others side-by-side. Save time and money with Classpert!'
+      title: "Contact us"
+      subtitle: "Our team is ready to help you"
+      form:
+        name:
+          header: "Name"
+          placeholder: "Enter your name"
+        email:
+          header: "E-mail"
+          placeholder: "Enter your e-mail address"
+        subject:
+          header: "Subject"
+          placeholder: "Subject"
+        message:
+          header: "Message"
+          placeholder: "Please, provide your detailed question here..."
+        action:
+          submit: "Send"
+      successful:
+        title: "Thank you!"
+        subtitle: "Your message was sent successfully. Our team will answer it shortly."
+        action:
+          another_message: "Send another message"
+          homepage: "Find a course"
   courses:
     index:
       arts_and_design:

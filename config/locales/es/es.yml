@@ -1,4 +1,10 @@
 es:
+  validations:
+    attributes:
+      name: "nombre"
+      email: "correo electrónico"
+      subject: "asunto"
+      message: "mensaje"
   careers:
     data_scientist: Científico de datos
     game_developer: Desarrollador de videojuegos
@@ -23,6 +29,36 @@ es:
     omniauth_sign_in: 'Conectar con %{provider}'
     omniauth_signin_in: 'Conectando con %{provider}'
     searchbar_placeholder: Buscar cursos ...
+  contact_us:
+    new:
+      meta:
+        description: >-
+          Busque y compare cursos en línea de plataformas como Udemy, Coursera, Pluralsight, Edx,
+          Linkedin Learning y muchas otras. Ahorre tiempo y dinero con Classpert.
+        title: Buscador de cursos en línea - gratis y pagados | Classpert
+      title: "Contáctenos"
+      subtitle: "Nuestro equipo está aquí para ayudarlo"
+      form:
+        name:
+          header: "Nombre"
+          placeholder: "Escribe tu nombre"
+        email:
+          header: "Correo electrónico"
+          placeholder: "Ingrese su correo electrónico"
+        subject:
+          header: "Asunto"
+          placeholder: "Dudas, sugerencias, críticas ..."
+        message:
+          header: "Mensaje"
+          placeholder: "Ingrese su mensaje ..."
+        action:
+          submit: "Enviar"
+      successful:
+        title: "¡Gracias!"
+        subtitle: "Su mensaje ha sido enviado con éxito. Nuestro equipo responderá pronto."
+        action:
+          another_message: "Enviar otro mensaje"
+          homepage: "Buscar un curso"
   course_bundles:
     index:
       description_html: >-
