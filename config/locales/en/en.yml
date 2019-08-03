@@ -279,9 +279,9 @@ en:
       careers:
         <<: *careers
       meta:
-        title: 'Online Course Search Engine - Free And Paid | Classpert'
-        description: 'Search and compare online courses from Udemy, Coursera, Pluralsight, edX,
-        LinkedIn Learning and others side-by-side. Save time and money with Classpert!'
+        title: 'Online Courses with Certificate - Find and Compare | Classpert'
+        description: ' Compare side-by-side online courses from Udemy, Coursera, Pluralsight, edX, LinkedIn Learning and more. 
+        Save time and money with Classpert!'
   courses:
     index:
       arts_and_design:
