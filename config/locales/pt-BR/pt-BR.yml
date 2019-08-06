@@ -284,14 +284,14 @@ pt-BR:
       careers:
         <<: *careers
       meta:
-        title: 'Buscador de cursos online - Gratuitos e Pagos | Classpert'
+        title: 'Cursos Online com Certificado - Encontre e Compare | Classpert'
         description: 'Busque e compare cursos online de plataformas como: Udemy, Coursera,
         Pluralsight, Edx, Linkedin Learning e muitos outros. Economize tempo e dinheiro com a
         Classpert!'
   contact_us:
     new:
       meta:
-        title: 'Buscador de cursos online - Gratuitos e Pagos | Classpert'
+        title: 'Cursos Online com Certificado - Encontre e Compare | Classpert'
         description: 'Busque e compare cursos online de plataformas como: Udemy, Coursera,
         Pluralsight, Edx, Linkedin Learning e muitos outros. Economize tempo e dinheiro com a
         Classpert!'

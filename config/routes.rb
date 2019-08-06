@@ -9,13 +9,11 @@ Rails.application.routes.draw do
   post '/contact-us',            to: 'contact_us#create'
 
   get '/search', to: 'courses#index',  as: :courses
-  get '/:provider/courses/:course', {
-    constraints: {
-      provider: Provider.slugged.pluck(:slug).join('|')
-    },
+  get '/:provider/courses/:course', constraints: lambda { |req|
+    Provider.slugged.pluck(:slug).include?(req.params[:provider]) } ,
     to: 'courses#show',
     as: :course
-  }
+
 
   resources :posts, path: 'blog'
 

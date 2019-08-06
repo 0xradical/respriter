@@ -22,7 +22,8 @@ module Integration
               page += 1
 
               payload['Actions'].each do |resource|
-                TrackedAction.new.tap do |action|
+                TrackedAction.find_or_initialize_by(compound_ext_id: "impact_radius_#{resource['Id']}")
+                .tap do |action|
                   action.ext_id           = resource['Id']
                   action.ext_click_date   = Time.parse(resource['EventDate']).utc
                   action.enrollment_id    = resource['SubId1']
@@ -30,7 +31,7 @@ module Integration
                   action.earnings_amount  = resource['Payout']
                   action.source           = 'impact_radius'
                   action.payload          = resource
-                end.upsert
+                end.save
               end
 
             end
