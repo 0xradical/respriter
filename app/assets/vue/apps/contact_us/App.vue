@@ -2,10 +2,10 @@
   <div class='clspt:contact-us'>
     <contact-us-form :contact="contact"
                      :auth_token="auth_token"
-                     v-if='submitted'
+                     v-if='!submitted'
                      @submitted='submit'>
     </contact-us-form>
-    <contact-us-successful v-if='!submitted'
+    <contact-us-successful v-if='submitted'
                            @goback='submit'>
     </contact-us-successful>
   </div>
