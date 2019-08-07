@@ -19,7 +19,8 @@ export default {
   data() {
     return {
       contact: this.createContact(),
-      submitted: false
+      submitted: false,
+      body: document.getElementsByTagName('body')[0]
     }
   },
   props: {
@@ -52,6 +53,7 @@ export default {
         email: this.contact.email
       });
       this.submitted = !this.submitted;
+      this.body.scrollIntoView();
     }
   }
 }

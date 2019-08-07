@@ -53,7 +53,7 @@
           </template>
         </validation-provider>
 
-        <validation-provider tag="div" name='subject' rules="required" class='col-md-12 offset-lg-4 col-lg-4 el:amx-Mb(2em)'>
+        <validation-provider tag="div" name='subject' rules="" class='col-md-12 offset-lg-4 col-lg-4 el:amx-Mb(2em)'>
           <template #default="{ errors }">
             <div class='el:m-form-field' :class='[errors.length > 0 && "el:m-form-field--error", sending && "el:m-form-field--disabled"]'>
               <div class='el:m-form-field__label el:m-form-field__label--over'>
