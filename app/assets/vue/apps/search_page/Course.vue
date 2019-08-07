@@ -244,17 +244,17 @@ export default {
       return `mobile-offcanvas-${this.course.id}`;
     },
     coursePageLink() {
-      if (this.course.slug) {
-        const separatorIndex = this.course.slug.indexOf("-");
-        if (separatorIndex > -1) {
-          const providerSlug = this.course.slug.slice(0, separatorIndex);
-          const courseSlug = this.course.slug.slice(separatorIndex + 1);
+      let separatorIndex = null;
+      let providerSlug = null;
+      let courseSlug = null;
 
-          return `/${providerSlug}/courses/${courseSlug}`;
+      if (this.course.slug && this.course.provider_slug) {
+        providerSlug = this.course.provider_slug.replace("_", "-");
+        courseSlug = this.course.slug.replace(new RegExp(`^${providerSlug}-`),"");
+      }
 
-        } else {
-          return null;
-        }
+      if (providerSlug && courseSlug) {
+        return `/${providerSlug}/courses/${courseSlug}`;
       } else {
         return null;
       }
