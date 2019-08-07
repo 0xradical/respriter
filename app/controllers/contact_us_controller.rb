@@ -8,6 +8,7 @@ class ContactUsController < ApplicationController
         contact = Contact.new(contact_params)
 
         if contact.save
+          ContactMailer.build(contact).deliver_later
           render json: { status: :ok }
         else
           render json: { status: :unprocessable_entity, reason: :validation }
