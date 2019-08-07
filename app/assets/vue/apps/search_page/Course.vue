@@ -17,7 +17,7 @@
 
           <div class='el:o-hcard-offcanvas__body-slot'>
             <course-title :course='course'
-                          :rootClasses="['el:amx-Mb(1.75em)']"
+                          :rootClasses="['el:amx-Mb(1.75em)','el:amx-C_gray5']"
                           :titleClasses="['el:amx-Fs(1.25em)']">
             </course-title>
 
@@ -68,7 +68,7 @@
                          :course="course">
         </course-provider>
 
-        <course-title :course='course'></course-title>
+        <course-title :course='course' :rootClasses="['el:amx-C_gray5']"></course-title>
 
         <course-attribute icon='clock'
                           :rootClasses="['el:amx-Mt(a)']"
@@ -115,7 +115,7 @@
 
           <div class='el-mb:o-hcard-offcanvas__body-slot'>
             <course-title :course='course'
-                          :rootClasses="['el:amx-Mb(1em)']">
+                          :rootClasses="['el:amx-Mb(1em)','el:amx-C_gray5']">
             </course-title>
 
             <video-preview :course='course'
@@ -158,6 +158,7 @@
         </course-provider>
 
         <course-title :course='course'
+                      :rootClasses="['el:amx-C_gray5']"
                       :titleClasses="['el:amx-Fs(0.875em)']"
                       :hyperlink="false">
         </course-title>
