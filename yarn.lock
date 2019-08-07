@@ -3288,13 +3288,13 @@ electron-to-chromium@^1.3.116:
   integrity sha512-/1FpHvmKmKo2Z6CCza2HfkrKvKhU7Rq4nvyX1FOherdTrdTufhVrJbCrcrIqgqUCI+BG6JC2rlY4z5QA1G0NOw==
 
 electron-to-chromium@^1.3.164:
-  version "1.3.216"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.216.tgz#7eda27727ba5412c96729df8fceb35bf503eb65a"
-  integrity sha512-G2rJKCdDLTaAP56WKMj0mcr7jtr3LBBL2EaF73DamfFpvcl0PzKUIaUocPP8NLu9s/RbbHLMGkbFOkDRK5PQIQ==
+  version "1.3.218"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.218.tgz#8a873456e6640da1bed18a8718da1b1a3c4f604c"
+  integrity sha512-+ABuwQH2bEUbJTMPUMfP9mjBFtbLgDjlrkg3QGQZwr/RJB7aJZBm8g3SK/lR/J76P6l/4a6RgW2yQjZQDdjtFw==
 
 "elements@git+https://7d12b077c98890abd66f41944901afcd4192f04a:x-oauth-basic@github.com/querocourses/elements.git":
-  version "2.1.1"
-  resolved "git+https://7d12b077c98890abd66f41944901afcd4192f04a:x-oauth-basic@github.com/querocourses/elements.git#23782836c247a129ebdcf238452636a4448e7da4"
+  version "2.1.2"
+  resolved "git+https://7d12b077c98890abd66f41944901afcd4192f04a:x-oauth-basic@github.com/querocourses/elements.git#4efe4bff614264f85b7168bb6d5abf53534daafd"
   dependencies:
     browserslist "4.6.3"
     caniuse-lite "1.0.30000974"
