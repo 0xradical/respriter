@@ -1,10 +1,13 @@
 pt-BR:
   validations:
+    messages:
+      challenge: "A resposta está errada"
     attributes:
       name: "nome"
       email: "e-mail"
       subject: "assunto"
       message: "mensagem"
+      challenge: "de segurança"
   careers: &careers
     data_scientist: Cientista de Dados
     game_developer: Desenvolvedor de Jogos
@@ -310,6 +313,9 @@ pt-BR:
         message:
           header: "Mensagem"
           placeholder: "Digite sua mensagem ..."
+        challenge:
+          header: "Pergunta de Segurança"
+          placeholder: "Qual é a resposta de %{question} ?"
         action:
           submit: "Enviar"
       successful:

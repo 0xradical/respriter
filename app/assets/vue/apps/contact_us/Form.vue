@@ -89,6 +89,25 @@
           </template>
         </validation-provider>
 
+        <validation-provider tag="div" name='challenge' :rules="`required|challenge:${mathenticate.first},${mathenticate.second}`" class='col-md-12 offset-lg-4 col-lg-4 el:amx-Mb(2em)'>
+          <template #default="{ errors }">
+            <div class='el:m-form-field' :class='[errors.length > 0 && "el:m-form-field--error", sending && "el:m-form-field--disabled"]'>
+              <div class='el:m-form-field__label el:m-form-field__label--over'>
+                <label for="challenge">{{ $t('contact_us.new.form.challenge.header') }}</label>
+              </div>
+
+              <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+                <input name="challenge" type="text" :placeholder="$t('contact_us.new.form.challenge.placeholder', { question: mathenticate.show() })" v-model='mathenticate.answer'>
+                <icon v-if='errors.length > 0' class='el:m-form-field__input-icon el:amx-C_red2' name="wrong" width="1.125em" height="1.125em"></icon>
+                <icon v-if='mathenticate.answer && errors.length == 0' class='el:m-form-field__input-icon el:amx-C_blue3' name="checked" width="1.125em" height="1.125em"></icon>
+                <div v-if='errors.length > 0' class='el:amx-Mt(0.25em) el:amx-C_red2'>
+                  <span class='el:amx-Fs(0.75em)'>{{ errors[0] }}</span>
+                </div>
+              </div>
+            </div>
+          </template>
+        </validation-provider>
+
         <div class='col-md-12 offset-lg-6 col-lg-2'>
           <button :disabled="invalid || sending" class='btn btn--block btn--blue-flat'>{{ $t('contact_us.new.form.action.submit') }}</button>
         </div>
@@ -104,7 +123,18 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      sending: false
+      sending: false,
+      mathenticate: {
+        first: Math.floor(Math.random() * 5) + 1,
+        second: Math.floor(Math.random() * 95) + 1,
+        answer: null,
+        solve: function() {
+          return this.first + this.second;
+        },
+        show: function() {
+          return this.first + ' + ' + this.second;
+        }
+      }
     }
   },
   props: {

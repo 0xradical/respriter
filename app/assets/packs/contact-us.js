@@ -6,10 +6,14 @@ import _ from 'lodash';
 
 const i18n = createI18n('en');
 
-import { install as VeeValidate, ValidationProvider, ValidationObserver } from 'vee-validate';
+import { install as VeeValidate, ValidationProvider, ValidationObserver, Validator } from 'vee-validate';
 import enValidations from 'vee-validate/dist/locale/en';
 import esValidations from 'vee-validate/dist/locale/es';
 import ptBrValidations from 'vee-validate/dist/locale/pt_BR';
+
+Validator.extend('challenge', (value, {first, second} = {}) => {
+  return Number(first) + Number(second) === Number(value);
+}, { paramNames: ['first', 'second'] });
 
 Vue.use(VeeValidate, {
   i18nRootKey: 'validations',

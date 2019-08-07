@@ -1,10 +1,13 @@
 es:
   validations:
+    messages:
+      challenge: "La respuesta es incorrecta"
     attributes:
       name: "nombre"
       email: "correo electrónico"
       subject: "asunto"
       message: "mensaje"
+      challenge: "de seguridad"
   careers:
     data_scientist: Científico de datos
     game_developer: Desarrollador de videojuegos
@@ -51,6 +54,9 @@ es:
         message:
           header: "Mensaje"
           placeholder: "Ingrese su mensaje ..."
+        challenge:
+          header: "Pregunta de Seguridad"
+          placeholder: "¿Cuál es la respuesta de %{question} ?"
         action:
           submit: "Enviar"
       successful:
