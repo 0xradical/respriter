@@ -30,7 +30,7 @@ GIT
 
 GIT
   remote: https://github.com/dalthon/lit
-  revision: acfc1bbb5303d96d9252ee8fd619ccd6a66a086d
+  revision: ae6040e7db518eaf2887a52b6eeb772331abe554
   specs:
     lit (1.0.2)
       coffee-rails
@@ -546,8 +546,8 @@ DEPENDENCIES
   guard-rspec
   http
   http-accept
-  hypernova
   httparty
+  hypernova
   kaminari
   lit!
   lograge
