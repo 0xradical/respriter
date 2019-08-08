@@ -1,5 +1,18 @@
 Rails.application.routes.draw do
 
+  # Devise
+  devise_for :admin_accounts, controllers: {
+    sessions: 'admin_accounts/sessions'
+  }, defaults: { format: :json }
+
+  devise_for :user_accounts, controllers: {
+    sessions: 'user_accounts/sessions',
+    registrations: 'user_accounts/registrations',
+    omniauth_callbacks: 'user_accounts/omniauth_callbacks'
+  }
+
+  mount Lit::Engine => '/lit'
+
   mount Vueonrails::Engine, at: 'vue'
   root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { '' }
 
@@ -14,25 +27,15 @@ Rails.application.routes.draw do
     to: 'courses#show',
     as: :course
 
-
   resources :posts, path: 'blog'
-
-  # Devise
-  devise_for :admin_accounts, controllers: {
-    sessions: 'admin_accounts/sessions'
-  }, defaults: { format: :json }
-
-  devise_for :user_accounts, controllers: {
-    sessions: 'user_accounts/sessions',
-    registrations: 'user_accounts/registrations',
-    omniauth_callbacks: 'user_accounts/omniauth_callbacks'
-  }
 
   namespace :user_accounts do
     match '*dashboard', to: 'dashboard#index', via: [:get], as: :dashboard
   end
 
   resources :videos, only: :show
+
+  get '/i18n/:locale(/*keys)', to: 'translations#index', as: :i18n
 
   get '/forward/:id', to: 'gateway#index', as: :gateway
 

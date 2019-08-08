@@ -9,6 +9,7 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
+require "sprockets/railtie"
 
 # Middlewares
 require_relative "../lib/middlewares/locale_router"
@@ -39,8 +40,13 @@ module App
     config.middleware.use LocaleRouter
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml')]
+    config.i18n.available_locales = ['en', 'es', 'pt-BR']
 
     config.action_mailer.default_url_options = { host: 'classpert.com' }
+
+    # Required for LiT
+    config.assets.compile = true
+    config.assets.prefix  = '/asset_pipeline'
 
     Elements.configure do |elements_config|
       elements_config.asset_host    = ENV.fetch('ELEMENTS_ASSET_HOST') { 'https://elements.classpert.com' }
