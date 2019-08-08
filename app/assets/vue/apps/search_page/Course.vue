@@ -244,19 +244,16 @@ export default {
       return `mobile-offcanvas-${this.course.id}`;
     },
     coursePageLink() {
+      var reg = RegExp(`^${this.course.provider_slug}-`)
       if (this.course.slug) {
-        const separatorIndex = this.course.slug.indexOf("-");
-        if (separatorIndex > -1) {
-          const providerSlug = this.course.slug.slice(0, separatorIndex);
-          const courseSlug = this.course.slug.slice(separatorIndex + 1);
-
-          return `/${providerSlug}/courses/${courseSlug}`;
-
+        if (reg.exec(this.course.slug)) {
+          const courseSlug = this.course.slug.replace(reg, '');
+          return `/${this.course.provider_slug}/courses/${courseSlug}`;
         } else {
-          return null;
+          return `/${this.course.provider_slug}/courses/${this.course.slug}`;
         }
       } else {
-        return null;
+        return null
       }
     }
   }
