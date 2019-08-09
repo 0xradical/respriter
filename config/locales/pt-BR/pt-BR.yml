@@ -17,6 +17,7 @@ pt-BR:
   dictionary: &dictionary
     terms_and_conditions: "Termos e Condições"
     providers: 'Plataformas'
+    about: 'Classpert'
     privacy_policy: "Política de Privacidade"
     blog: "Blog"
     levels:

@@ -245,17 +245,8 @@ export default {
       return `mobile-offcanvas-${this.course.id}`;
     },
     coursePageLink() {
-      let separatorIndex = null;
-      let providerSlug = null;
-      let courseSlug = null;
-
-      if (this.course.slug && this.course.provider_slug) {
-        providerSlug = this.course.provider_slug.replace("_", "-");
-        courseSlug = this.course.slug.replace(new RegExp(`^${providerSlug}-`),"");
-      }
-
-      if (providerSlug && courseSlug) {
-        return `/${providerSlug}/courses/${courseSlug}`;
+      if (this.course.slug) {
+        return `/${this.course.provider_slug}/courses/${this.course.slug}`;
       } else {
         return null;
       }

@@ -33,6 +33,6 @@ class CoursesController < ApplicationController
 
   def show
     @provider = Provider.find_by!(slug: params[:provider])
-    @course   = @provider.courses.find_by!(slug: "#{params[:provider]}-#{params[:course]}")
+    @course   = @provider.courses.find_by!(slug: params[:course])
   end
 end

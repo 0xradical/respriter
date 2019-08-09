@@ -82,6 +82,7 @@ en:
     categories: "Categories"
     max_price: "Max. $"
     providers: 'Providers'
+    about: 'Classpert'
     length: "length"
     previous_page: "Previous page"
     next_page: "Next page"

@@ -269,6 +269,7 @@ es:
       tooltip: '%{provider} ofrece %{offer}. Al final de este período, se cobrará el precio de la inscripción. Este pago le dará acceso ilimitado a los cursos y la cancelación se puede hacer en cualquier momento.'
     privacy_policy: Política de Privacidad
     providers: Plataformas
+    about: 'Classpert'
     relevance: Relevancia
     search: Buscar
     search_results: 'Mostrando %{total} resultados'

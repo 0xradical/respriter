@@ -13,7 +13,7 @@ I18nHost.new('classpert.com').each do |locale, host|
     add(posts_path, {
       changefreq: 'weekly',
       priority: 0.9,
-      lastmod: Post.locale(I18nHelper.sanitize_locale(locale)).order(published_at: :desc).first&.published_at&.strftime('%Y-%m-%d') 
+      lastmod: Post.locale(I18nHelper.sanitize_locale(locale)).order(published_at: :desc).first&.published_at&.strftime('%Y-%m-%d')
     })
     Post.locale(I18nHelper.sanitize_locale(locale)).published.each do |post|
       add(post_path(post.slug), { changefreq: 'monthly', priority: 0.9,  lastmod: post.content_changed_at })
@@ -29,8 +29,7 @@ I18nHost.new('classpert.com').each do |locale, host|
 
     # Courses
     Course.joins(:provider).published.where("courses.slug IS NOT NULL").find_each do |course|
-      course_slug = course.slug.gsub(/\A#{course.provider.slug}-(.*)/, '\1')
-      add(course_path(provider: course.provider.slug, course: course_slug), {
+      add(course_path(provider: course.provider.slug, course: course.slug), {
         changefreq: 'weekly',
         priority: 0.8
       })
