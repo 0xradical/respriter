@@ -157,13 +157,19 @@
 
           <div class='col-12 col-md-2'>
             <h2 class='el:amx-Fs(1.125em) el:amx-Mt(0.875em)@sm el:amx-C_blue2' style='margin-bottom:10px'>
-              About
+              <%= t('dictionary.about') %>
             </h2>
             <ul class='c-list c-list--unstyled el:amx-Fs(0.875em)'>
               <li style='margin-bottom:8px'>
                 <%= link_to "javascript:void(0)", onclick: "window.__vms__['promo-video-modal'].$modal.show('promo-video-modal')", target: '_blank', class: 'c-link c-link--white', rel: 'nofollow' do %>
                   <%= t('home.index.new_to_classpert') %> <%= t('home.index.watch_the_video') %>
                 <% end %>
+              </li>
+              <li style='margin-bottom:8px'>
+                <%= link_to t('dictionary.blog'), '/blog', class: 'c-link c-link--white', target: '_blank' %>
+              </li>
+              <li style='margin-bottom:8px'>
+                <%= link_to t('contact_us.new.title'), '/contact-us', class: 'c-link c-link--white', target: '_blank' %>
               </li>
             </ul>
           </div>
@@ -205,7 +211,6 @@
           <div class='col-12 el:amx-Fs(0.875em)'>
             <%= link_to t('dictionary.terms_and_conditions'), terms_and_conditions_path, class: 'c-link c-link--white el:amx-Fs(0.875em)', style: 'line-height:32px' %> &nbsp; &nbsp;
             <%= link_to t('dictionary.privacy_policy'), privacy_policy_path, class: 'c-link c-link--white el:amx-Fs(0.875em)', style: 'line-height:32px' %>
-                <%#= link_to t('dictionary.blog'), 'http://blog.classpert.com', class: 'el:amx-C_white' %>
             <img src="<%= elements_asset_path('svgs/logo_negative.svg') %>" width='126px' class='el:amx-D(n)@sm' style='float:right;vertical-align:middle'>
             <img src="<%= elements_asset_path('svgs/logo_symbol-negative.svg') %>" width='32px' class='el:amx-D(n)@>lg' style='float:right;vertical-align:middle'>
           </div>

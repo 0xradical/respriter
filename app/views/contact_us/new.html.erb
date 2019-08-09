@@ -1,0 +1,20 @@
+<%= content_for :meta do %>
+  <title><%= t('.meta.title') %></title>
+  <meta name='description' content="<%= t('.meta.description') %>" />
+  <meta property='og:description' content="<%= t('.meta.description') %>" />
+<% end %>
+
+<% content_for :body_html_attributes do %>
+  style="background-color:#FFFFFF"
+<% end %>
+
+<%= content_for :base_svg_sprites do %>
+  <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_pack_tag 'contact-us' %>
+  <%= stylesheet_pack_tag 'contact-us' %>
+<% end %>
+
+<%= render_vue_component "contact_us.js", { locale: I18n.locale, auth_token: form_authenticity_token } %>

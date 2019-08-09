@@ -539,6 +539,38 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: contacts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contacts (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    email character varying NOT NULL,
+    subject character varying NOT NULL,
+    message text NOT NULL
+);
+
+
+--
+-- Name: contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.contacts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contacts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.contacts_id_seq OWNED BY public.contacts.id;
+
+
+--
 -- Name: courses; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -999,6 +1031,13 @@ ALTER TABLE ONLY public.admin_profiles ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: contacts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts ALTER COLUMN id SET DEFAULT nextval('public.contacts_id_seq'::regclass);
+
+
+--
 -- Name: favorites id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1076,6 +1115,14 @@ ALTER TABLE ONLY public.admin_profiles
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: contacts contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_pkey PRIMARY KEY (id);
 
 
 --
@@ -1559,6 +1606,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190611223206'),
 ('20190615220137'),
 ('20190616024703'),
-('20190705153206');
+('20190705153206'),
+('20190805181853');
 
 

@@ -13,7 +13,7 @@ I18nHost.new('classpert.com').each do |locale, host|
     add(posts_path, {
       changefreq: 'weekly',
       priority: 0.9,
-      lastmod: Post.locale(I18nHelper.sanitize_locale(locale)).order(published_at: :desc).first&.published_at&.strftime('%Y-%m-%d') 
+      lastmod: Post.locale(I18nHelper.sanitize_locale(locale)).order(published_at: :desc).first&.published_at&.strftime('%Y-%m-%d')
     })
     Post.locale(I18nHelper.sanitize_locale(locale)).published.each do |post|
       add(post_path(post.slug), { changefreq: 'monthly', priority: 0.9,  lastmod: post.content_changed_at })

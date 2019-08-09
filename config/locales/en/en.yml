@@ -1,4 +1,12 @@
 en:
+  validations:
+    messages:
+      challenge: "The answer is incorrect"
+    attributes:
+      name: "name"
+      email: "e-mail"
+      subject: "subject"
+      message: "message"
   careers: &careers
     data_scientist: Data Scientist
     game_developer: Game Developer
@@ -74,6 +82,7 @@ en:
     categories: "Categories"
     max_price: "Max. $"
     providers: 'Providers'
+    about: 'Classpert'
     length: "length"
     previous_page: "Previous page"
     next_page: "Next page"
@@ -280,8 +289,40 @@ en:
         <<: *careers
       meta:
         title: 'Online Courses with Certificate - Find and Compare | Classpert'
-        description: ' Compare side-by-side online courses from Udemy, Coursera, Pluralsight, edX, LinkedIn Learning and more. 
+        description: 'Compare side-by-side online courses from Udemy, Coursera, Pluralsight, edX, LinkedIn Learning and more.
         Save time and money with Classpert!'
+  contact_us:
+    new:
+      meta:
+        title: 'Online Courses with Certificate - Find and Compare | Classpert'
+        description: 'Compare side-by-side online courses from Udemy, Coursera, Pluralsight, edX, LinkedIn Learning and more.
+        Save time and money with Classpert!'
+      title: "Contact us"
+      subtitle: "Our team is ready to help you"
+      form:
+        name:
+          header: "Name"
+          placeholder: "Enter your name"
+        email:
+          header: "E-mail"
+          placeholder: "Enter your e-mail address"
+        subject:
+          header: "Subject"
+          placeholder: "Subject"
+        message:
+          header: "Message"
+          placeholder: "Please, provide your detailed question here..."
+        challenge:
+          header: "What's the answer to %{question} ?"
+          placeholder: "Answer"
+        action:
+          submit: "Send"
+      successful:
+        title: "Thank you!"
+        subtitle: "Your message was sent successfully. Our team will answer it shortly."
+        action:
+          another_message: "Send another message"
+          homepage: "Find a course"
   courses:
     index:
       arts_and_design:

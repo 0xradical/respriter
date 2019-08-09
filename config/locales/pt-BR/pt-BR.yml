@@ -1,4 +1,13 @@
 pt-BR:
+  validations:
+    messages:
+      challenge: "A resposta está errada"
+    attributes:
+      name: "nome"
+      email: "e-mail"
+      subject: "assunto"
+      message: "mensagem"
+      challenge: "de segurança"
   careers: &careers
     data_scientist: Cientista de Dados
     game_developer: Desenvolvedor de Jogos
@@ -8,6 +17,7 @@ pt-BR:
   dictionary: &dictionary
     terms_and_conditions: "Termos e Condições"
     providers: 'Plataformas'
+    about: 'Classpert'
     privacy_policy: "Política de Privacidade"
     blog: "Blog"
     levels:
@@ -282,6 +292,39 @@ pt-BR:
         description: 'Busque e compare cursos online de plataformas como: Udemy, Coursera,
         Pluralsight, Edx, Linkedin Learning e muitos outros. Economize tempo e dinheiro com a
         Classpert!'
+  contact_us:
+    new:
+      meta:
+        title: 'Cursos Online com Certificado - Encontre e Compare | Classpert'
+        description: 'Busque e compare cursos online de plataformas como: Udemy, Coursera,
+        Pluralsight, Edx, Linkedin Learning e muitos outros. Economize tempo e dinheiro com a
+        Classpert!'
+      title: "Fale conosco"
+      subtitle: "Nosso time está aqui para ajudar"
+      form:
+        name:
+          header: "Nome"
+          placeholder: "Digite seu nome"
+        email:
+          header: "E-mail"
+          placeholder: "Digite seu e-mail"
+        subject:
+          header: "Assunto"
+          placeholder: "Dúvidas, sugestões, críticas ..."
+        message:
+          header: "Mensagem"
+          placeholder: "Digite sua mensagem ..."
+        challenge:
+          header: "Qual é a resposta de %{question} ?"
+          placeholder: "Resposta"
+        action:
+          submit: "Enviar"
+      successful:
+        title: "Obrigado!"
+        subtitle: "Sua mensagem foi enviada com sucesso. Nosso time responderá em breve."
+        action:
+          another_message: "Enviar novamente"
+          homepage: "Buscar um curso"
   courses:
     index:
       arts_and_design:
