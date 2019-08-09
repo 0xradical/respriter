@@ -2,9 +2,9 @@ class ContactMailer < ApplicationMailer
   def build(contact)
     @contact = contact
     mail({
-      from: @contact.email,
+      from: (@contact.name.present? ? "#{@contact.name} <#{@contact.email}>" : @contact.email),
       to: 'admin@classpert.com',
-      subject: @contact.subject || "New contact",
+      subject: "New contact" + (@contact.subject.present? ? ": #{@contact.subject}" : ""),
       reply_to: @contact.email
     })
   end
