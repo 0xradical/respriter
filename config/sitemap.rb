@@ -29,7 +29,8 @@ I18nHost.new('classpert.com').each do |locale, host|
 
     # Courses
     Course.joins(:provider).published.where("courses.slug IS NOT NULL").find_each do |course|
-      add(course_path(provider: course.provider.slug, course: course.slug), {
+      course_slug = course.slug.gsub(/\A#{course.provider.slug}-(.*)/, '\1')
+      add(course_path(provider: course.provider.slug, course: course_slug), {
         changefreq: 'weekly',
         priority: 0.8
       })
