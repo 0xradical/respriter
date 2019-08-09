@@ -315,8 +315,8 @@ pt-BR:
           header: "Mensagem"
           placeholder: "Digite sua mensagem ..."
         challenge:
-          header: "Pergunta de Segurança"
-          placeholder: "Qual é a resposta de %{question} ?"
+          header: "Qual é a resposta de %{question} ?"
+          placeholder: "Resposta"
         action:
           submit: "Enviar"
       successful:

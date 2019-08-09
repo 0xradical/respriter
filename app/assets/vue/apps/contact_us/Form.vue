@@ -93,11 +93,11 @@
           <template #default="{ errors }">
             <div class='el:m-form-field' :class='[errors.length > 0 && "el:m-form-field--error", sending && "el:m-form-field--disabled"]'>
               <div class='el:m-form-field__label el:m-form-field__label--over'>
-                <label for="challenge">{{ $t('contact_us.new.form.challenge.header') }}</label>
+                <label for="challenge">{{ $t('contact_us.new.form.challenge.header', { question: mathenticate.show() }) }}</label>
               </div>
 
               <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
-                <input name="challenge" type="text" :placeholder="$t('contact_us.new.form.challenge.placeholder', { question: mathenticate.show() })" v-model='mathenticate.answer'>
+                <input name="challenge" type="text" :placeholder="$t('contact_us.new.form.challenge.placeholder')" v-model='mathenticate.answer'>
                 <icon v-if='errors.length > 0' class='el:m-form-field__input-icon el:amx-C_red2' name="wrong" width="1.125em" height="1.125em"></icon>
                 <icon v-if='mathenticate.answer && errors.length == 0' class='el:m-form-field__input-icon el:amx-C_blue3' name="checked" width="1.125em" height="1.125em"></icon>
                 <div v-if='errors.length > 0' class='el:amx-Mt(0.25em) el:amx-C_red2'>

@@ -55,8 +55,8 @@ es:
           header: "Mensaje"
           placeholder: "Ingrese su mensaje ..."
         challenge:
-          header: "Pregunta de Seguridad"
-          placeholder: "¿Cuál es la respuesta de %{question} ?"
+          header: "¿Cuál es la respuesta de %{question} ?"
+          placeholder: "Respuesta"
         action:
           submit: "Enviar"
       successful:

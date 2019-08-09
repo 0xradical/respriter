@@ -313,8 +313,8 @@ en:
           header: "Message"
           placeholder: "Please, provide your detailed question here..."
         challenge:
-          header: "Challenge Question"
-          placeholder: "What's the answer to %{question} ?"
+          header: "What's the answer to %{question} ?"
+          placeholder: "Answer"
         action:
           submit: "Send"
       successful:
