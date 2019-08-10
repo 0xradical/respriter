@@ -33,6 +33,6 @@ class CoursesController < ApplicationController
 
   def show
     @provider = Provider.find_by!(slug: params[:provider])
-    @course   = @provider.courses.where("slug LIKE '%#{params[:course]}'").first
+    @course   = @provider.courses.find_by!(slug: params[:course])
   end
 end

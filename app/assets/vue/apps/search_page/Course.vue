@@ -245,14 +245,8 @@ export default {
       return `mobile-offcanvas-${this.course.id}`;
     },
     coursePageLink() {
-      var reg = RegExp(`^${this.course.provider_slug}-`)
       if (this.course.slug) {
-        if (reg.exec(this.course.slug)) {
-          const courseSlug = this.course.slug.replace(reg, '');
-          return `/${this.course.provider_slug}/courses/${courseSlug}`;
-        } else {
-          return `/${this.course.provider_slug}/courses/${this.course.slug}`;
-        }
+        return `/${this.course.provider_slug}/courses/${this.course.slug}`;
       } else {
         return null
       }
