@@ -15,6 +15,7 @@ services:
       - sidekiq
       - webpacker
       - redis
+      - hypernova
       - mailcatcher
       - postgres
       - elasticsearch
@@ -36,6 +37,16 @@ services:
   sidekiq:
     <<: *base
     command: bundle exec sidekiq
+    env_file:
+      - .env
+
+  hypernova:
+    <<: *base
+    command: node ssr/ssr.js
+    volumes:
+      - .:/app
+    ports:
+      - 7777:7777
     env_file:
       - .env
 
