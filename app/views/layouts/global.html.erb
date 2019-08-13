@@ -44,7 +44,7 @@
       <meta property='og:image' content="<%= asset_url('/images/classpert-social.png') %>" />
       <meta name="twitter:image" content="<%= asset_url('/images/classpert-social.png') %>" />
     <% else %>
-    <% yield :meta_og_image %>
+    <%= yield :meta_og_image %>
     <% end %>
 
     <!-- schema.org -->
