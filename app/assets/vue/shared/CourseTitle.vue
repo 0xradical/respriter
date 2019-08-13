@@ -1,6 +1,6 @@
 <template>
   <div :class='["el:m-text-clipbox",...rootClasses]'>
-    <a v-if='hyperlink' class='el:m-text-clipbox__text el:amx-Fw(b)' :class='[...titleBaseClasses, ...titleClasses]' :href='hyperlinkRef' rel='nofollow' target='_blank' :title='course.name'>
+    <a v-if='hyperlink' class='el:m-text-clipbox__text el:amx-Fw(b)' @click='(e) => clickHandler ? e.preventDefault() || clickHandler() : null'  :class='[...titleBaseClasses, ...titleClasses]' :href='hyperlinkRef' rel='nofollow' target='_blank' :title='course.name'>
       {{ course.name }}
     </a>
     <span v-else class='el:m-text-clipbox__text el:amx-Fw(b)' :class='[...titleBaseClasses, ...titleClasses]'>
@@ -21,6 +21,11 @@ export default {
       default() {
         return [];
       }
+    },
+    clickHandler: {
+      type: Function,
+      required: false,
+      default: undefined
     },
     titleClasses: {
       type: Array,

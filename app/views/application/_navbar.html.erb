@@ -1,4 +1,4 @@
-<div class='c-navbar c-navbar--white <%= "c-navbar--sticky" if sticky_navbar? %> el:amx-Pl(0.5em) el:amx-Pr(0.5em)' <%= 'data-sticky' if sticky_navbar? %> role='header-nav'>
+<div class='c-navbar c-navbar--white <%= "c-navbar--sticky" if sticky_navbar? %> el:amx-Pl(0.5em) el:amx-Pr(2em)' <%= 'data-sticky' if sticky_navbar? %> role='header-nav'>
 
   <% unless home_controller? %>
     <%= link_to root_path do %>
@@ -45,7 +45,7 @@
         <% end %>
       </div>
     <% else %>
-      <span class='c-navbar__slot el:amx-D(n)@sm' style='margin-right:4px;margin-left:10px;'>
+      <span class='c-navbar__slot el:amx-D(n)@sm' style='margin-right:0.5rem;margin-left:1rem;'>
         <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
           class: 'btn btn--gray-border btn--rounded btn--small btn--uppercase' %>
       </span>

@@ -1,3 +1,4 @@
+<!DOCTYPE>
 <html>
   <head>
 
@@ -5,7 +6,7 @@
     <%= csrf_meta_tags %>
 
     <!-- Device & Ownership Meta -->
-    <meta name="viewport" content="<%= viewport_content %>">
+    <meta name="viewport" content="width=device-width">
     <meta name="verification" content="898f8f25672b3d4f1acbb0228a862b98">
     <meta name="google-site-verification" content="frJWYLKLhn2TNmNSFXsY_N34EKr2sAfK3TE-M9ogE1o" />
     <meta name="p:domain_verify" content="31b22b390ed384603705691430ca8eb5"/>
@@ -125,6 +126,12 @@
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K5JDRZV"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- End Google Tag Manager (noscript) -->
+    <% end %>
+
+    <% if content_for(:banner) %>
+      <%= yield :banner %>
+    <% else %>
+      <%= render 'shared/banner' %>
     <% end %>
 
     <%= render 'application/navbar' %>

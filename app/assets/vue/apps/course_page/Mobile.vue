@@ -69,7 +69,7 @@
             </div>
           </div>
         </div>
-        <div class="row el:amx-Mt(2em)">
+        <div class="row el:amx-Mt(2em)" v-if='course.description && course.description.length > 0'>
           <div class="col">
             <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.description.header') }}</span>
               <lazy-hydrate ssr-only>
@@ -130,7 +130,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

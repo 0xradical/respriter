@@ -15,9 +15,17 @@
 <% end %>
 
 <script type='text/javascript'>
-  window.env_context = { params: { category: <%= raw(Array.wrap(params[:tag]).to_json) %> } }
+  window.env_context = {
+    params: {
+      category: <%= raw(Array.wrap(params[:tag]).to_json) %>
+    },
+    devise: {
+      sign_in: "<%= new_user_account_session_path %>",
+      sign_up: "<%= new_user_account_registration_path %>",
+      signed_in: <%= current_user_account.present? %>
+    }
+  }
 </script>
-
 
 <%= content_for :javascript do %>
   <%= javascript_pack_tag 'search-page' %>

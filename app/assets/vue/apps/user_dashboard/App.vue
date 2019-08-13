@@ -207,10 +207,10 @@ hr {
   text-overflow: ellipsis;
 }
 .nav-tabs {
-  border-bottom: 1px solid get-color("gray",2);
+  border-bottom: 1px solid get-color("gray2");
 
   .nav-link {
-    border-color: get-color("gray",2);
+    border-color: get-color("gray2");
     border-radius: 0;
 
     &.active {

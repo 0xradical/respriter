@@ -19,13 +19,11 @@
       </form>
     </div>
 
-    <section v-if='account.oauths.length > 0' id='oauth-accounts'>
-      <h4 style='margin-bottom:10px'>
-       {{ $t('pages.dashboard_index.html.connected_oauth_accounts_header')  }}
-      </h4>
-      <div style='margin-bottom:10px'>
+    <h4 class='el:amx-Mb(0.625em)'>{{ $t('pages.dashboard_index.html.connected_oauth_accounts_header')  }}</h4>
+    <section class='row' v-if='account.oauths.length > 0' id='oauth-accounts'>
+      <div class='col-lg-5 el:amx-Mb(0.625em)'>
         <ul style='list-style:none;margin:0;padding:0'>
-          <li v-for='oauth in account.oauths' style='margin-bottom:10px' :key='oauth.attributes.provider'>
+          <li class='el:amx-Mb(0.625em)' v-for='oauth in account.oauths' :key='oauth.attributes.provider'>
             <oauth-account @destroyOauth='destroyOauth' :provider='oauth.attributes.provider'
               :connected='true'
               ></oauth-account>
@@ -34,17 +32,19 @@
       </div>
     </section>
 
-    <h5 style='margin-bottom:10px'>{{ $t('pages.dashboard_index.html.add_oauth_accounts_header')  }}</h5>
-    <div>
-      <ul style='list-style:none;margin:0;padding:0'>
-        <li style='margin-bottom:10px' v-for='provider in otherProviders' :key='provider'>
-          <oauth-account
-            :provider='provider'
-            :authorize-url='`/user_accounts/auth/${provider}`'
-            :connected='false'
-            ></oauth-account>
-        </li>
-      </ul>
+    <h5 class='el:amx-Mb(0.625em)'>{{ $t('pages.dashboard_index.html.add_oauth_accounts_header')  }}</h5>
+    <div class='row'>
+      <div class='col-lg-5'>
+        <ul style='list-style:none;margin:0;padding:0'>
+          <li class='el:amx-Mb(0.625em)' v-for='provider in otherProviders' :key='provider'>
+            <oauth-account
+              :provider='provider'
+              :authorize-url='`/user_accounts/auth/${provider}`'
+              :connected='false'
+              ></oauth-account>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div v-if='account.password_missing' style='margin-top:20px'>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
- import OauthAccount from './OauthAccount.vue'
+import OauthAccount from '../../../shared/OauthAccount.vue';
 
  export default {
 
