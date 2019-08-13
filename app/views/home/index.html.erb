@@ -1,6 +1,9 @@
 <%= content_for :meta do %>
   <title><%= t('.meta.title') %></title>
+  <meta name='twitter:title' content="<%= t('.meta.title') %>" />
+  <meta name='twitter:description' content="<%= t('.meta.description') %>" />
   <meta name='description' content="<%= t('.meta.description') %>" />
+  <meta name="abstract" content="<%=t('.meta.description')  %>" />
   <meta property='og:description' content="<%= t('.meta.description') %>" />
 <% end %>
 

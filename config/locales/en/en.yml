@@ -272,7 +272,7 @@ en:
 
   home:
     index:
-      hero_html: 'Find and compare <b>online courses</b> <br/> from multiple e-learning platforms and MOOCs'
+      hero_html: 'Find and compare <b>online courses</b> and MOOCs <br/> from multiple e-learning platforms'
       new_to_classpert: 'New to Classpert?'
       watch_the_video: 'Watch the video!'
       kickstart_your_career: 'Kickstart your career'
@@ -289,7 +289,7 @@ en:
         <<: *careers
       meta:
         title: 'Online Courses with Certificate - Find and Compare | Classpert'
-        description: 'Compare side-by-side online courses from Udemy, Coursera, Pluralsight, edX, LinkedIn Learning and more.
+        description: 'Compare online courses side-by-side from platforms like Udemy, Coursera, Pluralsight, edX, LinkedIn Learning and more.
         Save time and money with Classpert!'
   contact_us:
     new:

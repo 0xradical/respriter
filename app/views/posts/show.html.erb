@@ -6,19 +6,31 @@
 
 <% content_for :meta do %>
   <title><%= @post.meta['title'] %> | Blog - Classpert </title>
+  <meta name='twitter:title' content="<%= @post.meta['title'] %>" />
+  <meta name='twitter:description' content="<%= @post.meta['description'] %>" />
   <meta name="description" content="<%= @post.meta['description'] %>">
   <meta property="og:title" content="<%= @post.meta['title'] %> | Blog - Classpert">
   <meta property="og:description" content="<%= @post.meta['description'] %>">
 <% end %>
 
-<% content_for :meta_hreflang do %>
-  <% if @post.versions.published.empty? %>
-    <link rel="alternate" href="<%= request.url %>" hreflang="x-default" />
-  <% else %>
-    <% @post.versions.published.map do |post| %>
-      <link ref='alternate' hreflang='<%= post.locale %>'
-      href="<%= post_url(post.slug, host: I18nHost.new('classpert.com').members[post.locale.downcase]) %>" />
-      <% end.join.html_safe %>
+<% unless @post.images.empty? %>
+  <% content_for :meta_og_image do %>
+    <meta property='og:image' content='<%= @post.images.first.file_url %>'>
+    <meta name='twitter:image' content='<%= @post.images.first.file_url %>'>
+  <% end %>
+<% end %>
+
+<% unless @post.versions.published.empty? %>
+  <% content_for :meta_hreflang do %>
+
+    <% @all_versions.each do |locale, slug| %>
+      <link ref="alternate" hreflang="<%= locale %>" href="<%= post_url(slug, host: I18nHost.new(request.host_with_port).members[locale.downcase]) %>" >
+    <% end %>
+
+    <% (I18n.available_locales.map(&:to_s) - @all_versions.keys).each do |locale| %>
+      <link ref="alternate" hreflang="<%= locale %>" href="<%= post_url(@post.slug, host: I18nHost.new(request.host_with_port).members[locale.downcase]) %>" >
+    <% end %>
+
   <% end %>
 <% end %>
 

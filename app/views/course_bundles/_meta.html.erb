@@ -1,5 +1,7 @@
 <% content_for :meta do %>
-  <title><%= t(".title_html", tag: t("tags.#{@tag}")) %> | Classpert</title>
-  <meta name='description' content='<%= t(".description_html", tag: t("tags.#{@tag}")) %>' />
-  <meta property='og:description' content='<%= t(".description_html", tag: t("tags.#{@tag}")) %>' />
+  <title><%= strip_tags(t(".title_html", tag: t("tags.#{@tag}"))) %> | Classpert</title>
+  <meta name='twitter:title' content="<%= strip_tags(t(".title_html", tag: t("tags.#{@tag}"))) + ' | Classpert' %>" />
+  <meta name='twitter:description' content='<%= strip_tags(t(".description_html", tag: t("tags.#{@tag}"))) %>' />
+  <meta name='description' content='<%= strip_tags(t(".description_html", tag: t("tags.#{@tag}"))) %>' />
+  <meta property='og:description' content='<%= strip_tags(t(".description_html", tag: t("tags.#{@tag}"))) %>' />
 <% end %>

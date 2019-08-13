@@ -7,6 +7,9 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.published.find_by!(slug: params[:id])
+    @all_versions = Hash[[@post, @post.versions].compact.flatten.map do |post|
+      [post.locale, post.slug]
+    end]
   end
 
 end

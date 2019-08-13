@@ -1,27 +1,68 @@
 <html>
   <head>
 
-    <!-- Metas -->
+    <!-- Security Meta -->
     <%= csrf_meta_tags %>
 
-    <!-- Global meta -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="<%= request.original_url %>">
-    <meta property="og:locale" content="<%= I18n.locale %>">
-    <meta name="author" content="Classpert">
-    <meta name="copyright" content="Classpert">
-    <meta name="designer" content="Classpert">
-    <meta name="abstract" content="Classpert - Find and Compare Online Courses from Multiple Providers">
+    <!-- Device & Ownership Meta -->
     <meta name="viewport" content="<%= viewport_content %>">
     <meta name="verification" content="898f8f25672b3d4f1acbb0228a862b98">
     <meta name="google-site-verification" content="frJWYLKLhn2TNmNSFXsY_N34EKr2sAfK3TE-M9ogE1o" />
+    <meta name="p:domain_verify" content="31b22b390ed384603705691430ca8eb5"/>
 
-    <!-- Custom meta with fallback -->
-    <%= content_for?(:meta_hreflang) ? yield(:meta_hreflang) : default_meta_alternate_hreflang %>
-    <%= content_for?(:meta_og_image) ? yield(:meta_og_image) : "<meta property='og:image' content='#{asset_url('/images/classpert-social.png')}'>".html_safe %>
+    <!-- Universal SEO Meta -->
+    <meta name="author" content="Classpert">
+    <meta name="copyright" content="Classpert">
+    <meta name="designer" content="Classpert">
+    <%# https://yoast.com/hreflang-ultimate-guide/#hreflang-canonical %>
+    <link rel="canonical" href="<%= request.original_url %>">
 
-    <!-- Custom meta -->
+    <!-- Global OpenGraph Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:locale" content="<%= I18n.locale %>">
+
+    <!-- Global Twitter Meta -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@classpert" />
+    <meta name="twitter:creator" content="@classpert" />
+
+    <!-- Custom SEO Meta -->
     <%= yield :meta %>
+
+    <!-- Custom SEO Meta with fallback  -->
+    <% unless content_for?(:meta_hreflang) %>
+    <link rel="alternate" hreflang="en"         href="https://classpert.com<%= request.path %>">
+    <link rel="alternate" hreflang="pt-br"      href="https://pt-br.classpert.com<%= request.path %>">
+    <link rel="alternate" hreflang="es"         href="https://es.classpert.com<%= request.path %>">
+    <link rel="alternate" hreflang="x-default"  href="https://classpert.com<%= request.path %>"/>
+    <% else %>
+    <%= yield :meta_hreflang %>
+    <% end %>
+
+    <% unless content_for?(:meta_og_image) %>
+      <meta property='og:image' content="<%= asset_url('/images/classpert-social.png') %>" />
+      <meta name="twitter:image" content="<%= asset_url('/images/classpert-social.png') %>" />
+    <% else %>
+    <% yield :meta_og_image %>
+    <% end %>
+
+    <!-- schema.org -->
+    <script type="application/ld+json">
+      {
+        "@context" : "http://schema.org",
+        "@type" : "Organization",
+        "name" : "Classpert",
+        "url" : "https://classpert.com",
+        "sameAs" : [
+          "https://twitter.com/classpert",
+          "https://www.facebook.com/classpert",
+          "https://pinterest.com/classpert",
+          "https://www.instagram.com/classpert",
+          "https://www.linkedin.com/company/classpert"
+        ]
+      }
+    </script>
 
     <!-- Elements css-->
     <%= elements_stylesheet_link_tag 'icon-font', 'bundle' %>
@@ -209,7 +250,9 @@
       <div class='container'>
         <div class='row'>
           <div class='col-12 el:amx-Fs(0.875em)'>
-            <%= link_to t('dictionary.terms_and_conditions'), terms_and_conditions_path, class: 'c-link c-link--white el:amx-Fs(0.875em)', style: 'line-height:32px' %> &nbsp; &nbsp;
+            <%= link_to t('dictionary.terms_and_conditions'),
+              terms_and_conditions_path, class: 'c-link c-link--white el:amx-Fs(0.875em)',
+              style: 'line-height:32px' %> &nbsp; &nbsp;
             <%= link_to t('dictionary.privacy_policy'), privacy_policy_path, class: 'c-link c-link--white el:amx-Fs(0.875em)', style: 'line-height:32px' %>
             <img src="<%= elements_asset_path('svgs/logo_negative.svg') %>" width='126px' class='el:amx-D(n)@sm' style='float:right;vertical-align:middle'>
             <img src="<%= elements_asset_path('svgs/logo_symbol-negative.svg') %>" width='32px' class='el:amx-D(n)@>lg' style='float:right;vertical-align:middle'>
