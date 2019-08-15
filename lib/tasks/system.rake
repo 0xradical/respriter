@@ -100,4 +100,19 @@ namespace :system do
 
   end
 
+  namespace :error_pages do
+    desc "Create static error pages"
+    task write_static: [:environment] do |t,args|
+      output_path = Rails.root.join('public')
+      pages = Dir.glob(Rails.root.join('app','views', 'error_pages', '*'))
+      pages.each do |page|
+        output_path = Rails.root.join('public', File.basename(page,'.erb'))
+        static      = ApplicationController.render(inline: File.read(page), layout: 'http_status')
+        File.open(output_path, 'w+') do |file|
+          file << static
+        end
+      end
+    end
+  end
+
 end
