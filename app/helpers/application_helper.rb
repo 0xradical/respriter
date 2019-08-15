@@ -24,7 +24,7 @@ module ApplicationHelper
   end
 
   def sticky_navbar?
-    !(%w(home static_pages posts).include?(controller_name) || devise_controller?)
+    !(%w(home static_pages posts contact_us).include?(controller_name) || devise_controller?)
   end
 
 end

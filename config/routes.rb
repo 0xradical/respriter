@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   mount Vueonrails::Engine, at: 'vue'
   root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { '' }
 
-  get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
-  get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
-  get '/contact-us',            to: 'contact_us#new'
-  post '/contact-us',            to: 'contact_us#create'
+  get '/privacy-policy',          to: 'static_pages#index', page: 'privacy_policy'
+  get '/terms-and-conditions',    to: 'static_pages#index', page: 'terms_and_conditions'
+  get '/contact-us',              to: 'contact_us#new'
+  post '/contact-us',             to: 'contact_us#create'
 
   get '/search', to: 'courses#index',  as: :courses
   get '/:provider/courses/:course', constraints: lambda { |req|
