@@ -1,2 +1,0 @@
-#!/bin/bash
-heroku pg:backups:restore `heroku pg:backups:url --app=classpert-web-app-prd` DATABASE_URL --app=$HEROKU_APP_NAME --confirm $HEROKU_APP_NAME
