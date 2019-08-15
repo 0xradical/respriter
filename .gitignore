@@ -22,10 +22,10 @@
 *.pem
 *.dump
 
-Guardfile
-Dockerfile
+/Guardfile
+/Dockerfile
 /coverage
-docker-compose.yml
+/docker-compose.yml
 
 /node_modules
 /yarn-error.log

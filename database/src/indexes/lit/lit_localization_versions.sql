@@ -1,0 +1,3 @@
+CREATE INDEX index_lit_localization_versions_on_localization_id
+ON lit.lit_localization_versions
+USING btree (localization_id);
