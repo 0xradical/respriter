@@ -1,5 +1,5 @@
 NAME   :=	classpert/rails
-TAG    :=	2.2.0
+TAG    :=	3.0.0
 IMG    :=	${NAME}\:${TAG}
 LATEST :=	${NAME}\:latest
 HEROKU_APP_NAME := classpert-web-app

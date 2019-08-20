@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+
+  migrator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DB_ENV: development
+    image: migrator
+    env_file: .env
+
+  postgrest:
+    image: postgrest/postgrest
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    environment:
+      PGRST_DB_URI:       postgres://${AUTHENTICATOR_USER}:${AUTHENTICATOR_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      PGRST_DB_SCHEMA:    ${API_SCHEMA}
+      PGRST_DB_ANON_ROLE: ${API_ANONYMOUS_ROLE}
+      PGRST_JWT_SECRET:   ${JWT_SECRET}
+
+  postgres:
+    image: postgres:11.4-alpine
+    env_file: .env
+    ports:
+      - 5432:5432
+
+  database:
+    image: classpert/database
+    env_file: .env
+    ports:
+      - 5432:5432
+
+  postgres_old:
+    image: postgres:10.9-alpine
+    env_file: .env
+    ports:
+      - 5433:5432

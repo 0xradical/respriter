@@ -1,7 +1,7 @@
 version: '3'
 services:
   base: &base
-    image: classpert/rails:2.2.0
+    image: classpert/rails:latest
     volumes:
       - .:/app
 
@@ -18,6 +18,7 @@ services:
       - hypernova
       - mailcatcher
       - postgres
+      - postgres_test
       - elasticsearch
       - assets.s3
 
@@ -32,6 +33,7 @@ services:
       - redis
       - mailcatcher
       - postgres
+      - postgres_test
       - elasticsearch
 
   sidekiq:
@@ -112,11 +114,18 @@ services:
       - redis:/data
 
   postgres:
-    image: postgres:9.6
+    image: classpert/database:1.1.0
+    environment:
+      POSTGRES_DB: quero_development
     ports:
       - 5432:5432
-    volumes:
-      - postgres-9.6:/var/lib/postgresql/data
+
+  postgres_test:
+    image: classpert/database:1.1.0
+    environment:
+      POSTGRES_DB: quero_test
+    ports:
+      - 5433:5432
 
   elasticsearch:
     image: nshou/elasticsearch-kibana:kibana6
@@ -131,6 +140,5 @@ services:
 
 volumes:
   redis:
-  postgres-9.6:
   esdata:
   fake_s3_data:

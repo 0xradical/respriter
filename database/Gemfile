@@ -1,0 +1,32 @@
+source 'https://rubygems.org'
+
+ruby '2.6.3'
+
+gem 'oj'
+gem 'nokogiri'
+gem 'mustache'
+gem 'reverse_markdown'
+
+gem 'pg'
+gem 'iobuffer'
+gem 'activerecord'
+gem 'activerecord-import'
+
+gem 'aws-sdk-s3'
+gem 'aws-sdk-cloudfront'
+
+gem 'que', '1.0.0.beta3'
+gem 'que-web'
+
+gem 'i18n'
+gem 'rake'
+gem 'zlib'
+gem 'colorize'
+gem 'awesome_print'
+gem 'ruby-progressbar'
+
+group :test, :development do
+  gem 'pry'
+  gem 'clipboard'
+  gem 'ruby-prof'
+end

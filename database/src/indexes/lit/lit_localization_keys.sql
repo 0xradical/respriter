@@ -1,0 +1,3 @@
+CREATE UNIQUE INDEX index_lit_localization_keys_on_localization_key
+ON lit.lit_localization_keys
+USING btree (localization_key);

@@ -1,0 +1,7 @@
+CREATE ROLE "user";
+
+GRANT USAGE ON SCHEMA api      TO "user";
+GRANT USAGE ON SCHEMA jwt      TO "user";
+GRANT USAGE ON SCHEMA settings TO "user";
+
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA api TO "user";

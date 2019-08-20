@@ -64,6 +64,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 
+# Redis
 gem 'redis-namespace'
 gem 'redis-rails'
 
@@ -85,6 +86,9 @@ gem 'lograge'
 
 # HTTParty
 gem 'httparty'
+
+# Translation
+gem 'lit', git: 'https://github.com/dalthon/lit'
 
 group :production do
   # Exceptions
@@ -114,3 +118,5 @@ group :development, :test do
   gem 'factory_bot'
   gem 'factory_bot_rails'
 end
+
+gem 'redis'

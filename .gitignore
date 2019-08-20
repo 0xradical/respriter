@@ -22,10 +22,10 @@
 *.pem
 *.dump
 
-Guardfile
-Dockerfile
+/Guardfile
+/Dockerfile
 /coverage
-docker-compose.yml
+/docker-compose.yml
 
 /node_modules
 /yarn-error.log
@@ -40,3 +40,5 @@ docker-compose.yml
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+
+/database/db/structure.sql
