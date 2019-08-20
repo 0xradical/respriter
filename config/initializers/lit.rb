@@ -11,7 +11,7 @@ Lit.authentication_verification = nil
 
 # Either 'redis' or 'hash'. Hash is the fastest, but will fail in multiprocess
 # environment
-Lit.key_value_engine = 'hash'
+Lit.key_value_engine = 'redis'
 
 # Redis URL to use when key_value_engine is 'redis'
 # When set to `nil`, it uses the REDIS_URL environment variable.
