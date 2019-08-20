@@ -114,14 +114,14 @@ services:
       - redis:/data
 
   postgres:
-    image: classpert/database:1.1.0
+    image: classpert/database:1.1.1
     environment:
       POSTGRES_DB: quero_development
     ports:
       - 5432:5432
 
   postgres_test:
-    image: classpert/database:1.1.0
+    image: classpert/database:1.1.1
     environment:
       POSTGRES_DB: quero_test
     ports:
