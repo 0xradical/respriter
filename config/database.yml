@@ -60,6 +60,4 @@ test:
 #
 production:
   <<: *default
-  database: quero_production
-  username: postgres
-  host: localhost
+  url: <%= ENV['NEW_DATABASE_URL'] %>
