@@ -1,14 +1,10 @@
 {
   "addons": [
     "bonsai",
-    "heroku-postgresql",
     "heroku-redis",
     "scheduler"
   ],
   "buildpacks": [
-    {
-      "url": "https://github.com/heroku/heroku-buildpack-cli"
-    },
     {
       "url": "heroku/ruby"
     }
@@ -45,6 +41,9 @@
       "required": true
     },
     "AWS_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "DATABASE_URL": {
       "required": true
     },
     "BONSAI_URL": {
@@ -186,8 +185,5 @@
     }
   },
   "name": "web-app",
-  "scripts": {
-    "postdeploy": "./bin/post-deploy"
-  },
   "stack": "heroku-16"
 }
