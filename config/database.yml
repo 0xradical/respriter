@@ -30,13 +30,11 @@ local: &local
 development:
   <<: *default
   <<: *local
-  host: postgres
   database: <%= ENV.fetch('PG_DATABASE') { 'quero_development' } %>
 
 test:
   <<: *default
   <<: *local
-  host: postgres_test
   database: <%= ENV.fetch('PG_DATABASE') { 'quero_test' } %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
