@@ -178,10 +178,12 @@
   },
   "formation": {
     "web": {
-      "quantity": 1
+      "quantity": 1,
+      "size": "Hobby"
     },
     "worker": {
-      "quantity": 1
+      "quantity": 1,
+       "size": "Hobby"
     }
   },
   "name": "web-app",

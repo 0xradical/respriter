@@ -87,9 +87,6 @@ gem 'lograge'
 # HTTParty
 gem 'httparty'
 
-# Translation
-gem 'lit', git: 'https://github.com/dalthon/lit'
-
 group :production do
   # Exceptions
   gem 'sentry-raven'

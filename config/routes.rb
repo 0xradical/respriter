@@ -11,8 +11,6 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'user_accounts/omniauth_callbacks'
   }
 
-  mount Lit::Engine => '/lit'
-
   mount Vueonrails::Engine, at: 'vue'
   root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { '' }
 
@@ -34,8 +32,6 @@ Rails.application.routes.draw do
   end
 
   resources :videos, only: :show
-
-  get '/i18n/:locale(/*keys)', to: 'translations#index', as: :i18n
 
   get '/forward/:id', to: 'gateway#index', as: :gateway
 

@@ -9,7 +9,6 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
-require "sprockets/railtie"
 
 # Middlewares
 require_relative "../lib/middlewares/locale_router"
@@ -44,13 +43,9 @@ module App
 
     config.action_mailer.default_url_options = { host: 'classpert.com' }
 
-    # Required for LiT
-    config.assets.compile = true
-    config.assets.prefix  = '/asset_pipeline'
-
     Elements.configure do |elements_config|
       elements_config.asset_host    = ENV.fetch('ELEMENTS_ASSET_HOST') { 'https://elements.classpert.com' }
-      elements_config.asset_version = '2.1.7'
+      elements_config.asset_version = '3.0.0'
     end
 
     # Settings in config/environments/* take precedence over those specified here.
