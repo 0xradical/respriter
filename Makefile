@@ -30,7 +30,10 @@ else
 endif
 RAKE := $(BUNDLE_EXEC) rake
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_up db_reset db_capture db_download db_load db_restore index_courses hrk_stg_db_restore tty down docker-build docker-push docker-% watch
+DOCKER_COMPOSE_POSTGRES_RUN_FLAGS := --rm -v $(shell pwd)/db:/db
+DOCKER_COMPOSE_POSTGRES_RUN       := docker-compose run $(DOCKER_COMPOSE_POSTGRES_RUN_FLAGS) postgres
+
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_reset db_download_data db_download db_load db_restore index_courses stg_db_restore tty down docker-build docker-push docker-% watch logs prd-logs stg-logs
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -47,7 +50,6 @@ bootstrap: Dockerfile docker-compose.yml .env .env.test
 	@docker-compose run --service-ports -e DETECTED_OS=$(DETECTED_OS) app_$(ENV) bin/bootstrap
 
 lazy: bootstrap db_restore ## Build your application from scratch and restores the latest dump
-	@$(RAKE) db:migrate system:elasticsearch:import_courses
 	@docker-compose run -p 3000:3000 app_$(ENV)
 
 rails: ## Run rails server
@@ -79,38 +81,35 @@ yarn-link-%: ## Link yarn to your local package copy. Usage e.g: yarn-link-eleme
 yarn-unlink-%: ## Unlink yarn from your local package copy. Usage e.g: yarn-unlink-elements
 	@$(DOCKER_COMPOSE_RUN) yarn unlink $*
 
-db_up: ## Run the database server
-	@docker-compose run --service-ports postgres
-
-db_drop: ## Drops local databases
-	@$(RAKE) db:drop
-
-db_create: ## Creates local databases
-	@$(RAKE) db:create
-
 db_migrate: ## Run database migration
 	@$(RAKE) db:migrate
 
 db_reset: ## Reset your database
-	@$(RAKE) db:{drop,create,migrate}
+	docker-compose stop  postgres
+	docker-compose rm -f postgres
+	docker-compose stop  postgres_test
+	docker-compose rm -f postgres_test
+	docker-compose up -d postgres postgres_test
 
-db_capture: ## Capture a new production dump from Heroku
-	@heroku pg:backups:capture --app $(HEROKU_APP_NAME)-prd
+db_download_data: db/db.prd.env ## Generates and dowloads latest production dump from RDS
+	$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.prd.env && PGPASSWORD=$$DATABASE_PASSWORD pg_dump -U $$DATABASE_USER -h $$DATABASE_HOST -p $$DATABASE_PORT -Fc $$DATABASE_DB --data-only > $(PG_DUMP_FILE).data'
 
-db_download: ## Dowloads latest production dump from Heroku
-	@heroku pg:backups:download --app $(HEROKU_APP_NAME)-prd --output $(PG_DUMP_FILE)
+db_download: db/db.prd.env ## Generates and dowloads latest production dump from RDS
+	$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.prd.env && PGPASSWORD=$$DATABASE_PASSWORD pg_dump -U $$DATABASE_USER -h $$DATABASE_HOST -p $$DATABASE_PORT -Fc $$DATABASE_DB > $(PG_DUMP_FILE)'
 
-db_load: ## Loads lastest dump creating database
-	@$(DOCKER_COMPOSE_RUN) pg_restore --verbose --clean --no-acl --no-owner -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV) < $(PG_DUMP_FILE); exit 0;
+db_load: $(PG_DUMP_FILE).data ## Loads lastest dump creating database
+	make db_reset
+	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c "( until pg_isready -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV); do sleep 0.5; done; ) && ( pg_restore --verbose -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV) --disable-triggers < $(PG_DUMP_FILE).data; exit 0; )"
 
 db_restore: ## Restores lastest dump creating database (if needed), migrates after restore and load elastic_search
-	@make db_create db_load db_migrate index_courses
+	@make db_load index_courses
 
 index_courses:
 	@$(BUNDLE_EXEC) rails runner "Course.reindex!"
 
-hrk_stg_db_restore: ## Dumps latest production dump from production and restores in staging
-	@heroku pg:backups:restore `heroku pg:backups:url --app=$(HEROKU_APP_NAME)-prd` DATABASE_URL --app=$(HEROKU_APP_NAME)-stg
+stg_db_restore: db/db.stg.env ## Dumps latest production dump from production and restores in staging
+	make db_download
+	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.stg.env && PGPASSWORD=$$DATABASE_PASSWORD pg_restore --verbose --clean -U $$DATABASE_USER -h $$DATABASE_HOST -d $$DATABASE_DB < $(PG_DUMP_FILE); exit 0;'
 
 tty: ## Attach a tty to the app container. Usage e.g: ENV=test make tty
 	@docker-compose run --entrypoint /bin/bash app_$(ENV)
@@ -143,6 +142,20 @@ system.svg: system.gv ## Use graphviz to build system architecture graph
 
 watch:
 	watch -n 3 docker-compose ps
+
+logs: prd-logs
+
+prd-logs:
+	@heroku logs -t --app classpert-web-app-prd
+
+stg-logs:
+	@heroku logs -t --app classpert-web-app-stg
+
+$(PG_DUMP_FILE).data:
+	make db_download_data
+
+$(PG_DUMP_FILE):
+	make db_download
 
 %: | examples/%.example
 	cp $| $@
