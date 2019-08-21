@@ -19,6 +19,10 @@
 .env.test
 .env.test.sh
 
+/db/db.prd.env
+/db/backups
+/db/db.stg.env
+
 *.pem
 *.dump
 
