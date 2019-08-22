@@ -1,0 +1,3 @@
+[submodule "config/locales"]
+	path = config/locales
+	url = https://7d12b077c98890abd66f41944901afcd4192f04a:x-oauth-basic@github.com/classpert/i18n.git
