@@ -13,8 +13,6 @@
 !/log/.keep
 !/tmp/.keep
 
-/config/locales/**
-
 .env
 .env.sh
 .env.production
