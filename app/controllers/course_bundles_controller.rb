@@ -8,12 +8,8 @@ class CourseBundlesController < ApplicationController
     bundles = Course.unnest_curated_tags(Course.by_tags(@tag)).group(:tag).count
     RootTag.all.each{ |rt| bundles.delete rt.id }
 
-    @bundles_by_letter = bundles.map do |k,v|
-      [
-        t("tags.#{k}"),
-        { tag: k, count: v }
-      ]
-    end.to_h.group_by{ |k,v| k[0] }.sort.map{ |k,v| Hash[v] }
+    @bundles_by_letter = bundles.map { |k,v| [t("tags.#{k}"), { tag: k, count: v } ] }
+      .to_h.sort_by { |k,v| k.downcase }.group_by{ |k,v| k[0] }.map{ |k,v| Hash[v] }
   end
 
   def show
