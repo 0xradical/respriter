@@ -12,7 +12,7 @@ AffiliateHub.setup do |config|
   end
 
   config.setup :impact_radius do |c|
-    c.base_uri = "https://#{ENV['IMPACT_RADIUS_ACCOUNT_SID']}:#{ENV['IMPACT_RADIUS_AUTH_TOKEN']}@api.impactradius.com"
+    c.base_uri = "https://#{ENV['IMPACT_RADIUS_ACCOUNT_SID']}:#{ENV['IMPACT_RADIUS_AUTH_TOKEN']}@api.impact.com"
   end
 
   config.setup :awin do |c|
