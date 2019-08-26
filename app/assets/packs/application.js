@@ -9,3 +9,24 @@
 
 require('../scss/application.scss')
 require('vueonrails')
+
+import { CountUp } from 'countup.js'
+
+document.querySelectorAll('[data-countup]').forEach(function (cpt) {
+
+  let countUp = new CountUp(cpt, cpt.dataset.countupCount, {
+    duration: parseFloat(cpt.dataset.countupDuration),
+    startVal: parseInt(cpt.dataset.countupStartVal || 0)
+  });
+
+  window.addEventListener('scroll', function(e) {
+    let pos = cpt.getBoundingClientRect();
+
+    // checking whether fully visible
+    if(pos.top >= 0 && pos.bottom <= window.innerHeight && parseInt(cpt.dataset.countupRun) == 0) {
+      cpt.dataset.countupRun += 1
+      countUp.start()
+    }
+  })
+
+});

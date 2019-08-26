@@ -27,4 +27,8 @@ module ApplicationHelper
     !(%w(home static_pages posts contact_us).include?(controller_name) || devise_controller?)
   end
 
+  def atomic_css
+    %w(home).include?(controller_name) ? 'atomic.full' : 'atomic.slim'
+  end
+
 end

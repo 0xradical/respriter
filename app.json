@@ -179,13 +179,13 @@
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "Hobby"
+      "size": "performance-m"
     },
     "worker": {
       "quantity": 1,
-       "size": "Hobby"
+       "size": "performance-m"
     }
   },
   "name": "web-app",
-  "stack": "heroku-16"
+  "stack": "heroku-18"
 }
