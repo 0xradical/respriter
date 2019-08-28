@@ -21,7 +21,7 @@
   </search-bar>
 </script>
 
-<div class='c-hero-impact el:amx-C_gray3' style='border-bottom:1px solid #eee'>
+<div class='c-hero-impact el:amx-C_gray3'>
   <div class='c-hero-impact__art'>
     <div class='c-hero-impact__slot'>
       <img src="<%= elements_asset_path('svgs/logo.svg') %>" class="clspt:c-hero-impact__img">
@@ -35,43 +35,145 @@
   </div>
 </div>
 
-<div class='el:amx-Pt(1em) el:amx-Pt(2em)@>lg' style='background-color:#FFF;padding-bottom:45px'>
+<div class='el:amx-Pt(1em) el:amx-Pt(2em)@>lg' style='background-color:#FFF;'>
   <div class='container'>
-    <div class='row'>
-      <% (RootTag.all).each_with_index do |t, index| %>
-        <div class='col-12 col-md-3'>
-          <%# Remove this hack as soon as all bundles are created %>
-          <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
-          <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "#{t.slugify}") do %>
-            <div class='el:amx-Bc_white el:amx-Mt(1em) el:amx-Mt(2em)@>lg' style='height:50px;'>
-              <span class='c-label c-label--double-line' style='height:60px;text-align:left'>
-                <%= svg_use('icons', t.icon, { class: 'c-label__icon' }) %>
-                <span class='c-label__text' class='el:amx-C_blue2' style='word-break:break-word;max-width:160px'>
-                  <b><%= t("tags.#{t.id}") %></b>
-                  <br />
-                  <span style='color:black;font-size:0.625em'> <%= @count_by_category[t.id] %> online courses</span>
+    <div class='el:amx-Pt(0.5em) el:amx-Pb(2.5em)' style='border-top:1px solid #DEE7ED;border-bottom:1px solid #DEE7ED;'>
+      <div class='row'>
+        <% (RootTag.all).each_with_index do |t, index| %>
+          <div class='col-12 col-md-3'>
+            <%# Remove this hack as soon as all bundles are created %>
+            <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
+            <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "#{t.slugify}") do %>
+              <div class='el:amx-Bc_white el:amx-Mt(1em) el:amx-Mt(2em)@>lg' style='height:50px;'>
+                <span class='c-label c-label--double-line' style='height:60px;text-align:left'>
+                  <%= svg_use('icons', t.icon, { class: 'c-label__icon' }) %>
+                  <span class='c-label__text' class='el:amx-C_blue2' style='word-break:break-word;max-width:160px'>
+                    <b><%= t("tags.#{t.id}") %></b>
+                    <br />
+                    <span style='color:black;font-size:0.625em'> <%= @count_by_category[t.id] %> online courses</span>
+                  </span>
                 </span>
-              </span>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
 
-<div class='el:amx-Bc_gray1' style='padding-top:42px;padding-bottom:74px'>
+<section id='about-us' class='el:amx-Bc_white'>
   <div class='container'>
+
+    <!-- Classpert's Online Search Engine -->
     <div class='row'>
-      <div class='col-12 col-sm-5 col-md-5'>
-        <%= image_pack_tag("media/svg/space-providers_art.svg", width: '100%' ) %>
+      <div class='col-12 col-lg-5'>
+        <div class='el:amx-Mt(5em)'>
+          <%= image_pack_tag("media/svg/characters-seated-planet.svg", width: '100%' ) %>
+        </div>
       </div>
-      <div class='col-12 col-sm-7 col-md-6 offset-md-1'>
-        <h2 class='el:amx-Fs(2em)' style='margin-top:58px;line-height:1em'> <%= t('.about_title') %> </h2>
-        <p style='line-height:1.5em'>
-          <%= t(".about_text") %>
-        </p>
+
+      <div class='col-12 col-lg-5'>
+        <div class='el:amx-Mt(2.5em) el:amx-Mt(8em)@>lg'>
+          <h2 class='el:amx-C_gray5 el:amx-Fs(2em) el:amx-Fw(b) el:amx-Lh(1.2)'><%= t('.about_us_title_1') %></h2>
+          <p class='el:amx-Lh(1.7) el:amx-Mt(0.5em)'>
+            <%= t('.about_us_text_1_html', providers_count: @providers_count) %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- X online courses -->
+    <div class='row'>
+      <div class='col-12 col-md-6 order-md-first order-last'>
+        <div class='row'>
+          <div class='col-md-11'>
+            <div class='el:amx-Mt(2.5em) el:amx-Mt(6.5em)@>lg'>
+              <span data-countup
+                  data-countup-duration=2
+                  data-countup-start-val=100000 
+                  data-countup-count='<%= @courses_count %>'
+                  data-countup-run=0 
+                  class='el:amx-C_magenta4 el:amx-Ta(r)@>lg el:amx-Lh(1) el:amx-Fs(3em) el:amx-D(b) el:amx-Fw(b)'>
+                <%= @courses_count %>
+              </span>
+              <h2 class='el:amx-C_gray5 el:amx-Ta(r)@>lg el:amx-Fs(1.5em) el:amx-Mt(0.5em) el:amx-Mb(0.5em) el:amx-Lh(1)'><%= t('.about_us_title_2') %></h2>
+              <p class='el:amx-Lh(1.7) el:amx-Ta(r)@>lg el:amx-M(0)'>
+                <%= t('.about_us_text_2_html') %>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='offset-md-6 col-8 col-md-6 el:amx-Mt(4.5em) el:amx-Mb(3.5em)'>
+            <%= image_pack_tag("media/svg/screen-yellow-planet.svg", width: '100%') %>
+          </div>
+        </div>
+      </div>
+
+      <div class='col-12 col-md-6 order-md-last order-first'>
+        <div class='el:amx-Mt(2.5em) el:amx-Mt(2em)@>lg'>
+          <%= image_pack_tag("media/svg/classpert-online-course-search-engine.svg", width: '100%' ) %>
+        </div>
+      </div>
+    </div>
+
+    <!-- e-learning platforms -->
+    <div class='row'>
+      <div class='col-12 col-md-6'>
+        <div class='row'>
+          <div class='col-12 col-md-11'>
+            <div class='el:amx-Ta(r)@>lg'>
+              <span data-countup
+                data-countup-duration=2
+                data-countup-start-val=0
+                data-countup-count='<%= @providers_count %>'
+                data-countup-run=0
+                    class='el:amx-C_magenta4 el:amx-Lh(1) el:amx-Fs(3em) el:amx-D(b) el:amx-Fw(b)'>
+                <%= @providers_count %>
+              </span>
+              <h2 class='el:amx-C_gray5 el:amx-Fs(1.5em) el:amx-Mt(0.5em) el:amx-Mb(0.5em)'>
+                <%= t('.about_us_title_3') %>
+              </h2>
+              <p class='el:amx-Lh(1.7) el:amx-Mt(0) el:amx-Mb(1.5em)'>
+                <%= t('.about_us_text_3_html') %>
+              </p>
+              <div class='row'>
+                <div class='col-md-8 offset-md-4'>
+                 <!-- <a class='btn btn--blue-flat btn--block el:amx-Tt(u)'>
+                    <%#= t('.about_us_button_text_3') %>
+                 </a> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='col-12 col-md-6 el:amx-Mt(2.5em) el:amx-Mt(-1.5em)@>lg el:amx-Mb(4em) el:amx-Mb(6.5em)@lg el:amx-Ta(l)'>
+        <div class='row'>
+          <div class='offset-4 col-8 offset-md-0 col-md-6'>
+            <%= image_pack_tag("media/svg/book-yellow-planet.svg", width: '100%') %>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-12 col-md-11'>
+            <h2 class='el:amx-C_gray5 el:amx-Ta(l) el:amx-Fs(1.5em) el:amx-Mt(1.375em) el:amx-Mb(0.5em)'>
+              <%= t('.about_us_title_4') %>
+            </h2>
+            <p class='el:amx-Lh(1.7) el:amx-Ta(l) el:amx-Mt(0) el:amx-Mb(1.5em)'>
+              <%= t('.about_us_text_4_html') %>
+            </p>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-8'>
+            <!--<a class='btn btn--blue-flat btn--block el:amx-Tt(u)'>
+              <%#= t('.about_us_button_text_4') %>
+            </a> -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
