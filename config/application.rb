@@ -44,8 +44,8 @@ module App
     config.action_mailer.default_url_options = { host: 'classpert.com' }
 
     Elements.configure do |elements_config|
-      elements_config.asset_host    = ENV.fetch('ELEMENTS_ASSET_HOST') { 'https://elements.classpert.com' }
-      elements_config.asset_version = '3.2.1'
+      elements_config.asset_host    = ENV.fetch('ELEMENTS_ASSET_HOST')    { 'https://elements.classpert.com' }
+      elements_config.asset_version = '3.2.2'
     end
 
     # Settings in config/environments/* take precedence over those specified here.
