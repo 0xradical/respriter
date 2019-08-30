@@ -4,14 +4,9 @@ CREATE OR REPLACE FUNCTION api.user_login(
 ) RETURNS text
 AS $$
 DECLARE
-  _role   varchar;
   user_id bigint;
   result  text;
 BEGIN
-  SELECT current_user INTO _role;
-
-  SET ROLE "authenticator";
-
   SELECT
     id
   FROM api.user_accounts
@@ -19,8 +14,6 @@ BEGIN
     api.user_accounts.email              = user_login.email AND
     api.user_accounts.encrypted_password = public.crypt(user_login.password, api.user_accounts.encrypted_password)
   INTO user_id;
-
-  EXECUTE ('SET ROLE ' || _role);
 
   IF user_id IS NULL THEN
     RAISE invalid_password USING message = 'invalid user or password';
@@ -40,4 +33,4 @@ BEGIN
 
   RETURN result;
 END;
-$$ LANGUAGE plpgsql;
+$$ SECURITY DEFINER LANGUAGE plpgsql;
