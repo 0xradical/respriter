@@ -1,4 +1,4 @@
-CREATE ROLE "authenticator" NOINHERIT login password '{{authenticator_password}}';
+CREATE ROLE "authenticator" NOINHERIT login password '$AUTHENTICATOR_PASSWORD';
 
 GRANT "user"      TO "authenticator";
 GRANT "admin"     TO "authenticator";
