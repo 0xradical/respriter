@@ -33,7 +33,7 @@ RAKE := $(BUNDLE_EXEC) rake
 DOCKER_COMPOSE_POSTGRES_RUN_FLAGS := --rm -v $(shell pwd)/db:/db
 DOCKER_COMPOSE_POSTGRES_RUN       := docker-compose run $(DOCKER_COMPOSE_POSTGRES_RUN_FLAGS) postgres
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_reset db_download_data db_download db_load db_restore index_courses stg_db_restore tty down docker-build docker-push docker-% watch logs prd-logs stg-logs
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_reset db_download_data db_download db_load db_restore index_courses sync_courses stg_db_restore tty down docker-build docker-push docker-% watch logs prd-logs stg-logs
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -106,6 +106,9 @@ db_restore: ## Restores lastest dump creating database (if needed), migrates aft
 
 index_courses:
 	@$(BUNDLE_EXEC) rails runner "Course.reindex!"
+
+sync_courses:
+	heroku run:detached bundle exec rake system:scheduler:courses_service --app=classpert-web-app-prd
 
 stg_db_restore: db/db.stg.env ## Dumps latest production dump from production and restores in staging
 	make db_download
