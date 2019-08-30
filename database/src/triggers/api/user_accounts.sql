@@ -9,3 +9,9 @@ CREATE TRIGGER track_updated_at
   ON api.user_accounts
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.track_updated_at();
+
+CREATE TRIGGER create_profile_for_user_account
+  AFTER INSERT
+  ON api.user_accounts
+  FOR EACH ROW
+    EXECUTE PROCEDURE triggers.create_profile_for_user_account();
