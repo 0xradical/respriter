@@ -9,10 +9,10 @@ DECLARE
 BEGIN
   SELECT
     id
-  FROM api.user_accounts
+  FROM app.user_accounts
   WHERE
-    api.user_accounts.email              = user_login.email AND
-    api.user_accounts.encrypted_password = public.crypt(user_login.password, api.user_accounts.encrypted_password)
+    app.user_accounts.email              = user_login.email AND
+    app.user_accounts.encrypted_password = public.crypt(user_login.password, app.user_accounts.encrypted_password)
   INTO user_id;
 
   IF user_id IS NULL THEN

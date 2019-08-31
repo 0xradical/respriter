@@ -9,10 +9,10 @@ DECLARE
 BEGIN
   SELECT
     id
-  FROM api.admin_accounts
+  FROM app.admin_accounts
   WHERE
-    api.admin_accounts.email              = admin_login.email AND
-    api.admin_accounts.encrypted_password = public.crypt(admin_login.password, api.admin_accounts.encrypted_password)
+    app.admin_accounts.email              = admin_login.email AND
+    app.admin_accounts.encrypted_password = public.crypt(admin_login.password, app.admin_accounts.encrypted_password)
   INTO admin_id;
 
   IF admin_id IS NULL THEN

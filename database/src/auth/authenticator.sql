@@ -8,6 +8,6 @@ GRANT USAGE ON SCHEMA api      TO "authenticator";
 GRANT USAGE ON SCHEMA jwt      TO "authenticator";
 GRANT USAGE ON SCHEMA settings TO "authenticator";
 
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA api TO "authenticator";
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA app TO "authenticator";
 
-GRANT SELECT ON TABLE api.user_accounts, api.admin_accounts TO "authenticator";
+GRANT SELECT ON app.user_accounts, app.admin_accounts TO "authenticator";
