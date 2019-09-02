@@ -1,6 +1,6 @@
 AffiliateHub.setup do |config|
 
-  config.debug_output = $stdout
+  config.debug_output = Rails.env.development?
 
   config.setup :rakuten_affiliate_network_v1 do |c|
     c.base_uri  = 'https://api.rakutenmarketing.com'

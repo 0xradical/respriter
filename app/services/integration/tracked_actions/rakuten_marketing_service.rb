@@ -1,18 +1,18 @@
 module Integration
-  module RakutenMarketing
-    class TrackedActionService
+  module TrackedActions
+    class RakutenMarketingService < BaseService
 
-      class << self
+      def run
 
-        def run
+        connection    = AffiliateHub.initialize_connection(:rakuten_affiliate_network_v1)
+        credentials   = JSON.parse(connection.authorization[:body])
 
-          connection    = AffiliateHub.initialize_connection(:rakuten_affiliate_network_v1)
-          credentials   = JSON.parse(connection.authorization[:body])
+        api_connection = AffiliateHub.initialize_connection(:rakuten_affiliate_network_v1, {
+          authorization_bearer_token: "Bearer #{credentials['access_token']}"
+        })
 
-          api_connection = AffiliateHub.initialize_connection(:rakuten_affiliate_network_v1, {
-            authorization_bearer_token: "Bearer #{credentials['access_token']}"
-          })
-
+        begin
+          retries ||= 0
           api_connection.events '', mapper: -> (r) { JSON.parse(r) } do |payload, code, header|
             payload.each do |resource|
               next unless resource['is_event'] == 'N'
@@ -30,10 +30,15 @@ module Integration
               end.save
             end
           end
-
+          log(:info, "Tracked actions successfully pulled! Bye".ansi(:green), ["RakutenMarketing", "run.#{@run_id}", "retry.#{retries}"])
+        rescue AffiliateHub::Connection::HTTPError => e
+          log(:error, e.message.ansi(:red), ["RakutenMarketing", "run.#{@run_id}", "retry.#{retries}"])
+          sleep(120)
+          retry if (retries += 1) < 3
         end
 
       end
+
     end
   end
 end

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/codextremist/affiliate_hub
-  revision: 47958823f3ddbde5c2f0955b8ea9830eb960c627
+  revision: c12d7bf167b1192d695746b5953ccd50ecc78b6e
   specs:
     affiliate_hub (0.1.0)
       activesupport
@@ -231,7 +231,7 @@ GEM
       domain_name (~> 0.5)
     http-form_data (2.1.1)
     http_parser.rb (0.6.0)
-    httparty (0.16.4)
+    httparty (0.17.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
     hypernova (1.4.0)
@@ -285,7 +285,7 @@ GEM
     multipart-post (2.0.0)
     nenv (0.3.0)
     nio4r (2.3.1)
-    nokogiri (1.10.3)
+    nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     notiffany (0.1.1)
       nenv (~> 0.1)

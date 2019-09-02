@@ -1,17 +1,16 @@
 module Integration
-  module ImpactRadius
-    class TrackedActionService
+  module TrackedActions
+    class ImpactRadiusService < BaseService
 
-      class << self
+      def run
+        connection = AffiliateHub.initialize_connection(:impact_radius)
+        url = "Mediapartners/#{ENV['IMPACT_RADIUS_ACCOUNT_SID']}/Actions.json?PageSize=100&Page=%{page}"
+        page = 1
 
-        def run
-          connection = AffiliateHub.initialize_connection(:impact_radius)
-          url = "Mediapartners/#{ENV['IMPACT_RADIUS_ACCOUNT_SID']}/Actions.json?PageSize=100&Page=%{page}"
-          page = 1
+        loop do
 
-          loop do
-
-            break if page.nil?
+          break if page.nil?
+          begin
             connection.api(url % { page: page }, mapper: -> (r) { JSON.parse(r) }) do |payload, code, header|
 
               if payload['Actions'].empty?
@@ -33,10 +32,14 @@ module Integration
                   action.payload          = resource
                 end.save
               end
-
+              log(:info, "Tracked actions successfully pulled! Bye".ansi(:green), ["ImpactRadius", "run.#{@run_id}", "retry.#{retries}"])
+            rescue AffiliateHub::Connection::HTTPError => e
+              log(:error, e.message.ansi(:red), ["ImpactRadius", "run.#{@run_id}", "retry.#{retries}"])
+              sleep(120)
+              retry if (retries += 1) < 3
             end
-          end
 
+          end
         end
 
       end
