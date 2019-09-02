@@ -11,6 +11,7 @@ module Integration
 
           break if page.nil?
           begin
+            retries ||= 0
             connection.api(url % { page: page }, mapper: -> (r) { JSON.parse(r) }) do |payload, code, header|
 
               if payload['Actions'].empty?
