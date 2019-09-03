@@ -356,15 +356,15 @@ export default {
       return `promo-${this.course.id}`;
     },
     promoHandler() {
-      if(this.signedIn) {
+      // if(this.signedIn) {
         return null;
-      } else {
-        return (
-          () => {
-            this.$modal.show(this.promoId);
-          }
-        );
-      }
+      // } else {
+      //   return (
+      //     () => {
+      //       this.$modal.show(this.promoId);
+      //     }
+      //   );
+      // }
     },
     coursePageLink() {
       if (this.course.slug) {
