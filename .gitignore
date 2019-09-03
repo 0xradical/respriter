@@ -36,6 +36,7 @@
 
 .byebug_history
 /public/packs
+/public/assets
 /public/uploads
 /public/assets
 /public/assets-test

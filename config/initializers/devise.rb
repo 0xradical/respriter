@@ -263,7 +263,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :github,   ENV['GITHUB_KEY'],    ENV['GITHUB_SECRET'],    scope: 'user'
-  config.omniauth :linkedin, ENV['LINKEDIN_KEY'],  ENV['LINKEDIN_SECRET'],  scope: 'r_basicprofile r_emailaddress'
+  config.omniauth :linkedin, ENV['LINKEDIN_KEY'],  ENV['LINKEDIN_SECRET'],  scope: 'r_liteprofile r_emailaddress'
   config.omniauth :facebook, ENV['FACEBOOK_KEY'],  ENV['FACEBOOK_SECRET'],  scope: 'email'
   #config.omniauth :google,   ENV['GOOGLE_KEY'],    ENV['GOOGLE_SECRET'],    scope: 'r_basicprofile r_emailaddress'
   # ==> Warden configuration

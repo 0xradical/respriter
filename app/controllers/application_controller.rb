@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :rendertron?
   before_action :set_sentry_raven_context if Rails.env.production?
-
+  before_action :store_user_account_location, if: :devise_controller?
   around_action :hypernova_render_support
   layout :fetch_layout
 
@@ -20,8 +20,21 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def store_user_account_location
+    # for omniauth
+    omniauth_params = request.env["omniauth.params"]
+    if omniauth_params && omniauth_params['redirect_to'].present?
+      store_location_for(:user_account, omniauth_params['redirect_to'])
+    end
+
+    # for simple signin
+    if params['redirect_to'].present?
+      store_location_for(:user_account, params['redirect_to'])
+    end
+  end
+
   def after_sign_in_path_for(resource)
-    request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+    stored_location_for(resource) || request.env['omniauth.origin'] || root_path
   end
 
   private

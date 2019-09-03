@@ -1,5 +1,5 @@
 <template>
-  <div class='clspt:course-description__content' :class='rootClasses' v-html='purifiedDescription'></div>
+  <div class='clspt:course-description__content' :class='rootClasses' v-html='purifiedDescription || "N/A"'></div>
 </template>
 
 <script>

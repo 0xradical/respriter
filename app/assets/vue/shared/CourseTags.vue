@@ -1,5 +1,5 @@
 <template>
-  <div :class='rootClasses' v-if="course.tags && course.tags.length > 1">
+  <div :class='rootClasses' v-if="course.tags && course.tags.length > 0">
     <div v-for="tag in course.tags" :class="[...tagBaseClasses,...tagClasses]" :key="tag" v-html='tag'>
     </div>
   </div>

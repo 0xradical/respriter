@@ -6,8 +6,22 @@
   <% end %>
 <% end %>
 
+<%= content_for :base_svg_sprites do %>
+  <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
+  <div data-svg-sprite="<%= elements_asset_path('svgs/packs/providers.svg') %>"></div>
+<% end %>
+
 <script type='text/javascript'>
-  window.env_context = { params: { category: <%= raw(Array.wrap(params[:tag]).to_json) %> } }
+  window.env_context = {
+    params: {
+      category: <%= raw(Array.wrap(params[:tag]).to_json) %>
+    },
+    devise: {
+      sign_in: "<%= new_user_account_session_path %>",
+      sign_up: "<%= new_user_account_registration_path %>",
+      signed_in: <%= current_user_account.present? %>
+    }
+  }
 </script>
 
 <script id='vue-search-app-props' type='x-vue-props'>

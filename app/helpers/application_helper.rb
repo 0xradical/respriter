@@ -15,10 +15,6 @@ module ApplicationHelper
     end
   end
 
-  def viewport_content
-    controller_name.eql?('posts') ? 'width=device-width user-scalable=yes' : 'width=device-width user-scalable=no'
-  end
-
   def home_controller?
     controller_name.eql?('home')
   end

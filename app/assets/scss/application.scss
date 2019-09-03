@@ -98,7 +98,7 @@ html {
 // tippy
 
 .tippy-tooltip.quero-theme {
-  background-color: get-color("gray");
+  background-color: get-color("gray3");
   color: #FFF;
   font-size: 0.75em;
 }
@@ -108,18 +108,18 @@ html {
 }
 
 .tippy-tooltip.quero-theme .tippy-backdrop {
-  background-color: get-color("gray");
+  background-color: get-color("gray3");
 }
 
 .tippy-popper[x-placement^='top'] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-top-color: get-color("gray");
+  border-top-color: get-color("gray3");
 }
 .tippy-popper[x-placement^='bottom'] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-bottom-color: get-color("gray");
+  border-bottom-color: get-color("gray3");
 }
 .tippy-popper[x-placement^='left'] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-left-color: get-color("gray");
+  border-left-color: get-color("gray3");
 }
 .tippy-popper[x-placement^='right'] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-right-color: get-color("gray");
+  border-right-color: get-color("gray3");
 }

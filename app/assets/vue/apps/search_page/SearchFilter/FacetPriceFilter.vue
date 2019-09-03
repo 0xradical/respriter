@@ -94,7 +94,7 @@ export default {
   @import '~elements/src/scss/config/variables.scss';
   @import '~elements/src/scss/config/functions.scss';
 
-  $themeColor: get-color("blue",2);
+  $themeColor: get-color("blue2");
 
   @import '~vue-slider-component/lib/theme/default.scss';
 
