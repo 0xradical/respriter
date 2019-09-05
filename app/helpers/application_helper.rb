@@ -27,4 +27,8 @@ module ApplicationHelper
     %w(home).include?(controller_name) ? 'atomic.full' : 'atomic.slim'
   end
 
+  def link_to_locale(locale, &block)
+    en = (locale.to_s == "en")
+    link_to((root_url(subdomain: (en ? params[:subdomain] : [locale, params[:subdomain]].join('.').chomp('.'))).chomp('/') + request.path + (en ? '?intl=true' : '')), &block)
+  end
 end
