@@ -9,7 +9,7 @@
         <%= svg_use('icons', 'avatar', { width: '32px', height: '32px', class: 'el:amx-D(ib)', style: 'border-radius:50%;vertical-align: top;' } ) %>
       <% end %>
       <div class='el:amx-D(ib) el:amx-Ml(0.125em)'>
-        <div class='el:amx-Pos(r) el:amx-Fw(b) el:amx-Fs(1em)' style='top:-2px;'><%= t("dictionary.hi") %><%= current_user_account.profile&.name ? ", #{current_user_account.profile.name}!" : "!" %></div>
+        <div class='el:amx-Pos(r) el:amx-Fw(b) el:amx-Fs(1em)' style='top:-2px;'><%= t("dictionary.hi") %><%= current_user_account.profile&.name ? ", #{current_user_account.profile.name.split.first}!" : "!" %></div>
         <div class='el:amx-Pos(r)'>
           <%= link_to user_accounts_dashboard_path("dashboard") do %>
             <span class='el:amx-C_gray4 el:amx-Fs(0.875em)'><%= t("dictionary.go_to_profile") %></span>
