@@ -35,6 +35,7 @@
 
 <%= content_for :javascript do %>
   <%= javascript_pack_tag 'search-page' %>
+  <%= elements_javascript_include_tag 'vars' %>
   <%= stylesheet_pack_tag 'search-page' %>
 <% end %>
 
