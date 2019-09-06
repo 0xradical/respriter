@@ -43,7 +43,7 @@
               <pagination @paginate='paginate' pagination-anchor='#body-anchor' :current-page='page' :num-of-pages='numOfPages' :records-per-page='recordsPerPage'></pagination>
             </div>
             <div class='el:amx-D(n)@<sm el:amx-D(F) el:amx-FxAi(c) sort'>
-              <span class='el:amx-D(b) el:amx-Mr(1em) sort__label'>{{ $t('dictionary.sort_by') }}</span>
+              <span class='el:amx-D(b) el:amx-Fw(b) el:amx-C_gray5 el:amx-Mr(1em) sort__label'>{{ $t('dictionary.sort_by') }}</span>
               <multiselect  :value="orderCurrentOption"
                             @select="sortByChanged"
                             track-by='key'
@@ -91,15 +91,15 @@
         <div class='col-12 el:amx-D(n)@>lg el:amx-Mb(1em)'>
           <hr/>
           <div class='el:amx-D(F) el:amx-FxJc(sb) el:amx-FxAi(c)'>
-            <span class='el:amx-C_blue2 el:amx-Fw(b)'>
-              {{ $t('dictionary.sort_by') }}
+            <span class='el:amx-C_gray5 el:amx-Fw(b)'>
+              <span class='el:amx-D(ib) el:amx-Mr(0.25em)'>{{ $t('dictionary.sort_by') }}</span>
               <select :value="orderCurrentOption.key" @change='sortByChanged({key: $event.target.value})'>
                 <option v-for='option in orderOptions' :key='option.key' :value='option.key'>
                   {{ $t(`dictionary.${option.i18n_key}`) }}
                 </option>
               </select>
             </span>
-            <a class='el:amx-C_blue2 el:amx-Fw(b) el:amx-Ws(nw)' href='#' @click="showMobileFilter">
+            <a class='el:amx-C_blue3 el:amx-Fw(b) el:amx-Ws(nw)' href='#' @click="showMobileFilter">
               {{ $t('dictionary.filter_results') }}
             </a>
           </div>
