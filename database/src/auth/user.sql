@@ -6,3 +6,9 @@ GRANT USAGE ON SCHEMA jwt      TO "user";
 GRANT USAGE ON SCHEMA settings TO "user";
 
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA app TO "user";
+
+GRANT SELECT, UPDATE             ON app.profiles      TO "user";
+GRANT SELECT, UPDATE, REFERENCES ON app.user_accounts TO "user";
+
+GRANT SELECT, UPDATE ON api.profiles      TO "user";
+GRANT SELECT, UPDATE ON api.user_accounts TO "user";
