@@ -49,6 +49,7 @@
       font-size: 1.1em;
       margin-right: 2rem;
       flex: 0 0 200px;
+      line-height: 1.375em
     }
     .promo-banner__subtitle {
       flex: 0 0 330px;
@@ -90,7 +91,7 @@
           <%= t('promo.pluralsight.title_html') %>
         </div>
         <div class='promo-banner__item promo-banner__subtitle el:amx-C_white'>
-          <%= t('promo.pluralsight.sub_title_html', courses_count: Provider.find_by(name: 'Pluralsight')&.courses&.count) %>
+          <%= t('promo.pluralsight.sub_title_html') %>
         </div>
         <div class='promo-banner__item promo-banner__squerol'>
           <%= image_pack_tag("media/svg/pluralsight-promo-squerol-banner.svg") %>
