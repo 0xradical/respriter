@@ -128,11 +128,11 @@
       <!-- End Google Tag Manager (noscript) -->
     <% end %>
 
-    <%# if content_for(:banner) %>
-      <%#= yield :banner %>
-    <%# else %>
-      <%#= render 'application/banner' %>
-    <%# end %>
+    <% if content_for(:banner) %>
+      <%= yield :banner %>
+    <% else %>
+      <%= render 'application/pluralsight_banner' %>
+    <% end %>
 
     <%= render 'application/navbar' %>
 

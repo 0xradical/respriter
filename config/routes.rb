@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   resources :videos, only: :show
 
+  get '/promo-100-pluralsight', to: 'gateway#index', as: :promo_100_pluralsight, id: 'f863c6e9-aa8f-469e-b8ed-1f446b4021fc'
   get '/forward/:id', to: 'gateway#index', as: :gateway
 
   get '/:tag',
