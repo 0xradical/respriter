@@ -15,7 +15,7 @@ class SessionTracker
   end
 
   def track
-    session[:tracking_data]                  = session_payload
+    session[:tracking_data]                  = truncate_payload session_payload
     cookies.signed.permanent[:tracking_data] = Base64.encode64 Marshal.dump truncate_payload cookies_payload
   end
 
