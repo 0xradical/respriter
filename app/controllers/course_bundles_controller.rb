@@ -9,7 +9,7 @@ class CourseBundlesController < ApplicationController
     RootTag.all.each{ |rt| bundles.delete rt.id }
 
     @bundles_by_letter = bundles.map { |k,v| [t("tags.#{k}"), { tag: k, count: v } ] }
-      .to_h.sort_by { |k,v| k.downcase }.group_by{ |k,v| k[0] }.map{ |k,v| Hash[v] }
+      .to_h.sort_by { |k,v| k.downcase }.group_by{ |k,v| k[0].downcase }.map{ |k,v| Hash[v] }
   end
 
   def show
