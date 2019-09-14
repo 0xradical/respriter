@@ -1,7 +1,7 @@
 default: &default
   adapter:            postgresql
   encoding:           unicode
-  schema_search_path: api,app,jwt,triggers,settings,public,lit
+  schema_search_path: app,public,api
   pool:               <%= ENV.fetch 'RAILS_MAX_THREADS', 5 %>
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
