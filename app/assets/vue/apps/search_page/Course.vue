@@ -236,7 +236,7 @@
                     </course-description>
                   </div>
                 </div>
-                <div class='row el:amx-Mt(2em)' v-if='course.tags && course.tags.length > 0'>
+                <div class='row el:amx-Mt(2em)' v-if='course.curated_tags && course.curated_tags.length > 0'>
                   <div class="col">
                     <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.tags.header') }}</span>
                       <course-tags  :course="course"

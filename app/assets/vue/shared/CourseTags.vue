@@ -1,7 +1,7 @@
 <template>
-  <div :class='rootClasses' v-if="course.tags && course.tags.length > 0">
-    <div v-for="tag in course.tags" :class="[...tagBaseClasses,...tagClasses]" :key="tag" v-html='tag'>
-    </div>
+  <div :class='rootClasses' v-if="course.curated_tags && course.curated_tags.length > 0">
+    <a :href="`/${tag.replace(/_/g,'-')}`" v-for="tag in course.curated_tags" :class="[...tagBaseClasses,...tagClasses]" :key="tag" v-html="$t(`tags.${tag}`)">
+    </a>
   </div>
 </template>
 
@@ -39,4 +39,8 @@ export default {
   }
 }
 </script>
-
+<style lang="scss" scoped>
+a:hover {
+  color: #FFFFFF;
+}
+</style>

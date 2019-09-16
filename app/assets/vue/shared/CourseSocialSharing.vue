@@ -58,8 +58,8 @@ export default {
       return "some quote";
     },
     hashtags() {
-      if(this.course.tags) {
-        return this.course.tags.map((tag) => `#${tag}`).join(', ');
+      if(this.course.curated_tags) {
+        return this.course.curated_tags.map((tag) => `#${tag}`).join(', ');
       } else {
         return null;
       }
