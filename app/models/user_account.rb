@@ -1,7 +1,7 @@
 class UserAccount < ApplicationRecord
 
   devise :database_authenticatable, :confirmable, :registerable, :recoverable, :rememberable,
-    :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :github, :linkedin]
+    :trackable, :validatable, :omniauthable, :jwt_authenticatable, jwt_revocation_strategy: Devise::JWT::RevocationStrategies::Null, omniauth_providers: [:facebook, :github, :linkedin]
 
   attr_accessor :skip_password_validation
 
@@ -24,6 +24,10 @@ class UserAccount < ApplicationRecord
     oauth_accounts.find_or_create_by(provider: oauth[:provider], uid: oauth[:uid]) do |oauth_acc|
       oauth_acc.raw_data = oauth
     end
+  end
+
+  def jwt_payload
+    { role: 'user' }
   end
 
   def password_required?
