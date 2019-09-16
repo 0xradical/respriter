@@ -3,6 +3,8 @@
 class UserAccounts::SessionsController < Devise::SessionsController
   protect_from_forgery prepend: true
 
+  skip_before_action :verify_authenticity_token, if: :json_request?
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -20,7 +22,11 @@ class UserAccounts::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  # protected
+  protected
+
+  def json_request?
+    request.format.json?
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params

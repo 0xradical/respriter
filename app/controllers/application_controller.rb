@@ -34,10 +34,17 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || request.env['omniauth.origin'] || root_path(locale: I18n.locale)
+    stored_location_for(resource) || request.env['omniauth.origin'] || user_logged_default_path
   end
 
   private
+  def user_logged_default_path
+    redirect_params = {
+      locale: I18n.locale,
+      token: request.env['warden-jwt_auth.token']
+    }
+    "#{ ENV.fetch 'USER_DASHBOARD_URL' }?#{ redirect_params.to_query }"
+  end
 
   def set_locale
     parsed_locale = I18nHelper.sanitize_locale(request.subdomains.first)
