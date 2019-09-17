@@ -55,6 +55,9 @@ lazy: bootstrap db_restore ## Build your application from scratch and restores t
 rails: ## Run rails server
 	@docker-compose run -p 3000:3000 app_$(ENV)
 
+postgrest:
+	@docker-compose run --service-ports postgrest
+
 console: ## Run rails console. Usage e.g: ENV="test" make console
 	@$(BUNDLE_EXEC) rails console
 
