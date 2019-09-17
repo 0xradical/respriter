@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'user_accounts/omniauth_callbacks'
   }
 
+  post '/user_accounts/token/:token', to: 'user_accounts/token#token', as: :user_account_token
+
   mount Vueonrails::Engine, at: 'vue'
   root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { '' }
 

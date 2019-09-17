@@ -41,9 +41,13 @@ class ApplicationController < ActionController::Base
   def user_logged_default_path
     redirect_params = {
       locale: I18n.locale,
-      token: request.env['warden-jwt_auth.token']
+      token: SessionToken.new(request.env['warden-jwt_auth.token'], request_ip).encrypt
     }
     "#{ ENV.fetch 'USER_DASHBOARD_URL' }?#{ redirect_params.to_query }"
+  end
+
+  def request_ip
+    ((request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).to_s).scan(/(.*),|\A(.*)\z/).flatten.compact.first
   end
 
   def set_locale
