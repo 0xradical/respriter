@@ -39,6 +39,6 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER api_user_accounts_view_instead
   INSTEAD OF UPDATE
-  ON api.profiles
+  ON api.user_accounts
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.api_user_accounts_view_instead();
