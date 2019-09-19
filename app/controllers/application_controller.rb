@@ -34,14 +34,32 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
+    store_jwt_or_sign_out_on_expiration
     stored_location_for(resource) || request.env['omniauth.origin'] || user_logged_default_path
   end
 
   private
+  def store_jwt_or_sign_out_on_expiration
+    token = request.env['warden-jwt_auth.token'] || session[:current_user_jwt]
+    return unless token.present?
+
+    payload, _ = JWT.decode token, nil, false
+
+    if Time.at(payload['exp']) < Time.now
+      sign_out :user_account
+      session[:current_user_jwt] = nil
+      flash.delete :alert
+    else
+      session[:current_user_jwt] = token
+    end
+  end
+
   def user_logged_default_path
+    return new_user_account_session_path unless session[:current_user_jwt]
+
     redirect_params = {
       locale: I18n.locale,
-      token: SessionToken.new(request.env['warden-jwt_auth.token'], request_ip).encrypt
+      token: SessionToken.new(session[:current_user_jwt], request_ip).encrypt
     }
     "#{ ENV.fetch 'USER_DASHBOARD_URL' }?#{ redirect_params.to_query }"
   end
