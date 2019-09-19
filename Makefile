@@ -94,6 +94,11 @@ db_reset: ## Reset your database
 	docker-compose rm -f postgres_test
 	docker-compose up -d postgres postgres_test
 
+postgrest_reset:
+	docker-compose stop  postgrest
+	docker-compose rm -f postgrest
+	docker-compose up -d postgrest
+
 db_download_data: db/db.prd.env ## Generates and dowloads latest production dump from RDS
 	$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.prd.env && PGPASSWORD=$$DATABASE_PASSWORD pg_dump -U $$DATABASE_USER -h $$DATABASE_HOST -p $$DATABASE_PORT -Fc $$DATABASE_DB --data-only > $(PG_DUMP_FILE).data'
 
