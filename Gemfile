@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 source 'https://rails-assets.org'
 
-ruby '2.6.2'
+ruby '2.6.5'
 
-gem 'rails', '~> 5.2.2'
-gem 'webpacker', '>= 4.0.x'
+gem 'rails', '~> 6.0.0'
+gem 'webpacker', '~> 4.x'
 gem 'pg'
 gem 'puma'
 gem 'semantic'
@@ -40,9 +40,9 @@ gem 'ruby-thumbor'
 gem 'aws-sdk-cloudfront'
 
 # Elastic Search
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
-gem 'elasticsearch-dsl'
+gem 'elasticsearch-model', '~> 6.0.0'
+gem 'elasticsearch-rails', '~> 6.0.0'
+gem 'elasticsearch-dsl',   '~> 0.1.0'
 
 # AffiliateHub
 gem 'affiliate_hub',                    git: 'https://github.com/codextremist/affiliate_hub'

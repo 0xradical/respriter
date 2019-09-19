@@ -1,5 +1,7 @@
 Rails.application.configure do
 
+  config.hosts << "lvh.me"
+
   # CORS
   config.middleware.insert_before 0, Rack::Cors do
     allow do

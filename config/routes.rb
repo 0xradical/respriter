@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   get '/:tag',
   to: 'course_bundles#index',
   constraints: {
-    tag: RootTag.all.map { |t| t.slugify }.join('|')
+    tag: /#{RootTag.all.map { |t| t.slugify }.join('|')}/
   },
   as: :course_bundles
 
