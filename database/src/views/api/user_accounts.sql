@@ -26,6 +26,10 @@ CREATE OR REPLACE VIEW api.user_accounts AS
 
 CREATE OR REPLACE FUNCTION triggers.api_user_accounts_view_instead() RETURNS trigger AS $$
 BEGIN
+  IF if_admin(TRUE) IS NULL AND if_user_by_id(NEW.id, TRUE) IS NULL THEN
+    RAISE EXCEPTION 'Unauthorized Access';
+  END IF;
+
   UPDATE app.user_accounts
   SET
     email              = NEW.email,

@@ -16,6 +16,10 @@ BEGIN
     RAISE invalid_authorization_specification USING message = 'could not change user_account_id';
   END IF;
 
+  IF if_admin(TRUE) IS NULL AND if_user_by_id(NEW.user_account_id, TRUE) IS NULL THEN
+    RAISE EXCEPTION 'Unauthorized Access';
+  END IF;
+
   UPDATE app.profiles
   SET
     name          = NEW.name,
