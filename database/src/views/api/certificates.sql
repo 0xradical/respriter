@@ -50,7 +50,7 @@ BEGIN
   NEW.updated_at        = certificate.updated_at;
   NEW.fetch_url         = app.sign_certificate_s3_fetch(NEW.id, NEW.file, 3600);
   NEW.upload_url        = app.sign_certificate_s3_upload(NEW.id, NEW.file, 3600);
-  NEW.file_content_type = app.content_type_by_extension(file);
+  NEW.file_content_type = app.content_type_by_extension(NEW.file);
 
   RETURN NEW;
 END;
