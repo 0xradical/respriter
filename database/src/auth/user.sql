@@ -9,10 +9,10 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA app TO "user";
 
 GRANT SELECT, INSERT, UPDATE, DELETE             ON app.certificates   TO "user";
 GRANT SELECT, UPDATE                             ON app.profiles       TO "user";
-GRANT SELECT, UPDATE,                 REFERENCES ON app.promo_accounts TO "user";
 GRANT SELECT, UPDATE,                 REFERENCES ON app.user_accounts  TO "user";
+GRANT SELECT, INSERT, UPDATE,         REFERENCES ON app.promo_accounts TO "user";
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.certificates   TO "user";
 GRANT SELECT, UPDATE                 ON api.profiles       TO "user";
 GRANT SELECT, UPDATE                 ON api.user_accounts  TO "user";
-GRANT SELECT, UPDATE                 ON api.promo_accounts TO "user";
+GRANT SELECT, INSERT, UPDATE         ON api.promo_accounts TO "user";
