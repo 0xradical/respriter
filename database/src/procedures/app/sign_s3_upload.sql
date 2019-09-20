@@ -33,18 +33,7 @@ BEGIN
               || '&X-Amz-Expires=' || expires_in::varchar
               || '&X-Amz-SignedHeaders=content-type%3Bhost%3Bx-amz-acl';
 
-  CASE
-  WHEN lower(filename) ~ '.(jpg|jpeg)$' THEN
-    content_type = 'image/jpeg';
-  WHEN lower(filename) ~ '.gif$' THEN
-    content_type = 'image/gif';
-  WHEN lower(filename) ~ '.png$' THEN
-    content_type = 'image/png';
-  WHEN lower(filename) ~ '.pdf$' THEN
-    content_type = 'application/pdf';
-  ELSE
-    content_type = 'application/octet-stream';
-  END CASE;
+  content_type = app.content_type_by_extension(filename);
 
   IF is_public THEN
     acl = 'public-read';

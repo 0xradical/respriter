@@ -5,8 +5,9 @@ CREATE OR REPLACE VIEW api.certificates AS
     file,
     created_at,
     updated_at,
-    app.sign_certificate_s3_fetch(id, file, 3600) AS fetch_url,
-    app.sign_certificate_s3_upload(id, file, 3600) AS upload_url
+    app.sign_certificate_s3_fetch(id, file, 3600)  AS fetch_url,
+    app.sign_certificate_s3_upload(id, file, 3600) AS upload_url,
+    app.content_type_by_extension(file)            AS file_content_type
   FROM app.certificates
   WHERE
     current_user = 'admin' OR (
@@ -44,11 +45,12 @@ BEGIN
     END IF;
   END IF;
 
-  NEW.id         = certificate.id;
-  NEW.created_at = certificate.created_at;
-  NEW.updated_at = certificate.updated_at;
-  NEW.fetch_url  = app.sign_certificate_s3_fetch(NEW.id, NEW.file, 3600);
-  NEW.upload_url = app.sign_certificate_s3_upload(NEW.id, NEW.file, 3600);
+  NEW.id                = certificate.id;
+  NEW.created_at        = certificate.created_at;
+  NEW.updated_at        = certificate.updated_at;
+  NEW.fetch_url         = app.sign_certificate_s3_fetch(NEW.id, NEW.file, 3600);
+  NEW.upload_url        = app.sign_certificate_s3_upload(NEW.id, NEW.file, 3600);
+  NEW.file_content_type = app.content_type_by_extension(file);
 
   RETURN NEW;
 END;
