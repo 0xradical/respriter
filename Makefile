@@ -16,6 +16,7 @@ endif
 PG_HOST      ?= postgres
 PG_USER      ?= postgres
 PG_PORT      ?= 5432
+PG_ROLE_FILE ?= ./db/backups/roles.dump
 PG_DUMP_FILE ?= ./db/backups/latest.dump
 
 DOCKER_COMPOSE_PATH := $(shell which docker-compose)
@@ -30,10 +31,10 @@ else
 endif
 RAKE := $(BUNDLE_EXEC) rake
 
-DOCKER_COMPOSE_POSTGRES_RUN_FLAGS := --rm -v $(shell pwd)/db:/db
+DOCKER_COMPOSE_POSTGRES_RUN_FLAGS := --rm -v $(shell pwd)/db:/db -v $(shell pwd):/app
 DOCKER_COMPOSE_POSTGRES_RUN       := docker-compose run $(DOCKER_COMPOSE_POSTGRES_RUN_FLAGS) postgres
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% db_migrate db_reset db_download_data db_download db_load db_restore index_courses sync_courses stg_db_restore tty down docker-build docker-push docker-% watch logs prd-logs stg-logs
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% rails_db_migrate db_reset db_reload postgrest_reset db_shell db_download db_migrate db_load db_restore index_courses sync_courses stg_db_restore tty down docker-build docker-push docker-% watch logs prd-logs stg-logs
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -84,10 +85,13 @@ yarn-link-%: ## Link yarn to your local package copy. Usage e.g: yarn-link-eleme
 yarn-unlink-%: ## Unlink yarn from your local package copy. Usage e.g: yarn-unlink-elements
 	@$(DOCKER_COMPOSE_RUN) yarn unlink $*
 
-db_migrate: ## Run database migration
+rails_db_migrate: ## Run database migration
 	@$(RAKE) db:migrate
 
-db_reset: ## Reset your database
+db_reset: db/db.dev.env ## Reset your database
+	$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_reset /db/db.dev.env
+
+db_reload: ## Reload your database
 	docker-compose stop  postgres
 	docker-compose rm -f postgres
 	docker-compose stop  postgres_test
@@ -99,15 +103,18 @@ postgrest_reset:
 	docker-compose rm -f postgrest
 	docker-compose up -d postgrest
 
-db_download_data: db/db.prd.env ## Generates and dowloads latest production dump from RDS
-	$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.prd.env && PGPASSWORD=$$DATABASE_PASSWORD pg_dump -U $$DATABASE_USER -h $$DATABASE_HOST -p $$DATABASE_PORT -Fc $$DATABASE_DB --data-only > $(PG_DUMP_FILE).data'
+db_shell:
+	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/bash
 
-db_download: db/db.prd.env ## Generates and dowloads latest production dump from RDS
+db_download: db/db.prd.env ## Generates and downloads latest production dump from RDS
 	$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.prd.env && PGPASSWORD=$$DATABASE_PASSWORD pg_dump -U $$DATABASE_USER -h $$DATABASE_HOST -p $$DATABASE_PORT -Fc $$DATABASE_DB > $(PG_DUMP_FILE)'
 
-db_load: $(PG_DUMP_FILE).data ## Loads lastest dump creating database
+db_migrate: db/db.dev.env
+	$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_migrate /db/db.dev.env /app/database/db/migrations
+
+db_load: $(PG_DUMP_FILE) ## Loads lastest dump creating database
 	make db_reset
-	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c "( until pg_isready -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV); do sleep 0.5; done; ) && ( pg_restore --verbose -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV) --disable-triggers < $(PG_DUMP_FILE).data; exit 0; )"
+	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c "( until pg_isready -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV); do sleep 0.5; done; ) && ( pg_restore --verbose --no-owner -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV) < $(PG_DUMP_FILE); exit 0; )"
 
 db_restore: ## Restores lastest dump creating database (if needed), migrates after restore and load elastic_search
 	@make db_load index_courses
@@ -161,9 +168,6 @@ prd-logs:
 
 stg-logs:
 	@heroku logs -t --app classpert-web-app-stg
-
-$(PG_DUMP_FILE).data:
-	make db_download_data
 
 $(PG_DUMP_FILE):
 	make db_download
