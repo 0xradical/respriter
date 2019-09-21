@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+timestamp=`date "+%Y%m%d%H%M%S"`
+
+printf "BEGIN;\n\n-- Migration code goes here...\n\nINSERT INTO public.schema_migrations (version) VALUES ('$timestamp');\n\nCOMMIT;\n" > database/db/migrations/$timestamp-$1.sql.env
