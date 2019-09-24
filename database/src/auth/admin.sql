@@ -33,4 +33,3 @@ GRANT SELECT,         UPDATE         ON api.profiles                   TO "admin
 GRANT SELECT,         UPDATE, DELETE ON api.user_accounts              TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.promo_accounts             TO "admin";
 GRANT SELECT                         ON api.promo_account_certificates TO "admin";
-

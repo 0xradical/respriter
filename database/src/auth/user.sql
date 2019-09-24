@@ -17,4 +17,4 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON api.certificates               TO "user"
 GRANT SELECT, UPDATE                 ON api.profiles                   TO "user";
 GRANT SELECT, UPDATE                 ON api.user_accounts              TO "user";
 GRANT SELECT, INSERT, UPDATE         ON api.promo_accounts             TO "user";
-GRANT SELECT                         ON api.promo_account_certificates TO "admin";
+GRANT SELECT                         ON api.promo_account_certificates TO "user";
