@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION app.sign_certificate_s3_fetch(
-  id         bigint,
+  id         uuid,
   filename   varchar,
   expires_in int
 ) RETURNS text AS $$
