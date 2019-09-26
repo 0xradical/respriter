@@ -5,8 +5,6 @@ class UserAccount < ApplicationRecord
 
   attr_accessor :skip_password_validation
 
-  after_initialize :build_instance
-
   has_many :oauth_accounts, dependent: :destroy
   has_one  :profile,        dependent: :destroy
 
@@ -33,10 +31,6 @@ class UserAccount < ApplicationRecord
   def password_required?
     return false if skip_password_validation
     super
-  end
-
-  def build_instance
-    self.profile ||= build_profile
   end
 
   def soft_delete
