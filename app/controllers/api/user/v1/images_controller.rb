@@ -4,7 +4,11 @@ module Api
       class ImagesController < BaseController
 
         def create
-          @image = current_user_account.profile.attach_image!(image_params)
+          # deprecated
+          Profile.transaction do
+            @image = current_user_account.profile.attach_image!(image_params)
+            current_user_account.profile.update(avatar: @image.file_url)
+          end
           render json: ImageSerializer.new(@image)
         end
 
