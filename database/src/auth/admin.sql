@@ -23,7 +23,6 @@ GRANT SELECT                                     ON app.tracked_actions         
 GRANT SELECT                                     ON app.tracked_searches           TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.user_accounts              TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.promo_accounts             TO "admin";
-GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.promo_account_certificates TO "admin";
 
 GRANT SELECT ON api.earnings       TO "admin";
 
@@ -32,4 +31,3 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON api.certificates               TO "admin
 GRANT SELECT,         UPDATE         ON api.profiles                   TO "admin";
 GRANT SELECT,         UPDATE, DELETE ON api.user_accounts              TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.promo_accounts             TO "admin";
-GRANT SELECT                         ON api.promo_account_certificates TO "admin";

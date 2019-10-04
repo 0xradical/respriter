@@ -1,3 +1,0 @@
-CREATE UNIQUE INDEX index_promo_account_certificates_on_promo_account
-ON app.promo_account_certificates
-USING btree (promo_account_id);
