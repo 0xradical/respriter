@@ -31,7 +31,11 @@ DECLARE
 BEGIN
   promo_account := NEW;
 
-  SELECT current_setting('request.header.certificateid', true)::uuid INTO cert_id;
+  IF TG_OP = 'INSERT' THEN
+    SELECT current_setting('request.header.certificateid', true)::uuid INTO cert_id;
+  ELSE
+    cert_id := OLD.certificate_id;
+  END IF;
 
   IF cert_id IS NULL THEN
     RAISE EXCEPTION 'Null certificate'
@@ -65,7 +69,7 @@ BEGIN
                old_self = (SELECT json_agg(json_build_object('price', apc.price, 'purchase_date', apc.purchase_date, 'order_id', apc.order_id, 'paypal_account', apc.paypal_account, 'state', apc.state, 'state_info', apc.state_info))->>0 FROM app.promo_accounts AS apc where apc.id = id)::jsonb
     RETURNING * INTO promo_account;
 
-  IF promo_account.state IN ('locked', 'approved') THEN
+  IF if_admin(TRUE) IS NULL AND promo_account.state IN ('locked', 'approved') THEN
     RAISE EXCEPTION 'Cannot update on locked promo'
       USING DETAIL = 'error', HINT = 'promo_accounts.state.locked';
   END IF;
@@ -75,8 +79,8 @@ BEGIN
       USING DETAIL = 'error', HINT = 'promo_accounts.state_info.blank';
   END IF;
 
-  INSERT INTO app.promo_account_logs (promo_account_id, old, new)
-    VALUES (promo_account.id, promo_account.old_self, to_jsonb(promo_account));
+  INSERT INTO app.promo_account_logs (promo_account_id, old, new, role)
+    VALUES (promo_account.id, promo_account.old_self, json_build_object('price', promo_account.price, 'purchase_date', promo_account.purchase_date, 'order_id', promo_account.order_id, 'paypal_account', promo_account.paypal_account, 'state', promo_account.state, 'state_info', promo_account.state_info), current_user);
 
   RETURN (
     promo_account.id,
@@ -117,7 +121,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER api_promo_accounts_view_instead
-  INSTEAD OF INSERT
+  INSTEAD OF INSERT OR UPDATE
   ON api.promo_accounts
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.api_promo_accounts_view_instead();
