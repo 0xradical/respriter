@@ -34,7 +34,7 @@ RAKE := $(BUNDLE_EXEC) rake
 DOCKER_COMPOSE_POSTGRES_RUN_FLAGS := --rm -v $(shell pwd)/db:/db -v $(shell pwd):/app
 DOCKER_COMPOSE_POSTGRES_RUN       := docker-compose run $(DOCKER_COMPOSE_POSTGRES_RUN_FLAGS) postgres
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console que_worker tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% rails_db_migrate db_reset db_reload postgrest_reset db_shell db_download db_migrate db_load db_restore index_courses sync_courses stg_db_restore tty down docker-build docker-push docker-% watch logs prd-logs stg-logs
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console que_worker tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% rails_db_migrate db_reset db_reload postgrest_reset db_shell db_download db_migrate db_stg_migrate db_prd_migrate db_load db_restore index_courses sync_courses stg_db_restore tty down docker-build docker-push docker-% watch logs prd-logs stg-logs
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -115,9 +115,16 @@ db_download: db/db.prd.env ## Generates and downloads latest production dump fro
 db_migrate: db/db.dev.env
 	$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_migrate /db/db.dev.env /app/database/db/migrations
 
+db_stg_migrate: db/db.stg.env
+	$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_migrate /db/db.stg.env /app/database/db/migrations
+
+db_prd_migrate: db/db.prd.env
+	$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_migrate /db/db.prd.env /app/database/db/migrations
+
 db_load: $(PG_DUMP_FILE) ## Loads lastest dump creating database
 	make db_reset
 	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c "( until pg_isready -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV); do sleep 0.5; done; ) && ( pg_restore --verbose --no-owner -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV) < $(PG_DUMP_FILE); exit 0; )"
+	@$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_fix_secrets /db/db.dev.env
 
 db_restore: ## Restores lastest dump creating database (if needed), migrates after restore and load elastic_search
 	@make db_load index_courses
@@ -128,9 +135,9 @@ index_courses:
 sync_courses:
 	heroku run:detached bundle exec rake system:scheduler:courses_service --app=classpert-web-app-prd
 
-stg_db_restore: db/db.stg.env ## Dumps latest production dump from production and restores in staging
-	make db_download
+stg_db_restore: db/db.stg.env $(PG_DUMP_FILE) ## Dumps latest production dump from production and restores in staging
 	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.stg.env && PGPASSWORD=$$DATABASE_PASSWORD pg_restore --verbose --clean -U $$DATABASE_USER -h $$DATABASE_HOST -d $$DATABASE_DB < $(PG_DUMP_FILE); exit 0;'
+	@$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_fix_secrets /db/db.stg.env
 
 tty: ## Attach a tty to the app container. Usage e.g: ENV=test make tty
 	@docker-compose run --entrypoint /bin/bash app_$(ENV)
