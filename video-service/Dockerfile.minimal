@@ -1,0 +1,15 @@
+FROM classpert/video-service AS builder
+
+COPY . .
+
+RUN dep ensure && make compile
+
+CMD ["make"]
+
+FROM scratch
+
+WORKDIR /app
+
+COPY --from=builder /go/src/app/app ./
+
+ENTRYPOINT ["./app"]
