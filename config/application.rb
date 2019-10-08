@@ -25,6 +25,8 @@ Bundler.require(*Rails.groups)
 module App
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.session_store :cookie_store, key: :_app_session, domain: :all
+
     config.load_defaults 5.1
 
     config.autoload_paths += [
@@ -45,7 +47,7 @@ module App
 
     Elements.configure do |elements_config|
       elements_config.asset_host    = ENV.fetch('ELEMENTS_ASSET_HOST')    { 'https://elements-prd.classpert.com' }
-      elements_config.asset_version = '4.11.0'
+      elements_config.asset_version = '4.11.1'
     end
 
     # Settings in config/environments/* take precedence over those specified here.
