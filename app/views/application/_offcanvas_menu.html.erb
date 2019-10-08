@@ -3,15 +3,15 @@
   <div class='el:o-off-canvas-menu__header-slot el:amx-Bob_gray1' style='height:3.5rem'>
     <div class='el:o-off-canvas-menu__control'></div>
     <div style='height:32px;'>
-      <% if current_user_account.avatar.present? %>
-        <%= image_tag(current_user_account.avatar, height: '32px', class: 'el:amx-D(ib)', style: 'border-radius:50%;vertical-align: top;') %>
+      <% if current_user_account.avatar_url.present? %>
+        <%= image_tag(current_user_account.avatar_url, height: '32px', class: 'el:amx-D(ib)', style: 'border-radius:50%;vertical-align: top;') %>
       <% else %>
         <%= svg_use('icons', 'avatar', { width: '32px', height: '32px', class: 'el:amx-D(ib)', style: 'border-radius:50%;vertical-align: top;' } ) %>
       <% end %>
       <div class='el:amx-D(ib) el:amx-Ml(0.125em)'>
         <div class='el:amx-Pos(r) el:amx-Fw(b) el:amx-Fs(1em)' style='top:-2px;'><%= t("dictionary.hi") %><%= current_user_account.profile&.name ? ", #{current_user_account.profile.name.split.first}!" : "!" %></div>
         <div class='el:amx-Pos(r)'>
-          <%= link_to user_accounts_dashboard_path("dashboard") do %>
+          <%= link_to user_dashboard_url do %>
             <span class='el:amx-C_gray4 el:amx-Fs(0.875em)'><%= t("dictionary.go_to_profile") %></span>
             <svg width='10px' height='10px' class='el:amx-D(ib) el:amx-Va(m) el:amx-Pos(r) el:amx-Mr(0.5em) el:amx-C_blue4' style='transform:rotate(-90deg);'>
               <use xlink:href='#icons-arrow-down' />

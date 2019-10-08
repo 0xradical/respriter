@@ -14,7 +14,7 @@ class UserAccount < ApplicationRecord
   #has_many :favorites,         dependent: :destroy
   #has_many :favorite_courses,  through: :favorites,     source: :course
 
-  delegate :avatar, to: :profile
+  delegate :avatar_url, to: :profile
 
   validates :email, 'valid_email_2/email': { mx: true, disposable: true, disallow_subaddressing: true}
 

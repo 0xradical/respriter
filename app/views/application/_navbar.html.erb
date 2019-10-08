@@ -36,9 +36,9 @@
 
     <%- if user_account_signed_in? %>
       <div class='c-navbar__slot el:amx-D(n)@sm'>
-        <%= link_to user_accounts_dashboard_path("dashboard") do %>
-          <% if current_user_account.avatar.present? %>
-            <%= image_tag(current_user_account.avatar, height: '37px', style: 'border-radius:50%;border:1px solid #ccc') %>
+        <%= link_to user_dashboard_url do %>
+          <% if current_user_account.avatar_url.present? %>
+            <%= image_tag(current_user_account.avatar_url, height: '37px', style: 'border-radius:50%;border:1px solid #ccc') %>
           <% else %>
             <%= svg_use('icons', 'avatar', { width: '37px', height: '37px' } ) %>
           <% end %>

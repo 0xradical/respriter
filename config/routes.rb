@@ -1,3 +1,5 @@
+user_dashboard = URI(ENV.fetch('USER_DASHBOARD_URL') { "//user.classpert.com" })
+
 Rails.application.routes.draw do
 
   # Devise
@@ -30,8 +32,13 @@ Rails.application.routes.draw do
 
   resources :posts, path: 'blog'
 
-  namespace :user_accounts do
-    match '*dashboard', to: 'dashboard#index', via: [:get], as: :dashboard
+  direct :user_dashboard do
+    {
+      protocol: user_dashboard.scheme,
+      host: user_dashboard.host,
+      port: user_dashboard.port,
+      params: { locale: I18n.locale }
+    }
   end
 
   resources :videos, only: :show
