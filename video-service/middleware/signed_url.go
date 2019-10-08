@@ -30,8 +30,7 @@ func SignedUrl(handlerFunc http.HandlerFunc) http.HandlerFunc {
 
     expectedToken := getExpectedToken(request)
     if token != expectedToken {
-      return errors.Forbidden(nil, expectedToken)
-      // return errors.Forbidden(nil, "Signature does not match")
+      return errors.Forbidden(nil, "Signature does not match")
     }
 
     handlerFunc(writer, request)
