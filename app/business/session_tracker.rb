@@ -27,7 +27,7 @@ class SessionTracker
     return @session_payload if @session_payload.present?
 
     @session_payload = if session[:tracking_data].present?
-      session[:tracking_data].deep_dup
+     session[:tracking_data].deep_dup
     else
       TRACKED_PROPERTIES.inject(raw) do |tracking_obj, property|
         tracking_obj.merge send("parse_#{property}")
@@ -43,6 +43,12 @@ class SessionTracker
     else
       session_payload.deep_dup
     end
+  end
+
+  def store_third_party_cookies!
+    @session_payload['third_party_cookies'] = Hash[cookies.filter { |k,v| !(k =~ /tracking_data|_app_session/) }.map do |k,v|
+      [k, v]
+    end]
   end
 
   def had_cookies?

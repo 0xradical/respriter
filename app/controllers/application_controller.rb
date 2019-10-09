@@ -46,6 +46,8 @@ class ApplicationController < ActionController::Base
 
   def session_tracker
     @session_tracker ||= SessionTracker.track self
+    @session_tracker.store_third_party_cookies!
+    @session_tracker
   end
   alias :track_session :session_tracker
 
