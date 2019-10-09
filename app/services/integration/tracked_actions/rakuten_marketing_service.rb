@@ -18,11 +18,10 @@ module Integration
               next unless resource['is_event'] == 'N'
               TrackedAction.find_or_initialize_by(compound_ext_id: "rakuten_#{resource['etransaction_id']}").tap do |action|
                 action.ext_id           = resource['etransaction_id']
-                action.ext_click_date   = resource['transaction_date']
                 action.enrollment_id    = resource['u1']
                 action.sale_amount      = resource['sale_amount']
                 action.earnings_amount  = resource['commissions']
-                action.ext_click_date   = resource['transaction_date']
+                action.ext_click_date   = Time.parse(resource['transaction_date']).utc
                 action.ext_sku_id       = resource['sku_id']
                 action.ext_product_name = resource['product_name']
                 action.source           = 'rakuten'
