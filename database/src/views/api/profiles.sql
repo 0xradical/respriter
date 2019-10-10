@@ -17,7 +17,7 @@ BEGIN
   END IF;
 
   IF if_admin(TRUE) IS NULL AND if_user_by_id(NEW.user_account_id, TRUE) IS NULL THEN
-    RAISE EXCEPTION 'Unauthorized Access';
+    RAISE insufficient_privilege;
   END IF;
 
   UPDATE app.profiles

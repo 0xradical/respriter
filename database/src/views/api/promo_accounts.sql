@@ -45,12 +45,12 @@ BEGIN
   SELECT app.certificates.user_account_id FROM app.certificates WHERE id = cert_id INTO cert_user_account_id;
 
   IF if_admin(TRUE) IS NULL AND if_user_by_id(cert_user_account_id, TRUE) IS NULL THEN
-    RAISE EXCEPTION 'Unauthorized Access'
+    RAISE insufficient_privilege
       USING DETAIL = 'error', HINT = 'promo_accounts.user_account_id.mismatch';
   END IF;
 
   IF if_admin(TRUE) IS NULL AND if_user_by_id(promo_account.user_account_id, TRUE) IS NULL THEN
-    RAISE EXCEPTION 'Unauthorized Access'
+    RAISE insufficient_privilege
       USING DETAIL = 'error', HINT = 'promo_accounts.unauthorized';
   END IF;
 
@@ -107,7 +107,10 @@ BEGIN
     promo_account.created_at,
     promo_account.updated_at
   );
-EXCEPTION WHEN OTHERS THEN
+EXCEPTION
+  WHEN insufficient_privilege THEN
+    RAISE;
+  WHEN OTHERS THEN
   GET STACKED DIAGNOSTICS exception_message = MESSAGE_TEXT,
                           exception_detail = PG_EXCEPTION_DETAIL,
                           exception_hint = PG_EXCEPTION_HINT,
