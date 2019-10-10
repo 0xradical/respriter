@@ -27,6 +27,7 @@ class UserAccounts::SessionsController < Devise::SessionsController
 
     respond_to do |format|
       format.json { head :ok }
+      format.any(*navigational_formats) { redirect_to after_sign_out_path_for(:user_account) }
     end
   end
 
