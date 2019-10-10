@@ -234,6 +234,9 @@ Devise.setup do |config|
   config.jwt do |jwt|
     jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
     jwt.expiration_time = 2.days.to_i
+    jwt.dispatch_requests = [
+      ['GET', %r{^/user_accounts/auth/\w+/callback$}]
+    ]
   end
 
   # Configure the default scope given to Warden. By default it's the first
