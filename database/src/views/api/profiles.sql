@@ -3,7 +3,7 @@ CREATE OR REPLACE VIEW api.profiles AS
     id,
     name,
     username,
-    avatar,
+    COALESCE(uploaded_avatar_url, oauth_avatar_url) AS avatar_url,
     COALESCE( if_admin(date_of_birth),   if_user_by_id(user_account_id, date_of_birth)   ) AS date_of_birth,
     COALESCE( if_admin(user_account_id), if_user_by_id(user_account_id, user_account_id) ) AS user_account_id,
     COALESCE( if_admin(interests),       if_user_by_id(user_account_id, interests)       ) AS interests,
@@ -22,12 +22,11 @@ BEGIN
 
   UPDATE app.profiles
   SET
-    name          = NEW.name,
-    date_of_birth = NEW.date_of_birth,
-    avatar        = NEW.avatar,
-    interests     = NEW.interests,
-    preferences   = NEW.preferences,
-    username      = NEW.username
+    name                = NEW.name,
+    date_of_birth       = NEW.date_of_birth,
+    interests           = NEW.interests,
+    preferences         = NEW.preferences,
+    username            = NEW.username
   WHERE
     id = OLD.id;
 

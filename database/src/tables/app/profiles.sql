@@ -3,7 +3,8 @@ CREATE TABLE app.profiles (
   name            varchar,
   username        varchar,
   date_of_birth   date,
-  avatar          varchar,
+  oauth_avatar_url varchar,
+  uploaded_avatar_url varchar,
   user_account_id bigint    REFERENCES app.user_accounts(id) ON DELETE CASCADE,
   interests       text[]    DEFAULT '{}'::text[],
   preferences     jsonb     DEFAULT '{}'::jsonb
