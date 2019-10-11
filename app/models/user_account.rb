@@ -25,7 +25,9 @@ class UserAccount < ApplicationRecord
   end
 
   def jwt_payload
-    { role: 'user' }
+    { 
+      role: 'user'
+    }
   end
 
   def password_required?

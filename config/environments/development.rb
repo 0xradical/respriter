@@ -1,5 +1,14 @@
 Rails.application.configure do
 
+  # CORS
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins /(?:localhost|lvh\.me):[0-9]{,5}\Z/, /.*\.classpert\.com\Z/, /.*\.classpert-staging\.com/
+      resource '*', headers: :any, credentials: true, expose: %w(Authorization),
+      methods: [:get, :put, :patch, :post, :delete, :options]
+    end
+  end 
+
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
 
@@ -56,13 +65,6 @@ Rails.application.configure do
   end
 
   config.action_view.raise_on_missing_translations = true
-
-  config.middleware.insert_before 0, Rack::Cors do
-    allow do
-      origins '*'
-      resource '*', headers: :any, expose: %w(Authorization), methods: [:get, :put, :patch, :post, :delete, :options]
-    end
-  end
 
   if ENV['PRERENDER_SERVICE_URL']
     config.middleware.use Rack::Prerender

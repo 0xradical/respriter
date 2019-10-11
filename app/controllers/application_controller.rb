@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   before_action :rendertron?
   before_action :set_sentry_raven_context if Rails.env.production?
   before_action :store_user_account_location, if: :devise_controller?
+  before_action :set_csrf_cookie
   around_action :hypernova_render_support
   layout :fetch_layout
 
@@ -62,6 +63,16 @@ class ApplicationController < ActionController::Base
       token: SessionToken.new(session[:current_user_jwt], request_ip).encrypt
     }
     "#{ ENV.fetch 'USER_DASHBOARD_URL' }?#{ redirect_params.to_query }"
+  end
+
+  # Cookie-to-header token 
+  # https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token
+  def set_csrf_cookie
+    cookies['_csrf_token'] = { 
+      value: session[:_csrf_token],
+      secure: Rails.env.production?,
+      domain: :all
+    }
   end
 
   def request_ip
