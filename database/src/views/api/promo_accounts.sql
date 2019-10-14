@@ -124,15 +124,17 @@ EXCEPTION
       USING DETAIL = exception_detail, HINT = exception_hint;
   ELSE
     -- constraint
-    IF exception_sql_state = '23514' AND exception_constraint_name IS NOT NULL THEN
+    IF exception_sql_state IN ('23514', '23505') AND exception_constraint_name IS NOT NULL THEN
       exception_column_name := REGEXP_REPLACE(exception_constraint_name, '(.*)__(.*)', '\1');
+      exception_sql_state := 'constraint';
     END IF;
 
     RAISE EXCEPTION '%', exception_message
-      USING DETAIL = 'error', HINT = 'promo_accounts.' || exception_column_name || '.' || exception_sql_state;
+      USING DETAIL = 'error', HINT = 'promo_accounts.' || COALESCE(exception_sql_state,'error') || '.' || exception_column_name;
   END IF;
 END;
 $$ LANGUAGE plpgsql;
+
 
 CREATE TRIGGER api_promo_accounts_view_instead
   INSTEAD OF INSERT OR UPDATE
