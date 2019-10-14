@@ -1,7 +1,7 @@
 CREATE TABLE app.profiles (
   id              bigserial PRIMARY KEY,
   name            varchar,
-  username        varchar,
+  username        varchar CONSTRAINT username_format CHECK (username ~* '^\w{1,15}$'),
   date_of_birth   date,
   oauth_avatar_url varchar,
   uploaded_avatar_url varchar,
