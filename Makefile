@@ -123,7 +123,7 @@ db_prd_migrate: db/db.prd.env
 
 db_load: $(PG_DUMP_FILE) ## Loads lastest dump creating database
 	make db_reset
-	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c "( until pg_isready -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV); do sleep 0.5; done; ) && ( pg_restore --verbose --no-owner -h $(PG_HOST) -U $(PG_USER) -d quero_$(ENV) < $(PG_DUMP_FILE); exit 0; )"
+	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c "( until pg_isready -h $(PG_HOST) -U $(PG_USER) -d classpert_$(ENV); do sleep 0.5; done; ) && ( pg_restore --verbose --no-owner -h $(PG_HOST) -U $(PG_USER) -d classpert_$(ENV) < $(PG_DUMP_FILE); exit 0; )"
 	@$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_fix_secrets /db/db.dev.env
 
 db_restore: ## Restores lastest dump creating database (if needed), migrates after restore and load elastic_search

@@ -11,7 +11,7 @@ development:
   host:     <%= ENV.fetch 'PG_HOST',     'localhost'              %>
   port:     <%= ENV.fetch 'PG_PORT',     '5432'                   %>
   username: <%= ENV.fetch 'PG_USER',     'postgres'               %>
-  database: <%= ENV.fetch 'PG_DATABASE', 'quero_development'      %>
+  database: <%= ENV.fetch 'PG_DATABASE', 'classpert_development'  %>
 
 test:
   <<: *default
