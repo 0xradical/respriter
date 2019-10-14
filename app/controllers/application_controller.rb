@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   before_action :rendertron?
   before_action :set_sentry_raven_context if Rails.env.production?
   before_action :store_user_account_location, if: :devise_controller?
-  before_action :set_csrf_cookie
   around_action :hypernova_render_support
   layout :fetch_layout
 
@@ -69,7 +68,7 @@ class ApplicationController < ActionController::Base
   # https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token
   def set_csrf_cookie
     cookies['_csrf_token'] = { 
-      value: session[:_csrf_token],
+      value: form_authenticity_token,
       secure: Rails.env.production?,
       domain: :all
     }

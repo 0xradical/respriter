@@ -8,5 +8,4 @@ class UserAccounts::TokenController < ApplicationController
     render json: { token: SessionToken.decrypt(params[:token], request_ip) }
   end
 
-
 end
