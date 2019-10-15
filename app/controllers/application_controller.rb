@@ -57,11 +57,14 @@ class ApplicationController < ActionController::Base
   def user_logged_default_path
     return new_user_account_session_path unless session[:current_user_jwt]
 
+    redir_path = session[:user_dashboard_redir] || '/' 
+
     redirect_params = {
       locale: I18n.locale,
       token: SessionToken.new(session[:current_user_jwt], request_ip).encrypt
     }
-    "#{ ENV.fetch 'USER_DASHBOARD_URL' }?#{ redirect_params.to_query }"
+
+    "#{ ENV.fetch 'USER_DASHBOARD_URL' }#{redir_path}?#{ redirect_params.to_query }"
   end
 
   # Cookie-to-header token 
