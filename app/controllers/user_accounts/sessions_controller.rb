@@ -22,6 +22,7 @@ class UserAccounts::SessionsController < Devise::SessionsController
   def destroy
     sign_out :user_account
     session[:current_user_jwt] = nil
+    flash.delete :alert
     respond_to do |format|
       format.json { head :ok }
       format.any(*navigational_formats) { redirect_to after_sign_out_path_for(:user_account) }

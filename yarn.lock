@@ -1820,9 +1820,9 @@ block-stream@*:
     yarn "^1.13.0"
 
 bluebird@^3.1.1, bluebird@^3.5.5:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.0.tgz#56a6a886e03f6ae577cffedeb524f8f2450293cf"
-  integrity sha512-aBQ1FxIa7kSWCcmKHlcHFlT2jt6J/l4FzC7KcPELkOJOsPOb/bccdhmIrKDfXhwFrmc7vDoDrrepFvGqjyXGJg==
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.1.tgz#df70e302b471d7473489acf26a93d63b53f874de"
+  integrity sha512-DdmyoGCleJnkbp3nkbxTLJ18rjDsE4yCggEwKNXkeV123sPNfOCYeDoeuOY+F2FrSjO1YXcTU+dsy96KMy+gcg==
 
 bluebird@^3.5.3:
   version "3.5.5"
@@ -3321,8 +3321,8 @@ electron-to-chromium@^1.3.164:
   integrity sha512-irSaDeCGgfMu1OA30bhqIBr+dx+pDJjRbwCpob7YWqVZbzXblybNzPGklVnWqv4EXxbkEAzQYqiNCqNTgu00lQ==
 
 "elements@git+https://7d12b077c98890abd66f41944901afcd4192f04a:x-oauth-basic@github.com/querocourses/elements.git":
-  version "4.12.0"
-  resolved "git+https://7d12b077c98890abd66f41944901afcd4192f04a:x-oauth-basic@github.com/querocourses/elements.git#3e7f843515d13ce4714a5cd9f13f2f840e6afbb2"
+  version "4.14.1"
+  resolved "git+https://7d12b077c98890abd66f41944901afcd4192f04a:x-oauth-basic@github.com/querocourses/elements.git#a9194a30b85a083f235e7575437a138aeb65c38c"
   dependencies:
     body-scroll-lock "^2.6.4"
     browserslist "4.6.3"
