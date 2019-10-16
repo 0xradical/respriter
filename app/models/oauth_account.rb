@@ -26,8 +26,8 @@ class OauthAccount < ApplicationRecord
       end
 
       oauth_account.raw_data.tap do |oauth_hash|
-        user.profile.oauth_avatar_url = (oauth_hash&.info&.image || oauth_hash&.info&.picture_url)
-        user.profile.name             = oauth_hash&.info&.name
+        user.profile.oauth_avatar_url = oauth_hash['info']['image'] || oauth_hash['info']['picture_url']
+        user.profile.name             = oauth_hash['info']['name']
       end
 
       user.profile.save
