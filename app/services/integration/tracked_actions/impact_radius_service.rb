@@ -25,7 +25,7 @@ module Integration
                 TrackedAction.find_or_initialize_by(compound_ext_id: "impact_radius_#{resource['Id']}")
                 .tap do |action|
                   action.ext_id           = resource['Id']
-                  action.ext_click_date   = Time.parse(resource['EventDate']).utc
+                  action.ext_click_date   = Time.parse(resource['ReferringDate']).utc
                   action.enrollment_id    = resource['SubId1']
                   action.sale_amount      = resource['Amount']
                   action.earnings_amount  = resource['Payout']
