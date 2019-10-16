@@ -11,6 +11,8 @@ class UserAccount < ApplicationRecord
   has_many :enrollments,       dependent: :nullify
   has_many :enrolled_courses,  through: :enrollments,   source: :course
 
+  has_many :tracked_actions, through: :enrollments
+  has_many :course_reviews
   #has_many :favorites,         dependent: :destroy
   #has_many :favorite_courses,  through: :favorites,     source: :course
 
@@ -25,7 +27,7 @@ class UserAccount < ApplicationRecord
   end
 
   def jwt_payload
-    { 
+    {
       role: 'user'
     }
   end

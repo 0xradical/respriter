@@ -1,0 +1,3 @@
+CREATE UNIQUE INDEX index_course_reviews_on_user_account_id_and_tracked_action_id
+ON app.course_reviews
+USING btree (user_account_id, tracked_action_id);

@@ -79,6 +79,8 @@ gem 'sitemap_generator'
 
 # Email
 gem "valid_email2"
+gem 'inky-rb', require: 'inky'
+gem 'premailer-rails'
 
 # SEO
 gem 'prerender_rails'

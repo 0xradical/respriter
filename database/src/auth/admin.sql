@@ -24,6 +24,7 @@ GRANT SELECT                                     ON app.tracked_searches        
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.user_accounts              TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.promo_accounts             TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.promo_account_logs         TO "admin";
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.course_reviews             TO "admin";
 
 GRANT SELECT ON api.earnings       TO "admin";
 

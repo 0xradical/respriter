@@ -12,6 +12,7 @@ GRANT SELECT, UPDATE                             ON app.profiles           TO "u
 GRANT SELECT, UPDATE,                 REFERENCES ON app.user_accounts      TO "user";
 GRANT SELECT, INSERT, UPDATE,         REFERENCES ON app.promo_accounts     TO "user";
 GRANT SELECT, INSERT, UPDATE,         REFERENCES ON app.promo_account_logs TO "user";
+GRANT SELECT, INSERT, UPDATE,         REFERENCES ON app.course_reviews     TO "user";
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.certificates   TO "user";
 GRANT SELECT, UPDATE                 ON api.profiles       TO "user";

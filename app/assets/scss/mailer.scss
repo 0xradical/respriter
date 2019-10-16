@@ -1,0 +1,21 @@
+@import "foundation-emails/scss/foundation-emails";
+
+body,
+  html,
+  .body {
+  background: white !important;
+}
+
+p {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.separator {
+  background-color: #9DAFB7;
+}
+
+.star {
+  display: inline-block;
+  padding: 12px;
+}

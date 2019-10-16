@@ -44,10 +44,11 @@ module App
     config.i18n.available_locales = ['en', 'es', 'pt-BR']
 
     config.action_mailer.default_url_options = { host: 'classpert.com' }
+    config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
 
     Elements.configure do |elements_config|
       elements_config.asset_host    = ENV.fetch('ELEMENTS_ASSET_HOST') { 'https://elements-prd.classpert.com' }
-      elements_config.asset_version = '4.16.1'
+      elements_config.asset_version = '4.17.0'
     end
 
     config.action_controller.forgery_protection_origin_check = false
