@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class UserAccounts::PasswordsController < Devise::PasswordsController
 
+  skip_before_action :require_no_authentication, :only => [:edit, :update]
+
   respond_to :json
 
   # GET /resource/password/new
