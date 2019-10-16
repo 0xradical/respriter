@@ -21,7 +21,7 @@ class UserAccounts::SessionsController < Devise::SessionsController
   # DELETE /resource/sign_out
   def destroy
     sign_out :user_account
-    session[:current_user_jwt] = nil
+    destroy_jwt_session
     flash.delete :alert
     respond_to do |format|
       format.json { head :ok }
@@ -33,6 +33,11 @@ class UserAccounts::SessionsController < Devise::SessionsController
 
   def json_request?
     request.format.json?
+  end
+
+  def destroy_jwt_session
+    session[:current_user_jwt] = nil
+    cookies.delete :_jwt, domain: :all
   end
 
   # If you have extra params to permit, append them to the sanitizer.

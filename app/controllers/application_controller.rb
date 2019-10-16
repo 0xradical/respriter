@@ -51,29 +51,37 @@ class ApplicationController < ActionController::Base
       flash.delete :alert
     else
       session[:current_user_jwt] = token
+      set_jwt_cookie
+      set_csrf_cookie
     end
   end
 
   def user_logged_default_path
     return new_user_account_session_path unless session[:current_user_jwt]
-
     redir_path = session[:user_dashboard_redir] || '/' 
-
     redirect_params = {
-      locale: I18n.locale,
-      token: SessionToken.new(session[:current_user_jwt], request_ip).encrypt
+      locale: I18n.locale
     }
-
     "#{ ENV.fetch 'USER_DASHBOARD_URL' }#{redir_path}?#{ redirect_params.to_query }"
+  end
+
+  def set_jwt_cookie
+    cookies[:_jwt] = {
+      value: session[:current_user_jwt],
+      secure: Rails.env.production?,
+      domain: :all,
+      httponly: false
+    }
   end
 
   # Cookie-to-header token 
   # https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token
   def set_csrf_cookie
-    cookies['_csrf_token'] = { 
+    cookies[:_csrf_token] = { 
       value: form_authenticity_token,
       secure: Rails.env.production?,
-      domain: :all
+      domain: :all,
+      httponly: false
     }
   end
 
