@@ -1,60 +1,70 @@
-<div class='c-navbar c-navbar--white <%= "c-navbar--sticky" if sticky_navbar? %> el:amx-Pl(0.5em) el:amx-Pr(2em)' <%= 'data-sticky' if sticky_navbar? %> role='header-nav'>
+<div class='el:amx-Bc_white el:amx-Bob_gray1'>
+  <div class='container-fluid'>
+    <div class="el:o-navbar el:amx-Bc_white <%= 'el:o-navbar--sticky' if sticky_navbar? %>" <%= 'data-sticky' if sticky_navbar? %> role='top-navbar'>
 
-  <% unless home_controller? %>
-    <%= link_to root_path do %>
-      <img src="<%= elements_asset_path('svgs/logo.svg') %>" class='c-navbar__slot el:amx-D(n)@<sm' width='156px'>
-      <img src="<%= elements_asset_path('svgs/logo_symbol.svg') %>" class='c-navbar__slot el:amx-D(n)@>lg' width='40px'>
-    <% end %>
-  <% end %>
-
-  <div class='c-navbar__slot el:amx-Ml(0.5em) el:amx-Ml(1.25em)@>lg' style='<%= home_controller? ? "visibility:hidden" : "" %>'>
-    <script id='navbar-search' type='x-vue-template'>
-      <search-bar placeholder="<%= t('components.searchbar_placeholder') %>"
-      :css-classes='{container: "c-search-slim c-search-slim--negative", form:
-      "c-search-slim__form", input: "c-search-slim__input"}'>
-        <span slot='icon' class='c-search-slim__icon'></span>
-      </search-bar>
-    </script>
-    <div data-vue-cpt='navbar-search'></div>
-  </div>
-
-  <nav style='float:right;line-height:40px;display:inline-block;vertical-align:middle'>
-
-    <div class='c-navbar__slot el:amx-Fs(0.875em) el:amx-D(n)@<sm'>
-      <%= link_to 'Blog', posts_path,
-      class: "el:m-link-nav el:m-link-nav--section el:amx-Mr(1.5em) #{controller_name.eql?('posts') ? 'el:m-link-nav--active' : ''}" %>
-    </div>
-
-    <% unless user_account_signed_in? %>
-      <div class='c-navbar__slot el:amx-D(n)@sm' style='margin-right:5px'>
-        <%= render 'language_dropdown' %>
-      </div>
-    <% end %>
-
-    <a data-off-canvas-menu='#main-menu' data-off-canvas-menu-tpl='#main-menu-tpl'
-      class='el:amx-D(n)@>lg c-navbar__offcanvas-menu-btn'></a>
-
-    <%- if user_account_signed_in? %>
-      <div class='c-navbar__slot el:amx-D(n)@sm'>
-        <%= link_to user_dashboard_url do %>
-          <% if current_user_account.avatar_url.present? %>
-            <%= image_tag(current_user_account.avatar_url, height: '37px', style: 'border-radius:50%;border:1px solid #ccc') %>
-          <% else %>
-            <%= svg_use('icons', 'avatar', { width: '37px', height: '37px' } ) %>
+      <!-- logo -->
+      <div class='el:o-navbar__slot el:amx-Mr(2em)'>
+        <% unless home_controller? %>
+          <%= link_to root_path do %>
+            <img src="<%= elements_asset_path('svgs/logo.svg') %>" class='el:amx-D(n)@<sm' width='156px'>
+            <img src="<%= elements_asset_path('svgs/logo_symbol.svg') %>" class='el:amx-D(n)@>lg' width='40px'>
           <% end %>
         <% end %>
       </div>
-    <% else %>
-      <span class='c-navbar__slot el:amx-D(n)@sm' style='margin-right:0.5rem;margin-left:1rem;'>
-        <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
-          class: 'btn btn--gray-border btn--rounded btn--small btn--uppercase' %>
-      </span>
 
-      <span class='c-navbar__slot el:amx-D(n)@sm'>
-        <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
-          class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
-      </span>
-    <%- end %>
+      <!-- search bar -->
+      <div class='el:o-navbar__slot'>
+        <script id='navbar-search' type='x-vue-template'>
+          <search-bar placeholder="<%= t('components.searchbar_placeholder') %>"
+          :css-classes='{container: "c-search-slim c-search-slim--negative", form:
+          "c-search-slim__form", input: "c-search-slim__input"}'>
+            <span slot='icon' class='c-search-slim__icon'></span>
+          </search-bar>
+        </script>
+        <div data-vue-cpt='navbar-search'></div>
+      </div>
 
-  </nav>
+      <div class='el:o-navbar__slot el:o-navbar__slot--stretch el:amx-Ta(r)'>
+        <ul class='el:m-list el:m-list--hrz el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-Tt(u) el:amx-D(n)@<sm'>
+
+          <!-- nav link -->
+          <li class='el:amx-Mr(2em)'>
+            <%= link_to t('dictionary.blog'), posts_path, class: controller_name.eql?('posts') ? 'el:m-link-nav--active' : '' %>
+          </li>
+          <li class='el:amx-Mr(2em)'>
+            <%= link_to t('dictionary.contact_us'), contact_us_path, class: controller_name.eql?('contact_us') ? 'el:m-link-nav--active' : '' %>
+          </li>
+
+          <!-- language dropdown -->
+          <li class='el:amx-Mr(2em)'>
+            <%= render 'language_dropdown' %>
+          </li>
+
+          <!-- login -->
+          <li>
+            <%- if user_account_signed_in? %>
+              <%= render 'user_dropdown' %>
+            <% else %>
+              <span class='el:amx-D(n)@sm el:amx-Mr(0.5em)'>
+                <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
+                  class: 'btn btn--gray-border btn--rounded btn--small btn--uppercase' %>
+              </span>
+
+              <span class='el:amx-D(n)@sm'>
+                <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
+                  class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
+              </span>
+            <%- end %>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- off-canvas menu button -->
+      <div class='el:o-navbar__slot el:amx-D(n)@>lg'>
+        <a data-off-canvas-menu='#main-menu' data-off-canvas-menu-tpl='#main-menu-tpl' class='el:o-navbar__offcanvas-button'></a>
+      </div>
+
+    </div>
+  </div>
 </div>

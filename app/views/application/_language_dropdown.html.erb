@@ -1,35 +1,18 @@
-<div data-dropdown class='c-dropdown'>
-  <a class='c-label'href='javascript:void(0)'>
-    <%= svg_use('icons', I18nHelper.root_language, class: 'c-label__icon') %>
-    <span class='c-label__text c-label__text--shrink-25% el:amx-Tt(u)'><%= I18nHelper.root_language %></span>
-  </a>
-  <div class='c-dropdown__menu-slot'>
-    <ul class='c-menu'>
-      <span class='c-menu__arrow-up'></span>
-      <li>
-        <%= link_to (root_url(subdomain: params[:subdomain]).chomp('/') + request.path + '?intl=true') do %>
-          <span class='c-label'>
-            <%= svg_use('icons', 'en', class: 'c-label__icon') %>
-            <span class='c-label__text c-label__text--shrink-25%'>EN</span>
-          </span>
+<div class='el:o-dropdown'>
+  <a href='javascript:void(0)' class='el:o-dropdown__action'>
+    <svg width='1rem' height='1rem' class='el:amx-Mr(0.375em) el:amx-Va(m) el:amx-D(ib)'>
+      <use xlink:href='#icons-<%= I18n.locale %>' />
+    </svg></a>
+  <ul class='el:o-dropdown__menu el:amx-Pb(-1.25em) el:o-dropdown__menu--dark el:o-dropdown__menu--right'>
+    <% I18nHost.new(ENV.fetch('HOST') { 'classpert.com' } ).each do |locale, url| %>
+      <li class='el:amx-Mb(1.25em) el:amx-Fs(0.75em)'>
+        <%= link_to ("//" + url + request.path + (locale == 'en' ? '?intl=true' : '')) do %>
+          <svg width='1em' height='1em' class='el:amx-Mr(0.25em) el:amx-Va(m) el:amx-D(ib)'>
+            <use xlink:href='#icons-<%= locale %>' />
+          </svg>
+          <span style='vertical-align: middle;' class='el:amx-C_white'><%= t("iso639_codes.#{I18nHelper.sanitize_locale(locale)}")%></span>
         <% end %>
       </li>
-      <li>
-        <%= link_to (root_url(subdomain: ['es', params[:subdomain]].join('.').chomp('.')).chomp('/') + request.path) do %>
-          <span class='c-label'>
-            <%= svg_use('icons', 'es', class: 'c-label__icon') %>
-            <span class='c-label__text c-label__text--shrink-25%'>ES</span>
-          </span>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to (root_url(subdomain: ['pt-BR', params[:subdomain]].join('.').chomp('.')).chomp('/') + request.path) do %>
-          <span class='c-label'>
-            <%= svg_use('icons', 'pt', class: 'c-label__icon') %>
-            <span class='c-label__text c-label__text--shrink-25%'>PT</span>
-          </span>
-        <% end %>
-      </li>
-    </ul>
-  </div>
+    <% end %>
+  </ul>
 </div>
