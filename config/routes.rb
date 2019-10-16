@@ -1,3 +1,5 @@
+user_dashboard = URI(ENV.fetch('USER_DASHBOARD_URL') { "//user.classpert.com" })
+
 Rails.application.routes.draw do
 
   # Devise
@@ -8,8 +10,11 @@ Rails.application.routes.draw do
   devise_for :user_accounts, controllers: {
     sessions: 'user_accounts/sessions',
     registrations: 'user_accounts/registrations',
+    passwords: 'user_accounts/passwords',
     omniauth_callbacks: 'user_accounts/omniauth_callbacks'
   }
+
+  post '/user_accounts/token/:token', to: 'user_accounts/token#token', as: :user_account_token
 
   mount Vueonrails::Engine, at: 'vue'
   root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { '' }
@@ -28,8 +33,13 @@ Rails.application.routes.draw do
 
   resources :posts, path: 'blog'
 
-  namespace :user_accounts do
-    match '*dashboard', to: 'dashboard#index', via: [:get], as: :dashboard
+  direct :user_dashboard do
+    {
+      protocol: user_dashboard.scheme,
+      host: user_dashboard.host,
+      port: user_dashboard.port,
+      params: { locale: I18n.locale }
+    }
   end
 
   resources :videos, only: :show

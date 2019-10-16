@@ -5,8 +5,8 @@ class Profile < ApplicationRecord
 
   belongs_to :user_account
 
-  def avatar(version=:sm)
-    image_url(version) || user_account.oauth_accounts.map(&:avatar).first
+  def avatar_url
+    uploaded_avatar_url || oauth_avatar_url
   end
 
 end

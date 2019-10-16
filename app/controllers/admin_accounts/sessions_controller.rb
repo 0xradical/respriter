@@ -3,7 +3,7 @@
 class AdminAccounts::SessionsController < Devise::SessionsController
   respond_to :json
 
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token, if: :json_request?
   #protect_from_forgery unless: -> { request.format.json? }, prepend: true
   #protect_from_forgery with: :null_session
 
@@ -24,7 +24,11 @@ class AdminAccounts::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  # protected
+  protected
+
+  def json_request?
+    request.format.json?
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params

@@ -10,6 +10,10 @@ class ImageUploader < CarrierWave::Uploader::Base
     process resize_to_limit: [32,32]
   end
 
+  def store_dir
+    "unsigned"
+  end
+
   def serializable_hash
     super.tap { |h| h[:path] = self.path }
   end
@@ -23,7 +27,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    @name ||= "#{File.basename(file.original_filename, '.*')}-#{md5}#{File.extname(super)}" if super
+    @name ||= "#{imageable_name}__#{File.basename(file.original_filename, '.*')}-#{md5}#{File.extname(super)}" if super
   end
 
   protected

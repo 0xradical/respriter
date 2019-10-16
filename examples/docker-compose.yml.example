@@ -113,15 +113,27 @@ services:
     volumes:
       - redis:/data
 
+  postgrest:
+    image: postgrest/postgrest
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    environment:
+      PGRST_DB_URI:       postgres://${AUTHENTICATOR_USER}:${AUTHENTICATOR_PASSWORD}@${PG_HOST}:${PG_PORT}/${PG_DATABASE}
+      PGRST_DB_SCHEMA:    ${API_SCHEMA}
+      PGRST_DB_ANON_ROLE: ${API_ANONYMOUS_ROLE}
+      PGRST_JWT_SECRET:   ${JWT_SECRET}
+
   postgres:
-    image: classpert/database:1.1.3
+    image: classpert/database:1.2.2
     environment:
       POSTGRES_DB: quero_development
     ports:
       - 5432:5432
 
   postgres_test:
-    image: classpert/database:1.1.3
+    image: classpert/database:1.2.2
     environment:
       POSTGRES_DB: quero_test
     ports:

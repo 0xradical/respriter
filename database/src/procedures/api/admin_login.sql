@@ -4,23 +4,16 @@ CREATE OR REPLACE FUNCTION api.admin_login(
 ) RETURNS text
 AS $$
 DECLARE
-  _role    varchar;
   admin_id bigint;
   result   text;
 BEGIN
-  SELECT current_user INTO _role;
-
-  SET ROLE "authenticator";
-
   SELECT
     id
-  FROM api.admin_accounts
+  FROM app.admin_accounts
   WHERE
-    api.admin_accounts.email              = admin_login.email AND
-    api.admin_accounts.encrypted_password = public.crypt(admin_login.password, api.admin_accounts.encrypted_password)
+    app.admin_accounts.email              = admin_login.email AND
+    app.admin_accounts.encrypted_password = public.crypt(admin_login.password, app.admin_accounts.encrypted_password)
   INTO admin_id;
-
-  EXECUTE ('SET ROLE ' || _role);
 
   IF admin_id IS NULL THEN
     RAISE invalid_password USING message = 'invalid email or password';
@@ -40,4 +33,4 @@ BEGIN
 
   RETURN result;
 END;
-$$ LANGUAGE plpgsql;
+$$ SECURITY DEFINER LANGUAGE plpgsql;

@@ -1,7 +1,7 @@
 default: &default
   adapter:            postgresql
   encoding:           unicode
-  schema_search_path: api,app,jwt,triggers,settings,public,lit
+  schema_search_path: app,public,api
   pool:               <%= ENV.fetch 'RAILS_MAX_THREADS', 5 %>
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
@@ -11,7 +11,7 @@ development:
   host:     <%= ENV.fetch 'PG_HOST',     'localhost'              %>
   port:     <%= ENV.fetch 'PG_PORT',     '5432'                   %>
   username: <%= ENV.fetch 'PG_USER',     'postgres'               %>
-  database: <%= ENV.fetch 'PG_DATABASE', 'quero_development'      %>
+  database: <%= ENV.fetch 'PG_DATABASE', 'classpert_development'  %>
 
 test:
   <<: *default

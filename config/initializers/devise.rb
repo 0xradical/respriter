@@ -234,6 +234,9 @@ Devise.setup do |config|
   config.jwt do |jwt|
     jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
     jwt.expiration_time = 2.days.to_i
+    jwt.dispatch_requests = [
+      ['GET', %r{^/user_accounts/auth/\w+/callback$}]
+    ]
   end
 
   # Configure the default scope given to Warden. By default it's the first
@@ -264,8 +267,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :github,   ENV['GITHUB_KEY'],    ENV['GITHUB_SECRET'],    scope: 'user'
   config.omniauth :linkedin, ENV['LINKEDIN_KEY'],  ENV['LINKEDIN_SECRET'],  scope: 'r_liteprofile r_emailaddress'
-  config.omniauth :facebook, ENV['FACEBOOK_KEY'],  ENV['FACEBOOK_SECRET'],  scope: 'email'
-  #config.omniauth :google,   ENV['GOOGLE_KEY'],    ENV['GOOGLE_SECRET'],    scope: 'r_basicprofile r_emailaddress'
+  config.omniauth :facebook, ENV['FACEBOOK_KEY'],  ENV['FACEBOOK_SECRET'],  scope: 'email', secure_image_url: true, image_size: 'large'
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

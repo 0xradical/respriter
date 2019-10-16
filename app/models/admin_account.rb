@@ -14,7 +14,10 @@ class AdminAccount < ApplicationRecord
   end
 
   def jwt_payload
-    { preferences: preferences }
+    {
+      role:       'admin',
+      preferences: preferences
+    }
   end
 
   def build_profile

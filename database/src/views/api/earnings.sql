@@ -19,7 +19,7 @@ CREATE VIEW api.earnings AS
     (enrollments.tracking_data->>'utm_medium')::text   AS utm_medium,
     (enrollments.tracking_data->>'utm_term')::text     AS utm_term,
     tracked_actions.created_at
-  FROM api.tracked_actions
-    LEFT JOIN api.enrollments ON enrollments.id = tracked_actions.enrollment_id
-    LEFT JOIN api.courses     ON courses.id     = enrollments.course_id
-    LEFT JOIN api.providers   ON providers.id   = courses.provider_id;
+  FROM app.tracked_actions
+    LEFT JOIN app.enrollments ON enrollments.id = tracked_actions.enrollment_id
+    LEFT JOIN app.courses     ON courses.id     = enrollments.course_id
+    LEFT JOIN app.providers   ON providers.id   = courses.provider_id;

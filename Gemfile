@@ -69,6 +69,8 @@ gem 'redis-namespace'
 gem 'redis-rails'
 
 # Background jobs
+gem 'que', '1.0.0.beta3'
+gem 'que-web'
 gem 'sidekiq'
 gem 'sidekiq-unique-jobs'
 

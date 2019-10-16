@@ -74,4 +74,4 @@ RUN  bundle install
 
 COPY package.json /app
 COPY yarn.lock    /app
-RUN  yarn install --modules-folder=$NODE_PATH
+RUN  yarn global add node-pre-gyp && yarn install --modules-folder=$NODE_PATH

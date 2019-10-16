@@ -1,17 +1,16 @@
 Rails.application.configure do
+
+  # CORS
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins /.*\.classpert\.com\Z/, /.*\.classpert-staging\.com\Z/
+      resource '*', headers: :any, credentials: true, expose: %w(Authorization),
+      methods: [:get, :put, :patch, :post, :delete, :options]
+    end
+  end
+
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
-
-  config.middleware.insert_before 0, Rack::Cors do
-
-    allow do
-      origins '*'
-      #origins /https?:\/\/admin.classpert.com/, /https?:\/\/blog.classpert.com/,/https?:\/\/classpert.com/, /https?:\/\/staging.classpert.com/
-      # The admin app depends on the authorization header being exposed
-      resource '*', headers: :any, expose: %w(Authorization), methods: [:get, :put, :post, :head, :patch, :options]
-    end
-
-  end
 
   # Settings specified here will take precedence over those in config/application.rb.
 

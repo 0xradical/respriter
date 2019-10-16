@@ -34,10 +34,52 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || request.env['omniauth.origin'] || root_path
+    store_jwt_or_sign_out_on_expiration
+    stored_location_for(resource) || request.env['omniauth.origin'] || user_logged_default_path
   end
 
   private
+  def store_jwt_or_sign_out_on_expiration
+    token = request.env['warden-jwt_auth.token'] || session[:current_user_jwt]
+    return unless token.present?
+
+    payload, _ = JWT.decode token, nil, false
+
+    if Time.at(payload['exp']) < Time.now
+      sign_out :user_account
+      session[:current_user_jwt] = nil
+      flash.delete :alert
+    else
+      session[:current_user_jwt] = token
+    end
+  end
+
+  def user_logged_default_path
+    return new_user_account_session_path unless session[:current_user_jwt]
+
+    redir_path = session[:user_dashboard_redir] || '/' 
+
+    redirect_params = {
+      locale: I18n.locale,
+      token: SessionToken.new(session[:current_user_jwt], request_ip).encrypt
+    }
+
+    "#{ ENV.fetch 'USER_DASHBOARD_URL' }#{redir_path}?#{ redirect_params.to_query }"
+  end
+
+  # Cookie-to-header token 
+  # https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token
+  def set_csrf_cookie
+    cookies['_csrf_token'] = { 
+      value: form_authenticity_token,
+      secure: Rails.env.production?,
+      domain: :all
+    }
+  end
+
+  def request_ip
+    ((request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).to_s).scan(/(.*),|\A(.*)\z/).flatten.compact.first
+  end
 
   def set_locale
     parsed_locale = I18nHelper.sanitize_locale(request.subdomains.first)
