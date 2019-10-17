@@ -4,6 +4,16 @@
   <meta property='og:description' content='<%= t(".meta.description", course: @course.name) %>' />
 <% end %>
 
+<script type='text/javascript'>
+  window.env_context = {
+    devise: {
+      sign_in: "<%= new_user_account_session_path %>",
+      sign_up: "<%= new_user_account_registration_path %>",
+      signed_in: <%= current_user_account.present? %>
+    }
+  }
+</script>
+
 <%= content_for :base_svg_sprites do %>
   <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
   <div data-svg-sprite="<%= elements_asset_path('svgs/packs/providers.svg') %>"></div>
@@ -11,7 +21,11 @@
 
 <%= content_for :javascript do %>
   <%= javascript_pack_tag 'course-page' %>
+  <%= elements_javascript_include_tag 'vars' %>
   <%= stylesheet_pack_tag 'course-page' %>
 <% end %>
 
-<%= render_vue_component "course_page.js", { locale: I18n.locale, course: @course.as_indexed_json } %>
+<%= render_vue_component "course_page.js", {
+  locale: I18n.locale,
+  course: @course.as_indexed_json
+} %>

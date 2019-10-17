@@ -1,50 +1,7 @@
 <template>
   <div class='clspt:course'>
     <!-- promo -->
-    <modal :adaptive="true" :width='mobileViewport() ? "100%" : "33%"' :height='mobileViewport() ? "100%" : "auto"' :scrollable='false' :name='promoId' style='z-index:1000!important'>
-      <div class='el:amx-Pt(5em) el:amx-Pt(1.875em)@>lg el:amx-Pr(1.875em) el:amx-Pb(1.875em) el:amx-Pl(1.875em) el:amx-Pos(r)'>
-        <div class='el:amx-Pos(a)' aria-label="Close" @click='$modal.hide(promoId)' style='top: 0.875em; right: 0.875em;'>
-          <icon name='close' width='1rem' height='1rem' cursor='pointer' class='el:amx-C_blue3'></icon>
-        </div>
-        <div class='el:amx-Fs(1.5em) el:amx-Lh(1.5) el:amx-Fw(b) el:amx-C_gray5'>
-          {{ $t('promo.title') }}
-        </div>
-        <div class='el:amx-Fs(1em) el:amx-Lh(1.2) el:amx-C_gray3 el:amx-Mt(1em) el:amx-Mt(0.5em)@>lg'
-             v-html="$t('promo.subtitle', { benefit: `<span class='el:amx-C_magenta3 el:amx-Fw(b)'>${$t('promo.benefit')}</span>`})">
-        </div>
-        <div class='el:amx-Fs(0.75em) el:amx-C_gray3 el:amx-Lh(1) el:amx-Mt(1em) el:amx-Mt(0.75em)@>lg'>
-          {{ $t('promo.login') }}
-        </div>
-        <ul class='el:amx-Mt(1.5em) el:amx-Mt(1.125em)@>lg el:amx-Mb(1.5em) el:amx-Mb(1em)@>lg' style='list-style:none;padding:0'>
-          <li class='el:amx-Mb(1em) el:amx-Mb(0.5em)@>lg' v-for="provider in ['linkedin', 'github', 'facebook']" :key='provider'>
-            <oauth-account
-              :provider='provider'
-              :authorize-url='`/user_accounts/auth/${provider}?redirect_to=${course.gateway_path}`'
-              :connected='false'
-              ></oauth-account>
-          </li>
-        </ul>
-        <div class='container'>
-          <div class='row'>
-            <div class='col-6' style='padding-left: 0'>
-              <a :href="signInLink" class='btn btn--medium btn--blue-border btn--block'>
-                {{ $t('dictionary.sign_in') }}
-              </a>
-            </div>
-            <div class='col-6' style='padding-right: 0'>
-              <a :href="signUpLink" class='btn btn--medium btn--blue-border btn--block'>
-                {{ $t('dictionary.sign_up') }}
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class='el:amx-Mt(4em) el:amx-Mt(2em)@>lg el:amx-Ta(c)'>
-          <a target='_blank' :href='course.gateway_path' class='el:amx-Fs(1em) el:amx-Fw(b) el:amx-C_gray3'>
-            <span class='el:amx-Lh(1em)'>{{ $t('promo.nologin') }}</span><icon name='arrow-down' transform='rotate(-90deg)' width='0.875em' height='0.875em' cursor='pointer' class='el:amx-Ml(0.25em) el:amx-C_gray3 el:amx-D(ib) el:amx-Va(m)'></icon>
-          </a>
-        </div>
-      </div>
-    </modal>
+    <promo-modal :name='promoId' :course='course'></promo-modal>
 
     <!-- desktop offcanvas -->
     <modal :adaptive="true" width='50%' height="auto" :scrollable="true" :name='offCanvasId'>
@@ -300,7 +257,7 @@ import CourseDescriptionToggler from './CourseDescriptionToggler.vue';
 import CourseRating from '../../shared/CourseRating.vue';
 import CourseSocialSharing from '../../shared/CourseSocialSharing.vue';
 import CourseTags from '../../shared/CourseTags.vue';
-import OauthAccount from '../../shared/OauthAccount.vue';
+import PromoModal from '../../shared/PromoModal.vue';
 
 export default {
 
@@ -331,15 +288,9 @@ export default {
     CourseRating,
     CourseSocialSharing,
     CourseTags,
-    OauthAccount
+    PromoModal
   },
 
-  methods: {
-    mobileViewport: function() {
-      let width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      return width < parseInt(Elements.breakpoints.lg);
-    }
-  },
   computed: {
     chromeExtData () {
       return JSON.stringify({
@@ -372,12 +323,6 @@ export default {
       } else {
         return null
       }
-    },
-    signInLink() {
-      return `${window.env_context.devise.sign_in}?redirect_to=${this.course.gateway_path}`;
-    },
-    signUpLink() {
-      return `${window.env_context.devise.sign_up}?redirect_to=${this.course.gateway_path}`;
     },
     signedIn() {
       return window.env_context.devise.signed_in;

@@ -4,6 +4,9 @@ import { createI18n } from '../js/i18n';
 import CoursePage from '../vue/apps/course_page/App.vue';
 import _ from 'lodash';
 
+import VueJsModal from 'vue-js-modal';
+Vue.use(VueJsModal);
+
 document.addEventListener('DOMContentLoaded', () => {
   // loaded by Rails, hydrated by Vue
   // [data-server-rendered="true"]')
