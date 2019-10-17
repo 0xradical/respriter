@@ -25,5 +25,15 @@ func (router *Router) Routes() {
     middleware.SignedUrl( WithSession(handlers.Udemy) ),
   )
 
+  router.HandleFunc(
+    "/udemy/{course_id:[0-9]+}/first_lecture",
+    middleware.SignedUrl( WithSession(handlers.UdemyLecture) ),
+  )
+
+  router.HandleFunc(
+    "/udemy/{course_id:[0-9]+}/first_lecture/{resolution:high_resolution|low_resolution}",
+    middleware.SignedUrl( WithSession(handlers.UdemyLecture) ),
+  )
+
   router.NewRoute().PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
 }

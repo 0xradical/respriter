@@ -16,28 +16,33 @@ import (
   "app/server/session"
 )
 
-type UdemyCourseEntry struct {
-  Id int `json:"id"`
-  PromoAssets struct {
+type UdemySyllabusResult struct {
+  Results []UdemySyllabusEntry `json:"results"`
+}
+
+type UdemySyllabusEntry struct {
+  Id   int  `json:"id"`
+  Free bool `json:"is_free"`
+  Asset *struct {
     DownloadUrls struct {
       Videos JsonVideoList `json:"Video"`
     } `json:"download_urls"`
-  } `json:"promo_asset"`
+  } `json:"asset"`
 }
 
-func Udemy (session *session.Session, writer http.ResponseWriter, request *http.Request) error {
+func UdemyLecture (session *session.Session, writer http.ResponseWriter, request *http.Request) error {
   vars := mux.Vars(request)
 
   fmt.Fprintf(os.Stderr, "Vars: %v\n", vars)
 
-  courseEntry, err := fetchUdemyCourse(session, vars["course_id"])
+  syllabusEntry, err := fetchUdemySyllabusEntry(session, vars["course_id"])
   if err != nil {
     return err
   }
 
-  sort.Sort(courseEntry.PromoAssets.DownloadUrls.Videos)
+  sort.Sort(syllabusEntry.Asset.DownloadUrls.Videos)
 
-  videos := courseEntry.PromoAssets.DownloadUrls.Videos
+  videos := syllabusEntry.Asset.DownloadUrls.Videos
   switch vars["resolution"] {
   case "high_resolution":
     http.Redirect(writer, request, videos[0].File, 307)
@@ -50,7 +55,7 @@ func Udemy (session *session.Session, writer http.ResponseWriter, request *http.
   return nil
 }
 
-func fetchUdemyCourse (session *session.Session, courseId string) (*UdemyCourseEntry, error) {
+func fetchUdemySyllabusEntry (session *session.Session, courseId string) (*UdemySyllabusEntry, error) {
   username := session.Config.UdemyApiUser
   password := session.Config.UdemyApiPassword
 
@@ -58,7 +63,7 @@ func fetchUdemyCourse (session *session.Session, courseId string) (*UdemyCourseE
     Timeout: time.Second * 5,
   }
 
-  url := fmt.Sprintf("https://www.udemy.com/api-2.0/courses/%s/?fields[course]=@min,promo_asset", courseId)
+  url := fmt.Sprintf("https://www.udemy.com/api-2.0/courses/%s/public-curriculum-items/?page_size=10&fields[lecture]=@min,is_free,asset&fields[asset]=download_urls", courseId)
   apiRequest, err := http.NewRequest("GET", url, nil)
   if err != nil {
     return nil, err
@@ -83,11 +88,26 @@ func fetchUdemyCourse (session *session.Session, courseId string) (*UdemyCourseE
     return nil, err
   }
 
-  courseEntry := UdemyCourseEntry{}
-  err = json.Unmarshal([]byte(body), &courseEntry)
+  syllabusResults := UdemySyllabusResult{}
+  err = json.Unmarshal([]byte(body), &syllabusResults)
   if err != nil {
     return nil, err
   }
 
-  return &courseEntry, nil
+  entry, err := findFirstFreeVideo(syllabusResults.Results)
+  if err != nil {
+    return nil, err
+  }
+
+  return entry, nil
+}
+
+func findFirstFreeVideo(syllabusEntries []UdemySyllabusEntry) (*UdemySyllabusEntry, error) {
+  for _, entry := range syllabusEntries {
+    if entry.Free && entry.Asset != nil {
+      return &entry, nil
+    }
+  }
+
+  return nil, errors.NotFound(nil, "Missing First Lecture Video")
 }
