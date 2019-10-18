@@ -46,7 +46,7 @@ class LocaleRouter
   end
 
   def whitelisted_routes
-    @path =~ /^\/api\/admin\// || @path =~ /^\/admin_accounts\/sign_in/
+    @path =~ /^\/admin_accounts\/sign_in/ || @path =~ /^\/api\//
   end
 
   def i18n_subdomains
