@@ -10,35 +10,33 @@ class OauthAccount < ApplicationRecord
 
   class << self
 
-    def from_provider(oauth:, session: {})
+    def user_account_from!(oauth:, session: {})
 
-      oauth_account = find_or_create_by(provider: oauth['provider'], uid: oauth['uid']) do |oauth_acc|
-        oauth_acc.raw_data = oauth
+      oauth_acc = find_by(provider: oauth['provider'], uid: oauth['uid'])
+
+      if oauth_acc.nil?
+        transaction do
+          oauth_acc = create(provider: oauth['provider'], uid: oauth['uid'])
+          oauth_acc.raw_data = oauth
+          oauth_acc.user_account = UserAccount.find_or_create_by(email: oauth[:info][:email]) do |u|
+            u.password        = Devise.friendly_token[0,20],
+            u.tracking_data   = session[:tracking_data],
+            u.confirmed_at    = Time.current
+          end
+          oauth_acc.save
+          oauth_acc.user_account.skip_confirmation_notification!
+          oauth_acc.user_account.reload
+        end
       end
 
-      return oauth_account.user_account if oauth_account.user_account.present?
-
-      user = UserAccount.find_or_create_by(email: oauth[:info][:email]) do |user|
-        user.tracking_data                  = session&.[](:tracking_data) || {}
-        user.password                       = SecureRandom.hex(16)
-        user.confirmed_at                   = Time.current
-        user.skip_confirmation_notification!
+      oauth_acc.user_account.profile.tap do |profile|
+        profile.oauth_avatar_url   =   oauth['info']['image'] || oauth['info']['picture_url']
+        profile.name               ||= oauth['info']['name']
+        profile.save
       end
 
-      user.reload
+      oauth_acc.user_account
 
-      oauth_account.raw_data.tap do |oauth_hash|
-        user.profile.oauth_avatar_url = oauth_hash['info']['image'] || oauth_hash['info']['picture_url']
-        user.profile.name             = oauth_hash['info']['name']
-      end
-
-      user.profile.save!
-      user.oauth_accounts << oauth_account
-
-      return user
-
-      rescue ActiveRecord::RecordNotUnique
-        retry
     end
 
   end

@@ -2,26 +2,18 @@
 
 class UserAccounts::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
-  before_action :create_oauth_session, only: [:github, :facebook, :linkedin]
+  before_action :find_or_create_user_account, only: [:github, :facebook, :linkedin]
 
   def github
     sign_in_and_redirect @user_account, scope: :user_account
-    #sign_in @user_account, scope: :user_account
-    #redirect_to user_accounts_dashboard_path('dashboard')
-    #render :success
   end
 
   def linkedin
     sign_in_and_redirect @user_account, scope: :user_account
-    #redirect_to user_accounts_dashboard_path('dashboard')
-    #render :success
   end
 
   def facebook
     sign_in_and_redirect @user_account, scope: :user_account
-    #sign_in @user_account, scope: :user_account
-    #redirect_to user_accounts_dashboard_path('dashboard')
-    #render :success
   end
 
   # def passthru
@@ -35,16 +27,13 @@ class UserAccounts::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
 
   # protected
 
-  def create_oauth_session
-    if user_account_signed_in?
-      current_user_account.add_oauth_account(request.env['omniauth.auth'])
-    else
-      @user_account = OauthAccount.from_provider(oauth: request.env['omniauth.auth'])
-    end
+  def find_or_create_user_account
+    @user_account = OauthAccount.user_account_from!(oauth: request.env['omniauth.auth'], session: session)
   end
 
   # The path used when OmniAuth fails
   # def after_omniauth_failure_path_for(scope)
   #   super(scope)
   # end
+
 end
