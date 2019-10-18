@@ -42,9 +42,7 @@ module CourseSearchHelper
   end
 
   def browser_languages
-    return [] if request.headers['HTTP_ACCEPT_LANGUAGE'].blank?
-
-    HTTP::Accept::Languages.parse(request.headers['HTTP_ACCEPT_LANGUAGE']).map(&:locale) - ['*']
+    HttpAcceptLanguageHandler.new(request.headers['HTTP_ACCEPT_LANGUAGE']).locales
   end
 
   def search_params

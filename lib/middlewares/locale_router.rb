@@ -37,7 +37,7 @@ class LocaleRouter
   end
 
   def browser_language
-    SessionTracker.parse_http_accept_language_header(@env['HTTP_ACCEPT_LANGUAGE'])
+    HttpAcceptLanguageHandler.new(@env['HTTP_ACCEPT_LANGUAGE']).locales.map(&:to_sym)
   end
 
   def intl_subdomain?
