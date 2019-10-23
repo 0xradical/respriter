@@ -7,7 +7,7 @@ Rails.application.configure do
       resource '*', headers: :any, credentials: true, expose: %w(Authorization),
       methods: [:get, :put, :patch, :post, :delete, :options]
     end
-  end 
+  end
 
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
@@ -41,16 +41,21 @@ Rails.application.configure do
 
   config.serve_static_assets = true
 
-  config.action_mailer.perform_caching       = false
+  config.action_mailer.asset_host = "http://#{ENV.fetch('WEBPACKER_DEV_SERVER_PUBLIC', 'localhost:3000')}"
+
+  config.active_job.queue_adapter = :que
+  config.action_mailer.perform_caching = false
+  config.action_mailer.deliver_later_queue_name = 'default'
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options   = {
-    host: ENV.fetch('HOST', 'localhost:3000')
+    host: ENV.fetch('HOST', 'localhost'),
+    port: ENV.fetch('PORT', 3000)
   }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'mailcatcher',
-    port:    1025
+    address: ENV.fetch('MAILCATCHER_HOST','mailcatcher'),
+    port:    ENV.fetch('MAILCATCHER_PORT', 1025)
   }
 
   # Print deprecation notices to the Rails logger.

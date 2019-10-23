@@ -16,7 +16,7 @@
 <% end %>
 
 <script id='search-impact' type='x-vue-template'>
-  <search-bar :css-classes='{container: "c-search-impact", form: "c-search-impact__form", input: "c-search-impact__input c-search-impact__input--hack"}'>
+  <search-bar placeholder="<%= t('components.searchbar_placeholder') %>" :css-classes='{container: "c-search-impact", form: "c-search-impact__form", input: "c-search-impact__input c-search-impact__input--hack"}'>
     <button slot='search-action' class='c-search-impact__btn'></button>
   </search-bar>
 </script>
@@ -91,9 +91,9 @@
             <div class='el:amx-Mt(2.5em) el:amx-Mt(6.5em)@>lg'>
               <span data-countup
                   data-countup-duration=2
-                  data-countup-start-val=100000 
+                  data-countup-start-val=100000
                   data-countup-count='<%= @courses_count %>'
-                  data-countup-run=0 
+                  data-countup-run=0
                   class='el:amx-C_magenta4 el:amx-Ta(r)@>lg el:amx-Lh(1) el:amx-Fs(3em) el:amx-D(b) el:amx-Fw(b)'>
                 <%= @courses_count %>
               </span>

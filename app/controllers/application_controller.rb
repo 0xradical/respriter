@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
 
   def user_logged_default_path
     return new_user_account_session_path unless session[:current_user_jwt]
-    redir_path = session[:user_dashboard_redir] || '/' 
+    redir_path = session[:user_dashboard_redir] || '/'
     redirect_params = {
       locale: I18n.locale
     }
@@ -74,10 +74,10 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  # Cookie-to-header token 
+  # Cookie-to-header token
   # https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token
   def set_csrf_cookie
-    cookies[:_csrf_token] = { 
+    cookies[:_csrf_token] = {
       value: form_authenticity_token,
       secure: Rails.env.production?,
       domain: :all,

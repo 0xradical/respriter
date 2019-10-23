@@ -37,6 +37,9 @@ Rails.application.routes.draw do
 
   get '/forward/:id', to: 'gateway#index', as: :gateway
 
+  get '/reviews/:id', to: 'course_reviews#show', as: :course_review
+  post '/reviews/:id', to: 'course_reviews#update'
+
   get '/:tag',
   to: 'course_bundles#index',
   constraints: {
