@@ -107,7 +107,7 @@
 
         <div id='results' class='col-12 col-lg-9 vld-parent'>
           <loading :active.sync="isLoadable" :is-full-page='true' color='#4C636F'></loading>
-          <course-list :courses='data.records'></course-list>
+          <course-list :tag='tag' :courses='data.records'></course-list>
           <pagination @paginate='paginate' pagination-anchor='#results' :records-per-page='recordsPerPage' :current-page='page' :num-of-pages='numOfPages'></pagination>
         </div>
 
@@ -216,6 +216,9 @@
       },
       orderOptions() {
         return this.$classpert.orderOptions;
+      },
+      tag () {
+        return this.searchEndpoint.replace('.json','')
       }
     },
     beforeCreate() {
