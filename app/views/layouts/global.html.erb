@@ -271,7 +271,7 @@
 
     <%= render 'offcanvas_menu' %>
     <div data-vue-cpt='promo-video-modal'></div>
-    <%= javascript_pack_tag 'vendor', 'application' %>
+    <%= javascript_pack_tag 'vendor', 'application', 'promo-modal' %>
     <%= elements_javascript_include_tag 'bundle' %>
     <%= yield :javascript  %>
   </body>

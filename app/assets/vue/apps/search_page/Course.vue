@@ -1,8 +1,5 @@
 <template>
   <div class='clspt:course'>
-    <!-- promo -->
-    <promo-modal :name='promoId' :course='course'></promo-modal>
-
     <!-- desktop offcanvas -->
     <modal :adaptive="true" width='50%' height="auto" :scrollable="true" :name='offCanvasId'>
       <div class='el:o-hcard-offcanvas el:amx-Pt(1.875em) el:amx-Pr(1.875em) el:amx-Pb(1.875em) el:amx-Pl(1.875em)'>
@@ -72,8 +69,7 @@
         </course-provider>
 
         <course-title :course='course'
-                      :rootClasses="['el:amx-C_gray5']"
-                      :clickHandler="promoHandler">
+                      :rootClasses="['el:amx-C_gray5']">
         </course-title>
 
         <course-attribute icon='clock'
@@ -90,8 +86,7 @@
 
         <div class='el:amx-D(f) el:amx-FxDi(c) el:amx-FxJc(c) el:amx-Ta(c) el:amx-Ml(0.75em)' style='flex: 0 0 40%;'>
           <course-button :course="course"
-                         :buttonClasses="['el:amx-Mb(0.75em)','el:amx-Fs(0.625em)','btn--block']"
-                         :clickHandler="promoHandler">
+                         :buttonClasses="['el:amx-Mb(0.75em)','el:amx-Fs(0.625em)','btn--block']">
           </course-button>
           <template v-if='coursePageLink'>
             <a class='el:amx-Fs(0.625em) btn btn--rounded btn--blue-border' :href='coursePageLink' target='_blank'>
@@ -140,8 +135,7 @@
                   <div class='col'>
                     <course-title :course='course'
                                   :titleClasses="['el:amx-Fs(1.5em)']"
-                                  :lines='5'
-                                  :clickHandler="promoHandler">
+                                  :lines='5'>
                     </course-title>
                   </div>
                 </div>
@@ -154,8 +148,7 @@
                   </div>
                   <div class='col-8 el:amx-D(f) el:amx-FxDi(c) el:amx-FxJc(c)'>
                     <course-button :course="course"
-                                  :buttonClasses="['btn--large','btn--block']"
-                                  :clickHandler="promoHandler">
+                                  :buttonClasses="['btn--large','btn--block']">
                     </course-button>
                   </div>
                 </div>
@@ -257,7 +250,6 @@ import CourseDescriptionToggler from './CourseDescriptionToggler.vue';
 import CourseRating from '../../shared/CourseRating.vue';
 import CourseSocialSharing from '../../shared/CourseSocialSharing.vue';
 import CourseTags from '../../shared/CourseTags.vue';
-import PromoModal from '../../shared/PromoModal.vue';
 
 export default {
 
@@ -287,8 +279,7 @@ export default {
     CourseDescriptionToggler,
     CourseRating,
     CourseSocialSharing,
-    CourseTags,
-    PromoModal
+    CourseTags
   },
 
   computed: {
@@ -303,29 +294,12 @@ export default {
     mobileOffCanvasId() {
       return `mobile-offcanvas-${this.course.id}`;
     },
-    promoId() {
-      return `promo-${this.course.id}`;
-    },
-    promoHandler() {
-      if(this.signedIn) {
-        return null;
-      } else {
-        return (
-          () => {
-            this.$modal.show(this.promoId);
-          }
-        );
-      }
-    },
     coursePageLink() {
       if (this.course.slug) {
         return `/${this.course.provider_slug}/courses/${this.course.slug}`;
       } else {
         return null
       }
-    },
-    signedIn() {
-      return window.env_context.devise.signed_in;
     }
   }
 }

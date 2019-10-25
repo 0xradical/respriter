@@ -48,7 +48,7 @@ module App
 
     Elements.configure do |elements_config|
       elements_config.asset_host    = ENV.fetch('ELEMENTS_ASSET_HOST') { 'https://elements-prd.classpert.com' }
-      elements_config.asset_version = '4.17.0'
+      elements_config.asset_version = '4.17.1'
     end
 
     config.action_controller.forgery_protection_origin_check = false
