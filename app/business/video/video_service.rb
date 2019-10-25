@@ -2,7 +2,7 @@ class Video::VideoService
 
   def self.call(params)
     url = "#{ video_url params.path }?#{ signed_query_params params.path }"
-    { url: signed(url), embed: params.embed }
+    { url: url, embed: params.embed }
   end
 
   def self.video_url(path)
@@ -11,7 +11,7 @@ class Video::VideoService
 
   def self.signed_query_params(path)
     query_string = "date=#{Time.now.to_i}"
-    query_string + sign("[GET]/#{path}?#{query_string}")
+    query_string + '&token=' + sign("[GET]/#{path}?#{query_string}")
   end
 
   def self.sign(payload)
