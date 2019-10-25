@@ -41,7 +41,7 @@ Rails.application.configure do
 
   config.serve_static_assets = true
 
-  config.action_mailer.asset_host = "http://#{ENV.fetch('WEBPACKER_DEV_SERVER_PUBLIC', 'localhost:3000')}"
+  config.action_mailer.asset_host = "http://#{ENV.fetch('WEBPACKER_DEV_SERVER_PUBLIC')}"
 
   config.active_job.queue_adapter = :que
   config.action_mailer.perform_caching = false
