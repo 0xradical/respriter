@@ -19,8 +19,8 @@ class OauthAccount < ApplicationRecord
           oauth_acc = create(provider: oauth['provider'], uid: oauth['uid'])
           oauth_acc.raw_data = oauth
           oauth_acc.user_account = UserAccount.find_or_create_by(email: oauth[:info][:email]) do |u|
-            u.password        = Devise.friendly_token[0,20],
-            u.tracking_data   = session[:tracking_data],
+            u.password        = Devise.friendly_token[0,20]
+            u.tracking_data   = session[:tracking_data]
             u.confirmed_at    = Time.current
           end
           oauth_acc.save

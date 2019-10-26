@@ -13,8 +13,7 @@ class UserAccount < ApplicationRecord
 
   has_many :tracked_actions, through: :enrollments
   has_many :course_reviews
-  #has_many :favorites,         dependent: :destroy
-  #has_many :favorite_courses,  through: :favorites,     source: :course
+  has_many :certificates, dependent: :destroy
 
   delegate :avatar_url, to: :profile
 
