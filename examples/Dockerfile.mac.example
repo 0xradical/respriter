@@ -6,12 +6,12 @@
 # * ChromeDriver & Google Chrome
 # * Node.js + phantomjs (required by the poltergeist gem)
 
-FROM ruby:2.6.2-slim
+FROM ruby:2.6.5-slim
 MAINTAINER codextremist <felipe.japm@gmail.com>
 
 ARG node_version=8.11.1
 ARG chromedriver_version=73.0.3683.68
-ARG yarn_version=1.16.0
+ARG yarn_version=1.19.1
 ARG UNAME=developer
 ARG UID=1000
 ARG GID=1000
@@ -21,7 +21,6 @@ ENV PACKAGES="apt-utils sudo procps wget apt-transport-https gpg locales openssl
 RUN groupadd -g $GID $UNAME                                                                                    && \
     useradd -m -u $UID -g $GID -s /bin/bash $UNAME                                                             && \
     mkdir -p /usr/share/man/man1 && mkdir -p /usr/share/man/man7                                               && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" >> /etc/apt/sources.list.d/pgdg.list && \
     apt-get update --no-install-recommends -qq --fix-missing                                                   && \
     apt-get install -qq -y --allow-unauthenticated $PACKAGES                                                   && \
     locale-gen en_US.UTF-8                                                                                     && \
