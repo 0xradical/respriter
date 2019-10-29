@@ -5,7 +5,7 @@
     <%= yield :meta %>
 
     <!-- Elements css-->
-    <%= elements_stylesheet_link_tag 'icon-font', 'bundle' %>
+    <%= elements_stylesheet_link_tag 'icon-font', 'bundle', 'atomic.slim' %>
 
     <!-- App css -->
     <%= stylesheet_pack_tag 'vendor', 'application' %>
@@ -36,7 +36,8 @@
           <%= yield :sub_title %>
         </p>
 
-        <%= link_to 'Find a Course', root_path, class: 'btn btn--blue-flat' %>
+        <%= yield :action %>
+
       </div>
     </div>
   </body>

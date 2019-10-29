@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require "rails"
+
 # Pick the frameworks you want:
 require "active_model/railtie"
 require "active_job/railtie"
@@ -11,6 +12,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 
 # Middlewares
+require_relative "../lib/middlewares/maintenance_mode"
 require_relative "../lib/middlewares/locale_router"
 require_relative "../lib/middlewares/robots_txt_interceptor"
 require_relative "../lib/middlewares/sitemap_xml_interceptor"
@@ -39,6 +41,7 @@ module App
     config.middleware.insert_before(ActionDispatch::Static, RobotsTxtInterceptor)
     config.middleware.insert_before(ActionDispatch::Static, SitemapXmlInterceptor)
     config.middleware.use LocaleRouter
+    config.middleware.use MaintenanceMode
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml')]
     config.i18n.available_locales = ['en', 'es', 'pt-BR']
