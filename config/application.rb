@@ -43,6 +43,8 @@ module App
     config.middleware.use LocaleRouter
     config.middleware.use MaintenanceMode
 
+    config.active_job.queue_adapter = :que
+
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml')]
     config.i18n.available_locales = ['en', 'es', 'pt-BR']
 

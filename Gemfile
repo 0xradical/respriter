@@ -64,15 +64,9 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 
-# Redis
-gem 'redis-namespace'
-gem 'redis-rails'
-
 # Background jobs
-gem 'que', '1.0.0.beta3'
+gem 'que',      git: 'https://github.com/que-rb/que.git', ref: 'c3547'
 gem 'que-web'
-gem 'sidekiq'
-gem 'sidekiq-unique-jobs'
 
 # Sitemap
 gem 'sitemap_generator'
@@ -119,5 +113,3 @@ group :development, :test do
   gem 'factory_bot'
   gem 'factory_bot_rails'
 end
-
-gem 'redis'
