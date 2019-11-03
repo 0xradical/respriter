@@ -445,6 +445,8 @@ GEM
     ruby-vips (2.0.16)
       ffi (~> 1.9)
     rubyzip (2.0.0)
+    rucaptcha (2.5.1)
+      railties (>= 3.2)
     safe_yaml (1.0.5)
     selenium-webdriver (3.142.6)
       childprocess (>= 0.5, < 4.0)
@@ -567,6 +569,7 @@ DEPENDENCIES
   rspec-mocks
   rspec-rails
   ruby-thumbor
+  rucaptcha
   selenium-webdriver
   semantic
   sentry-raven

@@ -55,6 +55,9 @@ gem 'browser'
 gem 'user_agent_parser'
 gem 'http-accept'
 
+# Rucaptcha
+gem 'rucaptcha'
+
 # Authentication
 gem 'devise'
 gem 'devise-jwt', '~> 0.5.8'

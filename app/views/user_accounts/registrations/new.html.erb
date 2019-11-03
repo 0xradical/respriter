@@ -29,9 +29,24 @@
     <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
   </div>
 
+  <div data-form-ctrl class="c-form-ctrl c-form-ctrl--vertical el:amx-Mb(1em)" style='box-sizing:border-box'>
+    <%= f.label 'Type the word in the image below', data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+    <div style='display:inline-block;width:34%;vertical-align:middle;'>
+      <%= rucaptcha_image_tag(alt: 'Captcha') %>
+    </div><div style='display:inline-block;width:66%;vertical-align:middle'>
+      <%= rucaptcha_input_tag(class: 'c-form-ctrl__input el:amx-Ml(0.25em)') %>
+    </div>
+  </div>
+
   <%= f.submit t('devise.registrations.new.section'), class: 'btn btn--blue-flat btn--block' %>
 
 <% end %>
 <%= render "user_accounts/shared/links" %>
   </div>
 </div>
+
+<style>
+  .rucaptcha-image {
+    width: 100%;
+  }
+</style>
