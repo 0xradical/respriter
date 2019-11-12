@@ -12,7 +12,6 @@ BEGIN
       SELECT 1 FROM app.crawler_domains
       WHERE
         provider_crawler_id               = NEW.id
-        AND authority_confirmation_status = 'confirmed'
         AND sitemap.url ~ ('^https?://([a-z0-9\-\_]+\.)*' || domain || '/')
     )
   );

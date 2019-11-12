@@ -34,7 +34,10 @@ GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.user_accounts           
 GRANT SELECT                         ON api.earnings          TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.admin_accounts    TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.certificates      TO "admin";
+GRANT SELECT, INSERT, UPDATE         ON api.crawler_domains   TO "admin";
+GRANT SELECT                         ON api.crawling_events   TO "admin";
 GRANT SELECT                         ON api.earnings          TO "admin";
+GRANT SELECT, INSERT,         DELETE ON api.preview_courses   TO "admin";
 GRANT SELECT,         UPDATE         ON api.profiles          TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.promo_accounts    TO "admin";
 GRANT SELECT, INSERT, UPDATE         ON api.providers         TO "admin";

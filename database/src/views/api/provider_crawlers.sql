@@ -21,7 +21,7 @@ BEGIN
     ) VALUES (
       _provider_id,
       ARRAY[current_setting('request.jwt.claim.sub',true)::bigint],
-      COALESCE(NEW.sitemaps, '{}')
+      COALESCE(app.new_sitemaps(NEW.sitemaps), '{}')
     ) RETURNING * INTO new_record;
 
     RETURN new_record;
@@ -47,7 +47,7 @@ BEGIN
       COALESCE(NEW.published, false),
       COALESCE(NEW.status, 'unverified'),
       COALESCE(NEW.user_account_ids, '{}'),
-      COALESCE(NEW.sitemaps, '{}')
+      COALESCE(app.fill_sitemaps(NEW.sitemaps), '{}')
     ) RETURNING * INTO new_record;
 
     RETURN new_record;
@@ -71,7 +71,7 @@ BEGIN
     UPDATE app.provider_crawlers
     SET
       user_account_ids = NEW.user_account_ids,
-      sitemaps         = NEW.sitemaps
+      sitemaps         = app.merge_sitemaps(OLD.sitemaps, app.new_sitemaps(NEW.sitemaps))
     WHERE
       id = OLD.id
     RETURNING * INTO new_record;
@@ -87,7 +87,7 @@ BEGIN
       published        = NEW.published,
       status           = NEW.status,
       user_account_ids = NEW.user_account_ids,
-      sitemaps         = NEW.sitemaps
+      sitemaps         = app.fill_sitemaps(NEW.sitemaps)
     WHERE
       id = OLD.id
     RETURNING * INTO new_record;

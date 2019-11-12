@@ -6,4 +6,4 @@ BEGIN
     RETURN NULL;
   END IF;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql STABLE;

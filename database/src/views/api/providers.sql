@@ -21,13 +21,9 @@ BEGIN
   IF current_user = 'user' THEN
     UPDATE app.providers
     SET
-      name                 = NEW.name,
-      description          = NEW.description,
-      slug                 = COALESCE(OLD.slug, app.slugify(NEW.slug), app.slugify(NEW.name)),
-      afn_url_template     = NEW.afn_url_template,
-      published            = NEW.published,
-      published_at         = NEW.published_at,
-      encoded_deep_linking = NEW.encoded_deep_linking
+      name        = NEW.name,
+      description = NEW.description,
+      slug        = COALESCE(OLD.slug, app.slugify(NEW.slug), app.slugify(NEW.name))
     WHERE
       id = OLD.id
       AND EXISTS (
