@@ -61,7 +61,7 @@ export default {
       return this.course.video;
     },
     videoExists() {
-      return this.video && (this.video.url || (this.video.type === "youtube" && this.video.id));
+      return this.video && (this.video.url || ( (this.video.type === "youtube" || this.video.type === "vimeo") && this.video.id));
     },
     style() {
       const backgroundImage = this.video && this.video.thumbnail_url;
