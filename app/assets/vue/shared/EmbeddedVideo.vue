@@ -6,7 +6,7 @@
       </video>
     </template>
     <template v-else>
-      <iframe :class='videoClasses' width='100%' height='100%' :src="videoUrl" frameBorder=0 />
+      <iframe :class='videoClasses' width='100%' height='100%' :src="videoUrl" frameBorder=0 allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen"/>
     </template>
   </div>
 </template>
