@@ -21,7 +21,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.provider_crawlers  TO "u
 GRANT SELECT,         UPDATE,         REFERENCES ON app.user_accounts      TO "user";
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.certificates      TO "user";
-GRANT SELECT, INSERT                 ON api.crawler_domains   TO "user";
+GRANT SELECT, INSERT, UPDATE         ON api.crawler_domains   TO "user";
 GRANT SELECT                         ON api.crawling_events   TO "user";
 GRANT SELECT, INSERT,         DELETE ON api.preview_courses   TO "user";
 GRANT SELECT,         UPDATE         ON api.profiles          TO "user";

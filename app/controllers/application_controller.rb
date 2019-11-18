@@ -59,11 +59,23 @@ class ApplicationController < ActionController::Base
 
   def user_logged_default_path
     return new_user_account_session_path unless session[:current_user_jwt]
-    redir_path = session[:user_dashboard_redir] || '/'
     redirect_params = {
       locale: I18n.locale
     }
-    "#{ ENV.fetch 'USER_DASHBOARD_URL' }#{redir_path}?#{ redirect_params.to_query }"
+
+    if session[:developers_dashboard_redir].present?
+      redirect_location = ENV.fetch('DEVELOPERS_DASHBOARD_URL')
+      redirect_path     = session[:developers_dashboard_redir]
+
+      session[:developers_dashboard_redir] = nil
+    else
+      redirect_location = ENV.fetch('USER_DASHBOARD_URL')
+      redirect_path     = session[:user_dashboard_redir] || '/'
+
+      session[:user_dashboard_redir] = nil
+    end
+
+    "#{redirect_location}#{redirect_path}?#{redirect_params.to_query}"
   end
 
   def set_jwt_cookie

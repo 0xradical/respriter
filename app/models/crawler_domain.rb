@@ -1,0 +1,2 @@
+class CrawlerDomain < ApplicationRecord
+end
