@@ -2,10 +2,16 @@ require 'dnsruby'
 
 module Developer
   class DomainAuthorityVerificationJob < Que::Job
+    class Error < StandardError; end
+
     self.priority = 100
 
     def run(id)
       crawler_domain = CrawlerDomain.find(id)
+
+      if crawler_domain.authority_confirmation_status == 'unconfirmed'
+        crawler_domain.update(authority_confirmation_status: 'confirming')
+      end
 
       resolver = Dnsruby::DNS.new
 
@@ -73,6 +79,15 @@ module Developer
             })
 
             finish # or destroy
+          end
+        else
+          if error_count < 10
+            raise DomainAuthorityVerificationJob::Error
+          else
+            CrawlerDomain.transaction do
+              crawler_domain.update(authority_confirmation_status: 'failed')
+              expire
+            end
           end
         end
       end
