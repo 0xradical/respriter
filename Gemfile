@@ -91,6 +91,9 @@ gem 'lograge'
 # HTTParty
 gem 'httparty'
 
+# DNS
+gem 'dnsruby'
+
 group :production do
   # Exceptions
   gem 'sentry-raven'
