@@ -48,7 +48,7 @@ module Developer
           break if authority_confirmed_via_html
 
           begin
-            response = Net::HTTP.get_response(uri)
+            response = Net::HTTP.get_response(u)
 
             if response.code == '200'
               document = Nokogiri::HTML(response.body)
