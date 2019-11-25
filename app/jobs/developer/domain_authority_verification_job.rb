@@ -50,17 +50,18 @@ module Developer
           end
         end
 
-        [ uri, uri.tap{|u| u.scheme = 'http' } ].each do |u|
+        [ uri, uri.dup.tap{|u| u.scheme = 'http' } ].each do |u|
           break if authority_confirmed_via_html
 
           begin
-            response = Net::HTTP.get_response(u)
+            response = Net::HTTP.get_response(URI.parse(u.to_s))
 
             if response.code == '200'
               document = Nokogiri::HTML(response.body)
 
               document.css('meta').each do |meta|
-                if meta[CrawlerDomain::DOMAIN_VERIFICATION_KEY] == crawler_domain.authority_confirmation_token
+                if meta.attributes['name']&.value == CrawlerDomain::DOMAIN_VERIFICATION_KEY &&
+                   meta.attributes['content']&.value == crawler_domain.authority_confirmation_token
                   authority_confirmed_via_html = true
                   break
                 end
