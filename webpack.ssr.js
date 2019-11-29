@@ -1,24 +1,46 @@
-const path = require('path');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const path = require("path");
+const nodeExternals = require("webpack-node-externals");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 module.exports = {
-  target: 'node',
-  entry: path.join(__dirname, 'app/assets/js/ssr/server.js'),
+  target: "node",
+  mode: "development",
+  devtool: "source-map",
+  entry: path.join(__dirname, "app/assets/js/hypernova.js"),
   output: {
-    path: path.join(__dirname, '/ssr'),
-    filename: 'ssr.js',
-    libraryTarget: 'commonjs2'
+    path: path.join(__dirname, "/ssr"),
+    filename: "hypernova.js",
+    chunkFilename: "[name].lazy-chunk.js",
+    libraryTarget: "commonjs2"
   },
-  externals: {
-		canvas: "commonjs canvas"
-	},
+  resolve: {
+    alias: {
+      // "hypernova-vue$": "hypernova-vue/server",
+      "hypernova-renderer": path.resolve(
+        __dirname,
+        "app/assets/js/hypernova/server.js"
+      )
+    }
+  },
+  externals: [
+    { canvas: "commonjs canvas" },
+    nodeExternals({
+      whitelist: [
+        /\.s?css$/,
+        /\.vue$/,
+        /^vue$/,
+        /^vuex$/,
+        /^vue-i18n$/,
+        /^hypernova$/,
+        /^hypernova-vue$/
+      ]
+    })
+  ],
   module: {
     rules: [
       {
         test: /\.js$/,
-        include: [
-          path.join(__dirname, 'app/assets'),
-        ],
+        include: [path.join(__dirname, "app/assets")],
         exclude: /node_modules/,
         use: [
           {
@@ -36,22 +58,13 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        use: ["vue-style-loader", "css-loader", "sass-loader"]
       },
       {
         test: /\.yml$/,
-        use: [
-          'json-loader',
-          'yaml-loader'
-        ]
-      },
+        use: ["json-loader", "yaml-loader"]
+      }
     ]
   },
-  plugins: [
-    new VueLoaderPlugin()
-  ]
-}
+  plugins: [new VueLoaderPlugin()]
+};
