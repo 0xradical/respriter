@@ -13,29 +13,36 @@ class CourseBundlesController < ApplicationController
   end
 
   def show
+    @courses, @root_tags = search()
+
     respond_to do |format|
       format.html do
-
-        search = Search::CourseSearch.new search_query_params.merge(per_page: 0)
-        @root_tags = search.results[:meta][:aggregations][:curated_root_tags].values.map do |results|
-          results.map &:first
-        end.flatten.compact.uniq.map &:to_s
-
-        raise ActionController::RoutingError, "No courses bundles for the term #{@tag}" if @root_tags.empty?
-
+        if @root_tags.empty?
+          raise ActionController::RoutingError, "No courses bundles for the term #{@tag}"
+        end
       end
 
       format.json do
-        search_query_params[:per_page] ||= PER_PAGE
-        search  = Search::CourseSearch.new search_query_params
-        tracker = SearchTracker.new(session_tracker, search, action: :course_bundle_search).store!
-
-        render json: format_aggregations(tracker.tracked_results)
+        render json: @courses
       end
     end
   end
 
   protected
+  def search
+    search_query_params[:per_page] ||= PER_PAGE
+    search  = Search::CourseSearch.new search_query_params
+    tracker = SearchTracker.new(session_tracker, search, action: :course_bundle_search).store!
+    root_tags = search.results[:meta][:aggregations][:curated_root_tags].values.map do |results|
+      results.map &:first
+    end.flatten.compact.uniq.map &:to_s
+
+    [
+      format_aggregations(tracker.tracked_results),
+      root_tags
+    ]
+  end
+
   def search_query_params
     @search_query_params ||= {
       query:      search_params[:q],

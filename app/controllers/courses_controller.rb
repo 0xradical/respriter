@@ -3,13 +3,12 @@ class CoursesController < ApplicationController
 
   # TODO: Refactor interface names and queries
   def index
-    respond_to do |format|
-      format.html do
-        @courses = search()
-      end
+    @courses = search()
 
+    respond_to do |format|
+      format.html
       format.json do
-        render json: search()
+        render json: @courses
       end
     end
   end
