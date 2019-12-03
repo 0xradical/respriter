@@ -16,8 +16,8 @@
           </div>
           <div style="height: 85%;">
             <search-filter
-              :aggregations="data.meta.aggregations"
-              :total="data.meta.total"
+              :aggregations="$store.state.meta.aggregations"
+              :total="$store.state.meta.total"
               :filter="params.filter"
               :mobileUx="true"
               @showResultsClicked="hideMobileFilter"
@@ -43,7 +43,11 @@
           <span
             style="display:inline-block;line-height:1em;font-size:0.875em;padding:20px 0;width:100%"
           >
-            {{ $t("dictionary.search_results", { total: data.meta.total }) }}
+            {{
+              $t("dictionary.search_results", {
+                total: $store.state.meta.total
+              })
+            }}
 
             <template v-if="params.q">
               {{ $t("dictionary.for") }}
@@ -58,9 +62,9 @@
               <pagination
                 @paginate="paginate"
                 pagination-anchor="#body-anchor"
-                :current-page="page"
-                :num-of-pages="numOfPages"
-                :records-per-page="recordsPerPage"
+                :records-per-page="$store.state.meta.per_page"
+                :current-page="$store.state.meta.page"
+                :num-of-pages="$store.state.meta.pages"
               ></pagination>
             </div>
             <div class="el:amx-D(n)@<sm el:amx-D(F) el:amx-FxAi(c) sort">
@@ -123,7 +127,7 @@
               </a>
             </div>
             <search-filter
-              :aggregations="data.meta.aggregations"
+              :aggregations="$store.state.meta.aggregations"
               :filter="params.filter"
               @clearFilterClicked="clearFilter"
               @optionAddedToFilter="addOptionToFilter"
@@ -170,13 +174,13 @@
             :is-full-page="true"
             color="#4C636F"
           ></loading>
-          <course-list :tag="tag" :courses="data.records"></course-list>
+          <course-list :tag="tag" :courses="$store.state.data"></course-list>
           <pagination
             @paginate="paginate"
             pagination-anchor="#results"
-            :records-per-page="recordsPerPage"
-            :current-page="page"
-            :num-of-pages="numOfPages"
+            :records-per-page="$store.state.meta.per_page"
+            :current-page="$store.state.meta.page"
+            :num-of-pages="$store.state.meta.pages"
           ></pagination>
         </div>
       </div>
@@ -196,16 +200,6 @@ import Multiselect from "vue-multiselect";
 
 export default {
   props: {
-    initialData: {
-      type: Object,
-      required: false
-    },
-
-    recordsPerPage: {
-      type: Number,
-      default: 25
-    },
-
     locale: {
       type: String,
       default: "en"
@@ -230,39 +224,13 @@ export default {
       isFetchingRecords: false,
       mobileFilterHidden: true,
       isMobile: false,
-      numOfPages: 0,
       orderCurrentOption: this.orderOptionByKey("rel"),
       orderOptionsToggled: false,
       orderOptionsToggle: function(callback) {
         this.orderOptionsToggled = !this.orderOptionsToggled;
         callback();
-      },
-      data: {
-        meta: {
-          aggregations: {
-            root_audio: {
-              buckets: []
-            },
-            subtitles: {
-              buckets: []
-            },
-            provider_name: {
-              buckets: []
-            },
-            max_price: {
-              value: undefined
-            }
-          }
-        },
-        records: []
       }
     };
-  },
-  watch: {
-    "data.meta.total": function(nVal, oVal) {
-      let total = Math.min(nVal, 10000); // 10000 is the default max window for ES
-      this.numOfPages = parseInt(Math.ceil(total / this.recordsPerPage));
-    }
   },
   computed: {
     page() {
@@ -281,13 +249,7 @@ export default {
       return this.searchEndpoint.replace(".json", "");
     }
   },
-  serverPrefetch() {
-    this.populateDataFromStore();
-  },
   beforeCreate() {
-    if (!this.$classpert) {
-      this.$classpert = {};
-    }
     this.$classpert.orderOptions = [
       { key: "rel", value: {}, i18n_key: "relevance" },
       { key: "price.asc", value: { price: "asc" }, i18n_key: "lowest_price" },
@@ -296,9 +258,6 @@ export default {
   },
   created() {
     this.isMobile = this.isCurrentViewportMobile();
-  },
-  beforeMount() {
-    this.populateDataFromStore();
   },
   mounted() {
     this.$i18n.locale = this.locale;
@@ -336,16 +295,7 @@ export default {
     );
   },
   methods: {
-    populateDataFromStore() {
-      if (this.$store.state.data && this.$store.state.data.length > 0) {
-        this.data.records = this.$store.state.data;
-        this.data.meta = this.$store.state.meta;
-        return true;
-      } else {
-        return false;
-      }
-    },
-    /* No-SSR */
+    // Check for document to be SSR friendly
     isCurrentViewportMobile() {
       if (typeof document === "undefined") {
         return false;
@@ -466,8 +416,7 @@ export default {
       vm.isFetchingRecords = true;
       fetch(url, { method: "GET" }).then(function(resp) {
         resp.json().then(function(json) {
-          vm.data.records = json.data;
-          vm.data.meta = json.meta;
+          vm.$store.commit("setData", json);
           vm.isFetchingRecords = false;
         });
       });

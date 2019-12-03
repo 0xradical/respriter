@@ -1,5 +1,4 @@
 class CoursesController < ApplicationController
-  PER_PAGE = 20
   include CourseSearchHelper
 
   # TODO: Refactor interface names and queries
@@ -36,8 +35,6 @@ class CoursesController < ApplicationController
     if search_params[:order].present?
       search_query_params[:order] = search_params[:order].to_h.to_a
     end
-
-    search_query_params[:per_page] ||= PER_PAGE
 
     search  = Search::CourseSearch.new search_query_params
     tracker = SearchTracker.new(session_tracker, search, action: :course_search).store!

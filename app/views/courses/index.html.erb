@@ -38,8 +38,6 @@
   locale: I18n.locale,
   state: {
     data: @courses[:data],
-    meta: (@courses[:meta] || {}).merge({
-      recordsPerPage: CoursesController::PER_PAGE
-    })
+    meta: @courses[:meta]
   }
 } %>
