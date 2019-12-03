@@ -1,2 +1,3 @@
-import _ from "lodash";
-import "../vue/apps/course_page";
+import render from "../vue/apps/course_page";
+
+render();

@@ -15,11 +15,11 @@ module.exports = {
   },
   resolve: {
     alias: {
-      // "hypernova-vue$": "hypernova-vue/server",
       "hypernova-renderer": path.resolve(
         __dirname,
         "app/assets/js/hypernova/server.js"
-      )
+      ),
+      "vue-js-modal": "vue-js-modal/dist/ssr.index"
     }
   },
   externals: [
@@ -31,6 +31,7 @@ module.exports = {
         /^vue$/,
         /^vuex$/,
         /^vue-i18n$/,
+        /^vue-js-modal$/,
         /^hypernova$/,
         /^hypernova-vue$/
       ]
@@ -55,6 +56,10 @@ module.exports = {
             loader: "vue-loader"
           }
         ]
+      },
+      {
+        test: /\.css$/,
+        use: ["vue-style-loader", "css-loader"]
       },
       {
         test: /\.scss$/,

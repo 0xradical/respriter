@@ -3,7 +3,7 @@
     <template v-if='mobileUx'>
       <div class='mobile-filter-wrapper'>
         <transition-group name='mobile-filter' tag='div'>
-          <div v-show='!(isFiltering.root_audio || isFiltering.subtitles || isFiltering.category || isFiltering.provider_name || isFiltering.price)' class='mobile-filter-view mobile-filter-facets-view' key='mobile-filter-facets'>
+          <div v-show='!(isFiltering.root_audio || isFiltering.subtitles || isFiltering.provider_name || isFiltering.price)' class='mobile-filter-view mobile-filter-facets-view' key='mobile-filter-facets'>
             <div @click='isFiltering.root_audio = true' class='mobile-filter-facets__facet'>
               <search-fieldset :title='$t("dictionary.audios")' :subtitle="filter.root_audio.map(audioValue).join(', ')" :stand-out='filter.root_audio.length > 0'>
                 <template #action>
@@ -14,21 +14,7 @@
               </search-fieldset>
             </div>
 
-            <hr/>
-
-            <template v-if="showCategoriesFilter">
-              <div @click='isFiltering.category = true' class='mobile-filter-facets__facet'>
-                <search-fieldset :title='$t("dictionary.categories")' v-if="showCategoriesFilter" :subtitle="filter.category.map(categoryValue).join(', ')" :stand-out='filter.category.length > 0'>
-                  <template #action>
-                    <a class='c-fieldset-frame__action' href='#'>
-                      <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
-                    </a>
-                  </template>
-                </search-fieldset>
-              </div>
-
-              <hr/>
-            </template>
+            <hr>
 
             <div @click='isFiltering.subtitles = true' class='mobile-filter-facets__facet'>
               <search-fieldset :title='$t("dictionary.subtitles")' :subtitle="filter.subtitles.map(subtitleValue).join(', ')" :stand-out='filter.subtitles.length > 0'>
@@ -102,21 +88,6 @@
             </search-facet-options>
             <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
               <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%;" @click='isFiltering.subtitles = false'>
-                OK
-              </a>
-            </div>
-          </div>
-          <div v-show='isFiltering.category' v-bar class='mobile-filter-view mobile-filter-options-view' key='mobile-filter-options__category'>
-            <search-facet-options :options='suggestions.category.filtered'
-                                  :filter='filter.category'
-                                  :rootClasses="['scrollable-ul--mobile']"
-                                  :noOptionsMessage="$t('dictionary.no_options_available')"
-                                  :checkboxClasses="['el:amx-Fs(1.25em)@sm']"
-                                  @includeFacetOption="$emit('optionAddedToFilter', 'category', $event)"
-                                  @excludeFacetOption="$emit('optionRemovedFromFilter', 'category', $event)">
-            </search-facet-options>
-            <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.category = false'>
                 OK
               </a>
             </div>
@@ -235,34 +206,6 @@
         </div>
       </search-fieldset>
 
-      <template v-if="showCategoriesFilter">
-        <hr/>
-
-        <search-fieldset :title='$t("dictionary.categories")' :stand-out="true">
-          <template #action>
-            <a class='c-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','category')">
-              {{ $t('dictionary.clear_filter') }}
-            </a>
-          </template>
-          <div class='c-fieldset-frame__item'>
-            <search-facet-options-filter name='category'
-                                        :placeholder="`${$t('dictionary.search')} ${$t('dictionary.categories')} ...`"
-                                        :suggestions='suggestions.category.filtered'
-                                        @changedInputFacetOptionSuggestion="suggestionInputChange('category', ...$event)">
-            </search-facet-options-filter>
-          </div>
-          <div class='c-fieldset-frame__item'>
-            <search-facet-options :options='suggestions.category.filtered'
-                                  :filter='filter.category'
-                                  :noOptionsMessage="this.suggestions.category.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.category.current})"
-                                  :noOptionsClasses="['el:amx-C_red2 el:amx-Fs(0.75em)']"
-                                  @includeFacetOption="$emit('optionAddedToFilter', 'category', $event)"
-                                  @excludeFacetOption="$emit('optionRemovedFromFilter', 'category', $event)">
-            </search-facet-options>
-          </div>
-        </search-fieldset>
-      </template>
-
       <hr/>
 
       <search-fieldset :title='$t("dictionary.subtitles")' :stand-out="true">
@@ -295,7 +238,6 @@
 
 <script>
   import _ from 'lodash';
-  import VueNumberInput from '@chenfengyuan/vue-number-input';
   import Icon from '../../shared/Icon.vue';
   import Fieldset from './SearchFilter/Fieldset.vue';
   import FacetOptions from './SearchFilter/FacetOptions.vue';
@@ -303,7 +245,6 @@
   import FacetPriceFilter from './SearchFilter/FacetPriceFilter.vue';
 
   export default {
-
     props: {
       mobileUx: {
         type: Boolean,
@@ -315,7 +256,6 @@
           return {
             root_audio: [],
             subtitles: [],
-            category: [],
             provider_name: []
           }
         }
@@ -333,12 +273,11 @@
     },
 
     components: {
-      'number-input': VueNumberInput,
       'search-fieldset': Fieldset,
       'search-facet-options': FacetOptions,
       'search-facet-options-filter': FacetOptionsFilter,
       'search-facet-price-filter': FacetPriceFilter,
-      'icon': Icon
+      Icon
     },
 
     data () {
@@ -346,7 +285,6 @@
         isFiltering: {
           root_audio: false,
           subtitles: false,
-          category: false,
           provider_name: false,
           price: false
         },
@@ -356,10 +294,6 @@
             filtered: []
           },
           subtitles: {
-            source: [],
-            filtered: []
-          },
-          category: {
             source: [],
             filtered: []
           },
@@ -391,9 +325,6 @@
         this.suggestions.subtitles.source   = aggregations.subtitles.buckets.map(({key, doc_count}) => Object.assign({}, {id: key, name: this.subtitleValue(key), count: doc_count}));
         this.suggestions.subtitles.filtered = this.suggestions.subtitles.source;
 
-        this.suggestions.category.source   = aggregations.category.buckets.map(({key, doc_count}) => Object.assign({}, {id: key, name: this.categoryValue(key), count: doc_count}));
-        this.suggestions.category.filtered = this.suggestions.category.source;
-
         this.suggestions.provider_name.source   = aggregations.provider_name.buckets.map(({key, doc_count}) => Object.assign({}, {id: key, name: this.providerValue(key), count: doc_count}));
         this.suggestions.provider_name.filtered = this.suggestions.provider_name.source;
       },
@@ -417,20 +348,10 @@
       subtitleValue: function(key){
         return this.$t(`iso639_codes.${key}`);
       },
-      categoryValue: function(key){
-        return this.$t(`tags.${key}`);
-      },
       providerValue: function(key) {
         return key;
       }
-    },
-
-    computed: {
-      showCategoriesFilter () {
-        return !window.env_context.params.category.length
-      }
     }
-
   }
 </script>
 

@@ -1,59 +1,61 @@
 <template>
   <div class='clspt:course'>
     <!-- desktop offcanvas -->
-    <modal :adaptive="true" width='50%' height="auto" :scrollable="true" :name='offCanvasId'>
-      <div class='el:o-hcard-offcanvas el:amx-Pt(1.875em) el:amx-Pr(1.875em) el:amx-Pb(1.875em) el:amx-Pl(1.875em)'>
-        <div class='el:o-hcard-offcanvas__content-slot'>
-          <div class='el:o-hcard-offcanvas__header-slot el:amx-Mb(1.5em)'>
-            <course-provider :logoClasses="['el:amx-Fs(1.5em)']"
-                             :nameClasses="['el:amx-Fs(0.875em)']"
-                             :course="course">
-            </course-provider>
+    <client-only>
+      <modal :adaptive="true" width='50%' height="auto" :scrollable="true" :name='offCanvasId'>
+        <div class='el:o-hcard-offcanvas el:amx-Pt(1.875em) el:amx-Pr(1.875em) el:amx-Pb(1.875em) el:amx-Pl(1.875em)'>
+          <div class='el:o-hcard-offcanvas__content-slot'>
+            <div class='el:o-hcard-offcanvas__header-slot el:amx-Mb(1.5em)'>
+              <course-provider :logoClasses="['el:amx-Fs(1.5em)']"
+                              :nameClasses="['el:amx-Fs(0.875em)']"
+                              :course="course">
+              </course-provider>
 
-            <div aria-label="Close" @click='$modal.hide(offCanvasId)'>
-              <icon name='close' width='1rem' height='1rem' cursor='pointer' class='el:amx-C_blue3'></icon>
-            </div>
-          </div>
-
-          <div class='el:o-hcard-offcanvas__body-slot'>
-            <course-title :course='course'
-                          :rootClasses="['el:amx-Mb(1.75em)','el:amx-C_gray5']"
-                          :titleClasses="['el:amx-Fs(1.25em)']">
-            </course-title>
-
-            <div class='el:amx-D(f)'>
-              <video-preview :course='course'
-                              :rootClasses="['el:amx-Mr(1.75em)']"
-                              style='flex: 50%;'>
-              </video-preview>
-
-              <course-attribute-list :course='course'
-                                     :rootClasses="['el:amx-D(f)','el:amx-FxJc(sb)','el:amx-FxDi(c)']"
-                                     :attributeClasses="['el:amx-Fs(0.875em)']"
-                                     :attributeIconClasses="['el:amx-Mr(0.5em)']"
-                                     style='flex: 50%'>
-              </course-attribute-list>
+              <div aria-label="Close" @click='$modal.hide(offCanvasId)'>
+                <icon name='close' width='1rem' height='1rem' cursor='pointer' class='el:amx-C_blue3'></icon>
+              </div>
             </div>
 
-            <course-description-toggler :course='course'
-                                :rootClasses="['el:amx-Mt(1.75em)','el:amx-Pt(0.5em)','el:amx-Pb(0.5em)','el:amx-Cur(p)']">
-            </course-description-toggler>
+            <div class='el:o-hcard-offcanvas__body-slot'>
+              <course-title :course='course'
+                            :rootClasses="['el:amx-Mb(1.75em)','el:amx-C_gray5']"
+                            :titleClasses="['el:amx-Fs(1.25em)']">
+              </course-title>
 
-            <div class='el:amx-D(f) el:amx-Mt(1.75em)'>
-              <course-pricing :course="course"
-                              :rootClasses="['el:amx-Mr(1.75em)']"
-                              style='flex: 50%;'>
-              </course-pricing>
-              <course-button :course="course"
-                              :rootClasses="['el:amx-Mt(a)', 'el:amx-Mb(a)', 'el:amx-Ta(c)']"
-                              :buttonClasses="['el:amx-Fs(0.75em)','btn--block']"
-                              style='flex: 50%;'>
-              </course-button>
+              <div class='el:amx-D(f)'>
+                <video-preview :course='course'
+                                :rootClasses="['el:amx-Mr(1.75em)']"
+                                style='flex: 50%;'>
+                </video-preview>
+
+                <course-attribute-list :course='course'
+                                      :rootClasses="['el:amx-D(f)','el:amx-FxJc(sb)','el:amx-FxDi(c)']"
+                                      :attributeClasses="['el:amx-Fs(0.875em)']"
+                                      :attributeIconClasses="['el:amx-Mr(0.5em)']"
+                                      style='flex: 50%'>
+                </course-attribute-list>
+              </div>
+
+              <course-description-toggler :course='course'
+                                  :rootClasses="['el:amx-Mt(1.75em)','el:amx-Pt(0.5em)','el:amx-Pb(0.5em)','el:amx-Cur(p)']">
+              </course-description-toggler>
+
+              <div class='el:amx-D(f) el:amx-Mt(1.75em)'>
+                <course-pricing :course="course"
+                                :rootClasses="['el:amx-Mr(1.75em)']"
+                                style='flex: 50%;'>
+                </course-pricing>
+                <course-button :course="course"
+                                :rootClasses="['el:amx-Mt(a)', 'el:amx-Mb(a)', 'el:amx-Ta(c)']"
+                                :buttonClasses="['el:amx-Fs(0.75em)','btn--block']"
+                                style='flex: 50%;'>
+                </course-button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </modal>
+      </modal>
+    </client-only>
 
     <!-- desktop card -->
     <div data-chrome-ext='clsp-tagger' :data-chrome-ext-data='chromeExtData' :id='course.id' class='el:o-hcard el:amx-Pr(0.75em) el:amx-Pl(0.75em) el:amx-Pb(0.75em) el:amx-Pt(0.75em) el:amx-Bc_white el:amx-D(n)@<sm el:amx-Fs(0.875em) el:amx-Fs(1em)@>lg' :class="{ 'js-expanded' : expanded }">
@@ -103,104 +105,106 @@
     </div>
 
     <!-- mobile offcanvas -->
-    <modal :id='mobileOffCanvasId' :adaptive="true" width='100%' height="auto" :scrollable="true" :name='mobileOffCanvasId'>
-      <div class='el-mb:o-hcard-offcanvas'>
-        <div class='el-mb:o-hcard-offcanvas__content-slot'>
-          <div class='el-mb:o-hcard-offcanvas__header-slot el:amx-Pt(1em) el:amx-Pb(2em) el:amx-Pos(r)'>
-            <div class='el:amx-Pos(a)' aria-label="Close" @click='$modal.hide(mobileOffCanvasId)' style='top: 0.875em; right: 0.875em;'>
-              <icon name='close' width='1rem' height='1rem' class='el:amx-C_blue3'></icon>
+    <client-only>
+      <modal :id='mobileOffCanvasId' :adaptive="true" width='100%' height="auto" :scrollable="true" :name='mobileOffCanvasId'>
+        <div class='el-mb:o-hcard-offcanvas'>
+          <div class='el-mb:o-hcard-offcanvas__content-slot'>
+            <div class='el-mb:o-hcard-offcanvas__header-slot el:amx-Pt(1em) el:amx-Pb(2em) el:amx-Pos(r)'>
+              <div class='el:amx-Pos(a)' aria-label="Close" @click='$modal.hide(mobileOffCanvasId)' style='top: 0.875em; right: 0.875em;'>
+                <icon name='close' width='1rem' height='1rem' class='el:amx-C_blue3'></icon>
+              </div>
             </div>
-          </div>
-          <div class='el-mb:o-hcard-offcanvas__body-slot'>
-            <div class='el:amx-Bc_white el:amx-Pt(1em) el:amx-Pb(2em)'>
-              <div class='container'>
-                <div class='row'>
-                  <div class='col'>
-                    <video-preview :course='course'
-                                  :rootClasses="['el:amx-W(100%)']">
-                    </video-preview>
-                  </div>
-                </div>
-                <div class='row el:amx-Mt(1em)'>
-                  <div class='col'>
-                    <div class='el:amx-D(f) el:amx-FxFd(c)'>
-                      <course-provider  :logoClasses="['el:amx-Fs(1em)']"
-                                        :nameClasses="['el:amx-Fs(0.875em)']"
-                                        :course="course">
-                      </course-provider>
+            <div class='el-mb:o-hcard-offcanvas__body-slot'>
+              <div class='el:amx-Bc_white el:amx-Pt(1em) el:amx-Pb(2em)'>
+                <div class='container'>
+                  <div class='row'>
+                    <div class='col'>
+                      <video-preview :course='course'
+                                    :rootClasses="['el:amx-W(100%)']">
+                      </video-preview>
                     </div>
                   </div>
-                </div>
-                <div class='row el:amx-Mt(1em)'>
-                  <div class='col'>
-                    <course-title :course='course'
-                                  :titleClasses="['el:amx-Fs(1.5em)']"
-                                  :lines='5'>
-                    </course-title>
+                  <div class='row el:amx-Mt(1em)'>
+                    <div class='col'>
+                      <div class='el:amx-D(f) el:amx-FxFd(c)'>
+                        <course-provider  :logoClasses="['el:amx-Fs(1em)']"
+                                          :nameClasses="['el:amx-Fs(0.875em)']"
+                                          :course="course">
+                        </course-provider>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class='row el:amx-Mt(1.5em)'>
-                  <div class='col-4 el:amx-D(f) el:amx-FxDi(c)'>
-                    <course-pricing :course="course"
-                                    :rootClasses="['el:amx-D(f)','el:amx-FxDi(c)','el:amx-FxAi(fe)','el:amx-FxJc(c)']"
-                                    style="flex: 1;">
-                    </course-pricing>
+                  <div class='row el:amx-Mt(1em)'>
+                    <div class='col'>
+                      <course-title :course='course'
+                                    :titleClasses="['el:amx-Fs(1.5em)']"
+                                    :lines='5'>
+                      </course-title>
+                    </div>
                   </div>
-                  <div class='col-8 el:amx-D(f) el:amx-FxDi(c) el:amx-FxJc(c)'>
-                    <course-button :course="course"
-                                  :buttonClasses="['btn--large','btn--block']">
-                    </course-button>
+                  <div class='row el:amx-Mt(1.5em)'>
+                    <div class='col-4 el:amx-D(f) el:amx-FxDi(c)'>
+                      <course-pricing :course="course"
+                                      :rootClasses="['el:amx-D(f)','el:amx-FxDi(c)','el:amx-FxAi(fe)','el:amx-FxJc(c)']"
+                                      style="flex: 1;">
+                      </course-pricing>
+                    </div>
+                    <div class='col-8 el:amx-D(f) el:amx-FxDi(c) el:amx-FxJc(c)'>
+                      <course-button :course="course"
+                                    :buttonClasses="['btn--large','btn--block']">
+                      </course-button>
+                    </div>
                   </div>
-                </div>
-                <div class='row el:amx-Mt(2em)'>
-                  <div class='col'>
-                    <course-social-sharing :course="course"
-                                          :iconClasses="['el:amx-Fs(1.6em)']"
-                                          :rootClasses="['el:cmx-aright']">
-                    </course-social-sharing>
+                  <div class='row el:amx-Mt(2em)'>
+                    <div class='col'>
+                      <course-social-sharing :course="course"
+                                            :iconClasses="['el:amx-Fs(1.6em)']"
+                                            :rootClasses="['el:cmx-aright']">
+                      </course-social-sharing>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- description + details -->
-            <div class='el:amx-Pt(2em) el:amx-Pb(2em) el:amx-Bc_gray1'>
-              <div class='container'>
-                <div class="row">
-                  <div class="col">
-                    <div class='el:amx-Bc_white el:amx-Pt(1.5em) el:amx-Pr(1.5em) el:amx-Pb(0.375em) el:amx-Pl(1.5em)'>
-                      <span class='el:amx-Fs(1.25em) el:amx-Fw(b)'>{{ $t('dictionary.details.header') }}</span>
-                      <course-attribute-list :course='course'
-                                            :rootClasses="['el:amx-Mt(1.5em)']"
-                                            :attributeClasses="['el:amx-Mb(1.125em)']"
-                                            :attributeIconClasses="['el:amx-Mr(0.5em)']"
-                                            :showUnavailable="false">
-                      </course-attribute-list>
+              <!-- description + details -->
+              <div class='el:amx-Pt(2em) el:amx-Pb(2em) el:amx-Bc_gray1'>
+                <div class='container'>
+                  <div class="row">
+                    <div class="col">
+                      <div class='el:amx-Bc_white el:amx-Pt(1.5em) el:amx-Pr(1.5em) el:amx-Pb(0.375em) el:amx-Pl(1.5em)'>
+                        <span class='el:amx-Fs(1.25em) el:amx-Fw(b)'>{{ $t('dictionary.details.header') }}</span>
+                        <course-attribute-list :course='course'
+                                              :rootClasses="['el:amx-Mt(1.5em)']"
+                                              :attributeClasses="['el:amx-Mb(1.125em)']"
+                                              :attributeIconClasses="['el:amx-Mr(0.5em)']"
+                                              :showUnavailable="false">
+                        </course-attribute-list>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="row el:amx-Mt(2em)" v-if='course.description && course.description.length > 0'>
-                  <div class="col">
-                    <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.description.header') }}</span>
-                    <course-description :rootClasses="['el:amx-Pt(0.5em)']"
-                                        :course="course">
-                    </course-description>
+                  <div class="row el:amx-Mt(2em)" v-if='course.description && course.description.length > 0'>
+                    <div class="col">
+                      <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.description.header') }}</span>
+                      <course-description :rootClasses="['el:amx-Pt(0.5em)']"
+                                          :course="course">
+                      </course-description>
+                    </div>
                   </div>
-                </div>
-                <div class='row el:amx-Mt(2em)' v-if='course.curated_tags && course.curated_tags.length > 0'>
-                  <div class="col">
-                    <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.tags.header') }}</span>
-                      <course-tags  :course="course"
-                                    :rootClasses="['el:amx-Mt(0.5em)']"
-                                    :tagClasses="['el:amx-D(ib)','el:amx-Fs(0.75em)','el:amx-Mr(0.5em)','el:amx-Mt(0.5em)']">
-                      </course-tags>
+                  <div class='row el:amx-Mt(2em)' v-if='course.curated_tags && course.curated_tags.length > 0'>
+                    <div class="col">
+                      <span class='el:amx-Fs(1.5em) el:amx-Fw(b)'>{{ $t('dictionary.tags.header') }}</span>
+                        <course-tags  :course="course"
+                                      :rootClasses="['el:amx-Mt(0.5em)']"
+                                      :tagClasses="['el:amx-D(ib)','el:amx-Fs(0.75em)','el:amx-Mr(0.5em)','el:amx-Mt(0.5em)']">
+                        </course-tags>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </modal>
+      </modal>
+    </client-only>
 
     <!-- mobile card -->
     <div :id='`mobile-${course.id}`' @click='$modal.show(mobileOffCanvasId)' class='el-mb:o-hcard el:amx-Pr(0.875em) el:amx-Pb(0.875em) el:amx-Pt(0.875em) el:amx-Pl(0.875em) el:amx-Bc_white el:amx-Cur(p) el:amx-D(n)@>lg'>

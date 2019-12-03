@@ -1,7 +1,7 @@
 import Vue from "vue";
 import hypernova, { load } from "hypernova";
 
-export { default as Vue } from "vue";
+export const vue = Vue;
 
 export const hydrateComponent = (Component, parentNode, data) => {
   const key = name.replace(/\W/g, "");
@@ -10,6 +10,8 @@ export const hydrateComponent = (Component, parentNode, data) => {
   if (data) {
     const { propsData, state, locale } = data;
     const vm = new Component({ propsData });
+
+    vm.$store.replaceState(state);
 
     if (node) {
       vm.$mount(node);
@@ -48,9 +50,7 @@ export const renderVueComponent = (
             ...ComponentDefinition
           });
 
-          const vm = hydrateComponent(Component, node, data);
-
-          vm.$store.replaceState(state);
+          hydrateComponent(Component, node, data);
         });
       }
 

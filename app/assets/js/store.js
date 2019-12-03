@@ -9,12 +9,14 @@ export function createStore() {
     // IMPORTANT: state must be a function so the module can be
     // instantiated multiple times
     state: () => ({
-      items: []
+      data: [],
+      meta: {}
     }),
 
     mutations: {
-      setItems(state, items) {
-        state.items = items;
+      setData(state, { data = [], meta = {} } = { data, meta }) {
+        state.data = data;
+        state.meta = meta;
       }
     }
   });

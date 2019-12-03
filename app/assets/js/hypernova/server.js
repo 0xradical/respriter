@@ -2,7 +2,7 @@ import Vue from "vue";
 import { createRenderer } from "vue-server-renderer";
 import hypernova, { serialize } from "hypernova";
 
-export { default as Vue } from "vue";
+export const vue = Vue;
 
 export const renderVueComponent = (
   name,
@@ -30,14 +30,13 @@ export const renderVueComponent = (
 
         const vm = new Component({ propsData });
 
-        vm.$store.commit("setItems", state);
+        vm.$store.commit("setData", state);
 
         const renderer = createRenderer();
 
         const contents = await renderer
           .renderToString(vm, context)
           .then(html => {
-            console.log(context, "context");
             return `
           ${context.renderStyles()}
           ${html}
@@ -48,8 +47,6 @@ export const renderVueComponent = (
 
             return ``;
           });
-
-        // const contents = await renderer.renderToString(vm);
 
         return serialize(name, contents, { propsData, state: vm.$store.state });
       };

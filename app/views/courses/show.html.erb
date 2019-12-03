@@ -20,8 +20,8 @@
 <% end %>
 
 <%= content_for :javascript do %>
-  <%= javascript_pack_tag 'course-page' %>
   <%= elements_javascript_include_tag 'vars' %>
+  <%= javascript_packs_with_chunks_tag 'course-page' %>
   <%= stylesheet_pack_tag 'course-page' %>
 <% end %>
 
@@ -31,5 +31,10 @@
     course: @course.as_indexed_json
   },
   locale: I18n.locale,
-  state: []
+  state: {
+    data: @course.as_indexed_json,
+    meta: {
+      single: true
+    }
+  }
 } %>
