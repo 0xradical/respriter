@@ -4,21 +4,10 @@
 
 <%= content_for :x_vue_templates do %>
   <%= render 'social_share' %>
-<script id='vue-search-app-props' type='x-vue-props'>
-  {
-    "searchEndpoint": "<%= params[:tag] %>.json",
-    "showCategoriesFilter": <%= params[:tag].present? %>,
-    "locale": "<%= I18n.locale %>",
-    "recordsPerPage": <%= CourseBundlesController::PER_PAGE %>
-  }
-</script>
 <% end %>
 
 <script type='text/javascript'>
   window.env_context = {
-    params: {
-      category: <%= raw(Array.wrap(params[:tag]).to_json) %>
-    },
     devise: {
       sign_in: "<%= new_user_account_session_path %>",
       sign_up: "<%= new_user_account_registration_path %>",
@@ -28,17 +17,10 @@
 </script>
 
 <%= content_for :javascript do %>
-  <%= javascript_pack_tag 'search-page' %>
   <%= elements_javascript_include_tag 'vars' %>
+  <%= javascript_packs_with_chunks_tag 'search-page' %>
   <%= stylesheet_pack_tag 'search-page' %>
 <% end %>
-
-<%
-  base_locales   = YAML::load_file(Rails.root.join('config', 'locales', I18n.locale.to_s, "#{I18n.locale}.base.yml"))
-  tags           = YAML::load_file(Rails.root.join('config', 'locales', I18n.locale.to_s, "#{I18n.locale}.tags.yml"))
-  custom_locales = YAML::load_file(Rails.root.join('config', 'locales', I18n.locale.to_s, "#{I18n.locale}.yml"))
-  locales        = base_locales.deep_merge(custom_locales).deep_merge(tags)
-%>
 
 <%= render 'hero',
   title: t(".title_html", tag: t("tags.#{@tag}")),
@@ -68,6 +50,13 @@
   </div>
 </div>
 
-<div class='el:amx-Mt(1em) el:amx-Mb(2em)'>
-  <div data-vue-search-app data-vue-search-app-props='vue-search-app-props' data-vue-search-app-translations='<%= locales.to_json %>'></div>
-</div>
+<%= render_vue_component "SearchPage", {
+  propsData: {
+    locale: I18n.locale
+  },
+  locale: I18n.locale,
+  state: {
+    data: @courses[:data],
+    meta: @courses[:meta]
+  }
+} %>

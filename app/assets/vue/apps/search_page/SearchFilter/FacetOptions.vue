@@ -1,14 +1,27 @@
 <template>
-  <div :class='rootClasses'>
-    <span v-if='noOptions' :class='noOptionsClasses' v-html='noOptionsMessage'></span>
+  <div :class="rootClasses">
+    <span
+      v-if="noOptions"
+      :class="noOptionsClasses"
+      v-html="noOptionsMessage"
+    ></span>
     <ul>
-      <li v-for='option in options' :key="option.id">
-        <div class='c-checkbox' :class='checkboxClasses'>
-          <div class='c-checkbox__selector'>
-            <input :checked="includedOption(option.id)" :value="option.id" type="checkbox"/>
+      <li v-for="option in options" :key="option.id">
+        <div class="c-checkbox" :class="checkboxClasses">
+          <div class="c-checkbox__selector">
+            <input
+              :checked="includedOption(option.id)"
+              :value="option.id"
+              type="checkbox"
+            />
             <label @click="toggleOption(option.id)"></label>
           </div>
-          <span @click="toggleOption(option.id)" class='c-checkbox__label'>{{ option.name }}<span class='c-checkbox__summary'> ({{ option.count }})</span></span>
+          <span @click="toggleOption(option.id)" class="c-checkbox__label"
+            >{{ option.name
+            }}<span class="c-checkbox__summary">
+              ({{ option.count }})</span
+            ></span
+          >
         </div>
       </li>
     </ul>
@@ -34,7 +47,7 @@ export default {
     },
     filter: {
       type: Array,
-      required: true,
+      required: true
     },
     rootClasses: {
       type: Array,
@@ -53,10 +66,10 @@ export default {
   },
   methods: {
     toggleOption: function(option) {
-      if(this.includedOption(option)){
-        this.$emit('excludeFacetOption', option);
+      if (this.includedOption(option)) {
+        this.$emit("excludeFacetOption", option);
       } else {
-        this.$emit('includeFacetOption', option);
+        this.$emit("includeFacetOption", option);
       }
     },
     includedOption: function(option) {
@@ -65,17 +78,20 @@ export default {
   },
   computed: {
     noOptions() {
-      return (this.noOptionsMessage !== '' || this.noOptionsMessage !== null) && this.options.length === 0;
+      return (
+        (this.noOptionsMessage !== "" || this.noOptionsMessage !== null) &&
+        this.options.length === 0
+      );
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 ul {
-  list-style:none;
-  margin:0;
-  padding:0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 
   li {
     line-height: 1em;

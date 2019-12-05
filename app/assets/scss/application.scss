@@ -27,6 +27,9 @@ html {
 @import '~bootstrap/scss/mixins/border-radius';
 @import '~bootstrap/scss/nav';
 
+@import '~vue-loading-overlay/dist/vue-loading';
+@import '~vue-slider-component/dist-css/vue-slider-component';
+
 @import 'theming/vuebar.scss';
 @import 'theming/multiselect.scss';
 @import 'theming/vue-modal.scss';

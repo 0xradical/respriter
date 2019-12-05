@@ -1,6 +1,7 @@
 module Search
   class CourseSearch
     VERSION = '1.1.1'
+    PER_PAGE = 20
 
     attr_reader :query, :filter, :page, :per_page, :order, :boost, :session_id
 
@@ -18,11 +19,11 @@ module Search
     }
     TERM_AGGREGATIONS = FILTER_BY_FIELD.find_all{ |k,v| v == :term }.map &:first
 
-    def initialize(query: nil, filter: Hash.new, page: 1, per_page: 25, order: nil, boost: nil, session_id: nil)
+    def initialize(query: nil, filter: Hash.new, page: 1, per_page: PER_PAGE, order: nil, boost: nil, session_id: nil)
       @query      = query
       @filter     = normalize_filter filter
       @page       = ( page     || 1  ).to_i
-      @per_page   = ( per_page || 25 ).to_i
+      @per_page   = ( per_page || PER_PAGE ).to_i
       @order      = order
       @boost      = boost
       @session_id = session_id
@@ -37,6 +38,7 @@ module Search
         meta: {
           total:        response.results.total,
           page:         @page,
+          pages:        ([response.results.total, 10000].min / @per_page).ceil, # 10000 is the default max window for Elastic Search
           per_page:     @per_page,
           order:        @order,
           max_score:    response.results.max_score,

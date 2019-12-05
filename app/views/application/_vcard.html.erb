@@ -141,14 +141,14 @@
         <div class='c-vcard__content-box c-vcard__content-box--Ta(r) el:amx-Fs(0.625em)'>
 
           <% if course.free_content? && course.paid_content? %>
-            <span data-tippy="<%= t('components.card.free_course_tip') %>" class='c-label'>
+            <span data-tippy-content="<%= t('components.card.free_course_tip') %>" class='c-label'>
               <%= svg_icons_lib('currency', { class: 'c-label__icon' } ) %>
               <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                 <%= t('dictionary.extra_paid_content')%>
               </span>
             </span>
           <% elsif course.subscription_type? && course.has_free_trial? %>
-            <span data-tippy="<%= t('components.card.subscription_tip', period: t("datetime.distance_in_words.x_#{course.trial_period['unit']}", count: course.trial_period['value']) ) %>" class='c-label'>
+            <span data-tippy-content="<%= t('components.card.subscription_tip', period: t("datetime.distance_in_words.x_#{course.trial_period['unit']}", count: course.trial_period['value']) ) %>" class='c-label'>
               <%= svg_icons_lib('renew', { class: 'c-label__icon' } ) %>
               <span class='c-label__text'>
                 <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>

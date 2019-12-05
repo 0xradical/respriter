@@ -1,0 +1,475 @@
+<template>
+  <div>
+    <client-only>
+      <modal :adaptive="true" width="100%" height="100%" name="mobileFilter">
+        <div class="filter-nav--mobile">
+          <div class="el:amx-D(F) el:amx-FxJc(sb)" style="height: 15%;">
+            <h5>{{ $t("dictionary.filters") }}</h5>
+            <a href="#" @click="hideMobileFilter">
+              <icon
+                width="1.05rem"
+                height="1.05rem"
+                name="close"
+                class="el:amx-C_blue2"
+              ></icon>
+            </a>
+          </div>
+          <div style="height: 85%;">
+            <search-filter
+              :aggregations="$store.state.meta.aggregations"
+              :total="$store.state.meta.total"
+              :filter="params.filter"
+              :mobileUx="true"
+              @showResultsClicked="hideMobileFilter"
+              @clearFiltersClicked="clearFilters"
+              @optionAddedToFilter="addOptionToFilter"
+              @optionRemovedFromFilter="removeOptionFromFilter"
+              @priceValueChanged="changePriceValue"
+            >
+            </search-filter>
+          </div>
+        </div>
+      </modal>
+    </client-only>
+
+    <div class="container el:amx-Pb(3.75em)">
+      <div class="row">
+        <div class="el:amx-D(n)@<sm col-lg-3">
+          <span
+            style="font-size:0.875em;display:inline-block;line-height:1.15em;padding:20px 0"
+          ></span>
+        </div>
+        <div class="col-12 col-lg-9">
+          <span
+            style="display:inline-block;line-height:1em;font-size:0.875em;padding:20px 0;width:100%"
+          >
+            {{
+              $t("dictionary.search_results", {
+                total: $store.state.meta.total
+              })
+            }}
+
+            <template v-if="params.q">
+              {{ $t("dictionary.for") }}
+              <span class="query-tag el:amx-Bc_magenta5">{{
+                this.params.q
+              }}</span>
+            </template>
+          </span>
+
+          <div class="el:amx-D(F) el:amx-FxJc(sb) el:amx-FxAi(c)">
+            <div>
+              <pagination
+                @paginate="paginate"
+                pagination-anchor="#body-anchor"
+                :records-per-page="$store.state.meta.per_page"
+                :current-page="$store.state.meta.page"
+                :num-of-pages="$store.state.meta.pages"
+              ></pagination>
+            </div>
+            <div class="el:amx-D(n)@<sm el:amx-D(F) el:amx-FxAi(c) sort">
+              <span
+                class="el:amx-D(b) el:amx-Fw(b) el:amx-C_gray5 el:amx-Mr(1em) sort__label"
+                >{{ $t("dictionary.sort_by") }}</span
+              >
+              <multiselect
+                :value="orderCurrentOption"
+                @select="sortByChanged"
+                track-by="key"
+                label="i18n_key"
+                :custom-label="
+                  ({ i18n_key }) => {
+                    return $t(`dictionary.${i18n_key}`);
+                  }
+                "
+                select-label=""
+                selected-label=""
+                deselect-label=""
+                :show-pointer="true"
+                @open="orderOptionsToggled = true"
+                @close="orderOptionsToggled = false"
+                :options="orderOptions"
+                :searchable="false"
+                :allow-empty="false"
+              >
+                <template slot="caret" slot-scope="{ toggle }">
+                  <div
+                    @mousedown.prevent.stop="orderOptionsToggle(toggle)"
+                    class="sort__caret"
+                  >
+                    <icon
+                      width="1rem"
+                      height="1rem"
+                      :transform="`rotate(${orderOptionsToggled ? 180 : 0}deg)`"
+                      name="arrow-down"
+                      class="el:amx-C_blue2"
+                    ></icon>
+                  </div>
+                </template>
+              </multiselect>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row el:amx-Mt(1em)@>lg el:amx-Mb(2em)">
+        <div class="el:amx-D(n)@<sm col-lg-3">
+          <div class="filter-nav">
+            <div class="el:amx-D(F) el:amx-FxJc(sb)">
+              <h4>{{ $t("dictionary.filters") }}</h4>
+              <a
+                href="#"
+                class="el:amx-C_red2 el:amx-Fw(b) el:amx-Fs(0.625em)"
+                @click.prevent="clearFilters"
+                style="margin: auto 0;text-align:right;"
+              >
+                {{ $t("dictionary.clear_all_filters") }}
+              </a>
+            </div>
+            <search-filter
+              :aggregations="$store.state.meta.aggregations"
+              :filter="params.filter"
+              @clearFilterClicked="clearFilter"
+              @optionAddedToFilter="addOptionToFilter"
+              @optionRemovedFromFilter="removeOptionFromFilter"
+              @priceValueChanged="changePriceValue"
+            >
+            </search-filter>
+          </div>
+        </div>
+
+        <div class="col-12 el:amx-D(n)@>lg el:amx-Mb(1em)">
+          <hr />
+          <div class="el:amx-D(F) el:amx-FxJc(sb) el:amx-FxAi(c)">
+            <span class="el:amx-C_gray5 el:amx-Fw(b)">
+              <span class="el:amx-D(ib) el:amx-Mr(0.25em)">{{
+                $t("dictionary.sort_by")
+              }}</span>
+              <select
+                :value="orderCurrentOption.key"
+                @change="sortByChanged({ key: $event.target.value })"
+              >
+                <option
+                  v-for="option in orderOptions"
+                  :key="option.key"
+                  :value="option.key"
+                >
+                  {{ $t(`dictionary.${option.i18n_key}`) }}
+                </option>
+              </select>
+            </span>
+            <a
+              class="el:amx-C_blue3 el:amx-Fw(b) el:amx-Ws(nw)"
+              href="#"
+              @click="showMobileFilter"
+            >
+              {{ $t("dictionary.filter_results") }}
+            </a>
+          </div>
+        </div>
+
+        <div id="results" class="col-12 col-lg-9 vld-parent">
+          <loading
+            :active.sync="isLoadable"
+            :is-full-page="true"
+            color="#4C636F"
+          ></loading>
+          <course-list :tag="tag" :courses="$store.state.data"></course-list>
+          <pagination
+            @paginate="paginate"
+            pagination-anchor="#results"
+            :records-per-page="$store.state.meta.per_page"
+            :current-page="$store.state.meta.page"
+            :num-of-pages="$store.state.meta.pages"
+          ></pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import _ from "lodash";
+import CourseList from "./CourseList.vue";
+import Pagination from "./Pagination.vue";
+import SearchFilter from "./SearchFilter.vue";
+import Icon from "components/Icon.vue";
+import qs from "qs";
+import Loading from "vue-loading-overlay";
+import Multiselect from "vue-multiselect";
+
+export default {
+  props: {
+    locale: {
+      type: String,
+      default: "en"
+    },
+
+    searchEndpoint: {
+      type: String,
+      default: "search.json"
+    }
+  },
+  components: {
+    courseList: CourseList,
+    searchFilter: SearchFilter,
+    pagination: Pagination,
+    icon: Icon,
+    loading: Loading,
+    multiselect: Multiselect
+  },
+  data() {
+    return {
+      params: this.defaultParams(null),
+      isFetchingRecords: false,
+      mobileFilterHidden: true,
+      isMobile: false,
+      orderCurrentOption: this.orderOptionByKey("rel"),
+      orderOptionsToggled: false,
+      orderOptionsToggle: function(callback) {
+        this.orderOptionsToggled = !this.orderOptionsToggled;
+        callback();
+      }
+    };
+  },
+  computed: {
+    page() {
+      return parseInt(this.params.p) || 1;
+    },
+    isLoadable() {
+      return (
+        (!this.isMobile || (this.isMobile && this.mobileFilterHidden)) &&
+        this.isFetchingRecords
+      );
+    },
+    orderOptions() {
+      return this.$classpert.orderOptions;
+    },
+    tag() {
+      return this.searchEndpoint.replace(".json", "");
+    }
+  },
+  beforeCreate() {
+    this.$classpert.orderOptions = [
+      { key: "rel", value: {}, i18n_key: "relevance" },
+      { key: "price.asc", value: { price: "asc" }, i18n_key: "lowest_price" },
+      { key: "price.desc", value: { price: "desc" }, i18n_key: "highest_price" }
+    ];
+  },
+  created() {
+    this.isMobile = this.isCurrentViewportMobile();
+  },
+  mounted() {
+    this.$i18n.locale = this.locale;
+
+    let queryParams = qs.parse(window.location.search.replace("?", ""), {
+      arrayFormat: "brackets"
+    });
+
+    if (_.get(queryParams, "filter.price")) {
+      queryParams.filter.price = queryParams.filter.price.map(parseFloat);
+    }
+
+    if (_.get(queryParams, "p")) {
+      queryParams.p = parseInt(queryParams.p);
+    }
+
+    if (_.get(queryParams, "order")) {
+      this.orderCurrentOption =
+        this.orderOptionByValue(_.get(queryParams, "order")) ||
+        this.orderOptionByKey("rel");
+    }
+
+    this.params = _.merge(this.params, queryParams);
+
+    // only start watching params after initial setup during mount
+    // otherwise will double trigger record fetching
+    this.$watch(
+      "params",
+      function(nVal, oVal) {
+        if (!_.isEqual(nVal, oVal)) {
+          this.fetchResults();
+        }
+      },
+      { deep: true }
+    );
+  },
+  methods: {
+    // Check for document to be SSR friendly
+    isCurrentViewportMobile() {
+      if (typeof document === "undefined") {
+        return false;
+      } else {
+        let w = Math.max(
+          document.documentElement.clientWidth,
+          window.innerWidth || 0
+        );
+        return w < parseInt(window.Elements.breakpoints.lg);
+      }
+    },
+    showMobileFilter() {
+      this.mobileFilterHidden = false;
+      this.$modal.show("mobileFilter");
+    },
+    hideMobileFilter() {
+      this.mobileFilterHidden = true;
+      this.$modal.hide("mobileFilter");
+    },
+    orderOptionByKey(key) {
+      return _.find(this.$classpert.orderOptions, o => {
+        return o.key === key;
+      });
+    },
+    orderOptionByValue(value) {
+      return _.find(this.$classpert.orderOptions, o => {
+        return _.isEqual(o.value, value);
+      });
+    },
+    paginate(page) {
+      this.params = this.changeFilters([
+        {
+          filter: "p",
+          value: parseInt(page || 1)
+        }
+      ]);
+    },
+    clearFilters() {
+      this.params = this.defaultParams(this.params.q);
+    },
+    clearFilter(filter) {
+      if (filter === "price") {
+        this.params = this.changePriceValue([0, 2500]);
+      } else {
+        this.params = this.changeFilters([
+          {
+            filter: `filter.${filter}`,
+            value: []
+          }
+        ]);
+      }
+    },
+    addOptionToFilter(key, option) {
+      this.params = this.changeFilters([
+        {
+          filter: `filter.${key}`,
+          value: _.concat(this.params.filter[key], [option])
+        }
+      ]);
+    },
+    removeOptionFromFilter(key, option) {
+      this.params = this.changeFilters([
+        {
+          filter: `filter.${key}`,
+          value: _.without(this.params.filter[key], option)
+        }
+      ]);
+    },
+    changePriceValue(value) {
+      this.params = this.changeFilters([
+        {
+          filter: "filter.price",
+          value: value
+        }
+      ]);
+    },
+    changeFilters(filters) {
+      // go back to first page when filtering
+      filters.unshift({ filter: "p", value: 1 });
+      return filters.reduce(
+        (acc, { filter, value }) => _.set(acc, filter, value),
+        _.cloneDeep(this.params)
+      );
+    },
+    sortByChanged({ key }) {
+      let orderOption = this.orderOptionByKey(key);
+      this.orderCurrentOption = orderOption;
+      this.params = this.changeFilters([
+        {
+          filter: "order",
+          value: orderOption.value
+        }
+      ]);
+    },
+    defaultParams: function(currentQuery) {
+      return {
+        order: {},
+        filter: {
+          provider_name: [],
+          root_audio: [],
+          subtitles: [],
+          price: [0, 2500]
+        },
+        p: 1,
+        q: currentQuery
+      };
+    },
+    fetchResults() {
+      var vm = this;
+      var stringifiedParams = qs.stringify(this.params, {
+        indices: false,
+        arrayFormat: "brackets",
+        encode: true
+      });
+      var url = `${this.searchEndpoint}?${stringifiedParams}`;
+      window.history.replaceState({}, "foo", url.replace(".json", ""));
+
+      vm.isFetchingRecords = true;
+      fetch(url, { method: "GET" }).then(function(resp) {
+        resp.json().then(function(json) {
+          vm.$store.commit("setData", json);
+          vm.isFetchingRecords = false;
+        });
+      });
+    }
+  }
+};
+</script>
+
+<style scoped lang="scss">
+hr {
+  margin-bottom: 1em;
+  border: none;
+  border-top: 1px solid #dee7ed;
+}
+
+.sort {
+  flex-basis: 260px;
+
+  .sort__label {
+    white-space: nowrap;
+  }
+
+  .sort__caret {
+    position: absolute;
+    width: 40px;
+    right: 1px;
+    top: 8px;
+    padding: 4px 8px;
+    text-align: center;
+    cursor: pointer;
+    svg {
+      transition: transform 0.2s ease;
+    }
+  }
+}
+
+.filter-nav {
+  top: 50;
+  background-color: white;
+  padding: 1.5em;
+}
+
+.filter-nav--mobile {
+  padding: 1.25em;
+  height: calc(100% - 2 * 1.25em);
+  box-sizing: content-box;
+}
+
+.query-tag {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  color: #fff;
+  border-radius: 3px;
+}
+</style>

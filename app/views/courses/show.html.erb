@@ -20,12 +20,21 @@
 <% end %>
 
 <%= content_for :javascript do %>
-  <%= javascript_pack_tag 'course-page' %>
   <%= elements_javascript_include_tag 'vars' %>
+  <%= javascript_packs_with_chunks_tag 'course-page' %>
   <%= stylesheet_pack_tag 'course-page' %>
 <% end %>
 
-<%= render_vue_component "course_page.js", {
+<%= render_vue_component "CoursePage", {
+  propsData: {
+    locale: I18n.locale,
+    course: @course.as_indexed_json
+  },
   locale: I18n.locale,
-  course: @course.as_indexed_json
+  state: {
+    data: @course.as_indexed_json,
+    meta: {
+      single: true
+    }
+  }
 } %>

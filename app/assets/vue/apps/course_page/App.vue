@@ -6,10 +6,11 @@
 </template>
 
 <script>
-import Desktop from './Desktop.vue';
-import Mobile from './Mobile.vue';
+import Desktop from "components/course_page/Desktop.vue";
+import Mobile from "components/course_page/Mobile.vue";
 
 export default {
+  name: "CoursePage",
   props: {
     course: {
       type: Object,
@@ -18,12 +19,12 @@ export default {
     locale: {
       type: String,
       required: false,
-      default: 'en'
+      default: "en"
     }
   },
   components: {
     desktop: Desktop,
     mobile: Mobile
   }
-}
+};
 </script>
