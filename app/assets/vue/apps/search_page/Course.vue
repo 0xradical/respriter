@@ -62,10 +62,10 @@
 </template>
 
 <script>
-import CourseCardDesktop from "../../shared/CourseCardDesktop.vue";
-import CourseOffcanvasDesktop from "../../shared/CourseOffcanvasDesktop.vue";
-import CourseCardMobile from "../../shared/CourseCardMobile.vue";
-import CourseOffcanvasMobile from "../../shared/CourseOffcanvasMobile.vue";
+import CourseCardDesktop from "components/CourseCardDesktop.vue";
+import CourseOffcanvasDesktop from "components/CourseOffcanvasDesktop.vue";
+import CourseCardMobile from "components/CourseCardMobile.vue";
+import CourseOffcanvasMobile from "components/CourseOffcanvasMobile.vue";
 
 export default {
   props: {

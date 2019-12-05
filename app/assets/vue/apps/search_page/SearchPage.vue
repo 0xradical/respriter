@@ -193,7 +193,7 @@ import _ from "lodash";
 import CourseList from "./CourseList.vue";
 import Pagination from "./Pagination.vue";
 import SearchFilter from "./SearchFilter.vue";
-import Icon from "../../shared/Icon.vue";
+import Icon from "components/Icon.vue";
 import qs from "qs";
 import Loading from "vue-loading-overlay";
 import Multiselect from "vue-multiselect";

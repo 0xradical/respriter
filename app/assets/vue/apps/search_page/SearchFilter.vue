@@ -238,7 +238,7 @@
 
 <script>
   import _ from 'lodash';
-  import Icon from '../../shared/Icon.vue';
+  import Icon from 'components/Icon.vue';
   import Fieldset from './SearchFilter/Fieldset.vue';
   import FacetOptions from './SearchFilter/FacetOptions.vue';
   import FacetOptionsFilter from './SearchFilter/FacetOptionsFilter.vue';

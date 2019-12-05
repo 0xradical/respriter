@@ -4,8 +4,8 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 module.exports = {
   target: "node",
-  mode: "development",
-  devtool: "source-map",
+  mode: "production",
+  // devtool: "source-map",
   entry: path.join(__dirname, "app/assets/js/hypernova.js"),
   output: {
     path: path.join(__dirname, "/ssr"),
@@ -15,11 +15,25 @@ module.exports = {
   },
   resolve: {
     alias: {
-      "hypernova-renderer": path.resolve(
+      "~~hypernova$": path.resolve(
         __dirname,
         "app/assets/js/hypernova/server.js"
       ),
-      "vue-js-modal": "vue-js-modal/dist/ssr.index"
+      "~~dompurify$": path.resolve(
+        __dirname,
+        "app/assets/js/dompurify/server.js"
+      ),
+      "~~marked$": path.resolve(__dirname, "app/assets/js/marked.js"),
+      "~~tippy$": path.resolve(__dirname, "app/assets/js/tippy.js"),
+      "~~lazy-hydration$": require.resolve("vue-lazy-hydration"),
+      "~~lodash$": require.resolve("lodash"),
+      "~~video-service$": path.resolve(
+        __dirname,
+        "app/assets/js/video_service.js"
+      ),
+      "vue-js-modal": "vue-js-modal/dist/ssr.index",
+      components: path.resolve(__dirname, "app/assets/vue/components/src"),
+      locales: path.resolve(__dirname, "config/locales")
     }
   },
   externals: [

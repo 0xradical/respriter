@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Desktop from "./Desktop.vue";
-import Mobile from "./Mobile.vue";
+import Desktop from "components/course_page/Desktop.vue";
+import Mobile from "components/course_page/Mobile.vue";
 
 export default {
   name: "CoursePage",

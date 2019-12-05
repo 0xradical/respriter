@@ -1,20 +1,20 @@
-let en   = {};
-let es   = {};
+let en = {};
+let es = {};
 let ptBr = {};
 
-import _ from 'lodash';
-import enBase from '../../../config/locales/en/en.base.yml';
-import enDevise from '../../../config/locales/en/en.devise.yml';
-import enTags from '../../../config/locales/en/en.tags.yml';
-import enGeneral from '../../../config/locales/en/en.yml';
-import esBase from '../../../config/locales/es/es.base.yml';
-import esDevise from '../../../config/locales/es/es.devise.yml';
-import esTags from '../../../config/locales/es/es.tags.yml';
-import esGeneral from '../../../config/locales/es/es.yml';
-import ptBrBase from '../../../config/locales/pt-BR/pt-BR.base.yml';
-import ptBrDevise from '../../../config/locales/pt-BR/pt-BR.devise.yml';
-import ptBrTags from '../../../config/locales/pt-BR/pt-BR.tags.yml';
-import ptBrGeneral from '../../../config/locales/pt-BR/pt-BR.yml';
+import _ from "lodash";
+import enBase from "locales/en/en.base.yml";
+import enDevise from "locales/en/en.devise.yml";
+import enTags from "locales/en/en.tags.yml";
+import enGeneral from "locales/en/en.yml";
+import esBase from "locales/es/es.base.yml";
+import esDevise from "locales/es/es.devise.yml";
+import esTags from "locales/es/es.tags.yml";
+import esGeneral from "locales/es/es.yml";
+import ptBrBase from "locales/pt-BR/pt-BR.base.yml";
+import ptBrDevise from "locales/pt-BR/pt-BR.devise.yml";
+import ptBrTags from "locales/pt-BR/pt-BR.tags.yml";
+import ptBrGeneral from "locales/pt-BR/pt-BR.yml";
 
 en = _.merge(en, enBase);
 en = _.merge(en, enDevise);
@@ -31,6 +31,6 @@ ptBr = _.merge(ptBr, ptBrDevise);
 ptBr = _.merge(ptBr, ptBrTags);
 ptBr = _.merge(ptBr, ptBrGeneral);
 
-let i18n = Object.assign({},en,es,ptBr);
+let i18n = Object.assign({}, en, es, ptBr);
 
 export default JSON.stringify(i18n);

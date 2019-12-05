@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import Icon from '../../shared/Icon.vue';
+import Icon from 'components/Icon.vue';
 import axios from 'axios';
 
 export default {

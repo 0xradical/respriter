@@ -19,11 +19,27 @@ environment.config.merge({
   resolve: {
     alias: {
       vue$: "vue/dist/vue.common.js",
-      jsdom: path.resolve(__dirname, "../../app/assets/js/dummy/jsdom.js"),
-      "hypernova-renderer$": path.resolve(
+      "~~hypernova$": path.resolve(
         __dirname,
         "../../app/assets/js/hypernova/client.js"
-      )
+      ),
+      "~~dompurify$": path.resolve(
+        __dirname,
+        "../../app/assets/js/dompurify/client.js"
+      ),
+      "~~marked$": path.resolve(__dirname, "../../app/assets/js/marked.js"),
+      "~~tippy$": path.resolve(__dirname, "../../app/assets/js/tippy.js"),
+      "~~lazy-hydration$": require.resolve("vue-lazy-hydration"),
+      "~~lodash$": require.resolve("lodash"),
+      "~~video-service$": path.resolve(
+        __dirname,
+        "../../app/assets/js/video_service.js"
+      ),
+      components: path.resolve(
+        __dirname,
+        "../../app/assets/vue/components/src"
+      ),
+      locales: path.resolve(__dirname, "../../config/locales")
     }
   }
 });
