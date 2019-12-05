@@ -5,7 +5,6 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 module.exports = {
   target: "node",
   mode: "production",
-  // devtool: "source-map",
   entry: path.join(__dirname, "app/assets/js/hypernova.js"),
   output: {
     path: path.join(__dirname, "/ssr"),
