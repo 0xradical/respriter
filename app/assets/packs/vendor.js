@@ -11,3 +11,5 @@ tippy.setDefaultProps({
 });
 
 tippy("[data-tippy-content]");
+
+import "blocks/build/dist/blocks.all";
