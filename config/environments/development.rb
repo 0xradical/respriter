@@ -75,10 +75,6 @@ Rails.application.configure do
 
   config.action_view.raise_on_missing_translations = true
 
-  if ENV['PRERENDER_SERVICE_URL']
-    config.middleware.use Rack::Prerender
-  end
-
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 

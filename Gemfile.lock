@@ -364,9 +364,6 @@ GEM
     premailer-rails (1.10.3)
       actionmailer (>= 3)
       premailer (~> 1.7, >= 1.7.9)
-    prerender_rails (1.6.1)
-      activesupport
-      rack
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -563,7 +560,6 @@ DEPENDENCIES
   omniauth-oauth2
   pg
   premailer-rails
-  prerender_rails
   pry
   pry-rails
   puma
