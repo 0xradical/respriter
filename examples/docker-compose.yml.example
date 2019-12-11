@@ -42,7 +42,7 @@ services:
 
   hypernova:
     <<: *base
-    command: node ssr/ssr.js
+    command: node ssr/hypernova.js
     volumes:
       - .:/app
     ports:

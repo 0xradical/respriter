@@ -1,6 +1,6 @@
 require 'dnsruby'
 
-module Developer
+module Developers
   class DomainAuthorityVerificationJob < Que::Job
     class Error < StandardError; end
 
