@@ -205,6 +205,11 @@ export default {
       default: "en"
     },
 
+    tag: {
+      type: String,
+      default: null
+    },
+
     searchEndpoint: {
       type: String,
       default: "search.json"
@@ -245,8 +250,12 @@ export default {
     orderOptions() {
       return this.$classpert.orderOptions;
     },
-    tag() {
-      return this.searchEndpoint.replace(".json", "");
+    tagParams() {
+      if (this.tag) {
+        return { tag: this.tag };
+      } else {
+        return {};
+      }
     }
   },
   beforeCreate() {
@@ -405,12 +414,16 @@ export default {
     },
     fetchResults() {
       var vm = this;
-      var stringifiedParams = qs.stringify(this.params, {
-        indices: false,
-        arrayFormat: "brackets",
-        encode: true
-      });
-      var url = `${this.searchEndpoint}?${stringifiedParams}`;
+
+      const stringifiedParams = qs.stringify(
+        _.merge(this.params, this.tagParams),
+        {
+          indices: false,
+          arrayFormat: "brackets",
+          encode: true
+        }
+      );
+      const url = `${this.searchEndpoint}?${stringifiedParams}`;
       window.history.replaceState({}, "foo", url.replace(".json", ""));
 
       vm.isFetchingRecords = true;

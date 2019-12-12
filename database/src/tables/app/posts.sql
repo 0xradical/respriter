@@ -1,5 +1,5 @@
 CREATE TABLE app.posts (
-  id                  bigserial       PRIMARY KEY,
+  id                  uuid DEFAULT public.uuid_generate_v4() PRIMARY KEY,
   slug                varchar,
   title               varchar,
   body                text,
@@ -13,6 +13,6 @@ CREATE TABLE app.posts (
   admin_account_id    bigint          REFERENCES app.admin_accounts(id),
   created_at          timestamptz     DEFAULT NOW() NOT NULL,
   updated_at          timestamptz     DEFAULT NOW() NOT NULL,
-  original_post_id    bigint          REFERENCES app.posts(id),
+  original_post_id    uuid            REFERENCES app.posts(id),
   use_cover_image     boolean         DEFAULT false
 );

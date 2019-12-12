@@ -52,7 +52,8 @@
 
 <%= render_vue_component "SearchPage", {
   propsData: {
-    locale: I18n.locale
+    locale: I18n.locale,
+    tag: @tag
   },
   locale: I18n.locale,
   state: {

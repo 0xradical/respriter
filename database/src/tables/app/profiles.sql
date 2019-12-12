@@ -1,5 +1,5 @@
 CREATE TABLE app.profiles (
-  id              bigserial PRIMARY KEY,
+  id              uuid DEFAULT public.uuid_generate_v4() PRIMARY KEY,
   name            varchar,
   username        varchar CONSTRAINT username_format CHECK (username ~* '^\w{5,15}$'),
   date_of_birth   date,

@@ -1,11 +1,3 @@
-<% if params[:tag].present? %>
-  <% content_for :meta do %>
-    <title><%= t(".#{params[:tag]}.meta.title") %></title>
-    <meta name='description' content='<%= t(".#{params[:tag]}.meta.description") %>' />
-    <meta property='og:description' content='<%= t(".#{params[:tag]}.meta.description") %>' />
-  <% end %>
-<% end %>
-
 <%= content_for :base_svg_sprites do %>
   <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
   <div data-svg-sprite="<%= elements_asset_path('svgs/packs/providers.svg') %>"></div>
@@ -33,7 +25,8 @@
 
 <%= render_vue_component "SearchPage", {
   propsData: {
-    locale: I18n.locale
+    locale: I18n.locale,
+    tag: @tag
   },
   locale: I18n.locale,
   state: {

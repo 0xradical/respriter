@@ -5,10 +5,8 @@ module Api
 
         def create
           # deprecated
-          Profile.transaction do
-            @image = current_user_account.profile.attach_image!(image_params)
-            current_user_account.profile.update(uploaded_avatar_url: @image.file_url)
-          end
+          @image = current_user_account.profile.attach_image!(image_params)
+          current_user_account.profile.update(uploaded_avatar_url: @image.file_url)
           render json: ImageSerializer.new(@image)
         end
 

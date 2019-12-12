@@ -1,6 +1,8 @@
 class CoursesController < ApplicationController
   include CourseSearchHelper
 
+  prepend_before_action :normalize_params
+
   # TODO: Refactor interface names and queries
   def index
     @courses = search()
@@ -23,7 +25,7 @@ class CoursesController < ApplicationController
   def search
     search_query_params = {
       query:      search_params[:q],
-      filter:     search_params[:filter],
+      filter:     (search_params[:filter] || Hash.new).tap{|f| @tag ? f.merge!(curated_tags: [@tag]) : f },
       page:       search_params[:p],
       session_id: session_tracker.session_payload[:id],
       boost: {
@@ -39,5 +41,9 @@ class CoursesController < ApplicationController
     tracker = SearchTracker.new(session_tracker, search, action: :course_search).store!
 
     format_aggregations(tracker.tracked_results)
+  end
+
+  def normalize_params
+    @tag = params[:tag]&.downcase&.underscore
   end
 end

@@ -1,5 +1,5 @@
 CREATE TABLE app.admin_profiles (
-  id                bigserial   PRIMARY KEY,
+  id                uuid DEFAULT public.uuid_generate_v4() PRIMARY KEY,
   name              varchar,
   bio               text,
   preferences       jsonb,

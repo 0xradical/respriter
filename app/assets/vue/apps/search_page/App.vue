@@ -1,5 +1,5 @@
 <template>
-  <search-page></search-page>
+  <search-page :tag="tag" :locale="locale"></search-page>
 </template>
 
 <script>
@@ -8,6 +8,17 @@
 import SearchPage from "./SearchPage.vue";
 
 export default {
+  props: {
+    tag: {
+      type: String,
+      default: null
+    },
+    locale: {
+      type: String,
+      required: false,
+      default: "en"
+    }
+  },
   components: {
     SearchPage
   }

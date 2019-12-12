@@ -27,7 +27,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    @name ||= "#{imageable_name}__#{File.basename(file.original_filename, '.*')}-#{md5}#{File.extname(super)}" if super
+    @name ||= "#{imageable_name}__#{File.basename(original_filename, '.*')}-#{md5}#{File.extname(super)}" if super
   end
 
   protected

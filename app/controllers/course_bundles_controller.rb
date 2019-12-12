@@ -56,7 +56,7 @@ class CourseBundlesController < ApplicationController
   end
 
   def normalize_params
-    @tag = params[:tag]&.downcase.underscore
+    @tag = params[:tag]&.downcase&.underscore
   end
 
   def search_order_params
