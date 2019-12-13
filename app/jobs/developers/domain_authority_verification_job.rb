@@ -18,9 +18,22 @@ module Developers
       authority_confirmed_via_dns = false
       authority_confirmed_via_html = false
 
+      # DNS by TXT entry
       begin
         resolver.each_resource(crawler_domain.domain, 'TXT') do |rr|
           if rr.data == crawler_domain.verification_dns_entry
+            authority_confirmed_via_dns = true
+            break
+          end
+        end
+      rescue Exception => e
+        nil
+      end
+
+      # DNS by CNAME entry
+      begin
+        resolver.each_resource(crawler_domain.authority_cname, 'CNAME') do |rr|
+          if rr.rdata.to_s == "verification.classpert.com"
             authority_confirmed_via_dns = true
             break
           end
