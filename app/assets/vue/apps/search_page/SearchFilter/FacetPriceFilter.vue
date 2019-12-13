@@ -88,8 +88,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~elements/src/scss/config/variables.scss";
-@import "~elements/src/scss/config/functions.scss";
+@import "~@classpert/elements/src/scss/config/variables.scss";
+@import "~@classpert/elements/src/scss/config/functions.scss";
 
 $themeColor: get-color("blue2");
 

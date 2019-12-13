@@ -356,8 +356,8 @@
 </script>
 
 <style scoped lang='scss'>
-@import '~elements/src/scss/config/variables.scss';
-@import '~elements/src/scss/config/functions.scss';
+@import '~@classpert/elements/src/scss/config/variables.scss';
+@import '~@classpert/elements/src/scss/config/functions.scss';
 
 form {
   margin: 0;

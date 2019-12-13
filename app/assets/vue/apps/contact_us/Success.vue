@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~elements/src/scss/config/variables/breakpoints";
+@import "~@classpert/elements/src/scss/config/variables/breakpoints";
 
 .clspt\:contact-us__successful {
   margin-top: 7.5em;
