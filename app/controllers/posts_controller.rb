@@ -11,5 +11,4 @@ class PostsController < ApplicationController
       [post.locale, post.slug]
     end]
   end
-
 end
