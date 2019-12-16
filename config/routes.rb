@@ -66,6 +66,11 @@ Rails.application.routes.draw do
     resources :images, shallow: true
   end
 
+  namespace :developers do
+    resources :preview_courses, only: :show
+    resources :preview_course_videos, only: :show
+  end
+
   namespace :api do
     namespace :admin do
       namespace :v1 do

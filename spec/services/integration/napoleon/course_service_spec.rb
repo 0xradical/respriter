@@ -20,7 +20,7 @@ describe 'Integration::Napoleon::CourseService' do
         @payload = JSON.parse(payload.to_json).merge({'id' => @course.id})
       end
 
-      def resources(_global_sequence, &blk)
+      def resources(_dataset_sequence, &blk)
         blk.call(@payload)
       end
     end).new(course, payload)

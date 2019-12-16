@@ -31,11 +31,16 @@ module Napoleon
       log(:info,  "Pulling courses ...",["BEGIN","run.#{@run}", "seq.#{@dataset_sequence}".ansi(:blue)])
       start_heartbeat
       loop do
-        resources = JSON.parse(http.get(URI % {dataset_sequence: @dataset_sequence}).body)
+        resources = JSON.parse(
+          http.get(URI % {dataset_sequence: @dataset_sequence}).body
+        ).map do |payload|
+          ::Napoleon::Resource.new(payload)
+        end
+
         break if resources.empty?
         resources.each do |resource|
           begin
-            check_version!(resource['content']['version'])
+            check_version!(resource.version)
             blk.call(resource)
           rescue VersionNotSupported, ActiveRecord::RecordNotUnique, ActiveRecord::StatementInvalid => e
             errors += 1
@@ -45,6 +50,7 @@ module Napoleon
           end
           count += 1
         end
+
         @dataset_sequence = resources.last['dataset_sequence']
       end
       stop_heartbeat

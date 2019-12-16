@@ -6,26 +6,39 @@ module Developers
 
     def run(id)
       preview_course = PreviewCourse.find(id)
+      preview_uri    = URI.join(ENV['CLASSPERT_URL'], "/developers/preview_courses/", preview_course.id)
+      provider       = preview_course.provider
+      data           = preview_course.data || { 'course' => {} }
+      course_url     = data.dig('course', 'url')
+      payload        = Net::HTTP.get(URI(course_url))
+      document       = Nokogiri::HTML(payload)
+      course_data    = JSON.parse(document.css('script[type="application/vnd.classpert+json"] text()').text)
+      resource       = ::Napoleon::Resource.from_integration(provider, course_data, course_url)
+      course_json    = nil
+      screenshooter  = HTMLScreenshooter.new
 
-      data       = preview_course.data || { 'course' => {} }
-      course_url = data.dig('course', 'url')
-
-      screenshooter = HTMLScreenshooter.new
-
-      screenshooter.capture("https://classpert.com/udemy/courses/3d-printing-business-secrets-from-modeling-to-marketing-1gVriS", "png", { width: 1024, full_page: true }) do |file|
-        preview_course.add_screenshot!(:desktop_course_page_screenshot, { file: file })
+      Course.transaction do
+        course_json = Course.upsert(resource.to_course).as_indexed_json
+        course_json[:id] = preview_course.id
+        course_json[:gateway_path] = course_url
+        raise ActiveRecord::Rollback
       end
 
-      screenshooter.capture("https://classpert.com/udemy/courses/3d-printing-business-secrets-from-modeling-to-marketing-1gVriS", "png", { width: 800, full_page: true }) do |file|
-        preview_course.add_screenshot!(:mobile_course_page_screenshot, { file: file })
+      data['course']['payload'] = course_json
+
+      preview_course.update(data: data)
+
+      desktop_screenshot = screenshooter.capture(preview_uri, "png", { width: 1024, full_page: true }) do |file|
+        preview_course.add_screenshot!(:desktop, file)
       end
 
-      data['course']['payload'] = {
-        processed: true,
-        screenshots: {
-          desktop: preview_course.desktop_course_page_screenshot.file_url,
-          mobile: preview_course.mobile_course_page_screenshot.file_url
-        }
+      mobile_screenshot = screenshooter.capture(preview_uri, "png", { width: 800, full_page: true }) do |file|
+        preview_course.add_screenshot!(:mobile, file)
+      end
+
+      data['course']['screenshots'] = {
+        desktop: desktop_screenshot.file_url,
+        mobile: mobile_screenshot.file_url
       }
 
       PreviewCourse.transaction do
