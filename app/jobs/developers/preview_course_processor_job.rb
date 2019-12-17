@@ -5,14 +5,34 @@ module Developers
     self.priority = 100
 
     def run(id)
-      preview_course = PreviewCourse.find(id)
-      preview_uri    = URI.join(ENV['CLASSPERT_URL'], "/developers/preview_courses/", preview_course.id)
-      provider       = preview_course.provider
+      error          = nil
+
+      preview_course = on_error("Preview not found") { PreviewCourse.find(id) }
+      classpert_uri  = on_nil("Classpert URI not set") { ENV['CLASSPERT_URL'] }
+
+      preview_uri    = URI.join(classpert_uri, "/developers/preview_courses/", preview_course.id)
+      provider       = on_nil("Preview's provider is null") { preview_course.provider }
+
       data           = preview_course.data || { 'course' => {} }
-      course_url     = data.dig('course', 'url')
-      payload        = Net::HTTP.get(URI(course_url))
+      course_url     = on_nil("Course URL is null") { data.dig('course', 'url') }
+
+      response       = Net::HTTP.get_response(URI(course_url))
+      payload        = if response.code != "200"
+        raise "Course URL returned status code #{response.code}"
+      else
+        response.body
+      end
+
       document       = Nokogiri::HTML(payload)
-      course_data    = JSON.parse(document.css('script[type="application/vnd.classpert+json"] text()').text)
+
+      course_struct  = on_nil("Course JSON not present on URL's page") do
+        document.css('script[type="application/vnd.classpert+json"] text()').text.presence
+      end
+
+      course_data    = on_error("Could not parse Course JSON") do
+        JSON.parse(course_struct)
+      end
+
       resource       = ::Napoleon::Resource.from_integration(provider, course_data, course_url)
       course_json    = nil
       screenshooter  = HTMLScreenshooter.new
@@ -49,14 +69,37 @@ module Developers
 
         finish
       end
-    rescue
-      if error_count < 10
-        raise PreviewCourseProcessorJob::Error
-      else
+    rescue => e
+      error = e.message
+    ensure
+      if error
         PreviewCourse.transaction do
-          crawler_domain.update(status: 'failed')
+          preview_course.update({
+            status: 'failed',
+            data: {
+              error: error
+            }
+          })
           expire
         end
+      end
+    end
+
+    def on_error(message)
+      begin
+        yield
+      rescue
+        raise message
+      end
+    end
+
+    def on_nil(message)
+      value = yield
+
+      if value
+        value
+      else
+        raise message
       end
     end
   end
