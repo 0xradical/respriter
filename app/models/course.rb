@@ -191,10 +191,10 @@ class Course < ApplicationRecord
         ->(provider) { joins(:provider).where('providers.slug = ?', provider) }
   scope :free, -> { where(free_content: true) }
   scope :featured, -> { order('enrollments_count DESC') }
-  scope :locales, ->(l) { where('audio && ARRAY[?]::text[]', l) }
+
   scope :by_provider_tags, ->(tags) { where('tags @> ARRAY[?]::text[]', tags) }
-  scope :with_tags,
-        -> { where("curated_tags IS NOT NULL AND curated_tags <> '{}'") }
+  scope :locales, ->(l) { where('audio && ARRAY[?]::text[]', l) }
+  scope :with_tags, -> { where("curated_tags IS NOT NULL AND curated_tags <> '{}'") }
   scope :by_tags,
         ->(tags) { where('curated_tags @> ARRAY[?]::varchar[]', tags) }
   scope :published, -> { where(published: true) }
@@ -271,8 +271,7 @@ class Course < ApplicationRecord
   def video_thumbnail
     return nil unless video['thumbnail_url']
     crypto = Thumbor::CryptoURL.new ENV.fetch('THUMBOR_SECURITY_KEY')
-    path =
-      crypto.generate(width: 240, image: CGI.escape(video['thumbnail_url']))
+    path = crypto.generate(width: 240, image: CGI.escape(video['thumbnail_url']))
     ENV.fetch('THUMBOR_HOST').chomp('/') + path
   end
 
@@ -342,39 +341,40 @@ class Course < ApplicationRecord
 
   def as_indexed_json(options = {})
     indexed_json = {
-      id: id,
-      name: name,
-      description: description,
-      slug: slug,
-      url: url,
-      pace: pace,
-      effort: effort,
-      gateway_path: gateway_path,
-      offered_by: offered_by || [],
-      instructors: instructors,
-      free_content: free_content?,
-      paid_content: paid_content?,
-      subscription_type: subscription_type?,
-      trial_period: trial_period,
-      subscription_period: subscription_period,
-      has_free_trial: has_free_trial?,
-      url_id: url_md5,
-      level: level,
-      video_url: nil,
-      details_path: details_path,
-      video: (video && video.merge(thumbnail_url: video_thumbnail)),
-      tags: tags,
-      audio: audio,
-      root_audio: root_languages_for_audio,
-      subtitles: subtitles,
-      root_subtitles: root_languages_for_subtitles,
-      category: category,
-      provider_name: provider_name,
-      curated_tags: curated_tags,
-      curated_root_tags: (curated_tags & RootTag.all.map(&:id)),
-      provider_slug: provider_slug,
-      syllabus_markdown: syllabus,
-      refinement_tags: refinement_tags
+      id:                   id,
+      name:                 name,
+      description:          description,
+      slug:                 slug,
+      url:                  url,
+      pace:                 pace,
+      effort:               effort,
+      gateway_path:         gateway_path,
+      offered_by:           offered_by || [],
+      instructors:          instructors || [],
+      free_content:         free_content?,
+      paid_content:         paid_content?,
+      subscription_type:    subscription_type?,
+      trial_period:         trial_period,
+      subscription_period:  subscription_period,
+      has_free_trial:       has_free_trial?,
+      url_id:               url_md5,
+      level:                level,
+      video_url:            nil,
+      details_path:         details_path,
+      video:                (video && video.merge(thumbnail_url: video_thumbnail)),
+      tags:                 tags,
+      audio:                audio,
+      root_audio:           root_languages_for_audio,
+      subtitles:            subtitles,
+      root_subtitles:       root_languages_for_subtitles,
+      category:             category,
+      provider_name:        provider_name,
+      curated_tags:         curated_tags,
+      curated_root_tags:    (curated_tags & RootTag.all.map(&:id)),
+      provider_slug:        provider_slug,
+      syllabus_markdown:    syllabus,
+      refinement_tags:      refinement_tags,
+      type:                 self.class.name
     }
 
     if category.present?

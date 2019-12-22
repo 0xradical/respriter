@@ -1,21 +1,23 @@
-class PreviewCourse < ApplicationRecord
-  belongs_to :provider_crawler
-  has_one :provider, through: :provider_crawler
-  has_many :screenshots, as: :imageable, class_name: 'PreviewCourseImage', dependent: :destroy
+class PreviewCourse < Course
+  self.table_name = 'preview_courses'
+
+  has_many :preview_course_images, dependent: :destroy
 
   def add_screenshot!(type, file)
-    screenshot = screenshots.where(caption: type).first_or_initialize
+    screenshot = preview_course_images.where(kind: type).first_or_initialize
     screenshot.file = file
     screenshot.save!
 
     screenshot
   end
 
-  def as_indexed_json
-    self[:data].dig('course', 'payload')
+  def gateway_path
+    url
   end
 
-  def video
-    as_indexed_json['video']
+  def details_path
+    url
   end
+
+  def global_sequence=(*); end
 end

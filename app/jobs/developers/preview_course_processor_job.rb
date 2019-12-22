@@ -5,67 +5,71 @@ module Developers
     self.priority = 100
 
     def run(id)
-      error          = nil
+      error = nil
 
-      preview_course = on_error("Preview not found") { PreviewCourse.find(id) }
-      classpert_uri  = on_nil("Classpert URI not set") { ENV['CLASSPERT_URL'] }
+      preview_course = on_error('Preview not found') { PreviewCourse.find(id) }
+      classpert_uri = on_nil('Classpert URI not set') { ENV['CLASSPERT_URL'] }
 
-      preview_uri    = URI.join(classpert_uri, "/developers/preview_courses/", preview_course.id)
-      provider       = on_nil("Preview's provider is null") { preview_course.provider }
+      preview_url =
+        URI.join(
+          classpert_uri,
+          '/developers/preview_courses/',
+          preview_course.id
+        )
 
-      data           = preview_course.data || { 'course' => {} }
-      course_url     = on_nil("Course URL is null") { data.dig('course', 'url') }
+      response = Net::HTTP.get_response(URI(preview_course.url))
 
-      response       = Net::HTTP.get_response(URI(course_url))
-      payload        = if response.code != "200"
-        raise "Course URL returned status code #{response.code}"
-      else
-        response.body
-      end
+      payload =
+        if response.code != '200'
+          raise "Course URL returned status code #{response.code}"
+        else
+          response.body
+        end
 
-      document       = Nokogiri::HTML(payload)
+      document = Nokogiri.HTML(payload)
 
-      course_struct  = on_nil("Course JSON not present on URL's page") do
-        document.css('script[type="application/vnd.classpert+json"] text()').text.presence
-      end
+      json =
+        on_nil("Course JSON not present on URL's page") do
+          document.css('script[type="application/vnd.classpert+json"] text()')
+            .text
+            .presence
+        end
 
-      course_data    = on_error("Could not parse Course JSON") do
-        JSON.parse(course_struct)
-      end
+      data = on_error('Could not parse Course JSON') { JSON.parse(json) }
 
-      resource       = ::Napoleon::Resource.from_integration(provider, course_data, course_url)
-      course_json    = nil
-      screenshooter  = HTMLScreenshooter.new
+      resource =
+        ::Napoleon::IntegrationResource.new(
+          preview_course.id,
+          preview_course.url,
+          preview_course.provider,
+          data
+        )
 
-      Course.transaction do
-        course_json = Course.upsert(resource.to_course).as_indexed_json
-        course_json[:id] = preview_course.id
-        course_json[:gateway_path] = course_url
-        raise ActiveRecord::Rollback
-      end
+      PreviewCourse.upsert(resource.to_course)
 
-      data['course']['payload'] = course_json
+      preview_course.reload
 
-      preview_course.update(data: data)
+      screenshooter = HTMLScreenshooter.new
 
-      desktop_screenshot = screenshooter.capture(preview_uri, "png", { width: 1024, full_page: true }) do |file|
-        preview_course.add_screenshot!(:desktop, file)
-      end
+      screenshooter.capture(
+        preview_url,
+        'png',
+        { width: 1_024, full_page: true, force: true }
+      ) { |file| preview_course.add_screenshot!(:desktop, file) }
 
-      mobile_screenshot = screenshooter.capture(preview_uri, "png", { width: 800, full_page: true }) do |file|
-        preview_course.add_screenshot!(:mobile, file)
-      end
-
-      data['course']['screenshots'] = {
-        desktop: desktop_screenshot.file_url,
-        mobile: mobile_screenshot.file_url
-      }
+      screenshooter.capture(
+        preview_url,
+        'png',
+        { width: 800, full_page: true, force: true }
+      ) { |file| preview_course.add_screenshot!(:mobile, file) }
 
       PreviewCourse.transaction do
-        preview_course.update({
-          status: 'succeeded',
-          data: data
-        })
+        preview_course.update(
+          {
+            status: 'succeeded',
+            __indexed_json__: preview_course.as_indexed_json
+          }
+        )
 
         finish
       end
@@ -74,23 +78,16 @@ module Developers
     ensure
       if error
         PreviewCourse.transaction do
-          preview_course.update({
-            status: 'failed',
-            data: {
-              error: error
-            }
-          })
+          preview_course.update({ status: 'failed' })
           expire
         end
       end
     end
 
     def on_error(message)
-      begin
-        yield
-      rescue
-        raise message
-      end
+      yield
+    rescue StandardError
+      raise message
     end
 
     def on_nil(message)

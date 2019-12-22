@@ -1,7 +1,5 @@
 module Napoleon
   class Resource
-    BASE_62 = [*(0..9).map(&:to_s), *('a'..'z'), *('A'..'Z')].map(&:to_sym)
-
     attr_reader :payload, :provider
 
     def initialize(payload, provider = nil)
@@ -19,6 +17,7 @@ module Napoleon
         description:       payload['content']['description'],
         effort:            payload['content']['effort'],
         free_content:      payload['content']['free_content'],
+        global_sequence:   payload['global_sequence'],
         instructors:       payload['content']['instructors'],
         level:             Array.wrap(payload['content']['level']),
         name:              payload['content']['course_name'],
@@ -34,7 +33,7 @@ module Napoleon
         url:               payload['content']['url'],
         video:             payload['content']['video'],
         __source_schema__: payload,
-        provider_id:       provider_id
+        provider_id: provider_id
       }
     end
 

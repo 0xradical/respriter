@@ -1,11 +1,8 @@
 class PreviewCourseImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
-  aws_acl 'private'
-  aws_authenticated_url_expiration (60 * 60 * 24 * 7)
-
   def store_dir
-    "unsigned"
+    'unsigned'
   end
 
   def serializable_hash
@@ -13,7 +10,7 @@ class PreviewCourseImageUploader < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w(jpg jpeg png)
+    %w[jpg jpeg png]
   end
 
   def md5
@@ -21,6 +18,11 @@ class PreviewCourseImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    @name ||= "preview_course__#{File.basename(original_filename, '.*')}-#{md5}#{File.extname(super)}" if super
+    if super
+      @name ||=
+        "preview_course__#{File.basename(original_filename, '.*')}-#{md5}#{
+          File.extname(super)
+        }"
+    end
   end
 end

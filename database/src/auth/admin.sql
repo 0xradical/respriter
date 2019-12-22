@@ -22,6 +22,7 @@ GRANT SELECT,         UPDATE, DELETE, REFERENCES ON app.oauth_accounts          
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.orphaned_profiles         TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.posts                     TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.preview_courses           TO "admin";
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.preview_course_images     TO "admin";
 GRANT SELECT, INSERT, UPDATE,         REFERENCES ON app.profiles                  TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.promo_accounts            TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.promo_account_logs        TO "admin";
@@ -31,15 +32,15 @@ GRANT SELECT                                     ON app.tracked_actions         
 GRANT SELECT                                     ON app.tracked_searches          TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.user_accounts             TO "admin";
 
-GRANT SELECT                         ON api.earnings          TO "admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON api.admin_accounts    TO "admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON api.certificates      TO "admin";
-GRANT SELECT, INSERT, UPDATE         ON api.crawler_domains   TO "admin";
-GRANT SELECT                         ON api.crawling_events   TO "admin";
-GRANT SELECT                         ON api.earnings          TO "admin";
-GRANT SELECT, INSERT,         DELETE ON api.preview_courses   TO "admin";
-GRANT SELECT,         UPDATE         ON api.profiles          TO "admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON api.promo_accounts    TO "admin";
-GRANT SELECT, INSERT, UPDATE         ON api.providers         TO "admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON api.provider_crawlers TO "admin";
-GRANT SELECT,         UPDATE, DELETE ON api.user_accounts     TO "admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON api.admin_accounts        TO "admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON api.certificates          TO "admin";
+GRANT SELECT, INSERT, UPDATE         ON api.crawler_domains       TO "admin";
+GRANT SELECT                         ON api.crawling_events       TO "admin";
+GRANT SELECT                         ON api.earnings              TO "admin";
+GRANT SELECT, INSERT,         DELETE ON api.preview_courses       TO "admin";
+GRANT SELECT, INSERT,         DELETE ON api.preview_course_images TO "admin";
+GRANT SELECT,         UPDATE         ON api.profiles              TO "admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON api.promo_accounts        TO "admin";
+GRANT SELECT, INSERT, UPDATE         ON api.providers             TO "admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON api.provider_crawlers     TO "admin";
+GRANT SELECT,         UPDATE, DELETE ON api.user_accounts         TO "admin";
