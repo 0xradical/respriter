@@ -1,11 +1,26 @@
 module Developers
   class PreviewCourseProcessorJob < Que::Job
+    SERVICE_NAME = 'debug-tool-service'
+
     class Error < StandardError; end
 
     self.priority = 100
 
+    attr_reader :logger
+
+    def initialize(*)
+      super
+
+      @logger =
+        ActiveSupport::TaggedLogging.new(
+          Logger.new(STDOUT).tap { |l| l.formatter = Logger::Formatter.new }
+        )
+    end
+
     def run(id)
       error = nil
+
+      log(id, 'Started debug tool processing')
 
       preview_course = on_error('Preview not found') { PreviewCourse.find(id) }
       classpert_uri = on_nil('Classpert URI not set') { ENV['CLASSPERT_URL'] }
@@ -72,6 +87,8 @@ module Developers
         )
 
         finish
+
+        log(id, 'Successfully finished debug tool processing')
       end
     rescue => e
       error = e.message
@@ -81,6 +98,8 @@ module Developers
           preview_course.update({ status: 'failed' })
           expire
         end
+
+        log(id, "Finished debug tool processing with error: #{error}")
       end
     end
 
@@ -98,6 +117,16 @@ module Developers
       else
         raise message
       end
+    end
+
+    def log(ctx_id, message)
+      self.logger.info(
+        {
+          id: SecureRandom.uuid,
+          ps: { id: ctx_id, name: SERVICE_NAME },
+          payload: message
+        }.to_json
+      )
     end
   end
 end
