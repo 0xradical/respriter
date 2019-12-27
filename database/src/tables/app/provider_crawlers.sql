@@ -7,5 +7,7 @@ CREATE TABLE app.provider_crawlers (
   updated_at       timestamptz        DEFAULT    NOW()                     NOT NULL,
   status           app.crawler_status DEFAULT    'unverified'              NOT NULL,
   user_account_ids bigint[]           DEFAULT    '{}'                      NOT NULL,
-  sitemaps         app.sitemap[]      DEFAULT    '{}'                      NOT NULL
+  sitemaps         app.sitemap[]      DEFAULT    '{}'                      NOT NULL,
+  version          varchar,
+  settings         jsonb
 );

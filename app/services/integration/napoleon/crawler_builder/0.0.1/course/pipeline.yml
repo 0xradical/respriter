@@ -1,0 +1,6 @@
+name: 'Course Pipeline'
+pipes:
+  - type:   Fetcher
+    script: fetcher.rb
+  - type:   ResourceCreator
+    script: creator.rb
