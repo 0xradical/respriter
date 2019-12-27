@@ -159,8 +159,8 @@ docker-push: ## Pushes the docker image to Dockerhub
 docker-compose.yml: ### Copies docker-compose.yml from examples
 	cp examples/docker-compose.yml.example docker-compose.yml
 
-Dockerfile: Dockerfile.$(DETECTED_OS)
-	mv $< $@
+Dockerfile: examples/Dockerfile.$(DETECTED_OS).example
+	cp $< $@
 
 docker-%: ## When running `make docker-SOMETHING` it executes `make SOMETHING` inside docker context
 	@docker-compose run --service-ports app_$(ENV) make -s $*
