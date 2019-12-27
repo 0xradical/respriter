@@ -141,6 +141,26 @@ services:
     volumes:
       - esdata:/usr/share/elasticsearch/data
 
+  napoleon_database:
+    image: classpert/napoleon_database:0.0.1
+    env_file:
+      - napoleon/database.dev.env
+    environment:
+      POSTGRES_DB: napoleon_dev
+    volumes:
+      - ./napoleon/database_seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
+    ports:
+      - 5434:5432
+
+  napoleon_postgrest:
+    image: postgrest/postgrest
+    env_file:
+      - napoleon/postgrest.dev.env
+    depends_on:
+      - napoleon_database
+    ports:
+      - 3030:3000
+
 volumes:
   esdata:
   fake_s3_data:
