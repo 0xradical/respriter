@@ -39,7 +39,7 @@ DOCKER_COMPOSE_POSTGRES_RUN       := docker-compose run $(DOCKER_COMPOSE_POSTGRE
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-update-packages: Gemfile Gemfile.lock package.json yarn.lock ## Updates packages from Gemfile.lock and yarn.lock
+update-packages: Gemfile Gemfile.lock package.json ## Updates packages from Gemfile.lock and yarn.lock
 	yarn install --modules-folder=/home/developer/.config/yarn/global/node_modules
 	bundle install
 
