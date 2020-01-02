@@ -21,10 +21,10 @@
   </search-bar>
 </script>
 
-<div class='c-hero-impact el:amx-C_gray3'>
-  <div class='c-hero-impact__art'>
-    <div class='c-hero-impact__slot'>
-      <img src="<%= elements_asset_path('svgs/logo.svg') %>" class="clspt:c-hero-impact__img">
+<div class='el:amx-Bc_su el:amx-C_fg el:o-hero-impact'>
+  <div class='el:o-hero-impact__art'>
+    <div class='el:o-hero-impact__slot'>
+      <%= svg_use 'brand', 'logo', class: 'el:amx-Fi_fg', width: '246px', height: '40px' %>
       <h1 style='font-weight:400;' class='el:amx-Mt(1.25em) el:amx-Fs(1.25em) el:amx-Fs(1.5em)@>lg'>
         <%= t('.hero_html').html_safe %>
       </h1>
@@ -35,23 +35,19 @@
   </div>
 </div>
 
-<div class='el:amx-Pt(1em) el:amx-Pt(2em)@>lg' style='background-color:#FFF;'>
+<div class='el:amx-Bc_su'>
   <div class='container'>
-    <div class='el:amx-Pt(0.5em) el:amx-Pb(2.5em)' style='border-top:1px solid #DEE7ED;border-bottom:1px solid #DEE7ED;'>
+    <div class='el:amx-Bob el:amx-Bot el:amx-Pt(2em)'>
       <div class='row'>
         <% (RootTag.all).each_with_index do |t, index| %>
           <div class='col-12 col-md-3'>
-            <%# Remove this hack as soon as all bundles are created %>
-            <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
-            <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "#{t.slugify}") do %>
-              <div class='el:amx-Bc_white el:amx-Mt(1em) el:amx-Mt(2em)@>lg' style='height:50px;'>
-                <span class='c-label c-label--double-line' style='height:60px;text-align:left'>
-                  <%= svg_use('icons', t.icon, { class: 'c-label__icon' }) %>
-                  <span class='c-label__text' class='el:amx-C_blue2' style='word-break:break-word;max-width:160px'>
+            <%= link_to t.slugify do %>
+              <div class='el:m-sticker el:m-sticker--borderless el:amx-Mb(2em)'>
+                <%= svg_use('tags', t.id, { class: 'el:m-sticker__media' }) %><span class='el:m-sticker__text'>
+                  <span class='el:m-sticker__primary-label'>
                     <b><%= t("tags.#{t.id}") %></b>
-                    <br />
-                    <span style='color:black;font-size:0.625em'> <%= @count_by_category[t.id] %> online courses</span>
                   </span>
+                  <span class='el:m-sticker__secondary-label'><%= @count_by_category[t.id] %> online courses </span>
                 </span>
               </div>
             <% end %>
@@ -60,9 +56,9 @@
       </div>
     </div>
   </div>
-</div>
+ </div>
 
-<section id='about-us' class='el:amx-Bc_white'>
+<section id='about-us' class='el:amx-Bc_su'>
   <div class='container'>
 
     <!-- Classpert's Online Search Engine -->

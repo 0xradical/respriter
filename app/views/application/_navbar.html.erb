@@ -1,13 +1,13 @@
-<div class='el:amx-Bc_white el:amx-Bob_gray1'>
+<div class='el:amx-Bc_su el:amx-Bob'>
   <div class='container-fluid'>
-    <div class="el:o-navbar el:amx-Bc_white <%= 'el:o-navbar--sticky' if sticky_navbar? %>" <%= 'data-sticky' if sticky_navbar? %> role='top-navbar'>
+    <div class="el:o-navbar el:amx-Bc_surface <%= 'el:o-navbar--sticky' if sticky_navbar? %>" <%= 'data-sticky' if sticky_navbar? %> role='top-navbar'>
 
       <!-- logo -->
       <div class='el:o-navbar__slot el:amx-Mr(2em)'>
         <% unless home_controller? %>
           <%= link_to root_path do %>
-            <img src="<%= elements_asset_path('svgs/logo.svg') %>" class='el:amx-D(n)@<sm' width='156px'>
-            <img src="<%= elements_asset_path('svgs/logo_symbol.svg') %>" class='el:amx-D(n)@>lg' width='40px'>
+            <%= svg_use 'brand', 'logo',        class: 'el:amx-Fi_fg el:amx-D(n)@<sm', width: '164px', height: '27px' %>
+            <%= svg_use 'brand', 'logo_symbol', class: 'el:amx-Fi_fg el:amx-D(n)@>lg', width: '48px' %>
           <% end %>
         <% end %>
       </div>
@@ -47,12 +47,12 @@
             <% else %>
               <span class='el:amx-D(n)@sm el:amx-Mr(0.5em)'>
                 <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
-                  class: 'btn btn--gray-border btn--rounded btn--small btn--uppercase' %>
+                  class: 'btn btn--primary-border btn--rounded btn--xs btn--uppercase' %>
               </span>
 
               <span class='el:amx-D(n)@sm'>
                 <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
-                  class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
+                  class: 'btn btn--primary-flat btn--rounded btn--xs btn--uppercase' %>
               </span>
             <%- end %>
           </li>

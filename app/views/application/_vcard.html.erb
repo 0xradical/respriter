@@ -4,19 +4,19 @@
 
   <div class='c-vcard__head'>
     <div id='embed-<%= uniq %>' class='c-video'>
-      <% if course.video && (course.video.url || (course.video.type == "youtube" && course.video.id)) %>
-        <div class="c-video__bg-img" style="background-image:url(<%= course.video_thumbnail %>)"></div>
+      <%# if course.video && (course.video.url || (course.video.type == "youtube" && course.video.id)) %>
+        <div class="c-video__bg-img" style="background-image:url(<%#= course.video_thumbnail %>)"></div>
         <div class="c-video__mask"></div>
         <div data-embedded-video='/videos/<%= course.id %>' data-embedded-video-target='#embed-<%= uniq %>' class='swiper-no-swiping c-video__content'>
-          <%= svg_use('icons-', 'play', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
+          <%= svg_use('icons', 'play', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
           <span class='c-video__subtitle'><%= t('dictionary.preview_this_course.long') %></span>
         </div>
-      <% else %>
+      <%# else %>
         <div class='c-video__content'>
-          <%= svg_icons_lib('no-video', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
+          <%= svg_use('icons', 'video-record-unavailable', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
           <span class='c-video__subtitle'><%= t('dictionary.preview_not_available.long') %> </span>
         </div>
-      <% end %>
+      <%# end %>
     </div>
   </div>
 
@@ -48,7 +48,7 @@
       <ul class='c-list c-list--unstyled'>
         <li>
           <span class='c-label'>
-            <%= svg_use('icons-', 'velocimeter', {
+            <%= svg_use('icons', 'velocimeter', {
               alt: t('meta.icons.user_and_monitor'),
               class: 'c-label__icon c-label__icon--inc-25%',
               title: t('meta.icons.user_and_monitor')
@@ -62,7 +62,7 @@
         </li>
         <li>
           <span class='c-label'>
-            <%= svg_use('icons-', 'level', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+            <%= svg_use('icons', 'level', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
             <span class='c-label__text' style='font-size:0.75em'>
             <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                 <% if !course.level.empty? %>
@@ -76,7 +76,7 @@
         </li>
         <li>
           <span class='c-label'>
-            <%= svg_icons_lib('clock', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+            <%= svg_use('icons', 'clock', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
             <span class='c-label__text' style='font-size:0.75em'>
               <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                 <%= course.effort ? t("datetime.distance_in_words.about_x_hours", count: course.effort.ceil) : t('dictionary.not_available') %>
@@ -86,7 +86,7 @@
         </li>
         <li>
           <span class='c-label'>
-            <%= svg_icons_lib('institution', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+            <%= svg_use('icons', 'institution', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
             <span class='c-label__text' style='font-size:0.75em'>
               <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                 <%= course.offered_by.present? ? course.offered_by.map { |i| i['name'] }.join(',') : t("dictionary.not_available") %>
@@ -102,7 +102,7 @@
         <ul class='c-list c-list--unstyled'>
           <li class='c-vcard__content-box c-vcard__content-box--ellipsis'>
             <span class='c-label'>
-              <%= svg_icons_lib('audio', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+              <%= svg_use('icons', 'audio', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
               <span class='c-label__text' style='font-size:0.75em'>
                 <span class='c-tags c-tags--gray el:amx-Ml(0.25em) el:amx-Tt(u)'>
                   <%= course.root_languages_for_audio.join(',') %>
@@ -112,7 +112,7 @@
           </li>
           <li class='c-vcard__content-box c-vcard__content-box--ellipsis'>
             <span class='c-label'>
-              <%= svg_icons_lib('subtitle', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
+              <%= svg_use('icons', 'subtitle', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
               <span class='c-label__text' style='font-size:0.75em'>
                 <span class='c-tags c-tags--gray el:amx-Ml(0.25em) el:amx-Tt(u)'>
                   <% begin %>
@@ -142,14 +142,14 @@
 
           <% if course.free_content? && course.paid_content? %>
             <span data-tippy-content="<%= t('components.card.free_course_tip') %>" class='c-label'>
-              <%= svg_icons_lib('currency', { class: 'c-label__icon' } ) %>
+              <%= svg_use('icons', 'currency', { class: 'c-label__icon' } ) %>
               <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                 <%= t('dictionary.extra_paid_content')%>
               </span>
             </span>
           <% elsif course.subscription_type? && course.has_free_trial? %>
             <span data-tippy-content="<%= t('components.card.subscription_tip', period: t("datetime.distance_in_words.x_#{course.trial_period['unit']}", count: course.trial_period['value']) ) %>" class='c-label'>
-              <%= svg_icons_lib('renew', { class: 'c-label__icon' } ) %>
+              <%= svg_use('icons', 'renew', { class: 'c-label__icon' } ) %>
               <span class='c-label__text'>
                 <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
                   <%= t("dictionary.subscription_period.#{course.subscription_period['unit']}") %>
@@ -165,7 +165,7 @@
 
     <div class='c-vcard__content-row'>
       <a href="<%= gateway_path(course.id) %>" rel='nofollow' title="Go to course on provider's page" target='_blank'
-        style='margin:1em 0 0.5em; text-align:center' class='btn btn--block btn--rounded btn--blue-flat'>
+        style='margin:1em 0 0.5em; text-align:center' class='btn btn--block btn--rounded btn--primary-flat'>
         <%= t("dictionary.go_to_course") %>
       </a>
     </div>

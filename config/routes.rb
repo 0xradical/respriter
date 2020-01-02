@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     "#{ENV.fetch('USER_DASHBOARD_URL') { "//user.classpert.com"  }}?locale=#{I18n.locale}"
   end
 
+  resources :orphaned_profiles, only: :show, path: 'users'
   resources :videos, only: :show
 
   get '/forward/:id', to: 'gateway#index', as: :gateway
