@@ -90,6 +90,10 @@ gem 'httparty'
 
 # DNS
 gem 'dnsruby'
+gem 'public_suffix'
+
+# Logger
+gem 'syslogger5424'
 
 group :production do
   # Exceptions

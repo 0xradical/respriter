@@ -1,3 +1,5 @@
+require 'syslogger'
+
 module Developers
   class PreviewCourseProcessorJob < Que::Job
     SERVICE_NAME = 'debug-tool-service'
@@ -11,10 +13,7 @@ module Developers
     def initialize(*)
       super
 
-      @logger =
-        ActiveSupport::TaggedLogging.new(
-          Logger.new(STDOUT).tap { |l| l.formatter = Logger::Formatter.new }
-        )
+      @logger = SysLogger.new
     end
 
     def run(id)
