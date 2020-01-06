@@ -1,4 +1,5 @@
 require 'dnsruby'
+require 'syslogger'
 
 module Developers
   class DomainAuthorityVerificationJob < Que::Job
@@ -12,10 +13,7 @@ module Developers
     def initialize(*)
       super
 
-      @logger =
-        ActiveSupport::TaggedLogging.new(
-          Logger.new(STDOUT).tap { |l| l.formatter = Logger::Formatter.new }
-        )
+      @logger = SysLogger.new
     end
 
     def run(id, user_id)
