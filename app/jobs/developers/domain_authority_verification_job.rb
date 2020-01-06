@@ -3,7 +3,7 @@ require 'dnsruby'
 module Developers
   class DomainAuthorityVerificationJob < Que::Job
     class Error < StandardError; end
-    SERVICE_NAME = 'domain-verification-service'
+    SERVICE_NAME = 'domain-validation-service'
 
     self.priority = 100
 
