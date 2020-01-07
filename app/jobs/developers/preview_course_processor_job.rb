@@ -31,6 +31,7 @@ module Developers
           preview_course.id
         )
 
+      log(id, 'Fetching page')
       response = Net::HTTP.get_response(URI(preview_course.url))
 
       payload =
@@ -40,8 +41,10 @@ module Developers
           response.body
         end
 
+      log(id, 'Parsing page')
       document = Nokogiri.HTML(payload)
 
+      log(id, 'Looking for JSON+LD')
       json =
         on_nil("Course JSON not present on URL's page") do
           document.css('script[type="application/vnd.classpert+json"] text()')
@@ -51,6 +54,7 @@ module Developers
 
       data = on_error('Could not parse Course JSON') { JSON.parse(json) }
 
+      log(id, 'Generating resource based on JSON+LD')
       resource =
         ::Napoleon::IntegrationResource.new(
           preview_course.id,
@@ -65,12 +69,14 @@ module Developers
 
       screenshooter = HTMLScreenshooter.new
 
+      log(id, "Capturing screenshot of preview page's desktop version")
       screenshooter.capture(
         preview_url,
         'png',
         { width: 1_024, full_page: true, force: true }
       ) { |file| preview_course.add_screenshot!(:desktop, file) }
 
+      log(id, "Capturing screenshot of preview page's mobile version")
       screenshooter.capture(
         preview_url,
         'png',
@@ -98,7 +104,7 @@ module Developers
           expire
         end
 
-        log(id, "Finished debug tool processing with error: #{error}")
+        log(id, "Finished debug tool processing with error: #{error}", :error)
       end
     end
 
@@ -118,8 +124,9 @@ module Developers
       end
     end
 
-    def log(ctx_id, message)
-      self.logger.info(
+    def log(ctx_id, message, level = :info)
+      self.logger.public_send(
+        level,
         {
           id: SecureRandom.uuid,
           ps: { id: ctx_id, name: SERVICE_NAME },
