@@ -13,7 +13,7 @@ module Integration
             builder.create_pipeline_templates!
             builder.create_pipeline_executions!
             update_provider_crawler!
-          rescue
+          rescue StandardError
             builder.rollback!
             raise ActiveRecord::Rollback
           end
@@ -21,36 +21,36 @@ module Integration
       end
 
       def cleanup
-        if @provider_crawler.version.present?
-          builder.cleanup
-        end
+        builder.cleanup if @provider_crawler.version.present?
       end
 
       def builder
-        @builder ||= Integration::Napoleon::CrawlerBuilders[@version].new self, @version
+        @builder ||=
+          Integration::Napoleon::CrawlerBuilders[@version].new self, @version
       end
 
       def update_provider_crawler!
         @provider_crawler.version = @version
         @provider_crawler.settings = {
-          pipeline_templates:  builder.pipeline_templates,
+          pipeline_templates: builder.pipeline_templates,
           pipeline_executions: builder.pipeline_executions
         }
         @provider_crawler.save!
       end
     end
 
-    crawlers_dir = File.expand_path File.dirname(__FILE__)
-    CrawlerBuilders = Dir["#{crawlers_dir}/crawler_builder/*"].find_all do |dir|
-      File.directory? dir
-    end.map do |dir|
-      path    = "#{dir}/builder.rb"
-      version = File.basename dir
+    crawlers_dir = File.expand_path(Rails.root.join('app', 'crawlers'))
+    CrawlerBuilders =
+      Dir["#{crawlers_dir}/*"].find_all do |dir|
+        File.directory? dir
+      end.map do |dir|
+        path = "#{dir}/builder.rb"
+        version = File.basename dir
 
-      klass = Class.new Integration::Napoleon::CrawlerBuilder::Base
-      klass.class_eval File.read(path), path
+        klass = Class.new Integration::Napoleon::CrawlerBuilder::Base
+        klass.class_eval File.read(path), path
 
-      [ version, klass ]
-    end.to_h
+        [version, klass]
+      end.to_h
   end
 end
