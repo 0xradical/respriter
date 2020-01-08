@@ -47,7 +47,7 @@ module Integration
         path = "#{dir}/builder.rb"
         version = File.basename dir
 
-        klass = Class.new Integration::Napoleon::CrawlerBuilder::Base
+        klass = Class.new Integration::Napoleon::CrawlerBuilder
         klass.class_eval File.read(path), path
 
         [version, klass]
