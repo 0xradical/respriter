@@ -39,7 +39,7 @@ module Integration
       end
     end
 
-    crawlers_dir = File.expand_path(Rails.root.join('app', 'crawlers'))
+    crawlers_dir = File.expand_path(Rails.root.join('crawlers'))
     CrawlerBuilders =
       Dir["#{crawlers_dir}/*"].find_all do |dir|
         File.directory? dir
