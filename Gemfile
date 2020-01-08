@@ -100,6 +100,9 @@ gem 'parser',  require: 'parser/current'
 gem 'pg_query'
 gem 'unparser'
 
+# JSON Schema
+gem 'json_schemer'
+
 group :production do
   # Exceptions
   gem 'sentry-raven'
