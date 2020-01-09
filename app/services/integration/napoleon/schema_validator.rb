@@ -2,6 +2,8 @@ module Integration::Napoleon
   class SchemaValidator
     attr_reader :kind, :version
 
+    AUTHORIZATION_HEADER = "Bearer #{ENV.fetch 'NAPOLEON_POSTGREST_JWT'}"
+
     def initialize(kind, version)
       @kind, @version = kind, version
     end
@@ -18,23 +20,27 @@ module Integration::Napoleon
       cloned_data = data.deep_dup.deep_stringify_keys
       [
         cloned_data,
-        schemer.validate(cloned_data)
+        schemer.validate(cloned_data).map do |error|
+          error.except 'root_schema'
+        end
       ]
     end
 
     protected
-    def fetch_schema
-      uri = URI.join ENV.fetch('NAPOLEON_POSTGREST_URI'), "/resource_schemas?kind=eq.#{kind}&schema_version=eq.#{version}"
+    def schema_uri
+      URI.join ENV.fetch('NAPOLEON_POSTGREST_URI'), "/resource_schemas?kind=eq.#{kind}&schema_version=eq.#{version}"
+    end
 
-      Net::HTTP.start(uri.host, uri.port) do |http|
-        request = Net::HTTP::Get.new uri
-        request['Authorization'] = "Bearer #{ENV.fetch 'NAPOLEON_POSTGREST_JWT'}"
+    def fetch_schema
+      Net::HTTP.start(schema_uri.host, schema_uri.port) do |http|
+        request = Net::HTTP::Get.new schema_uri
+        request['Authorization'] = AUTHORIZATION_HEADER
 
         response = http.request request
         raise 'Could not get schema' if response.code != '200'
 
         results = JSON.parse(response.body)
-        raise "Could not find schema for #{kind}:#{version}" if response.empty?
+        raise "Could not find schema for #{kind}:#{version}" if results.empty?
 
         results[0]['specification']
       end

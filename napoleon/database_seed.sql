@@ -84,39 +84,39 @@ INSERT INTO app.resource_schemas (
       },
       "certificate": {
         "type": "object",
-        "oneOf": [
-          {
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": ["free", "included"]
-              }
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["paid", "free", "included"]
+          }
+        },
+        "if": {
+          "properties": { "type": { "const": "paid" } }
+        },
+        "then": {
+          "properties": {
+            "price": {
+              "$ref": "#/definitions/price"
+            },
+            "currency": {
+              "$ref": "#/definitions/currency"
             }
           },
-          {
-            "properties": {
-              "type": {
-                "enum": ["paid"]
-              },
-              "price": {
-                "$ref": "#/definitions/price"
-              },
-              "currency": {
-                "$ref": "#/definitions/currency"
-              }
-            },
-            "required": ["type", "price", "currency"]
-          }
-        ]
+          "required": [
+            "type",
+            "price",
+            "currency"
+          ]
+        }
       },
       "customer_type": {
         "type": "string",
-        "enum": ["individual", "enterprise"],
+        "enum": [ "individual", "enterprise" ],
         "default": "individual"
       },
       "plan_type": {
         "type": "string",
-        "enum": ["regular", "premium"],
+        "enum": [ "regular", "premium" ],
         "default": "regular"
       },
       "price": {
@@ -148,7 +148,11 @@ INSERT INTO app.resource_schemas (
             "type": "string",
             "enum": ["minutes", "hours", "days", "weeks", "months", "years", "lessons", "chapters"]
           }
-        }
+        },
+        "required": [
+          "value",
+          "unit"
+        ]
       },
       "price_type": {
         "type": "object",
@@ -236,7 +240,20 @@ INSERT INTO app.resource_schemas (
       },
       "category": {
         "type": "string",
-        "enum": ["personal_development", "arts_and_design", "life_sciences", "data_science", "health_and_fitness", "language_and_communication", "physical_science_and_engineering", "math_and_logic", "marketing", "business", "social_sciences", "computer_science"]
+        "enum": [
+          "personal_development",
+          "arts_and_design",
+          "life_sciences",
+          "data_science",
+          "health_and_fitness",
+          "language_and_communication",
+          "physical_science_and_engineering",
+          "math_and_logic",
+          "marketing",
+          "business",
+          "social_sciences",
+          "computer_science"
+        ]
       },
       "tag": {
         "type": "string",
