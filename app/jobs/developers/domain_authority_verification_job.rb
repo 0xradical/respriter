@@ -110,7 +110,7 @@ module Developers
         else
           if error_count < 10
             crawler_domain.update(authority_confirmation_status: 'unconfirmed')
-            log(id, 'Could not verify domain, will try again shortly')
+            log(id, 'Could not verify domain, will try again shortly', :error)
 
             raise DomainAuthorityVerificationJob::Error
           else
@@ -119,7 +119,7 @@ module Developers
               expire
             end
 
-            log(id, 'Could not verify domain, exceeded number of tries')
+            log(id, 'Could not verify domain, exceeded number of tries', :error)
           end
         end
       end
@@ -149,8 +149,9 @@ module Developers
       end
     end
 
-    def log(ctx_id, message)
-      self.logger.info(
+    def log(ctx_id, message, level = :info)
+      self.logger.public_send(
+        level,
         {
           id: SecureRandom.uuid,
           ps: { id: ctx_id, name: SERVICE_NAME },
