@@ -21,7 +21,7 @@ BEGIN
     ) VALUES (
       _provider_id,
       ARRAY[current_setting('request.jwt.claim.sub',true)::bigint],
-      COALESCE(app.new_sitemaps(NEW.sitemaps), '{}')
+      '{}'
     ) RETURNING * INTO new_record;
 
     RETURN new_record;
@@ -66,20 +66,49 @@ CREATE TRIGGER api_provider_crawlers_view_instead_of_insert
 CREATE OR REPLACE FUNCTION triggers.api_provider_crawlers_view_instead_of_update() RETURNS trigger AS $$
 DECLARE
   new_record RECORD;
+  sitemap app.sitemap;
+  user_id bigint;
+  user_role varchar;
 BEGIN
-  IF if_user_by_ids(OLD.user_account_ids, TRUE) THEN
+  user_id := current_setting('request.jwt.claim.sub', true)::bigint;
+  user_role := current_setting('request.jwt.claim.role', true)::varchar;
+
+  IF NEW.sitemaps[1] IS NULL THEN
+    sitemap := OLD.sitemaps[1];
+  ELSE
+    sitemap :=
+      ( '(' || NEW.sitemaps[1].id  ||  ','
+            || 'unverified'    ||  ','
+            || NEW.sitemaps[1].url ||  ','
+            || 'unknown'       ||  ')'
+      )::app.sitemap;
+  END IF;
+
+  IF user_role = 'user' AND user_id = ANY(OLD.user_account_ids) THEN
     UPDATE app.provider_crawlers
     SET
       user_account_ids = NEW.user_account_ids,
-      sitemaps         = app.merge_sitemaps(OLD.sitemaps, app.new_sitemaps(NEW.sitemaps))
+      sitemaps         = ARRAY[sitemap]::app.sitemap[]
     WHERE
       id = OLD.id
     RETURNING * INTO new_record;
 
+    INSERT INTO public.que_jobs
+      (queue, priority, run_at, job_class, args, data)
+      VALUES
+      (
+        'default',
+        100,
+        NOW(),
+        'Developers::SitemapVerificationJob',
+        ('["' || OLD.id || '","' || sitemap.id  || '"]')::jsonb,
+        '{}'::jsonb
+      );
+
     RETURN new_record;
   END IF;
 
-  IF if_admin(TRUE) THEN
+  IF user_role = 'admin' THEN
     UPDATE app.provider_crawlers
     SET
       user_agent_token = NEW.user_agent_token,
@@ -87,7 +116,7 @@ BEGIN
       published        = NEW.published,
       status           = NEW.status,
       user_account_ids = NEW.user_account_ids,
-      sitemaps         = app.fill_sitemaps(NEW.sitemaps)
+      sitemaps         = NEW.sitemaps
     WHERE
       id = OLD.id
     RETURNING * INTO new_record;
@@ -97,7 +126,7 @@ BEGIN
 
   RAISE insufficient_privilege;
 END;
-$$ LANGUAGE plpgsql;
+$$ SECURITY DEFINER LANGUAGE plpgsql;
 
 CREATE TRIGGER api_provider_crawlers_view_instead_of_update
   INSTEAD OF UPDATE
