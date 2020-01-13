@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-source 'https://rails-assets.org'
 
 ruby '2.6.5'
 
@@ -76,6 +75,7 @@ gem 'que-web'
 
 # Sitemap
 gem 'sitemap_generator'
+gem 'robotstxt'
 
 # Email
 gem "valid_email2"

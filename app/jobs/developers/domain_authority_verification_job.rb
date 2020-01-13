@@ -69,18 +69,7 @@ module Developers
       else
         log(id, 'Could not verify via CNAME DNS entries, trying HTML method')
         # try via HTML
-        # try HTTP + HTTPS
-        uri = URI.parse(crawler_domain.domain)
-
-        if uri.scheme.nil? && uri.host.nil?
-          if uri.path
-            uri.scheme = 'https'
-            uri.host = uri.path
-            uri.path = ''
-          end
-        end
-
-        [uri, uri.dup.tap { |u| u.scheme = 'http' }].each do |u|
+        crawler_domain.possible_uris.each do |u|
           break if authority_confirmed_via_html
 
           begin
@@ -126,6 +115,9 @@ module Developers
     end
 
     def confirm!(user_id, crawler_domain, confirmation_method)
+      provider = nil
+      provider_crawler = nil
+
       ApplicationRecord.transaction do
         provider = Provider.create
 
@@ -144,9 +136,115 @@ module Developers
             provider_crawler_id: provider_crawler.id
           }
         )
-
-        finish # or destroy
       end
+
+      if provider && provider_crawler
+        detect_sitemap(crawler_domain, provider_crawler)
+      end
+
+      finish
+    end
+
+    def detect_sitemap(crawler_domain, provider_crawler)
+      sitemap = nil
+      sitemap_id = SecureRandom.uuid
+
+      crawler_domain.possible_uris.each do |uri|
+        begin
+          # robots.txt
+          uri.path = '/robots.txt'
+
+          robots_parser = Robotstxt.get(uri, 'Classpert Bot')
+          sitemap = robots_parser.sitemaps.first.presence
+        rescue StandardError
+          nil
+        end
+
+        if sitemap
+          verify_sitemap(
+            crawler_domain,
+            provider_crawler,
+            sitemap.to_s,
+            sitemap_id
+          )
+          return
+        end
+
+        begin
+          # sitemap.xml
+          uri.path = '/sitemap.xml'
+
+          response = Net::HTTP.get_response(uri)
+
+          sitemap = uri.dup.to_s if response.code == '200'
+        rescue StandardError
+          nil
+        end
+
+        if sitemap
+          verify_sitemap(
+            crawler_domain,
+            provider_crawler,
+            sitemap.to_s,
+            sitemap_id
+          )
+          return
+        end
+
+        begin
+          # sitemap.xml
+          uri.path = '/sitemap.xml.gz'
+
+          response = Net::HTTP.get_response(uri)
+
+          sitemap = uri.dup.to_s if response.code == '200'
+        rescue StandardError
+          nil
+        end
+
+        if sitemap
+          verify_sitemap(
+            crawler_domain,
+            provider_crawler,
+            sitemap.to_s,
+            sitemap_id
+          )
+          return
+        end
+      end
+
+      log(
+        crawler_domain.id,
+        'Could not configure sitemap automatically',
+        :error
+      )
+    rescue StandardError => e
+      log(
+        crawler_domain.id,
+        "Could not configure sitemap automatically: #{e.message}",
+        :error
+      )
+    end
+
+    def verify_sitemap(
+      crawler_domain, provider_crawler, sitemap_url, sitemap_id
+    )
+      log(crawler_domain.id, 'Sitemap detected, enqueuing for verification')
+
+      provider_crawler.update(
+        sitemaps: [
+          {
+            id: sitemap_id,
+            url: sitemap_url,
+            type: 'unknown',
+            status: 'unverified'
+          }
+        ]
+      )
+      ::Developers::SitemapVerificationJob.enqueue(
+        provider_crawler.id,
+        sitemap_id
+      )
     end
 
     def log(ctx_id, message, level = :info)

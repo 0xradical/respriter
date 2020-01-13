@@ -37,7 +37,6 @@ GIT
 
 GEM
   remote: http://rubygems.org/
-  remote: https://rails-assets.org/
   specs:
     abstract_type (0.0.7)
     actioncable (6.0.0)
@@ -445,6 +444,7 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    robotstxt (0.5.4)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -607,6 +607,7 @@ DEPENDENCIES
   que-web
   rack-cors
   rails (~> 6.0.0)
+  robotstxt
   rspec-mocks
   rspec-rails
   ruby-thumbor
@@ -631,4 +632,4 @@ RUBY VERSION
    ruby 2.6.5p114
 
 BUNDLED WITH
-   2.1.1
+   2.1.4
