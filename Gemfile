@@ -90,7 +90,7 @@ gem 'httparty'
 
 # DNS
 gem 'dnsruby'
-gem 'public_suffix'
+gem 'public_suffix', '~> 4.0.3'
 
 # Logger
 gem 'syslogger5424'

@@ -117,9 +117,31 @@ module Developers
     def confirm!(user_id, crawler_domain, confirmation_method)
       provider = nil
       provider_crawler = nil
+      provider_name = nil
+
+      log(crawler_domain.id, 'Deriving name from domain')
+
+      begin
+        parsed_domain = PublicSuffix.parse(crawler_domain.domain)
+
+        provider_name =
+          [parsed_domain.sld, parsed_domain.trd].compact.map do |domain_part|
+            domain_part.split(/\./).map do |part|
+              part.gsub(/\-/, '_').gsub(/[^A-Za-z0-9_]/, '').camelcase
+            end.join(' ')
+          end.select { |name| Provider.where(name: name).count == 0 }.first
+      rescue StandardError => e
+        raise "Error while deriving name from domain: #{e.message}"
+      end
+
+      if provider_name
+        log(crawler_domain.id, 'Successfully derived name from domain')
+      else
+        raise 'Could not derive name from domain'
+      end
 
       ApplicationRecord.transaction do
-        provider = Provider.create
+        provider = Provider.create(name: provider_name)
 
         provider_crawler =
           ProviderCrawler.create(
@@ -140,12 +162,15 @@ module Developers
 
       if provider && provider_crawler
         detect_sitemap(crawler_domain, provider_crawler)
+        setup_provider_crawler(crawler_domain, provider_crawler)
       end
 
       finish
     end
 
     def detect_sitemap(crawler_domain, provider_crawler)
+      log(crawler_domain.id, 'Trying to detect sitemap automatically')
+
       sitemap = nil
       sitemap_id = SecureRandom.uuid
 
@@ -213,15 +238,11 @@ module Developers
         end
       end
 
-      log(
-        crawler_domain.id,
-        'Could not configure sitemap automatically',
-        :error
-      )
+      log(crawler_domain.id, 'Could not detect sitemap automatically', :error)
     rescue StandardError => e
       log(
         crawler_domain.id,
-        "Could not configure sitemap automatically: #{e.message}",
+        "Could not detect sitemap automatically: #{e.message}",
         :error
       )
     end
@@ -244,6 +265,27 @@ module Developers
       ::Developers::SitemapVerificationJob.enqueue(
         provider_crawler.id,
         sitemap_id
+      )
+    end
+
+    def setup_provider_crawler(crawler_domain, provider_crawler)
+      log(crawler_domain.id, 'Configuring domain crawler')
+
+      crawler_service =
+        ::Integration::Napoleon::ProviderCrawlerService.new(provider_crawler)
+
+      crawler_service.call
+
+      if crawler_service.error
+        raise crawler_service.error
+      else
+        log(crawler_domain.id, 'Successfully configured domain crawler')
+      end
+    rescue StandardError => e
+      log(
+        crawler_domain.id,
+        "Configuration of domain crawler failed with error: #{e.message}",
+        :error
       )
     end
 

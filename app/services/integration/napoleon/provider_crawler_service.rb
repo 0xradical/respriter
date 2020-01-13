@@ -2,18 +2,22 @@ module Integration
   module Napoleon
     class ProviderCrawlerService
       attr_reader :provider_crawler
+      attr_accessor :error
 
       def initialize(provider_crawler, version = '0.0.1')
         @provider_crawler, @version = provider_crawler, version
       end
 
       def call
+        self.error = nil
+
         @provider_crawler.transaction do
           begin
             builder.create_pipeline_templates!
             builder.create_pipeline_executions!
             update_provider_crawler!
-          rescue StandardError
+          rescue StandardError => error
+            self.error = error
             builder.rollback!
             raise ActiveRecord::Rollback
           end
