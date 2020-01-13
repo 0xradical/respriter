@@ -63,7 +63,9 @@ module Developers
           data
         )
 
-      PreviewCourse.upsert(resource.to_course)
+      PreviewCourse.upsert(
+        resource.to_course.merge(expired_at: 20.minutes.from_now)
+      )
 
       preview_course.reload
 
