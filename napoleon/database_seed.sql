@@ -185,7 +185,7 @@ INSERT INTO app.resource_schemas (
           {
             "if": {
               "properties": {
-                "type": { "const": "subscription" },
+                "type": { "const": "subscription" }
               }
             },
             "then": {
@@ -194,7 +194,7 @@ INSERT INTO app.resource_schemas (
                 "subscription_period": { "$ref": "#/definitions/period" },
                 "payment_period":      { "$ref": "#/definitions/period" },
                 "trial_period":        { "$ref": "#/definitions/period" }
-              }
+              },
               "required": [ "total_price", "subscription_period", "payment_period" ]
             }
           }
