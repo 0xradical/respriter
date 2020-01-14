@@ -90,52 +90,44 @@ INSERT INTO app.resource_schemas (
             "enum": ["paid", "free", "included"]
           }
         },
+        "required": [ "type" ],
         "if": {
           "properties": { "type": { "const": "paid" } }
         },
         "then": {
           "properties": {
-            "price": {
-              "$ref": "#/definitions/price"
-            },
-            "currency": {
-              "$ref": "#/definitions/currency"
-            }
+            "price":    { "$ref": "#/definitions/price" },
+            "currency": { "$ref": "#/definitions/currency" }
           },
-          "required": [
-            "type",
-            "price",
-            "currency"
-          ]
+          "required": [ "price", "currency" ]
         }
       },
       "customer_type": {
-        "type": "string",
-        "enum": [ "individual", "enterprise" ],
+        "type":    "string",
+        "enum":    [ "individual", "enterprise" ],
         "default": "individual"
       },
       "plan_type": {
-        "type": "string",
-        "enum": [ "regular", "premium" ],
+        "type":    "string",
+        "enum":    [ "regular", "premium" ],
         "default": "regular"
       },
       "price": {
-        "type": "string",
+        "type":    "string",
         "pattern": "^[0-9]{1,}(\\.[0-9]{2})?$"
       },
+      "percentage": {
+        "type":    "string",
+        "pattern": "^([1-9][0-9]+|[0-9])(\\.[0-9]+)?\\s*\\%$"
+      },
       "discount": {
-        "oneOf": [
-          {
-            "type": "string",
-            "pattern": "^([1-9][0-9]+|[0-9])(\\.[0-9]+)?\\s*\\%$"
-          },
-          {
-            "$ref": "#/definitions/price"
-          }
+        "anyOf": [
+          { "$ref": "#/definitions/percentage" },
+          { "$ref": "#/definitions/price" }
         ]
       },
       "currency": {
-        "type": "string",
+        "type":    "string",
         "pattern": "^[A-Z]{3}$"
       },
       "period": {
@@ -149,92 +141,62 @@ INSERT INTO app.resource_schemas (
             "enum": ["minutes", "hours", "days", "weeks", "months", "years", "lessons", "chapters"]
           }
         },
-        "required": [
-          "value",
-          "unit"
-        ]
+        "required": [ "value", "unit" ]
       },
       "price_type": {
         "type": "object",
-        "oneOf": [
+        "properties": {
+          "type": {
+            "enum": [ "single_course", "subscription" ]
+          },
+          "customer_type":  { "$ref": "#/definitions/customer_type" },
+          "plan_type":      { "$ref": "#/definitions/plan_type"     },
+          "price":          { "$ref": "#/definitions/price"         },
+          "original_price": { "$ref": "#/definitions/price"         },
+          "discount":       { "$ref": "#/definitions/discount"      },
+          "currency":       { "$ref": "#/definitions/currency"      },
+          "enrollment_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": [ "type", "price", "currency" ],
+        "allOf": [
           {
-            "properties": {
-              "type": {
-                "enum": ["single_course"]
-              },
-              "customer_type": {
-                "$ref": "#/definitions/customer_type"
-              },
-              "plan_type": {
-                "$ref": "#/definitions/plan_type"
-              },
-              "price": {
-                "$ref": "#/definitions/price"
-              },
-              "original_price": {
-                "$ref": "#/definitions/price"
-              },
-              "discount": {
-                "$ref": "#/definitions/discount"
-              },
-              "currency": {
-                "$ref": "#/definitions/currency"
-              },
-              "enrollment_ids": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+            "if": {
+              "properties": {
+                "discount": { "not": { "const": null } }
               }
             },
-            "required": ["type", "price", "plan_type", "currency"]
+            "then": {
+              "required": ["original_price"]
+            }
           },
           {
-            "properties": {
-              "type": {
-                "enum": ["subscription"]
-              },
-              "customer_type": {
-                "$ref": "#/definitions/customer_type"
-              },
-              "plan_type": {
-                "$ref": "#/definitions/plan_type"
-              },
-              "price": {
-                "$ref": "#/definitions/price"
-              },
-              "total_price": {
-                "$ref": "#/definitions/price"
-              },
-              "original_price": {
-                "$ref": "#/definitions/price"
-              },
-              "discount": {
-                "$ref": "#/definitions/discount"
-              },
-              "currency": {
-                "$ref": "#/definitions/currency"
-              },
-              "subscription_period": {
-                "$ref": "#/definitions/period"
-              },
-              "payment_period": {
-                "$ref": "#/definitions/period"
-              },
-              "trial_period": {
-                "oneOf": [
-                  { "type": "null" },
-                  { "$ref": "#/definitions/period" }
-                ]
-              },
-              "enrollment_ids": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+            "if": {
+              "properties": {
+                "original_price": { "not": { "const": null } }
               }
             },
-            "required": ["type", "price", "customer_type", "plan_type", "total_price", "currency", "subscription_period"]
+            "then": {
+              "required": [ "discount" ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": { "const": "subscription" },
+              }
+            },
+            "then": {
+              "properties": {
+                "total_price":         { "$ref": "#/definitions/price"  },
+                "subscription_period": { "$ref": "#/definitions/period" },
+                "payment_period":      { "$ref": "#/definitions/period" },
+                "trial_period":        { "$ref": "#/definitions/period" }
+              }
+              "required": [ "total_price", "subscription_period", "payment_period" ]
+            }
           }
         ]
       },
@@ -260,31 +222,31 @@ INSERT INTO app.resource_schemas (
         "pattern": "^[A-Za-z0-9_]+$"
       },
       "rating": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "enum": ["stars"]
+        "anyOf": [
+          {
+            "type": "string",
+            "pattern": "^([1-9][0-9]+|[0-9])(\\.[0-9]+)?$"
           },
-          "value": {
-            "type": "number"
-          },
-          "range": {
-            "oneOf": [
-              {
-                "type": "array",
-                "minItems": 2,
-                "maxItems": 2,
-                "items": {
-                  "type": "number"
-                }
-              },
-              {
-                "type": "number"
+          {
+            "type": "object",
+            "properties": {
+              "type":  { "enum": [ "stars" ] },
+              "value": { "type": "number"    },
+              "range": {
+                "anyOf": [
+                  {
+                    "type":     "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items":    { "type": "number" }
+                  },
+                  { "type": "number" }
+                ]
               }
-            ]
+            },
+            "required": ["type", "value", "range"]
           }
-        },
-        "required": ["type", "value", "range"]
+        ]
       },
       "language": {
         "type": "string",
@@ -292,99 +254,109 @@ INSERT INTO app.resource_schemas (
       },
       "video": {
         "type": "object",
-        "oneOf": [
+        "properties": {
+          "type": {
+            "enum": [ "video_service", "youtube", "vimeo", "brightcove", "raw", "self_hosted", "coursera_hosted" ]
+          }
+        },
+        "required": [ "type" ],
+        "allOf": [
           {
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": ["video_service"]
-              },
-              "path": {
-                "type": "string"
+            "if": {
+              "properties": {
+                "type": { "const": "video_service" }
               }
             },
-            "required": [ "type", "path" ]
+            "then": {
+              "properties": {
+                "path": { "type": "string" }
+              },
+              "required": [ "path" ]
+            }
           },
           {
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": ["youtube", "vimeo"]
-              },
-              "id": {
-                "type": "string"
+            "if": {
+              "properties": {
+                "type": { "enum": ["youtube", "vimeo"] }
               }
             },
-            "required": [ "type", "id" ]
+            "then": {
+              "properties": {
+                "id": { "type": "string" }
+              },
+              "required": [ "id" ]
+            }
           },
           {
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": ["brightcove"]
-              },
-              "url": {
-                "type": "string",
-                "format": "uri"
-              },
-              "embed": {
-                "type": "boolean"
-              },
-              "thumbnail_url": {
-                "type": "string",
-                "format": "uri"
+            "if": {
+              "properties": {
+                "type": { "const": "brightcove" }
               }
             },
-            "required": [ "type", "url", "embed" ]
+            "then": {
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "embed": {
+                  "type": "boolean"
+                },
+                "thumbnail_url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [ "url", "embed" ]
+            }
           },
           {
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": ["raw"]
-              },
-              "url": {
-                "type": "string",
-                "format": "uri"
-              },
-              "thumbnail_url": {
-                "type": "string",
-                "format": "uri"
-              },
-              "provider": {
-                "type": "string"
+            "if": {
+              "properties": {
+                "type": { "const": "raw" }
               }
             },
-            "required": [ "type", "url" ]
+            "then": {
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "thumbnail_url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "provider": {
+                  "type": "string"
+                }
+              },
+              "required": [ "url" ]
+            }
           },
           {
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": ["self_hosted", "coursera_hosted"]
-              },
-              "url": {
-                "type": "string",
-                "format": "uri"
+            "if": {
+              "properties": {
+                "type": { "enum": [ "self_hosted", "coursera_hosted" ] }
               }
             },
-            "required": [ "type", "url" ]
+            "then": {
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "thumbnail_url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [ "url" ]
+            }
           }
         ]
       }
     },
-    "required": [
-      "unique_id",
-      "course_name",
-      "url",
-      "free_content",
-      "paid_content",
-      "description",
-      "pace",
-      "language",
-      "subtitles",
-      "audio"
-    ],
+    "required": [ "unique_id" ],
     "properties": {
       "unique_id": {
         "type": "string"
@@ -400,11 +372,11 @@ INSERT INTO app.resource_schemas (
         "type": "string"
       },
       "level": {
-        "oneOf": [
+        "anyOf": [
           { "$ref": "#/definitions/level" },
           {
             "type": "array",
-            "minItems": 0,
+            "minItems": 1,
             "items": {
               "$ref": "#/definitions/level"
             }
@@ -439,50 +411,22 @@ INSERT INTO app.resource_schemas (
       "enrollments": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
-          "starts_at": {
-            "oneOf": [
-              { "$ref": "#/definitions/datetime" },
-              { "type": "null" }
-            ]
-          },
-          "ends_at": {
-            "oneOf": [
-              { "$ref": "#/definitions/datetime" },
-              { "type": "null" }
-            ]
-          },
-          "valid_until": {
-            "oneOf": [
-              { "$ref": "#/definitions/datetime" },
-              { "type": "null" }
-            ]
-          },
+          "id":          { "type": "string" },
+          "starts_at":   { "$ref": "#/definitions/datetime" },
+          "ends_at":     { "$ref": "#/definitions/datetime" },
+          "valid_until": { "$ref": "#/definitions/datetime" },
+          "duration":    { "$ref": "#/definitions/period"   },
+          "workload":    { "$ref": "#/definitions/period"   },
           "url": {
-            "type": "string"
-          },
-          "duration": {
-            "oneOf": [
-              { "$ref": "#/definitions/period" },
-              { "type": "null" }
-            ]
-          },
-          "workload": {
-            "oneOf": [
-              { "$ref": "#/definitions/period" },
-              { "type": "null" }
-            ]
+            "type": "string",
+            "format": "uri"
           },
           "prices": {
             "type": "array",
-            "items": {
-              "$ref": "#/definitions/price_type"
-            }
+            "items": { "$ref": "#/definitions/price_type" }
           }
         },
-        "required": ["start_at"]
+        "required": [ "start_at" ]
       },
       "certificate": {
         "$ref": "#/definitions/certificate"
@@ -501,32 +445,25 @@ INSERT INTO app.resource_schemas (
       },
       "tags": {
         "type": "array",
-        "items": {
-          "$ref": "#/definitions/tag"
-        }
+        "items": { "$ref": "#/definitions/tag" }
       },
       "provided_tags": {
         "type": "array",
-        "items": {
-          "type": "string"
-        }
+        "items": { "type": "string" }
       },
       "provided_categories": {
         "type": "array",
-        "items": {
-          "type": "string"
-        }
+        "items": { "type": "string" }
       },
       "description": {
-        "type": "string",
-        "minLength": 100
+        "type": "string"
       },
       "syllabus": {
         "type": "string"
       },
       "pace": {
         "type": "string",
-        "enum": ["instructor_paced", "self_paced", "live_class"]
+        "enum": [ "instructor_paced", "self_paced", "live_class" ]
       },
       "duration": {
         "$ref": "#/definitions/period"
@@ -538,39 +475,28 @@ INSERT INTO app.resource_schemas (
         "type": "number"
       },
       "rating": {
-        "oneOf": [
-          { "$ref": "#/definitions/rating" },
-          { "type": "string", "pattern": "^([1-9][0-9]+|[0-9])(\\.[0-9]+)?$" }
-        ]
+        "$ref": "#/definitions/rating"
       },
       "language": {
         "type": "array",
-        "items": {
-          "$ref": "#/definitions/language"
-        }
+        "items": { "$ref": "#/definitions/language" }
       },
       "subtitles": {
         "type": "array",
-        "items": {
-          "$ref": "#/definitions/language"
-        }
+        "items": { "$ref": "#/definitions/language" }
       },
       "audio": {
         "type": "array",
-        "items": {
-          "$ref": "#/definitions/language"
-        }
+        "items": { "$ref": "#/definitions/language" }
       },
       "published": {
         "type": "boolean"
       },
       "reviewed": {
-        "type": "boolean",
-        "default": false
+        "type": "boolean"
       },
       "stale": {
-        "type": "boolean",
-        "default": false
+        "type": "boolean"
       },
       "alternative_course_id": {
         "$ref": "#/definitions/uuid"
@@ -585,12 +511,34 @@ INSERT INTO app.resource_schemas (
         "$ref": "#/definitions/video"
       }
     },
-    "if": {
-      "properties": { "paid_content": { "const": true } }
-    },
-    "then": {
-      "properties": { "prices": { "minItems": 1 } },
-      "required": ["prices"]
-    }
+    "allOf": [
+      {
+        "if": {
+          "properties": { "paid_content": { "const": true } }
+        },
+        "then": {
+          "properties": { "prices": { "minItems": 1 } },
+          "required": ["prices"]
+        }
+      },
+      {
+        "if": {
+          "properties": { "status": { "const": "available" } }
+        },
+        "then": {
+          "required": [
+            "course_name",
+            "url",
+            "free_content",
+            "paid_content",
+            "description",
+            "pace",
+            "language",
+            "subtitles",
+            "audio"
+          ]
+        }
+      }
+    ]
   }'
 );

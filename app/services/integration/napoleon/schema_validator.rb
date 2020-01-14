@@ -20,9 +20,7 @@ module Integration::Napoleon
       cloned_data = data.deep_dup.deep_stringify_keys
       [
         cloned_data,
-        schemer.validate(cloned_data).map do |error|
-          error.except 'root_schema'
-        end
+        ValidatorHandler.new( schemer.validate(cloned_data) ).errors
       ]
     end
 
