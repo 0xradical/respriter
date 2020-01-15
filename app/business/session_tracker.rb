@@ -141,8 +141,8 @@ class SessionTracker
   end
 
   def parse_user_agent
-    user_agent_parser = UserAgentParser.parse(request.user_agent)&.truncate(100)
-    { user_agent: { browser: user_agent_parser.to_s, os: user_agent_parser.os.to_s } }
+    user_agent_parser = UserAgentParser.parse(request.user_agent)
+    { user_agent: { browser: user_agent_parser.to_s&.truncate(50), os: user_agent_parser.os.to_s&.truncate(50) } }
   end
 
   def parse_first_access_at
