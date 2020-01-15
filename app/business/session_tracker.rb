@@ -94,8 +94,8 @@ class SessionTracker
         accept_language:  request.env['HTTP_ACCEPT_LANGUAGE'],
         x_forwarded_for:  request.env['HTTP_X_FORWARDED_FOR'],
         cf_ipcountry:     request.env['HTTP_CF_IPCOUNTRY'],
-        user_agent:       request.env['HTTP_USER_AGENT'],
-        referer:          request.env['HTTP_REFERER']
+        user_agent:       request.env['HTTP_USER_AGENT']&.truncate(150),
+        referer:          request.env['HTTP_REFERER']&.truncate(150)
       }
     }
   end
@@ -128,15 +128,20 @@ class SessionTracker
   end
 
   def parse_referer
-    { referer: request.referer&.split('?')&.first }
+    return Hash.new         unless request.referer.present?
+    raise 'Invalid Referer' unless valid_url?(request.referer)
+
+    uri     = URI(request.referer)
+    referer = uri.host + uri.path
+    { referer: referer.truncate(150) }
   end
 
   def parse_query_string
-    { query_string: request.query_string }
+    { query_string: request.query_string&.truncate(300) }
   end
 
   def parse_user_agent
-    user_agent_parser = UserAgentParser.parse(request.user_agent)
+    user_agent_parser = UserAgentParser.parse(request.user_agent)&.truncate(100)
     { user_agent: { browser: user_agent_parser.to_s, os: user_agent_parser.os.to_s } }
   end
 
@@ -168,6 +173,13 @@ class SessionTracker
   end
 
   private
+  def valid_url?(url)
+    uri = URI.parse url
+    uri.is_a?(URI::HTTP) && uri.host.present?
+  rescue URI::InvalidURIError
+    false
+  end
+
   def request
     @action.send :request
   end
