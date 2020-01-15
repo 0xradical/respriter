@@ -36,14 +36,25 @@ INSERT INTO app.resource_schemas (
       },
       "status": {
         "type": "string",
-        "enum": ["available", "unavailable", "finished", "upcoming", "coming_soon", "in_progress"]
+        "enum": [
+          "available",
+          "unavailable",
+          "finished",
+          "upcoming",
+          "coming_soon",
+          "in_progress"
+        ]
       },
       "offered_by": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["university", "company", "other"]
+            "enum": [
+              "university",
+              "company",
+              "other"
+            ]
           },
           "name": {
             "type": "string"
@@ -64,7 +75,11 @@ INSERT INTO app.resource_schemas (
       },
       "level": {
         "type": "string",
-        "enum": ["beginner", "intermediate", "advanced"]
+        "enum": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ]
       },
       "instructor": {
         "type": "object",
@@ -87,47 +102,74 @@ INSERT INTO app.resource_schemas (
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["paid", "free", "included"]
+            "enum": [
+              "paid",
+              "free",
+              "included"
+            ]
           }
         },
-        "required": [ "type" ],
+        "required": [
+          "type"
+        ],
         "if": {
-          "properties": { "type": { "const": "paid" } }
+          "properties": {
+            "type": {
+              "const": "paid"
+            }
+          }
         },
         "then": {
           "properties": {
-            "price":    { "$ref": "#/definitions/price" },
-            "currency": { "$ref": "#/definitions/currency" }
+            "price": {
+              "$ref": "#/definitions/price"
+            },
+            "currency": {
+              "$ref": "#/definitions/currency"
+            }
           },
-          "required": [ "price", "currency" ]
+          "required": [
+            "price",
+            "currency"
+          ]
         }
       },
       "customer_type": {
-        "type":    "string",
-        "enum":    [ "individual", "enterprise" ],
+        "type": "string",
+        "enum": [
+          "individual",
+          "enterprise"
+        ],
         "default": "individual"
       },
       "plan_type": {
-        "type":    "string",
-        "enum":    [ "regular", "premium" ],
+        "type": "string",
+        "enum": [
+          "regular",
+          "premium"
+        ],
         "default": "regular"
       },
       "price": {
-        "type":    "string",
+        "type": "string",
         "pattern": "^[0-9]{1,}(\\.[0-9]{2})?$"
       },
       "percentage": {
-        "type":    "string",
+        "type": "string",
         "pattern": "^([1-9][0-9]+|[0-9])(\\.[0-9]+)?\\s*\\%$"
       },
       "discount": {
         "anyOf": [
-          { "$ref": "#/definitions/percentage" },
-          { "$ref": "#/definitions/price" }
+          {
+            "$ref": "#/definitions/percentage"
+          },
+          {
+            "$ref": "#/definitions/price"
+          }
         ]
       },
       "currency": {
-        "type":    "string",
+        "type": "string",
         "pattern": "^[A-Z]{3}$"
       },
       "period": {
@@ -138,64 +180,119 @@ INSERT INTO app.resource_schemas (
           },
           "unit": {
             "type": "string",
-            "enum": ["minutes", "hours", "days", "weeks", "months", "years", "lessons", "chapters"]
+            "enum": [
+              "minutes",
+              "hours",
+              "days",
+              "weeks",
+              "months",
+              "years",
+              "lessons",
+              "chapters"
+            ]
           }
         },
-        "required": [ "value", "unit" ]
+        "required": [
+          "value",
+          "unit"
+        ]
       },
       "price_type": {
         "type": "object",
         "properties": {
           "type": {
-            "enum": [ "single_course", "subscription" ]
+            "enum": [
+              "single_course",
+              "subscription"
+            ]
           },
-          "customer_type":  { "$ref": "#/definitions/customer_type" },
-          "plan_type":      { "$ref": "#/definitions/plan_type"     },
-          "price":          { "$ref": "#/definitions/price"         },
-          "original_price": { "$ref": "#/definitions/price"         },
-          "discount":       { "$ref": "#/definitions/discount"      },
-          "currency":       { "$ref": "#/definitions/currency"      },
+          "customer_type": {
+            "$ref": "#/definitions/customer_type"
+          },
+          "plan_type": {
+            "$ref": "#/definitions/plan_type"
+          },
+          "price": {
+            "$ref": "#/definitions/price"
+          },
+          "original_price": {
+            "$ref": "#/definitions/price"
+          },
+          "discount": {
+            "$ref": "#/definitions/discount"
+          },
+          "currency": {
+            "$ref": "#/definitions/currency"
+          },
           "enrollment_ids": {
             "type": "array",
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           }
         },
-        "required": [ "type", "price", "currency" ],
+        "required": [
+          "type",
+          "price",
+          "currency"
+        ],
         "allOf": [
           {
             "if": {
               "properties": {
-                "discount": { "not": { "const": null } }
+                "discount": {
+                  "const": null
+                }
               }
             },
-            "then": {
-              "required": ["original_price"]
+            "else": {
+              "required": [
+                "original_price"
+              ]
             }
           },
           {
             "if": {
               "properties": {
-                "original_price": { "not": { "const": null } }
+                "original_price": {
+                  "const": null
+                }
               }
             },
-            "then": {
-              "required": [ "discount" ]
+            "else": {
+              "required": [
+                "discount"
+              ]
             }
           },
           {
             "if": {
               "properties": {
-                "type": { "const": "subscription" }
+                "type": {
+                  "const": "subscription"
+                }
               }
             },
             "then": {
               "properties": {
-                "total_price":         { "$ref": "#/definitions/price"  },
-                "subscription_period": { "$ref": "#/definitions/period" },
-                "payment_period":      { "$ref": "#/definitions/period" },
-                "trial_period":        { "$ref": "#/definitions/period" }
+                "total_price": {
+                  "$ref": "#/definitions/price"
+                },
+                "subscription_period": {
+                  "$ref": "#/definitions/period"
+                },
+                "payment_period": {
+                  "$ref": "#/definitions/period"
+                },
+                "trial_period": {
+                  "$ref": "#/definitions/period"
+                }
               },
-              "required": [ "total_price", "subscription_period", "payment_period" ]
+              "required": [
+                "total_price",
+                "subscription_period",
+                "payment_period"
+              ]
             }
           }
         ]
@@ -230,21 +327,35 @@ INSERT INTO app.resource_schemas (
           {
             "type": "object",
             "properties": {
-              "type":  { "enum": [ "stars" ] },
-              "value": { "type": "number"    },
+              "type": {
+                "enum": [
+                  "stars"
+                ]
+              },
+              "value": {
+                "type": "number"
+              },
               "range": {
                 "anyOf": [
                   {
-                    "type":     "array",
+                    "type": "array",
                     "minItems": 2,
                     "maxItems": 2,
-                    "items":    { "type": "number" }
+                    "items": {
+                      "type": "number"
+                    }
                   },
-                  { "type": "number" }
+                  {
+                    "type": "number"
+                  }
                 ]
               }
             },
-            "required": ["type", "value", "range"]
+            "required": [
+              "type",
+              "value",
+              "range"
+            ]
           }
         ]
       },
@@ -256,41 +367,68 @@ INSERT INTO app.resource_schemas (
         "type": "object",
         "properties": {
           "type": {
-            "enum": [ "video_service", "youtube", "vimeo", "brightcove", "raw", "self_hosted", "coursera_hosted" ]
+            "enum": [
+              "video_service",
+              "youtube",
+              "vimeo",
+              "brightcove",
+              "raw",
+              "self_hosted",
+              "coursera_hosted"
+            ]
           }
         },
-        "required": [ "type" ],
+        "required": [
+          "type"
+        ],
         "allOf": [
           {
             "if": {
               "properties": {
-                "type": { "const": "video_service" }
+                "type": {
+                  "const": "video_service"
+                }
               }
             },
             "then": {
               "properties": {
-                "path": { "type": "string" }
+                "path": {
+                  "type": "string"
+                }
               },
-              "required": [ "path" ]
+              "required": [
+                "path"
+              ]
             }
           },
           {
             "if": {
               "properties": {
-                "type": { "enum": ["youtube", "vimeo"] }
+                "type": {
+                  "enum": [
+                    "youtube",
+                    "vimeo"
+                  ]
+                }
               }
             },
             "then": {
               "properties": {
-                "id": { "type": "string" }
+                "id": {
+                  "type": "string"
+                }
               },
-              "required": [ "id" ]
+              "required": [
+                "id"
+              ]
             }
           },
           {
             "if": {
               "properties": {
-                "type": { "const": "brightcove" }
+                "type": {
+                  "const": "brightcove"
+                }
               }
             },
             "then": {
@@ -307,13 +445,18 @@ INSERT INTO app.resource_schemas (
                   "format": "uri"
                 }
               },
-              "required": [ "url", "embed" ]
+              "required": [
+                "url",
+                "embed"
+              ]
             }
           },
           {
             "if": {
               "properties": {
-                "type": { "const": "raw" }
+                "type": {
+                  "const": "raw"
+                }
               }
             },
             "then": {
@@ -330,13 +473,20 @@ INSERT INTO app.resource_schemas (
                   "type": "string"
                 }
               },
-              "required": [ "url" ]
+              "required": [
+                "url"
+              ]
             }
           },
           {
             "if": {
               "properties": {
-                "type": { "enum": [ "self_hosted", "coursera_hosted" ] }
+                "type": {
+                  "enum": [
+                    "self_hosted",
+                    "coursera_hosted"
+                  ]
+                }
               }
             },
             "then": {
@@ -350,13 +500,17 @@ INSERT INTO app.resource_schemas (
                   "format": "uri"
                 }
               },
-              "required": [ "url" ]
+              "required": [
+                "url"
+              ]
             }
           }
         ]
       }
     },
-    "required": [ "unique_id" ],
+    "required": [
+      "unique_id"
+    ],
     "properties": {
       "unique_id": {
         "type": "string"
@@ -373,7 +527,9 @@ INSERT INTO app.resource_schemas (
       },
       "level": {
         "anyOf": [
-          { "$ref": "#/definitions/level" },
+          {
+            "$ref": "#/definitions/level"
+          },
           {
             "type": "array",
             "minItems": 1,
@@ -411,22 +567,38 @@ INSERT INTO app.resource_schemas (
       "enrollments": {
         "type": "object",
         "properties": {
-          "id":          { "type": "string" },
-          "starts_at":   { "$ref": "#/definitions/datetime" },
-          "ends_at":     { "$ref": "#/definitions/datetime" },
-          "valid_until": { "$ref": "#/definitions/datetime" },
-          "duration":    { "$ref": "#/definitions/period"   },
-          "workload":    { "$ref": "#/definitions/period"   },
+          "id": {
+            "type": "string"
+          },
+          "starts_at": {
+            "$ref": "#/definitions/datetime"
+          },
+          "ends_at": {
+            "$ref": "#/definitions/datetime"
+          },
+          "valid_until": {
+            "$ref": "#/definitions/datetime"
+          },
+          "duration": {
+            "$ref": "#/definitions/period"
+          },
+          "workload": {
+            "$ref": "#/definitions/period"
+          },
           "url": {
             "type": "string",
             "format": "uri"
           },
           "prices": {
             "type": "array",
-            "items": { "$ref": "#/definitions/price_type" }
+            "items": {
+              "$ref": "#/definitions/price_type"
+            }
           }
         },
-        "required": [ "start_at" ]
+        "required": [
+          "start_at"
+        ]
       },
       "certificate": {
         "$ref": "#/definitions/certificate"
@@ -445,15 +617,21 @@ INSERT INTO app.resource_schemas (
       },
       "tags": {
         "type": "array",
-        "items": { "$ref": "#/definitions/tag" }
+        "items": {
+          "$ref": "#/definitions/tag"
+        }
       },
       "provided_tags": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
       "provided_categories": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
       "description": {
         "type": "string"
@@ -463,7 +641,11 @@ INSERT INTO app.resource_schemas (
       },
       "pace": {
         "type": "string",
-        "enum": [ "instructor_paced", "self_paced", "live_class" ]
+        "enum": [
+          "instructor_paced",
+          "self_paced",
+          "live_class"
+        ]
       },
       "duration": {
         "$ref": "#/definitions/period"
@@ -479,15 +661,21 @@ INSERT INTO app.resource_schemas (
       },
       "language": {
         "type": "array",
-        "items": { "$ref": "#/definitions/language" }
+        "items": {
+          "$ref": "#/definitions/language"
+        }
       },
       "subtitles": {
         "type": "array",
-        "items": { "$ref": "#/definitions/language" }
+        "items": {
+          "$ref": "#/definitions/language"
+        }
       },
       "audio": {
         "type": "array",
-        "items": { "$ref": "#/definitions/language" }
+        "items": {
+          "$ref": "#/definitions/language"
+        }
       },
       "published": {
         "type": "boolean"
@@ -514,16 +702,30 @@ INSERT INTO app.resource_schemas (
     "allOf": [
       {
         "if": {
-          "properties": { "paid_content": { "const": true } }
+          "properties": {
+            "paid_content": {
+              "const": true
+            }
+          }
         },
         "then": {
-          "properties": { "prices": { "minItems": 1 } },
-          "required": ["prices"]
+          "properties": {
+            "prices": {
+              "minItems": 1
+            }
+          },
+          "required": [
+            "prices"
+          ]
         }
       },
       {
         "if": {
-          "properties": { "status": { "const": "available" } }
+          "properties": {
+            "status": {
+              "const": "available"
+            }
+          }
         },
         "then": {
           "required": [
