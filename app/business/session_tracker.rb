@@ -175,7 +175,10 @@ class SessionTracker
   private
   def valid_url?(url)
     uri = URI.parse url
-    uri.is_a?(URI::HTTP) && uri.host.present?
+    uri.host.present? && (
+      uri.is_a?(URI::HTTP) ||
+      uri.scheme == 'android-app'
+    )
   rescue URI::InvalidURIError
     false
   end
