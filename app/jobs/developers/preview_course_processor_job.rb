@@ -3,6 +3,7 @@ require 'syslogger'
 module Developers
   class PreviewCourseProcessorJob < Que::Job
     SERVICE_NAME = 'debug-tool-service'
+    DEFAULT_VERSION = '0.0.1'
 
     class Error < StandardError; end
 
@@ -52,13 +53,27 @@ module Developers
             .presence
         end
 
-      data = on_error('Could not parse Course JSON') { JSON.parse(json) }
+      data =
+        on_error('Could not parse Course JSON') do
+          JSON.parse(json).merge('url': preview_course.url)
+        end
 
-      log(id, 'Generating resource based on JSON+LD')
+      schema_version = data.delete('version') || DEFAULT_VERSION
+
+      log(id, 'Validating JSON')
+      validator =
+        Integration::Napoleon::SchemaValidator.new('course', schema_version)
+
+      data, validation_errors = validator.validate(data)
+
+      validation_errors.each do |validation_error|
+        log(id, "Validation error: #{validation_error.message}", :error)
+      end
+
+      log(id, 'Generating resource based on JSON')
       resource =
         ::Napoleon::IntegrationResource.new(
           preview_course.id,
-          preview_course.url,
           preview_course.provider,
           data
         )

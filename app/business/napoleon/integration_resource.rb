@@ -2,31 +2,18 @@ module Napoleon
   class IntegrationResource < Resource
     BASE_62 = [*(0..9).map(&:to_s), *('a'..'z'), *('A'..'Z')].map(&:to_sym)
 
-    attr_reader :id, :url, :data, :provider
+    attr_reader :id, :data, :provider
 
-    def initialize(id, url, provider, data)
-      @id, @url, @provider, @data = id, url, provider, data
+    def initialize(id, provider, data)
+      @id, @provider, @data = id, provider, (data || {})
+      if @data['course_name'] && @data['url']
+        @data['slug'] = slug(@data['course_name'], @data['url'])
+      end
       super(to_payload, provider)
     end
 
     def to_payload
-      payload = { 'content' => {} }
-
-      payload['id'] = id
-      payload['content']['version'] = data['version']
-      payload['content']['course_name'] = data['course']['name']
-      payload['content']['level'] = data['course']['level']
-      payload['content']['description'] = data['course']['description']
-      payload['content']['pace'] = data['course']['pace']
-      payload['content']['audio'] = data['course']['audio']
-      payload['content']['subtitles'] = data['course']['subtitles']
-      payload['content']['video'] = data['course']['video']
-      payload['content']['prices'] = data['course']['prices']
-      payload['content']['url'] = url
-      payload['content']['slug'] =
-        data['course']['slug'] || slug(data['course']['name'], url)
-
-      payload
+      { 'id' => id, 'content' => data }
     end
 
     def slug(course_name, course_url)
