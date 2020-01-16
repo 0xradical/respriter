@@ -111,12 +111,14 @@
       <div style='width:0;height:0'>
         <% if content_for(:base_svg_sprites) %>
           <%= yield :base_svg_sprites %>
+          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/i18n.svg') %>"></div>
+          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg') %>"></div>
         <% else %>
           <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg') %>"></div>
+          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/i18n.svg') %>"></div>
           <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/icons.svg') %>"></div>
           <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/providers.svg') %>"></div>
           <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/tags.svg') %>"></div>
-          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/country-flags.svg') %>"></div>
         <% end %>
 
         <%= yield :svg_sprites %>

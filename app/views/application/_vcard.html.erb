@@ -1,175 +1,64 @@
-<% uniq = SecureRandom.hex(48) %>
-
-<div class='c-vcard'>
-
-  <div class='c-vcard__head'>
-    <div id='embed-<%= uniq %>' class='c-video'>
-      <%# if course.video && (course.video.url || (course.video.type == "youtube" && course.video.id)) %>
-        <div class="c-video__bg-img" style="background-image:url(<%#= course.video_thumbnail %>)"></div>
-        <div class="c-video__mask"></div>
-        <div data-embedded-video='/videos/<%= course.id %>' data-embedded-video-target='#embed-<%= uniq %>' class='swiper-no-swiping c-video__content'>
-          <%= svg_use('icons', 'play', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
-          <span class='c-video__subtitle'><%= t('dictionary.preview_this_course.long') %></span>
+<div class='el:o-vcard'>
+  <div class='el:o-vcard__media'>
+    <% if course.video %>
+      <div class="el:m-video-preview clspt:m-video-preview--available" >
+        <div class="el:m-video-preview__wrapper">
+          <div class="el:m-video-preview__background" style="background-image:url('<%= course.video_thumbnail %>');"></div>
+          <div class="el:m-video-preview__mask"></div>
+          <div class="el:m-video-preview__content">
+            <svg width="50%" height="50%" viewBox="0 0 24 24" class="el:m-video-preview__icon el:amx-Fi_fgV" style="transform:translate(0%, 50%);transition:all.5s;width:50%;height:50%;" data-v-167c7238="" viewbox="0 0 24 24" data-v-500edc45="">
+              <use xlink:href="#icons-play"></use>
+            </svg>
+          </div>
         </div>
-      <%# else %>
-        <div class='c-video__content'>
-          <%= svg_use('icons', 'video-record-unavailable', { width: '18px', height: '18px', class: 'c-video__icon'} ) %>
-          <span class='c-video__subtitle'><%= t('dictionary.preview_not_available.long') %> </span>
-        </div>
-      <%# end %>
-    </div>
+      </div>
+    <% end %>
   </div>
+  <div class='el:o-vcard__content'>
 
-  <div class='c-vcard__body'>
-
-    <div class='c-vcard__content-row'>
-      <span class='c-label'>
-        <%= svg_use('providers-',course.provider.slug, {class: 'c-label__icon c-label__icon--inc-25% c-label__icon--circled-border' }) %>
-        <span class='c-label__text' style='font-size:0.875em'>
-          <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
-            <%= course.provider.name %>
-          </span>
-        </span>
-      </span>
+    <div class='el:m-label el:amx-M(0.75em|0)'>
+      <svg class='el:m-label__icon'>
+        <use xlink:href='#providers-<%= course.provider.slug %>'>
+      </svg>
+      <span class='el:m-label__text'><%= course.provider.name %></span>
     </div>
 
-    <div class='c-vcard__content-row'>
-      <div class='c-vcard__title-box'>
-        <a href='<%= gateway_path(course.id) %>' rel='nofollow' target='_blank' title='<%= course.name %>' class='c-vcard__title'>
-          <%= course.name %>
-        </a>
+    <div class='el:m-text-clipbox el:amx-Mb(0.5em)'>
+      <div 
+        class='el:amx-Fs(0.875em) el:m-text-clipbox__text 
+        el:m-text-clipbox__text--bold 
+        el:m-text-clipbox__text--3-lined'>
+        <%= course.name %>
       </div>
     </div>
 
-    <div class='c-vcard__content-row el:amx-Fs(0.875em)'>
-    </div>
+    <div style='display:flex;align-items:center;' class='el:amx-Mb(0.75em)' >
+      <div style='width:50%;'>
+        <div class='el:m-label el:amx-M(0.75em|0) el:amx-Fs(0.75em)'>
+          <svg class='el:m-label__icon'>
+            <use xlink:href='#icons-clock'>
+          </svg>
+          <span class='el:m-label__text'>
+            <%= course.effort ? t("datetime.distance_in_words.about_x_hours", count: course.effort.ceil) : t('dictionary.not_available') %>
+          </span>
+        </div>
 
-    <div class='c-vcard__content-row c-vcard__content--spaced'>
-      <ul class='c-list c-list--unstyled'>
-        <li>
-          <span class='c-label'>
-            <%= svg_use('icons', 'velocimeter', {
-              alt: t('meta.icons.user_and_monitor'),
-              class: 'c-label__icon c-label__icon--inc-25%',
-              title: t('meta.icons.user_and_monitor')
-            } ) %>
-            <span class='c-label__text' style='font-size:0.75em'>
-              <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
-                <%= course.pace ? t("dictionary.pace.#{course.pace}") : t("dictionary.not_available") %>
-              </span>
-            </span>
-          </span>
-        </li>
-        <li>
-          <span class='c-label'>
-            <%= svg_use('icons', 'level', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-            <span class='c-label__text' style='font-size:0.75em'>
-            <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
-                <% if !course.level.empty? %>
-                  <%= course.level.map { |l| t("dictionary.levels.#{l}") }.join(',') %>
-                <% else %>
-                  <%= t("dictionary.not_available") %>
-                <% end %>
-              </span>
-            </span>
-          </span>
-        </li>
-        <li>
-          <span class='c-label'>
-            <%= svg_use('icons', 'clock', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-            <span class='c-label__text' style='font-size:0.75em'>
-              <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
-                <%= course.effort ? t("datetime.distance_in_words.about_x_hours", count: course.effort.ceil) : t('dictionary.not_available') %>
-              </span>
-            </span>
-          </span>
-        </li>
-        <li>
-          <span class='c-label'>
-            <%= svg_use('icons', 'institution', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-            <span class='c-label__text' style='font-size:0.75em'>
-              <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
-                <%= course.offered_by.present? ? course.offered_by.map { |i| i['name'] }.join(',') : t("dictionary.not_available") %>
-              </span>
-            </span>
-          </span>
-        </li>
-      </ul>
-    </div>
-
-    <div class='c-vcard__content-row c-vcard__content--spaced' style='font-size:0'>
-      <div class='c-vcard__content-lcol c-vcard__content-lcol--W(40%)'>
-        <ul class='c-list c-list--unstyled'>
-          <li class='c-vcard__content-box c-vcard__content-box--ellipsis'>
-            <span class='c-label'>
-              <%= svg_use('icons', 'audio', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-              <span class='c-label__text' style='font-size:0.75em'>
-                <span class='c-tags c-tags--gray el:amx-Ml(0.25em) el:amx-Tt(u)'>
-                  <%= course.root_languages_for_audio.join(',') %>
-                </span>
-              </span>
-            </span>
-          </li>
-          <li class='c-vcard__content-box c-vcard__content-box--ellipsis'>
-            <span class='c-label'>
-              <%= svg_use('icons', 'subtitle', { class: 'c-label__icon c-label__icon--inc-25%' } ) %>
-              <span class='c-label__text' style='font-size:0.75em'>
-                <span class='c-tags c-tags--gray el:amx-Ml(0.25em) el:amx-Tt(u)'>
-                  <% begin %>
-                    <%= (course.subtitles & session[:tracking_data]['http_accept_language']).join(',') %>
-                  <% rescue %>
-                    EN
-                  <% end %>
-                </span>
-              </span>
-            </span>
-          </li>
-        </ul>
+        <div class='el:amx-Mb(0.75em) el:amx-Fs(0.75em)'>
+          30 days <span 
+          class='el:m-tag 
+            el:m-tag--secondary-variant-flat
+            el:m-tag--bold 
+            el:m-tag--xxs 
+            el:m-tag--uppercase'>free trial</span>
+        </div>
       </div>
-      <div class='c-vcard__content-rcol c-vcard__content-rcol--W(60%)'>
-
-        <div class='el:amx-Fs(0.625em) el:amx-Tt(u) c-vcard__content-box c-vcard__content-box--Ta(r)'>
-          <% if course.subscription_type? %>
-            <span class='el:amx-C_green3'><%= t("dictionary.free_trial")%></span>: <%= t("datetime.distance_in_words.x_#{course.trial_period['unit']}", count: course.trial_period['value']) %>
-          <% end %>
-        </div>
-
-        <div class='c-vcard__content-box c-vcard__price el:amx-Tt(u) c-vcard__content-box--Ta(r)'>
-          <%= course.free_content? ? 'free' : "$#{'%.2f' % course.price}" %>
-        </div>
-
-        <div class='c-vcard__content-box c-vcard__content-box--Ta(r) el:amx-Fs(0.625em)'>
-
-          <% if course.free_content? && course.paid_content? %>
-            <span data-tippy-content="<%= t('components.card.free_course_tip') %>" class='c-label'>
-              <%= svg_use('icons', 'currency', { class: 'c-label__icon' } ) %>
-              <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
-                <%= t('dictionary.extra_paid_content')%>
-              </span>
-            </span>
-          <% elsif course.subscription_type? && course.has_free_trial? %>
-            <span data-tippy-content="<%= t('components.card.subscription_tip', period: t("datetime.distance_in_words.x_#{course.trial_period['unit']}", count: course.trial_period['value']) ) %>" class='c-label'>
-              <%= svg_use('icons', 'renew', { class: 'c-label__icon' } ) %>
-              <span class='c-label__text'>
-                <span class='c-tags c-tags--gray el:amx-Ml(0.25em)'>
-                  <%= t("dictionary.subscription_period.#{course.subscription_period['unit']}") %>
-                </span>
-              </span>
-            </span>
-          <% end %>
-
-        </div>
-
+      
+      <div style='width:50%;'>
+        <div class='el:amx-F(r) el:amx-C_seV el:amx-Fs(1.25em)'>$219,00</div>
+        <div class='el:amx-F(r) el:amx-Fs(0.625em)'>for this course</div>
       </div>
     </div>
 
-    <div class='c-vcard__content-row'>
-      <a href="<%= gateway_path(course.id) %>" rel='nofollow' title="Go to course on provider's page" target='_blank'
-        style='margin:1em 0 0.5em; text-align:center' class='btn btn--block btn--rounded btn--primary-flat'>
-        <%= t("dictionary.go_to_course") %>
-      </a>
-    </div>
-
+    <a class='btn btn--primary-border btn--xs btn--block'>see details</a>
   </div>
-
 </div>

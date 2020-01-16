@@ -1,6 +1,6 @@
 <div class='el:o-dropdown'>
   <a href='javascript:void(0)' class='el:o-dropdown__action'>
-    <div class="el:m-avatar el:m-avatar--circle el:m-avatar--32x32">
+    <div class="el:m-avatar el:m-avatar--circle el:m-avatar--2x2em">
       <% if current_user_account.profile.avatar_url %>
         <%= image_tag current_user_account.profile&.avatar_url %>
       <% else %>
@@ -10,12 +10,12 @@
     <ul class='el:o-dropdown__menu el:amx-Pb(-1.25em) el:o-dropdown__menu--dark el:o-dropdown__menu--right'>
       <li class='el:amx-Mb(1.25em) el:amx-Fs(0.75em)'>
         <%= link_to user_dashboard_url('/account-settings') do %>
-          <span class='el:amx-C_white'><%= t('user.tabs.account_settings') %></span>
+          <span class='el:amx-C_fgV'><%= t('user.tabs.account_settings') %></span>
         <% end %>
       </li>
-      <li class='el:amx-Mb(1.25em) el:amx-Fs(0.75em) el:amx-Bot_gray4 el:amx-Pt(1em)'>
-        <a data-method='delete' href='/user_accounts/sign_out' class='el:amx-C_white'>
-          <span class='el:amx-C_white'><%= t('dictionary.sign_out') %></span>
+      <li class='el:amx-Mb(1.25em) el:amx-Fs(0.75em) el:amx-Bot el:amx-Pt(1em)'>
+        <a data-method='delete' href='/user_accounts/sign_out' class='el:amx-C_fgV'>
+          <span class='el:amx-C_fgV'><%= t('dictionary.sign_out') %></span>
         </a>
       </li>
     </ul>

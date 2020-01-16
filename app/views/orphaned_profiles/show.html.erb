@@ -1,3 +1,11 @@
+<% content_for :meta do %>
+  <title><%= @orphaned_profile.name %> | Classpert</title>
+  <meta name='twitter:title' content='' />
+  <meta name='twitter:description' content='' />
+  <meta name='description' content='' />
+  <meta property='og:description' content='' />
+<% end %>
+
 <div>
   <div class='el:amx-Bc_su el:amx-P(2.5em|0)'>
     <div class='container'>
@@ -6,6 +14,7 @@
           <div class='el:m-avatar el:m-avatar--circle el:m-avatar--6x6em'>
             <% if @orphaned_profile.avatar_url %>
               <%= image_tag @orphaned_profile.avatar_url %>
+              <span>@codextremist</span>
             <% else %>
               <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNkZWU3ZWQ7fS5jbHMtMntmaWxsOiM5ZGFmYjc7fS5jbHMtM3tmaWxsOiM0YzYzNmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5hdmF0YXIgY29weTwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik00OSwxMGMtOC41LDAtOSw4LjUtOSw4LjVIMjRTMjMuNSwxMCwxNSwxMFY0Mi4zOUExMC4xMSwxMC4xMSwwLDAsMCwyNS4xMSw1Mi41SDM4Ljg5QTEwLjExLDEwLjExLDAsMCwwLDQ5LDQyLjM5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTI5LjMyLDM5LjIyQTIuNjIsMi42MiwwLDAsMSwzMiwzNy43M2EyLjY5LDIuNjksMCwwLDEsMi42OCwxLjQ5YzAsMS40OC0uNjksNC0yLjY4LDRTMjkuMzIsNDAuNywyOS4zMiwzOS4yMloiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0zOS40OCwzMy43YTEuMywxLjMsMCwxLDAsMi42LDBjMC0uNzItLjU4LTItMS4zLTJTMzkuNDgsMzMsMzkuNDgsMzMuN1oiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0yMS45MiwzMy43YTEuMywxLjMsMCwxLDAsMi42LDBjMC0uNzItLjU4LTItMS4zLTJTMjEuOTIsMzMsMjEuOTIsMzMuN1oiLz48L3N2Zz4=" />
             <% end %>
@@ -36,7 +45,7 @@
     </div>
   </div>
   <div class='container'>
-    <div class='el:amx-Mt(2em)'>
+    <div class='el:amx-Mt(2em) el:amx-Mb(4em)'>
       <div class='row'>
         <div class='col-12'>
 
@@ -45,11 +54,13 @@
             <%= @orphaned_profile.long_bio %>
           </p>
 
-          <h2 class='el:amx-Fs(1.25em) el:amx-Mt(1em)'>Courses</h3>
+          <h2 class='el:amx-Fs(1.25em) el:amx-M(1em|0)'>Courses</h3>
           <div class='row'>
             <% @courses.each do |course| %>
               <div class='col-12 col-md-3'>
-                <%= render 'vcard', course: course %>
+                <div class='el:amx-Mb(1em)'>
+                  <%= render 'vcard', course: course %>
+                </div>
               </div>
             <% end %>
           </div>

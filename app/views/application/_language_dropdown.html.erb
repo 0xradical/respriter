@@ -1,14 +1,14 @@
 <div class='el:o-dropdown'>
   <a href='javascript:void(0)' class='el:o-dropdown__action'>
     <svg width='1.5em' height='1.5em' class='el:amx-Mr(0.375em) el:amx-Va(m) el:amx-D(ib)'>
-      <use xlink:href='#country-flags-<%= I18n.locale %>' />
+      <use xlink:href='#i18n-<%= I18n.locale.downcase %>' />
     </svg></a>
   <ul class='el:o-dropdown__menu el:amx-Pb(-1.25em) el:o-dropdown__menu--right'>
     <% I18nHost.new(ENV.fetch('HOST') { 'classpert.com' } ).each do |locale, url| %>
       <li class='el:amx-Mb(1.25em) el:amx-Fs(0.75em)'>
         <%= link_to ("//" + url + request.path + (locale == 'en' ? '?intl=true' : '')) do %>
           <svg width='1.5em' height='1.5em' class='el:amx-Mr(0.25em) el:amx-Va(m) el:amx-D(ib)'>
-            <use xlink:href='#country-flags-<%= locale %>' />
+            <use xlink:href='#i18n-<%= locale %>' />
           </svg>
           <span style='vertical-align: middle;' class='el:amx-C_fgV'><%= t("iso639_codes.#{I18nHelper.sanitize_locale(locale)}")%></span>
         <% end %>
