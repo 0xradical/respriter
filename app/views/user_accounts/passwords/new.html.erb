@@ -7,12 +7,16 @@
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= devise_error_messages! %>
 
-      <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical' style='box-sizing:border-box'>
-        <%= f.label :email, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
-        <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
+      <div class='el:m-form-field'>
+        <div class='el:m-form-field__label el:m-form-field__label--over'>
+          <%= f.label :email %>
+        </div>
+        <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+          <%= f.email_field :email %>
+        </div>
       </div>
-      <%= f.submit t('devise.passwords.new.send_me_reset_password_instructions'), class: 'btn btn--blue-flat btn--block' %>
+
+      <%= f.submit t('devise.passwords.new.send_me_reset_password_instructions'), class: 'btn btn--primary-flat btn--block el:amx-Mt(1.25em)' %>
     <% end %>
 
     <%= render "user_accounts/shared/links" %>

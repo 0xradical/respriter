@@ -7,38 +7,51 @@
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <%# if session[:omniauth_data].empty? %>
-    <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical' style='box-sizing:border-box'>
-      <%= f.label :email, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
+  <div class='el:m-form-field'>
+    <div class='el:m-form-field__label el:m-form-field__label--over'>
+      <%= f.label :email %>
+    </div>
+    <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
       <%= f.email_field :email, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
-      <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
-    </div>
-  <%# else %>
-    <%#= f.hidden_field :email, session[:omniauth_data]['email'] %>
-  <%# end %>
-
-  <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical' style='box-sizing:border-box'>
-    <%= f.label :password, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
-    <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
-  </div>
-
-  <div data-form-ctrl data-form-ctrl-config='email-conf' class='c-form-ctrl c-form-ctrl--vertical' style='box-sizing:border-box'>
-    <%= f.label :password_confirmation, data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
-    <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
-    <span data-form-ctrl-role='feedback' class='c-form-ctrl__feedback'></span>
-  </div>
-
-  <div data-form-ctrl class="c-form-ctrl c-form-ctrl--vertical el:amx-Mb(1em)" style='box-sizing:border-box'>
-    <%= f.label 'Type the word in the image below', data: { :"form-ctrl-role" => 'label'}, class: 'c-form-ctrl__label' %>
-    <div style='display:inline-block;width:34%;vertical-align:middle;'>
-      <%= rucaptcha_image_tag(alt: 'Captcha') %>
-    </div><div style='display:inline-block;width:66%;vertical-align:middle'>
-      <%= rucaptcha_input_tag(class: 'c-form-ctrl__input el:amx-Ml(0.25em)') %>
     </div>
   </div>
 
-  <%= f.submit t('devise.registrations.new.section'), class: 'btn btn--blue-flat btn--block' %>
+  <div class='el:m-form-field el:amx-Mt(0.75em)'>
+    <div class='el:m-form-field__label el:m-form-field__label--over'>
+      <%= f.label :password %>
+    </div>
+    <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+      <%= f.password_field :password, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+    </div>
+  </div>
+
+  <div class='el:m-form-field el:amx-Mt(0.75em)'>
+    <div class='el:m-form-field__label el:m-form-field__label--over'>
+      <%= f.label :password_confirmation %>
+    </div>
+    <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+      <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+    </div>
+  </div>
+
+  <div class='el:m-form-field el:amx-Mt(0.75em)'>
+    <div class='el:m-form-field__label el:m-form-field__label--over'>
+      <%= f.label 'Type the word in the image below' %>
+    </div>
+    <%# do not add space between inline-block divs %>
+    <div class='el:amx-D(f)'>
+      <div style='flex: 0 0 33%'>
+        <%= rucaptcha_image_tag(alt: 'Captcha') %>
+      </div>
+      <div class='el:amx-Ml(1em)' style='flex: 1'>
+        <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+          <%= rucaptcha_input_tag %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= f.submit t('devise.registrations.new.section'), class: 'btn btn--primary-flat btn--block el:amx-Mt(1.25em)' %>
 
 <% end %>
 <%= render "user_accounts/shared/links" %>
