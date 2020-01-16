@@ -8,7 +8,7 @@
               <search-fieldset :title='$t("dictionary.audios")' :subtitle="filter.root_audio.map(audioValue).join(', ')" :stand-out='filter.root_audio.length > 0'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_pr'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -20,7 +20,7 @@
               <search-fieldset :title='$t("dictionary.subtitles")' :subtitle="filter.subtitles.map(subtitleValue).join(', ')" :stand-out='filter.subtitles.length > 0'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_pr'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -32,7 +32,7 @@
               <search-fieldset :title='$t("dictionary.providers")' :subtitle="filter.provider_name.map(providerValue).join(', ')" :stand-out='filter.provider_name.length > 0'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_pr'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -44,7 +44,7 @@
               <search-fieldset :title='$t("dictionary.price")' :subtitle='`$ ${filter.price[0]} - $ ${filter.price[1]}`' :stand-out='filter.price[0] > 0 || filter.price[1] < 2500'>
                 <template #action>
                   <a class='c-fieldset-frame__action' href='#'>
-                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_blue2'></icon>
+                    <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_pr'></icon>
                   </a>
                 </template>
               </search-fieldset>
@@ -53,11 +53,11 @@
             <hr/>
 
             <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(sb) el:amx-FxAi(c) el:amx-W(100%)'>
-              <a href='#' class='el:amx-C_red2 el:amx-Fw(b)' @click="$emit('clearFiltersClicked')">
+              <a href='#' class='el:amx-C_er el:amx-Fw(b)' @click="$emit('clearFiltersClicked')">
                 {{ $t('dictionary.clear_all_filters') }}
               </a>
 
-              <a href='#' class='btn btn--blue-flat' @click="$emit('showResultsClicked')">
+              <a href='#' class='btn btn--primary-flat' @click="$emit('showResultsClicked')">
                 {{ $t('dictionary.show_results') }} ({{ total > 1000 ? '1000+' : total }})
               </a>
             </div>
@@ -72,7 +72,7 @@
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'root_audio', $event)">
             </search-facet-options>
             <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.root_audio = false'>
+              <a href='#' class='btn btn--primary-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.root_audio = false'>
                 OK
               </a>
             </div>
@@ -87,7 +87,7 @@
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'subtitles', $event)">
             </search-facet-options>
             <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%;" @click='isFiltering.subtitles = false'>
+              <a href='#' class='btn btn--primary-flat btn--block el:amx-Ta(c)' style="width:30%;" @click='isFiltering.subtitles = false'>
                 OK
               </a>
             </div>
@@ -102,7 +102,7 @@
                                   @excludeFacetOption="$emit('optionRemovedFromFilter', 'provider_name', $event)">
             </search-facet-options>
             <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.provider_name = false'>
+              <a href='#' class='btn btn--primary-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.provider_name = false'>
                 OK
               </a>
             </div>
@@ -120,7 +120,7 @@
               </search-facet-price-filter>
             </div>
             <div class='el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)'>
-              <a href='#' class='btn btn--blue-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.price = false'>
+              <a href='#' class='btn btn--primary-flat btn--block el:amx-Ta(c)' style="width:30%" @click='isFiltering.price = false'>
                 OK
               </a>
             </div>
@@ -172,7 +172,7 @@
           <search-facet-options :options='suggestions.provider_name.filtered'
                                 :filter='filter.provider_name'
                                 :noOptionsMessage="this.suggestions.provider_name.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.provider_name.current})"
-                                :noOptionsClasses="['el:amx-C_red2 el:amx-Fs(0.75em)']"
+                                :noOptionsClasses="['el:amx-C_er el:amx-Fs(0.75em)']"
                                 @includeFacetOption="$emit('optionAddedToFilter', 'provider_name', $event)"
                                 @excludeFacetOption="$emit('optionRemovedFromFilter', 'provider_name', $event)">
           </search-facet-options>
@@ -199,7 +199,7 @@
                                 :filter='filter.root_audio'
                                 :rootClasses="['scrollable-ul']"
                                 :noOptionsMessage="this.suggestions.root_audio.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.root_audio.current})"
-                                :noOptionsClasses="['el:amx-C_red2 el:amx-Fs(0.75em)']"
+                                :noOptionsClasses="['el:amx-C_er el:amx-Fs(0.75em)']"
                                 @includeFacetOption="$emit('optionAddedToFilter', 'root_audio', $event)"
                                 @excludeFacetOption="$emit('optionRemovedFromFilter', 'root_audio', $event)">
           </search-facet-options>
@@ -226,7 +226,7 @@
                                 :filter='filter.subtitles'
                                 :rootClasses="['scrollable-ul']"
                                 :noOptionsMessage="this.suggestions.subtitles.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.subtitles.current})"
-                                :noOptionsClasses="['el:amx-C_red2 el:amx-Fs(0.75em)']"
+                                :noOptionsClasses="['el:amx-C_er el:amx-Fs(0.75em)']"
                                 @includeFacetOption="$emit('optionAddedToFilter', 'subtitles', $event)"
                                 @excludeFacetOption="$emit('optionRemovedFromFilter', 'subtitles', $event)">
           </search-facet-options>
@@ -238,7 +238,7 @@
 
 <script>
   import _ from 'lodash';
-  import Icon from 'components/Icon.vue';
+  import Icon from 'components/v2/Icon.vue';
   import Fieldset from './SearchFilter/Fieldset.vue';
   import FacetOptions from './SearchFilter/FacetOptions.vue';
   import FacetOptionsFilter from './SearchFilter/FacetOptionsFilter.vue';
