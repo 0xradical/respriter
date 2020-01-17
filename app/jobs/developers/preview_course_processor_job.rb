@@ -22,8 +22,13 @@ module Developers
 
       log(id, 'Started debug tool processing')
 
-      preview_course = on_error('Preview not found') { PreviewCourse.find(id) }
-      classpert_uri = on_nil('Classpert URI not set') { ENV['CLASSPERT_URL'] }
+      preview_course = PreviewCourse.find_by(id: id)
+      if preview_course.nil?
+        raise '#120000: Debug structure not found on database'
+      end
+
+      classpert_uri = ENV['CLASSPERT_URL']
+      raise '#120001: Classpert URI not set' if classpert_uri.nil?
 
       preview_url =
         URI.join(
@@ -37,7 +42,7 @@ module Developers
 
       payload =
         if response.code != '200'
-          raise "Course URL returned status code #{response.code}"
+          raise "#120002: Course URL returned status code #{response.code}"
         else
           response.body
         end
@@ -47,18 +52,23 @@ module Developers
 
       log(id, 'Looking for JSON+LD')
       json =
-        on_nil("Course JSON not present on URL's page") do
-          document.css('script[type="application/vnd.classpert+json"] text()')
-            .text
-            .presence
-        end
+        document.css('script[type="application/vnd.classpert+json"] text()')
+          .text
+          .presence
+
+      if json.nil?
+        raise "#120003: Course page doesn't have a vnd.classpert+json structure"
+      end
 
       data =
-        on_error('Could not parse Course JSON') do
+        begin
           JSON.parse(json).merge('url': preview_course.url)
+        rescue StandardError
+          raise "#120004: Course page's vnd.classpert+json structure is malformed"
         end
 
       schema_version = data.delete('version') || DEFAULT_VERSION
+      log(id, "Using #{schema_version} schema version")
 
       log(id, 'Validating JSON')
       validator =
@@ -66,39 +76,53 @@ module Developers
 
       data, validation_errors = validator.validate(data)
 
-      validation_errors.each do |validation_error|
-        log(id, "Validation error: #{validation_error.message}", :error)
+      if validation_errors.size > 0
+        validation_errors.each do |validation_error|
+          log(id, "Validation error: #{validation_error.message}", :error)
+        end
+
+        raise "#120005: Course page's vnd.classpert+json is not valid"
+      else
+        log(id, 'Successfully validated JSON')
       end
 
       log(id, 'Generating resource based on JSON')
-      resource =
-        ::Napoleon::IntegrationResource.new(
-          preview_course.id,
-          preview_course.provider,
-          data
+      begin
+        resource =
+          ::Napoleon::IntegrationResource.new(
+            preview_course.id,
+            preview_course.provider,
+            data
+          )
+
+        PreviewCourse.upsert(
+          resource.to_course.merge(expired_at: 20.minutes.from_now)
         )
 
-      PreviewCourse.upsert(
-        resource.to_course.merge(expired_at: 20.minutes.from_now)
-      )
-
-      preview_course.reload
+        preview_course.reload
+      rescue StandardError
+        raise '#120006: Debug structure could not be generated'
+      end
 
       screenshooter = HTMLScreenshooter.new
 
-      log(id, "Capturing screenshot of preview page's desktop version")
-      screenshooter.capture(
-        preview_url,
-        'png',
-        { width: 1_024, full_page: true, force: true }
-      ) { |file| preview_course.add_screenshot!(:desktop, file) }
+      begin
+        log(id, "Capturing screenshot of preview page's desktop version")
+        screenshooter.capture(
+          preview_url,
+          'png',
+          { width: 1_024, full_page: true, force: true }
+        ) { |file| preview_course.add_screenshot!(:desktop, file) }
 
-      log(id, "Capturing screenshot of preview page's mobile version")
-      screenshooter.capture(
-        preview_url,
-        'png',
-        { width: 800, full_page: true, force: true }
-      ) { |file| preview_course.add_screenshot!(:mobile, file) }
+        log(id, "Capturing screenshot of preview page's mobile version")
+        screenshooter.capture(
+          preview_url,
+          'png',
+          { width: 800, full_page: true, force: true }
+        ) { |file| preview_course.add_screenshot!(:mobile, file) }
+      rescue StandardError
+        raise '#120007: Debug screenshotting failed'
+      end
 
       PreviewCourse.transaction do
         preview_course.update(
@@ -116,12 +140,16 @@ module Developers
       error = e.message
     ensure
       if error
-        PreviewCourse.transaction do
-          preview_course.update({ status: 'failed' })
+        if preview_course
+          PreviewCourse.transaction do
+            preview_course.update({ status: 'failed' })
+            expire
+          end
+        else
           expire
         end
 
-        log(id, "Finished debug tool processing with error: #{error}", :error)
+        log(id, error.message, :error)
       end
     end
 

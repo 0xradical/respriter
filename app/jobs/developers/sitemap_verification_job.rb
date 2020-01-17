@@ -19,26 +19,30 @@ module Developers
     def run(id, sitemap_id)
       log(sitemap_id, 'Started sitemap verification')
 
-      provider_crawler = ProviderCrawler.find(id)
+      provider_crawler = ProviderCrawler.find_by(id: id)
+      if provider_crawler.nil?
+        raise '#110000: Sitemap structure not found on database'
+      end
+
       sitemap_validator = Sitemap::Validator.new
       sitemap = provider_crawler.sitemaps.first
 
-      raise "Sitemap with id #{sitemap_id} not found" if sitemap.nil?
+      raise '#110000: Sitemap structure not found on database' if sitemap.nil?
 
       log(sitemap_id, 'Fetching sitemap')
       response = Net::HTTP.get_response(URI.parse(sitemap[:url].to_s))
 
       if response.code != '200'
-        raise "Sitemap URL returned status code #{response.code}"
+        raise "#110001: Sitemap URL returned status code #{response.code}"
       end
 
       validation = sitemap_validator.validate(response.body)
 
       case validation
       when :invalid
-        raise 'Sitemap is not valid'
+        raise '#110002: Sitemap is not valid'
       when :error
-        raise 'Error while detecting sitemap type'
+        raise '#110003: Error while detecting sitemap type'
       else
         ProviderCrawler.transaction do
           log(sitemap_id, 'Successfully detected sitemap type')
@@ -51,12 +55,16 @@ module Developers
       error = e
     ensure
       if error
-        ProviderCrawler.transaction do
-          update_sitemap(sitemap, provider_crawler, 'invalid', 'unknown')
+        if provider_crawler && sitemap
+          ProviderCrawler.transaction do
+            update_sitemap(sitemap, provider_crawler, 'invalid', 'unknown')
+            expire
+          end
+        else
           expire
         end
 
-        log(id, "Finished sitemap verification with error: #{error}", :error)
+        log(id, error.message, :error)
       end
     end
 

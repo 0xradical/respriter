@@ -19,8 +19,19 @@ module Developers
     def run(id, user_id)
       log(id, 'Started domain verification')
 
-      crawler_domain = CrawlerDomain.find(id)
-      user_account = UserAccount.find(user_id)
+      crawler_domain = CrawlerDomain.find_by(id: id)
+      if crawler_domain.nil?
+        raise '#100000: Domain structure not found on database'
+      end
+
+      user_account = UserAccount.find_by(id: user_id)
+      if user_account.nil?
+        raise "#100001: Domain's associated user not found on database"
+      end
+
+      if crawler_domain.authority_confirmation_status == 'confirmed'
+        raise '#100002: Domain already validated'
+      end
 
       if crawler_domain.authority_confirmation_status == 'unconfirmed'
         crawler_domain.update(authority_confirmation_status: 'confirming')
@@ -99,7 +110,7 @@ module Developers
         else
           if error_count < 10
             crawler_domain.update(authority_confirmation_status: 'unconfirmed')
-            log(id, 'Could not verify domain, will try again shortly', :error)
+            log(id, '#100004: Domain validation failed temporarily', :error)
 
             raise DomainAuthorityVerificationJob::Error
           else
@@ -108,10 +119,21 @@ module Developers
               expire
             end
 
-            log(id, 'Could not verify domain, exceeded number of tries', :error)
+            log(id, '#100005: Domain validation failed permanently', :error)
           end
         end
       end
+    rescue StandardError => e
+      if crawler_domain
+        CrawlerDomain.transaction do
+          crawler_domain.update(authority_confirmation_status: 'failed')
+          expire
+        end
+      else
+        expire
+      end
+
+      log(id, e.message, :error)
     end
 
     def confirm!(user_id, crawler_domain, confirmation_method)
@@ -130,14 +152,14 @@ module Developers
               part.gsub(/\-/, '_').gsub(/[^A-Za-z0-9_]/, '').camelcase
             end.join(' ')
           end.select { |name| Provider.where(name: name).count == 0 }.first
-      rescue StandardError => e
-        raise "Error while deriving name from domain: #{e.message}"
+      rescue StandardError
+        raise '#100006: Name derived from domain url cannot be used'
       end
 
       if provider_name
         log(crawler_domain.id, 'Successfully derived name from domain')
       else
-        raise 'Could not derive name from domain'
+        raise '#100007: Name derivation from domain failed'
       end
 
       ApplicationRecord.transaction do
@@ -171,78 +193,63 @@ module Developers
     def detect_sitemap(crawler_domain, provider_crawler)
       log(crawler_domain.id, 'Trying to detect sitemap automatically')
 
+      robot_method =
+        proc do |uri|
+          robots_parser = Robotstxt.get(uri, 'Classpert Bot')
+          robots_parser.sitemaps.first.presence
+        end
+      sitemap_xml_method =
+        proc do |uri|
+          response = Net::HTTP.get_response(uri)
+
+          uri.dup.to_s if response.code == '200'
+        end
+
+      methods = {
+        'robots.txt' => robot_method,
+        'sitemap.xml' => sitemap_xml_method,
+        'sitemap.xml.gz' => sitemap_xml_method,
+        'sitemap_index.xml' => sitemap_xml_method,
+        'sitemap_index.xml.gz' => sitemap_xml_method
+      }
+
       sitemap = nil
       sitemap_id = SecureRandom.uuid
 
       crawler_domain.possible_uris.each do |uri|
-        begin
-          # robots.txt
-          uri.path = '/robots.txt'
+        methods.each do |method_file, method_processor|
+          uri.path = "/#{method_file}"
 
-          robots_parser = Robotstxt.get(uri, 'Classpert Bot')
-          sitemap = robots_parser.sitemaps.first.presence
-        rescue StandardError
-          nil
-        end
+          sitemap =
+            (
+              begin
+                method_processor.call(uri)
+              rescue StandardError
+                nil
+              end
+            )
 
-        if sitemap
-          verify_sitemap(
-            crawler_domain,
-            provider_crawler,
-            sitemap.to_s,
-            sitemap_id
-          )
-          return
-        end
-
-        begin
-          # sitemap.xml
-          uri.path = '/sitemap.xml'
-
-          response = Net::HTTP.get_response(uri)
-
-          sitemap = uri.dup.to_s if response.code == '200'
-        rescue StandardError
-          nil
-        end
-
-        if sitemap
-          verify_sitemap(
-            crawler_domain,
-            provider_crawler,
-            sitemap.to_s,
-            sitemap_id
-          )
-          return
-        end
-
-        begin
-          # sitemap.xml
-          uri.path = '/sitemap.xml.gz'
-
-          response = Net::HTTP.get_response(uri)
-
-          sitemap = uri.dup.to_s if response.code == '200'
-        rescue StandardError
-          nil
-        end
-
-        if sitemap
-          verify_sitemap(
-            crawler_domain,
-            provider_crawler,
-            sitemap.to_s,
-            sitemap_id
-          )
-          return
+          if sitemap
+            verify_sitemap(
+              crawler_domain,
+              provider_crawler,
+              sitemap.to_s,
+              sitemap_id
+            )
+            return
+          end
         end
       end
 
-      log(crawler_domain.id, 'Could not detect sitemap automatically', :error)
+      log(
+        crawler_domain.id,
+        '#110004: Could not detect sitemap automatically',
+        :error
+      )
     rescue StandardError => e
       log(
         crawler_domain.id,
-        "Could not detect sitemap automatically: #{e.message}",
+        '#110004: Could not detect sitemap automatically',
         :error
       )
     end
@@ -282,11 +289,7 @@ module Developers
         log(crawler_domain.id, 'Successfully configured domain crawler')
       end
     rescue StandardError => e
-      log(
-        crawler_domain.id,
-        "Configuration of domain crawler failed with error: #{e.message}",
-        :error
-      )
+      log(crawler_domain.id, '#100008: Domain configuration failed', :error)
     end
 
     def log(ctx_id, message, level = :info)
