@@ -21,10 +21,10 @@
             <h1 class='el:amx-Fs(1.25em) el:amx-Fw(b)'>
               <%= @orphaned_profile.name %>
               <span style='font-weight:bold'
-                class='el:m-tag 
-                el:m-tag--primary-variant-flat 
-                el:m-tag--uppercase 
-                el:m-tag--xxs 
+                class='el:m-tag
+                el:m-tag--primary-variant-flat
+                el:m-tag--uppercase
+                el:m-tag--xxs
                 el:amx-Ml(0.5em)
                 el:amx-Va(m)'>
                 <%= t('.instructor') %>
@@ -72,13 +72,13 @@
             <% @orphaned_profile.courses.each do |course| %>
               <div class='col-12 col-md-3'>
                 <div class='el:amx-Mb(1em)'>
-                  <%= render 'vcard', course: course %>
+                  <%= render 'vcard', course: course.as_indexed_json %>
                 </div>
               </div>
             <% end %>
           </div>
 
-        </div> 
+        </div>
       </div>
     </div>
     <div class='el:amx-Mt(2em) el:amx-Bot'>

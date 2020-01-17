@@ -1,13 +1,13 @@
 <div class='el:o-vcard'>
   <div class='el:o-vcard__media'>
-    <% if course.video %>
+    <% if course[:video] %>
       <div class="el:m-video-preview clspt:m-video-preview--available" >
-        <div class="el:m-video-preview__wrapper" data-embedded-video="/videos/<%= course.id %>">
-          <div class="el:m-video-preview__background" style="background-image:url('<%= course.video_thumbnail %>');"></div>
+        <div class="el:m-video-preview__wrapper" data-embedded-video="/videos/<%= course[:id] %>">
+          <div class="el:m-video-preview__background" style="background-image:url('<%= course.dig(:video, :thumbnail_url) %>');"></div>
           <div class="el:m-video-preview__mask"></div>
           <div class="el:m-video-preview__content">
             <svg width="50%" height="50%" viewBox="0 0 24 24"
-                class="el:m-video-preview__icon el:amx-Fi_fgV" 
+                class="el:m-video-preview__icon el:amx-Fi_fgV"
                 style="transform:translate(0%, 50%);transition:all.5s;width:50%;height:50%;">
               <use xlink:href="#icons-play"></use>
             </svg>
@@ -20,53 +20,55 @@
 
     <div class='el:m-label el:amx-M(0.75em|0)'>
       <svg class='el:m-label__icon'>
-        <use xlink:href='#providers-<%= course.provider.slug %>'>
+        <use xlink:href='#providers-<%= course[:provider_slug] %>'>
       </svg>
-      <span class='el:m-label__text'><%= course.provider.name %></span>
+      <span class='el:m-label__text'><%= course[:provider_name] %></span>
     </div>
 
     <div class='el:m-text-clipbox el:amx-Mb(0.5em)'>
-      <div 
-        class='el:amx-Fs(0.875em) el:m-text-clipbox__text 
-        el:m-text-clipbox__text--bold 
+      <div
+        class='el:amx-Fs(0.875em) el:m-text-clipbox__text
+        el:m-text-clipbox__text--bold
         el:m-text-clipbox__text--3-lined'>
-        <%= course.name %>
+        <%= course[:name] %>
       </div>
     </div>
 
     <div style='display:flex;align-items:center;' class='el:amx-Mb(0.75em)' >
       <div style='width:50%;'>
-        <div class='el:m-label el:amx-M(0.75em|0) el:amx-Fs(0.75em)'>
-          <svg class='el:m-label__icon'>
-            <use xlink:href='#icons-clock'>
-          </svg>
-          <span class='el:m-label__text'>
-            <%= t("datetime.distance_in_words.x_hours.#{course.effort == 1 ? 'one' : 'other'}", count: course.effort) %>
-          </span>
-        </div>
+        <% if course[:effort] %>
+          <div class='el:m-label el:amx-M(0.75em|0) el:amx-Fs(0.75em)'>
+            <svg class='el:m-label__icon'>
+              <use xlink:href='#icons-clock'>
+            </svg>
+            <span class='el:m-label__text'>
+              <%= t("datetime.distance_in_words.x_hours.#{course[:effort] == 1 ? 'one' : 'other'}", count: course[:effort]) %>
+            </span>
+          </div>
+        <% end %>
 
-        <% if course.subscription_type? %>
+        <% if course[:subscription_type] %>
           <div class='el:amx-Mb(0.75em) el:amx-Fs(0.75em)'>
-            30 days <span 
-            class='el:m-tag 
+            30 days <span
+            class='el:m-tag
               el:m-tag--secondary-variant-flat
-              el:m-tag--bold 
-              el:m-tag--xxs 
+              el:m-tag--bold
+              el:m-tag--xxs
               el:m-tag--uppercase'><%= t('dictionary.free_trial') %></span>
           </div>
         <% end %>
       </div>
-      
+
       <div style='width:50%;'>
         <div class='el:amx-F(r) el:amx-C_seV el:amx-Fs(1.25em)'>
-          <% if course.price > 0 %>
-            <%= number_to_currency(course.price) %>
+          <% if course[:price] > 0 %>
+            <%= number_to_currency(course[:price]) %>
           <% else %>
             <%= t("dictionary.free") %>
           <% end %>
         </div>
         <div class='el:amx-F(r) el:amx-Fs(0.625em)'>
-          <% if !course.subscription_type? && course.price > 0 %>
+          <% if !course[:subscription_type] && course[:price] > 0 %>
             <%= t("dictionary.pricing.this_course_only") %>
           <% end %>
         </div>
