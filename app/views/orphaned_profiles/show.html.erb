@@ -1,28 +1,33 @@
 <% content_for :meta do %>
-  <title><%= @orphaned_profile.name %> | Classpert</title>
-  <meta name='twitter:title' content='' />
-  <meta name='twitter:description' content='' />
-  <meta name='description' content='' />
-  <meta property='og:description' content='' />
+  <title><%= t(".meta.title", name: @orphaned_profile.name) %> | Classpert</title>
+  <meta name='twitter:title'        content='<%= t(".meta.title",       name: @orphaned_profile.name )%> | Classpert' />
+  <meta name='twitter:description'  content='<%= t(".meta.description", name: @orphaned_profile.name )%>' />
+  <meta name='description'          content='<%= t(".meta.description", name: @orphaned_profile.name )%>' />
+  <meta property='og:description'   content='<%= t(".meta.description", name: @orphaned_profile.name )%>' />
 <% end %>
 
 <div>
   <div class='el:amx-Bc_su el:amx-P(2.5em|0)'>
+
     <div class='container'>
       <div class='row'>
         <div class='col-12'>
-          <div class='el:m-avatar el:m-avatar--circle el:m-avatar--6x6em'>
+          <div class='el:m-avatar el:m-avatar--circle el:m-avatar--5x5em'>
             <% if @orphaned_profile.avatar_url %>
               <%= image_tag @orphaned_profile.avatar_url %>
-              <span>@codextremist</span>
             <% else %>
-              <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNkZWU3ZWQ7fS5jbHMtMntmaWxsOiM5ZGFmYjc7fS5jbHMtM3tmaWxsOiM0YzYzNmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5hdmF0YXIgY29weTwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik00OSwxMGMtOC41LDAtOSw4LjUtOSw4LjVIMjRTMjMuNSwxMCwxNSwxMFY0Mi4zOUExMC4xMSwxMC4xMSwwLDAsMCwyNS4xMSw1Mi41SDM4Ljg5QTEwLjExLDEwLjExLDAsMCwwLDQ5LDQyLjM5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTI5LjMyLDM5LjIyQTIuNjIsMi42MiwwLDAsMSwzMiwzNy43M2EyLjY5LDIuNjksMCwwLDEsMi42OCwxLjQ5YzAsMS40OC0uNjksNC0yLjY4LDRTMjkuMzIsNDAuNywyOS4zMiwzOS4yMloiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0zOS40OCwzMy43YTEuMywxLjMsMCwxLDAsMi42LDBjMC0uNzItLjU4LTItMS4zLTJTMzkuNDgsMzMsMzkuNDgsMzMuN1oiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0yMS45MiwzMy43YTEuMywxLjMsMCwxLDAsMi42LDBjMC0uNzItLjU4LTItMS4zLTJTMjEuOTIsMzMsMjEuOTIsMzMuN1oiLz48L3N2Zz4=" />
             <% end %>
           </div><div class='el:amx-D(ib) el:amx-Va(m) el:amx-Ml(0.75em)'>
-            <h1 style='font-weight:normal' class='el:amx-Fs(1.25em)'>
+            <h1 class='el:amx-Fs(1.25em) el:amx-Fw(b)'>
               <%= @orphaned_profile.name %>
-              <span style='font-weight:bold' class='el:m-tag el:m-tag--primary-variant-flat el:m-tag--uppercase el:m-tag--xxs el:amx-Ml(0.5em)'>
-                Instructor
+              <span style='font-weight:bold'
+                class='el:m-tag 
+                el:m-tag--primary-variant-flat 
+                el:m-tag--uppercase 
+                el:m-tag--xxs 
+                el:amx-Ml(0.5em)
+                el:amx-Va(m)'>
+                <%= t('.instructor') %>
               </span>
             </h1>
             <div class='el:amx-Fs(0.875em) el:amx-Mt(0.625em) el:amx-Mb(0.125em)'>
@@ -33,7 +38,7 @@
                 <% @orphaned_profile.public_profiles.each do |key, val| %>
                   <li class='el:amx-Mr(0.5em)'>
                     <a href='<%= val %>' ref='nofollow noreferrer'>
-                      <%= svg_use('icons', key, {class: "el:amx-Fi_#{key}", width: '1.25em', height: '1.25em'}) %>
+                      <%= svg_use('icons', key, {class: "el:amx-Fi_#{key}", width: '1em', height: '1em'}) %>
                     </a>
                   </li>
                 <% end %>
@@ -44,19 +49,25 @@
       </div>
     </div>
   </div>
+
   <div class='container'>
-    <div class='el:amx-Mt(2em) el:amx-Mb(4em)'>
+    <div class='el:amx-Mt(2em)'>
       <div class='row'>
         <div class='col-12'>
 
-          <h2 class='el:amx-Fs(1.25em)'>About Me</h3>
+          <h2 class='el:amx-Fs(1.25em)'>
+            <%= t('.about_me') %>
+          </h2>
           <p style='line-height:1.5em'>
-            <%= @orphaned_profile.long_bio %>
+            <%= @orphaned_profile.long_bio.html_safe %>
           </p>
 
-          <h2 class='el:amx-Fs(1.25em) el:amx-M(1em|0)'>Courses</h3>
+          <h2 class='el:amx-Fs(1.25em) el:amx-M(1em|0)'>
+            <%= t('.courses', name: @orphaned_profile.name) %>
+          </h2>
+
           <div class='row'>
-            <% @courses.each do |course| %>
+            <% @orphaned_profile.courses.each do |course| %>
               <div class='col-12 col-md-3'>
                 <div class='el:amx-Mb(1em)'>
                   <%= render 'vcard', course: course %>
@@ -66,6 +77,13 @@
           </div>
 
         </div> 
+      </div>
+    </div>
+    <div class='el:amx-Mt(2em) el:amx-Bot'>
+      <div class='row'>
+        <div class='col-12'>
+          <p class='el:amx-Fw(b) el:amx-Fs(0.875em) el:amx-P(1.125em|0)'><%= t('.disclaimer') %></p>
+        </div>
       </div>
     </div>
   </div>

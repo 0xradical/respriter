@@ -2,11 +2,13 @@
   <div class='el:o-vcard__media'>
     <% if course.video %>
       <div class="el:m-video-preview clspt:m-video-preview--available" >
-        <div class="el:m-video-preview__wrapper">
+        <div class="el:m-video-preview__wrapper" data-embedded-video="/videos/<%= course.id %>">
           <div class="el:m-video-preview__background" style="background-image:url('<%= course.video_thumbnail %>');"></div>
           <div class="el:m-video-preview__mask"></div>
           <div class="el:m-video-preview__content">
-            <svg width="50%" height="50%" viewBox="0 0 24 24" class="el:m-video-preview__icon el:amx-Fi_fgV" style="transform:translate(0%, 50%);transition:all.5s;width:50%;height:50%;" data-v-167c7238="" viewbox="0 0 24 24" data-v-500edc45="">
+            <svg width="50%" height="50%" viewBox="0 0 24 24"
+                class="el:m-video-preview__icon el:amx-Fi_fgV" 
+                style="transform:translate(0%, 50%);transition:all.5s;width:50%;height:50%;">
               <use xlink:href="#icons-play"></use>
             </svg>
           </div>
@@ -39,26 +41,38 @@
             <use xlink:href='#icons-clock'>
           </svg>
           <span class='el:m-label__text'>
-            <%= course.effort ? t("datetime.distance_in_words.about_x_hours", count: course.effort.ceil) : t('dictionary.not_available') %>
+            <%= t("datetime.distance_in_words.x_hours.#{course.effort == 1 ? 'one' : 'other'}", count: course.effort) %>
           </span>
         </div>
 
-        <div class='el:amx-Mb(0.75em) el:amx-Fs(0.75em)'>
-          30 days <span 
-          class='el:m-tag 
-            el:m-tag--secondary-variant-flat
-            el:m-tag--bold 
-            el:m-tag--xxs 
-            el:m-tag--uppercase'>free trial</span>
-        </div>
+        <% if course.subscription_type? %>
+          <div class='el:amx-Mb(0.75em) el:amx-Fs(0.75em)'>
+            30 days <span 
+            class='el:m-tag 
+              el:m-tag--secondary-variant-flat
+              el:m-tag--bold 
+              el:m-tag--xxs 
+              el:m-tag--uppercase'><%= t('dictionary.free_trial') %></span>
+          </div>
+        <% end %>
       </div>
       
       <div style='width:50%;'>
-        <div class='el:amx-F(r) el:amx-C_seV el:amx-Fs(1.25em)'>$219,00</div>
-        <div class='el:amx-F(r) el:amx-Fs(0.625em)'>for this course</div>
+        <div class='el:amx-F(r) el:amx-C_seV el:amx-Fs(1.25em)'>
+          <% if course.price > 0 %>
+            <%= number_to_currency(course.price) %>
+          <% else %>
+            <%= t("dictionary.free") %>
+          <% end %>
+        </div>
+        <div class='el:amx-F(r) el:amx-Fs(0.625em)'>
+          <% if !course.subscription_type? && course.price > 0 %>
+            <%= t("dictionary.pricing.this_course_only") %>
+          <% end %>
+        </div>
       </div>
     </div>
 
-    <a class='btn btn--primary-border btn--xs btn--block'>see details</a>
+    <a class='btn btn--primary-border btn--xs btn--block'><%= t('dictionary.details.see') %></a>
   </div>
 </div>

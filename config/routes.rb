@@ -45,8 +45,8 @@ Rails.application.routes.draw do
     }"
   end
 
-  resources :orphaned_profiles, only: :show, path: 'users'
-  resources :videos, only: :show
+  resources :orphaned_profiles, only: :show, path: 'profiles'
+  resources :videos,            only: :show
 
   get '/forward/:id', to: 'gateway#index', as: :gateway
 
