@@ -42,7 +42,7 @@
         <% (RootTag.all).each_with_index do |t, index| %>
           <div class='col-12 col-md-3'>
             <%= link_to t.slugify do %>
-              <div class='el:m-sticker el:m-sticker--borderless el:amx-Mb(2em)'>
+              <div class='el:m-sticker el:m-sticker--borderless el:m-sticker--top el:amx-Mb(2em)'>
                 <%= svg_use('tags', t.id, { class: 'el:m-sticker__media' }) %><span class='el:m-sticker__text'>
                   <span class='el:m-sticker__primary-label'>
                     <b><%= t("tags.#{t.id}") %></b>
