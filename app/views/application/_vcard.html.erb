@@ -49,7 +49,7 @@
 
         <% if course[:subscription_type] %>
           <div class='el:amx-Mb(0.75em) el:amx-Fs(0.75em)'>
-            30 days <span
+          <%= t("datetime.adjectives.#{course.dig(:trial_period,'unit')}.#{course.dig(:trial_period,'value') == 1 ? 'one' : 'other'}", { count: course.dig(:trial_period,'value') }) %> <span
             class='el:m-tag
               el:m-tag--secondary-variant-flat
               el:m-tag--bold
