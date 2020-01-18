@@ -19,6 +19,7 @@ environment.config.merge({
   resolve: {
     alias: {
       vue$: "vue/dist/vue.common.js",
+      Swiper$: "swiper",
       "~~hypernova$": path.resolve(
         __dirname,
         "../../app/assets/js/hypernova/client.js"
