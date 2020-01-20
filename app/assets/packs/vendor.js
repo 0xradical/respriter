@@ -29,7 +29,8 @@ for (let index = 0; index < swiepables.length; index++) {
     freeModeMomentumRatio: 0.5,
     freeModeMomentumVelocityRatio: 0.75,
     spaceBetween: 20,
-    pagination: null
+    pagination: null,
+    navigation: null
   });
 }
 
