@@ -35,10 +35,6 @@ module ApplicationHelper
     )
   end
 
-  def atomic_css
-    %w[home].include?(controller_name) ? 'atomic.full' : 'atomic.slim'
-  end
-
   def link_to_locale(locale, &block)
     en = (locale.to_s == 'en')
     link_to(
