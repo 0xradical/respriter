@@ -137,7 +137,7 @@ module Developers
         log(id, 'Successfully finished debug tool processing')
       end
     rescue => e
-      error = e.message
+      error = e
     ensure
       if error
         if preview_course
