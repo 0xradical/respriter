@@ -1,5 +1,3 @@
-BEGIN;
-
 CREATE TABLE app.orphaned_profiles (
   id                          uuid DEFAULT public.uuid_generate_v4() PRIMARY KEY,
   user_account_id             bigint REFERENCES app.user_accounts(id) ON DELETE CASCADE,
@@ -22,22 +20,3 @@ CREATE TABLE app.orphaned_profiles (
   updated_at                  timestamptz DEFAULT NOW() NOT NULL
   CONSTRAINT                  state__inclusion CHECK (state IN ('disabled','enabled'))
 );
-
-CREATE TRIGGER track_updated_at
-  BEFORE UPDATE
-  ON app.orphaned_profiles
-  FOR EACH ROW
-    EXECUTE PROCEDURE triggers.track_updated_at();
-
-CREATE UNIQUE INDEX index_orphaned_profiles_on_user_account_id
-ON app.orphaned_profiles
-USING btree (user_account_id);
-
-GRANT SELECT, REFERENCES                         ON app.orphaned_profiles TO "user";
-GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.orphaned_profiles TO "admin";
-
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA app TO "user";
-
-INSERT INTO public.schema_migrations (version) VALUES ('20200107070000');
-
-COMMIT;
