@@ -1,7 +1,7 @@
 <div class='el:o-vcard'>
   <div class='el:o-vcard__media'>
     <% if course[:video] %>
-      <div class="el:m-video-preview clspt:m-video-preview--available" >
+      <div class="el:m-video-preview clspt:m-video-preview--available el:amx-W(100%)" >
         <div class="el:m-video-preview__wrapper" data-embedded-video="/videos/<%= course[:id] %>">
           <div class="el:m-video-preview__background" style="background-image:url('<%= course.dig(:video, :thumbnail_url) %>');"></div>
           <div class="el:m-video-preview__mask"></div>
