@@ -3,7 +3,7 @@
     <div class="el:o-navbar el:amx-Bc_su <%= 'el:o-navbar--sticky' if sticky_navbar? %>" <%= 'data-sticky' if sticky_navbar? %> role='top-navbar'>
 
       <!-- logo -->
-      <div class='el:o-navbar__slot el:amx-Mr(2em)'>
+      <div class='el:o-navbar__slot el:amx-Mr(1em)'>
         <% unless home_controller? %>
           <%= link_to root_path do %>
             <%= svg_use 'brand', 'logo',        class: 'el:amx-Fi_fg el:amx-D(n)@<sm', width: '164px', height: '27px' %>
@@ -14,15 +14,15 @@
 
       <!-- search bar -->
       <% unless home_controller? %>
-        <div class='el:o-navbar__slot'>
-          <script id='navbar-search' type='x-vue-template'>
-            <search-bar placeholder="<%= t('components.searchbar_placeholder') %>"
-            :css-classes='{container: "c-search-slim c-search-slim--negative", form:
-            "c-search-slim__form", input: "c-search-slim__input"}'>
-              <span slot='icon' class='c-search-slim__icon'></span>
-            </search-bar>
-          </script>
-          <div data-vue-cpt='navbar-search'></div>
+        <div class='el:o-navbar__slot el:amx-Fs(0.875em)'>
+          <form action='/search' method='get' class='el:m-search-bar'>
+            <input placeholder="<%= t('components.searchbar_placeholder') %>"
+                   onkeyup="this.setAttribute('value', this.value)"
+                   class='el:m-search-bar__input el:m-search-bar__input--hollow'
+                   value='<%= request.query_parameters["q"] %>'
+                   type='search'
+                   name='q' />
+          </form>
         </div>
       <% end %>
 
