@@ -170,12 +170,8 @@ module Developers
             { provider_id: provider.id, user_account_ids: [user_id] }
           )
 
-        detect_sitemap(crawler_domain, provider_crawler)
-        setup_provider_crawler(crawler_domain, provider_crawler)
-
         crawler_domain.update(
           {
-            authority_confirmation_status: 'confirmed',
             authority_confirmation_method: confirmation_method,
             authority_confirmation_token:
               crawler_domain.authority_confirmation_token,
@@ -183,9 +179,18 @@ module Developers
             provider_crawler_id: provider_crawler.id
           }
         )
-
-        finish
       end
+
+      if provider && provider_crawler
+        detect_sitemap(crawler_domain, provider_crawler)
+        setup_provider_crawler(crawler_domain, provider_crawler)
+      else
+        raise 'Database error'
+      end
+
+      crawler_domain.update(authority_confirmation_status: 'confirmed')
+    rescue StandardError
+      raise 'Confirmation failed, trying again'
     end
 
     def detect_sitemap(crawler_domain, provider_crawler)
