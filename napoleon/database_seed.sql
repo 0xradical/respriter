@@ -69,10 +69,6 @@ INSERT INTO app.resource_schemas (
           }
         }
       },
-      "datetime": {
-        "type": "string",
-        "pattern": "^[0-9]{1,2}\\[0-9]{1,2}\\[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$"
-      },
       "level": {
         "type": "string",
         "enum": [
@@ -571,13 +567,16 @@ INSERT INTO app.resource_schemas (
             "type": "string"
           },
           "starts_at": {
-            "$ref": "#/definitions/datetime"
+            "type": "string",
+            "format": "date-time"
           },
           "ends_at": {
-            "$ref": "#/definitions/datetime"
+            "type": "string",
+            "format": "date-time"
           },
           "valid_until": {
-            "$ref": "#/definitions/datetime"
+            "type": "string",
+            "format": "date-time"
           },
           "duration": {
             "$ref": "#/definitions/period"
