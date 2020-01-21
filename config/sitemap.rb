@@ -35,5 +35,13 @@ I18nHost.new('classpert.com').each do |locale, host|
       })
     end
 
+    #Orphanes Profiles (Claimable Instructor Profiles)
+    OrphanedProfile.enabled.find_each do |orphaned_profile|
+      add(orphaned_profile_path(orphaned_profile.slug), {
+        changefreq: 'weekly',
+        priority: 0.8
+      })
+    end
+
   end
 end

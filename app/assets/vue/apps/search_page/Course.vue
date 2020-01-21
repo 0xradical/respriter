@@ -51,7 +51,7 @@
 
     <!-- mobile card -->
     <course-card-mobile
-      class="el:amx-Pr(0.875em) el:amx-Pb(0.875em) el:amx-Pt(0.875em) el:amx-Pl(0.875em) el:amx-Bc_white el:amx-Cur(p) el:amx-D(n)@>lg"
+      class="el:amx-Pr(0.875em) el:amx-Pb(0.875em) el:amx-Pt(0.875em) el:amx-Pl(0.875em) el:amx-Cur(p) el:amx-D(n)@>lg"
       :id="`mobile-${course.id}`"
       :course="course"
       @click="$modal.show(mobileOffCanvasId)"
@@ -62,10 +62,10 @@
 </template>
 
 <script>
-import CourseCardDesktop from "components/CourseCardDesktop.vue";
-import CourseOffcanvasDesktop from "components/CourseOffcanvasDesktop.vue";
-import CourseCardMobile from "components/CourseCardMobile.vue";
-import CourseOffcanvasMobile from "components/CourseOffcanvasMobile.vue";
+import CourseCardDesktop from "components/v2/CourseCardDesktop.vue";
+import CourseOffcanvasDesktop from "components/v2/CourseOffcanvasDesktop.vue";
+import CourseCardMobile from "components/v2/CourseCardMobile.vue";
+import CourseOffcanvasMobile from "components/v2/CourseOffcanvasMobile.vue";
 
 export default {
   props: {

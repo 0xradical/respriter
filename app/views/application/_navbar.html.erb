@@ -1,28 +1,30 @@
-<div class='el:amx-Bc_white el:amx-Bob_gray1'>
+<div class='el:amx-Bc_su <%= !home_controller? ? "el:amx-Bob" : "" %>'>
   <div class='container-fluid'>
-    <div class="el:o-navbar el:amx-Bc_white <%= 'el:o-navbar--sticky' if sticky_navbar? %>" <%= 'data-sticky' if sticky_navbar? %> role='top-navbar'>
+    <div class="el:o-navbar el:amx-Bc_su <%= 'el:o-navbar--sticky' if sticky_navbar? %>" <%= 'data-sticky' if sticky_navbar? %> role='top-navbar'>
 
       <!-- logo -->
-      <div class='el:o-navbar__slot el:amx-Mr(2em)'>
+      <div class='el:o-navbar__slot el:amx-Mr(1em)'>
         <% unless home_controller? %>
           <%= link_to root_path do %>
-            <img src="<%= elements_asset_path('svgs/logo.svg') %>" class='el:amx-D(n)@<sm' width='156px'>
-            <img src="<%= elements_asset_path('svgs/logo_symbol.svg') %>" class='el:amx-D(n)@>lg' width='40px'>
+            <%= svg_use 'brand', 'logo',        class: 'el:amx-Fi_fg el:amx-D(n)@<sm', width: '164px', height: '27px' %>
+            <%= svg_use 'brand', 'logo_symbol', class: 'el:amx-Fi_fg el:amx-D(n)@>lg', height: '27px', width: '27px' %>
           <% end %>
         <% end %>
       </div>
 
       <!-- search bar -->
-      <div class='el:o-navbar__slot'>
-        <script id='navbar-search' type='x-vue-template'>
-          <search-bar placeholder="<%= t('components.searchbar_placeholder') %>"
-          :css-classes='{container: "c-search-slim c-search-slim--negative", form:
-          "c-search-slim__form", input: "c-search-slim__input"}'>
-            <span slot='icon' class='c-search-slim__icon'></span>
-          </search-bar>
-        </script>
-        <div data-vue-cpt='navbar-search'></div>
-      </div>
+      <% unless home_controller? %>
+        <div class='el:o-navbar__slot el:amx-Fs(0.875em)'>
+          <form action='/search' method='get' class='el:m-search-bar'>
+            <input placeholder="<%= t('components.searchbar_placeholder') %>"
+                   onkeyup="this.setAttribute('value', this.value)"
+                   class='el:m-search-bar__input el:m-search-bar__input--hollow'
+                   value='<%= request.query_parameters["q"] %>'
+                   type='search'
+                   name='q' />
+          </form>
+        </div>
+      <% end %>
 
       <div class='el:o-navbar__slot el:o-navbar__slot--stretch el:amx-Ta(r)'>
         <ul class='el:m-list el:m-list--hrz el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-Tt(u) el:amx-D(n)@<sm'>
@@ -47,12 +49,12 @@
             <% else %>
               <span class='el:amx-D(n)@sm el:amx-Mr(0.5em)'>
                 <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
-                  class: 'btn btn--gray-border btn--rounded btn--small btn--uppercase' %>
+                  class: 'btn btn--primary-border btn--rounded btn--xs btn--uppercase' %>
               </span>
 
               <span class='el:amx-D(n)@sm'>
                 <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
-                  class: 'btn btn--blue-flat btn--rounded btn--small btn--uppercase' %>
+                  class: 'btn btn--primary-flat btn--rounded btn--xs btn--uppercase' %>
               </span>
             <%- end %>
           </li>

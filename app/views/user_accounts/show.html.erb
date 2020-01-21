@@ -1,0 +1,135 @@
+<div class='el:amx-Bc_white el:amx-Pt(1.5em) el:amx-Pb(1.5em)'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <div class='el:m-avatar el:m-avatar--circle el:m-avatar--6x6em'>
+          <% if @user_account.avatar_url %>
+            <%= image_tag @user_account.avatar_url %>
+          <% else %>
+            <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNkZWU3ZWQ7fS5jbHMtMntmaWxsOiM5ZGFmYjc7fS5jbHMtM3tmaWxsOiM0YzYzNmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5hdmF0YXIgY29weTwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik00OSwxMGMtOC41LDAtOSw4LjUtOSw4LjVIMjRTMjMuNSwxMCwxNSwxMFY0Mi4zOUExMC4xMSwxMC4xMSwwLDAsMCwyNS4xMSw1Mi41SDM4Ljg5QTEwLjExLDEwLjExLDAsMCwwLDQ5LDQyLjM5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTI5LjMyLDM5LjIyQTIuNjIsMi42MiwwLDAsMSwzMiwzNy43M2EyLjY5LDIuNjksMCwwLDEsMi42OCwxLjQ5YzAsMS40OC0uNjksNC0yLjY4LDRTMjkuMzIsNDAuNywyOS4zMiwzOS4yMloiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0zOS40OCwzMy43YTEuMywxLjMsMCwxLDAsMi42LDBjMC0uNzItLjU4LTItMS4zLTJTMzkuNDgsMzMsMzkuNDgsMzMuN1oiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0yMS45MiwzMy43YTEuMywxLjMsMCwxLDAsMi42LDBjMC0uNzItLjU4LTItMS4zLTJTMjEuOTIsMzMsMjEuOTIsMzMuN1oiLz48L3N2Zz4=" />
+          <% end %>
+        </div><div class='el:amx-D(ib) el:amx-Va(m) el:amx-Ml(0.75em)'>
+          <h1 style='font-weight:normal' class='el:amx-Fs(1.25em)'>
+            <%= @user_account.name %>
+            <span style='font-weight:bold' class='el:m-tag el:m-tag--magenta3-flat el:m-tag--uppercase el:amx-Fs(0.375em) el:amx-Ml(0.5em)'>
+              Instructor
+            </span>
+          </h1>
+          <div class='el:amx-Fs(0.875em) el:amx-Mt(0.75em) el:amx-Mb(0.125em)'>
+             Software developer, guitar player and electronics hobbyst
+          </div>
+          <div class='el:amx-Mt(0.75em)'>
+            <span>Find me on: </span>
+            <ul class='el:m-list el:m-list--hrz'>
+              <li class='el:amx-Mr(0.5em)'>
+                <a href='' ref='nofollow noreferrer'>
+                  <%= svg_use('providers', 'edx', {width: '1.25em', height: '1.25em'}) %>
+                </a>
+              </li>
+              <li class='el:amx-Mr(0.5em)'>
+                <a href='' ref='nofollow noreferrer'>
+                  <%= svg_use('providers', 'udemy', {width: '1.25em', height: '1.25em'}) %>
+                </a>
+              </li>
+              <li class='el:amx-Mr(0.5em)'>
+                <a href='' ref='nofollow noreferrer'>
+                  <%= svg_use('providers', 'skillshare', {width: '1.25em', height: '1.25em'}) %>
+                </a>
+              </li>
+              <li class='el:amx-Mr(0.5em)'>
+                <a href='' ref='nofollow noreferrer'>
+                  <%= svg_use('providers', 'treehouse', {width: '1.25em', height: '1.25em'}) %>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-12'>
+        <div data-elements-tabs class='el:o-tabs el:amx-Mt(1.5em)'>
+
+          <div class='el:o-tabs__nav'>
+            <a data-elements-tabs-tab='#content-1' class='el:o-tabs__tab el:o-tabs__tab--active' href='javascript:void(0)'>Profile</a>
+            <a data-elements-tabs-tab='#content-2' class='el:o-tabs__tab' href='javascript:void(0)'>Contact</a>
+          </div>
+
+          <div data-elements-tabs-content class='el:o-tabs__content'>
+
+            <div id='content-1' style='padding:1em 0;height:220px;text-align:justify' class='el:amx-Mt(1em)'>
+              <h2 class='el:amx-Fs(1.25em)'>About Me</h3>
+              <p style='line-height:1.5em'>
+                  Duis eget condimentum metus. Aenean efficitur elit vitae sagittis scelerisque. Sed
+                sed efficitur justo, vel rutrum lectus. Vivamus eget venenatis nisi. Duis consectetur
+                nibh in convallis fringilla. Praesent molestie metus et imperdiet mattis. Aliquam
+                ullamcorper sem in rutrum posuere.
+              </p>
+              <h2 class='el:amx-Fs(1.25em)'>Find me on</h3>
+              <ul class='el:amx-Mt(1em) el:m-list el:m-list--hrz'>
+                <li class='el:amx-Mr(0.5em)'>
+                  <a href='' ref='nofollow noreferrer'>
+                    <%= svg_use('providers', 'edx', {width: '1.5em', height: '1.5em'}) %>
+                  </a>
+                </li>
+                <li class='el:amx-Mr(0.5em)'>
+                  <a href='' ref='nofollow noreferrer'>
+                    <%= svg_use('providers', 'udemy', {width: '1.5em', height: '1.5em'}) %>
+                  </a>
+                </li>
+                <li class='el:amx-Mr(0.5em)'>
+                  <a href='' ref='nofollow noreferrer'>
+                    <%= svg_use('providers', 'skillshare', {width: '1.5em', height: '1.5em'}) %>
+                  </a>
+                </li>
+                <li class='el:amx-Mr(0.5em)'>
+                  <a href='' ref='nofollow noreferrer'>
+                    <%= svg_use('providers', 'treehouse', {width: '1.5em', height: '1.5em'}) %>
+                  </a>
+                </li>
+              </ul>
+              <h2 class='el:amx-Fs(1.25em) el:amx-Mt(1em)'>Courses</h3>
+              <div class='row'>
+                <div class='col-12 col-md-3'>
+                  <div class='c-vcard'>
+                    <div class='c-vcard__head'>
+
+                    </div>
+                    <div class='c-vcard__body'></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id='content-2' style='padding:1em 0;height:220px;display:none' class='el:amx-Mt(1em)'>
+              <h2 class='el:amx-Fs(1.25em)'>Social</h3>
+              <ul class='el:amx-Mt(1em) el:m-list el:m-list--hrz'>
+                <li class='el:amx-Mr(0.5em)'>
+                  <a href='' ref='nofollow noreferrer'>
+                    <%= svg_use('icons', 'reddit_share', {width: '1.25em', height: '1.25em'}) %>
+                  </a>
+                </li>
+                <li class='el:amx-Mr(0.5em)'>
+                  <a href='' ref='nofollow noreferrer'>
+                    <%= svg_use('icons', 'facebook', {width: '1.25em', height: '1.25em'}) %>
+                  </a>
+                </li>
+                <li class='el:amx-Mr(0.5em)'>
+                  <a href='' ref='nofollow noreferrer'>
+                    <%= svg_use('icons', 'twitter', {width: '1.25em', height: '1.25em'}) %>
+                  </a>
+                </li>
+                <li>
+                  <a href='' ref='nofollow noreferrer'>
+                    <%= svg_use('icons', 'linkedin', {width: '1.25em', height: '1.25em'}) %>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>

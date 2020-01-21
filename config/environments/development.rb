@@ -1,6 +1,8 @@
 Rails.application.configure do
 
   config.hosts << "lvh.me"
+  config.hosts << "es.lvh.me"
+  config.hosts << "pt-br.lvh.me"
 
   # CORS
   config.middleware.insert_before 0, Rack::Cors do

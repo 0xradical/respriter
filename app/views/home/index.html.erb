@@ -7,51 +7,43 @@
   <meta property='og:description' content="<%= t('.meta.description') %>" />
 <% end %>
 
-<%= content_for :stylesheets do %>
-  <style type="text/css">
-    .c-search-impact__input--hack {
-      width: calc(100% - 77px) !important;
-    }
-  </style>
-<% end %>
-
-<script id='search-impact' type='x-vue-template'>
-  <search-bar placeholder="<%= t('components.searchbar_placeholder') %>" :css-classes='{container: "c-search-impact", form: "c-search-impact__form", input: "c-search-impact__input c-search-impact__input--hack"}'>
-    <button slot='search-action' class='c-search-impact__btn'></button>
-  </search-bar>
-</script>
-
-<div class='c-hero-impact el:amx-C_gray3'>
-  <div class='c-hero-impact__art'>
-    <div class='c-hero-impact__slot'>
-      <img src="<%= elements_asset_path('svgs/logo.svg') %>" class="clspt:c-hero-impact__img">
-      <h1 style='font-weight:400;' class='el:amx-Mt(1.25em) el:amx-Fs(1.25em) el:amx-Fs(1.5em)@>lg'>
-        <%= t('.hero_html').html_safe %>
-      </h1>
-      <div class='el:amx-Mt(1.25em) el:amx-Ml(0.875em)@sm el:amx-Mr(0.875em)@sm'>
-        <div data-vue-cpt='search-impact'></div>
+<div class='el:amx-Bc_su'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <div class='el:amx-C_fg el:amx-Ta(c)' style='margin-top:7em'>
+          <%= svg_use 'brand', 'logo', class: 'el:amx-Fi_fg', width: '246px', height: '40px' %>
+          <h1 style='font-weight:400;' class='el:amx-Mt(1.25em) el:amx-Fs(1.25em) el:amx-Fs(1.25em)@>lg'>
+            <%= t('.hero_html').html_safe %>
+          </h1>
+          <div class='el:amx-Mt(2em) el:amx-Mr(auto) el:amx-Ml(auto)' style='max-width:620px;'>
+            <form action='/search' method='get' class='el:m-search-bar'>
+              <input placeholder="<%= t('components.searchbar_placeholder') %>"
+                     class='el:m-search-bar__input'
+                     value='<%= request.query_parameters["q"] %>'
+                     type='search'
+                     name='q' />
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class='el:amx-Pt(1em) el:amx-Pt(2em)@>lg' style='background-color:#FFF;'>
+<div class='el:amx-Bc_su' style='padding-bottom:8.5em'>
   <div class='container'>
-    <div class='el:amx-Pt(0.5em) el:amx-Pb(2.5em)' style='border-top:1px solid #DEE7ED;border-bottom:1px solid #DEE7ED;'>
+    <div class='el:amx-Pt(4.5em)'>
       <div class='row'>
         <% (RootTag.all).each_with_index do |t, index| %>
-          <div class='col-12 col-md-3'>
-            <%# Remove this hack as soon as all bundles are created %>
-            <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
-            <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "#{t.slugify}") do %>
-              <div class='el:amx-Bc_white el:amx-Mt(1em) el:amx-Mt(2em)@>lg' style='height:50px;'>
-                <span class='c-label c-label--double-line' style='height:60px;text-align:left'>
-                  <%= svg_use('icons', t.icon, { class: 'c-label__icon' }) %>
-                  <span class='c-label__text' class='el:amx-C_blue2' style='word-break:break-word;max-width:160px'>
+          <div class='col-12 col-lg-3'>
+            <%= link_to t.slugify do %>
+              <div class='el:m-sticker el:m-sticker--borderless el:m-sticker--top el:amx-Mb(1em)'>
+                <%= svg_use('tags', t.id, { class: 'el:m-sticker__media el:amx-Fi_fg' }) %><span class='el:m-sticker__text'>
+                  <span class='el:m-sticker__primary-label'>
                     <b><%= t("tags.#{t.id}") %></b>
-                    <br />
-                    <span style='color:black;font-size:0.625em'> <%= @count_by_category[t.id] %> online courses</span>
                   </span>
+                  <span class='el:m-sticker__secondary-label'><%= @count_by_category[t.id] %> <%= t('dictionary.online_courses').downcase %></span>
                 </span>
               </div>
             <% end %>
@@ -60,9 +52,9 @@
       </div>
     </div>
   </div>
-</div>
+ </div>
 
-<section id='about-us' class='el:amx-Bc_white'>
+<section id='about-us'>
   <div class='container'>
 
     <!-- Classpert's Online Search Engine -->

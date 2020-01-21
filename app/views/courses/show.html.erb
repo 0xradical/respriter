@@ -15,8 +15,10 @@
 </script>
 
 <%= content_for :base_svg_sprites do %>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/packs/providers.svg') %>"></div>
+  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg') %>"></div>
+  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/country-flags.svg') %>"></div>
+  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/icons.svg') %>"></div>
+  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/providers.svg') %>"></div>
 <% end %>
 
 <%= content_for :javascript do %>

@@ -51,7 +51,7 @@
 
             <template v-if="params.q">
               {{ $t("dictionary.for") }}
-              <span class="query-tag el:amx-Bc_magenta5">{{
+              <span class="query-tag el:amx-Bc_prV">{{
                 this.params.q
               }}</span>
             </template>

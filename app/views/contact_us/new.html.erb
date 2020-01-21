@@ -8,10 +8,6 @@
   style="background-color:#FFFFFF"
 <% end %>
 
-<%= content_for :base_svg_sprites do %>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
-<% end %>
-
 <%= content_for :javascript do %>
   <%= javascript_pack_tag 'contact-us' %>
   <%= stylesheet_pack_tag 'contact-us' %>
