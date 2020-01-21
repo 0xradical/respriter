@@ -68,25 +68,27 @@
             <%= t('.courses', name: @orphaned_profile.name) %>
           </h2>
 
-          <div class='row swiper-container d-md-none' data-swiepable style='width:100%;height:350px;'>
-            <div class='swiper-wrapper'>
+          <% if @orphaned_profile.courses %>
+            <div class='row swiper-container d-md-none' data-swiepable style='width:100%;height:350px;'>
+              <div class='swiper-wrapper'>
+                <% @orphaned_profile.courses.each do |course| %>
+                  <div class='el:amx-Mb(1em) swiper-slide'>
+                    <%= render 'vcard', course: course.as_indexed_json %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class='row d-none d-md-flex'>
               <% @orphaned_profile.courses.each do |course| %>
-                <div class='el:amx-Mb(1em) swiper-slide'>
-                  <%= render 'vcard', course: course.as_indexed_json %>
+                <div class='col-md-6 col-lg-4 col-xl-3'>
+                  <div class='el:amx-Mb(1em)'>
+                    <%= render 'vcard', course: course.as_indexed_json %>
+                  </div>
                 </div>
               <% end %>
             </div>
-          </div>
-
-          <div class='row d-none d-md-flex'>
-            <% @orphaned_profile.courses.each do |course| %>
-              <div class='col-md-6 col-lg-4 col-xl-3'>
-                <div class='el:amx-Mb(1em)'>
-                  <%= render 'vcard', course: course.as_indexed_json %>
-                </div>
-              </div>
-            <% end %>
-          </div>
+          <% end %>
 
         </div>
       </div>
