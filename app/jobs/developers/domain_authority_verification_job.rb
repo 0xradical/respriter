@@ -170,6 +170,9 @@ module Developers
             { provider_id: provider.id, user_account_ids: [user_id] }
           )
 
+        detect_sitemap(crawler_domain, provider_crawler)
+        setup_provider_crawler(crawler_domain, provider_crawler)
+
         crawler_domain.update(
           {
             authority_confirmation_status: 'confirmed',
@@ -180,14 +183,9 @@ module Developers
             provider_crawler_id: provider_crawler.id
           }
         )
-      end
 
-      if provider && provider_crawler
-        detect_sitemap(crawler_domain, provider_crawler)
-        setup_provider_crawler(crawler_domain, provider_crawler)
+        finish
       end
-
-      finish
     end
 
     def detect_sitemap(crawler_domain, provider_crawler)
