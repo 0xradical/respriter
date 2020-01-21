@@ -68,7 +68,7 @@
             <%= t('.courses', name: @orphaned_profile.name) %>
           </h2>
 
-          <% if @orphaned_profile.courses %>
+          <% unless @orphaned_profile.courses.empty? %>
             <div class='row swiper-container d-md-none' data-swiepable style='width:100%;height:350px;'>
               <div class='swiper-wrapper'>
                 <% @orphaned_profile.courses.each do |course| %>
