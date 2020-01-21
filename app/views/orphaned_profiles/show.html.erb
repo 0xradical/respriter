@@ -37,7 +37,7 @@
               <ul class='el:m-list el:m-list--hrz'>
                 <% @orphaned_profile.public_profiles.each do |key, val| %>
                   <li class='el:amx-Mr(0.5em)'>
-                    <a href='<%= val %>' ref='nofollow noreferrer'>
+                    <a href='<%= val %>' target='_blank' ref='nofollow noreferrer'>
                       <%= svg_use('icons', key, {class: "el:amx-Fi_#{key}", width: '1em', height: '1em'}) %>
                     </a>
                   </li>
@@ -64,11 +64,11 @@
             </p>
           <% end %>
 
-          <h2 class='el:amx-Fs(1.25em) el:amx-M(1em|0)'>
-            <%= t('.courses', name: @orphaned_profile.name) %>
-          </h2>
-
           <% unless @orphaned_profile.courses.empty? %>
+            <h2 class='el:amx-Fs(1.25em) el:amx-M(1em|0)'>
+              <%= t('.courses', name: @orphaned_profile.name) %>
+            </h2>
+
             <div class='row swiper-container d-md-none' data-swiepable style='width:100%;height:350px;'>
               <div class='swiper-wrapper'>
                 <% @orphaned_profile.courses.each do |course| %>
