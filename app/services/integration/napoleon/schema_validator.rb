@@ -40,7 +40,14 @@ module Integration::Napoleon
         response = http.request request
         raise 'Could not get schema' if response.code != '200'
 
-        results = JSON.parse(response.body)
+        body =
+          if response.header['Content-Encoding'] == 'gzip'
+            Zlib::GzipReader.new(StringIO.new(response.body)).read
+          else
+            response.body
+          end
+
+        results = JSON.parse(body)
         raise "Could not find schema for #{kind}:#{version}" if results.empty?
 
         results[0]['specification']
