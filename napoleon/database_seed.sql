@@ -30,9 +30,8 @@ INSERT INTO app.resource_schemas (
     "$id": "https://napoleon.classpert.com/schemas/course/0.0.1",
     "type": "object",
     "definitions": {
-      "uuid": {
-        "type": "string",
-        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      "id": {
+        "type": "string"
       },
       "status": {
         "type": "string",
@@ -505,11 +504,11 @@ INSERT INTO app.resource_schemas (
       }
     },
     "required": [
-      "unique_id"
+      "id"
     ],
     "properties": {
-      "unique_id": {
-        "type": "string"
+      "id": {
+        "$ref": "#/definitions/id"
       },
       "status": {
         "$ref": "#/definitions/status",
@@ -686,7 +685,7 @@ INSERT INTO app.resource_schemas (
         "type": "boolean"
       },
       "alternative_course_id": {
-        "$ref": "#/definitions/uuid"
+        "$ref": "#/definitions/id"
       },
       "extra": {
         "type": "object"
