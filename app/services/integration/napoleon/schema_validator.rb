@@ -18,19 +18,22 @@ module Integration::Napoleon
 
     def validate(data)
       cloned_data = data.deep_dup.deep_stringify_keys
-      [
-        cloned_data,
-        ValidatorHandler.new( schemer.validate(cloned_data) ).errors
-      ]
+      [cloned_data, ValidatorHandler.new(schemer.validate(cloned_data)).errors]
     end
 
     protected
+
     def schema_uri
-      URI.join ENV.fetch('NAPOLEON_POSTGREST_URI'), "/resource_schemas?kind=eq.#{kind}&schema_version=eq.#{version}"
+      URI.join ENV.fetch('NAPOLEON_POSTGREST_URI'),
+               "/resource_schemas?kind=eq.#{kind}&schema_version=eq.#{version}"
     end
 
     def fetch_schema
-      Net::HTTP.start(schema_uri.host, schema_uri.port) do |http|
+      Net::HTTP.start(
+        schema_uri.host,
+        schema_uri.port,
+        use_ssl: schema_uri.scheme == 'https'
+      ) do |http|
         request = Net::HTTP::Get.new schema_uri
         request['Authorization'] = AUTHORIZATION_HEADER
 
