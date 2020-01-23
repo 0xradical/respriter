@@ -17,9 +17,7 @@ services:
       - postgres
 
   postgres:
-    image: postgres:11.2-alpine
+    image: classpert/database
     env_file: .env
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
-    volumes:
-      - ./db:/docker-entrypoint-initdb.d

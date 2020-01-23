@@ -26,6 +26,7 @@ type Config struct {
   DatabasePoolSize        int
   ForceHTTPS              bool
   UrlSignerKey            string
+  SkillshareSecretKey     string
   UdemyApiUser            string
   UdemyApiPassword        string
 }
@@ -44,6 +45,7 @@ func FromEnv() *Config {
     DatabaseURL:             requiredEnv( "DATABASE_URL"                                ),
     ForceHTTPS:              getEnvBool(  "FORCE_HTTPS",               false            ),
     UrlSignerKey:            requiredEnv( "URL_SIGNER_KEY"                              ),
+    SkillshareSecretKey:     requiredEnv( "SKILLSHARE_SECRET_KEY"                       ),
     UdemyApiUser:            requiredEnv( "UDEMY_API_USER"                              ),
     UdemyApiPassword:        requiredEnv( "UDEMY_API_PASSWORD"                          ),
   }

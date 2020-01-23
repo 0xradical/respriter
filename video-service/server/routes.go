@@ -16,6 +16,16 @@ func (router *Router) Routes() {
   }
 
   router.HandleFunc(
+    "/skillshare/{account_id:[0-9]+}/{video_id:[0-9]+}",
+    middleware.SignedUrl( WithSession(handlers.Skillshare) ),
+  )
+
+  router.HandleFunc(
+    "/skillshare/{account_id:[0-9]+}/{video_id:[0-9]+}/{resolution:high_resolution|low_resolution}",
+    middleware.SignedUrl( WithSession(handlers.Skillshare) ),
+  )
+
+  router.HandleFunc(
     "/udemy/{course_id:[0-9]+}",
     middleware.SignedUrl( WithSession(handlers.Udemy) ),
   )
