@@ -1,26 +1,23 @@
-# frozen_string_literal: true
-
 class UserAccounts::SessionsController < Devise::SessionsController
   protect_from_forgery prepend: true
 
-  before_action  :destroy_api_session,            only: :destroy
-  before_action  :set_user_dashboard_redir,       only: :new
-  before_action  :set_developers_dashboard_redir, only: :new
+  before_action :destroy_api_session, only: :destroy
+  before_action :set_login_redirect_location, only: :new
 
   protected
 
-  def set_user_dashboard_redir
-    session[:user_dashboard_redir] = params[:user_dashboard_redir]
-  end
+  def set_login_redirect_location
+    if session[:login_redirect_location].presence.nil?
+      redirect_url = ENV.fetch('USER_DASHBOARD_URL')
+      redirect_path = params[:user_dashboard_redir].presence || '/'
 
-  def set_developers_dashboard_redir
-    session[:developers_dashboard_redir] = params[:developers_dashboard_redir]
+      session[:login_redirect_location] = "#{redirect_url}#{redirect_path}"
+    end
   end
 
   def destroy_api_session
     session[:current_user_jwt] = nil
-    cookies.delete :_jwt,         domain: :all
-    cookies.delete :_csrf_token,  domain: :all
+    cookies.delete :_jwt, domain: :all
+    cookies.delete :_csrf_token, domain: :all
   end
-
 end

@@ -1,8 +1,11 @@
 require 'hypernova'
 
 class ApplicationController < ActionController::Base
-
-  http_basic_authenticate_with(name: ENV['BASIC_AUTH_USER'], password: ENV['BASIC_AUTH_PASSWORD']) if ENV['BASIC_AUTH_REQUIRED']
+  if ENV['BASIC_AUTH_REQUIRED']
+    http_basic_authenticate_with(
+      name: ENV['BASIC_AUTH_USER'], password: ENV['BASIC_AUTH_PASSWORD']
+    )
+  end
 
   protect_from_forgery with: :exception
   prepend_before_action :track_session
@@ -15,15 +18,15 @@ class ApplicationController < ActionController::Base
   layout :fetch_layout
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from ActionController::UnknownFormat,  with: :render_406
-    rescue_from ActionController::RoutingError,   with: :render_404
+    rescue_from ActionController::UnknownFormat, with: :render_406
+    rescue_from ActionController::RoutingError, with: :render_404
   end
 
   protected
 
   def store_user_account_location
     # for omniauth
-    omniauth_params = request.env["omniauth.params"]
+    omniauth_params = request.env['omniauth.params']
     if omniauth_params && omniauth_params['redirect_to'].present?
       store_location_for(:user_account, omniauth_params['redirect_to'])
     end
@@ -36,10 +39,12 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     store_jwt_or_sign_out_on_expiration
-    stored_location_for(resource) || request.env['omniauth.origin'] || user_logged_default_path
+    stored_location_for(resource) || request.env['omniauth.origin'] ||
+      user_logged_default_path
   end
 
   private
+
   def store_jwt_or_sign_out_on_expiration
     token = request.env['warden-jwt_auth.token'] || session[:current_user_jwt]
     return unless token.present?
@@ -59,23 +64,10 @@ class ApplicationController < ActionController::Base
 
   def user_logged_default_path
     return new_user_account_session_path unless session[:current_user_jwt]
-    redirect_params = {
-      locale: I18n.locale
-    }
+    redirect_params = { locale: I18n.locale }
+    redirect_location = session[:login_redirect_location] || '/'
 
-    if session[:developers_dashboard_redir].present?
-      redirect_location = ENV.fetch('DEVELOPERS_DASHBOARD_URL')
-      redirect_path     = session[:developers_dashboard_redir]
-
-      session[:developers_dashboard_redir] = nil
-    else
-      redirect_location = ENV.fetch('USER_DASHBOARD_URL')
-      redirect_path     = session[:user_dashboard_redir] || '/'
-
-      session[:user_dashboard_redir] = nil
-    end
-
-    "#{redirect_location}#{redirect_path}?#{redirect_params.to_query}"
+    "#{redirect_location}?#{redirect_params.to_query}"
   end
 
   def set_jwt_cookie
@@ -99,12 +91,18 @@ class ApplicationController < ActionController::Base
   end
 
   def request_ip
-    ((request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).to_s).scan(/(.*),|\A(.*)\z/).flatten.compact.first
+    ((request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).to_s).scan(
+      /(.*),|\A(.*)\z/
+    )
+      .flatten
+      .compact
+      .first
   end
 
   def set_locale
     parsed_locale = I18nHelper.sanitize_locale(request.subdomains.first)
-    I18n.locale = ([parsed_locale] & I18n.available_locales).present? ? parsed_locale : :en
+    I18n.locale =
+      ([parsed_locale] & I18n.available_locales).present? ? parsed_locale : :en
   end
 
   def session_tracker
@@ -112,7 +110,7 @@ class ApplicationController < ActionController::Base
     @session_tracker.store_third_party_cookies!
     @session_tracker
   end
-  alias :track_session :session_tracker
+  alias track_session session_tracker
 
   def rendertron?
     request.headers['HTTP_X_RENDERTRON_USER_AGENT'] == 'true'
@@ -131,11 +129,13 @@ class ApplicationController < ActionController::Base
   end
 
   def render_404(exception)
-    render file: Rails.root.join('public', '404.html'),  status: 404, layout: false
+    render file: Rails.root.join('public', '404.html'),
+           status: 404,
+           layout: false
   end
 
   def render_406(exception)
-    render plain: "406 - not acceptable", status: 406
+    render plain: '406 - not acceptable', status: 406
   end
 
   def load_live_support
@@ -144,5 +144,4 @@ class ApplicationController < ActionController::Base
     session[:live_support_enabled] = (conf.enabled && (conf.assisted_countries.empty? ||
                                                       conf.assisted_countries.include?(country)))
   end
-
 end

@@ -19,6 +19,11 @@ Rails.application.routes.draw do
          as: :user_account_registration
   end
 
+  devise_scope :user_account do
+    get '/developers/sign_in(.:format)' => 'developers/sessions#new',
+        as: :new_developer_session_path
+  end
+
   mount Vueonrails::Engine, at: 'vue'
   root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { '' }
 
