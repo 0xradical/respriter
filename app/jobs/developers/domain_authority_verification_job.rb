@@ -5,15 +5,21 @@ module Developers
   class DomainAuthorityVerificationJob < Que::Job
     class Error < StandardError; end
     SERVICE_NAME = 'domain-validation-service'
+    MAX_RETRIES = 10
+    RETRY_WINDOW = 20 # seconds
 
     self.priority = 100
 
     attr_reader :logger
+    attr_accessor :retries, :next_retry
 
     def initialize(*)
       super
 
       @logger = SysLogger.new
+      @exit = false
+      @retries = 0
+      @next_retry = nil
     end
 
     def run(id, user_id)
@@ -33,86 +39,37 @@ module Developers
         raise '#100002: Domain already validated'
       end
 
+      if crawler_domain.authority_confirmation_status == 'confirming'
+        raise '#100009: Domain already being validated'
+      end
+
       if crawler_domain.authority_confirmation_status == 'unconfirmed'
         crawler_domain.update(authority_confirmation_status: 'confirming')
       end
 
-      resolver = Dnsruby::DNS.new
+      start_heartbeat(crawler_domain)
 
-      authority_confirmed_via_dns = false
-      authority_confirmed_via_html = false
+      loop do
+        self.next_retry = nil
+        log(id, 'Retrying verification') if (self.retries > 0)
 
-      # DNS by TXT entry
-      begin
-        log(id, 'Verifying TXT DNS entries')
-        resolver.each_resource(crawler_domain.domain, 'TXT') do |rr|
-          if rr.data == crawler_domain.authority_txt
-            authority_confirmed_via_dns = true
-            break
-          end
-        end
-      rescue Exception => e
-        log(id, 'Could not verify via TXT DNS entries')
-        nil
-      end
-
-      if !authority_confirmed_via_dns
-        # DNS by CNAME entry
-        log(id, 'Could not verify via TXT DNS entries, trying CNAME entries')
-        begin
-          resolver.each_resource(
-            crawler_domain.authority_cname,
-            'CNAME'
-          ) do |rr|
-            if rr.rdata.to_s == 'verification.classpert.com'
-              authority_confirmed_via_dns = true
-              break
-            end
-          end
-        rescue Exception => e
-          log(id, 'Could not verify via CNAME DNS entries')
-        end
-      end
-
-      if authority_confirmed_via_dns
-        confirm!(user_id, crawler_domain, 'dns')
-        log(id, 'Successfully verified domain via DNS')
-      else
-        log(id, 'Could not verify via CNAME DNS entries, trying HTML method')
-        # try via HTML
-        crawler_domain.possible_uris.each do |u|
-          break if authority_confirmed_via_html
-
-          begin
-            response = Net::HTTP.get_response(URI.parse(u.to_s))
-
-            if response.code == '200'
-              document = Nokogiri.HTML(response.body)
-
-              document.css('meta').each do |meta|
-                if meta.attributes['name']&.value ==
-                     CrawlerDomain::DOMAIN_VERIFICATION_KEY &&
-                     meta.attributes['content']&.value ==
-                       crawler_domain.authority_confirmation_token
-                  authority_confirmed_via_html = true
-                  break
-                end
-              end
-            end
-          rescue StandardError
-            false
-          end
-        end
-
-        if authority_confirmed_via_html
+        if check_html(crawler_domain)
           confirm!(user_id, crawler_domain, 'html')
           log(id, 'Successfully verified domain via HTML')
-        else
-          if error_count < 10
-            crawler_domain.update(authority_confirmation_status: 'unconfirmed')
-            log(id, '#100004: Domain validation failed temporarily', :error)
 
-            raise DomainAuthorityVerificationJob::Error
+          return
+        elsif check_dns(crawler_domain)
+          confirm!(user_id, crawler_domain, 'dns')
+          log(id, 'Successfully verified domain via DNS')
+
+          return
+        else
+          self.retries += 1
+
+          if self.retries < MAX_RETRIES
+            log(id, '#100004: Domain validation failed temporarily', :error)
+            self.next_retry = RETRY_WINDOW.seconds.from_now
+            sleep(RETRY_WINDOW)
           else
             CrawlerDomain.transaction do
               crawler_domain.update(authority_confirmation_status: 'failed')
@@ -120,6 +77,7 @@ module Developers
             end
 
             log(id, '#100005: Domain validation failed permanently', :error)
+            return
           end
         end
       end
@@ -134,6 +92,72 @@ module Developers
       end
 
       log(id, e.message, :error)
+    end
+
+    def check_html(crawler_domain)
+      log(crawler_domain.id, 'Verifying HTML page')
+
+      crawler_domain.possible_uris.each do |u|
+        begin
+          uri = URI.parse(u.to_s)
+          log(crawler_domain.id, "Trying #{uri.scheme.upcase} (#{uri.to_s})")
+          response = Net::HTTP.get_response(uri)
+
+          if response.code == '200'
+            document = Nokogiri.HTML(response.body)
+
+            document.css('meta').each do |meta|
+              if meta.attributes['name']&.value ==
+                   CrawlerDomain::DOMAIN_VERIFICATION_KEY &&
+                   meta.attributes['content']&.value ==
+                     crawler_domain.authority_confirmation_token
+                return true
+              end
+            end
+          else
+            log(
+              crawler_domain.id,
+              "HTML Verification for #{u.to_s} failed (status code: #{
+                response.code
+              })"
+            )
+          end
+        rescue StandardError
+          log(crawler_domain.id, 'Could not verify via HTML')
+          false
+        end
+      end
+
+      false
+    end
+
+    def check_dns(crawler_domain)
+      log(crawler_domain.id, 'Verifying DNS entries')
+      resolver = Dnsruby::DNS.new
+
+      # DNS by TXT entry
+      begin
+        log(crawler_domain.id, 'Looking for token in TXT DNS entries')
+        resolver.each_resource(crawler_domain.domain, 'TXT') do |rr|
+          return true if rr.data == crawler_domain.authority_txt
+        end
+        log(crawler_domain.id, 'Could not find matching TXT DNS entries')
+      rescue Exception => e
+        log(crawler_domain.id, 'Could not verify via TXT DNS entries')
+        nil
+      end
+
+      begin
+        log(crawler_domain.id, 'Looking for token in CNAME DNS entries')
+        resolver.each_resource(crawler_domain.authority_cname, 'CNAME') do |rr|
+          return true if rr.rdata.to_s == 'verification.classpert.com'
+        end
+        log(crawler_domain.id, 'Could not find matching CNAME DNS entries')
+      rescue Exception => e
+        log(crawler_domain.id, 'Could not verify via CNAME DNS entries')
+      end
+
+      false
     end
 
     def confirm!(user_id, crawler_domain, confirmation_method)
@@ -190,7 +214,7 @@ module Developers
 
       crawler_domain.update(authority_confirmation_status: 'confirmed')
     rescue StandardError
-      raise 'Confirmation failed, trying again'
+      raise 'Confirmation failed'
     end
 
     def detect_sitemap(crawler_domain, provider_crawler)
@@ -222,6 +246,7 @@ module Developers
       crawler_domain.possible_uris.each do |uri|
         methods.each do |method_file, method_processor|
           uri.path = "/#{method_file}"
+          log(crawler_domain.id, "Looking for #{uri.to_s}")
 
           sitemap =
             (
@@ -240,6 +265,8 @@ module Developers
               sitemap_id
             )
             return
+          else
+            log(crawler_domain.id, "Could not find #{uri.to_s}")
           end
         end
       end
@@ -260,7 +287,7 @@ module Developers
     def verify_sitemap(
       crawler_domain, provider_crawler, sitemap_url, sitemap_id
     )
-      log(crawler_domain.id, 'Sitemap detected, enqueuing for verification')
+      log(crawler_domain.id, 'Sitemap detected, enqueuing for validation')
 
       provider_crawler.update(
         sitemaps: [
@@ -304,6 +331,34 @@ module Developers
           payload: message
         }.to_json
       )
+    end
+
+    def start_heartbeat(crawler_domain)
+      @heartbeat =
+        Thread.new do
+          while !@exit
+            sleep(5)
+            if (
+                 self.next_retry &&
+                   (elapsed = (Time.now - self.next_retry).to_i) <= 0
+               )
+              log(
+                crawler_domain.id,
+                "Will retry verification in #{elapsed.abs} seconds (#{
+                  self.retries
+                } out of #{MAX_RETRIES} retries)"
+              )
+            end
+          end
+        end
+      Signal.trap('INT') do
+        @exit = true
+        exit
+      end
+    end
+
+    def stop_heartbeat
+      @heartbeat.kill
     end
   end
 end
