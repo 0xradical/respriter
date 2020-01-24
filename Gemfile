@@ -28,6 +28,9 @@ gem 'hypernova'
 # Pagination
 gem 'kaminari'
 
+# Damerau-Levenshtein
+gem 'damerau-levenshtein'
+
 # MiniMagick
 gem 'mini_magick'
 gem 'carrierwave'

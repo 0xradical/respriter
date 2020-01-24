@@ -192,16 +192,21 @@ class Course < ApplicationRecord
     end
   end
 
-  scope :by_category,   -> (category) { where(category: category) }
-  scope :by_provider,   -> (provider) { joins(:provider).where("providers.slug = ?", provider)  }
-  scope :free,          -> { where(free_content: true) }
-  scope :featured,      -> { order('enrollments_count DESC') }
-  scope :locales,       -> (l) { where("audio @> ?", "{#{l.join(',')}}") }
-  scope :by_tags,       -> (tags) { where("curated_tags @> ARRAY[?]::varchar[]", tags) }
-  scope :published,     -> { where(published: true) }
+  scope :by_category,       -> (category) { where(category: category) }
+  scope :by_provider,       -> (provider) { joins(:provider).where("providers.slug = ?", provider)  }
+  scope :free,              -> { where(free_content: true) }
+  scope :featured,          -> { order('enrollments_count DESC') }
+  scope :locales,           -> (l) { where("audio @> ?", "{#{l.join(',')}}") }
+  scope :by_provider_tags,  -> (tags) { where("tags @> ARRAY[?]::text[]", tags) }
+  scope :by_tags,           -> (tags) { where("curated_tags @> ARRAY[?]::varchar[]", tags) }
+  scope :published,         -> { where(published: true) }
 
   def self.unnest_curated_tags(sub_query='courses')
     select('*').from(select("unnest(curated_tags) as tag").from(sub_query), :unnested_curated_tags)
+  end
+
+  def self.unnest_array_type(field)
+    select('distinct *').from(select("unnest(#{field}) as tag").from('courses'), :"unnested_#{field}")
   end
 
   def self.count_by_bundle(tag)
@@ -213,6 +218,14 @@ class Course < ApplicationRecord
       ) tags GROUP by tag
     SQL
     connection.select_all(sanitize_sql_array([query,tag]))
+  end
+
+  def self.distinct_tags
+    unnest_array_type('tags').map { |r| r['tag'] }.compact
+  end
+
+  def self.distinct_curated_tags
+    unnest_array_type('curated_tags').map { |r| r['tag'] }
   end
 
   def root_languages_for_audio

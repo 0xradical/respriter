@@ -6,6 +6,14 @@ end
 
 namespace :system do
 
+  desc "Upload file to S3"
+  task :upload_to_s3, [:file] => [:environment] do |t, args|
+    ENV['AWS_REGION'] = ENV['AWS_S3_REGION']
+    @s3_connector = Aws::S3::Resource.new
+    obj = @s3_connector.bucket(ENV['AWS_S3_BUCKET_NAME']).object("system/#{args[:file]}")
+    obj.upload_file(Rails.root.join("tmp/#{args[:file]}"))
+  end
+
   namespace :admin_accounts do
 
     desc "Create an admin account"
@@ -138,6 +146,64 @@ namespace :system do
     end
 
   end
+
+  namespace :tags do
+
+    task :update, [:url] => [:environment] do |t,args|
+      CSV.new(open(args[:url]), :headers => :first_row).each do |row|
+        # Uncurated courses
+        courses = Course.where("curated_tags = '{}' AND tags @> ARRAY[?]::text[]", [row['provider_tag']])
+
+        # Get root tags (category) from a curated course
+        root_tags = Course.select("unnest(curated_tags) as tag").by_tags([row['curated_tag']]).map(&:tag).uniq.select do |tag|
+          RootTag.all.map(&:id).include?(tag) 
+        end
+
+        if !root_tags.empty?
+          tags = [root_tags.first, row['curated_tag']].uniq.join(',')
+          courses.update_all("curated_tags = '{#{tags}}'")
+          puts "#{row['provider_tag']} tagged with #{tags}"
+        end
+
+      end
+    end
+
+    task generate_tags_suggestions_csv: [:environment] do |t,args|
+      filename  = "tags_suggestions_#{Time.now.strftime('%Y%m%d%H%M%S')}.csv"
+      filepath  = Rails.root.join("tmp/#{filename}")
+
+      curated_tags = I18n.backend.send(:translations)[:en][:tags].keys.map(&:to_s)
+
+      CSV.open(filepath, 'wb') do |csv|
+        csv << [:provider_tag, :suggested_tags]
+        Course.distinct_tags.each do |tag|
+
+          # Normalize the provider tag before comparison
+          normalized_tag  = tag.downcase.gsub(" ","_").gsub("-","_")
+          max_distance    = normalized_tag.size
+
+          # Calculate Levenshtein distance from provider tag with each curated_tag
+          results = Hash[curated_tags.map do |curated_tag|
+            [curated_tag, DamerauLevenshtein.distance(normalized_tag, curated_tag, 1, max_distance)]
+          end]
+
+          # Get the 6 best candidates
+          candidates = results.min_by(6) { |k,v| v }
+
+          if candidates[0][1] > 1
+            suggestions = candidates.map { |c| c[0] }.join(' ')
+          else
+            suggestions = candidates[0][0]
+          end
+
+          csv << [tag,suggestions]
+
+        end
+      end
+      Rake::Task['system:upload_to_s3'].invoke(filename)
+    end
+  end
+
 
   namespace :error_pages do
     desc "Create static error pages"
