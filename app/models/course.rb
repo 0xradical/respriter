@@ -243,7 +243,7 @@ class Course < ApplicationRecord
   def video_thumbnail
     return nil unless video['thumbnail_url']
     crypto = Thumbor::CryptoURL.new ENV.fetch('THUMBOR_SECURITY_KEY')
-    path = crypto.generate(:width => 240, filters: [CGI.escape('blur(2)')], :image => CGI.escape(video['thumbnail_url']))
+    path = crypto.generate(:width => 240, :image => CGI.escape(video['thumbnail_url']))
     ENV.fetch('THUMBOR_HOST').chomp('/') + path
   end
 
