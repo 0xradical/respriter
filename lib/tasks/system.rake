@@ -149,7 +149,7 @@ namespace :system do
 
   namespace :tags do
 
-    task :update, [:url] => [:environment] do |t,args|
+    task :set_curated_tags_from_csv, [:url] => [:environment] do |t,args|
       CSV.new(open(args[:url]), :headers => :first_row).each do |row|
         # Uncurated courses
         courses = Course.where("curated_tags = '{}' AND tags @> ARRAY[?]::text[]", [row['provider_tag']])
@@ -168,7 +168,7 @@ namespace :system do
       end
     end
 
-    task generate_tags_suggestions_csv: [:environment] do |t,args|
+    task generate_suggestions_csv: [:environment] do |t,args|
       filename  = "tags_suggestions_#{Time.now.strftime('%Y%m%d%H%M%S')}.csv"
       filepath  = Rails.root.join("tmp/#{filename}")
 
