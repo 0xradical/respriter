@@ -383,7 +383,7 @@ class Course < ApplicationRecord
     end
 
     def default_import_to_search_index
-      import_to_search_index({published: true})
+      import_to_search_index({published: true, source: 'api'})
     end
 
     def bulk_index_async(records)
