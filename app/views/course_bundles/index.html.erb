@@ -43,8 +43,7 @@
         <div class='col-lg-4'>
           <%= link_to course_bundle_path(data[:tag].dasherize) do %>
             <div class='el:m-sticker el:amx-Mb(1em)'>
-              <%= svg_use('tags', data[:tag], { class: 'el:m-sticker__media' }) %>
-              <span class='el:m-sticker__text'>
+              <%= svg_use('tags', data[:tag], { class: 'el:m-sticker__media' }) %><span class='el:m-sticker__text'>
                 <span class='el:m-sticker__primary-label'><%= name %></span>
                 <span class='el:m-sticker__secondary-label'><%= data[:count] %> online courses </span>
               </span>
