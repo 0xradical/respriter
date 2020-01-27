@@ -1,14 +1,19 @@
 class OrphanedProfile < ApplicationRecord
-
   include Slugifyable
-  slugify run_on: :before_save, callback_options: { unless: -> { slug.present? } }
+  slugify run_on: :before_save,
+          callback_options: { unless: -> { slug.present? } }
 
   belongs_to :user_account, optional: true
 
   scope :enabled, -> { where(state: 'enabled') }
+  scope :with_slug, -> { where.not(slug: nil) }
 
   def claimed?
     !!user_account_id
+  end
+
+  def enabled?
+    state == 'enabled'
   end
 
   def courses
@@ -30,5 +35,4 @@ class OrphanedProfile < ApplicationRecord
     SQL
     ActiveRecord::Base.connection.execute(query)
   end
-
 end
