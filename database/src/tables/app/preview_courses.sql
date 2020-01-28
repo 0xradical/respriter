@@ -36,8 +36,8 @@ CREATE TABLE app.preview_courses (
   curated_tags        varchar[]     DEFAULT '{}'::varchar[],
   refinement_tags     varchar[],
   provider_id         bigint        REFERENCES app.providers(id),
-  provider_crawler_id uuid          REFERENCES app.provider_crawlers(id) ON DELETE CASCADE,
-  created_at          timestamptz   DEFAULT    NOW()                     NOT NULL,
-  updated_at          timestamptz   DEFAULT    NOW()                     NOT NULL,
-  expired_at          timestamptz   DEFAULT    NOW() + INTERVAL '20 MINUTES' NOT NULL,
+  provider_crawler_id uuid          REFERENCES app.provider_crawlers(id)     ON DELETE CASCADE,
+  created_at          timestamptz   DEFAULT    NOW()                         NOT NULL,
+  updated_at          timestamptz   DEFAULT    NOW()                         NOT NULL,
+  expired_at          timestamptz   DEFAULT    NOW() + INTERVAL '20 MINUTES' NOT NULL
 );

@@ -6,7 +6,8 @@ CREATE OR REPLACE FUNCTION app.new_sitemaps(
       (
         COALESCE(sitemap.id, public.uuid_generate_v4()),
         'unconfirmed',
-        sitemap.url
+        sitemap.url,
+        sitemap.type
       )::app.sitemap
     )
   FROM unnest(_sitemaps) AS sitemap
