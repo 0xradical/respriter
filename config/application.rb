@@ -70,6 +70,10 @@ module App
     config.action_controller.forgery_protection_origin_check = false
     config.action_controller.per_form_csrf_tokens = false
 
+    # Third-party support chat
+    config.x.live_support.enabled             = ENV.fetch('LIVE_SUPPORT_ENABLED'){ false }
+    config.x.live_support.assisted_countries  = ENV.fetch('LIVE_SUPPORT_ASSISTED_COUNTRIES'){ '' }.split(',')
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

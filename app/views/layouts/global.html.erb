@@ -280,20 +280,13 @@
     <div data-vue-cpt='promo-video-modal'></div>
     <%= javascript_pack_tag 'vendor', 'application' %>
     <%= elements_javascript_include_tag 'bundle' %>
-    <!-- Start of LiveChat (www.livechatinc.com) code -->
-    <script type="text/javascript">
-      window.__lc = window.__lc || {};
-      window.__lc.license = 11697687;
-      (function() {
-        var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
-        lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
-      })();
-    </script>
-    <noscript>
-      <a href="https://www.livechatinc.com/chat-with/11697687/" rel="nofollow">Chat with us</a>
-    </noscript>
-    <!-- End of LiveChat code -->
+
+    <% if session[:live_support_enabled] %>
+      <!-- Start of LiveChat (www.livechatinc.com) code -->
+      <%= render 'live_chat' %>
+      <!-- End of LiveChat code -->
+    <% end %>
+
     <%= yield :javascript  %>
   </body>
 
