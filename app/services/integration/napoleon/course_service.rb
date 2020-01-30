@@ -7,12 +7,12 @@ module Integration
         @napoleon = napoleon
       end
 
-      def run(global_sequence = nil)
-        global_sequence = global_sequence || Course.current_global_sequence
-        self.napoleon.resources(global_sequence) do |resource|
+      def run(dataset_sequence = nil)
+        dataset_sequence = dataset_sequence || Course.current_dataset_sequence
+        self.napoleon.resources(dataset_sequence) do |resource|
           Course.upsert(
             id:                resource['id'],
-            global_sequence:   resource['global_sequence'],
+            dataset_sequence:  resource['dataset_sequence'],
             name:              resource['content']['course_name'],
             audio:             resource['content']['audio'],
             slug:              resource['content']['slug'],
@@ -41,8 +41,8 @@ module Integration
       end
 
       class << self
-        def run(global_sequence = nil)
-          self.new(::Napoleon.client).run(global_sequence)
+        def run(dataset_sequence = nil)
+          self.new(::Napoleon.client).run(dataset_sequence)
         end
       end
     end

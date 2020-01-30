@@ -363,8 +363,8 @@ class Course < ApplicationRecord
       bulk_index_async(result.ids)
     end
 
-    def current_global_sequence
-      maximum(:global_sequence)
+    def current_dataset_sequence
+      maximum(:dataset_sequence)
     end
 
     # TODO: Is this dead code? Same holds for SUPPORTED_LANGUAGES constant?
