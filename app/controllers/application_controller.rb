@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   before_action :rendertron?
   before_action :set_sentry_raven_context if Rails.env.production?
   before_action :store_user_account_location, if: :devise_controller?
+  before_action :load_live_support
   around_action :hypernova_render_support
   layout :fetch_layout
 
@@ -123,6 +124,13 @@ class ApplicationController < ActionController::Base
 
   def render_406(exception)
     render plain: "406 - not acceptable", status: 406
+  end
+
+  def load_live_support
+    country = session[:tracking_data]['country']
+    conf    = Rails.configuration.x.live_support
+    session[:live_support_enabled] = (conf.enabled && (conf.assisted_countries.empty? ||
+                                                      conf.assisted_countries.include?(country)))
   end
 
 end
