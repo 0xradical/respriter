@@ -62,43 +62,43 @@
 </template>
 
 <script>
-import CourseCardDesktop from "components/v2/CourseCardDesktop.vue";
-import CourseOffcanvasDesktop from "components/v2/CourseOffcanvasDesktop.vue";
-import CourseCardMobile from "components/v2/CourseCardMobile.vue";
-import CourseOffcanvasMobile from "components/v2/CourseOffcanvasMobile.vue";
+  import CourseCardDesktop from "components/CourseCardDesktop.vue";
+  import CourseOffcanvasDesktop from "components/CourseOffcanvasDesktop.vue";
+  import CourseCardMobile from "components/CourseCardMobile.vue";
+  import CourseOffcanvasMobile from "components/CourseOffcanvasMobile.vue";
 
-export default {
-  props: {
-    course: {
-      type: Object,
-      required: true
-    }
-  },
-
-  data() {
-    return {
-      expanded: false
-    };
-  },
-
-  components: {
-    CourseCardDesktop,
-    CourseOffcanvasDesktop,
-    CourseCardMobile,
-    CourseOffcanvasMobile
-  },
-  computed: {
-    chromeExtData() {
-      return JSON.stringify({
-        curated_tags: this.course.curated_tags
-      });
+  export default {
+    props: {
+      course: {
+        type: Object,
+        required: true
+      }
     },
-    desktopOffCanvasId() {
-      return `offcanvas-${this.course.id}`;
+
+    data() {
+      return {
+        expanded: false
+      };
     },
-    mobileOffCanvasId() {
-      return `mobile-offcanvas-${this.course.id}`;
+
+    components: {
+      CourseCardDesktop,
+      CourseOffcanvasDesktop,
+      CourseCardMobile,
+      CourseOffcanvasMobile
+    },
+    computed: {
+      chromeExtData() {
+        return JSON.stringify({
+          curated_tags: this.course.curated_tags
+        });
+      },
+      desktopOffCanvasId() {
+        return `offcanvas-${this.course.id}`;
+      },
+      mobileOffCanvasId() {
+        return `mobile-offcanvas-${this.course.id}`;
+      }
     }
-  }
-};
+  };
 </script>

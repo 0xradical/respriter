@@ -10,7 +10,7 @@
                 width="1.05rem"
                 height="1.05rem"
                 name="close"
-                class="el:amx-C_blue2"
+                class="el:amx-C_pr"
               ></icon>
             </a>
           </div>
@@ -51,9 +51,7 @@
 
             <template v-if="params.q">
               {{ $t("dictionary.for") }}
-              <span class="query-tag el:amx-Bc_prV">{{
-                this.params.q
-              }}</span>
+              <span class="el:amx-Fw(b) el:amx-C_fg">{{ this.params.q }}</span>
             </template>
           </span>
 
@@ -102,7 +100,7 @@
                       height="1rem"
                       :transform="`rotate(${orderOptionsToggled ? 180 : 0}deg)`"
                       name="arrow-down"
-                      class="el:amx-C_blue2"
+                      class="el:amx-C_pr"
                     ></icon>
                   </div>
                 </template>
@@ -119,7 +117,7 @@
               <h4>{{ $t("dictionary.filters") }}</h4>
               <a
                 href="#"
-                class="el:amx-C_red2 el:amx-Fw(b) el:amx-Fs(0.625em)"
+                class="el:amx-C_er el:amx-Fw(b) el:amx-Fs(0.625em)"
                 @click.prevent="clearFilters"
                 style="margin: auto 0;text-align:right;"
               >
@@ -159,7 +157,7 @@
               </select>
             </span>
             <a
-              class="el:amx-C_blue3 el:amx-Fw(b) el:amx-Ws(nw)"
+              class="el:amx-C_pr el:amx-Fw(b) el:amx-Ws(nw)"
               href="#"
               @click="showMobileFilter"
             >
@@ -189,300 +187,296 @@
 </template>
 
 <script>
-import _ from "lodash";
-import CourseList from "./CourseList.vue";
-import Pagination from "./Pagination.vue";
-import SearchFilter from "./SearchFilter.vue";
-import Icon from "components/Icon.vue";
-import qs from "qs";
-import Loading from "vue-loading-overlay";
-import Multiselect from "vue-multiselect";
+  import _ from "lodash";
+  import CourseList from "./CourseList.vue";
+  import Pagination from "./Pagination.vue";
+  import SearchFilter from "./SearchFilter.vue";
+  import Icon from "components/Icon.vue";
+  import qs from "qs";
+  import Loading from "vue-loading-overlay";
+  import Multiselect from "vue-multiselect";
 
-export default {
-  props: {
-    locale: {
-      type: String,
-      default: "en"
-    },
-
-    tag: {
-      type: String,
-      default: null
-    },
-
-    searchEndpoint: {
-      type: String,
-      default: "search.json"
-    }
-  },
-  components: {
-    courseList: CourseList,
-    searchFilter: SearchFilter,
-    pagination: Pagination,
-    icon: Icon,
-    loading: Loading,
-    multiselect: Multiselect
-  },
-  data() {
-    return {
-      params: this.defaultParams(null),
-      isFetchingRecords: false,
-      mobileFilterHidden: true,
-      isMobile: false,
-      orderCurrentOption: this.orderOptionByKey("rel"),
-      orderOptionsToggled: false,
-      orderOptionsToggle: function(callback) {
-        this.orderOptionsToggled = !this.orderOptionsToggled;
-        callback();
-      }
-    };
-  },
-  computed: {
-    page() {
-      return parseInt(this.params.p) || 1;
-    },
-    isLoadable() {
-      return (
-        (!this.isMobile || (this.isMobile && this.mobileFilterHidden)) &&
-        this.isFetchingRecords
-      );
-    },
-    orderOptions() {
-      return this.$classpert.orderOptions;
-    },
-    tagParams() {
-      if (this.tag) {
-        return { tag: this.tag };
-      } else {
-        return {};
-      }
-    }
-  },
-  beforeCreate() {
-    this.$classpert.orderOptions = [
-      { key: "rel", value: {}, i18n_key: "relevance" },
-      { key: "price.asc", value: { price: "asc" }, i18n_key: "lowest_price" },
-      { key: "price.desc", value: { price: "desc" }, i18n_key: "highest_price" }
-    ];
-  },
-  created() {
-    this.isMobile = this.isCurrentViewportMobile();
-  },
-  mounted() {
-    this.$i18n.locale = this.locale;
-
-    let queryParams = qs.parse(window.location.search.replace("?", ""), {
-      arrayFormat: "brackets"
-    });
-
-    if (_.get(queryParams, "filter.price")) {
-      queryParams.filter.price = queryParams.filter.price.map(parseFloat);
-    }
-
-    if (_.get(queryParams, "p")) {
-      queryParams.p = parseInt(queryParams.p);
-    }
-
-    if (_.get(queryParams, "order")) {
-      this.orderCurrentOption =
-        this.orderOptionByValue(_.get(queryParams, "order")) ||
-        this.orderOptionByKey("rel");
-    }
-
-    this.params = _.merge(this.params, queryParams);
-
-    // only start watching params after initial setup during mount
-    // otherwise will double trigger record fetching
-    this.$watch(
-      "params",
-      function(nVal, oVal) {
-        if (!_.isEqual(nVal, oVal)) {
-          this.fetchResults();
-        }
+  export default {
+    props: {
+      locale: {
+        type: String,
+        default: "en"
       },
-      { deep: true }
-    );
-  },
-  methods: {
-    // Check for document to be SSR friendly
-    isCurrentViewportMobile() {
-      if (typeof document === "undefined") {
-        return false;
-      } else {
-        let w = Math.max(
-          document.documentElement.clientWidth,
-          window.innerWidth || 0
-        );
-        return w < parseInt(window.Elements.breakpoints.lg);
+
+      tag: {
+        type: String,
+        default: null
+      },
+
+      searchEndpoint: {
+        type: String,
+        default: "search.json"
       }
     },
-    showMobileFilter() {
-      this.mobileFilterHidden = false;
-      this.$modal.show("mobileFilter");
+    components: {
+      courseList: CourseList,
+      searchFilter: SearchFilter,
+      pagination: Pagination,
+      icon: Icon,
+      loading: Loading,
+      multiselect: Multiselect
     },
-    hideMobileFilter() {
-      this.mobileFilterHidden = true;
-      this.$modal.hide("mobileFilter");
-    },
-    orderOptionByKey(key) {
-      return _.find(this.$classpert.orderOptions, o => {
-        return o.key === key;
-      });
-    },
-    orderOptionByValue(value) {
-      return _.find(this.$classpert.orderOptions, o => {
-        return _.isEqual(o.value, value);
-      });
-    },
-    paginate(page) {
-      this.params = this.changeFilters([
-        {
-          filter: "p",
-          value: parseInt(page || 1)
-        }
-      ]);
-    },
-    clearFilters() {
-      this.params = this.defaultParams(this.params.q);
-    },
-    clearFilter(filter) {
-      if (filter === "price") {
-        this.params = this.changePriceValue([0, 2500]);
-      } else {
-        this.params = this.changeFilters([
-          {
-            filter: `filter.${filter}`,
-            value: []
-          }
-        ]);
-      }
-    },
-    addOptionToFilter(key, option) {
-      this.params = this.changeFilters([
-        {
-          filter: `filter.${key}`,
-          value: _.concat(this.params.filter[key], [option])
-        }
-      ]);
-    },
-    removeOptionFromFilter(key, option) {
-      this.params = this.changeFilters([
-        {
-          filter: `filter.${key}`,
-          value: _.without(this.params.filter[key], option)
-        }
-      ]);
-    },
-    changePriceValue(value) {
-      this.params = this.changeFilters([
-        {
-          filter: "filter.price",
-          value: value
-        }
-      ]);
-    },
-    changeFilters(filters) {
-      // go back to first page when filtering
-      filters.unshift({ filter: "p", value: 1 });
-      return filters.reduce(
-        (acc, { filter, value }) => _.set(acc, filter, value),
-        _.cloneDeep(this.params)
-      );
-    },
-    sortByChanged({ key }) {
-      let orderOption = this.orderOptionByKey(key);
-      this.orderCurrentOption = orderOption;
-      this.params = this.changeFilters([
-        {
-          filter: "order",
-          value: orderOption.value
-        }
-      ]);
-    },
-    defaultParams: function(currentQuery) {
+    data() {
       return {
-        order: {},
-        filter: {
-          provider_name: [],
-          root_audio: [],
-          subtitles: [],
-          price: [0, 2500]
-        },
-        p: 1,
-        q: currentQuery
+        params: this.defaultParams(null),
+        isFetchingRecords: false,
+        mobileFilterHidden: true,
+        isMobile: false,
+        orderCurrentOption: this.orderOptionByKey("rel"),
+        orderOptionsToggled: false,
+        orderOptionsToggle: function(callback) {
+          this.orderOptionsToggled = !this.orderOptionsToggled;
+          callback();
+        }
       };
     },
-    fetchResults() {
-      var vm = this;
-
-      const stringifiedParams = qs.stringify(
-        _.merge(this.params, this.tagParams),
-        {
-          indices: false,
-          arrayFormat: "brackets",
-          encode: true
+    computed: {
+      page() {
+        return parseInt(this.params.p) || 1;
+      },
+      isLoadable() {
+        return (
+          (!this.isMobile || (this.isMobile && this.mobileFilterHidden)) &&
+          this.isFetchingRecords
+        );
+      },
+      orderOptions() {
+        return this.$classpert.orderOptions;
+      },
+      tagParams() {
+        if (this.tag) {
+          return { tag: this.tag };
+        } else {
+          return {};
         }
-      );
-      const url = `${this.searchEndpoint}?${stringifiedParams}`;
-      window.history.replaceState({}, "foo", url.replace(".json", ""));
+      }
+    },
+    beforeCreate() {
+      this.$classpert.orderOptions = [
+        { key: "rel", value: {}, i18n_key: "relevance" },
+        { key: "price.asc", value: { price: "asc" }, i18n_key: "lowest_price" },
+        {
+          key: "price.desc",
+          value: { price: "desc" },
+          i18n_key: "highest_price"
+        }
+      ];
+    },
+    created() {
+      this.isMobile = this.isCurrentViewportMobile();
+    },
+    mounted() {
+      this.$i18n.locale = this.locale;
 
-      vm.isFetchingRecords = true;
-      fetch(url, { method: "GET" }).then(function(resp) {
-        resp.json().then(function(json) {
-          vm.$store.commit("setData", json);
-          vm.isFetchingRecords = false;
-        });
+      let queryParams = qs.parse(window.location.search.replace("?", ""), {
+        arrayFormat: "brackets"
       });
+
+      if (_.get(queryParams, "filter.price")) {
+        queryParams.filter.price = queryParams.filter.price.map(parseFloat);
+      }
+
+      if (_.get(queryParams, "p")) {
+        queryParams.p = parseInt(queryParams.p);
+      }
+
+      if (_.get(queryParams, "order")) {
+        this.orderCurrentOption =
+          this.orderOptionByValue(_.get(queryParams, "order")) ||
+          this.orderOptionByKey("rel");
+      }
+
+      this.params = _.merge(this.params, queryParams);
+
+      // only start watching params after initial setup during mount
+      // otherwise will double trigger record fetching
+      this.$watch(
+        "params",
+        function(nVal, oVal) {
+          if (!_.isEqual(nVal, oVal)) {
+            this.fetchResults();
+          }
+        },
+        { deep: true }
+      );
+    },
+    methods: {
+      // Check for document to be SSR friendly
+      isCurrentViewportMobile() {
+        if (typeof document === "undefined") {
+          return false;
+        } else {
+          let w = Math.max(
+            document.documentElement.clientWidth,
+            window.innerWidth || 0
+          );
+          return w < parseInt(window.Elements.breakpoints.lg);
+        }
+      },
+      showMobileFilter() {
+        this.mobileFilterHidden = false;
+        this.$modal.show("mobileFilter");
+      },
+      hideMobileFilter() {
+        this.mobileFilterHidden = true;
+        this.$modal.hide("mobileFilter");
+      },
+      orderOptionByKey(key) {
+        return _.find(this.$classpert.orderOptions, o => {
+          return o.key === key;
+        });
+      },
+      orderOptionByValue(value) {
+        return _.find(this.$classpert.orderOptions, o => {
+          return _.isEqual(o.value, value);
+        });
+      },
+      paginate(page) {
+        this.params = this.changeFilters([
+          {
+            filter: "p",
+            value: parseInt(page || 1)
+          }
+        ]);
+      },
+      clearFilters() {
+        this.params = this.defaultParams(this.params.q);
+      },
+      clearFilter(filter) {
+        if (filter === "price") {
+          this.params = this.changePriceValue([0, 2500]);
+        } else {
+          this.params = this.changeFilters([
+            {
+              filter: `filter.${filter}`,
+              value: []
+            }
+          ]);
+        }
+      },
+      addOptionToFilter(key, option) {
+        this.params = this.changeFilters([
+          {
+            filter: `filter.${key}`,
+            value: _.concat(this.params.filter[key], [option])
+          }
+        ]);
+      },
+      removeOptionFromFilter(key, option) {
+        this.params = this.changeFilters([
+          {
+            filter: `filter.${key}`,
+            value: _.without(this.params.filter[key], option)
+          }
+        ]);
+      },
+      changePriceValue(value) {
+        this.params = this.changeFilters([
+          {
+            filter: "filter.price",
+            value: value
+          }
+        ]);
+      },
+      changeFilters(filters) {
+        // go back to first page when filtering
+        filters.unshift({ filter: "p", value: 1 });
+        return filters.reduce(
+          (acc, { filter, value }) => _.set(acc, filter, value),
+          _.cloneDeep(this.params)
+        );
+      },
+      sortByChanged({ key }) {
+        let orderOption = this.orderOptionByKey(key);
+        this.orderCurrentOption = orderOption;
+        this.params = this.changeFilters([
+          {
+            filter: "order",
+            value: orderOption.value
+          }
+        ]);
+      },
+      defaultParams: function(currentQuery) {
+        return {
+          order: {},
+          filter: {
+            provider_name: [],
+            root_audio: [],
+            subtitles: [],
+            price: [0, 2500]
+          },
+          p: 1,
+          q: currentQuery
+        };
+      },
+      fetchResults() {
+        var vm = this;
+
+        const stringifiedParams = qs.stringify(
+          _.merge(this.params, this.tagParams),
+          {
+            indices: false,
+            arrayFormat: "brackets",
+            encode: true
+          }
+        );
+        const url = `${this.searchEndpoint}?${stringifiedParams}`;
+        window.history.replaceState({}, "foo", url.replace(".json", ""));
+
+        vm.isFetchingRecords = true;
+        fetch(url, { method: "GET" }).then(function(resp) {
+          resp.json().then(function(json) {
+            vm.$store.commit("setData", json);
+            vm.isFetchingRecords = false;
+          });
+        });
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped lang="scss">
-hr {
-  margin-bottom: 1em;
-  border: none;
-  border-top: 1px solid #dee7ed;
-}
-
-.sort {
-  flex-basis: 260px;
-
-  .sort__label {
-    white-space: nowrap;
+  hr {
+    margin-bottom: 1em;
+    border: none;
+    border-top: 1px solid #dee7ed;
   }
 
-  .sort__caret {
-    position: absolute;
-    width: 40px;
-    right: 1px;
-    top: 8px;
-    padding: 4px 8px;
-    text-align: center;
-    cursor: pointer;
-    svg {
-      transition: transform 0.2s ease;
+  .sort {
+    flex-basis: 260px;
+
+    .sort__label {
+      white-space: nowrap;
+    }
+
+    .sort__caret {
+      position: absolute;
+      width: 40px;
+      right: 1px;
+      top: 8px;
+      padding: 4px 8px;
+      text-align: center;
+      cursor: pointer;
+      svg {
+        transition: transform 0.2s ease;
+      }
     }
   }
-}
 
-.filter-nav {
-  top: 50;
-  background-color: white;
-  padding: 1.5em;
-}
+  .filter-nav {
+    top: 50;
+    background-color: white;
+    padding: 1.5em;
+  }
 
-.filter-nav--mobile {
-  padding: 1.25em;
-  height: calc(100% - 2 * 1.25em);
-  box-sizing: content-box;
-}
-
-.query-tag {
-  display: inline-block;
-  padding: 5px 10px;
-  font-size: 0.9em;
-  color: #fff;
-  border-radius: 3px;
-}
+  .filter-nav--mobile {
+    padding: 1.25em;
+    height: calc(100% - 2 * 1.25em);
+    box-sizing: content-box;
+  }
 </style>

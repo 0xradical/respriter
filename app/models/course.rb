@@ -5,6 +5,7 @@ class Course < ApplicationRecord
 
   SUPPORTED_LANGUAGES = %w[pt en es ru it de fr]
   SITE_LOCALES = { br: 'pt-BR', en: 'en' }
+  SIMILAR_COURSES = 15
 
   paginates_per 50
 
@@ -189,8 +190,10 @@ class Course < ApplicationRecord
         ->(provider) { joins(:provider).where('providers.slug = ?', provider) }
   scope :free, -> { where(free_content: true) }
   scope :featured, -> { order('enrollments_count DESC') }
-  scope :locales, ->(l) { where('audio @> ?', "{#{l.join(',')}}") }
+  scope :locales, ->(l) { where('audio && ARRAY[?]::text[]', l) }
   scope :by_provider_tags, ->(tags) { where('tags @> ARRAY[?]::text[]', tags) }
+  scope :with_tags,
+        -> { where("curated_tags IS NOT NULL AND curated_tags <> '{}'") }
   scope :by_tags,
         ->(tags) { where('curated_tags @> ARRAY[?]::varchar[]', tags) }
   scope :published, -> { where(published: true) }
@@ -226,6 +229,26 @@ class Course < ApplicationRecord
 
   def self.distinct_curated_tags
     unnest_array_type('curated_tags').map { |r| r['tag'] }
+  end
+
+  def similar
+    result = []
+
+    result +=
+      self.class.by_tags(self.curated_tags).locales(self.audio.uniq).order(
+        'enrollments_count DESC'
+      )
+        .limit(SIMILAR_COURSES)
+        .to_a
+
+    if result.size < SIMILAR_COURSES
+      result +=
+        self.class.by_tags(self.curated_tags).order('enrollments_count DESC')
+          .limit(SIMILAR_COURSES - result.size)
+          .to_a
+    end
+
+    result
   end
 
   def root_languages_for_audio
