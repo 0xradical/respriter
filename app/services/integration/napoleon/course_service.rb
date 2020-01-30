@@ -32,6 +32,7 @@ module Integration
             video:             resource['content']['video'],
             category:          resource['content']['category'],
             tags:              resource['content']['tags'],
+            published:         resource['content']['published'],
             __source_schema__: resource,
             provider_id:       Provider.find_by(name: resource['content']['provider_name'])&.id
           )
