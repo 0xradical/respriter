@@ -87,17 +87,6 @@
 
     <%= yield :stylesheets %>
     <%= yield :jsts %>
-
-    <!-- x-vue-templates -->
-    <script id='promo-video-modal' type='x-vue-template'>
-      <modal :adaptive=true name='promo-video-modal'>
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/p6_Uim8OXvQ"
-          frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-        </iframe>
-      </modal>
-    </script>
-    <%= yield :x_vue_templates %>
-
   </head>
 
   <body <%= content_for(:body_html_attributes) ? yield(:body_html_attributes) : '' %> >
@@ -210,11 +199,6 @@
             </h2>
             <ul class='el:m-list el:amx-Fs(0.875em)'>
               <li style='margin-bottom:8px'>
-                <%= link_to "javascript:void(0)", onclick: "window.__vms__['promo-video-modal'].$modal.show('promo-video-modal')", target: '_blank', class: 'el:amx-C_fgV', rel: 'nofollow' do %>
-                  <%= t('home.index.new_to_classpert') %> <%= t('home.index.watch_the_video') %>
-                <% end %>
-              </li>
-              <li style='margin-bottom:8px'>
                 <%= link_to t('dictionary.blog'), '/blog', class: 'el:amx-C_fgV', target: '_blank' %>
               </li>
               <li style='margin-bottom:8px'>
@@ -277,7 +261,6 @@
     </footer>
 
     <%= render 'offcanvas_menu' %>
-    <div data-vue-cpt='promo-video-modal'></div>
     <%= javascript_pack_tag 'vendor', 'application' %>
     <%= elements_javascript_include_tag 'bundle' %>
 

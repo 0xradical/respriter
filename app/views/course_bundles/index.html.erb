@@ -2,12 +2,12 @@
   <%= render 'meta' %>
 <% end %>
 
-<%= content_for :x_vue_templates do %>
-  <%= render 'social_share' %>
-<% end %>
-
 <%= content_for :body_html_attributes do %>
   id='results'
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_packs_with_chunks_tag 'sharing' %>
 <% end %>
 
 <%= render 'hero',

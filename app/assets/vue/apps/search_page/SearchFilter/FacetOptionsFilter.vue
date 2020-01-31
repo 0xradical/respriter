@@ -18,7 +18,7 @@
       <vue-autosuggest
         :ref="id"
         :componentAttrIdAutosuggest="id"
-        componentAttrClassAutosuggestResults="el:m-search-suggest__suggestions"
+        componentAttrClassAutosuggestResults="el\:m-search-suggest__suggestions"
         componentAttrClassAutosuggestResultsContainer="mx-D(n)"
         :suggestions="suggestions"
         :input-props="{
