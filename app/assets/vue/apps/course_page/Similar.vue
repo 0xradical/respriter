@@ -9,15 +9,13 @@
         <swiper-slide v-for="course in courses" :key="course.id">
           <vertical-card
             :course="course"
-            class="d-none d-sm-block el:amx-Mt(0) el:amx-Mb(2em)"
-          ></vertical-card>
-          <vertical-card
-            :course="course"
-            class="d-sm-none el:amx-Mt(0) el:amx-Mb(2em)"
-            style="margin-left: auto; margin-right: auto"
+            class="el:amx-Mt(0) el:amx-Mb(3em)"
           ></vertical-card>
         </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
+        <div
+          class="d-none d-sm-block swiper-pagination"
+          slot="pagination"
+        ></div>
       </swiper>
     </div>
   </div>
@@ -43,24 +41,25 @@
           autoHeight: true,
           breakpoints: {
             767: {
-              slidesPerView: 1,
-              spaceBetween: 0,
-              centeredSlides: true
+              slidesPerView: 1.25
             },
             992: {
               // container: 720px, space = (720px - 2*255px)/1 = 210
               slidesPerView: 2,
-              spaceBetween: 210 - 28
+              spaceBetween: 210 - 28,
+              slidesPerGroup: 2
             },
             1200: {
               // container: 960px, space = (960px - 3*255px)/2 = 65
               slidesPerView: 3,
-              spaceBetween: 97.5 - 28
+              spaceBetween: 97.5 - 28,
+              slidesPerGroup: 3
             },
             9999: {
               // container: 1140px, space = (1140px - 4*255px)/3 = 30
               slidesPerView: 4,
-              spaceBetween: 40 - 28
+              spaceBetween: 40 - 28,
+              slidesPerGroup: 4
             }
           },
           freeMode: true,
