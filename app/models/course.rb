@@ -243,7 +243,8 @@ class Course < ApplicationRecord
 
     if result.size < SIMILAR_COURSES
       result +=
-        self.class.by_tags(self.curated_tags).order('enrollments_count DESC')
+        self.class.where.not(id: result.map(&:id)).by_tags(self.curated_tags)
+          .order('enrollments_count DESC')
           .limit(SIMILAR_COURSES - result.size)
           .to_a
     end

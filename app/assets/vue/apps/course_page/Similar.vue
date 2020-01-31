@@ -9,20 +9,15 @@
         <swiper-slide v-for="course in courses" :key="course.id">
           <vertical-card
             :course="course"
-            style="margin: 0 auto 2em auto;"
+            class="d-none d-sm-block el:amx-Mt(0) el:amx-Mb(2em)"
+          ></vertical-card>
+          <vertical-card
+            :course="course"
+            class="d-sm-none el:amx-Mt(0) el:amx-Mb(2em)"
+            style="margin-left: auto; margin-right: auto"
           ></vertical-card>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
-        <div
-          class="swiper-button-prev"
-          slot="button-prev"
-          style="left: 0"
-        ></div>
-        <div
-          class="swiper-button-next"
-          slot="button-next"
-          style="right: 0"
-        ></div>
       </swiper>
     </div>
   </div>
@@ -49,19 +44,23 @@
           breakpoints: {
             767: {
               slidesPerView: 1,
-              spaceBetween: 0
+              spaceBetween: 0,
+              centeredSlides: true
             },
             992: {
+              // container: 720px, space = (720px - 2*255px)/1 = 210
               slidesPerView: 2,
-              spaceBetween: 0
+              spaceBetween: 210 - 28
             },
             1200: {
+              // container: 960px, space = (960px - 3*255px)/2 = 65
               slidesPerView: 3,
-              spaceBetween: 0
+              spaceBetween: 97.5 - 28
             },
             9999: {
+              // container: 1140px, space = (1140px - 4*255px)/3 = 30
               slidesPerView: 4,
-              spaceBetween: 0
+              spaceBetween: 40 - 28
             }
           },
           freeMode: true,
@@ -71,10 +70,6 @@
           pagination: {
             el: ".swiper-pagination",
             clickable: true
-          },
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev"
           }
         }
       };
