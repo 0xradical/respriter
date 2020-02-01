@@ -64,7 +64,7 @@ module App
         ENV.fetch('ELEMENTS_ASSET_HOST') do
           'https://elements-prd.classpert.com'
         end
-      elements_config.asset_version = '5.0.0-beta.12'
+      elements_config.asset_version = '5.0.0-pre'
     end
 
     config.action_controller.forgery_protection_origin_check = false
