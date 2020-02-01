@@ -92,7 +92,7 @@ html {
 // tippy
 
 .tippy-tooltip.quero-theme {
-  background-color: pick-color("foreground");
+  background-color: var(--foreground);
   color: #fff;
   font-size: 0.75em;
 }
@@ -102,18 +102,21 @@ html {
 }
 
 .tippy-tooltip.quero-theme .tippy-backdrop {
-  background-color: pick-color("foreground");
+  background-color: var(--foreground);
 }
 
 .tippy-popper[x-placement^="top"] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-top-color: pick-color("foreground");
+  border-top-color: var(--foreground);
 }
+
 .tippy-popper[x-placement^="bottom"] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-bottom-color: pick-color("foreground");
+  border-bottom-color: var(--foreground);
 }
+
 .tippy-popper[x-placement^="left"] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-left-color: pick-color("foreground");
+  border-left-color: var(--foreground);
 }
+
 .tippy-popper[x-placement^="right"] .tippy-tooltip.quero-theme .tippy-arrow {
-  border-right-color: pick-color("foreground");
+  border-right-color: var(--foreground);
 }
