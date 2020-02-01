@@ -6,7 +6,6 @@ import "tippy.js/dist/tippy.css";
 import Swiper from "swiper";
 import AwesomeSwiper from "awesome-swiper";
 import "swiper/dist/css/swiper.css";
-// import "awesome-swiper/build/AwesomeSwiper.css";
 
 tippy.setDefaultProps({
   animation: "fade",
@@ -33,5 +32,3 @@ for (let index = 0; index < swiepables.length; index++) {
     navigation: null
   });
 }
-
-import "blocks/build/dist/blocks.all";

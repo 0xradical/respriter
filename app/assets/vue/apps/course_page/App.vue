@@ -1,30 +1,70 @@
 <template>
   <div>
-    <desktop :course="course"></desktop>
-    <mobile :course="course"></mobile>
+    <desktop :course="course">
+      <template #similar>
+        <client-only>
+          <div v-if="similar.length" class="container">
+            <div class="row">
+              <div class="col">
+                <similar
+                  :courses="similar"
+                  class="el:amx-Mt(1em) el:amx-Mb(3em)"
+                ></similar>
+              </div>
+            </div>
+          </div>
+        </client-only>
+      </template>
+    </desktop>
+
+    <mobile :course="course">
+      <template #similar>
+        <client-only>
+          <div v-if="similar.length" class="container">
+            <div class="row">
+              <div class="col">
+                <similar
+                  :courses="similar"
+                  class="el:amx-Mt(1em) el:amx-Mb(3em)"
+                ></similar>
+              </div>
+            </div>
+          </div>
+        </client-only>
+      </template>
+    </mobile>
   </div>
 </template>
 
 <script>
-import Desktop from "components/v2/course_page/Desktop.vue";
-import Mobile from "components/v2/course_page/Mobile.vue";
+  import Desktop from "components/course_page/Desktop.vue";
+  import Mobile from "components/course_page/Mobile.vue";
+  import Similar from "./Similar.vue";
 
-export default {
-  name: "CoursePage",
-  props: {
-    course: {
-      type: Object,
-      required: true
+  export default {
+    name: "CoursePage",
+    props: {
+      course: {
+        type: Object,
+        required: true
+      },
+      locale: {
+        type: String,
+        required: false,
+        default: "en"
+      },
+      similar: {
+        type: Array,
+        required: false,
+        default() {
+          return [];
+        }
+      }
     },
-    locale: {
-      type: String,
-      required: false,
-      default: "en"
+    components: {
+      desktop: Desktop,
+      mobile: Mobile,
+      Similar
     }
-  },
-  components: {
-    desktop: Desktop,
-    mobile: Mobile
-  }
-};
+  };
 </script>

@@ -31,6 +31,7 @@ module.exports = {
         "app/assets/js/video_service.js"
       ),
       "vue-js-modal": "vue-js-modal/dist/ssr.index",
+      "~~vue-awesome-swiper": path.resolve(__dirname, "app/assets/js/empty.js"),
       components: path.resolve(__dirname, "app/assets/vue/components/src"),
       locales: path.resolve(__dirname, "config/locales")
     }

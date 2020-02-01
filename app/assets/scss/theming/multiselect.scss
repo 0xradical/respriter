@@ -1,29 +1,29 @@
-@import 'vue-multiselect/dist/vue-multiselect.min.css';
+@import "vue-multiselect/dist/vue-multiselect.min.css";
 
 .multiselect__option--selected {
-  color: get-color("gray3") !important;
-  background: #FFFFFF !important;
+  color: pick-color("foreground") !important;
+  background: pick-color("background") !important;
   font-weight: bold !important;
 }
 
 .multiselect__option--selected:after {
-  color: get-color("gray2") !important;
+  color: pick-color("foreground-medium") !important;
 }
 
 .multiselect__option--highlight {
-  color: #FFFFFF !important;
-  background: get-color("blue2") !important;
+  color: #ffffff !important;
+  background: pick-color("primary") !important;
   font-weight: bold !important;
 }
 
 .multiselect__option--selected.multiselect__option--highlight {
-  color: get-color("gray3") !important;
-  background: get-color("gray1") !important;
+  color: pick-color("foreground") !important;
+  background: pick-color("background") !important;
   font-weight: bold !important;
 }
 
 .multiselect__option--selected.multiselect__option--highlight:after {
-  color: get-color("gray2") !important;
-  background: get-color("gray1") !important;
+  color: pick-color("foreground-medium") !important;
+  background: pick-color("background") !important;
   content: attr(data-selected) !important;
 }

@@ -7,7 +7,7 @@
             <div @click='isFiltering.root_audio = true' class='mobile-filter-facets__facet'>
               <search-fieldset :title='$t("dictionary.audios")' :subtitle="filter.root_audio.map(audioValue).join(', ')" :stand-out='filter.root_audio.length > 0'>
                 <template #action>
-                  <a class='c-fieldset-frame__action' href='#'>
+                  <a class='el:o-fieldset-frame__action' href='#'>
                     <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_pr'></icon>
                   </a>
                 </template>
@@ -19,7 +19,7 @@
             <div @click='isFiltering.subtitles = true' class='mobile-filter-facets__facet'>
               <search-fieldset :title='$t("dictionary.subtitles")' :subtitle="filter.subtitles.map(subtitleValue).join(', ')" :stand-out='filter.subtitles.length > 0'>
                 <template #action>
-                  <a class='c-fieldset-frame__action' href='#'>
+                  <a class='el:o-fieldset-frame__action' href='#'>
                     <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_pr'></icon>
                   </a>
                 </template>
@@ -31,7 +31,7 @@
             <div @click='isFiltering.provider_name = true' class='mobile-filter-facets__facet'>
               <search-fieldset :title='$t("dictionary.providers")' :subtitle="filter.provider_name.map(providerValue).join(', ')" :stand-out='filter.provider_name.length > 0'>
                 <template #action>
-                  <a class='c-fieldset-frame__action' href='#'>
+                  <a class='el:o-fieldset-frame__action' href='#'>
                     <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_pr'></icon>
                   </a>
                 </template>
@@ -43,7 +43,7 @@
             <div @click='isFiltering.price = true' class='mobile-filter-facets__facet'>
               <search-fieldset :title='$t("dictionary.price")' :subtitle='`$ ${filter.price[0]} - $ ${filter.price[1]}`' :stand-out='filter.price[0] > 0 || filter.price[1] < 2500'>
                 <template #action>
-                  <a class='c-fieldset-frame__action' href='#'>
+                  <a class='el:o-fieldset-frame__action' href='#'>
                     <icon width='1rem' height='1rem' transform='rotate(-90deg)' name='arrow-down' class='el:amx-C_pr'></icon>
                   </a>
                 </template>
@@ -133,11 +133,11 @@
 
       <search-fieldset :title='$t("dictionary.price")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','price')">
+          <a class='el:o-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','price')">
             {{ $t('dictionary.clear_filter') }}
           </a>
         </template>
-        <div class='c-fieldset-frame__item'>
+        <div class='el:o-fieldset-frame__item'>
           <search-facet-price-filter :initial-min='filter.price[0]'
                                      :initial-max='filter.price[1]'
                                      :marks='[0,625,1250,1875,2500]'
@@ -157,18 +157,18 @@
 
       <search-fieldset :title='$t("dictionary.providers")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','provider_name')">
+          <a class='el:o-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','provider_name')">
             {{ $t('dictionary.clear_filter') }}
           </a>
         </template>
-        <div class='c-fieldset-frame__item'>
+        <div class='el:o-fieldset-frame__item'>
           <search-facet-options-filter name='provider_name'
                                       :placeholder="`${$t('dictionary.search')} ${$t('dictionary.providers')} ...`"
                                       :suggestions='suggestions.provider_name.filtered'
                                       @changedInputFacetOptionSuggestion="suggestionInputChange('provider_name', ...$event)">
           </search-facet-options-filter>
         </div>
-        <div class='c-fieldset-frame__item'>
+        <div class='el:o-fieldset-frame__item'>
           <search-facet-options :options='suggestions.provider_name.filtered'
                                 :filter='filter.provider_name'
                                 :noOptionsMessage="this.suggestions.provider_name.current && $t('dictionary.no_suggestions_message', {term: this.suggestions.provider_name.current})"
@@ -183,18 +183,18 @@
 
       <search-fieldset :title='$t("dictionary.audios")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','root_audio')">
+          <a class='el:o-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','root_audio')">
             {{ $t('dictionary.clear_filter') }}
           </a>
         </template>
-        <div class='c-fieldset-frame__item'>
+        <div class='el:o-fieldset-frame__item'>
           <search-facet-options-filter name='root_audio'
                                        :placeholder="`${$t('dictionary.search')} ${$t('dictionary.audios')} ...`"
                                        :suggestions='suggestions.root_audio.filtered'
                                        @changedInputFacetOptionSuggestion="suggestionInputChange('root_audio', ...$event)">
           </search-facet-options-filter>
         </div>
-        <div class='c-fieldset-frame__item' v-bar>
+        <div class='el:o-fieldset-frame__item' v-bar>
           <search-facet-options :options='suggestions.root_audio.filtered'
                                 :filter='filter.root_audio'
                                 :rootClasses="['scrollable-ul']"
@@ -210,18 +210,18 @@
 
       <search-fieldset :title='$t("dictionary.subtitles")' :stand-out="true">
         <template #action>
-          <a class='c-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','subtitles')">
+          <a class='el:o-fieldset-frame__action el:amx-Ws(nw)' href='#' @click.prevent="$emit('clearFilterClicked','subtitles')">
             {{ $t('dictionary.clear_filter') }}
           </a>
         </template>
-        <div class='c-fieldset-frame__item'>
+        <div class='el:o-fieldset-frame__item'>
           <search-facet-options-filter name='subtitles'
                                        :placeholder="`${$t('dictionary.search')} ${$t('dictionary.subtitles')} ...`"
                                        :suggestions='suggestions.subtitles.filtered'
                                        @changedInputFacetOptionSuggestion="suggestionInputChange('subtitles', ...$event)">
           </search-facet-options-filter>
         </div>
-        <div class='c-fieldset-frame__item' v-bar>
+        <div class='el:o-fieldset-frame__item' v-bar>
           <search-facet-options :options='suggestions.subtitles.filtered'
                                 :filter='filter.subtitles'
                                 :rootClasses="['scrollable-ul']"
@@ -238,7 +238,7 @@
 
 <script>
   import _ from 'lodash';
-  import Icon from 'components/v2/Icon.vue';
+  import Icon from 'components/Icon.vue';
   import Fieldset from './SearchFilter/Fieldset.vue';
   import FacetOptions from './SearchFilter/FacetOptions.vue';
   import FacetOptionsFilter from './SearchFilter/FacetOptionsFilter.vue';

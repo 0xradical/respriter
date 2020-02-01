@@ -6,6 +6,11 @@
   <meta property='og:description'   content='<%= t(".meta.description", name: @orphaned_profile.name )%>' />
 <% end %>
 
+<%= content_for :javascript do %>
+  <%= elements_javascript_include_tag 'vars' %>
+  <%= javascript_packs_with_chunks_tag 'vcard' %>
+<% end %>
+
 <div>
   <div class='el:amx-Bc_su el:amx-P(2.5em|0)'>
 

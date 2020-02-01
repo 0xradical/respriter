@@ -36,6 +36,7 @@ environment.config.merge({
         __dirname,
         "../../app/assets/js/video_service.js"
       ),
+      "~~vue-awesome-swiper": require.resolve("vue-awesome-swiper"),
       components: path.resolve(
         __dirname,
         "../../app/assets/vue/components/src"

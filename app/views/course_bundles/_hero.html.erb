@@ -10,7 +10,9 @@
             <%= description %>
             <div class='el:amx-Pt(0.75em) el:amx-Pb(0.5em) el:amx-Fs(0.875em) el:amx-Fs(1em)@>lg'>
               <span class='el:amx-D(n)@<sm el:amx-Fw(b)'><%= share_it %> &nbsp;</span>
-              <div class='el:amx-D(ib) el:amx-Va(m)'><div data-vue-cpt='social-share'></div></div>
+              <div class='el:amx-D(ib) el:amx-Va(m)'>
+                <%= render 'social_share' %>
+              </div>
             </div>
           </p>
         </div>

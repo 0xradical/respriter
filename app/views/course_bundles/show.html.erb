@@ -2,10 +2,6 @@
   <%= render 'meta' %>
 <% end %>
 
-<%= content_for :x_vue_templates do %>
-  <%= render 'social_share' %>
-<% end %>
-
 <script type='text/javascript'>
   window.env_context = {
     devise: {
@@ -18,7 +14,7 @@
 
 <%= content_for :javascript do %>
   <%= elements_javascript_include_tag 'vars' %>
-  <%= javascript_packs_with_chunks_tag 'search-page' %>
+  <%= javascript_packs_with_chunks_tag 'sharing', 'search-page' %>
   <%= stylesheet_pack_tag 'search-page' %>
 <% end %>
 
@@ -33,15 +29,15 @@
     <div class='row'>
       <div class='col-12'>
         <div class='el:amx-Pt(0.875em) el:amx-Pb(0.875em)'>
-          <ul class='c-breadcrumb el:amx-Fs(0.625em) el:amx-Fs(0.875em)@>lg'>
+          <ul class='el:m-breadcrumb el:amx-Fs(0.625em) el:amx-Fs(0.875em)@>lg'>
             <% @root_tags.each_with_index do |root_tag, index| %>
-              <li class='c-breadcrumb__item'><%= link_to t("tags.#{root_tag}"), course_bundles_path(tag: root_tag.dasherize) %></li>
+              <li class='el:m-breadcrumb__item'><%= link_to t("tags.#{root_tag}"), course_bundles_path(tag: root_tag.dasherize) %></li>
               <% if (index + 1 ) != @root_tags.length %>
-                <li class='c-breadcrumb__item'> | </li>
+                <li class='el:m-breadcrumb__item'> | </li>
               <% end %>
             <% end %>
-            <li class='c-breadcrumb__separator'></li>
-            <li class='c-breadcrumb__item'><%= t("tags.#{@tag}") %></li>
+            <li class='el:m-breadcrumb__separator'></li>
+            <li class='el:m-breadcrumb__item'><%= t("tags.#{@tag}") %></li>
             <li class='el:amx-Cl(b)'></li>
           </ul>
         </div>

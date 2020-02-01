@@ -1,9 +1,3 @@
-<%= render 'application/x_vue_templates/social_share',
-  title: @post.meta['title'],
-  quote: @post.meta['description'],
-  description: @post.meta['description'],
-  hashtags: @post.tags.join(',') %>
-
 <% content_for :meta do %>
   <title><%= @post.meta['title'] %> | Blog - Classpert </title>
   <meta name='twitter:title' content="<%= @post.meta['title'] %>" />
@@ -11,6 +5,10 @@
   <meta name="description" content="<%= @post.meta['description'] %>">
   <meta property="og:title" content="<%= @post.meta['title'] %> | Blog - Classpert">
   <meta property="og:description" content="<%= @post.meta['description'] %>">
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_packs_with_chunks_tag 'sharing' %>
 <% end %>
 
 <% unless @post.images.empty? %>
@@ -41,7 +39,7 @@
         <article class='el:o-article'>
 
           <div class='el:amx-Fs(0.75em) el:amx-Mb(0.5em)'>
-            <%= link_to 'Blog', posts_path %> / <span class='el:amx-C_blue2'>
+            <%= link_to 'Blog', posts_path %> / <span class='el:amx-C_pr'>
               <%= @post.tags.map { |t| link_to(t(".tags.#{t}"), posts_path(tags: t)) }.join(',').html_safe %>
             </span>
           </div>
@@ -69,7 +67,18 @@
         <% end %>
 
           <div class='post__meta-slot1'>
-            <div data-vue-cpt='social-share'></div>
+            <%= render_vue_component "Sharing", {
+                  propsData: {
+                    options: {
+                      title: @post.meta['title'],
+                      quote: @post.meta['description'],
+                      description: @post.meta['description'],
+                      hashtags: @post.tags.join(',')
+                    },
+                    locale: I18n.locale,
+                  },
+                  locale: I18n.locale
+                } %>
           </div>
 
           <div class='el:o-article__body'>
