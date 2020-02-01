@@ -366,7 +366,7 @@ form {
 hr {
   margin-bottom: 1em;
   border: none;
-  border-top: 1px solid #DEE7ED;
+  border-top: 1px solid var(--foreground-low);
 }
 
 .mobile-filter-wrapper {

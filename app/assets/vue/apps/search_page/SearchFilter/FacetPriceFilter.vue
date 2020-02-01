@@ -88,15 +88,12 @@
 </script>
 
 <style lang="scss">
-  @import "@classpert/elements/src/scss/config/variables/themes/_default.scss";
   @import "@classpert/elements/src/scss/config/functions.scss";
-
-  $themeColor: pick-color("primary");
 
   @import "~vue-slider-component/lib/theme/default.scss";
 
   .vue-slider-dot-handle {
-    background-color: $themeColor;
+    background-color: var(--primary);
   }
 
   .facet-price-filter {

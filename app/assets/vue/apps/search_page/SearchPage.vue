@@ -444,7 +444,7 @@
   hr {
     margin-bottom: 1em;
     border: none;
-    border-top: 1px solid #dee7ed;
+    border-top: 1px solid var(--foreground-low);
   }
 
   .sort {
@@ -470,7 +470,7 @@
 
   .filter-nav {
     top: 50;
-    background-color: white;
+    background-color: var(--surface);
     padding: 1.5em;
   }
 

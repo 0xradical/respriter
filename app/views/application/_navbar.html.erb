@@ -30,6 +30,12 @@
         <ul class='el:m-list el:m-list--hrz el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-Tt(u) el:amx-D(n)@<sm'>
 
           <!-- nav link -->
+          <li class='el:amx-Mr(2em)' style='font-size:1rem !important'>
+            <label data-el-theme-toggle-switch class="el:m-theme-toggle-switch" for="checkbox">
+              <input type="checkbox" id="checkbox" />
+              <div class="el:m-theme-toggle-switch__slider"></div>
+            </label>
+          </li>
           <li class='el:amx-Mr(2em)'>
             <%= link_to t('dictionary.blog'), posts_path, class: controller_name.eql?('posts') ? 'el:m-link-nav--active' : '' %>
           </li>
