@@ -17,7 +17,7 @@ class OrphanedProfile < ApplicationRecord
   end
 
   def courses
-    Course.where(id: course_ids)
+    Course.where(id: course_ids).limit(50)
   end
 
   def self.courses_by_instructor_name(name)
