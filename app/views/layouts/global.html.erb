@@ -2,6 +2,10 @@
 <html data-theme='<%= cookies[:theme] %>'>
   <head>
 
+    <!-- Performance tags -->
+    <link rel="preconnect" href="https://elements-prd.classpert.com" crossorigin>
+    <link rel="dns-prefetch" href="https://elements-prd.classpert.com">
+
     <!-- Security Meta -->
     <%= csrf_meta_tags %>
 
@@ -11,6 +15,7 @@
     <meta name="google-site-verification" content="frJWYLKLhn2TNmNSFXsY_N34EKr2sAfK3TE-M9ogE1o" />
     <meta name="p:domain_verify" content="31b22b390ed384603705691430ca8eb5"/>
 
+    <!-- Render favicons of different formats -->
     <%= render 'favicons' %>
 
     <!-- Universal SEO Meta -->
@@ -263,8 +268,8 @@
     </footer>
 
     <%= render 'offcanvas_menu' %>
-    <%= javascript_pack_tag 'vendor', 'application' %>
-    <%= elements_javascript_include_tag 'bundle' %>
+    <%= javascript_pack_tag 'vendor', 'application',   async: true %>
+    <%= elements_javascript_include_tag 'bundle',      async: true %>
 
     <% if session[:live_support_enabled] %>
       <!-- Start of LiveChat (www.livechatinc.com) code -->
