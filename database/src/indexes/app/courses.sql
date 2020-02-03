@@ -25,3 +25,7 @@ USING gin (tags);
 CREATE UNIQUE INDEX index_courses_on_url_md5
 ON app.courses
 USING btree (url_md5);
+
+CREATE INDEX index_courses_on_up_to_date_id
+ON app.courses
+USING btree (up_to_date_id);

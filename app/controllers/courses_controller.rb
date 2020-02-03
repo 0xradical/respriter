@@ -30,7 +30,19 @@ class CoursesController < ApplicationController
         redirect_to "/#{params[:provider]}/courses/#{redirected_course.slug}", status: 301
         return
       end
+
+      outdated_course = @provider
+        .courses
+        .where('up_to_date_id IS NOT NULL')
+        .find_by(slug: params[:course])
+
+      if outdated_course.present?
+        up_to_date_course = Course.find_by id: outdated_course.up_to_date_id
+        redirect_to "/#{params[:provider]}/courses/#{up_to_date_course.slug}", status: 301
+        return
+      end
     end
+
     raise ActiveRecord::RecordNotFound unless @course
   end
 
