@@ -234,12 +234,14 @@ class Course < ApplicationRecord
   def similar
     result = []
 
-    result +=
-      self.class.by_tags(self.curated_tags).locales(self.audio.uniq).order(
-        'enrollments_count DESC'
-      )
-        .limit(SIMILAR_COURSES)
-        .to_a
+    if self.audio && self.audio.length > 0
+      result +=
+        self.class.by_tags(self.curated_tags).locales(self.audio.uniq).order(
+          'enrollments_count DESC'
+        )
+          .limit(SIMILAR_COURSES)
+          .to_a
+    end
 
     if result.size < SIMILAR_COURSES
       result +=
