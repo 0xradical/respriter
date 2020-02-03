@@ -104,6 +104,7 @@ namespace :system do
           skillshare:         row['skillshare_profile_url'],
           linkedin_learning:  row['linkedin_learning_profile_url'],
           facebook:           row['facebook_url'],
+          masterclass:        row['masterclass_url'],
           twitter:            row['twitter_url'],
           linkedin:           row['linkedin_url'],
           youtube:            row['youtube_url'],
@@ -118,6 +119,7 @@ namespace :system do
           p.avatar_url            = row['avatar_url']
           p.website               = row['personal_website_url']
           p.long_bio              = row['long_bio']
+          p.short_bio             = row['short_bio']
           p.public_profiles       = public_profiles.select { |k,v| v.present? }
           p.email                 = row['email']
         end
