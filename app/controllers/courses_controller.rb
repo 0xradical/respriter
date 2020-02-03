@@ -17,7 +17,21 @@ class CoursesController < ApplicationController
 
   def show
     @provider = Provider.find_by!(slug: params[:provider])
-    @course   = @provider.courses.published.find_by(slug: params[:course]) || @provider.courses.published.find_by!(slug: "#{@provider.slug}-#{params[:course]}")
+    @course   = @provider.courses.published.find_by(slug: params[:course])
+
+    unless @course
+      redirected_course = Course
+        .published
+        .joins(:slug_histories)
+        .where('provider_id = ? AND slug_histories.slug = ?', @provider.id, params[:course])
+        .first
+
+      if redirected_course.present?
+        redirect_to "/#{params[:provider]}/courses/#{redirected_course.slug}", status: 301
+        return
+      end
+    end
+    raise ActiveRecord::RecordNotFound unless @course
   end
 
   protected

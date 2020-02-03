@@ -12,6 +12,7 @@ class Course < ApplicationRecord
   belongs_to :provider, optional: true
 
   has_many :enrollments
+  has_many :slug_histories
   has_many :user_accounts, through: :enrollments
 
   delegate :name, :slug, to: :provider, prefix: true
