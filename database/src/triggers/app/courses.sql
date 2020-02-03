@@ -16,6 +16,12 @@ CREATE TRIGGER sort_prices
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.sort_prices();
 
+CREATE TRIGGER course_keep_slug
+  AFTER INSERT OR UPDATE
+  ON app.courses
+  FOR EACH ROW
+    EXECUTE PROCEDURE triggers.course_keep_slug();
+
 CREATE TRIGGER track_updated_at
   BEFORE UPDATE
   ON app.courses
