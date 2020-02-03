@@ -32,30 +32,13 @@
       @clickedCourseCard="$modal.show(desktopOffCanvasId)"
     ></course-card-desktop>
 
-    <!-- mobile offcanvas -->
-    <client-only>
-      <modal
-        :id="mobileOffCanvasId"
-        :adaptive="true"
-        width="100%"
-        height="auto"
-        :scrollable="true"
-        :name="mobileOffCanvasId"
-      >
-        <course-offcanvas-mobile
-          :course="course"
-          @clickedCourseOffcanvas="$modal.hide(mobileOffCanvasId)"
-        ></course-offcanvas-mobile>
-      </modal>
-    </client-only>
-
     <!-- mobile card -->
     <course-card-mobile
       class="el:amx-Pr(0.875em) el:amx-Pb(0.875em) el:amx-Pt(0.875em) el:amx-Pl(0.875em) el:amx-Cur(p) el:amx-D(n)@>lg"
       :id="`mobile-${course.id}`"
       :course="course"
-      @click="$modal.show(mobileOffCanvasId)"
-      @clickedCourseCard="$modal.show(mobileOffCanvasId)"
+      @click="mobileClick"
+      @clickedCourseCard="mobileClick"
     >
     </course-card-mobile>
   </div>
@@ -65,7 +48,6 @@
   import CourseCardDesktop from "components/CourseCardDesktop.vue";
   import CourseOffcanvasDesktop from "components/CourseOffcanvasDesktop.vue";
   import CourseCardMobile from "components/CourseCardMobile.vue";
-  import CourseOffcanvasMobile from "components/CourseOffcanvasMobile.vue";
 
   export default {
     props: {
@@ -84,8 +66,7 @@
     components: {
       CourseCardDesktop,
       CourseOffcanvasDesktop,
-      CourseCardMobile,
-      CourseOffcanvasMobile
+      CourseCardMobile
     },
     computed: {
       chromeExtData() {
@@ -98,6 +79,23 @@
       },
       mobileOffCanvasId() {
         return `mobile-offcanvas-${this.course.id}`;
+      },
+      coursePageLink() {
+        return `/${this.course.provider_slug}/courses/${this.course.slug}`;
+      }
+    },
+    methods: {
+      mobileClick(_event) {
+        if (typeof window !== undefined && typeof URL !== undefined) {
+          const currentUrl = new URL(window.location);
+          currentUrl.hash = `mobile-${this.course.id}`;
+
+          if (window.history) {
+            window.history.pushState(null, null, currentUrl);
+          }
+
+          window.location = this.coursePageLink;
+        }
       }
     }
   };

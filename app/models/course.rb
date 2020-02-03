@@ -330,6 +330,14 @@ class Course < ApplicationRecord
     end
   end
 
+  def details_path
+    if slug.present? && provider.slug.present?
+      Rails.application.routes.url_helpers.course_path(provider.slug, slug)
+    else
+      nil
+    end
+  end
+
   def as_indexed_json(options = {})
     indexed_json = {
       id: id,
@@ -351,6 +359,7 @@ class Course < ApplicationRecord
       url_id: url_md5,
       level: level,
       video_url: nil,
+      details_path: details_path,
       video: (video && video.merge(thumbnail_url: video_thumbnail)),
       tags: tags,
       audio: audio,
