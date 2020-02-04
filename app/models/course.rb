@@ -237,16 +237,17 @@ class Course < ApplicationRecord
 
     if self.audio && self.audio.length > 0
       result +=
-        self.class.by_tags(self.curated_tags).locales(self.audio.uniq).order(
-          'enrollments_count DESC'
-        )
+        self.class.published.by_tags(self.curated_tags).locales(self.audio.uniq)
+          .order('enrollments_count DESC')
           .limit(SIMILAR_COURSES)
           .to_a
     end
 
     if result.size < SIMILAR_COURSES
       result +=
-        self.class.where.not(id: result.map(&:id)).by_tags(self.curated_tags)
+        self.class.published.where.not(id: result.map(&:id)).by_tags(
+          self.curated_tags
+        )
           .order('enrollments_count DESC')
           .limit(SIMILAR_COURSES - result.size)
           .to_a
