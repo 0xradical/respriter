@@ -140,8 +140,14 @@ class ApplicationController < ActionController::Base
 
   def load_live_support
     country = session[:tracking_data]['country']
-    conf    = Rails.configuration.x.live_support
-    session[:live_support_enabled] = (conf.enabled && (conf.assisted_countries.empty? ||
-                                                      conf.assisted_countries.include?(country)))
+    conf = Rails.configuration.x.live_support
+    session[:live_support_enabled] =
+      (
+        conf.enabled &&
+          (
+            conf.assisted_countries.empty? ||
+              conf.assisted_countries.include?(country)
+          )
+      )
   end
 end

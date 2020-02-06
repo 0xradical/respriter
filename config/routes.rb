@@ -50,11 +50,13 @@ Rails.application.routes.draw do
     }"
   end
 
+  resources :videos, only: :show
   resources :orphaned_profiles, only: :show, path: 'profiles'
-  resources :videos,            only: :show
 
   direct :developers_dashboard do
-    "#{ENV.fetch('DEVELOPERS_DASHBOARD_URL') { "//developers.classpert.com"  }}?locale=#{I18n.locale}"
+    "#{
+      ENV.fetch('DEVELOPERS_DASHBOARD_URL') { '//developers.classpert.com' }
+    }?locale=#{I18n.locale}"
   end
 
   get '/forward/:id', to: 'gateway#index', as: :gateway

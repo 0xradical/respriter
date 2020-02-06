@@ -19,5 +19,5 @@ class PreviewCourse < Course
     url
   end
 
-  def global_sequence=(*); end
+  def dataset_sequence=(*); end
 end
