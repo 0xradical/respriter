@@ -135,8 +135,12 @@ index_courses:
 sync_courses:
 	heroku run:detached bundle exec rake system:scheduler:courses_service --app=classpert-web-app-prd
 
+dev_db_restore: db/db.dev.env $(PG_DUMP_FILE)
+	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.dev.env && PGPASSWORD=$$DATABASE_PASSWORD pg_restore --verbose --clean --no-acl --no-owner -U $$DATABASE_USER -h $$DATABASE_HOST -d $$DATABASE_DB < $(PG_DUMP_FILE); exit 0;'
+	@$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_fix_secrets /db/db.dev.env
+
 stg_db_restore: db/db.stg.env $(PG_DUMP_FILE) ## Dumps latest production dump from production and restores in staging
-	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.stg.env && PGPASSWORD=$$DATABASE_PASSWORD pg_restore --verbose --clean -U $$DATABASE_USER -h $$DATABASE_HOST -d $$DATABASE_DB < $(PG_DUMP_FILE); exit 0;'
+	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.stg.env && PGPASSWORD=$$DATABASE_PASSWORD pg_restore --verbose --clean --no-acl --no-owner -U $$DATABASE_USER -h $$DATABASE_HOST -d $$DATABASE_DB < $(PG_DUMP_FILE); exit 0;'
 	@$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_fix_secrets /db/db.stg.env
 
 tty: ## Attach a tty to the app container. Usage e.g: ENV=test make tty
