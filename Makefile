@@ -34,7 +34,7 @@ RAKE := $(BUNDLE_EXEC) rake
 DOCKER_COMPOSE_POSTGRES_RUN_FLAGS := --rm -v $(shell pwd)/db:/db -v $(shell pwd):/app
 DOCKER_COMPOSE_POSTGRES_RUN       := docker-compose run $(DOCKER_COMPOSE_POSTGRES_RUN_FLAGS) postgres
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console que_worker tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% rails_db_migrate db_reset db_reload postgrest_reset db_shell db_download db_migrate db_stg_migrate db_prd_migrate db_load db_restore index_courses sync_courses stg_db_restore tty down docker-build docker-push docker-% watch logs prd-logs stg-logs
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console que_worker tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% rails_db_migrate db_reset db_reload postgrest_reset db_shell db_download db_migrate db_stg_migrate db_prd_migrate db_load db_restore index_courses sync_courses stg_db_restore tty down clean wipe docker-build docker-push docker-% watch logs prd-logs stg-logs
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -150,6 +150,10 @@ down: ## Run docker-compose down
 	@docker-compose down
 
 clean: ## Stop containers, remove old images and prune docker unused resources
+	@docker-compose down --rmi local --remove-orphans
+	@docker system prune -f
+
+wipe: ## Stop containers, remove old images and prune docker unused resources
 	@docker-compose down -v --rmi local --remove-orphans
 	@docker system prune -f
 

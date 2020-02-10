@@ -71,6 +71,6 @@ COPY Gemfile      /app
 COPY Gemfile.lock /app
 RUN  bundle install
 
-COPY package.json /app
-COPY yarn.lock    /app
-RUN  yarn global add node-pre-gyp && yarn install --modules-folder=/home/developer/.config/yarn/global/node_modules
+# COPY package.json /app
+# COPY yarn.lock    /app
+# RUN  yarn global add node-pre-gyp && yarn install --modules-folder=/home/developer/.config/yarn/global/node_modules
