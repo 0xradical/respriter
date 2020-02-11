@@ -430,12 +430,6 @@ class Course < ApplicationRecord
       maximum(:dataset_sequence)
     end
 
-    # TODO: Is this dead code? Same holds for SUPPORTED_LANGUAGES constant?
-    def is_language_supported?(lang)
-      !(SUPPORTED_LANGUAGES & [lang].flatten.map { |l| l.split('-') }.flatten)
-        .empty?
-    end
-
     def reset_index!
       begin
         __elasticsearch__.delete_index!

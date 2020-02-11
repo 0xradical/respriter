@@ -12,8 +12,10 @@ module Napoleon
   class Client
     class VersionNotSupported < RuntimeError; end
 
-    URI =
-      'https://napoleon-the-crawler.herokuapp.com/resources/updates/%{dataset_sequence}'
+    SELECT_FIELDS        = 'resource_id,id,last_execution_id,sequence,content,schema_version,provider_id,dataset_sequence'
+    ENDPOINT_TEMPLATE    = "#{ENV.fetch 'NAPOLEON_POSTGREST_URI'}/resource_versions?select=#{SELECT_FIELDS}&order=dataset_sequence&kind=eq.course&dataset_sequence=gt."
+    AUTHORIZATION_HEADER = "Bearer #{ENV.fetch 'NAPOLEON_POSTGREST_JWT'}"
+    RESOURCES_PER_PAGE   = 50
 
     attr_accessor :http
 
@@ -35,11 +37,9 @@ module Napoleon
       )
       start_heartbeat
       loop do
-        resources =
-          JSON.parse(
-            http.get(URI % { dataset_sequence: @dataset_sequence }).body
-          )
-            .map { |payload| ::Napoleon::Resource.new(payload) }
+        resources = fetch_payload.map do |payload|
+          ::Napoleon::Resource.new payload
+        end
 
         break if resources.empty?
         resources.each do |resource|
@@ -69,7 +69,7 @@ module Napoleon
           count += 1
         end
 
-        @dataset_sequence = resources.last.dataset_sequence
+        @dataset_sequence = resources.map(&:dataset_sequence).max
       end
       stop_heartbeat
       log(
@@ -86,6 +86,33 @@ module Napoleon
           "Took #{elapsed_time}".ansi(:blue),
         ['END', "run.#{@run}", "seq.#{@dataset_sequence}".ansi(:blue)]
       )
+    end
+
+    def fetch_payload
+      resources_uri = URI(ENDPOINT_TEMPLATE + @dataset_sequence.to_s)
+
+      Net::HTTP.start(
+        resources_uri.host,
+        resources_uri.port,
+        use_ssl: resources_uri.scheme == 'https'
+      ) do |http|
+        request = Net::HTTP::Get.new resources_uri
+        request['Authorization'] = AUTHORIZATION_HEADER
+        request['Range-Unit']    = 'items'
+        request['Range']         = "0-#{RESOURCES_PER_PAGE-1}"
+
+        response = http.request request
+        raise "Something went wrong, got HTTP #{response.code}" if response.code != '200'
+
+        body =
+          if response.header['Content-Encoding'] == 'gzip'
+            Zlib::GzipReader.new(StringIO.new(response.body)).read
+          else
+            response.body
+          end
+
+        JSON.parse body
+      end
     end
 
     def elapsed_time
