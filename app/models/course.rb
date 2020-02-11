@@ -427,7 +427,7 @@ class Course < ApplicationRecord
     end
 
     def current_dataset_sequence
-      maximum(:dataset_sequence)
+      maximum(:dataset_sequence) || 0
     end
 
     def reset_index!

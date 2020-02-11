@@ -1,5 +1,5 @@
 describe 'Integration::Napoleon::CourseService' do
-  let(:service) { Integration::Napoleon::CourseService.new(napoleon) }
+  let(:service) { Integration::Napoleon::CourseService.new }
 
   let(:payload) do
     JSON.parse(File.read(Rails.root.join('spec/fixtures/napoleon/platzi.json')))

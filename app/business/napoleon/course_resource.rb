@@ -1,5 +1,5 @@
 module Napoleon
-  class Resource
+  class CourseResource
     attr_reader :payload, :provider
 
     def initialize(payload, provider = nil)
@@ -12,8 +12,8 @@ module Napoleon
         id:                payload['resource_id'],
         global_sequence:   payload['id'],
         dataset_sequence:  dataset_sequence,
-        # schema_version:    version,
-        # last_execution_id: payload['last_execution_id'],
+        schema_version:    version,
+        last_execution_id: payload['last_execution_id'],
         resource_sequence: payload['sequence'],
         name:              payload['content']['course_name'],
         audio:             payload['content']['audio'],
@@ -36,12 +36,7 @@ module Napoleon
         tags:              payload['content']['tags'],
         published:         payload['content']['published'],
         __source_schema__: payload,
-        provider_id:       provider_id,
-        source:            'api'
-
-        # # Fields that musb be added asap
-        # version
-        # last_execution_id
+        provider_id:       provider_id
 
         # # Fields that are already handled
         # audio

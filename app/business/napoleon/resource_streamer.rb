@@ -1,51 +1,44 @@
 module Napoleon
-  def self.config(&settings)
-    @@client = Client.new
-    @@client.http = @@client.http.instance_eval(&settings)
-    @@client
-  end
-
-  def self.client
-    @@client
-  end
-
-  class Client
+  class ResourceStreamer
     class VersionNotSupported < RuntimeError; end
 
-    SELECT_FIELDS        = 'resource_id,id,last_execution_id,sequence,content,schema_version,provider_id,dataset_sequence'
-    ENDPOINT_TEMPLATE    = "#{ENV.fetch 'NAPOLEON_POSTGREST_URI'}/resource_versions?select=#{SELECT_FIELDS}&order=dataset_sequence&kind=eq.course&dataset_sequence=gt."
+    attr_reader :fields, :kind, :per_page, :locked_versions, :resource_class
+
     AUTHORIZATION_HEADER = "Bearer #{ENV.fetch 'NAPOLEON_POSTGREST_JWT'}"
-    RESOURCES_PER_PAGE   = 50
 
-    attr_accessor :http
+    def initialize(fields: nil, kind: nil, per_page: 50, locked_versions: nil, resource_class: nil)
+      @fields, @kind, @per_page, @locked_versions, @resource_class = fields, kind, per_page, locked_versions, resource_class
 
-    def initialize
-      @http = HTTP
-      logger = Logger.new(STDOUT)
+      logger           = Logger.new STDOUT
       logger.formatter = Logger::Formatter.new
-      @logger = ActiveSupport::TaggedLogging.new(logger)
+      @logger          = ActiveSupport::TaggedLogging.new logger
     end
 
-    def resources(dataset_sequence, &blk)
+    def next_endpoint_url
+      "#{ENV.fetch 'NAPOLEON_POSTGREST_URI'}/resource_versions?select=#{@fields.join ','}&order=dataset_sequence&kind=eq.#{@kind}&dataset_sequence=gt." + @dataset_sequence.to_s
+    end
+
+    def resources(dataset_sequence, &block)
       @dataset_sequence, @started_at, @run =
         dataset_sequence, Time.now, SecureRandom.hex(4)
       count, errors, run = 0, 0
       log(
         :info,
-        'Pulling courses ...',
+        "Pulling #{@kind.pluralize} ...",
         ['BEGIN', "run.#{@run}", "seq.#{@dataset_sequence}".ansi(:blue)]
       )
       start_heartbeat
       loop do
         resources = fetch_payload.map do |payload|
-          ::Napoleon::Resource.new payload
+          resource_class.new payload
         end
 
         break if resources.empty?
         resources.each do |resource|
           begin
-            check_version!(resource.version)
-            blk.call(resource)
+            check_version!(resource.version) if locked_versions.present?
+
+            block.call(resource)
           rescue VersionNotSupported,
                  ActiveRecord::RecordNotUnique,
                  ActiveRecord::StatementInvalid => e
@@ -89,7 +82,7 @@ module Napoleon
     end
 
     def fetch_payload
-      resources_uri = URI(ENDPOINT_TEMPLATE + @dataset_sequence.to_s)
+      resources_uri = URI(next_endpoint_url)
 
       Net::HTTP.start(
         resources_uri.host,
@@ -99,7 +92,7 @@ module Napoleon
         request = Net::HTTP::Get.new resources_uri
         request['Authorization'] = AUTHORIZATION_HEADER
         request['Range-Unit']    = 'items'
-        request['Range']         = "0-#{RESOURCES_PER_PAGE-1}"
+        request['Range']         = "0-#{@per_page-1}"
 
         response = http.request request
         raise "Something went wrong, got HTTP #{response.code}" if response.code != '200'
@@ -151,15 +144,11 @@ module Napoleon
     end
 
     def check_version!(v)
-      unless locked_version.map do |ver|
+      unless locked_versions.map do |ver|
                Semantic::Version.new(v).satisfies?(ver)
              end.reduce(&:|)
         raise VersionNotSupported, "version #{v} not supported"
       end
-    end
-
-    def locked_version
-      ['0.0.0', '< 2.0.0']
     end
   end
 end

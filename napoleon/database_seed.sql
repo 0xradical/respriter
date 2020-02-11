@@ -8,11 +8,11 @@ INSERT INTO app.datasets (
 
 INSERT INTO app.users (
   dataset_id,
-  email,
+  username,
   password
 ) VALUES (
   'c1225396-28e1-11ea-9078-0242ac150002',
-  'user@classpert.com',
+  'user',
   'abc123'
 );
 
@@ -20,7 +20,8 @@ INSERT INTO app.resource_schemas (
   dataset_id,
   kind,
   schema_version,
-  specification
+  specification,
+  public_specification
 ) VALUES (
   'c1225396-28e1-11ea-9078-0242ac150002',
   'course',
@@ -740,5 +741,6 @@ INSERT INTO app.resource_schemas (
         }
       }
     ]
-  }'
+  }',
+  '{}'
 );
