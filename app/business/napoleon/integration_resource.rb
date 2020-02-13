@@ -13,7 +13,7 @@ module Napoleon
     end
 
     def to_payload
-      { 'id' => id, 'content' => data }
+      { 'resource_id' => id, 'content' => data }
     end
 
     def slug(course_name, course_url)

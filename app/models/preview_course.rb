@@ -20,4 +20,8 @@ class PreviewCourse < Course
   end
 
   def dataset_sequence=(*); end
+  def global_sequence=(*); end
+  def resource_sequence=(*); end
+  def last_execution_id=(*); end
+  def schema_version=(*); end
 end
