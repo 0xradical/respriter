@@ -1,5 +1,5 @@
 module Napoleon
-  class IntegrationResource < Resource
+  class IntegrationResource < CourseResource
     BASE_62 = [*(0..9).map(&:to_s), *('a'..'z'), *('A'..'Z')].map(&:to_sym)
 
     attr_reader :id, :data, :provider
