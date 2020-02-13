@@ -35,7 +35,8 @@ class Integration::Napoleon::CrawlerBuilder
 
     params = options_for_get_request.merge(
       query: {
-        pipeline_template_id: "in.(#{ @pipeline_templates.map{ |t| t[:id] }.join ',' })"
+        pipeline_template_id: "in.(#{ @pipeline_templates.map{ |t| t[:id] }.join ',' })",
+        and: 'or(status.eq.pending,status.eq.waiting)'
       }
     )
     response =
