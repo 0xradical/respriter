@@ -46,7 +46,7 @@
     "hypernova-vue": "^3.0.4",
     "jsdom": "^15.1.1",
     "json-loader": "^0.5.7",
-    "marked": "^0.6.1",
+    "marked": "^0.8.0",
     "node-sass": "^4.13.1",
     "plyr": "^3.4.8",
     "postcss-preset-env": "^6.7.0",

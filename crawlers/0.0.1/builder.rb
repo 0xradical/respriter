@@ -19,7 +19,7 @@ def create_pipeline_templates!
   add_pipeline_template sitemap_params
 end
 
-def create_pipeline_executions!
+def create_pipeline_execution!
   sitemap_template = @pipeline_templates[-1]
   add_pipeline_execution(
     name: provider.name,
@@ -31,25 +31,20 @@ end
 
 def rollback!
   @pipeline_templates.each do |template|
-    delete_pipeline_templates template[:id]
+    delete_pipeline_template template[:id]
   end
   @pipeline_templates = []
-
-  @pipeline_executions.each do |execution|
-    delete_pipeline_executions execution[:id]
-  end
-  @pipeline_executions = []
 end
 
 def cleanup
   provider_crawler.transaction do
     provider_crawler.settings[:pipeline_templates].each do |pipeline_template|
-      delete_pipeline_templates pipeline_template[:id]
+      delete_pipeline_template pipeline_template[:id]
     end
 
     provider_crawler.settings[:pipeline_executions]
       .each do |pipeline_execution|
-      delete_pipeline_executions pipeline_execution[:id]
+      delete_pipeline_execution pipeline_execution[:id]
     end
 
     provider_crawler.version = nil

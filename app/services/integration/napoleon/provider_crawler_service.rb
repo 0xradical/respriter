@@ -8,19 +8,29 @@ module Integration
         @provider_crawler, @version = provider_crawler, version
       end
 
-      def call
+      def prepare
         self.error = nil
 
         @provider_crawler.transaction do
           begin
             builder.create_pipeline_templates!
-            builder.create_pipeline_executions!
             update_provider_crawler!
           rescue StandardError => error
             self.error = error
             builder.rollback!
             raise ActiveRecord::Rollback
           end
+        end
+      end
+
+      def start
+        builder.create_pipeline_execution! unless builder.active_pipeline_execution.present?
+      end
+
+      def stop
+        pipeline_execution = builder.active_pipeline_execution
+        if pipeline_execution.present?
+          builder.delete_pipeline_execution pipeline_execution[:id]
         end
       end
 
@@ -36,8 +46,7 @@ module Integration
       def update_provider_crawler!
         @provider_crawler.version = @version
         @provider_crawler.settings = {
-          pipeline_templates: builder.pipeline_templates,
-          pipeline_executions: builder.pipeline_executions
+          pipeline_templates: builder.pipeline_templates
         }
         @provider_crawler.save!
       end

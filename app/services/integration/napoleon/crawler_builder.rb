@@ -1,7 +1,7 @@
 class Integration::Napoleon::CrawlerBuilder
   include HTTParty
 
-  attr_reader :service, :version, :pipeline_templates, :pipeline_executions
+  attr_reader :service, :version, :pipeline_templates
 
   delegate :provider_crawler, to: :service
   delegate :provider, to: :provider_crawler
@@ -9,50 +9,78 @@ class Integration::Napoleon::CrawlerBuilder
   base_uri ENV.fetch('NAPOLEON_POSTGREST_HOST')
   NAPOLEON_JWT = ENV.fetch 'NAPOLEON_POSTGREST_JWT'
 
+  query_string_normalizer (lambda do |query|
+    query.map do |key, value|
+      [value].flatten.map {|v| "#{key}=#{v}"}.join('&')
+    end.join('&')
+  end)
+
   def initialize(service, version)
-    @service, @version = service, version
+    @service, @version  = service, version
     @pipeline_templates = []
-    @pipeline_executions = []
   end
 
   def add_pipeline_template(params)
     response =
       self.class.post '/pipeline_templates',
-                      options_for_add_request.merge(body: params.to_json)
+                      options_for_post_request.merge(body: params.to_json)
     raise 'Invalid Response' if response.code != 201
     template = response.parsed_response.first.deep_symbolize_keys
     @pipeline_templates << template
     template
   end
 
+  def active_pipeline_execution
+    return nil if @pipeline_templates.blank?
+
+    params = options_for_get_request.merge(
+      query: {
+        pipeline_template_id: "in.(#{ @pipeline_templates.map{ |t| t[:id] }.join ',' })"
+      }
+    )
+    response =
+      self.class.get '/pipeline_executions', params
+    raise 'Invalid Response' if response.code != 200
+
+    return nil if response.parsed_response.empty?
+    response.parsed_response.first.deep_symbolize_keys
+  end
+
   def add_pipeline_execution(params)
     response =
       self.class.post '/pipeline_executions',
-                      options_for_add_request.merge(body: params.to_json)
+                      options_for_post_request.merge(body: params.to_json)
     raise 'Invalid Response' if response.code != 201
-    execution = response.parsed_response.first.deep_symbolize_keys
-    @pipeline_executions << execution
-    execution
+    response.parsed_response.first.deep_symbolize_keys
   end
 
-  def delete_pipeline_templates(id)
+  def delete_pipeline_template(id)
     response =
       self.class.delete '/pipeline_templates', options_for_delete_request(id)
     raise 'Invalid Response' if response.code != 204
   end
 
-  def delete_pipeline_executions(id)
+  def delete_pipeline_execution(id)
     response =
       self.class.delete '/pipeline_executions', options_for_delete_request(id)
     raise 'Invalid Response' if response.code != 204
   end
 
-  def options_for_add_request
+  def options_for_post_request
     {
       headers: {
         'Prefer' => 'return=representation',
         'Authorization' => "Bearer #{NAPOLEON_JWT}",
         'Accept' => 'application/json',
+        'Content-Type' => 'application/json'
+      }
+    }
+  end
+
+  def options_for_get_request
+    {
+      headers: {
+        'Authorization' => "Bearer #{NAPOLEON_JWT}",
         'Content-Type' => 'application/json'
       }
     }

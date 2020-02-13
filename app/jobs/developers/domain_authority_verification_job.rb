@@ -311,7 +311,7 @@ module Developers
       crawler_service =
         ::Integration::Napoleon::ProviderCrawlerService.new(provider_crawler)
 
-      crawler_service.call
+      crawler_service.prepare
 
       if crawler_service.error
         raise crawler_service.error
