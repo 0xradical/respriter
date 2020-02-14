@@ -6,7 +6,7 @@ module Developers
     class Error < StandardError; end
     SERVICE_NAME = 'domain-validation-service'
     MAX_RETRIES = 10
-    RETRY_WINDOW = 20 # seconds
+    RETRY_WINDOW = 25 # seconds
 
     self.priority = 100
 
