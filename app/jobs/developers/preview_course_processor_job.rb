@@ -140,6 +140,8 @@ module Developers
       error = e
     ensure
       if error
+        log(id, error.message, :error)
+
         if preview_course
           PreviewCourse.transaction do
             preview_course.update({ status: 'failed' })
@@ -148,8 +150,6 @@ module Developers
         else
           expire
         end
-
-        log(id, error.message, :error)
       end
     end
 
