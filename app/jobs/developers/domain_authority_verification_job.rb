@@ -5,13 +5,14 @@ module Developers
   class DomainAuthorityVerificationJob < Que::Job
     class Error < StandardError; end
     SERVICE_NAME = 'domain-validation-service'
-    MAX_RETRIES = 10
+    RETRY_MAX = 10
     RETRY_WINDOW = 25 # seconds
+    RETRY_HEARTBEATS = 5
 
     self.priority = 100
 
     attr_reader :logger
-    attr_accessor :retries, :next_retry
+    attr_accessor :retries
 
     def initialize(*)
       super
@@ -19,7 +20,7 @@ module Developers
       @logger = SysLogger.new
       @exit = false
       @retries = 0
-      @next_retry = nil
+      @elapsed = 0
     end
 
     def run(id, user_id)
@@ -43,14 +44,13 @@ module Developers
         raise '#100009: Domain already being validated'
       end
 
-      if crawler_domain.authority_confirmation_status == 'unconfirmed'
+      if crawler_domain.authority_confirmation_status.in?(
+           %w[unconfirmed failed]
+         )
         crawler_domain.update(authority_confirmation_status: 'confirming')
       end
 
-      start_heartbeat(crawler_domain)
-
       loop do
-        self.next_retry = nil
         log(id, 'Retrying verification') if (self.retries > 0)
 
         if check_html(crawler_domain)
@@ -66,10 +66,9 @@ module Developers
         else
           self.retries += 1
 
-          if self.retries < MAX_RETRIES
+          if self.retries <= RETRY_MAX
             log(id, '#100004: Domain validation failed temporarily', :error)
-            self.next_retry = RETRY_WINDOW.seconds.from_now
-            sleep(RETRY_WINDOW)
+            start_heartbeat(crawler_domain)
           else
             CrawlerDomain.transaction do
               crawler_domain.update(authority_confirmation_status: 'failed')
@@ -186,23 +185,29 @@ module Developers
         raise '#100007: Name derivation from domain failed'
       end
 
-      ApplicationRecord.transaction do
-        provider = Provider.create(name: provider_name)
+      crawler_domain.reload
 
-        provider_crawler =
-          ProviderCrawler.create(
-            { provider_id: provider.id, user_account_ids: [user_id] }
+      if crawler_domain.provider_crawler_id
+        raise 'Domain already validate by someone else'
+      else
+        ApplicationRecord.transaction do
+          provider = Provider.create(name: provider_name)
+
+          provider_crawler =
+            ProviderCrawler.create(
+              { provider_id: provider.id, user_account_ids: [user_id] }
+            )
+
+          crawler_domain.update(
+            {
+              authority_confirmation_method: confirmation_method,
+              authority_confirmation_token:
+                crawler_domain.authority_confirmation_token,
+              authority_confirmation_salt: ENV['DOMAIN_VERIFICATION_SALT'],
+              provider_crawler_id: provider_crawler.id
+            }
           )
-
-        crawler_domain.update(
-          {
-            authority_confirmation_method: confirmation_method,
-            authority_confirmation_token:
-              crawler_domain.authority_confirmation_token,
-            authority_confirmation_salt: ENV['DOMAIN_VERIFICATION_SALT'],
-            provider_crawler_id: provider_crawler.id
-          }
-        )
+        end
       end
 
       if provider && provider_crawler
@@ -334,20 +339,25 @@ module Developers
     end
 
     def start_heartbeat(crawler_domain)
+      @exit = false
+      @elapsed = 0
+      @begin = Time.now
+
       @heartbeat =
         Thread.new do
           while !@exit
-            sleep(5)
-            if (
-                 self.next_retry &&
-                   (elapsed = (Time.now - self.next_retry).to_i) <= 0
-               )
+            sleep(RETRY_WINDOW / RETRY_HEARTBEATS)
+            @elapsed = (Time.now - @begin).to_i
+
+            if (@elapsed < RETRY_WINDOW)
               log(
                 crawler_domain.id,
-                "Will retry verification in #{elapsed.abs} seconds (#{
-                  self.retries
-                } out of #{MAX_RETRIES} retries)"
+                "Will retry verification in #{
+                  (RETRY_WINDOW - @elapsed).abs
+                } seconds (#{self.retries} out of #{RETRY_MAX} retries)"
               )
+            else
+              stop_heartbeat
             end
           end
         end
@@ -355,10 +365,12 @@ module Developers
         @exit = true
         exit
       end
+
+      sleep(RETRY_WINDOW)
     end
 
     def stop_heartbeat
-      @heartbeat.kill
+      @heartbeat.kill if !@exit
     end
   end
 end
