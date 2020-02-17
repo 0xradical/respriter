@@ -30,9 +30,7 @@ def create_pipeline_execution!
 end
 
 def rollback!
-  @pipeline_templates.each do |template|
-    delete_pipeline_template template[:id]
-  end
+  @pipeline_templates.each { |template| delete_pipeline_template template[:id] }
   @pipeline_templates = []
 end
 
@@ -62,9 +60,7 @@ end
 def verified_domains
   provider_crawler.crawler_domains.find_all do |domain|
     domain.authority_confirmation_status == 'confirmed'
-  end.map(
-    &:domain
-  )
+  end.map(&:domain)
 end
 
 def prepared?
@@ -73,9 +69,8 @@ end
 
 def update_provider_crawler!
   provider_crawler.version = @version
-  provider_crawler.settings = {
-    pipeline_templates: builder.pipeline_templates
-  }
+  provider_crawler.settings = { pipeline_templates: pipeline_templates }
+  provider_crawler.status = :active
   provider_crawler.save!
 end
 
