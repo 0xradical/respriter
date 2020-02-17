@@ -5,7 +5,12 @@ module Integration
       attr_accessor :error
 
       def initialize(provider_crawler, version = '0.0.1')
-        @provider_crawler, @version = provider_crawler, version
+        @provider_crawler = provider_crawler
+        @version          = @provider_crawler.version || version
+      end
+
+      def prepared?
+        @provider_crawler.status.to_sym == :active && builder.prepared?
       end
 
       def prepare
@@ -14,7 +19,7 @@ module Integration
         @provider_crawler.transaction do
           begin
             builder.create_pipeline_templates!
-            update_provider_crawler!
+            builder.update_provider_crawler!
           rescue StandardError => error
             self.error = error
             builder.rollback!
@@ -24,13 +29,40 @@ module Integration
       end
 
       def start
-        builder.create_pipeline_execution! unless builder.active_pipeline_execution.present?
+        raise CrawlerNotReady unless prepared?
+        self.error = nil
+
+        unless builder.active_pipeline_execution.present?
+          @provider_crawler.transaction do
+            begin
+              builder.create_pipeline_execution!
+              @provider_crawler.update! scheduled: true
+            rescue StandardError => error
+              self.error = error
+              raise ActiveRecord::Rollback
+            end
+          end
+        end
       end
 
       def stop
-        pipeline_execution = builder.active_pipeline_execution
-        if pipeline_execution.present?
-          builder.delete_pipeline_execution pipeline_execution[:id]
+        raise CrawlerNotReady unless prepared?
+
+        self.error = nil
+
+        unless builder.active_pipeline_execution.present?
+          @provider_crawler.transaction do
+            begin
+              pipeline_execution = builder.active_pipeline_execution
+              if pipeline_execution.present?
+                builder.delete_pipeline_execution pipeline_execution[:id]
+                @provider_crawler.update! scheduled: false
+              end
+            rescue StandardError => error
+              self.error = error
+              raise ActiveRecord::Rollback
+            end
+          end
         end
       end
 
@@ -43,13 +75,7 @@ module Integration
           Integration::Napoleon::CrawlerBuilders[@version].new self, @version
       end
 
-      def update_provider_crawler!
-        @provider_crawler.version = @version
-        @provider_crawler.settings = {
-          pipeline_templates: builder.pipeline_templates
-        }
-        @provider_crawler.save!
-      end
+      class CrawlerNotReady < StandardError; end
     end
 
     crawlers_dir = File.expand_path(Rails.root.join('crawlers'))

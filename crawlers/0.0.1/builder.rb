@@ -1,4 +1,4 @@
-# class CrawlerBuilder[0.0.1] < Integration::Napoleon::CrawlerBuilder::Base
+# class CrawlerBuilder[0.0.1] < Integration::Napoleon::CrawlerBuilder
 
 def create_pipeline_templates!
   course_params = build_template_by_folder 'course'
@@ -65,6 +65,18 @@ def verified_domains
   end.map(
     &:domain
   )
+end
+
+def prepared?
+  provider_crawler.version.present? && provider_crawler.settings.present?
+end
+
+def update_provider_crawler!
+  provider_crawler.version = @version
+  provider_crawler.settings = {
+    pipeline_templates: builder.pipeline_templates
+  }
+  provider_crawler.save!
 end
 
 # end

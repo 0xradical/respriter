@@ -76,6 +76,10 @@ Rails.application.routes.draw do
   namespace :developers do
     resources :preview_courses, only: :show
     resources :preview_course_videos, only: :show
+    authenticated :user_account do
+      get '/provider_crawler/:id/start', to: 'provider_crawlers#start'
+      get '/provider_crawler/:id/stop',  to: 'provider_crawlers#stop'
+    end
   end
 
   namespace :api do
