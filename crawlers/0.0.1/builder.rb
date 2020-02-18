@@ -1,5 +1,9 @@
 # class CrawlerBuilder[0.0.1] < Integration::Napoleon::CrawlerBuilder
 
+def pipeline_templates
+  @pipeline_templates ||= provider_crawler.settings.deep_symbolize_keys&.[](:pipeline_templates) || []
+end
+
 def create_pipeline_templates!
   course_params = build_template_by_folder 'course'
   course_params[:name] = [provider.name, course_params[:name]].join ' '
@@ -20,7 +24,7 @@ def create_pipeline_templates!
 end
 
 def create_pipeline_execution!
-  sitemap_template = @pipeline_templates[-1]
+  sitemap_template = pipeline_templates[-1]
   add_pipeline_execution(
     name: provider.name,
     run_at: Time.now,
@@ -30,7 +34,13 @@ def create_pipeline_execution!
 end
 
 def rollback!
+<<<<<<< HEAD
   @pipeline_templates.each { |template| delete_pipeline_template template[:id] }
+=======
+  pipeline_templates.each do |template|
+    delete_pipeline_template template[:id]
+  end
+>>>>>>> fix pipeline_templates
   @pipeline_templates = []
 end
 

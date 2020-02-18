@@ -1,7 +1,7 @@
 class Integration::Napoleon::CrawlerBuilder
   include HTTParty
 
-  attr_reader :service, :version, :pipeline_templates
+  attr_reader :service, :version
 
   delegate :provider_crawler, to: :service
   delegate :provider, to: :provider_crawler
@@ -17,7 +17,10 @@ class Integration::Napoleon::CrawlerBuilder
 
   def initialize(service, version)
     @service, @version  = service, version
-    @pipeline_templates = []
+  end
+
+  def pipeline_templates
+    @pipeline_templates ||= []
   end
 
   def add_pipeline_template(params)
@@ -26,16 +29,16 @@ class Integration::Napoleon::CrawlerBuilder
                       options_for_post_request.merge(body: params.to_json)
     raise 'Invalid Response' if response.code != 201
     template = response.parsed_response.first.deep_symbolize_keys
-    @pipeline_templates << template
+    pipeline_templates << template
     template
   end
 
   def active_pipeline_execution
-    return nil if @pipeline_templates.blank?
+    return nil if pipeline_templates.blank?
 
     params = options_for_get_request.merge(
       query: {
-        pipeline_template_id: "in.(#{ @pipeline_templates.map{ |t| t[:id] }.join ',' })",
+        pipeline_template_id: "in.(#{ pipeline_templates.map{ |t| t[:id] }.join ',' })",
         or: '(status.eq.pending,status.eq.waiting)'
       }
     )
