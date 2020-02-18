@@ -34,13 +34,10 @@ def create_pipeline_execution!
 end
 
 def rollback!
-<<<<<<< HEAD
-  @pipeline_templates.each { |template| delete_pipeline_template template[:id] }
-=======
   pipeline_templates.each do |template|
     delete_pipeline_template template[:id]
   end
->>>>>>> fix pipeline_templates
+
   @pipeline_templates = []
 end
 
