@@ -50,7 +50,7 @@ module Integration
 
         self.error = nil
 
-        unless builder.active_pipeline_execution.present?
+        if builder.active_pipeline_execution.present?
           @provider_crawler.transaction do
             begin
               pipeline_execution = builder.active_pipeline_execution
