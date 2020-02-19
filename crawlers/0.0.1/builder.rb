@@ -5,21 +5,26 @@ def pipeline_templates
 end
 
 def create_pipeline_templates!
-  course_params = build_template_by_folder 'course'
-  course_params[:name] = [provider.name, course_params[:name]].join ' '
-  course_pipeline = add_pipeline_template course_params
+  events_params        = build_template_by_folder 'crawling_events'
+  events_params[:name] = [provider.name, events_params[:name]].join ' '
+  events_pipeline      = add_pipeline_template events_params
 
-  sitemap_params = build_template_by_folder 'sitemap'
+  course_params        = build_template_by_folder 'course'
+  course_params[:name] = [provider.name, course_params[:name]].join ' '
+  course_params[:data] = { next_pipeline_template_id: events_pipeline[:id] }
+  course_pipeline      = add_pipeline_template course_params
+
+  sitemap_params        = build_template_by_folder 'sitemap'
   sitemap_params[:name] = [provider.name, sitemap_params[:name]].join ' '
-  sitemap_params[:data].merge!(
+  sitemap_params[:data] = {
     next_pipeline_template_id: course_pipeline[:id],
-    provider_id: provider.id,
-    provider_name: provider.name,
-    crawler_id: provider_crawler.id,
-    user_agent: { version: '1.0.0', token: provider_crawler.user_agent_token },
-    sitemaps: verified_sitemaps,
-    domains: verified_domains
-  )
+    provider_id:               provider.id,
+    provider_name:             provider.name,
+    crawler_id:                provider_crawler.id,
+    user_agent:                { version: '1.0.0', token: provider_crawler.user_agent_token },
+    sitemaps:                  verified_sitemaps,
+    domains:                   verified_domains
+  }
   add_pipeline_template sitemap_params
 end
 
@@ -33,7 +38,7 @@ def create_pipeline_execution!
   )
 end
 
-def rollback!
+def remove_pipeline_templates
   pipeline_templates.each do |template|
     delete_pipeline_template template[:id]
   end
@@ -41,16 +46,13 @@ def rollback!
   @pipeline_templates = []
 end
 
+def rollback!
+  remove_pipeline_templates
+end
+
 def cleanup
   provider_crawler.transaction do
-    provider_crawler.settings[:pipeline_templates].each do |pipeline_template|
-      delete_pipeline_template pipeline_template[:id]
-    end
-
-    provider_crawler.settings[:pipeline_executions]
-      .each do |pipeline_execution|
-      delete_pipeline_execution pipeline_execution[:id]
-    end
+    remove_pipeline_templates
 
     provider_crawler.version = nil
     provider_crawler.settings = nil

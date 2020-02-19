@@ -1,20 +1,13 @@
-name:       'Sitemap Pipeline'
-data:
-  crawler_id:    '979eee3f-de99-5814-e487-b630727d2b91'
-  provider_name: 'Generic Provider'
-  sitemaps:
-    - http://dummy_provider/sitemap_01.xml
-    - http://dummy_provider/sitemap_02.xml
-    - http://dummy_provider/sitemap_03.xml
-  domains:
-    - other_provider
-    - dummy_provider
-    - other_dummy_provider
-  user_agent:
-    version: '1.0.0'
-    token:   'd727036b-784e-4185-99ed-f3ee2b91e979'
+name: 'Sitemap Pipeline'
 pipes:
   - type:   Fetcher
+    status_map:
+      - - [ 100, 199 ]
+        - skipped
+      - - [ 200, 399 ]
+        - pending
+      - - [ 400, 599 ]
+        - skipped
     script: fetcher.rb
   - type:   Demux
     script: demux.rb

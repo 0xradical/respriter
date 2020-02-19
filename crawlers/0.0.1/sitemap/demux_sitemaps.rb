@@ -1,8 +1,7 @@
 document = Nokogiri.XML pipe_process.data[:payload]
 
 entries =
-  document.css('sitemapindex sitemap').map(&:text).map(&:strip)
-    .find_all do |url|
+  document.css('sitemapindex sitemap').map(&:text).map(&:strip).find_all do |url|
     pipeline.data[:domains].any? do |domain|
       # TODO: Notify user about not verified domains on sitemap
       domain_without_www =
