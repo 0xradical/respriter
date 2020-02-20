@@ -5,7 +5,7 @@ class CrawlingEvent < ApplicationRecord
     puts 'Not done yet'
   end
 
-  def current_sequence
-    sequence
+  def self.current_sequence
+    maximum(:sequence) || 0
   end
 end
