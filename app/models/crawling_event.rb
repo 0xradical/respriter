@@ -4,4 +4,8 @@ class CrawlingEvent < ApplicationRecord
   def process
     puts 'Not done yet'
   end
+
+  def current_sequence
+    sequence
+  end
 end

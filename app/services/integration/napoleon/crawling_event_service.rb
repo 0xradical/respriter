@@ -3,22 +3,22 @@ module Integration
     class CrawlingEventService
       STREAMER_PARAMS = {
         kind: 'crawling_event',
-        locked_versions: [
-          '0.0.0', '< 2.0.0'
-        ],
-        resource_class: ::Napoleon::CrawlingEvent,
-        fields: [
-          'resource_id',
-          'dataset_sequence',
-          'last_execution_id',
-          'content',
-          'created_at',
-          'updated_at'
+        locked_versions: ['0.0.0', '< 2.0.0'],
+        resource_class: CrawlingEvent,
+        fields: %w[
+          resource_id
+          dataset_sequence
+          last_execution_id
+          content
+          created_at
+          updated_at
         ]
       }
 
       def run(sequence = CrawlingEvent.current_sequence)
-        ::Napoleon::ResourceStreamer.new(STREAMER_PARAMS).resources(sequence) do |resource|
+        ::Napoleon::ResourceStreamer.new(STREAMER_PARAMS).resources(
+          sequence
+        ) do |resource|
           CrawlingEvent.create(resource.to_crawling_event).process
         end
       end
