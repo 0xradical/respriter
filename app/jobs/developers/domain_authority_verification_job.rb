@@ -304,10 +304,12 @@ module Developers
           }
         ]
       )
-      ::Developers::SitemapVerificationJob.enqueue(
-        provider_crawler.id,
-        sitemap_id
-      )
+
+      # run synchronously
+      Class.new(::Developers::SitemapVerificationJob).tap do |klass|
+        klass.run_synchronously = true
+        klass.enqueue(provider_crawler.id, sitemap)
+      end
     end
 
     def setup_provider_crawler(crawler_domain, provider_crawler)
