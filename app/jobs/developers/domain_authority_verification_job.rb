@@ -168,13 +168,23 @@ module Developers
 
       begin
         parsed_domain = PublicSuffix.parse(crawler_domain.domain)
+        digest = Digest::MD5.hexdigest(crawler_domain.domain)[0..4]
 
         provider_name =
-          [parsed_domain.sld, parsed_domain.trd].compact.map do |domain_part|
-            domain_part.split(/\./).map do |part|
-              part.gsub(/\-/, '_').gsub(/[^A-Za-z0-9_]/, '').camelcase
-            end.join(' ')
-          end.select { |name| Provider.where(name: name).count == 0 }.first
+          [parsed_domain.sld, parsed_domain.trd].compact
+            .flat_map do |domain_part|
+            derived =
+              domain_part.split(/\./).map do |part|
+                part.gsub(/\-/, '_').gsub(/[^A-Za-z0-9_]/, '').camelcase
+              end.join(' ')
+            [
+              { pos: 1, value: derived },
+              { pos: 2, value: "#{derived} ##{digest}" }
+            ]
+          end.sort_by { |h| h[:pos] }.select do |h|
+            Provider.where(name: h[:value]).count == 0
+          end.first
+            &.fetch(:value)
       rescue StandardError
         raise '#100006: Name derived from domain url cannot be used'
       end
