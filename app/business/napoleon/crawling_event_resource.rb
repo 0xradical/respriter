@@ -6,7 +6,7 @@ module Napoleon
       @payload = payload
     end
 
-    def to_course
+    def to_crawling_event
       {
         id:                  payload['resource_id'],
         execution_id:        payload['last_execution_id'],
