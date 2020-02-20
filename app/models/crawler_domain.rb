@@ -6,7 +6,11 @@ class CrawlerDomain < ApplicationRecord
   end
 
   def authority_cname
-    "#{self.authority_confirmation_token}.#{self.domain}"
+    "#{self.authority_confirmation_token}.#{
+      PublicSuffix.parse(self.domain).domain
+    }"
+  rescue StandardError
+    nil
   end
 
   def authority_confirmation_token
