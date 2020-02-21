@@ -171,7 +171,7 @@ module Developers
         digest = Digest::MD5.hexdigest(crawler_domain.domain)[0..4]
 
         provider_name =
-          [parsed_domain.sld, parsed_domain.trd].compact
+          [parsed_domain.trd, parsed_domain.sld].compact
             .flat_map do |domain_part|
             derived =
               domain_part.split(/\./).map do |part|
