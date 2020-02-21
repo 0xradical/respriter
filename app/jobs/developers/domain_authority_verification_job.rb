@@ -386,11 +386,17 @@ module Developers
     end
 
     def get_response(url)
-      http = Net::HTTP.new(url.host, url.port)
+      Net::HTTP.start(
+        url.host,
+        url.port,
+        use_ssl: url.scheme == 'https'
+      ) do |http|
+        request = Net::HTTP::Get.new url
+        http.read_timeout = 5
+        http.open_timeout = 5
 
-      http.read_timeout = 5
-      http.open_timeout = 5
-      http.start { |http| http.get(url.path) }
+        response = http.request request
+      end
     end
   end
 end
