@@ -100,7 +100,7 @@ module Developers
         begin
           uri = URI.parse(u.to_s)
           log(crawler_domain.id, "Trying #{uri.scheme.upcase} (#{uri.to_s})")
-          response = Net::HTTP.get_response(uri)
+          response = get_response(uri)
 
           if response.code == '200'
             document = Nokogiri.HTML(response.body)
@@ -242,7 +242,7 @@ module Developers
         end
       sitemap_xml_method =
         proc do |uri|
-          response = Net::HTTP.get_response(uri)
+          response = get_response(uri)
 
           uri.dup.to_s if response.code == '200'
         end
@@ -383,6 +383,14 @@ module Developers
 
     def stop_heartbeat
       @heartbeat.kill if !@exit
+    end
+
+    def get_response(url)
+      http = Net::HTTP.new(url.host, url.port)
+
+      http.read_timeout = 5
+      http.open_timeout = 5
+      http.start { |http| http.get(url.path) }
     end
   end
 end

@@ -30,7 +30,7 @@ module Developers
       raise '#110000: Sitemap structure not found on database' if sitemap.nil?
 
       log(sitemap_id, 'Fetching sitemap')
-      response = Net::HTTP.get_response(URI.parse(sitemap[:url].to_s))
+      response = get_response(URI.parse(sitemap[:url].to_s))
 
       if response.code != '200'
         raise "#110001: Sitemap URL returned status code #{response.code}"
@@ -84,6 +84,14 @@ module Developers
           payload: message
         }.to_json
       )
+    end
+
+    def get_response(url)
+      http = Net::HTTP.new(url.host, url.port)
+
+      http.read_timeout = 5
+      http.open_timeout = 5
+      http.start { |http| http.get(url.path) }
     end
   end
 end

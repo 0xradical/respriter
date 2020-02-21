@@ -38,7 +38,7 @@ module Developers
         )
 
       log(id, 'Fetching page')
-      response = Net::HTTP.get_response(URI(preview_course.url))
+      response = get_response(URI(preview_course.url))
 
       payload =
         if response.code != '200'
@@ -178,6 +178,14 @@ module Developers
           payload: message
         }.to_json
       )
+    end
+
+    def get_response(url)
+      http = Net::HTTP.new(url.host, url.port)
+
+      http.read_timeout = 5
+      http.open_timeout = 5
+      http.start { |http| http.get(url.path) }
     end
   end
 end
