@@ -184,11 +184,9 @@ module Developers
       Net::HTTP.start(
         url.host,
         url.port,
-        use_ssl: url.scheme == 'https'
+        use_ssl: url.scheme == 'https', open_timeout: 5, read_timeout: 5
       ) do |http|
         request = Net::HTTP::Get.new url
-        http.read_timeout = 5
-        http.open_timeout = 5
 
         response = http.request request
       end
