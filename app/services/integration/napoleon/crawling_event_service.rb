@@ -4,7 +4,7 @@ module Integration
       STREAMER_PARAMS = {
         kind: 'crawling_event',
         locked_versions: ['0.0.0', '< 2.0.0'],
-        resource_class: Napoleon::CrawlingEventResource,
+        resource_class: ::Napoleon::CrawlingEventResource,
         fields: %w[
           resource_id
           dataset_sequence
