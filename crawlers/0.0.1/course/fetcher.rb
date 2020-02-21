@@ -1,10 +1,11 @@
-version, token = pipeline.data[:user_agent].values_at :version, :token
+token = pipeline.data[:token]
 
 accumulator = pipe_process.accumulator
 
-accumulator[:http]                      ||= Hash.new
-accumulator[:http][:headers]            ||= Hash.new
-accumulator[:http][:headers][:user_agent] = "Napoleon (url: napoleon.classpert.com/docs/crawler, version: #{version}, token: #{token})"
+accumulator[:http]                        ||= Hash.new
+accumulator[:http][:headers]              ||= Hash.new
+accumulator[:http][:headers][:user_agent]  = "Napoleon Crawler (token: #{token})"
+accumulator[:http][:follow_redirects]      = { limit: 100 }
 
 call
 

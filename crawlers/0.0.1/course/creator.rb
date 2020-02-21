@@ -1,3 +1,5 @@
+# TODO: Check for redirects
+
 payload, json_ld, headers =
   pipe_process.accumulator.values_at :payload, :json_ld, :response_headers
 
@@ -23,11 +25,12 @@ end
 content = contents.first
 
 content[:last_fecthed_at] = DateTime.parse(headers[:date]).strftime '%Y/%m/%d'
-content[:json_ld] = json_ld
-content[:provider_id] = pipeline.data[:provider_id]
-content[:stale] = false
-content[:published] = true
-content[:execution_id] = pipeline.pipeline_execution_id
+content[:json_ld]         = json_ld
+content[:provider_id]     = pipeline.data[:provider_id]
+content[:stale]           = false
+content[:execution_id]    = pipeline.pipeline_execution_id
+
+content[:published] = content[:published].nil? ? true : content[:published]
 
 content[:slug] =
   [

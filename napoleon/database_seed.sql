@@ -25,7 +25,7 @@ INSERT INTO app.resource_schemas (
 ) VALUES (
   'c1225396-28e1-11ea-9078-0242ac150002',
   'course',
-  '0.0.1',
+  '1.0.0',
   '{
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://napoleon.classpert.com/schemas/course/0.0.1",
@@ -692,7 +692,7 @@ INSERT INTO app.resource_schemas (
         "type": "object"
       },
       "json_ld": {
-        "type": "object"
+        "type": "array"
       },
       "video": {
         "$ref": "#/definitions/video"

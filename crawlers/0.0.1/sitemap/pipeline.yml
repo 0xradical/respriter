@@ -3,11 +3,11 @@ pipes:
   - type:   Fetcher
     status_map:
       - - [ 100, 199 ]
-        - skipped
+        - succeeded
       - - [ 200, 399 ]
         - pending
       - - [ 400, 599 ]
-        - skipped
+        - succeeded
     script: fetcher.rb
   - type:   Demux
     script: demux.rb
