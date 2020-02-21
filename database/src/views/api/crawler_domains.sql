@@ -17,8 +17,10 @@ DECLARE
   crawler_domain RECORD;
   crawler RECORD;
   current_user_id bigint;
+  log_session_id text;
 BEGIN
   current_user_id := current_setting('request.jwt.claim.sub', true)::bigint;
+  log_session_id := current_setting('request.header.sessionid', true)::text;
 
   IF if_admin(TRUE) THEN
     INSERT INTO app.crawler_domains (
@@ -75,7 +77,7 @@ BEGIN
         100,
         NOW(),
         'Developers::DomainAuthorityVerificationJob',
-        ('["' || crawler_domain.id || '","' || current_user_id  || '"]')::jsonb,
+        ('["' || crawler_domain.id || '","' || current_user_id  ||  '","' || log_session_id || '"]')::jsonb,
         '{}'::jsonb
       );
 

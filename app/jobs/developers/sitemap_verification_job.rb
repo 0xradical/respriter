@@ -7,6 +7,9 @@ module Developers
     SERVICE_NAME = 'sitemap-verification-service'
 
     self.priority = 100
+    class << self
+      attr_accessor :session_id
+    end
 
     attr_reader :logger
 
@@ -17,6 +20,10 @@ module Developers
     end
 
     def run(id, sitemap_id)
+      verify(id, sitemap_id)
+    end
+
+    def verify(id, sitemap_id)
       log(sitemap_id, 'Started sitemap verification')
 
       provider_crawler = ProviderCrawler.find_by(id: id)
@@ -80,7 +87,7 @@ module Developers
         level,
         {
           id: SecureRandom.uuid,
-          ps: { id: ctx_id, name: SERVICE_NAME },
+          ps: { id: (self.class.session_id || ctx_id), name: SERVICE_NAME },
           payload: message
         }.to_json
       )

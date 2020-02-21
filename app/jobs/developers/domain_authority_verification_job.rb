@@ -6,10 +6,13 @@ module Developers
     class Error < StandardError; end
     SERVICE_NAME = 'domain-validation-service'
     RETRY_MAX = 10
-    RETRY_WINDOW = 25 # seconds
+    RETRY_WINDOW = 30 # seconds
     RETRY_HEARTBEATS = 5
 
     self.priority = 100
+    class << self
+      attr_accessor :session_id
+    end
 
     attr_reader :logger
     attr_accessor :retries
@@ -23,7 +26,14 @@ module Developers
       @elapsed = 0
     end
 
-    def run(id, user_id)
+    def run(id, user_id, session_id)
+      Class.new(self.class).tap { |klass| klass.session_id = session_id }.new(
+        {}
+      )
+        .verify(id, user_id)
+    end
+
+    def verify(id, user_id)
       log(id, 'Started domain verification')
 
       crawler_domain = CrawlerDomain.find_by(id: id)
@@ -317,9 +327,9 @@ module Developers
 
       # run synchronously
       Class.new(::Developers::SitemapVerificationJob).tap do |klass|
-        klass.run_synchronously = true
-        klass.enqueue(provider_crawler.id, sitemap)
-      end
+        klass.session_id = self.class.session_id
+      end.new({})
+        .verify(provider_crawler.id, sitemap_id)
     end
 
     def setup_provider_crawler(crawler_domain, provider_crawler)
@@ -344,7 +354,7 @@ module Developers
         level,
         {
           id: SecureRandom.uuid,
-          ps: { id: ctx_id, name: SERVICE_NAME },
+          ps: { id: (self.class.session_id || ctx_id), name: SERVICE_NAME },
           payload: message
         }.to_json
       )
