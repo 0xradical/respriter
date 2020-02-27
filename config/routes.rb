@@ -27,12 +27,11 @@ Rails.application.routes.draw do
   mount Vueonrails::Engine, at: 'vue'
   root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { '' }
 
-  get '/privacy-policy', to: 'static_pages#index', page: 'privacy_policy'
-  get '/terms-and-conditions',
-      to: 'static_pages#index', page: 'terms_and_conditions'
-  get '/promo', to: 'static_pages#index', page: 'promo'
-  get '/contact-us', to: 'contact_us#new'
-  post '/contact-us', to: 'contact_us#create'
+  get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
+  get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
+  get '/get-listed',            to: 'static_pages#index', page: 'get_listed'
+  get '/contact-us',            to: 'contact_us#new'
+  post '/contact-us',           to: 'contact_us#create'
 
   get '/search', to: 'courses#index', as: :courses
   get '/:provider/courses/:course',
@@ -50,14 +49,20 @@ Rails.application.routes.draw do
     }"
   end
 
-  resources :videos, only: :show
-  resources :orphaned_profiles, only: :show, path: 'profiles'
-
   direct :developers_dashboard do
     "#{
       ENV.fetch('DEVELOPERS_DASHBOARD_URL') { '//developers.classpert.com' }
     }?locale=#{I18n.locale}"
   end
+
+  direct :listing_api_documentation do
+    "#{
+      ENV.fetch('LISTING_API_DOCUMENTATION_URL') { '//developers.classpert.com/documentation' }
+    }?locale=#{I18n.locale}"
+  end
+
+  resources :videos, only: :show
+  resources :orphaned_profiles, only: :show, path: 'profiles'
 
   get '/forward/:id', to: 'gateway#index', as: :gateway
 
