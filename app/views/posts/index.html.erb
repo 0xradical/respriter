@@ -13,11 +13,11 @@
             </div>
 
             <%= link_to post_path(post.slug) do %>
-              <h1 class='el:amx-Fs(1.5em) el:amx-C_blackish-gray' style='line-height:1em'><%= post.title %></h1>
+              <h1 class='el:amx-Fs(1.5em) el:amx-C_fg' style='line-height:1em'><%= post.title %></h1>
             <% end %>
 
             <%= image_tag(post.images&.first&.thumbor&.file_url(width: 728), style: 'max-width:100%', class: 'el:amx-Mt(1em)') if post.use_cover_image? %>
-            <p class='el:amx-C_blackish-gray el:amx-Mt(0.5em)' style='line-height:1.5em'>
+            <p class='el:amx-C_fg el:amx-Mt(0.5em)' style='line-height:1.5em'>
               <%= truncate(strip_tags(post.body.html_safe), length: 350) { "&nbsp".html_safe + link_to("Read more", post_path(post.slug), class: 'el:amx-C_pr') } %>
             </p>
           </div>
