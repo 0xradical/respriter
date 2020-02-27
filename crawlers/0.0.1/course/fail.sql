@@ -63,4 +63,20 @@ WHERE
   AND status = 'skipped'
   AND accumulator ? 'crawling_event';
 
+INSERT INTO app.pipe_processes (
+  pipeline_id,
+  initial_accumulator
+) SELECT
+  ($1.data->>'crawling_events_pipeline_id')::uuid,
+  jsonb_build_object(
+    'crawling_event', jsonb_build_object(
+      'type',    'course_internal_error',
+      'details', accumulator
+    )
+  )
+FROM app.pipe_processes
+WHERE
+  pipeline_id = $1.id
+  AND status = 'failed';
+
 SELECT app.pipeline_call(($1.data->>'next_pipeline_id')::uuid);

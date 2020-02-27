@@ -32,23 +32,30 @@ content[:execution_id]    = pipeline.pipeline_execution_id
 
 content[:published] = content[:published].nil? ? true : content[:published]
 
-content[:slug] =
-  [
-    I18n.transliterate(content[:course_name].to_s).downcase,
-    Resource.digest(Zlib.crc32(content[:id].to_s))
-  ].join('-')
-    .gsub(/[\s\_\-]+/, '-')
-    .gsub(/[^0-9a-z\-]/i, '')
-    .gsub(/[\s\_\-]+/, '-')
-    .gsub(/(^\-)|(\-$)/, '')
+validated_content = content.deep_dup.deep_stringify_keys
+errors = public_validator('course', '1.0.0').validate validated_content
 
-pipe_process.accumulator = {
-  kind: 'course',
-  schema_version: '1.0.0',
-  unique_id:
-    Digest::SHA1.hexdigest("#{pipeline.data[:crawler_id]}-#{content[:id]}"),
-  content: content,
-  relations: Hash.new
-}
+if errors.any?
+  pipe_process.accumulator = {
+    kind:      'crawling_event',
+    unique_id: Digest::SHA1.hexdigest("#{pipe_process.id}-invalid_course"),
+    content: {
+      type:        'invalid_course',
+      pipeline_id: pipe_process.pipeline_id,
+      errors:      errors.to_a,
+      url:         pipe_process.initial_accumulator[:url]
+    },
+    relations: Hash.new
+  }
+else
+  pipe_process.accumulator = {
+    kind: 'course',
+    schema_version: '1.0.0',
+    unique_id:
+      Digest::SHA1.hexdigest("#{pipeline.data[:crawler_id]}-#{content[:id]}"),
+    content: validated_content,
+    relations: Hash.new
+  }
+end
 
 call
