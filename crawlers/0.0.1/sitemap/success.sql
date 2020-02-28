@@ -18,6 +18,7 @@ INSERT INTO app.pipe_processes (
   jsonb_build_object(
     'crawling_event', jsonb_build_object(
       'pipeline_id',   $1.id,
+      'crawler_id',    $1.data->>'crawler_id',
       'type',          'sitemap_summary',
       '2xx/3xx_count', COUNT(*) FILTER (WHERE status = 'succeeded' AND NOT( accumulator ? 'status_code' ) ),
       '1xx_count',     COUNT(*) FILTER (WHERE status = 'succeeded' AND (accumulator->>'status_code')::int >= 100 AND (accumulator->>'status_code')::int < 200 ),

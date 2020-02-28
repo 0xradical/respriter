@@ -34,7 +34,7 @@ RAKE := $(BUNDLE_EXEC) rake
 DOCKER_COMPOSE_POSTGRES_RUN_FLAGS := --rm -v $(shell pwd)/db:/db -v $(shell pwd):/app
 DOCKER_COMPOSE_POSTGRES_RUN       := docker-compose run $(DOCKER_COMPOSE_POSTGRES_RUN_FLAGS) postgres
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console que_worker tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% rails_db_migrate db_reset db_reload postgrest_reset db_shell db_download db_migrate db_stg_migrate db_prd_migrate db_load db_restore index_courses sync_courses stg_db_restore tty down clean wipe docker-build docker-push docker-% watch logs prd-logs stg-logs
+.PHONY: help update-packages rebuild-and-update-packages bootstrap console que_worker tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% rails_db_migrate db_reset db_reload postgrest_reset db_shell db_download db_migrate db_stg_migrate db_prd_migrate db_load db_restore index_courses sync_courses sync_crawling_events heroku_prd_% heroku_stg_% stg_db_restore tty down clean wipe docker-build docker-push docker-% watch logs prd-logs stg-logs
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -130,10 +130,19 @@ db_restore: ## Restores lastest dump creating database (if needed), migrates aft
 	@make db_load index_courses
 
 index_courses:
-	@$(BUNDLE_EXEC) rails runner "Course.reindex!"
+	$(BUNDLE_EXEC) rails runner "Course.reindex!"
 
 sync_courses:
-	heroku run:detached bundle exec rake system:scheduler:courses_service --app=classpert-web-app-prd
+	$(BUNDLE_EXEC) rake system:scheduler:courses_service
+
+sync_crawling_events:
+	$(BUNDLE_EXEC) rake system:scheduler:crawling_events_service
+
+heroku_prd_%:
+	heroku run:detached make $* --app=classpert-web-app-prd
+
+heroku_stg_%:
+	heroku run:detached make $* --app=classpert-web-app-prd
 
 dev_db_restore: db/db.dev.env $(PG_DUMP_FILE)
 	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.dev.env && PGPASSWORD=$$DATABASE_PASSWORD pg_restore --verbose --clean --no-acl --no-owner -U $$DATABASE_USER -h $$DATABASE_HOST -d $$DATABASE_DB < $(PG_DUMP_FILE); exit 0;'

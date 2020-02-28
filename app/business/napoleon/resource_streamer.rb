@@ -15,7 +15,7 @@ module Napoleon
     end
 
     def next_endpoint_url
-      "#{ENV.fetch 'NAPOLEON_POSTGREST_URI'}/resource_versions?select=#{@fields.join ','}&order=dataset_sequence&kind=eq.#{@kind}&dataset_sequence=gt." + @dataset_sequence.to_s
+      "#{ENV.fetch 'NAPOLEON_POSTGREST_URI'}/resource_versions?select=#{@fields.join ','}&order=dataset_sequence&kind=eq.#{@kind}&dataset_sequence=gt." + (@dataset_sequence || 0).to_s
     end
 
     def resources(dataset_sequence, &block)
@@ -95,7 +95,7 @@ module Napoleon
         request['Range']         = "0-#{@per_page-1}"
 
         response = http.request request
-        raise "Something went wrong, got HTTP #{response.code}" if response.code != '200'
+        binding.pry and raise "Something went wrong, got HTTP #{response.code}" if response.code != '200'
 
         body =
           if response.header['Content-Encoding'] == 'gzip'

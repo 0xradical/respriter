@@ -10,13 +10,17 @@ module Napoleon
       {
         id:                  payload['resource_id'],
         execution_id:        payload['last_execution_id'],
-        provider_crawler_id: payload['content']['provider_crawler_id'],
+        provider_crawler_id: payload['content']['crawler_id'],
         created_at:          payload['created_at'],
         updated_at:          payload['updated_at'],
-        sequence:            payload['dataset_sequence'],
+        sequence:            dataset_sequence,
         type:                payload['content']['type'],
-        data:                payload['content']['data']
+        data:                payload['content']
       }
+    end
+
+    def dataset_sequence
+      payload['dataset_sequence']
     end
   end
 end

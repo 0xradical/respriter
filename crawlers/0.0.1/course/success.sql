@@ -43,6 +43,7 @@ INSERT INTO app.pipe_processes (
   jsonb_build_object(
     'crawling_event', jsonb_build_object(
       'pipeline_id',   $1.id,
+      'crawler_id',    $1.data->>'crawler_id',
       'type',          'course_summary',
       'removed_count', summary.removed_count,
       'added_count',   summary.added_count,

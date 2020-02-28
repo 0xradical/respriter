@@ -17,6 +17,7 @@ if accumulator[:status] == 'skipped'
     type:            'sitemap_fetch_error',
     url:             initial_accumulator[:url],
     status_code:     accumulator[:status_code],
-    timestamp:       Time.now
+    timestamp:       Time.now,
+    crawler_id:      pipeline.data[:crawler_id]
   }
 end

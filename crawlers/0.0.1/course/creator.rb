@@ -43,7 +43,8 @@ if errors.any?
       type:        'invalid_course',
       pipeline_id: pipe_process.pipeline_id,
       errors:      errors.to_a,
-      url:         pipe_process.initial_accumulator[:url]
+      url:         pipe_process.initial_accumulator[:url],
+      crawler_id:  pipeline.data[:crawler_id]
     },
     relations: Hash.new
   }

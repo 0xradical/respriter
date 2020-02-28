@@ -60,6 +60,11 @@ namespace :system do
       Integration::Napoleon::CourseService.run(args[:dataset_sequence])
     end
 
+    desc 'Pull crawling events from Napoleon'
+    task :crawling_events_service, %i[dataset_sequence] => %i[environment] do |t, args|
+      Integration::Napoleon::CrawlingEventService.run(args[:dataset_sequence])
+    end
+
     desc 'Pull tracked actions from all AFNs'
     task tracked_actions_service: %i[environment] do |t, args|
       run_id = SecureRandom.hex(4)
