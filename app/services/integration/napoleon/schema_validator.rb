@@ -50,7 +50,7 @@ module Integration::Napoleon
         results = JSON.parse(body)
         raise "Could not find schema for #{kind}:#{version}" if results.empty?
 
-        results[0]['specification']
+        results[0]['public_specification']
       end
     end
   end
