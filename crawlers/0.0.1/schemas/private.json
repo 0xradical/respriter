@@ -492,7 +492,7 @@
     },
     "slug": {
       "type": "string",
-      "pattern": "^(?!\\s*$).+"
+      "pattern": "^[0-9a-zA\\-\\_]+$"
     },
     "course_name": {
       "type": "string",
