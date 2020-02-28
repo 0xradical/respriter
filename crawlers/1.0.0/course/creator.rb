@@ -29,6 +29,7 @@ content[:json_ld]         = json_ld
 content[:provider_id]     = pipeline.data[:provider_id]
 content[:stale]           = false
 content[:execution_id]    = pipeline.pipeline_execution_id
+content[:url]           ||= pipe_process.initial_accumulator[:url]
 
 content[:published] = content[:published].nil? ? true : content[:published]
 

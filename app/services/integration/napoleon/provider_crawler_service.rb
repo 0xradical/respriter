@@ -4,7 +4,7 @@ module Integration
       attr_reader :provider_crawler
       attr_accessor :error
 
-      def initialize(provider_crawler, version = '0.0.1')
+      def initialize(provider_crawler, version = '1.0.0')
         @provider_crawler = provider_crawler
         @version          = @provider_crawler.version || version
       end

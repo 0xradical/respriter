@@ -33,6 +33,10 @@
           "type": "string",
           "pattern": "^(?!\\s*$).+"
         },
+        "distinguished": {
+          "type": "boolean",
+          "default": false
+        },
         "main": {
           "type": "boolean",
           "default": true
@@ -53,6 +57,10 @@
         "name": {
           "type": "string",
           "pattern": "^(?!\\s*$).+"
+        },
+        "distinguished": {
+          "type": "boolean",
+          "default": false
         },
         "main": {
           "type": "boolean",
@@ -282,36 +290,44 @@
       "pattern": "^[A-Za-z0-9_]+$"
     },
     "rating": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "enum": [
-            "stars"
-          ]
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^([1-9][0-9]+|[0-9])(\\.[0-9]+)?$"
         },
-        "value": {
-          "type": "number"
-        },
-        "range": {
-          "anyOf": [
-            {
-              "type": "array",
-              "minItems": 2,
-              "maxItems": 2,
-              "items": {
-                "type": "number"
-              }
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "stars"
+              ]
             },
-            {
+            "value": {
               "type": "number"
+            },
+            "range": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                {
+                  "type": "number"
+                }
+              ]
             }
+          },
+          "required": [
+            "type",
+            "value",
+            "range"
           ]
         }
-      },
-      "required": [
-        "type",
-        "value",
-        "range"
       ]
     },
     "language": {
@@ -323,6 +339,7 @@
       "properties": {
         "type": {
           "enum": [
+            "video_service",
             "youtube",
             "vimeo",
             "brightcove",
@@ -336,6 +353,25 @@
         "type"
       ],
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "video_service"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "path": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          }
+        },
         {
           "if": {
             "properties": {
@@ -403,6 +439,36 @@
               "thumbnail_url": {
                 "type": "string",
                 "format": "uri"
+              },
+              "provider": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "self_hosted",
+                  "coursera_hosted"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "thumbnail_url": {
+                "type": "string",
+                "format": "uri"
               }
             },
             "required": [
@@ -426,7 +492,7 @@
     },
     "slug": {
       "type": "string",
-      "pattern": "^[0-9a-zA\\-\\_]+$"
+      "pattern": "^[0-9a-zA-Z\\-\\_]+$"
     },
     "course_name": {
       "type": "string",
@@ -445,6 +511,9 @@
           }
         }
       ]
+    },
+    "provider_id": {
+      "type": "number"
     },
     "offered_by": {
       "type": "array",
@@ -510,6 +579,9 @@
     "certificate": {
       "$ref": "#/definitions/certificate"
     },
+    "extra_content": {
+      "type": "string"
+    },
     "free_content": {
       "type": "boolean"
     },
@@ -525,9 +597,24 @@
         "$ref": "#/definitions/tag"
       }
     },
+    "provided_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provided_categories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "description": {
       "type": "string",
       "pattern": "^(?!\\s*$).+"
+    },
+    "syllabus": {
+      "type": "string"
     },
     "pace": {
       "type": "string",
@@ -570,11 +657,20 @@
     "published": {
       "type": "boolean"
     },
+    "reviewed": {
+      "type": "boolean"
+    },
     "stale": {
       "type": "boolean"
     },
     "alternative_course_id": {
       "$ref": "#/definitions/id"
+    },
+    "extra": {
+      "type": "object"
+    },
+    "json_ld": {
+      "type": "array"
     },
     "video": {
       "$ref": "#/definitions/video"
@@ -612,10 +708,10 @@
         "required": [
           "course_name",
           "url",
-          "slug",
           "free_content",
           "paid_content",
           "description",
+          "provider_id",
           "pace",
           "language",
           "subtitles",

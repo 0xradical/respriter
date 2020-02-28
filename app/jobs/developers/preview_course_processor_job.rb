@@ -3,7 +3,7 @@ require 'syslogger'
 module Developers
   class PreviewCourseProcessorJob < Que::Job
     SERVICE_NAME = 'debug-tool-service'
-    DEFAULT_VERSION = '0.0.1'
+    DEFAULT_VERSION = '1.0.0'
 
     class Error < StandardError; end
 

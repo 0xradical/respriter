@@ -1,4 +1,4 @@
-# class CrawlerBuilder[0.0.1] < Integration::Napoleon::CrawlerBuilder
+# class CrawlerBuilder[1.0.0] < Integration::Napoleon::CrawlerBuilder
 
 def pipeline_templates
   @pipeline_templates ||= provider_crawler.settings&.deep_symbolize_keys&.[](:pipeline_templates) || []
