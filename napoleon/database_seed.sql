@@ -26,7 +26,8 @@ INSERT INTO app.resource_schemas (
   'c1225396-28e1-11ea-9078-0242ac150002',
   'course',
   '1.0.0',
-  '{
+  '
+  {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://napoleon.classpert.com/schemas/course/1.0.0",
     "type": "object",
@@ -520,7 +521,7 @@ INSERT INTO app.resource_schemas (
       },
       "slug": {
         "type": "string",
-        "pattern": "^(?!\\s*$).+"
+        "pattern": "^[0-9a-zA\\-\\_]+$"
       },
       "course_name": {
         "type": "string",
@@ -1177,7 +1178,7 @@ INSERT INTO app.resource_schemas (
       },
       "slug": {
         "type": "string",
-        "pattern": "^(?!\\s*$).+"
+        "pattern": "^[0-9a-zA\\-\\_]+$"
       },
       "course_name": {
         "type": "string",
