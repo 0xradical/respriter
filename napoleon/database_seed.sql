@@ -33,7 +33,7 @@ INSERT INTO app.resource_schemas (
     "definitions": {
       "id": {
         "type": "string",
-        "pattern": "^[^\\s]+$"
+        "pattern": "^(?!\\s*$).+"
       },
       "status": {
         "type": "string",
@@ -59,7 +59,7 @@ INSERT INTO app.resource_schemas (
           },
           "name": {
             "type": "string",
-            "pattern": "^[^\\s]+$"
+            "pattern": "^(?!\\s*$).+"
           },
           "distinguished": {
             "type": "boolean",
@@ -84,7 +84,7 @@ INSERT INTO app.resource_schemas (
         "properties": {
           "name": {
             "type": "string",
-            "pattern": "^[^\\s]+$"
+            "pattern": "^(?!\\s*$).+"
           },
           "distinguished": {
             "type": "boolean",
@@ -520,11 +520,11 @@ INSERT INTO app.resource_schemas (
       },
       "slug": {
         "type": "string",
-        "pattern": "^[^\\s]+$"
+        "pattern": "^(?!\\s*$).+"
       },
       "course_name": {
         "type": "string",
-        "pattern": "^[^\\s]+$"
+        "pattern": "^(?!\\s*$).+"
       },
       "level": {
         "anyOf": [
@@ -639,7 +639,7 @@ INSERT INTO app.resource_schemas (
       },
       "description": {
         "type": "string",
-        "pattern": "^[^\\s]+$"
+        "pattern": "^(?!\\s*$).+"
       },
       "syllabus": {
         "type": "string"
@@ -748,8 +748,7 @@ INSERT INTO app.resource_schemas (
         }
       }
     ]
-  }
-  ',
+  }',
   '{
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://napoleon.classpert.com/schemas/course/1.0.0",
@@ -757,7 +756,7 @@ INSERT INTO app.resource_schemas (
     "definitions": {
       "id": {
         "type": "string",
-        "pattern": "^[^\\s]+$"
+        "pattern": "^(?!\\s*$).+"
       },
       "status": {
         "type": "string",
@@ -783,7 +782,7 @@ INSERT INTO app.resource_schemas (
           },
           "name": {
             "type": "string",
-            "pattern": "^[^\\s]+$"
+            "pattern": "^(?!\\s*$).+"
           },
           "main": {
             "type": "boolean",
@@ -804,7 +803,7 @@ INSERT INTO app.resource_schemas (
         "properties": {
           "name": {
             "type": "string",
-            "pattern": "^[^\\s]+$"
+            "pattern": "^(?!\\s*$).+"
           },
           "main": {
             "type": "boolean",
@@ -1178,11 +1177,11 @@ INSERT INTO app.resource_schemas (
       },
       "slug": {
         "type": "string",
-        "pattern": "^[^\\s]+$"
+        "pattern": "^(?!\\s*$).+"
       },
       "course_name": {
         "type": "string",
-        "pattern": "^[^\\s]+$"
+        "pattern": "^(?!\\s*$).+"
       },
       "level": {
         "anyOf": [
@@ -1279,7 +1278,7 @@ INSERT INTO app.resource_schemas (
       },
       "description": {
         "type": "string",
-        "pattern": "^[^\\s]+$"
+        "pattern": "^(?!\\s*$).+"
       },
       "pace": {
         "type": "string",

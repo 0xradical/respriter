@@ -5,7 +5,7 @@
   "definitions": {
     "id": {
       "type": "string",
-      "pattern": "^[^\\s]+$"
+      "pattern": "^(?!\\s*$).+"
     },
     "status": {
       "type": "string",
@@ -31,7 +31,7 @@
         },
         "name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^(?!\\s*$).+"
         },
         "distinguished": {
           "type": "boolean",
@@ -56,7 +56,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "pattern": "^[^\\s]+$"
+          "pattern": "^(?!\\s*$).+"
         },
         "distinguished": {
           "type": "boolean",
@@ -492,11 +492,11 @@
     },
     "slug": {
       "type": "string",
-      "pattern": "^[^\\s]+$"
+      "pattern": "^(?!\\s*$).+"
     },
     "course_name": {
       "type": "string",
-      "pattern": "^[^\\s]+$"
+      "pattern": "^(?!\\s*$).+"
     },
     "level": {
       "anyOf": [
@@ -611,7 +611,7 @@
     },
     "description": {
       "type": "string",
-      "pattern": "^[^\\s]+$"
+      "pattern": "^(?!\\s*$).+"
     },
     "syllabus": {
       "type": "string"
