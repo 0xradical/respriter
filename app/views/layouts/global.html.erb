@@ -150,12 +150,12 @@
         <div class='row'>
 
           <div class='col-12 col-md-3'>
-            <h2 class='el:amx-Fs(0.875em) el:amx-C_fgM el:amx-Mb(1.75em)'><%= t('dictionary.categories') %></h2>
+            <h2 class='el:amx-Fs(1em) el:amx-C_fgM el:amx-Mb(1.75em)'><%= t('dictionary.categories') %></h2>
             <ul class='el:m-list el:m-list--unstyled el:amx-C_fgV'>
               <% (RootTag.all).each_with_index do |t, index| %>
                 <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
                 <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "/#{t.slugify}"), class: 'c-link c-link--white' do %>
-                  <li class='el:amx-Fs(0.875em)' style='padding:4px 0px'>
+                  <li class='el:amx-Fs(0.875em) el:amx-Mb(1em)'>
                     <%= t("tags.#{t.id}") %>
                   </li>
                 <% end %>
@@ -164,36 +164,36 @@
           </div>
 
           <div class='col-12 col-md-2'>
-            <h2 class='el:amx-Fs(0.875em) el:amx-C_fgM el:amx-Mt(0.875em)@sm el:amx-Mb(1.75em)'>
+            <h2 class='el:amx-Fs(1em) el:amx-C_fgM el:amx-Mt(0.875em)@sm el:amx-Mb(1.75em)'>
               <%= t('dictionary.providers') %>
             </h2>
             <ul class='el:m-list el:amx-Fs(0.875em)'>
-              <li style='margin-bottom:8px'>
+              <li class='el:amx-Mb(1em)'>
                 <%= link_to "https://www.udemy.com", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
                   Udemy
                 <% end %>
               </li>
-              <li style='margin-bottom:8px'>
+              <li class='el:amx-Mb(1em)'>
                 <%= link_to "https://www.pluralsight.com", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
                   Pluralsight
                 <% end %>
               </li>
-              <li style='margin-bottom:8px'>
+              <li class='el:amx-Mb(1em)'>
                 <%= link_to "https://www.coursera.org", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
                   Coursera
                 <% end %>
               </li>
-              <li style='margin-bottom:8px'>
+              <li class='el:amx-Mb(1em)'>
                 <%= link_to "https://www.linkedin.com/learning", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
                   Linkedin Learning
                 <% end %>
               </li>
-              <li style='margin-bottom:8px'>
+              <li class='el:amx-Mb(1em)'>
                 <%= link_to "https://edx.org", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
                   Edx
                 <% end %>
               </li>
-              <li style='margin-bottom:8px'>
+              <li>
                 <%= link_to "https://teamtreehouse.com", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
                   Treehouse
                 <% end %>
@@ -202,28 +202,28 @@
           </div>
 
           <div class='col-12 col-md-3'>
-            <h2 class='el:amx-Fs(0.875em) el:amx-C_fgM el:amx-Mt(0.875em)@sm el:amx-Mb(1.75em)'>
-              Get Listed
+            <h2 class='el:amx-Fs(1em) el:amx-C_fgM el:amx-Mt(0.875em)@sm el:amx-Mb(1.75em)'>
+              Classpert Index Tool
             </h2>
             <ul class='el:m-list el:amx-Fs(0.875em)'>
-              <li style='margin-bottom:8px'>
+              <li class='el:amx-Mb(1em)'>
                 <%= link_to get_listed_path, class: 'el:amx-C_fgV c-link c-link--white' do %>
-                  <%= image_pack_tag('media/svg/flask.svg', class: 'el:amx-Mr(0.5em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %><span>Course Listing API <sup>beta</sup></span>
+                  <%= image_pack_tag('media/svg/flask.svg', class: 'el:amx-Mr(0.125em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %> Get Listed <sup>beta</sup>
                 <% end %>
               </li>
-              <li style='margin-bottom:8px'>
+              <li>
                 <%= link_to 'Documentation', listing_api_documentation_url, class: 'el:amx-C_fgV c-link c-link--white', target: '_blank' %>
               </li>
             </ul>
 
-            <h2 class='el:amx-Fs(0.875em) el:amx-C_fgM el:amx-Mt(1em) el:amx-Mb(1.75em)'>
+            <h2 class='el:amx-Fs(1em) el:amx-C_fgM el:amx-Mt(1em) el:amx-Mb(1.75em)'>
               <%= t('dictionary.about') %>
             </h2>
             <ul class='el:m-list el:amx-Fs(0.875em)'>
-              <li style='margin-bottom:8px'>
+              <li class='el:amx-Mb(1em)'>
                 <%= link_to t('dictionary.blog'), '/blog', class: 'el:amx-C_fgV c-link c-link--white', target: '_blank' %>
               </li>
-              <li style='margin-bottom:8px'>
+              <li>
                 <%= link_to t('contact_us.new.title'), '/contact-us', class: 'el:amx-C_fgV c-link c-link--white' %>
               </li>
             </ul>
@@ -231,7 +231,7 @@
 
           <div class='col-12 col-md-4 el:amx-Ta(r)'>
             <span style='display:inline-block;vertical-align:middle'>
-              <span class='el:amx-C_fgM el:amx-Fs(0.875em) el:amx-Fw(b)'>Follow us!</span> &nbsp;
+              <span class='el:amx-C_fgM el:amx-Fs(1em) el:amx-Fw(b)'>Follow us!</span> &nbsp;
               <ul style='display:inline-block;vertical-align:middle' class='el:m-list el:m-list--hrz el:amx-Fs(0.875em)'>
                 <li class='el:amx-Pr(0.5em)'>
                   <%= link_to "https://facebook.com/classpert", target: '_blank' do %>

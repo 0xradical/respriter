@@ -35,7 +35,7 @@ module ApplicationHelper
     )
   end
 
-  def link_to_locale(locale, &block)
+  def link_to_locale(locale, opts={}, &block)
     en = (locale.to_s == 'en')
     link_to(
       (
@@ -53,6 +53,7 @@ module ApplicationHelper
           request.path +
           (en ? '?intl=true' : '')
       ),
+      opts,
       &block
     )
   end

@@ -28,7 +28,7 @@
   <div class='el:o-off-canvas-menu__body-slot'>
     <div class='el:m-collapsible el:m-collapsible--fixed' data-elements-collapsible>
       <div class='el:m-collapsible__visible-content'>
-        <a href='/'><%= t("dictionary.home") %></a>
+        <a href='/' class='el:m-link-nav'><%= t("dictionary.home") %></a>
       </div>
     </div>
     <div class='el:m-collapsible' data-elements-collapsible>
@@ -36,7 +36,7 @@
       <div class='el:m-collapsible__hidden-content'>
         <ul class='el:m-list' style='margin-bottom:1em'>
           <% (RootTag.all).each_with_index do |t, index| %>
-            <%= link_to (course_bundles_path(t.slugify)) do %>
+            <%= link_to course_bundles_path(t.slugify), class: 'el:m-link-nav' do %>
               <li style='padding:4px 0px'>
                 <span class='el:m-label' style='height:60px;text-align:left'>
                   <%= svg_use('tags', t.id, { class: 'el:m-label__icon' }) %>
@@ -52,18 +52,18 @@
     </div>
     <div class='el:m-collapsible el:m-collapsible--fixed' data-elements-collapsible>
       <div class='el:m-collapsible__visible-content'>
-        <%= link_to t("dictionary.blog"), posts_path %>
+        <%= link_to t("dictionary.blog"), posts_path, class: 'el:m-link-nav' %>
       </div>
     </div>
     <div class='el:m-collapsible el:m-collapsible--fixed' data-elements-collapsible>
       <div class='el:m-collapsible__visible-content'>
-        <%= link_to t("dictionary.contact_us"), contact_us_path %>
+        <%= link_to t("dictionary.contact_us"), contact_us_path, class: 'el:m-link-nav' %>
       </div>
     </div>
     <div class='el:m-collapsible el:m-collapsible' data-elements-collapsible>
       <div class='el:m-collapsible__visible-content'>
         <div>
-        <%= link_to_locale(I18n.locale) do %>
+        <%= link_to_locale(I18n.locale, class: 'el:m-link-nav') do %>
           <svg width='16px' height='16px' style='display:inline-block;vertical-align:middle' class='el:amx-Mr(0.25em)'>
             <use xlink:href='<%= "#i18n-#{I18n.locale}" %>' />
           </svg>
@@ -77,7 +77,7 @@
           <% ['en', 'es', 'pt-BR', 'ja'].each do |locale| %>
             <% next if locale == I18n.locale.to_s %>
             <div class="<%= counter == 0 ? '' : 'el:amx-Mt(1em)' %>">
-              <%= link_to_locale(locale) do %>
+              <%= link_to_locale(locale, class: 'el:m-link-nav') do %>
                 <svg width='16px' height='16px' style='display:inline-block;vertical-align:middle' class='el:amx-Mr(0.25em)'>
                   <use xlink:href='<%= "#i18n-#{locale.downcase}" %>' />
                 </svg>
