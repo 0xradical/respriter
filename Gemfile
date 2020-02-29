@@ -92,9 +92,6 @@ gem 'httparty'
 gem 'dnsruby'
 gem 'public_suffix', '~> 4.0.3'
 
-# Logger
-gem 'syslogger5424'
-
 # Provider API Syntax checkers for Ruby and SQL source code
 gem 'parser',  require: 'parser/current'
 gem 'pg_query'

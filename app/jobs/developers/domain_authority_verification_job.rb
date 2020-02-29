@@ -1,5 +1,5 @@
 require 'dnsruby'
-require 'syslogger'
+#require 'syslogger'
 
 module Developers
   class DomainAuthorityVerificationJob < Que::Job
@@ -19,8 +19,10 @@ module Developers
 
     def initialize(*)
       super
-
-      @logger = SysLogger.new
+      @logger            = Logger.new(STDOUT)
+      @logger.formatter  = proc do |severity, datetime, progname, msg|
+        "#{msg}\n"
+      end
       @exit = false
       @retries = 0
       @elapsed = 0
@@ -350,7 +352,7 @@ module Developers
     end
 
     def log(ctx_id, message, level = :info)
-      self.logger.public_send(
+      self.logger.send(
         level,
         {
           id: SecureRandom.uuid,

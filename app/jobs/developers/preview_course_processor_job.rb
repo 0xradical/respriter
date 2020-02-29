@@ -1,5 +1,3 @@
-require 'syslogger'
-
 module Developers
   class PreviewCourseProcessorJob < Que::Job
     SERVICE_NAME = 'debug-tool-service'
@@ -13,8 +11,10 @@ module Developers
 
     def initialize(*)
       super
-
-      @logger = SysLogger.new
+      @logger            = Logger.new(STDOUT)
+      @logger.formatter  = proc do |severity, datetime, progname, msg|
+        "#{msg}\n"
+      end
     end
 
     def run(id)

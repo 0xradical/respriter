@@ -1,4 +1,3 @@
-require 'syslogger'
 require_relative '../../../lib/sitemap/validator.rb'
 
 module Developers
@@ -15,8 +14,10 @@ module Developers
 
     def initialize(*)
       super
-
-      @logger = SysLogger.new
+      @logger            = Logger.new(STDOUT)
+      @logger.formatter  = proc do |severity, datetime, progname, msg|
+        "#{msg}\n"
+      end
     end
 
     def run(id, sitemap_id)
