@@ -6,16 +6,26 @@ module Napoleon
 
     AUTHORIZATION_HEADER = "Bearer #{ENV.fetch 'NAPOLEON_POSTGREST_JWT'}"
 
-    def initialize(fields: nil, kind: nil, per_page: 50, locked_versions: nil, resource_class: nil)
-      @fields, @kind, @per_page, @locked_versions, @resource_class = fields, kind, per_page, locked_versions, resource_class
+    def initialize(
+      fields: nil,
+      kind: nil,
+      per_page: 50,
+      locked_versions: nil,
+      resource_class: nil
+    )
+      @fields, @kind, @per_page, @locked_versions, @resource_class =
+        fields, kind, per_page, locked_versions, resource_class
 
-      logger           = Logger.new STDOUT
+      logger = Logger.new STDOUT
       logger.formatter = Logger::Formatter.new
-      @logger          = ActiveSupport::TaggedLogging.new logger
+      @logger = ActiveSupport::TaggedLogging.new logger
     end
 
     def next_endpoint_url
-      "#{ENV.fetch 'NAPOLEON_POSTGREST_URI'}/resource_versions?select=#{@fields.join ','}&order=dataset_sequence&kind=eq.#{@kind}&dataset_sequence=gt." + (@dataset_sequence || 0).to_s
+      "#{ENV.fetch 'NAPOLEON_POSTGREST_URI'}/resource_versions?select=#{
+        @fields.join ','
+      }&order=dataset_sequence&kind=eq.#{@kind}&dataset_sequence=gt." +
+        (@dataset_sequence || 0).to_s
     end
 
     def resources(dataset_sequence, &block)
@@ -29,9 +39,7 @@ module Napoleon
       )
       start_heartbeat
       loop do
-        resources = fetch_payload.map do |payload|
-          resource_class.new payload
-        end
+        resources = fetch_payload.map { |payload| resource_class.new payload }
 
         break if resources.empty?
         resources.each do |resource|
@@ -91,11 +99,13 @@ module Napoleon
       ) do |http|
         request = Net::HTTP::Get.new resources_uri
         request['Authorization'] = AUTHORIZATION_HEADER
-        request['Range-Unit']    = 'items'
-        request['Range']         = "0-#{@per_page-1}"
+        request['Range-Unit'] = 'items'
+        request['Range'] = "0-#{@per_page - 1}"
 
         response = http.request request
-        binding.pry and raise "Something went wrong, got HTTP #{response.code}" if response.code != '200'
+        if response.code != '200'
+          raise "Something went wrong, got HTTP #{response.code}"
+        end
 
         body =
           if response.header['Content-Encoding'] == 'gzip'
