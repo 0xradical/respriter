@@ -19,10 +19,9 @@ module Developers
 
     def initialize(*)
       super
-      @logger            = Logger.new(STDOUT)
-      @logger.formatter  = proc do |severity, datetime, progname, msg|
-        "#{msg}\n"
-      end
+      @logger = Logger.new(STDOUT)
+      @logger.formatter =
+        proc { |severity, datetime, progname, msg| "#{msg}\n" }
       @exit = false
       @retries = 0
       @elapsed = 0
@@ -225,6 +224,7 @@ module Developers
               authority_confirmation_method: confirmation_method,
               authority_confirmation_token:
                 crawler_domain.authority_confirmation_token,
+              authority_confirmation_status: 'confirmed',
               authority_confirmation_salt: ENV['DOMAIN_VERIFICATION_SALT'],
               provider_crawler_id: provider_crawler.id
             }
@@ -238,8 +238,6 @@ module Developers
       else
         raise 'Database error'
       end
-
-      crawler_domain.update(authority_confirmation_status: 'confirmed')
     rescue StandardError
       raise 'Confirmation failed'
     end
@@ -338,7 +336,9 @@ module Developers
       log(crawler_domain.id, 'Configuring domain crawler')
 
       crawler_service =
-        ::Integration::Napoleon::ProviderCrawlerService.new(provider_crawler)
+        ::Integration::Napoleon::ProviderCrawlerService.new(
+          provider_crawler.reload
+        )
 
       crawler_service.prepare
 
