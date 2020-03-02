@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-number-input": "^1.2.1",
-    "@classpert/elements": "^5.4.1",
+    "@classpert/elements": "^5.5.0",
     "@rails/webpacker": "^4.2.0",
     "awesome-swiper": "^1.4.3",
     "axios": "^0.19.2",
