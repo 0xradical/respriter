@@ -1,29 +1,31 @@
 # class CrawlerBuilder[1.0.0] < Integration::Napoleon::CrawlerBuilder
 
 def pipeline_templates
-  @pipeline_templates ||= provider_crawler.settings&.deep_symbolize_keys&.[](:pipeline_templates) || []
+  @pipeline_templates ||=
+    provider_crawler.settings&.deep_symbolize_keys&.[](:pipeline_templates) ||
+      []
 end
 
 def create_pipeline_templates!
-  events_params        = build_template_by_folder 'crawling_events'
+  events_params = build_template_by_folder 'crawling_events'
   events_params[:name] = [provider.name, events_params[:name]].join ' '
-  events_pipeline      = add_pipeline_template events_params
+  events_pipeline = add_pipeline_template events_params
 
-  course_params        = build_template_by_folder 'course'
+  course_params = build_template_by_folder 'course'
   course_params[:name] = [provider.name, course_params[:name]].join ' '
   course_params[:data] = { next_pipeline_template_id: events_pipeline[:id] }
-  course_pipeline      = add_pipeline_template course_params
+  course_pipeline = add_pipeline_template course_params
 
-  sitemap_params        = build_template_by_folder 'sitemap'
+  sitemap_params = build_template_by_folder 'sitemap'
   sitemap_params[:name] = [provider.name, sitemap_params[:name]].join ' '
   sitemap_params[:data] = {
     next_pipeline_template_id: course_pipeline[:id],
-    provider_id:               provider.id,
-    provider_name:             provider.name,
-    crawler_id:                provider_crawler.id,
-    user_agent:                { version: '1.0.0', token: provider_crawler.user_agent_token },
-    sitemaps:                  verified_sitemaps,
-    domains:                   verified_domains
+    provider_id: provider.id,
+    provider_name: provider.name,
+    crawler_id: provider_crawler.id,
+    user_agent: { version: '1.0.0', token: provider_crawler.user_agent_token },
+    sitemaps: verified_sitemaps,
+    domains: verified_domains
   }
   add_pipeline_template sitemap_params
 end
@@ -39,9 +41,7 @@ def create_pipeline_execution!
 end
 
 def remove_pipeline_templates
-  pipeline_templates.each do |template|
-    delete_pipeline_template template[:id]
-  end
+  pipeline_templates.each { |template| delete_pipeline_template template[:id] }
 
   @pipeline_templates = []
 end

@@ -14,10 +14,9 @@ module Developers
 
     def initialize(*)
       super
-      @logger            = Logger.new(STDOUT)
-      @logger.formatter  = proc do |severity, datetime, progname, msg|
-        "#{msg}\n"
-      end
+      @logger = Logger.new(STDOUT)
+      @logger.formatter =
+        proc { |severity, datetime, progname, msg| "#{msg}\n" }
     end
 
     def run(id, sitemap_id)
@@ -55,6 +54,7 @@ module Developers
         ProviderCrawler.transaction do
           log(sitemap_id, 'Successfully detected sitemap type')
           update_sitemap(sitemap, provider_crawler, 'verified', validation)
+          setup_provider_crawler(sitemap_id, provider_crawler)
           log(sitemap_id, 'Finished sitemap verification')
           finish
         end
@@ -81,6 +81,25 @@ module Developers
       sitemap[:type] = type
       provider_crawler.sitemaps_will_change!
       provider_crawler.save
+    end
+
+    def setup_provider_crawler(id, provider_crawler)
+      log(id, 'Configuring domain crawler')
+
+      crawler_service =
+        ::Integration::Napoleon::ProviderCrawlerService.new(
+          provider_crawler.reload
+        )
+
+      crawler_service.prepare
+
+      if crawler_service.error
+        raise crawler_service.error
+      else
+        log(id, 'Successfully configured domain crawler')
+      end
+    rescue StandardError => e
+      log(id, '#100008: Domain configuration failed', :error)
     end
 
     def log(ctx_id, message, level = :info)

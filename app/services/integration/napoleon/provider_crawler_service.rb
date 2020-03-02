@@ -6,7 +6,7 @@ module Integration
 
       def initialize(provider_crawler, version = '1.0.0')
         @provider_crawler = provider_crawler
-        @version          = @provider_crawler.version || version
+        @version = @provider_crawler.version || version
       end
 
       def prepared?
@@ -14,10 +14,16 @@ module Integration
       end
 
       def prepare
+        @provider_crawler.reload
+
         self.error = nil
+        scheduled = @provider_crawler&.scheduled
+
+        stop if prepared?
 
         @provider_crawler.transaction do
           begin
+            builder.remove_pipeline_templates
             builder.create_pipeline_templates!
             builder.update_provider_crawler!
           rescue StandardError => error
@@ -26,6 +32,8 @@ module Integration
             raise ActiveRecord::Rollback
           end
         end
+
+        start if scheduled
       end
 
       def start
