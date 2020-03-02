@@ -51,13 +51,13 @@ Rails.application.routes.draw do
 
   direct :developers_dashboard do
     "#{
-      ENV.fetch('DEVELOPERS_DASHBOARD_URL') { '//developers.classpert.com' }
+      ENV.fetch('DEVELOPERS_DASHBOARD_URL') { '//listing.classpert.com' }
     }?locale=#{I18n.locale}"
   end
 
   direct :listing_api_documentation do
     "#{
-      ENV.fetch('LISTING_API_DOCUMENTATION_URL') { '//developers.classpert.com/documentation' }
+      ENV.fetch('LISTING_API_DOCUMENTATION_URL') { '//listing.classpert.com/docs' }
     }?locale=#{I18n.locale}"
   end
 
