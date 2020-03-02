@@ -25,7 +25,7 @@ end
 content = contents.first
 
 content[:last_fecthed_at] = DateTime.parse(headers[:date]).strftime '%Y/%m/%d'
-content[:json_ld]         = json_ld
+content[:json_ld]         = json_ld if json_ld.present?
 content[:provider_id]     = pipeline.data[:provider_id]
 content[:stale]           = false
 content[:execution_id]    = pipeline.pipeline_execution_id

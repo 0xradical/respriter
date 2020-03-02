@@ -142,7 +142,7 @@ heroku_prd_%:
 	heroku run:detached make $* --app=classpert-web-app-prd
 
 heroku_stg_%:
-	heroku run:detached make $* --app=classpert-web-app-prd
+	heroku run:detached make $* --app=classpert-web-app-stg
 
 dev_db_restore: db/db.dev.env $(PG_DUMP_FILE)
 	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.dev.env && PGPASSWORD=$$DATABASE_PASSWORD pg_restore --verbose --clean --no-acl --no-owner -U $$DATABASE_USER -h $$DATABASE_HOST -d $$DATABASE_DB < $(PG_DUMP_FILE); exit 0;'
