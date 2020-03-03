@@ -102,7 +102,7 @@ module Napoleon
       if provider
         provider.id
       else
-        payload.dig('content', 'provider_id') || Provider.find_by(name: payload.dig('content', 'name'))&.id
+        payload.dig('content', 'provider_id') || Provider.find_by(name: payload.dig('content', 'provider_name'))&.id
       end
     end
 
