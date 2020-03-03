@@ -72,7 +72,7 @@ module Developers
           expire
         end
 
-        log(id, error.message, :error)
+        log(sitemap_id, error.message, :error)
       end
     end
 
