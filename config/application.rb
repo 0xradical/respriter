@@ -54,7 +54,7 @@ module App
 
     config.i18n.load_path +=
       Dir[Rails.root.join('config', 'locales', '**', '*.yml')]
-    config.i18n.available_locales = %w[en es pt-BR]
+    config.i18n.available_locales = %w[en es pt-BR ja]
 
     config.action_mailer.default_url_options = { host: 'classpert.com' }
     config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
@@ -64,7 +64,7 @@ module App
         ENV.fetch('ELEMENTS_ASSET_HOST') do
           'https://elements-prd.classpert.com'
         end
-      elements_config.asset_version = '5.1.2'
+      elements_config.asset_version = '5.5.1'
     end
 
     config.action_controller.forgery_protection_origin_check = false

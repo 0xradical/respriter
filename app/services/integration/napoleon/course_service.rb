@@ -1,51 +1,34 @@
 module Integration
   module Napoleon
     class CourseService
-      attr_reader :napoleon
+      STREAMER_PARAMS = {
+        kind: 'course',
+        locked_versions: [
+          '0.0.0', '< 2.0.0'
+        ],
+        resource_class: ::Napoleon::CourseResource,
+        fields: [
+          'id',
+          'resource_id',
+          'last_execution_id',
+          'sequence',
+          'dataset_sequence',
+          'content',
+          'schema_version'
+        ]
+      }
 
-      def initialize(napoleon)
-        @napoleon = napoleon
-      end
-
-      def run(dataset_sequence = nil)
-        dataset_sequence = dataset_sequence || Course.current_dataset_sequence
-        self.napoleon.resources(dataset_sequence) do |resource|
-          Course.upsert(
-            id:                resource['id'],
-            dataset_sequence:  resource['dataset_sequence'],
-            name:              resource['content']['course_name'],
-            audio:             resource['content']['audio'],
-            slug:              resource['content']['slug'],
-            subtitles:         resource['content']['subtitles'],
-            price:             resource['content']['price'],
-            url:               resource['content']['url'],
-            pace:              resource['content']['pace'],
-            level:             Array.wrap(resource['content']['level']),
-            effort:            resource['content']['effort'],
-            free_content:      resource['content']['free_content'],
-            paid_content:      resource['content']['paid_content'],
-            description:       resource['content']['description'],
-            syllabus:          resource['content']['syllabus'],
-            certificate:       resource['content']['certificate'],
-            offered_by:        resource['content']['offered_by'],
-            instructors:       resource['content']['instructors'],
-            video:             resource['content']['video'],
-            category:          resource['content']['category'],
-            tags:              resource['content']['tags'],
-            published:         resource['content']['published'],
-            __source_schema__: resource,
-            provider_id:       Provider.find_by(name: resource['content']['provider_name'])&.id
-          )
-
+      def run(dataset_sequence = Course.current_dataset_sequence)
+        ::Napoleon::ResourceStreamer.new(STREAMER_PARAMS).resources(dataset_sequence) do |resource|
+          Course.upsert resource.to_course
         end
       end
 
       class << self
-        def run(dataset_sequence = nil)
-          self.new(::Napoleon.client).run(dataset_sequence)
+        def run(dataset_sequence = Course.current_dataset_sequence)
+          self.new.run dataset_sequence
         end
       end
     end
   end
 end
-

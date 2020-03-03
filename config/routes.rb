@@ -19,15 +19,19 @@ Rails.application.routes.draw do
          as: :user_account_registration
   end
 
+  devise_scope :user_account do
+    get '/developers/sign_in(.:format)' => 'developers/sessions#new',
+        as: :new_developer_session_path
+  end
+
   mount Vueonrails::Engine, at: 'vue'
   root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { '' }
 
-  get '/privacy-policy', to: 'static_pages#index', page: 'privacy_policy'
-  get '/terms-and-conditions',
-      to: 'static_pages#index', page: 'terms_and_conditions'
-  get '/promo', to: 'static_pages#index', page: 'promo'
-  get '/contact-us', to: 'contact_us#new'
-  post '/contact-us', to: 'contact_us#create'
+  get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
+  get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
+  get '/get-listed',            to: 'static_pages#index', page: 'get_listed'
+  get '/contact-us',            to: 'contact_us#new'
+  post '/contact-us',           to: 'contact_us#create'
 
   get '/search', to: 'courses#index', as: :courses
   get '/:provider/courses/:course',
@@ -45,8 +49,20 @@ Rails.application.routes.draw do
     }"
   end
 
+  direct :developers_dashboard do
+    "#{
+      ENV.fetch('DEVELOPERS_DASHBOARD_URL') { '//listing.classpert.com' }
+    }?locale=#{I18n.locale}"
+  end
+
+  direct :listing_api_documentation do
+    "#{
+      ENV.fetch('LISTING_API_DOCUMENTATION_URL') { '//listing.classpert.com/docs' }
+    }?locale=#{I18n.locale}"
+  end
+
+  resources :videos, only: :show
   resources :orphaned_profiles, only: :show, path: 'profiles'
-  resources :videos,            only: :show
 
   get '/forward/:id', to: 'gateway#index', as: :gateway
 
@@ -60,6 +76,15 @@ Rails.application.routes.draw do
 
   concern :imageable do
     resources :images, shallow: true
+  end
+
+  namespace :developers do
+    resources :preview_courses, only: :show
+    resources :preview_course_videos, only: :show
+    authenticated :user_account do
+      get '/provider_crawler/:id/start', to: 'provider_crawlers#start'
+      get '/provider_crawler/:id/stop',  to: 'provider_crawlers#stop'
+    end
   end
 
   namespace :api do

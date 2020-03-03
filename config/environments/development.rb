@@ -1,15 +1,20 @@
 Rails.application.configure do
-
-  config.hosts << "lvh.me"
-  config.hosts << "es.lvh.me"
-  config.hosts << "pt-br.lvh.me"
+  config.hosts << 'lvh.me'
+  config.hosts << 'es.lvh.me'
+  config.hosts << 'pt-br.lvh.me'
+  config.hosts << 'ja.lvh.me'
 
   # CORS
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins /(?:localhost|lvh\.me):[0-9]{,5}\Z/, /.*\.classpert\.com\Z/, /.*\.classpert-staging\.com/
-      resource '*', headers: :any, credentials: true, expose: %w(Authorization),
-      methods: [:get, :put, :patch, :post, :delete, :options]
+      origins /(?:localhost|lvh\.me):[0-9]{,5}\Z/,
+              /.*\.classpert\.com\Z/,
+              /.*\.classpert-staging\.com/
+      resource '*',
+               headers: :any,
+               credentials: true,
+               expose: %w[Authorization],
+               methods: %i[get put patch post delete options]
     end
   end
 
@@ -27,7 +32,8 @@ Rails.application.configure do
   config.eager_load = false
 
   # Show full error reports.
-  config.consider_all_requests_local = ENV.fetch('CONSIDER_ALL_REQUESTS_LOCAL') { true }
+  config.consider_all_requests_local =
+    ENV.fetch('CONSIDER_ALL_REQUESTS_LOCAL') { true }
 
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join('tmp/caching-dev.txt').exist?
@@ -45,21 +51,21 @@ Rails.application.configure do
 
   config.serve_static_assets = true
 
-  config.action_mailer.asset_host = "http://#{ENV.fetch('WEBPACKER_DEV_SERVER_PUBLIC')}"
+  config.action_mailer.asset_host =
+    "http://#{ENV.fetch('WEBPACKER_DEV_SERVER_PUBLIC')}"
 
   config.active_job.queue_adapter = :que
   config.action_mailer.perform_caching = false
   config.action_mailer.deliver_later_queue_name = 'default'
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options   = {
-    host: ENV.fetch('HOST', 'localhost'),
-    port: ENV.fetch('PORT', 3000)
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch('HOST', 'localhost'), port: ENV.fetch('PORT', 3_000)
   }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV.fetch('MAILCATCHER_HOST','mailcatcher'),
-    port:    ENV.fetch('MAILCATCHER_PORT', 1025)
+    address: ENV.fetch('MAILCATCHER_HOST', 'mailcatcher'),
+    port: ENV.fetch('MAILCATCHER_PORT', 1_025)
   }
 
   # Print deprecation notices to the Rails logger.
@@ -74,10 +80,6 @@ Rails.application.configure do
   end
 
   config.action_view.raise_on_missing_translations = true
-
-  if ENV['PRERENDER_SERVICE_URL']
-    config.middleware.use Rack::Prerender
-  end
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

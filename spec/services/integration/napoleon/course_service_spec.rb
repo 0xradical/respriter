@@ -1,32 +1,31 @@
 describe 'Integration::Napoleon::CourseService' do
-  let(:service) do
-    Integration::Napoleon::CourseService.new(napoleon)
-  end
+  let(:service) { Integration::Napoleon::CourseService.new }
 
   let(:payload) do
     JSON.parse(File.read(Rails.root.join('spec/fixtures/napoleon/platzi.json')))
   end
 
-  let(:course) do
-    create(:course)
-  end
+  let(:course) { create(:course) }
 
   let(:napoleon) do
-    (Class.new do
-      attr_accessor :payload
+    (
+      Class.new do
+        attr_accessor :payload
 
-      def initialize(course, payload)
-        @course = course
-        @payload = JSON.parse(payload.to_json).merge({'id' => @course.id})
-      end
+        def initialize(course, payload)
+          @course = course
+          @payload = JSON.parse(payload.to_json).merge({ 'id' => @course.id })
+        end
 
-      def resources(_global_sequence, &blk)
-        blk.call(@payload)
+        def resources(_dataset_sequence, &blk)
+          blk.call(@payload)
+        end
       end
-    end).new(course, payload)
+    )
+      .new(course, payload)
   end
 
-  describe "#run" do
+  describe '#run' do
     context 'on upsert' do
       before do
         # assume we don't have slug info initially

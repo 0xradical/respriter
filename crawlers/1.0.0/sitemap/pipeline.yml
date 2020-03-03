@@ -1,0 +1,15 @@
+name: 'Sitemap Pipeline'
+pipes:
+  - type:   Fetcher
+    status_map:
+      - - [ 100, 199 ]
+        - succeeded
+      - - [ 200, 399 ]
+        - pending
+      - - [ 400, 599 ]
+        - succeeded
+    script: fetcher.rb
+  - type:   Demux
+    script: demux.rb
+  - type:   Demux
+    script: demux_sitemaps.rb

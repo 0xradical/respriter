@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-source 'https://rails-assets.org'
 
 ruby '2.6.5'
 
@@ -76,20 +75,30 @@ gem 'que-web'
 
 # Sitemap
 gem 'sitemap_generator'
+gem 'robotstxt'
 
 # Email
 gem "valid_email2"
 gem 'inky-rb', require: 'inky'
 gem 'premailer-rails'
 
-# SEO
-gem 'prerender_rails'
-
 # LogRage
 gem 'lograge'
 
 # HTTParty
 gem 'httparty'
+
+# DNS
+gem 'dnsruby'
+gem 'public_suffix', '~> 4.0.3'
+
+# Provider API Syntax checkers for Ruby and SQL source code
+gem 'parser',  require: 'parser/current'
+gem 'pg_query'
+gem 'unparser'
+
+# JSON Schema
+gem 'json_schemer'
 
 group :production do
   # Exceptions

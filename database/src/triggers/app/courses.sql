@@ -1,9 +1,3 @@
-CREATE TRIGGER set_global_id
-  BEFORE INSERT
-  ON app.courses
-  FOR EACH ROW
-    EXECUTE PROCEDURE triggers.md5_url();
-
 CREATE TRIGGER course_normalize_languages
   BEFORE INSERT OR UPDATE
   ON app.courses

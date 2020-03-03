@@ -103,10 +103,6 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  if ENV['PRERENDER_SERVICE_URL']
-    config.middleware.use Rack::Prerender
-  end
-
   # Sentry settings
   Raven.configure do |sentry_config|
     sentry_config.dsn = ENV['SENTRY_DSN']

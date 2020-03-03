@@ -37,8 +37,8 @@ GIT
 
 GEM
   remote: http://rubygems.org/
-  remote: https://rails-assets.org/
   specs:
+    abstract_type (0.0.7)
     actioncable (6.0.0)
       actionpack (= 6.0.0)
       nio4r (~> 2.0)
@@ -99,8 +99,12 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.1, >= 2.1.8)
+    adamantium (0.2.0)
+      ice_nine (~> 0.11.0)
+      memoizable (~> 0.4.0)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    ast (2.4.0)
     aws-eventstream (1.0.3)
     aws-partitions (1.230.0)
     aws-sdk-cloudfront (1.23.0)
@@ -147,6 +151,9 @@ GEM
       carrierwave (>= 0.7, < 2.1)
     childprocess (3.0.0)
     coderay (1.1.2)
+    concord (0.1.5)
+      adamantium (~> 0.2.0)
+      equalizer (~> 0.0.9)
     concurrent-ruby (1.1.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -187,6 +194,8 @@ GEM
       devise (~> 4.0)
       warden-jwt_auth (~> 0.3.6)
     diff-lcs (1.3)
+    dnsruby (1.61.3)
+      addressable (~> 2.5)
     docile (1.3.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -200,6 +209,8 @@ GEM
       dry-configurable (~> 0.1, >= 0.1.3)
     dry-core (0.4.9)
       concurrent-ruby (~> 1.0)
+    ecma-re-validator (0.2.0)
+      regexp_parser (~> 1.2)
     ejs (1.1.1)
     elasticsearch (7.3.0)
       elasticsearch-api (= 7.3.0)
@@ -215,6 +226,7 @@ GEM
     elasticsearch-transport (7.3.0)
       faraday
       multi_json
+    equalizer (0.0.11)
     erubi (1.9.0)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -251,6 +263,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    hana (1.3.5)
     hashdiff (1.0.0)
     hashie (3.6.0)
     htmlentities (4.3.4)
@@ -272,6 +285,7 @@ GEM
       faraday (~> 0.8)
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
+    ice_nine (0.11.2)
     image_processing (1.9.3)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.13, < 3)
@@ -280,6 +294,11 @@ GEM
       nokogiri
     jmespath (1.4.0)
     json (2.2.0)
+    json_schemer (0.2.8)
+      ecma-re-validator (~> 0.2)
+      hana (~> 1.3)
+      regexp_parser (~> 1.5)
+      uri_template (~> 0.7)
     jwt (2.2.1)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
@@ -309,6 +328,8 @@ GEM
       mini_mime (>= 0.1.1)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
+    memoizable (0.4.2)
+      thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.9.2)
     mime-types (3.3)
       mime-types-data (~> 3.2015)
@@ -354,7 +375,10 @@ GEM
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
     orm_adapter (0.5.0)
+    parser (2.6.5.0)
+      ast (~> 2.4.0)
     pg (1.1.4)
+    pg_query (1.2.0)
     premailer (1.11.1)
       addressable
       css_parser (>= 1.6.0)
@@ -362,15 +386,13 @@ GEM
     premailer-rails (1.10.3)
       actionmailer (>= 3)
       premailer (~> 1.7, >= 1.7.9)
-    prerender_rails (1.6.1)
-      activesupport
-      rack
+    procto (0.0.3)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
-    public_suffix (4.0.1)
+    public_suffix (4.0.3)
     puma (4.2.1)
       nio4r (~> 2.0)
     que-web (0.8.0)
@@ -421,6 +443,7 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    robotstxt (0.5.4)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -486,6 +509,15 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.6)
+    unparser (0.4.5)
+      abstract_type (~> 0.0.7)
+      adamantium (~> 0.2.0)
+      concord (~> 0.1.5)
+      diff-lcs (~> 1.3)
+      equalizer (~> 0.0.9)
+      parser (~> 2.6.3)
+      procto (~> 0.0.2)
+    uri_template (0.7.0)
     user_agent_parser (2.5.2)
     valid_email2 (3.1.0)
       activemodel (>= 3.2)
@@ -535,6 +567,7 @@ DEPENDENCIES
   database_cleaner
   devise
   devise-jwt (~> 0.5.8)
+  dnsruby
   ejs
   elasticsearch-dsl (~> 0.1.0)
   elasticsearch-model (~> 6.0.0)
@@ -550,6 +583,7 @@ DEPENDENCIES
   httparty
   hypernova
   inky-rb
+  json_schemer
   kaminari
   lograge
   mini_magick
@@ -558,16 +592,19 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-linkedin-oauth2 (~> 1.0.0)
   omniauth-oauth2
+  parser
   pg
+  pg_query
   premailer-rails
-  prerender_rails
   pry
   pry-rails
+  public_suffix (~> 4.0.3)
   puma
   que!
   que-web
   rack-cors
   rails (~> 6.0.0)
+  robotstxt
   rspec-mocks
   rspec-rails
   ruby-thumbor
@@ -579,6 +616,7 @@ DEPENDENCIES
   simplecov
   sitemap_generator
   spring
+  unparser
   user_agent_parser
   valid_email2
   vcr
@@ -590,4 +628,4 @@ RUBY VERSION
    ruby 2.6.5p114
 
 BUNDLED WITH
-   2.0.2
+   2.1.4

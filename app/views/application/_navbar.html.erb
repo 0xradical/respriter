@@ -37,10 +37,10 @@
             </label>
           </li>
           <li class='el:amx-Mr(2em)'>
-            <%= link_to t('dictionary.blog'), posts_path, class: controller_name.eql?('posts') ? 'el:m-link-nav--active' : '' %>
+            <%= link_to t('dictionary.blog'), posts_path, class: "el:m-link-nav #{controller_name.eql?('posts') ? 'el:m-link-nav--active' : ''}" %>
           </li>
           <li class='el:amx-Mr(2em)'>
-            <%= link_to t('dictionary.contact_us'), contact_us_path, class: controller_name.eql?('contact_us') ? 'el:m-link-nav--active' : '' %>
+            <%= link_to t('dictionary.contact_us'), contact_us_path, class: "el:m-link-nav #{controller_name.eql?('contact_us') ? 'el:m-link-nav--active' : ''}" %>
           </li>
 
           <!-- language dropdown -->

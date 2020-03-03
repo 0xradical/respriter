@@ -374,7 +374,8 @@ class Course < ApplicationRecord
       curated_root_tags: (curated_tags & RootTag.all.map(&:id)),
       provider_slug: provider_slug,
       syllabus_markdown: syllabus,
-      refinement_tags: refinement_tags
+      refinement_tags: refinement_tags,
+      type: self.class.name
     }
 
     if category.present?
@@ -426,13 +427,7 @@ class Course < ApplicationRecord
     end
 
     def current_dataset_sequence
-      maximum(:dataset_sequence)
-    end
-
-    # TODO: Is this dead code? Same holds for SUPPORTED_LANGUAGES constant?
-    def is_language_supported?(lang)
-      !(SUPPORTED_LANGUAGES & [lang].flatten.map { |l| l.split('-') }.flatten)
-        .empty?
+      maximum(:dataset_sequence) || 0
     end
 
     def reset_index!

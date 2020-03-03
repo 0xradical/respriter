@@ -1,0 +1,13 @@
+name: 'Course Pipeline'
+pipes:
+  - type:   Fetcher
+    status_map:
+      - - [ 100, 199 ]
+        - skipped
+      - - [ 200, 399 ]
+        - pending
+      - - [ 400, 599 ]
+        - skipped
+    script: fetcher.rb
+  - type:   ResourceCreator
+    script: creator.rb

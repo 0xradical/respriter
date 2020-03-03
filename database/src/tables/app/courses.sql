@@ -39,5 +39,7 @@ CREATE TABLE app.courses (
   instructors       jsonb         DEFAULT '[]'::jsonb,
   curated_tags      varchar[]     DEFAULT '{}'::varchar[],
   refinement_tags   varchar[],
-  up_to_date_id     uuid          REFERENCES app.courses(id) ON DELETE SET NULL
+  up_to_date_id     uuid          REFERENCES app.courses(id) ON DELETE SET NULL,
+  last_execution_id uuid,
+  schema_version    varchar
 );
