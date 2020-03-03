@@ -407,6 +407,8 @@ module Developers
 
         response = http.request request
       end
+    rescue Net::OpenTimeout
+      raise "Timeout while trying to access #{url}"
     end
   end
 end

@@ -50,7 +50,7 @@ module Developers
       log(id, 'Parsing page')
       document = Nokogiri.HTML(payload)
 
-      log(id, 'Looking for JSON+LD')
+      log(id, 'Looking for Classpert JSON')
       json =
         document.css('script[type="application/vnd.classpert+json"] text()')
           .text
@@ -190,6 +190,8 @@ module Developers
 
         response = http.request request
       end
+    rescue Net::OpenTimeout
+      raise "Timeout while trying to access #{url}"
     end
   end
 end
