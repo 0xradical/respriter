@@ -287,10 +287,14 @@
     <%= javascript_pack_tag 'vendor', 'application',   async: true %>
     <%= elements_javascript_include_tag 'bundle',      async: true %>
 
-    <% if session[:live_support_enabled] %>
-      <!-- Start of LiveChat (www.livechatinc.com) code -->
-      <%= render 'live_chat' %>
-      <!-- End of LiveChat code -->
+    <% if content_for?(:chat_snippet) %>
+      <%= yield :chat_snippet %>
+    <% else %>
+      <% if session[:live_support_enabled] %>
+        <!-- Start of LiveChat (www.livechatinc.com) code -->
+        <%= render 'live_chat' %>
+        <!-- End of LiveChat code -->
+      <% end %>
     <% end %>
 
     <%= yield :javascript  %>

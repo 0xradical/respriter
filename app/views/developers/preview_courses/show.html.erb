@@ -15,6 +15,10 @@
   <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/providers.svg') %>"></div>
 <% end %>
 
+<%= content_for :chat_snippet do %>
+  <!-- do nothing -->
+<% end %>
+
 <%= content_for :javascript do %>
   <%= elements_javascript_include_tag 'vars' %>
   <%= javascript_packs_with_chunks_tag 'course-page' %>
