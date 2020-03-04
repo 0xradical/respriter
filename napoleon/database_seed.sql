@@ -26,8 +26,7 @@ INSERT INTO app.resource_schemas (
   'c1225396-28e1-11ea-9078-0242ac150002',
   'course',
   '1.0.0',
-  '
-  {
+  '{
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://napoleon.classpert.com/schemas/course/1.0.0",
     "type": "object",
@@ -521,7 +520,7 @@ INSERT INTO app.resource_schemas (
       },
       "slug": {
         "type": "string",
-        "pattern": "^[0-9a-zA\\-\\_]+$"
+        "pattern": "^[0-9a-zA-Z\\-\\_]+$"
       },
       "course_name": {
         "type": "string",
@@ -669,7 +668,8 @@ INSERT INTO app.resource_schemas (
         "type": "array",
         "items": {
           "$ref": "#/definitions/language"
-        }
+        },
+        "minItems": 1
       },
       "subtitles": {
         "type": "array",
@@ -1033,39 +1033,6 @@ INSERT INTO app.resource_schemas (
         "type": "string",
         "pattern": "^[A-Za-z0-9_]+$"
       },
-      "rating": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "enum": [
-              "stars"
-            ]
-          },
-          "value": {
-            "type": "number"
-          },
-          "range": {
-            "anyOf": [
-              {
-                "type": "array",
-                "minItems": 2,
-                "maxItems": 2,
-                "items": {
-                  "type": "number"
-                }
-              },
-              {
-                "type": "number"
-              }
-            ]
-          }
-        },
-        "required": [
-          "type",
-          "value",
-          "range"
-        ]
-      },
       "language": {
         "type": "string",
         "pattern": "^[a-zA-Z-]{2,}$"
@@ -1078,9 +1045,7 @@ INSERT INTO app.resource_schemas (
               "youtube",
               "vimeo",
               "brightcove",
-              "raw",
-              "self_hosted",
-              "coursera_hosted"
+              "raw"
             ]
           }
         },
@@ -1178,7 +1143,7 @@ INSERT INTO app.resource_schemas (
       },
       "slug": {
         "type": "string",
-        "pattern": "^[0-9a-zA\\-\\_]+$"
+        "pattern": "^[0-9a-zA-Z\\-\\_]+$"
       },
       "course_name": {
         "type": "string",
@@ -1298,14 +1263,12 @@ INSERT INTO app.resource_schemas (
       "effort": {
         "type": "number"
       },
-      "rating": {
-        "$ref": "#/definitions/rating"
-      },
       "language": {
         "type": "array",
         "items": {
           "$ref": "#/definitions/language"
-        }
+        },
+        "minItems": 1
       },
       "subtitles": {
         "type": "array",

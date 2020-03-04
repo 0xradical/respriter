@@ -281,39 +281,6 @@
       "type": "string",
       "pattern": "^[A-Za-z0-9_]+$"
     },
-    "rating": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "enum": [
-            "stars"
-          ]
-        },
-        "value": {
-          "type": "number"
-        },
-        "range": {
-          "anyOf": [
-            {
-              "type": "array",
-              "minItems": 2,
-              "maxItems": 2,
-              "items": {
-                "type": "number"
-              }
-            },
-            {
-              "type": "number"
-            }
-          ]
-        }
-      },
-      "required": [
-        "type",
-        "value",
-        "range"
-      ]
-    },
     "language": {
       "type": "string",
       "pattern": "^[a-zA-Z-]{2,}$"
@@ -544,14 +511,12 @@
     "effort": {
       "type": "number"
     },
-    "rating": {
-      "$ref": "#/definitions/rating"
-    },
     "language": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/language"
-      }
+      },
+      "minItems": 1
     },
     "subtitles": {
       "type": "array",
