@@ -33,7 +33,7 @@ module Napoleon
         level,
         {
           id: SecureRandom.uuid,
-          ps: { id: crawling_event.execution_id, name: 'crawling_event' },
+          ps: { id: crawling_event.execution_id, name: 'crawling-event' },
           payload: message
         }.to_json
       )
