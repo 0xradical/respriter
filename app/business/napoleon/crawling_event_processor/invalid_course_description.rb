@@ -9,7 +9,7 @@ module Napoleon
       crawling_event.data['url']
     end
 
-    def url
+    def description
       crawling_event.data['description']
     end
   end
