@@ -3,12 +3,12 @@ INSERT INTO app.pipe_processes (
   initial_accumulator
 ) SELECT
   ($1.data->>'crawling_events_pipeline_id')::uuid,
-  accumulator
+  last_accumulator
 FROM app.pipe_processes
 WHERE
   pipeline_id = $1.id
   AND status  = 'skipped'
-  AND accumulator ? 'crawling_event';
+  AND last_accumulator ? 'crawling_event';
 
 INSERT INTO app.pipe_processes (
   pipeline_id,

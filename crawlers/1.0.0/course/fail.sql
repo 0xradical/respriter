@@ -57,12 +57,12 @@ INSERT INTO app.pipe_processes (
   initial_accumulator
 ) SELECT
   ($1.data->>'crawling_events_pipeline_id')::uuid,
-  accumulator
+  last_accumulator
 FROM app.pipe_processes
 WHERE
   pipeline_id = $1.id
   AND status = 'skipped'
-  AND accumulator ? 'crawling_event';
+  AND last_accumulator ? 'crawling_event';
 
 INSERT INTO app.pipe_processes (
   pipeline_id,
@@ -72,7 +72,7 @@ INSERT INTO app.pipe_processes (
   jsonb_build_object(
     'crawling_event', jsonb_build_object(
       'type',    'course_internal_error',
-      'url',     initial_accumulator->>'url'
+      'url',     initial_accumulator->>'url',
       'details', accumulator
     )
   )
