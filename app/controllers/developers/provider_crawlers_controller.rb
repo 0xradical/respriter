@@ -5,8 +5,10 @@ module Developers
       render json: { scheduled: true }
     rescue Integration::Napoleon::ProviderCrawlerService::CrawlerNotReady
       render json: { error: 'crawler not ready' }, status: :bad_request
+    rescue Integration::Napoleon::CrawlerBuilder::InvalidResponseError
+      render json: { error: 'could not process start' }, status: :service_unavailable
     rescue
-      render json: { error: 'could not process stop' }, status: :service_unavailable
+      render json: { error: 'could not process start' }, status: :internal_server_error
     end
 
     def stop
@@ -14,8 +16,10 @@ module Developers
       render json: { scheduled: false }
     rescue Integration::Napoleon::ProviderCrawlerService::CrawlerNotReady
       render json: { error: 'crawler not ready' }, status: :bad_request
-    rescue
+    rescue Integration::Napoleon::CrawlerBuilder::InvalidResponseError
       render json: { error: 'could not process stop' }, status: :service_unavailable
+    rescue
+      render json: { error: 'could not process stop' }, status: :internal_server_error
     end
 
     protected

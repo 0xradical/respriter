@@ -27,7 +27,7 @@ class Integration::Napoleon::CrawlerBuilder
     response =
       self.class.post '/pipeline_templates',
                       options_for_post_request.merge(body: params.to_json)
-    raise 'Invalid Response' if response.code != 201
+    raise InvalidResponseError.new(response, "on add_pipeline_template expected response code 201, got #{response.code}") if response.code != 201
     template = response.parsed_response.first.deep_symbolize_keys
     pipeline_templates << template
     template
@@ -44,7 +44,7 @@ class Integration::Napoleon::CrawlerBuilder
     )
     response =
       self.class.get '/pipeline_executions', params
-    raise 'Invalid Response' if response.code != 200
+    raise InvalidResponseError.new(response, "on active_pipeline_execution expected response code 200, got #{response.code}") if response.code != 200
 
     return nil if response.parsed_response.empty?
     response.parsed_response.first.deep_symbolize_keys
@@ -54,20 +54,20 @@ class Integration::Napoleon::CrawlerBuilder
     response =
       self.class.post '/pipeline_executions',
                       options_for_post_request.merge(body: params.to_json)
-    raise 'Invalid Response' if response.code != 201
+    raise InvalidResponseError.new(response, "on add_pipeline_execution expected response code 201, got #{response.code}") if response.code != 201
     response.parsed_response.first.deep_symbolize_keys
   end
 
   def delete_pipeline_template(id)
     response =
       self.class.delete '/pipeline_templates', options_for_delete_request(id)
-    raise 'Invalid Response' if response.code != 204
+    raise InvalidResponseError.new(response, "on delete_pipeline_template expected response code 204, got #{response.code}") if response.code != 204
   end
 
   def delete_pipeline_execution(id)
     response =
       self.class.delete '/pipeline_executions', options_for_delete_request(id)
-    raise 'Invalid Response' if response.code != 204
+    raise InvalidResponseError.new(response, "on delete_pipeline_execution expected response code 204, got #{response.code}") if response.code != 204
   end
 
   def options_for_post_request
@@ -128,7 +128,7 @@ class Integration::Napoleon::CrawlerBuilder
 
     case scripts
     when [true, true]
-      raise "More than one #{name} callback per pipeline is not allowed"
+      raise CrawlerError.new("More than one #{name} callback per pipeline is not allowed")
     when [true, false]
       {
         "#{name}_script_type": 'ruby',
@@ -151,7 +151,7 @@ class Integration::Napoleon::CrawlerBuilder
     when '.sql'
       { type: 'sql', source_code: sql_source_code(dir, path) }
     else
-      raise "Invalid script file #{path}"
+      raise CrawlerError.new("Could not find extension #{File.extname(path)}")
     end
   end
 
@@ -159,12 +159,16 @@ class Integration::Napoleon::CrawlerBuilder
     source = File.read relative_path(*paths)
     Unparser.parse source # Should raise an exception if source has invalid syntax
     source
+  rescue
+    raise InvalidScriptFileError.new(source, $!, "Invalid Ruby File at #{relative_path(*paths)}")
   end
 
   def sql_source_code(*paths)
     source = File.read relative_path(*paths)
     PgQuery.parse source # Should raise an exception if source has invalid syntax
     source
+  rescue PgQuery::ParseError
+    raise InvalidScriptFileError.new(source, $!, "Invalid SQL File at #{relative_path(*paths)}")
   end
 
   def relative_path(*paths)
@@ -173,5 +177,25 @@ class Integration::Napoleon::CrawlerBuilder
       @version.to_s,
       *paths
     )
+  end
+
+  class CrawlerError < StandardError; end
+
+  class InvalidScriptFileError < CrawlerError
+    attr_reader :source, :base_error
+
+    def initialize(source, base_error, message)
+      @source, @base_error = source, base_error
+      super(message)
+    end
+  end
+
+  class InvalidResponseError < CrawlerError
+    attr_reader :response
+
+    def initialize(response, message)
+      @response = response
+      super(message)
+    end
   end
 end
