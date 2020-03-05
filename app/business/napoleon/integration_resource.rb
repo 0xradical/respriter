@@ -6,8 +6,9 @@ module Napoleon
 
     def initialize(id, provider, data)
       @id, @provider, @data = id, provider, (data || {})
-      if @data['course_name'] && @data['url']
-        @data['slug'] = slug(@data['course_name'], @data['url'])
+      if @data['course_name']
+        @data['slug'] =
+          slug(@data['slug'].presence || @data['course_name'].presence)
       end
       super(to_payload, provider)
     end
@@ -16,14 +17,15 @@ module Napoleon
       { 'resource_id' => id, 'content' => data }
     end
 
-    def slug(course_name, course_url)
+    def slug(source)
       [
-        I18n.transliterate(course_name).downcase,
-        digest(Zlib.crc32(course_url))
+        I18n.transliterate(source).downcase,
+        digest(Zlib.crc32("#{@provider.id}-#{@id}"))
       ].join('-')
         .gsub(/[\s\_\-]+/, '-')
         .gsub(/[^0-9a-z\-]/i, '')
         .gsub(/(^\-)|(\-$)/, '')
+        .gsub(/[\s\_\-]+/, '-')
     end
 
     def digest(n, carry = [])

@@ -1,1 +1,3 @@
 **/*.rb
+
+!app/business/napoleon/integration_resource.rb
