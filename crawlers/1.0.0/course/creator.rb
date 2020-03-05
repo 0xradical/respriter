@@ -69,52 +69,46 @@ unless owned_domain
 end
 
 if errors.any?
-  pipe_process.accumulator = {
-    kind:      'crawling_event',
-    unique_id: Digest::SHA1.hexdigest("#{pipe_process.id}-invalid_course"),
-    content: {
-      type:        'invalid_course',
-      pipeline_id: pipe_process.pipeline_id,
-      errors:      errors.to_a,
-      url:         pipe_process.initial_accumulator[:url],
-      crawler_id:  pipeline.data[:crawler_id]
-    },
-    relations: Hash.new
+  pipe_process.accumulator[:crawling_event] = {
+    type:            'invalid_course',
+    pipeline_id:     pipe_process.pipeline_id,
+    pipe_process_id: pipe_process.id,
+    errors:          errors.to_a,
+    url:             pipe_process.initial_accumulator[:url],
+    crawler_id:      pipeline.data[:crawler_id]
   }
-else
-  if Napoleon::SafeMarkdownRenderer.valid?(content[:description])
-    validated_content['slug'] = [
-      I18n.transliterate((validated_content['slug'] || content[:course_name]).to_s).downcase,
-      Resource.digest(Zlib.crc32("#{content[:provider_id]}-#{content[:id]}"))
-    ].join('-')
-      .gsub(/[\s\_\-]+/, '-')
-      .gsub(/[^0-9a-z\-]/i, '')
-      .gsub(/(^\-)|(\-$)/, '')
-      .gsub(/[\s\_\-]+/, '-')
-
-    pipe_process.accumulator = {
-      kind: 'course',
-      schema_version: '1.0.0',
-      unique_id:
-        Digest::SHA1.hexdigest("#{pipeline.data[:crawler_id]}-#{content[:id]}"),
-      content: validated_content,
-      relations: Hash.new
-    }
-  else
-    pipe_process.accumulator = {
-      kind:      'crawling_event',
-      unique_id: Digest::SHA1.hexdigest("#{pipe_process.id}-invalid_course"),
-      content: {
-        type:        'invalid_course_description',
-        pipeline_id: pipe_process.pipeline_id,
-        errors:      errors.to_a,
-        url:         pipe_process.initial_accumulator[:url],
-        crawler_id:  pipeline.data[:crawler_id],
-        description: content[:description]
-      },
-      relations: Hash.new
-    }
-  end
+  raise Pipe::Error.new(:skipped, 'Invalid Course')
 end
+
+unless Napoleon::SafeMarkdownRenderer.valid?(content[:description])
+  pipe_process.accumulator[:crawling_event] = {
+    pipe_process_id: pipe_process.id,
+    type:            'invalid_course_description',
+    pipeline_id:     pipe_process.pipeline_id,
+    errors:          errors.to_a,
+    url:             pipe_process.initial_accumulator[:url],
+    crawler_id:      pipeline.data[:crawler_id],
+    description:     content[:description]
+  }
+  raise Pipe::Error.new(:skipped, 'Invalid Course Description')
+end
+
+validated_content['slug'] = [
+  I18n.transliterate((validated_content['slug'] || content[:course_name]).to_s).downcase,
+  Resource.digest(Zlib.crc32("#{content[:provider_id]}-#{content[:id]}"))
+].join('-')
+  .gsub(/[\s\_\-]+/, '-')
+  .gsub(/[^0-9a-z\-]/i, '')
+  .gsub(/(^\-)|(\-$)/, '')
+  .gsub(/[\s\_\-]+/, '-')
+
+pipe_process.accumulator = {
+  kind: 'course',
+  schema_version: '1.0.0',
+  unique_id:
+    Digest::SHA1.hexdigest("#{pipeline.data[:crawler_id]}-#{content[:id]}"),
+  content: validated_content,
+  relations: Hash.new
+}
 
 call

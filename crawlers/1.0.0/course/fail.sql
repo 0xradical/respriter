@@ -71,9 +71,10 @@ INSERT INTO app.pipe_processes (
   ($1.data->>'crawling_events_pipeline_id')::uuid,
   jsonb_build_object(
     'crawling_event', jsonb_build_object(
-      'type',    'course_internal_error',
-      'url',     initial_accumulator->>'url',
-      'details', accumulator
+      'type',            'course_internal_error',
+      'url',             initial_accumulator->>'url',
+      'pipe_process_id', id::varchar,
+      'details',         accumulator
     )
   )
 FROM app.pipe_processes

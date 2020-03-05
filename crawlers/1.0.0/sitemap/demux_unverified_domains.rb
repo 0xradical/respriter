@@ -30,6 +30,7 @@ pipe_process.accumulator = unverified_domains.map do |domain|
       crawling_event: {
         pipe_process_id: pipe_process.id,
         pipeline_id:     pipeline.id,
+        digest:          Digest::SHA1.hexdigest(domain),
         type:            'unverified_sitemap_domain',
         url:             pipe_process.initial_accumulator[:url],
         domain:          domain,
