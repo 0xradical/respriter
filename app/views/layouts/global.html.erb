@@ -202,20 +202,19 @@
           </div>
 
           <div class='col-12 col-md-3'>
-          <!--
             <h2 class='el:amx-Fs(1em) el:amx-C_fgM el:amx-Mt(0.875em)@sm el:amx-Mb(1.75em)'>
               Classpert Index Tool
             </h2>
             <ul class='el:m-list el:amx-Fs(0.875em)'>
               <li class='el:amx-Mb(1em)'>
-                <%#= link_to get_listed_path, class: 'el:amx-C_fgV c-link c-link--white' do %>
-                  <%#= image_pack_tag('media/svg/flask.svg', class: 'el:amx-Mr(0.125em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %> Get Listed <sup>beta</sup>
-                <%# end %>
+                <%= link_to get_listed_path, class: 'el:amx-C_fgV c-link c-link--white' do %>
+                  <%= image_pack_tag('media/svg/flask.svg', class: 'el:amx-Mr(0.125em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %> Get Listed <sup>beta</sup>
+                <% end %>
               </li>
               <li>
-                <%#= link_to 'Documentation', listing_api_documentation_url, class: 'el:amx-C_fgV c-link c-link--white', target: '_blank' %>
+                <%= link_to 'Documentation', listing_api_documentation_url, class: 'el:amx-C_fgV c-link c-link--white', target: '_blank' %>
               </li>
-            </ul>-->
+            </ul>
 
             <h2 class='el:amx-Fs(1em) el:amx-C_fgM el:amx-Mt(1em) el:amx-Mb(1.75em)'>
               <%= t('dictionary.about') %>
