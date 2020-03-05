@@ -13,3 +13,5 @@ pipes:
     script: demux.rb
   - type:   Demux
     script: demux_sitemaps.rb
+  - type:   Demux
+    script: demux_unverified_domains.rb
