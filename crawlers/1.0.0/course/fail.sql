@@ -73,6 +73,7 @@ INSERT INTO app.pipe_processes (
     'crawling_event', jsonb_build_object(
       'type',            'course_internal_error',
       'url',             initial_accumulator->>'url',
+      'pipeline_id',     $1.id,
       'pipe_process_id', id::varchar,
       'details',         accumulator
     )
