@@ -2,7 +2,7 @@ module Developers
   class SessionsController < ::UserAccounts::SessionsController
     def new
       flash[:notice] =
-        'You must be signed in on Classpert.com to access the developers dashboard'
+        'You must be signed in on Classpert.com to access the Index Tool dashboard'
       redirect_to user_account_session_path
     end
 
