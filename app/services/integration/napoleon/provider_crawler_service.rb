@@ -36,7 +36,7 @@ module Integration
         start if scheduled
       end
 
-      def start
+      def start!
         raise CrawlerNotReady unless prepared?
         self.error = nil
 
@@ -51,9 +51,15 @@ module Integration
             end
           end
         end
+
+        raise self.error if self.error
       end
 
-      def stop
+      def start
+        start! || true rescue false
+      end
+
+      def stop!
         raise CrawlerNotReady unless prepared?
 
         self.error = nil
@@ -72,6 +78,12 @@ module Integration
             end
           end
         end
+
+        raise self.error if self.error
+      end
+
+      def stop
+        stop! || true rescue false
       end
 
       def cleanup
