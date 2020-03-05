@@ -57,12 +57,17 @@ namespace :system do
   namespace :scheduler do
     desc 'Pull courses from Napoleon'
     task :courses_service, %i[dataset_sequence] => %i[environment] do |t, args|
-      Integration::Napoleon::CourseService.run(args[:dataset_sequence] || Course.current_dataset_sequence)
+      Integration::Napoleon::CourseService.run(
+        args[:dataset_sequence] || Course.current_dataset_sequence
+      )
     end
 
     desc 'Pull crawling events from Napoleon'
-    task :crawling_events_service, %i[dataset_sequence] => %i[environment] do |t, args|
-      Integration::Napoleon::CrawlingEventService.run(args[:dataset_sequence])
+    task :crawling_events_service,
+         %i[dataset_sequence] => %i[environment] do |t, args|
+      Integration::Napoleon::CrawlingEventService.run(
+        args[:dataset_sequence] || CrawlingEvent.current_sequence
+      )
     end
 
     desc 'Pull tracked actions from all AFNs'

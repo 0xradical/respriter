@@ -51,7 +51,7 @@ validated_content = content.deep_dup.deep_stringify_keys
 errors = public_validator('course', '1.0.0').validate validated_content
 
 owned_domain = pipeline.data[:domains].any? do |domain|
-  domain_without_www = domain.gsub /^www\./, ''
+  domain_without_www = domain.gsub(/^www\./, '')
   content[:url].match %r{^https?\:\/\/([a-zA-Z\-\_0-9]+\.)*#{domain_without_www}\/}
 end
 
