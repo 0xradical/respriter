@@ -83,6 +83,15 @@ if errors.any?
   }
 else
   if Napoleon::SafeMarkdownRenderer.valid?(content[:description])
+    validated_content['slug'] = [
+      I18n.transliterate((validated_content['slug'] || content[:course_name]).to_s).downcase,
+      Resource.digest(Zlib.crc32("#{content[:provider_id]}-#{content[:id]}"))
+    ].join('-')
+      .gsub(/[\s\_\-]+/, '-')
+      .gsub(/[^0-9a-z\-]/i, '')
+      .gsub(/(^\-)|(\-$)/, '')
+      .gsub(/[\s\_\-]+/, '-')
+
     pipe_process.accumulator = {
       kind: 'course',
       schema_version: '1.0.0',

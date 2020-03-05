@@ -575,7 +575,6 @@
         "required": [
           "course_name",
           "url",
-          "slug",
           "free_content",
           "paid_content",
           "description",
