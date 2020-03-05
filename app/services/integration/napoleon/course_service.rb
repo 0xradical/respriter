@@ -18,14 +18,15 @@ module Integration
         ]
       }
 
-      def run(dataset_sequence = Course.current_dataset_sequence)
+      def run(dataset_sequence = nil)
+        dataset_sequence = Course.current_dataset_sequence if dataset_sequence.blank? || dataset_sequence == 0
         ::Napoleon::ResourceStreamer.new(STREAMER_PARAMS).resources(dataset_sequence) do |resource|
           Course.upsert resource.to_course
         end
       end
 
       class << self
-        def run(dataset_sequence = Course.current_dataset_sequence)
+        def run(dataset_sequence = nil)
           self.new.run dataset_sequence
         end
       end

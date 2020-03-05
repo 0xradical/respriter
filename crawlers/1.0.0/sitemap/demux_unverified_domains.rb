@@ -4,8 +4,7 @@ unverified_domains = Set.new
 
 has_verified_domain = lambda do |url|
   pipeline.data[:domains].any? do |domain|
-    domain_without_www =
-      domain.gsub(/^www\./, '')
+    domain_without_www = domain.gsub(/^www\./, '')
     url.match %r{^https?\:\/\/([a-zA-Z\-\_0-9]+\.)*#{domain_without_www}\/}
   end
 end

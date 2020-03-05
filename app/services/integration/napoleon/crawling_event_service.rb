@@ -14,17 +14,17 @@ module Integration
         ]
       }
 
-      def run(sequence = CrawlingEvent.current_sequence)
+      def run(sequence = nil)
+        sequence = CrawlingEvent.current_sequence if sequence.blank? || sequence == 0
         ::Napoleon::ResourceStreamer.new(STREAMER_PARAMS).resources(
           sequence
         ) do |resource|
-          # binding.pry
           CrawlingEvent.create!(resource.to_crawling_event).process
         end
       end
 
       class << self
-        def run(sequence = CrawlingEvent.current_sequence)
+        def run(sequence = nil)
           self.new.run sequence
         end
       end
