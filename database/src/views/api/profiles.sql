@@ -59,10 +59,20 @@ EXCEPTION
     IF exception_sql_state IN ('23514', '23505') AND exception_constraint_name IS NOT NULL THEN
       exception_column_name := REGEXP_REPLACE(exception_constraint_name, '(.*)__(.*)', '\1');
       exception_sql_state := 'constraint';
+
+      exception_detail := (
+        CASE exception_column_name
+          WHEN 'used_usernames_username_idx' THEN '010001'
+          WHEN 'used_usernames_profile_id_username_idx'  THEN '010002'
+          ELSE '010000'
+        END
+      );
+
     END IF;
 
     RAISE EXCEPTION '%', exception_message
-      USING DETAIL = 'error', HINT = 'profiles.' || COALESCE(exception_sql_state,'error') || '.' || exception_column_name;
+      USING DETAIL = COALESCE(exception_detail, 'error'), HINT = exception_hint;
+
   END IF;
 END;
 $$ LANGUAGE plpgsql;

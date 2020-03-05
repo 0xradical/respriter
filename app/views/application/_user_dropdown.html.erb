@@ -1,8 +1,8 @@
 <div class='el:o-dropdown'>
   <a href='javascript:void(0)' class='el:o-dropdown__action'>
     <div class="el:m-avatar el:m-avatar--circle el:m-avatar--2x2em">
-      <% if current_user_account.profile.avatar_url %>
-        <%= image_tag current_user_account.profile&.avatar_url %>
+      <% if current_user_account&.profile&.avatar_url %>
+        <%= image_tag current_user_account&.profile&.avatar_url %>
       <% else %>
         <%= image_pack_tag 'media/svg/avatar-default.svg' %>
       <% end %>

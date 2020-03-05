@@ -23,10 +23,10 @@
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class='el:m-form-field'>
           <div class='el:m-form-field__label el:m-form-field__label--over'>
-            <%= f.label :email %>
+            <%= f.label :login, t('activerecord.attributes.user.login') %>
           </div>
           <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+            <%= f.text_field :login, autofocus: true %>
           </div>
         </div>
 

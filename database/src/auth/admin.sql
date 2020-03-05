@@ -30,6 +30,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.providers             TO
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.provider_crawlers     TO "admin";
 GRANT SELECT                                     ON app.tracked_actions       TO "admin";
 GRANT SELECT                                     ON app.tracked_searches      TO "admin";
+GRANT SELECT, INSERT, UPDATE, DELETE             ON app.used_usernames        TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.user_accounts         TO "admin";
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.admin_accounts        TO "admin";

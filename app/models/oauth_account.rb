@@ -29,12 +29,6 @@ class OauthAccount < ApplicationRecord
         end
       end
 
-      oauth_acc.user_account.profile.tap do |profile|
-        profile.oauth_avatar_url   =   oauth['info']['image'] || oauth['info']['picture_url']
-        profile.name               ||= oauth['info']['name']
-        profile.save
-      end
-
       oauth_acc.user_account
 
     end

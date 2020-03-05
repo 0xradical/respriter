@@ -1,4 +1,5 @@
 class Profile < ApplicationRecord
+  has_many :used_usernames
 
   include Imageable::HasOne
   initialize_imageable_module :image
