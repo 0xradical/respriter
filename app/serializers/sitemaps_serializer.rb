@@ -4,12 +4,14 @@ module SitemapsSerializer
   ID_REGEX = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
   STATUS_REGEX = /(verified|invalid|unverified)/
   TYPE_REGEX = /(sitemap|sitemap_index|unknown)/
-  URL_REGEX = %r{https?\:\/\/\w+(\.\w+)+\/([\.\w]*\/?)*}
+  URL_REGEX = %r{https?\:\/\/\w+(\.\w+)+\/([\.\w\-\_]*\/?)*}
   SITEMAP_REGEX = /\,?\"\((?<id>#{ID_REGEX}),(?<status>#{
     STATUS_REGEX
   }),(?<url>#{URL_REGEX}),(?<type>#{TYPE_REGEX})\)\"/
 
   KEYS = %i[id status url type]
+
+{"(53c77a21-5cfd-4931-afd6-182948768499,verified,https://www.lsbr.uk/course-sitemap.xml,sitemap_index)"}
 
   def self.load(value)
     return nil if value.nil?
