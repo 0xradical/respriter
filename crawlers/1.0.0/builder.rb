@@ -25,6 +25,7 @@ def create_pipeline_templates!
     crawler_id: provider_crawler.id,
     user_agent: { version: '1.0.0', token: provider_crawler.user_agent_token },
     sitemaps: verified_sitemaps,
+    urls: provider_crawler.urls,
     domains: verified_domains
   }
   add_pipeline_template sitemap_params

@@ -2,7 +2,7 @@ APP := migrator
 
 NAME := classpert/database
 
-DATABASE_IMAGE_TAG     := 1.3.7
+DATABASE_IMAGE_TAG     := 1.3.8
 DATABASE_IMAGE_NAME    := $(NAME)\:$(DATABASE_IMAGE_TAG)
 DATABASE_IMAGE_VERSION := $(NAME)\:latest
 

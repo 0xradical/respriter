@@ -4,7 +4,7 @@ module SitemapsSerializer
   ID_REGEX = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
   STATUS_REGEX = /(verified|invalid|unverified)/
   TYPE_REGEX = /(sitemap|sitemap_index|unknown)/
-  URL_REGEX = %r{https?\:\/\/\w+(\.\w+)+\/([\.\w\-\_]*\/?)*}
+  URL_REGEX = %r{https?\:\/\/[\w\-\_]+(\.[\w\-\_]+)+\/([\.\w\-\_]*\/?)*}
   SITEMAP_REGEX = /\,?\"\((?<id>#{ID_REGEX}),(?<status>#{
     STATUS_REGEX
   }),(?<url>#{URL_REGEX}),(?<type>#{TYPE_REGEX})\)\"/

@@ -10,5 +10,6 @@ CREATE TABLE app.provider_crawlers (
   user_account_ids bigint[]           DEFAULT    '{}'                      NOT NULL,
   sitemaps         app.sitemap[]      DEFAULT    '{}'                      NOT NULL,
   version          varchar,
-  settings         jsonb
+  settings         jsonb,
+  urls             varchar[]          DEFAULT    '{}'                      NOT NULL
 );

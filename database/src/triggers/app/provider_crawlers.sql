@@ -15,3 +15,9 @@ CREATE CONSTRAINT TRIGGER validate_sitemaps
   ON app.provider_crawlers
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.validate_sitemaps();
+
+CREATE CONSTRAINT TRIGGER validate_provider_crawler_urls
+  AFTER INSERT OR UPDATE
+  ON app.provider_crawlers
+  FOR EACH ROW
+    EXECUTE PROCEDURE triggers.validate_provider_crawler_urls();
