@@ -11,8 +11,6 @@ module SitemapsSerializer
 
   KEYS = %i[id status url type]
 
-{"(53c77a21-5cfd-4931-afd6-182948768499,verified,https://www.lsbr.uk/course-sitemap.xml,sitemap_index)"}
-
   def self.load(value)
     return nil if value.nil?
     return [] if value == '{}'
