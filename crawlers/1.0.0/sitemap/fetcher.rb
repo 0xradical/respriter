@@ -1,4 +1,4 @@
-token = pipeline.data[:token]
+token = pipeline.data[:user_agent][:token]
 
 accumulator = pipe_process.accumulator
 
