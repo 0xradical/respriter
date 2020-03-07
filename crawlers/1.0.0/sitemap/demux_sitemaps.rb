@@ -1,7 +1,7 @@
 document = Nokogiri.XML pipe_process.data[:payload]
 
 entries =
-  document.css('sitemapindex sitemap').map(&:text).map(&:strip).find_all do |url|
+  document.css('sitemapindex sitemap loc').map(&:text).map(&:strip).find_all do |url|
     pipeline.data[:domains].any? do |domain|
       domain_without_www =
         domain.gsub(/^www\./, '')

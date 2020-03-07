@@ -16,7 +16,7 @@ document.css('url loc').map(&:text).map(&:strip).each do |url|
   end
 end
 
-document.css('sitemapindex sitemap').map(&:text).map(&:strip).each do |url|
+document.css('sitemapindex sitemap loc').map(&:text).map(&:strip).each do |url|
   unless has_verified_domain.call(url)
     unverified_domains.add url.match(%r{^https?\:\/\/(?<domain>[^\/]+)\/})[:domain]
   end
