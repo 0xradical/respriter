@@ -7,7 +7,7 @@
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class='el:m-form-field'>
+  <div class='el:m-form-field <%= "el:m-form-field--error" if resource.errors.has_key?(:email) %>'>
     <div class='el:m-form-field__label el:m-form-field__label--over'>
       <%= f.label :email %>
     </div>
@@ -16,7 +16,18 @@
     </div>
   </div>
 
-  <div class='el:m-form-field el:amx-Mt(0.75em)'>
+  <%= f.fields_for :profile, (resource.profile || resource.build_profile) do |profile_fields| %>
+    <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.details[:base]&.select{|error| error[:field] == :username }&.size > 0 %>'>
+      <div class='el:m-form-field__label el:m-form-field__label--over'>
+        <%= profile_fields.label :username %>
+      </div>
+      <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+        <%= profile_fields.text_field :username, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input' %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.has_key?(:password) %>'>
     <div class='el:m-form-field__label el:m-form-field__label--over'>
       <%= f.label :password %>
     </div>
@@ -25,7 +36,7 @@
     </div>
   </div>
 
-  <div class='el:m-form-field el:amx-Mt(0.75em)'>
+  <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.has_key?(:password_confirmation) %>'>
     <div class='el:m-form-field__label el:m-form-field__label--over'>
       <%= f.label :password_confirmation %>
     </div>

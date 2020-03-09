@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+require_relative '../../../lib/pg/result_processor.rb'
 
 class UserAccounts::RegistrationsController < Devise::RegistrationsController
-  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_sign_up_params, only: %i[create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -12,7 +13,22 @@ class UserAccounts::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     build_resource(sign_up_params)
-    if verify_rucaptcha?(resource) && resource.save
+    captcha_verified = verify_rucaptcha?(resource)
+    resource_saved = false
+
+    begin
+      resource_saved = resource.save
+    rescue ActiveRecord::StatementInvalid => e
+      pg_processor = PG::ResultProcessor.new(e.cause.result)
+      resource.errors.add(
+        :base,
+        I18n.t("db.#{pg_processor.error}"),
+        field: :username
+      )
+      resource_saved = false
+    end
+
+    if captcha_verified && resource_saved
       yield resource if block_given?
       if resource.persisted?
         if resource.active_for_authentication?
@@ -20,9 +36,11 @@ class UserAccounts::RegistrationsController < Devise::RegistrationsController
           sign_up(resource_name, resource)
           respond_with resource, location: after_sign_up_path_for(resource)
         else
-          set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+          set_flash_message! :notice,
+                             :"signed_up_but_#{resource.inactive_message}"
           expire_data_after_sign_in!
-          respond_with resource, location: after_inactive_sign_up_path_for(resource)
+          respond_with resource,
+                       location: after_inactive_sign_up_path_for(resource)
         end
       else
         clean_up_passwords resource
@@ -41,8 +59,7 @@ class UserAccounts::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  def update
-  end
+  def update; end
 
   # DELETE /resource
   def destroy
@@ -50,7 +67,9 @@ class UserAccounts::RegistrationsController < Devise::RegistrationsController
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     set_flash_message :notice, :destroyed
     yield resource if block_given?
-    respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
+    respond_with_navigational(resource) do
+      redirect_to after_sign_out_path_for(resource_name)
+    end
   end
 
   # GET /resource/cancel
@@ -64,12 +83,17 @@ class UserAccounts::RegistrationsController < Devise::RegistrationsController
 
   # protected
   def sign_up_params
-    devise_parameter_sanitizer.sanitize(:sign_up).merge(tracking_data: session[:tracking_data])
+    devise_parameter_sanitizer.sanitize(:sign_up).merge(
+      { tracking_data: session[:tracking_data] }
+    )
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:tracking_data])
+    devise_parameter_sanitizer.permit(
+      :sign_up,
+      keys: [:tracking_data, profile_attributes: %i[username]]
+    )
   end
 
   # If you have extra params to permit, append them to the sanitizer.

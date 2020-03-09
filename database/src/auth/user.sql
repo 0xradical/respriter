@@ -20,6 +20,7 @@ GRANT SELECT, INSERT, UPDATE,         REFERENCES ON app.promo_account_logs    TO
 GRANT SELECT, INSERT, UPDATE,         REFERENCES ON app.providers             TO "user";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.provider_crawlers     TO "user";
 GRANT SELECT,         UPDATE,         REFERENCES ON app.user_accounts         TO "user";
+GRANT SELECT, INSERT                             ON app.used_usernames        TO "user";
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.certificates          TO "user";
 GRANT SELECT, INSERT, UPDATE         ON api.crawler_domains       TO "user";

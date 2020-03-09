@@ -19,6 +19,9 @@ Rails.application.routes.draw do
          as: :user_account_registration
   end
 
+  get  '/profile' => 'profiles#new'
+  post '/profile' => 'profiles#create'
+
   devise_scope :user_account do
     get '/developers/sign_in(.:format)' => 'developers/sessions#new',
         as: :new_developer_session_path
