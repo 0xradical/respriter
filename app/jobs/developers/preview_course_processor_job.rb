@@ -51,10 +51,7 @@ module Developers
       document = Nokogiri.HTML(payload)
 
       log(id, 'Looking for Classpert JSON')
-      json =
-        document.css('script[type="application/vnd.classpert+json"] text()')
-          .text
-          .presence
+      json = document.css('script[type="application/vnd.classpert+json"] text()').text.presence
 
       if json.nil?
         raise "#120003: Course page doesn't have a vnd.classpert+json structure"
@@ -70,11 +67,18 @@ module Developers
       schema_version = data.delete('version') || DEFAULT_VERSION
       log(id, "Using #{schema_version} schema version")
 
+      resource =
+      ::Napoleon::IntegrationResource.new(
+        preview_course.id,
+        preview_course.provider,
+        data
+      )
+
       log(id, 'Validating JSON')
       validator =
         Integration::Napoleon::SchemaValidator.new('course', schema_version)
 
-      data, validation_errors = validator.validate(data)
+      _, validation_errors = validator.validate(resource.data)
 
       if validation_errors.size > 0
         validation_errors.each do |validation_error|
@@ -88,13 +92,6 @@ module Developers
 
       log(id, 'Generating resource based on JSON')
       begin
-        resource =
-          ::Napoleon::IntegrationResource.new(
-            preview_course.id,
-            preview_course.provider,
-            data
-          )
-
         PreviewCourse.upsert(
           resource.to_course.merge(expired_at: 20.minutes.from_now)
         )
