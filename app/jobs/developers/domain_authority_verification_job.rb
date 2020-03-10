@@ -239,6 +239,8 @@ module Developers
         raise 'Database error'
       end
     rescue StandardError
+      puts $!
+      puts $!.message
       raise 'Confirmation failed'
     end
 
