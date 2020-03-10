@@ -182,8 +182,9 @@ module Developers
         digest = Digest::MD5.hexdigest(crawler_domain.domain)[0..4]
 
         provider_name =
-          [parsed_domain.trd, parsed_domain.sld].compact
-            .flat_map do |domain_part|
+          [parsed_domain.trd, parsed_domain.sld].compact.flat_map(&:to_s).select do |domain_part|
+            domain_part != "www"
+          end.flat_map do |domain_part|
             derived =
               domain_part.split(/\./).map do |part|
                 part.gsub(/\-/, '_').gsub(/[^A-Za-z0-9_]/, '').camelcase
@@ -194,8 +195,7 @@ module Developers
             ]
           end.sort_by { |h| h[:pos] }.select do |h|
             Provider.where(name: h[:value]).count == 0
-          end.first
-            &.fetch(:value)
+          end.first&.fetch(:value)
       rescue StandardError
         raise '#100006: Name derived from domain url cannot be used'
       end
