@@ -6,10 +6,11 @@ module Napoleon
 
     def initialize(id, provider, data)
       @id, @provider, @data = id, provider, (data || {})
-      if @data['course_name']
-        @data['slug'] =
-          slug(@data['slug'].presence || @data['course_name'].presence)
-      end
+      @data['slug'] =
+        slug(@data['slug'].presence || @data['course_name'].presence)
+      @data['id'] = @data['id']&.strip
+      @data['course_name'] = @data['course_name']&.strip
+      @data['description'] = @data['description']&.strip
       super(to_payload, provider)
     end
 
@@ -18,14 +19,18 @@ module Napoleon
     end
 
     def slug(source)
-      [
-        I18n.transliterate(source).downcase,
-        digest(Zlib.crc32("#{@provider.id}-#{@id}"))
-      ].join('-')
-        .gsub(/[\s\_\-]+/, '-')
-        .gsub(/[^0-9a-z\-]/i, '')
-        .gsub(/(^\-)|(\-$)/, '')
-        .gsub(/[\s\_\-]+/, '-')
+      if source
+        [
+          I18n.transliterate(source).downcase,
+          digest(Zlib.crc32("#{@provider.id}-#{@id}"))
+        ].join('-')
+          .gsub(/[\s\_\-]+/, '-')
+          .gsub(/[^0-9a-z\-]/i, '')
+          .gsub(/(^\-)|(\-$)/, '')
+          .gsub(/[\s\_\-]+/, '-')
+      else
+        nil
+      end
     end
 
     def digest(n, carry = [])
