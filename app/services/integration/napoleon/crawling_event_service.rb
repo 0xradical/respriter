@@ -19,7 +19,9 @@ module Integration
         ::Napoleon::ResourceStreamer.new(STREAMER_PARAMS).resources(
           sequence
         ) do |resource|
-          CrawlingEvent.create!(resource.to_crawling_event).process
+          params = resource.to_crawling_event
+          ProviderCrawler.find_by(id: params[:provider_crawler_id]) or next
+          CrawlingEvent.create!(params).process
         end
       end
 
