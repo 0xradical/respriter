@@ -1,7 +1,7 @@
 require_relative '../../../lib/sitemap/validator.rb'
 
 module Developers
-  class SitemapVerificationJob < Que::Job
+  class SitemapVerificationJob < BaseJob
     class Error < StandardError; end
     SERVICE_NAME = 'sitemap-verification-service'
 
@@ -111,20 +111,6 @@ module Developers
           payload: message
         }.to_json
       )
-    end
-
-    def get_response(url)
-      Net::HTTP.start(
-        url.host,
-        url.port,
-        use_ssl: url.scheme == 'https', open_timeout: 10, read_timeout: 10
-      ) do |http|
-        request = Net::HTTP::Get.new url
-
-        response = http.request request
-      end
-    rescue Net::OpenTimeout
-      raise "Timeout while trying to access #{url}"
     end
   end
 end

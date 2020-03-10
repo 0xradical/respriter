@@ -16,40 +16,50 @@ class UserAccounts::RegistrationsController < Devise::RegistrationsController
     captcha_verified = verify_rucaptcha?(resource)
     resource_saved = false
 
-    begin
-      resource_saved = resource.save
-    rescue ActiveRecord::StatementInvalid => e
-      pg_processor = PG::ResultProcessor.new(e.cause.result)
-      resource.errors.add(
-        :base,
-        I18n.t("db.#{pg_processor.error}"),
-        field: :username
-      )
-      resource_saved = false
-    end
+    if captcha_verified
+      ActiveRecord::Base.transaction do
+        begin
+          resource_saved = resource.save
+        rescue ActiveRecord::StatementInvalid => e
+          pg_processor = PG::ResultProcessor.new(e.cause.result)
+          resource.errors.add(
+            :base,
+            I18n.t("db.#{pg_processor.error}"),
+            field: :username
+          )
+          resource_saved = false
+          raise ActiveRecord::Rollback
+        end
+      end
 
-    if captcha_verified && resource_saved
-      yield resource if block_given?
-      if resource.persisted?
-        if resource.active_for_authentication?
-          set_flash_message! :notice, :signed_up
-          sign_up(resource_name, resource)
-          respond_with resource, location: after_sign_up_path_for(resource)
+      if resource_saved
+        yield resource if block_given?
+        if resource.persisted?
+          if resource.active_for_authentication?
+            set_flash_message! :notice, :signed_up
+            sign_up(resource_name, resource)
+            respond_with resource, location: after_sign_up_path_for(resource)
+          else
+            set_flash_message! :notice,
+                               :"signed_up_but_#{resource.inactive_message}"
+            expire_data_after_sign_in!
+            respond_with resource,
+                         location: after_inactive_sign_up_path_for(resource)
+          end
         else
-          set_flash_message! :notice,
-                             :"signed_up_but_#{resource.inactive_message}"
-          expire_data_after_sign_in!
-          respond_with resource,
-                       location: after_inactive_sign_up_path_for(resource)
+          clean_up_passwords resource
+          set_minimum_password_length
+          respond_with_navigational(resource) { render :new }
         end
       else
         clean_up_passwords resource
         set_minimum_password_length
-        respond_with resource
+        respond_with_navigational(resource) { render :new }
       end
     else
       clean_up_passwords resource
-      respond_with resource
+      set_minimum_password_length
+      respond_with_navigational(resource) { render :new }
     end
   end
 

@@ -1,5 +1,5 @@
 module Developers
-  class PreviewCourseProcessorJob < Que::Job
+  class PreviewCourseProcessorJob < BaseJob
     SERVICE_NAME = 'debug-tool-service'
     DEFAULT_VERSION = '1.0.0'
 
@@ -178,20 +178,6 @@ module Developers
           payload: message
         }.to_json
       )
-    end
-
-    def get_response(url)
-      Net::HTTP.start(
-        url.host,
-        url.port,
-        use_ssl: url.scheme == 'https', open_timeout: 10, read_timeout: 10
-      ) do |http|
-        request = Net::HTTP::Get.new url
-
-        response = http.request request
-      end
-    rescue Net::OpenTimeout
-      raise "Timeout while trying to access #{url}"
     end
   end
 end

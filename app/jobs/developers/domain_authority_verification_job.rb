@@ -2,7 +2,7 @@ require 'dnsruby'
 #require 'syslogger'
 
 module Developers
-  class DomainAuthorityVerificationJob < Que::Job
+  class DomainAuthorityVerificationJob < BaseJob
     class Error < StandardError; end
     SERVICE_NAME = 'domain-validation-service'
     RETRY_MAX = 10
@@ -182,8 +182,9 @@ module Developers
         digest = Digest::MD5.hexdigest(crawler_domain.domain)[0..4]
 
         provider_name =
-          [parsed_domain.trd, parsed_domain.sld].compact
-            .flat_map do |domain_part|
+          [parsed_domain.trd, parsed_domain.sld].compact.flat_map(&:to_s).select do |domain_part|
+            domain_part != "www"
+          end.flat_map do |domain_part|
             derived =
               domain_part.split(/\./).map do |part|
                 part.gsub(/\-/, '_').gsub(/[^A-Za-z0-9_]/, '').camelcase
@@ -194,8 +195,7 @@ module Developers
             ]
           end.sort_by { |h| h[:pos] }.select do |h|
             Provider.where(name: h[:value]).count == 0
-          end.first
-            &.fetch(:value)
+          end.first&.fetch(:value)
       rescue StandardError
         raise '#100006: Name derived from domain url cannot be used'
       end
@@ -238,8 +238,8 @@ module Developers
       else
         raise 'Database error'
       end
-    rescue StandardError
-      raise "Confirmation failed\n#{$!.to_s}\n#{$!.message}"
+    rescue StandardError => e
+      raise "Confirmation failed: #{e.message}"
     end
 
     def detect_sitemap(crawler_domain, provider_crawler)
@@ -395,20 +395,6 @@ module Developers
 
     def stop_heartbeat
       @heartbeat.kill if !@exit
-    end
-
-    def get_response(url)
-      Net::HTTP.start(
-        url.host,
-        url.port,
-        use_ssl: url.scheme == 'https', open_timeout: 10, read_timeout: 10
-      ) do |http|
-        request = Net::HTTP::Get.new url
-
-        response = http.request request
-      end
-    rescue Net::OpenTimeout
-      raise "Timeout while trying to access #{url}"
     end
   end
 end
