@@ -2,7 +2,7 @@ require 'dnsruby'
 #require 'syslogger'
 
 module Developers
-  class DomainAuthorityVerificationJob < Que::Job
+  class DomainAuthorityVerificationJob < BaseJob
     class Error < StandardError; end
     SERVICE_NAME = 'domain-validation-service'
     RETRY_MAX = 10
@@ -238,8 +238,8 @@ module Developers
       else
         raise 'Database error'
       end
-    rescue StandardError
-      raise "Confirmation failed\n#{$!.to_s}\n#{$!.message}"
+    rescue StandardError => e
+      raise "Confirmation failed: #{e.message}"
     end
 
     def detect_sitemap(crawler_domain, provider_crawler)
@@ -395,20 +395,6 @@ module Developers
 
     def stop_heartbeat
       @heartbeat.kill if !@exit
-    end
-
-    def get_response(url)
-      Net::HTTP.start(
-        url.host,
-        url.port,
-        use_ssl: url.scheme == 'https', open_timeout: 10, read_timeout: 10
-      ) do |http|
-        request = Net::HTTP::Get.new url
-
-        response = http.request request
-      end
-    rescue Net::OpenTimeout
-      raise "Timeout while trying to access #{url}"
     end
   end
 end

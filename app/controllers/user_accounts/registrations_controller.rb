@@ -45,11 +45,12 @@ class UserAccounts::RegistrationsController < Devise::RegistrationsController
       else
         clean_up_passwords resource
         set_minimum_password_length
-        respond_with resource
+        respond_with_navigational(resource) { render :new }
       end
     else
       clean_up_passwords resource
-      respond_with resource
+      set_minimum_password_length
+      respond_with_navigational(resource) { render :new }
     end
   end
 
