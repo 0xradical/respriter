@@ -239,9 +239,7 @@ module Developers
         raise 'Database error'
       end
     rescue StandardError
-      puts $!
-      puts $!.message
-      raise 'Confirmation failed'
+      raise "Confirmation failed\n#{$!.to_s}\n#{$!.message}"
     end
 
     def detect_sitemap(crawler_domain, provider_crawler)
