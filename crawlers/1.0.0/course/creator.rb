@@ -45,6 +45,11 @@ content[:stale]           = false
 content[:execution_id]    = pipeline.pipeline_execution_id
 content[:url]           ||= pipe_process.initial_accumulator[:url]
 
+content[:id]          = content[:id]&.strip
+content[:course_name] = content[:course_name]&.strip
+content[:description] = content[:description]&.strip
+
+
 content[:published] = content[:published].nil? ? true : content[:published]
 
 validated_content = content.deep_dup.deep_stringify_keys
