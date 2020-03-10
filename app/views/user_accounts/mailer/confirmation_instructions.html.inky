@@ -1,0 +1,43 @@
+<wrapper class="header">
+  <container>
+    <row>
+      <columns>
+        <spacer size="32"></spacer>
+
+        <center>
+          <img src="<%= elements_asset_path('pngs/brand/logo.png') %>" height='50px'>
+        </center>
+
+        <spacer size="16"></spacer>
+      </columns>
+    </row>
+
+    <row>
+      <columns>
+        <spacer class='separator' size='1'></spacer>
+      </columns>
+    </row>
+
+    <row>
+      <columns>
+        <spacer size="24"></spacer>
+
+        <p>
+          <b>
+            Welcome <%= @email %>!
+          </b>
+        </p>
+
+        <spacer size="24"></spacer>
+
+        <p>You can confirm your account email through the link below:</p>
+
+        <spacer size="24"></spacer>
+
+        <p>
+          <%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %>
+        </p>
+      </columns>
+    </row>
+  </container>
+</wrapper>

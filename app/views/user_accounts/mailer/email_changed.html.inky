@@ -1,0 +1,42 @@
+<wrapper class="header">
+  <container>
+    <row>
+      <columns>
+        <spacer size="32"></spacer>
+
+        <center>
+          <img src="<%= elements_asset_path('pngs/brand/logo.png') %>" height='50px'>
+        </center>
+
+        <spacer size="16"></spacer>
+      </columns>
+    </row>
+
+    <row>
+      <columns>
+        <spacer class='separator' size='1'></spacer>
+      </columns>
+    </row>
+
+    <row>
+      <columns>
+        <spacer size="24"></spacer>
+
+        <p>
+          <b>
+            Hello <%= @email %>!
+          </b>
+        </p>
+
+        <spacer size="24"></spacer>
+
+        <% if @resource.try(:unconfirmed_email?) %>
+          <p>We're contacting you to notify you that your email is being changed to <%= @resource.unconfirmed_email %>.</p>
+        <% else %>
+          <p>We're contacting you to notify you that your email has been changed to <%= @resource.email %>.</p>
+        <% end %>
+
+      </columns>
+    </row>
+  </container>
+</wrapper>
