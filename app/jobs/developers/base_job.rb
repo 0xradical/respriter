@@ -1,6 +1,6 @@
 module Developers
   class BaseJob < Que::Job
-    CLASSPERT_BOT_UA = -> (token) { "Napoleon Crawler (token: #{token})" }
+    CLASSPERT_BOT_UA = -> (token) { "ClasspertBot (token: #{token})" }
     LOGGER = Logger.new(STDOUT).tap do |logger|
       logger.formatter  = proc do |severity, datetime, progname, msg|
         "#{msg}\n"
