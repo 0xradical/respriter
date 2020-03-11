@@ -1,41 +1,33 @@
 require 'dnsruby'
-#require 'syslogger'
 
 module Developers
   class DomainAuthorityVerificationJob < BaseJob
-    class Error < StandardError; end
     SERVICE_NAME = 'domain-validation-service'
     RETRY_MAX = 10
     RETRY_WINDOW = 30 # seconds
     RETRY_HEARTBEATS = 5
 
-    self.priority = 100
-    class << self
-      attr_accessor :session_id
-    end
-
-    attr_reader :logger
     attr_accessor :retries
 
     def initialize(*)
       super
-      @logger = Logger.new(STDOUT)
-      @logger.formatter =
-        proc { |severity, datetime, progname, msg| "#{msg}\n" }
       @exit = false
       @retries = 0
       @elapsed = 0
     end
 
-    def run(id, user_id, session_id)
-      Class.new(self.class).tap { |klass| klass.session_id = session_id }.new(
-        {}
-      )
-        .verify(id, user_id)
+    def run(crawler_domain_id, user_account_id, session_id)
+      job = Class.new(self.class).tap do |klass|
+        klass.session_id = session_id
+        klass.service_name = SERVICE_NAME
+        klass.user_agent_token = nil
+      end.new({})
+
+      job.process(crawler_domain_id, user_account_id)
     end
 
-    def verify(id, user_id)
-      log(id, 'Started domain verification')
+    def process(id, user_id)
+      log('Started domain verification')
 
       crawler_domain = CrawlerDomain.find_by(id: id)
       if crawler_domain.nil?
@@ -62,23 +54,23 @@ module Developers
       end
 
       loop do
-        log(id, 'Retrying verification') if (self.retries > 0)
+        log('Retrying verification') if (self.retries > 0)
 
         if check_html(crawler_domain)
           confirm!(user_id, crawler_domain, 'html')
-          log(id, 'Successfully verified domain via HTML')
+          log('Successfully verified domain via HTML')
 
           return
         elsif check_dns(crawler_domain)
           confirm!(user_id, crawler_domain, 'dns')
-          log(id, 'Successfully verified domain via DNS')
+          log('Successfully verified domain via DNS')
 
           return
         else
           self.retries += 1
 
           if self.retries <= RETRY_MAX
-            log(id, '#100004: Domain validation failed temporarily', :error)
+            log('#100004: Domain validation failed temporarily', :error)
             start_heartbeat(crawler_domain)
           else
             CrawlerDomain.transaction do
@@ -86,7 +78,7 @@ module Developers
               expire
             end
 
-            log(id, '#100005: Domain validation failed permanently', :error)
+            log('#100005: Domain validation failed permanently', :error)
             return
           end
         end
@@ -101,16 +93,16 @@ module Developers
         expire
       end
 
-      log(id, e.message, :error)
+      log(e.message, :error)
     end
 
     def check_html(crawler_domain)
-      log(crawler_domain.id, 'Verifying HTML page')
+      log('Verifying HTML page')
 
       crawler_domain.possible_uris.each do |u|
         begin
           uri = URI.parse(u.to_s)
-          log(crawler_domain.id, "Trying #{uri.scheme.upcase} (#{uri.to_s})")
+          log("Trying #{uri.scheme.upcase} (#{uri.to_s})")
           response = get_response(uri)
 
           if response.code == '200'
@@ -126,14 +118,13 @@ module Developers
             end
           else
             log(
-              crawler_domain.id,
               "HTML Verification for #{u.to_s} failed (status code: #{
                 response.code
               })"
             )
           end
         rescue StandardError
-          log(crawler_domain.id, 'Could not verify via HTML')
+          log('Could not verify via HTML')
           false
         end
       end
@@ -142,29 +133,29 @@ module Developers
     end
 
     def check_dns(crawler_domain)
-      log(crawler_domain.id, 'Verifying DNS entries')
+      log('Verifying DNS entries')
       resolver = Dnsruby::DNS.new
 
       # DNS by TXT entry
       begin
-        log(crawler_domain.id, 'Looking for token in TXT DNS entries')
+        log('Looking for token in TXT DNS entries')
         resolver.each_resource(crawler_domain.domain, 'TXT') do |rr|
           return true if rr.data == crawler_domain.authority_txt
         end
-        log(crawler_domain.id, 'Could not find matching TXT DNS entries')
+        log('Could not find matching TXT DNS entries')
       rescue Exception => e
-        log(crawler_domain.id, 'Could not verify via TXT DNS entries')
+        log('Could not verify via TXT DNS entries')
         nil
       end
 
       begin
-        log(crawler_domain.id, 'Looking for token in CNAME DNS entries')
+        log('Looking for token in CNAME DNS entries')
         resolver.each_resource(crawler_domain.authority_cname, 'CNAME') do |rr|
           return true if rr.rdata.to_s == 'verification.classpert.com'
         end
-        log(crawler_domain.id, 'Could not find matching CNAME DNS entries')
+        log('Could not find matching CNAME DNS entries')
       rescue Exception => e
-        log(crawler_domain.id, 'Could not verify via CNAME DNS entries')
+        log('Could not verify via CNAME DNS entries')
       end
 
       false
@@ -175,7 +166,7 @@ module Developers
       provider_crawler = nil
       provider_name = nil
 
-      log(crawler_domain.id, 'Deriving name from domain')
+      log('Deriving name from domain')
 
       begin
         parsed_domain = PublicSuffix.parse(crawler_domain.domain)
@@ -201,7 +192,7 @@ module Developers
       end
 
       if provider_name
-        log(crawler_domain.id, 'Successfully derived name from domain')
+        log('Successfully derived name from domain')
       else
         raise '#100007: Name derivation from domain failed'
       end
@@ -234,7 +225,7 @@ module Developers
 
       if provider && provider_crawler
         detect_sitemap(crawler_domain, provider_crawler)
-        setup_provider_crawler(crawler_domain, provider_crawler)
+        setup_provider_crawler(provider_crawler)
       else
         raise 'Database error'
       end
@@ -243,7 +234,7 @@ module Developers
     end
 
     def detect_sitemap(crawler_domain, provider_crawler)
-      log(crawler_domain.id, 'Trying to detect sitemap automatically')
+      log('Trying to detect sitemap automatically')
 
       robot_method =
         proc do |uri|
@@ -271,7 +262,7 @@ module Developers
       crawler_domain.possible_uris.each do |uri|
         methods.each do |method_file, method_processor|
           uri.path = "/#{method_file}"
-          log(crawler_domain.id, "Looking for #{uri.to_s}")
+          log("Looking for #{uri.to_s}")
 
           sitemap =
             (
@@ -291,7 +282,7 @@ module Developers
             )
             return
           else
-            log(crawler_domain.id, "Could not find #{uri.to_s}")
+            log("Could not find #{uri.to_s}")
           end
         end
       end
@@ -312,7 +303,7 @@ module Developers
     def verify_sitemap(
       crawler_domain, provider_crawler, sitemap_url, sitemap_id
     )
-      log(crawler_domain.id, 'Sitemap detected, enqueuing for validation')
+      log('Sitemap detected, enqueuing for validation')
 
       provider_crawler.update(
         sitemaps: [
@@ -325,15 +316,15 @@ module Developers
         ]
       )
 
-      # run synchronously
-      Class.new(::Developers::SitemapVerificationJob).tap do |klass|
-        klass.session_id = self.class.session_id
-      end.new({})
-        .verify(provider_crawler.id, sitemap_id)
+      ::Developers::SitemapVerificationJob.new({}).run(
+        provider_crawler.id,
+        sitemap_id,
+        self.class.session_id
+      )
     end
 
-    def setup_provider_crawler(crawler_domain, provider_crawler)
-      log(crawler_domain.id, 'Configuring domain crawler')
+    def setup_provider_crawler(provider_crawler)
+      log('Configuring domain crawler')
 
       crawler_service =
         ::Integration::Napoleon::ProviderCrawlerService.new(
@@ -345,21 +336,10 @@ module Developers
       if crawler_service.error
         raise crawler_service.error
       else
-        log(crawler_domain.id, 'Successfully configured domain crawler')
+        log('Successfully configured domain crawler')
       end
     rescue StandardError => e
-      log(crawler_domain.id, '#100008: Domain configuration failed', :error)
-    end
-
-    def log(ctx_id, message, level = :info)
-      self.logger.send(
-        level,
-        {
-          id: SecureRandom.uuid,
-          ps: { id: (self.class.session_id || ctx_id), name: SERVICE_NAME },
-          payload: message
-        }.to_json
-      )
+      log('#100008: Domain configuration failed', :error)
     end
 
     def start_heartbeat(crawler_domain)
@@ -375,7 +355,6 @@ module Developers
 
             if (@elapsed < RETRY_WINDOW)
               log(
-                crawler_domain.id,
                 "Will retry verification in #{
                   (RETRY_WINDOW - @elapsed).abs
                 } seconds (#{self.retries} out of #{RETRY_MAX} retries)"

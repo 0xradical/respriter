@@ -2,29 +2,20 @@ require_relative '../../../lib/sitemap/validator.rb'
 
 module Developers
   class SitemapVerificationJob < BaseJob
-    class Error < StandardError; end
     SERVICE_NAME = 'sitemap-verification-service'
 
-    self.priority = 100
-    class << self
-      attr_accessor :session_id
+    def run(provider_crawler_id, sitemap_id, session_id = sitemap_id)
+      job = Class.new(self.class).tap do |klass|
+        klass.session_id = session_id
+        klass.service_name = SERVICE_NAME
+        klass.user_agent_token = ProviderCrawler.find_by(id: provider_crawler_id)&.user_agent_token
+      end.new({})
+
+      job.process(provider_crawler_id, sitemap_id)
     end
 
-    attr_reader :logger
-
-    def initialize(*)
-      super
-      @logger = Logger.new(STDOUT)
-      @logger.formatter =
-        proc { |severity, datetime, progname, msg| "#{msg}\n" }
-    end
-
-    def run(id, sitemap_id)
-      verify(id, sitemap_id)
-    end
-
-    def verify(id, sitemap_id)
-      log(sitemap_id, 'Started sitemap verification')
+    def process(id, sitemap_id)
+      log('Started sitemap verification')
 
       provider_crawler = ProviderCrawler.find_by(id: id)
       if provider_crawler.nil?
@@ -36,7 +27,7 @@ module Developers
 
       raise '#110000: Sitemap structure not found on database' if sitemap.nil?
 
-      log(sitemap_id, 'Fetching sitemap')
+      log('Fetching sitemap')
       response = get_response(URI.parse(sitemap[:url].to_s))
 
       if response.code != '200'
@@ -52,10 +43,10 @@ module Developers
         raise '#110003: Error while detecting sitemap type'
       else
         ProviderCrawler.transaction do
-          log(sitemap_id, 'Successfully detected sitemap type')
+          log('Successfully detected sitemap type')
           update_sitemap(sitemap, provider_crawler, 'verified', validation)
-          setup_provider_crawler(sitemap_id, provider_crawler)
-          log(sitemap_id, 'Finished sitemap verification')
+          setup_provider_crawler(provider_crawler)
+          log('Finished sitemap verification')
           finish
         end
       end
@@ -72,7 +63,7 @@ module Developers
           expire
         end
 
-        log(sitemap_id, error.message, :error)
+        log(error.message, :error)
       end
     end
 
@@ -83,8 +74,8 @@ module Developers
       provider_crawler.save
     end
 
-    def setup_provider_crawler(id, provider_crawler)
-      log(id, 'Configuring domain crawler')
+    def setup_provider_crawler(provider_crawler)
+      log('Configuring domain crawler')
 
       crawler_service =
         ::Integration::Napoleon::ProviderCrawlerService.new(
@@ -96,21 +87,10 @@ module Developers
       if crawler_service.error
         raise crawler_service.error
       else
-        log(id, 'Successfully configured domain crawler')
+        log('Successfully configured domain crawler')
       end
     rescue StandardError => e
-      log(id, '#100008: Domain configuration failed', :error)
-    end
-
-    def log(ctx_id, message, level = :info)
-      self.logger.public_send(
-        level,
-        {
-          id: SecureRandom.uuid,
-          ps: { id: (self.class.session_id || ctx_id), name: SERVICE_NAME },
-          payload: message
-        }.to_json
-      )
+      log('#100008: Domain configuration failed', :error)
     end
   end
 end
