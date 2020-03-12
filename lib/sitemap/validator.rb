@@ -18,8 +18,8 @@ module Sitemap
     attr_reader :sitemap_schema, :siteindex_schema
 
     def initialize
-      @sitemap_schema = Nokogiri::XML.Schema(File.read(SITEMAP_SCHEMA))
-      @siteindex_schema = Nokogiri::XML.Schema(File.read(SITEINDEX_SCHEMA))
+      @sitemap_schema = Nokogiri::XML.Schema(File.open(SITEMAP_SCHEMA))
+      @siteindex_schema = Nokogiri::XML.Schema(File.open(SITEINDEX_SCHEMA))
     end
 
     def validate(source)
@@ -31,6 +31,13 @@ module Sitemap
         end
 
       document = Nokogiri.XML(contents)
+
+      # remove unknown namespaces
+      document.collect_namespaces.except('xmlns').each do |namespace, namespace_uri|
+        document.xpath('//namespace:*', {
+          namespace: namespace_uri
+        }).each(&:remove)
+      end
 
       sitemap_errors = @sitemap_schema.validate(document)
       siteindex_errors = @siteindex_schema.validate(document)
