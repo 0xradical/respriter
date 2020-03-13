@@ -50,14 +50,14 @@ module Developers
       json = document.css('script[type="application/vnd.classpert+json"] text()').text.presence
 
       if json.nil?
-        raise "#120003: Course page doesn't have a vnd.classpert+json structure"
+        raise "#120003: Course page doesn't have a vnd.classpert+json JSON"
       end
 
       data =
         begin
           JSON.parse(json).merge('url': preview_course.url)
         rescue StandardError
-          raise "#120004: Course page's vnd.classpert+json structure is malformed"
+          raise "#120004: Course page's vnd.classpert+json could not be parsed"
         end
 
       schema_version = data.delete('version') || DEFAULT_VERSION

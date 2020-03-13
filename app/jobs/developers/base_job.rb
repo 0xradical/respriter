@@ -21,7 +21,7 @@ module Developers
         use_ssl: url.scheme == 'https', open_timeout: 10, read_timeout: 10
       ) do |http|
         request = Net::HTTP::Get.new(url)
-        if self.class.user_agent_token
+        if self.class.respond_to?(:user_agent_token) && self.class.user_agent_token
           request['User-Agent'] = CLASSPERT_BOT_UA.(self.class.user_agent_token)
         end
         response = http.request(request)
