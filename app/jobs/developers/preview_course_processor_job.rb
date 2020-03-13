@@ -55,7 +55,7 @@ module Developers
 
       data =
         begin
-          JSON.parse(json).merge('url': preview_course.url)
+          JSON.parse(json).merge('url' => preview_course.url)
         rescue StandardError
           raise "#120004: Course page's vnd.classpert+json could not be parsed"
         end
