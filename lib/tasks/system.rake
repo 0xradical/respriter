@@ -109,42 +109,33 @@ namespace :system do
   namespace :db do
     desc 'Update orphaned profiles'
     task :update_orphaned_profiles, %i[url] => %i[environment] do |t, args|
-      CSV.new(open(args[:url]), headers: :first_row).each do |row|
-        public_profiles = {
-          website: row['personal_website_url'],
-          udemy: row['udemy_profile_url'],
-          pluralsight: row['pluralsight_profile_url'],
-          skillshare: row['skillshare_profile_url'],
-          linkedin_learning: row['linkedin_learning_profile_url'],
-          facebook: row['facebook_url'],
-          masterclass: row['masterclass_url'],
-          twitter: row['twitter_url'],
-          linkedin: row['linkedin_url'],
-          youtube: row['youtube_url'],
-          instagram: row['instagram_url'],
-          pinterest: row['pinterest_url'],
-          github: row['github_url']
-        }
+      count, errors = 0, []
+      CSV.new(open(args[:url]), headers: :first_row, encoding: 'utf-8').each do |row|
+  
+        begin
+          op = OrphanedProfile.find_or_initialize_by(id: row['id'])
+          op.tap do |p|
+            p.name = row['name'].split(' ').map(&:capitalize).join(' ')
+            p.avatar_url = row['avatar_url']
+            p.long_bio = row['long_bio']
+            p.short_bio = row['short_bio']
+            p.public_profiles = Hash[eval(row['public_profiles']).select { |k, v| v.present? }.map { |k,v| [k, "//#{v.force_encoding('utf-8')}"] }]
+            p.email = row['email']
+          end
 
-        op = OrphanedProfile.find_or_initialize_by(id: row['id'])
-        op.tap do |p|
-          p.name = row['name']
-          p.avatar_url = row['avatar_url']
-          p.website = row['personal_website_url']
-          p.long_bio = row['long_bio']
-          p.short_bio = row['short_bio']
-          p.public_profiles = public_profiles.select { |k, v| v.present? }
-          p.email = row['email']
+          op.course_ids =
+            OrphanedProfile.courses_by_instructor_name(row['name'].gsub("'", ''))
+              .map { |c| c['id'] }
+
+          op.save
+          puts "#{count+=1} Profile updated - id: #{op.id} name: #{op.name} slug: #{op.slug}"
+        rescue
+          errors << row['id']
+          puts "#{count+=1} Error processing #{row}"
         end
 
-        op.course_ids =
-          OrphanedProfile.courses_by_instructor_name(row['name'].gsub("'", ''))
-            .map { |c| c['id'] }
-
-        op.save
-
-        puts "Profile updated - id: #{op.id} name: #{op.name} slug: #{op.slug}"
       end
+      puts errors
     end
 
     desc 'Delete enrollments created by crawlers and spider bots'
