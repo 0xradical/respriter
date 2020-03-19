@@ -35,7 +35,7 @@ def create_pipeline_execution!
   add_pipeline_execution(
     name: provider.name,
     run_at: Time.now,
-    schedule_interval: '2 weeks',
+    schedule_interval: '12 hours',
     pipeline_template_id: sitemap_template[:id]
   )
 end
