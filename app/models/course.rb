@@ -481,6 +481,32 @@ class Course < ApplicationRecord
       default_import_to_search_index
     end
 
+    def index_by_dataset_sequence(sequence)
+      __elasticsearch__.import query: -> do
+        where(published: true, source: 'api')
+        .where('dataset_sequence >= ?', sequence)
+        .includes(:provider)
+      end
+    end
+
+    def remove_from_index_by_dataset_sequence(sequence)
+      self.select(:id)
+      .where(published: false)
+      .where('dataset_sequence >= ?', sequence)
+      .find_in_batches(batch_size: 100) do |courses|
+        body = courses.map do |course|
+          {
+            delete: {
+              _index: __elasticsearch__.index_name,
+              _type:  __elasticsearch__.document_type,
+              _id:    course.id
+            }
+          }
+        end
+        __elasticsearch__.client.bulk body: body
+      end
+    end
+
     def default_import_to_search_index
       import_to_search_index({ published: true, source: 'api' })
     end
