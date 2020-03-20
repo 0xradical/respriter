@@ -35,6 +35,7 @@ class Course < ApplicationRecord
             'a plus => aplus',
             'a plus plus => aplusplus',
             'a++ => aplusplus',
+            'big data, bigdata',
             'c sharp => csharp',
             'c# => csharp',
             'c star => cstar',
@@ -122,6 +123,15 @@ class Course < ApplicationRecord
             spanish_stemmer
           ],
           char_filter: %w[html_strip]
+        },
+        proper_names: {
+          tokenizer: 'whitespace',
+          filter: %w[
+            lowercase
+            programming_synonyms
+            all_stopwords
+          ],
+          char_filter: %w[html_strip]
         }
       }
     }
@@ -151,11 +161,25 @@ class Course < ApplicationRecord
       indexes :category_text do
         indexes :en, type: 'text', analyzer: 'english_programmer'
         indexes :br, type: 'text', analyzer: 'brazilian_programmer'
+        indexes :es, type: 'text', analyzer: 'spanish_programmer'
       end
 
       indexes :tags_text do
         indexes :en, type: 'text', analyzer: 'english_programmer'
         indexes :br, type: 'text', analyzer: 'brazilian_programmer'
+        indexes :es, type: 'text', analyzer: 'spanish_programmer'
+      end
+
+      indexes :instructors_text do
+        indexes :en, type: 'text', analyzer: 'english_programmer'
+        indexes :br, type: 'text', analyzer: 'brazilian_programmer'
+        indexes :es, type: 'text', analyzer: 'spanish_programmer'
+      end
+
+      indexes :provider_name_text do
+        indexes :en, type: 'text', analyzer: 'english_programmer'
+        indexes :br, type: 'text', analyzer: 'brazilian_programmer'
+        indexes :es, type: 'text', analyzer: 'spanish_programmer'
       end
 
       indexes :pace, type: 'keyword'
@@ -377,6 +401,19 @@ class Course < ApplicationRecord
       refinement_tags: refinement_tags,
       type: self.class.name
     }
+
+    indexed_json[:provider_name_text] = SITE_LOCALES.map do |key, locale|
+      [ key, provider_name ]
+    end.to_h
+
+    if instructors.present?
+      indexed_json[:instructors_text] = SITE_LOCALES.map do |key, locale|
+        [
+          key,
+          instructors.map{ |i| i['name'] }.compact
+        ]
+      end.to_h
+    end
 
     if category.present?
       indexed_json[:category_text] =

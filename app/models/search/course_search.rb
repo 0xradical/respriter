@@ -128,9 +128,9 @@ module Search
             type: 'cross_fields',
             operator: 'and',
             fields: [
-              'name.en^2', 'description.en', 'tags_text.en^2',
-              'name.br^2', 'description.br', 'tags_text.br^2',
-              'name.es^2', 'description.es'
+              'name.en^2', 'description.en', 'tags_text.en^2', 'instructors_text.en', 'provider_name_text.en',
+              'name.br^2', 'description.br', 'tags_text.br^2', 'instructors_text.br', 'provider_name_text.br',
+              'name.es^2', 'description.es', 'tags_text.es^2', 'instructors_text.es', 'provider_name_text.es',
             ]
           }
         }
@@ -141,6 +141,7 @@ module Search
             fields: [
               'category_text.en',
               'category_text.br',
+              'category_text.es',
             ]
           }
         }
