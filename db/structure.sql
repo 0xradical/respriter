@@ -38,6 +38,29 @@ COMMENT ON SCHEMA public IS 'standard public schema';
 
 
 --
+-- Name: authority_confirmation_method; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.authority_confirmation_method AS ENUM (
+    'dns',
+    'html'
+);
+
+
+--
+-- Name: authority_confirmation_status; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.authority_confirmation_status AS ENUM (
+    'unconfirmed',
+    'confirming',
+    'confirmed',
+    'failed',
+    'deleted'
+);
+
+
+--
 -- Name: category; Type: TYPE; Schema: app; Owner: -
 --
 
@@ -55,6 +78,19 @@ CREATE TYPE app.category AS ENUM (
     'social_science',
     'health_and_fitness',
     'social_sciences'
+);
+
+
+--
+-- Name: crawler_status; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.crawler_status AS ENUM (
+    'unverified',
+    'pending',
+    'broken',
+    'active',
+    'deleted'
 );
 
 
@@ -267,6 +303,29 @@ CREATE TYPE app.post_status AS ENUM (
 
 
 --
+-- Name: preview_course_status; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.preview_course_status AS ENUM (
+    'pending',
+    'failed',
+    'succeeded'
+);
+
+
+--
+-- Name: sitemap; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.sitemap AS (
+	id uuid,
+	status character varying,
+	url character varying,
+	type character varying
+);
+
+
+--
 -- Name: source; Type: TYPE; Schema: app; Owner: -
 --
 
@@ -379,6 +438,69 @@ BEGIN
   END CASE;
 END;
 $_$;
+
+
+--
+-- Name: fill_sitemaps(app.sitemap[]); Type: FUNCTION; Schema: app; Owner: -
+--
+
+CREATE FUNCTION app.fill_sitemaps(_sitemaps app.sitemap[]) RETURNS app.sitemap[]
+    LANGUAGE sql
+    AS $$
+  SELECT
+    ARRAY_AGG(
+      (
+        COALESCE(sitemap.id,     public.uuid_generate_v4()),
+        COALESCE(sitemap.status, 'unconfirmed'),
+        sitemap.url,
+        sitemap.type
+      )::app.sitemap
+    )
+  FROM unnest(_sitemaps) AS sitemap
+  WHERE
+    sitemap.url IS NOT NULL
+    AND char_length(sitemap.url) > 0
+$$;
+
+
+--
+-- Name: merge_sitemaps(app.sitemap[], app.sitemap[]); Type: FUNCTION; Schema: app; Owner: -
+--
+
+CREATE FUNCTION app.merge_sitemaps(_old_sitemaps app.sitemap[], _new_sitemaps app.sitemap[]) RETURNS app.sitemap[]
+    LANGUAGE sql
+    AS $$
+  SELECT
+    ARRAY_AGG(
+      COALESCE(old_sitemap, new_sitemap)
+    )
+  FROM      unnest(_new_sitemaps) AS new_sitemap
+  LEFT JOIN unnest(_old_sitemaps) AS old_sitemap ON
+    new_sitemap.id = old_sitemap.id
+$$;
+
+
+--
+-- Name: new_sitemaps(app.sitemap[]); Type: FUNCTION; Schema: app; Owner: -
+--
+
+CREATE FUNCTION app.new_sitemaps(_sitemaps app.sitemap[]) RETURNS app.sitemap[]
+    LANGUAGE sql
+    AS $$
+  SELECT
+    ARRAY_AGG(
+      (
+        COALESCE(sitemap.id, public.uuid_generate_v4()),
+        'unconfirmed',
+        sitemap.url,
+        sitemap.type
+      )::app.sitemap
+    )
+  FROM unnest(_sitemaps) AS sitemap
+  WHERE
+    sitemap.url IS NOT NULL
+    AND char_length(sitemap.url) > 0
+$$;
 
 
 --
@@ -592,6 +714,36 @@ $$;
 
 
 --
+-- Name: slugify(character varying); Type: FUNCTION; Schema: app; Owner: -
+--
+
+CREATE FUNCTION app.slugify(value character varying) RETURNS text
+    LANGUAGE sql IMMUTABLE STRICT
+    AS $_$
+  WITH unaccented AS (
+    SELECT unaccent(value) AS value
+  ),
+
+  lowercase AS (
+    SELECT lower(value) AS value
+    FROM unaccented
+  ),
+
+  hyphenated AS (
+    SELECT regexp_replace(value, '[^a-z0-9\\-_]+', '-', 'gi') AS value
+    FROM lowercase
+  ),
+
+  trimmed AS (
+    SELECT regexp_replace(regexp_replace(value, '\\-+$', ''), '^\\-', '') AS value
+    FROM hyphenated
+  )
+
+  SELECT value FROM trimmed;
+$_$;
+
+
+--
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -653,7 +805,7 @@ COMMENT ON TABLE public.que_jobs IS '4';
 --
 
 CREATE FUNCTION public.if_admin(value anyelement) RETURNS anyelement
-    LANGUAGE plpgsql
+    LANGUAGE plpgsql STABLE
     AS $$
 BEGIN
   IF current_user = 'admin' THEN
@@ -670,10 +822,27 @@ $$;
 --
 
 CREATE FUNCTION public.if_user_by_id(id bigint, value anyelement) RETURNS anyelement
-    LANGUAGE plpgsql
+    LANGUAGE plpgsql STABLE
     AS $$
 BEGIN
   IF current_user = 'user' AND current_setting('request.jwt.claim.sub', true)::bigint = id THEN
+    RETURN value;
+  ELSE
+    RETURN NULL;
+  END IF;
+END;
+$$;
+
+
+--
+-- Name: if_user_by_ids(bigint[], anyelement); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.if_user_by_ids(ids bigint[], value anyelement) RETURNS anyelement
+    LANGUAGE plpgsql STABLE
+    AS $$
+BEGIN
+  IF current_user = 'user' AND current_setting('request.jwt.claim.sub', true)::bigint = ANY(ids) THEN
     RETURN value;
   ELSE
     RETURN NULL;
@@ -921,6 +1090,95 @@ CREATE VIEW api.certificates AS
 
 
 --
+-- Name: crawler_domains; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.crawler_domains (
+    id uuid DEFAULT public.uuid_generate_v1() NOT NULL,
+    provider_crawler_id uuid,
+    authority_confirmation_status app.authority_confirmation_status DEFAULT 'unconfirmed'::app.authority_confirmation_status NOT NULL,
+    authority_confirmation_token character varying,
+    authority_confirmation_method app.authority_confirmation_method DEFAULT 'dns'::app.authority_confirmation_method NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    domain character varying NOT NULL,
+    authority_confirmation_salt character varying,
+    CONSTRAINT domain__must_be_a_domain CHECK (((domain)::text ~ '^([a-z0-9\-\_]+\.)+[a-z]+$'::text))
+);
+
+
+--
+-- Name: provider_crawlers; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.provider_crawlers (
+    id uuid DEFAULT public.uuid_generate_v1() NOT NULL,
+    user_agent_token uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    provider_id bigint,
+    published boolean DEFAULT false NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    status app.crawler_status DEFAULT 'unverified'::app.crawler_status NOT NULL,
+    user_account_ids bigint[] DEFAULT '{}'::bigint[] NOT NULL,
+    sitemaps app.sitemap[] DEFAULT '{}'::app.sitemap[] NOT NULL,
+    version character varying,
+    settings jsonb
+);
+
+
+--
+-- Name: crawler_domains; Type: VIEW; Schema: api; Owner: -
+--
+
+CREATE VIEW api.crawler_domains AS
+ SELECT COALESCE(public.if_admin(crawler_domain.id), public.if_user_by_ids(crawler.user_account_ids, crawler_domain.id)) AS id,
+    crawler_domain.provider_crawler_id,
+    crawler_domain.authority_confirmation_status,
+    COALESCE(public.if_admin(crawler_domain.authority_confirmation_token), public.if_user_by_ids(crawler.user_account_ids, crawler_domain.authority_confirmation_token)) AS authority_confirmation_token,
+    COALESCE(public.if_admin(crawler_domain.authority_confirmation_method), public.if_user_by_ids(crawler.user_account_ids, crawler_domain.authority_confirmation_method)) AS authority_confirmation_method,
+    COALESCE(public.if_admin(crawler_domain.created_at), public.if_user_by_ids(crawler.user_account_ids, crawler_domain.created_at)) AS created_at,
+    COALESCE(public.if_admin(crawler_domain.updated_at), public.if_user_by_ids(crawler.user_account_ids, crawler_domain.updated_at)) AS updated_at,
+    crawler_domain.domain,
+    COALESCE(public.if_admin(crawler_domain.authority_confirmation_salt), public.if_user_by_ids(crawler.user_account_ids, crawler_domain.authority_confirmation_salt)) AS authority_confirmation_salt
+   FROM (app.crawler_domains crawler_domain
+     LEFT JOIN app.provider_crawlers crawler ON ((crawler.id = crawler_domain.provider_crawler_id)))
+  ORDER BY COALESCE(public.if_admin(crawler_domain.id), public.if_user_by_ids(crawler.user_account_ids, crawler_domain.id));
+
+
+--
+-- Name: crawling_events; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.crawling_events (
+    id uuid DEFAULT public.uuid_generate_v1() NOT NULL,
+    provider_crawler_id uuid,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    sequence bigint,
+    type character varying NOT NULL,
+    data jsonb
+);
+
+
+--
+-- Name: crawling_events; Type: VIEW; Schema: api; Owner: -
+--
+
+CREATE VIEW api.crawling_events AS
+ SELECT event.id,
+    event.provider_crawler_id,
+    event.created_at,
+    event.updated_at,
+    event.sequence,
+    event.type,
+    event.data
+   FROM app.crawling_events event
+  WHERE (((CURRENT_USER = 'user'::name) AND (EXISTS ( SELECT 1
+           FROM app.provider_crawlers crawler
+          WHERE ((crawler.status <> 'deleted'::app.crawler_status) AND (event.provider_crawler_id = crawler.id) AND public.if_user_by_ids(crawler.user_account_ids, true))))) OR (CURRENT_USER = 'admin'::name));
+
+
+--
 -- Name: courses; Type: TABLE; Schema: app; Owner: -
 --
 
@@ -951,9 +1209,9 @@ CREATE TABLE app.courses (
     video jsonb,
     source app.source DEFAULT 'api'::app.source,
     pace app.pace,
-    certificate jsonb DEFAULT '"{}"'::jsonb,
-    pricing_models jsonb DEFAULT '"[]"'::jsonb,
-    offered_by jsonb DEFAULT '"[]"'::jsonb,
+    certificate jsonb DEFAULT '{}'::jsonb,
+    pricing_models jsonb DEFAULT '[]'::jsonb,
+    offered_by jsonb DEFAULT '[]'::jsonb,
     syllabus text,
     effort integer,
     enrollments_count integer DEFAULT 0,
@@ -964,7 +1222,8 @@ CREATE TABLE app.courses (
     __source_schema__ jsonb,
     instructors jsonb DEFAULT '[]'::jsonb,
     curated_tags character varying[] DEFAULT '{}'::character varying[],
-    refinement_tags character varying[]
+    refinement_tags character varying[],
+    up_to_date_id uuid
 );
 
 
@@ -1058,6 +1317,136 @@ CREATE VIEW api.earnings AS
 
 
 --
+-- Name: preview_courses; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.preview_courses (
+    id uuid DEFAULT public.uuid_generate_v1() NOT NULL,
+    status app.preview_course_status DEFAULT 'pending'::app.preview_course_status,
+    name character varying,
+    description text,
+    slug character varying,
+    url character varying NOT NULL,
+    url_md5 character varying,
+    duration_in_hours numeric,
+    price numeric,
+    rating numeric,
+    relevance integer DEFAULT 0,
+    region character varying,
+    audio text[] DEFAULT '{}'::text[],
+    subtitles text[] DEFAULT '{}'::text[],
+    published boolean DEFAULT true,
+    stale boolean DEFAULT false,
+    category app.category,
+    tags text[] DEFAULT '{}'::text[],
+    video jsonb,
+    source app.source DEFAULT 'api'::app.source,
+    pace app.pace,
+    certificate jsonb DEFAULT '"{}"'::jsonb,
+    pricing_models jsonb DEFAULT '"[]"'::jsonb,
+    offered_by jsonb DEFAULT '"[]"'::jsonb,
+    syllabus text,
+    effort integer,
+    enrollments_count integer DEFAULT 0,
+    free_content boolean DEFAULT false,
+    paid_content boolean DEFAULT true,
+    level app.level[] DEFAULT '{}'::app.level[],
+    __provider_name__ character varying,
+    __source_schema__ jsonb,
+    __indexed_json__ jsonb,
+    instructors jsonb DEFAULT '[]'::jsonb,
+    curated_tags character varying[] DEFAULT '{}'::character varying[],
+    refinement_tags character varying[],
+    provider_id bigint,
+    provider_crawler_id uuid,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    expired_at timestamp with time zone DEFAULT (now() + '00:20:00'::interval) NOT NULL
+);
+
+
+--
+-- Name: preview_courses; Type: VIEW; Schema: api; Owner: -
+--
+
+CREATE VIEW api.preview_courses AS
+ SELECT course.id,
+    course.status,
+    course.name,
+    course.description,
+    course.slug,
+    course.url,
+    course.url_md5,
+    course.duration_in_hours,
+    course.price,
+    course.rating,
+    course.relevance,
+    course.region,
+    course.audio,
+    course.subtitles,
+    course.published,
+    course.stale,
+    course.category,
+    course.tags,
+    course.video,
+    course.source,
+    course.pace,
+    course.certificate,
+    course.pricing_models,
+    course.offered_by,
+    course.syllabus,
+    course.effort,
+    course.enrollments_count,
+    course.free_content,
+    course.paid_content,
+    course.level,
+    course.__provider_name__,
+    course.__source_schema__,
+    course.__indexed_json__,
+    course.instructors,
+    course.curated_tags,
+    course.refinement_tags,
+    course.provider_id,
+    course.provider_crawler_id,
+    course.created_at,
+    course.updated_at,
+    course.expired_at
+   FROM app.preview_courses course
+  WHERE (((CURRENT_USER = 'user'::name) AND (EXISTS ( SELECT 1
+           FROM app.provider_crawlers crawler
+          WHERE ((crawler.status <> 'deleted'::app.crawler_status) AND (course.provider_crawler_id = crawler.id) AND public.if_user_by_ids(crawler.user_account_ids, true))))) OR (CURRENT_USER = 'admin'::name));
+
+
+--
+-- Name: preview_course_images; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.preview_course_images (
+    id uuid DEFAULT public.uuid_generate_v1() NOT NULL,
+    kind character varying,
+    file character varying,
+    preview_course_id uuid,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: preview_course_images; Type: VIEW; Schema: api; Owner: -
+--
+
+CREATE VIEW api.preview_course_images AS
+ SELECT preview_course_images.id,
+    preview_course_images.kind,
+    preview_course_images.file,
+    preview_course_images.preview_course_id,
+    preview_course_images.created_at,
+    preview_course_images.updated_at
+   FROM (app.preview_course_images
+     JOIN api.preview_courses ON ((preview_courses.id = preview_course_images.preview_course_id)));
+
+
+--
 -- Name: profiles; Type: TABLE; Schema: app; Owner: -
 --
 
@@ -1135,6 +1524,47 @@ CREATE VIEW api.promo_accounts AS
     promo_accounts.updated_at
    FROM (app.promo_accounts
      JOIN app.certificates ON ((promo_accounts.certificate_id = certificates.id)));
+
+
+--
+-- Name: provider_crawlers; Type: VIEW; Schema: api; Owner: -
+--
+
+CREATE VIEW api.provider_crawlers AS
+ SELECT provider_crawlers.id,
+    provider_crawlers.user_agent_token,
+    provider_crawlers.provider_id,
+    provider_crawlers.published,
+    provider_crawlers.created_at,
+    provider_crawlers.updated_at,
+    provider_crawlers.status,
+    provider_crawlers.user_account_ids,
+    provider_crawlers.sitemaps,
+    provider_crawlers.version,
+    provider_crawlers.settings
+   FROM app.provider_crawlers
+  WHERE (((provider_crawlers.status <> 'deleted'::app.crawler_status) AND public.if_user_by_ids(provider_crawlers.user_account_ids, true)) OR (CURRENT_USER = 'admin'::name));
+
+
+--
+-- Name: providers; Type: VIEW; Schema: api; Owner: -
+--
+
+CREATE VIEW api.providers AS
+ SELECT provider.id,
+    provider.name,
+    provider.description,
+    provider.slug,
+    provider.afn_url_template,
+    provider.published,
+    provider.published_at,
+    provider.created_at,
+    provider.updated_at,
+    provider.encoded_deep_linking
+   FROM app.providers provider
+  WHERE (((CURRENT_USER = 'user'::name) AND (EXISTS ( SELECT 1
+           FROM app.provider_crawlers crawler
+          WHERE ((crawler.status <> 'deleted'::app.crawler_status) AND (crawler.provider_id = provider.id) AND public.if_user_by_ids(crawler.user_account_ids, true))))) OR (CURRENT_USER = 'admin'::name));
 
 
 --
@@ -1391,6 +1821,16 @@ ALTER SEQUENCE app.landing_pages_id_seq OWNED BY app.landing_pages.id;
 
 
 --
+-- Name: napoleon_course_mapping; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.napoleon_course_mapping (
+    old_resource_id uuid NOT NULL,
+    resource_id uuid
+);
+
+
+--
 -- Name: oauth_accounts; Type: TABLE; Schema: app; Owner: -
 --
 
@@ -1422,6 +1862,34 @@ CREATE SEQUENCE app.oauth_accounts_id_seq
 --
 
 ALTER SEQUENCE app.oauth_accounts_id_seq OWNED BY app.oauth_accounts.id;
+
+
+--
+-- Name: orphaned_profiles; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.orphaned_profiles (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    user_account_id bigint,
+    name character varying(75) NOT NULL,
+    country character varying(3),
+    short_bio character varying(200),
+    long_bio text,
+    email character varying(320),
+    website character varying,
+    avatar_url character varying,
+    public_profiles jsonb DEFAULT '{}'::jsonb,
+    languages character varying[] DEFAULT '{}'::character varying[],
+    course_ids uuid[] DEFAULT '{}'::uuid[],
+    state character varying(20) DEFAULT 'disabled'::character varying,
+    slug character varying,
+    claimable_emails character varying[] DEFAULT '{}'::character varying[],
+    claimable_public_profiles jsonb DEFAULT '{}'::jsonb,
+    claim_code character varying(7),
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT state__inclusion CHECK (((state)::text = ANY (ARRAY[('disabled'::character varying)::text, ('enabled'::character varying)::text])))
+);
 
 
 --
@@ -1478,6 +1946,19 @@ CREATE SEQUENCE app.providers_id_seq
 --
 
 ALTER SEQUENCE app.providers_id_seq OWNED BY app.providers.id;
+
+
+--
+-- Name: slug_histories; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.slug_histories (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    course_id uuid,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    slug character varying NOT NULL
+);
 
 
 --
@@ -1704,6 +2185,22 @@ ALTER TABLE ONLY app.courses
 
 
 --
+-- Name: crawler_domains crawler_domains_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.crawler_domains
+    ADD CONSTRAINT crawler_domains_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: crawling_events crawling_events_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.crawling_events
+    ADD CONSTRAINT crawling_events_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: enrollments enrollments_pkey; Type: CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -1736,6 +2233,14 @@ ALTER TABLE ONLY app.landing_pages
 
 
 --
+-- Name: napoleon_course_mapping napoleon_course_mapping_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.napoleon_course_mapping
+    ADD CONSTRAINT napoleon_course_mapping_pkey PRIMARY KEY (old_resource_id);
+
+
+--
 -- Name: oauth_accounts oauth_accounts_pkey; Type: CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -1744,11 +2249,35 @@ ALTER TABLE ONLY app.oauth_accounts
 
 
 --
+-- Name: orphaned_profiles orphaned_profiles_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.orphaned_profiles
+    ADD CONSTRAINT orphaned_profiles_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: posts posts_pkey; Type: CONSTRAINT; Schema: app; Owner: -
 --
 
 ALTER TABLE ONLY app.posts
     ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: preview_course_images preview_course_images_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.preview_course_images
+    ADD CONSTRAINT preview_course_images_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: preview_courses preview_courses_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.preview_courses
+    ADD CONSTRAINT preview_courses_pkey PRIMARY KEY (id);
 
 
 --
@@ -1776,11 +2305,27 @@ ALTER TABLE ONLY app.promo_accounts
 
 
 --
+-- Name: provider_crawlers provider_crawlers_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.provider_crawlers
+    ADD CONSTRAINT provider_crawlers_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: providers providers_pkey; Type: CONSTRAINT; Schema: app; Owner: -
 --
 
 ALTER TABLE ONLY app.providers
     ADD CONSTRAINT providers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: slug_histories slug_histories_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.slug_histories
+    ADD CONSTRAINT slug_histories_pkey PRIMARY KEY (id);
 
 
 --
@@ -1848,6 +2393,13 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: app_crawler_domains_unique_domain_idx; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE UNIQUE INDEX app_crawler_domains_unique_domain_idx ON app.crawler_domains USING btree (domain) WHERE (authority_confirmation_status = 'confirmed'::app.authority_confirmation_status);
+
+
+--
 -- Name: index_admin_accounts_on_confirmation_token; Type: INDEX; Schema: app; Owner: -
 --
 
@@ -1907,7 +2459,7 @@ CREATE INDEX index_courses_on_dataset_sequence ON app.courses USING btree (datas
 -- Name: index_courses_on_global_sequence; Type: INDEX; Schema: app; Owner: -
 --
 
-CREATE INDEX index_courses_on_global_sequence ON app.courses USING btree (global_sequence);
+CREATE UNIQUE INDEX index_courses_on_global_sequence ON app.courses USING btree (global_sequence);
 
 
 --
@@ -1921,7 +2473,7 @@ CREATE INDEX index_courses_on_provider_id ON app.courses USING btree (provider_i
 -- Name: index_courses_on_slug; Type: INDEX; Schema: app; Owner: -
 --
 
-CREATE UNIQUE INDEX index_courses_on_slug ON app.courses USING btree (slug);
+CREATE UNIQUE INDEX index_courses_on_slug ON app.courses USING btree (slug) WHERE (published = true);
 
 
 --
@@ -1932,10 +2484,17 @@ CREATE INDEX index_courses_on_tags ON app.courses USING gin (tags);
 
 
 --
--- Name: index_courses_on_url_md5; Type: INDEX; Schema: app; Owner: -
+-- Name: index_courses_on_up_to_date_id; Type: INDEX; Schema: app; Owner: -
 --
 
-CREATE UNIQUE INDEX index_courses_on_url_md5 ON app.courses USING btree (url_md5);
+CREATE INDEX index_courses_on_up_to_date_id ON app.courses USING btree (up_to_date_id);
+
+
+--
+-- Name: index_courses_on_url; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE UNIQUE INDEX index_courses_on_url ON app.courses USING btree (url) WHERE (published = true);
 
 
 --
@@ -2002,6 +2561,20 @@ CREATE INDEX index_oauth_accounts_on_user_account_id ON app.oauth_accounts USING
 
 
 --
+-- Name: index_orphaned_profiles_on_name; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE INDEX index_orphaned_profiles_on_name ON app.orphaned_profiles USING btree (name);
+
+
+--
+-- Name: index_orphaned_profiles_on_user_account_id; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE UNIQUE INDEX index_orphaned_profiles_on_user_account_id ON app.orphaned_profiles USING btree (user_account_id);
+
+
+--
 -- Name: index_posts_on_admin_account_id; Type: INDEX; Schema: app; Owner: -
 --
 
@@ -2062,6 +2635,13 @@ CREATE UNIQUE INDEX index_providers_on_name ON app.providers USING btree (name);
 --
 
 CREATE UNIQUE INDEX index_providers_on_slug ON app.providers USING btree (slug);
+
+
+--
+-- Name: index_slug_histories_on_course_id_and_slug; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE UNIQUE INDEX index_slug_histories_on_course_id_and_slug ON app.slug_histories USING btree (course_id, slug);
 
 
 --
@@ -2163,6 +2743,34 @@ CREATE TRIGGER api_certificates_view_instead INSTEAD OF INSERT OR UPDATE ON api.
 
 
 --
+-- Name: crawler_domains api_crawler_domains_view_instead_of_delete; Type: TRIGGER; Schema: api; Owner: -
+--
+
+CREATE TRIGGER api_crawler_domains_view_instead_of_delete INSTEAD OF DELETE ON api.crawler_domains FOR EACH ROW EXECUTE PROCEDURE triggers.api_crawler_domains_view_instead_of_delete();
+
+
+--
+-- Name: crawler_domains api_crawler_domains_view_instead_of_insert; Type: TRIGGER; Schema: api; Owner: -
+--
+
+CREATE TRIGGER api_crawler_domains_view_instead_of_insert INSTEAD OF INSERT ON api.crawler_domains FOR EACH ROW EXECUTE PROCEDURE triggers.api_crawler_domains_view_instead_of_insert();
+
+
+--
+-- Name: crawler_domains api_crawler_domains_view_instead_of_update; Type: TRIGGER; Schema: api; Owner: -
+--
+
+CREATE TRIGGER api_crawler_domains_view_instead_of_update INSTEAD OF UPDATE ON api.crawler_domains FOR EACH ROW EXECUTE PROCEDURE triggers.api_crawler_domains_view_instead_of_update();
+
+
+--
+-- Name: preview_courses api_preview_courses_view_instead_of_insert; Type: TRIGGER; Schema: api; Owner: -
+--
+
+CREATE TRIGGER api_preview_courses_view_instead_of_insert INSTEAD OF INSERT OR UPDATE ON api.preview_courses FOR EACH ROW EXECUTE PROCEDURE triggers.api_preview_courses_view_instead_of_insert();
+
+
+--
 -- Name: profiles api_profiles_view_instead; Type: TRIGGER; Schema: api; Owner: -
 --
 
@@ -2177,6 +2785,34 @@ CREATE TRIGGER api_promo_accounts_view_instead INSTEAD OF INSERT OR UPDATE ON ap
 
 
 --
+-- Name: provider_crawlers api_provider_crawlers_view_instead_of_delete; Type: TRIGGER; Schema: api; Owner: -
+--
+
+CREATE TRIGGER api_provider_crawlers_view_instead_of_delete INSTEAD OF DELETE ON api.provider_crawlers FOR EACH ROW EXECUTE PROCEDURE triggers.api_provider_crawlers_view_instead_of_delete();
+
+
+--
+-- Name: provider_crawlers api_provider_crawlers_view_instead_of_insert; Type: TRIGGER; Schema: api; Owner: -
+--
+
+CREATE TRIGGER api_provider_crawlers_view_instead_of_insert INSTEAD OF INSERT ON api.provider_crawlers FOR EACH ROW EXECUTE PROCEDURE triggers.api_provider_crawlers_view_instead_of_insert();
+
+
+--
+-- Name: provider_crawlers api_provider_crawlers_view_instead_of_update; Type: TRIGGER; Schema: api; Owner: -
+--
+
+CREATE TRIGGER api_provider_crawlers_view_instead_of_update INSTEAD OF UPDATE ON api.provider_crawlers FOR EACH ROW EXECUTE PROCEDURE triggers.api_provider_crawlers_view_instead_of_update();
+
+
+--
+-- Name: providers api_providers_view_instead_of_update; Type: TRIGGER; Schema: api; Owner: -
+--
+
+CREATE TRIGGER api_providers_view_instead_of_update INSTEAD OF UPDATE ON api.providers FOR EACH ROW EXECUTE PROCEDURE triggers.api_providers_view_instead_of_update();
+
+
+--
 -- Name: user_accounts api_user_accounts_view_instead; Type: TRIGGER; Schema: api; Owner: -
 --
 
@@ -2184,10 +2820,24 @@ CREATE TRIGGER api_user_accounts_view_instead INSTEAD OF UPDATE ON api.user_acco
 
 
 --
+-- Name: courses course_keep_slug; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER course_keep_slug AFTER INSERT OR UPDATE ON app.courses FOR EACH ROW EXECUTE PROCEDURE triggers.course_keep_slug();
+
+
+--
 -- Name: courses course_normalize_languages; Type: TRIGGER; Schema: app; Owner: -
 --
 
 CREATE TRIGGER course_normalize_languages BEFORE INSERT OR UPDATE ON app.courses FOR EACH ROW EXECUTE PROCEDURE triggers.course_normalize_languages();
+
+
+--
+-- Name: preview_courses course_normalize_languages; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER course_normalize_languages BEFORE INSERT OR UPDATE ON app.preview_courses FOR EACH ROW EXECUTE PROCEDURE triggers.course_normalize_languages();
 
 
 --
@@ -2219,17 +2869,17 @@ CREATE TRIGGER set_compound_ext_id BEFORE INSERT ON app.tracked_actions FOR EACH
 
 
 --
--- Name: courses set_global_id; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER set_global_id BEFORE INSERT ON app.courses FOR EACH ROW EXECUTE PROCEDURE triggers.md5_url();
-
-
---
 -- Name: courses sort_prices; Type: TRIGGER; Schema: app; Owner: -
 --
 
 CREATE TRIGGER sort_prices BEFORE INSERT OR UPDATE ON app.courses FOR EACH ROW EXECUTE PROCEDURE triggers.sort_prices();
+
+
+--
+-- Name: preview_courses sort_prices; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER sort_prices BEFORE INSERT OR UPDATE ON app.preview_courses FOR EACH ROW EXECUTE PROCEDURE triggers.sort_prices();
 
 
 --
@@ -2352,6 +3002,69 @@ CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.course_reviews FOR EACH ROW
 
 
 --
+-- Name: orphaned_profiles track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.orphaned_profiles FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: provider_crawlers track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.provider_crawlers FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: crawler_domains track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.crawler_domains FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: crawling_events track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.crawling_events FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: preview_courses track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.preview_courses FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: preview_course_images track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.preview_course_images FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: slug_histories track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.slug_histories FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: provider_crawlers validate_sitemaps; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE CONSTRAINT TRIGGER validate_sitemaps AFTER INSERT OR UPDATE ON app.provider_crawlers NOT DEFERRABLE INITIALLY IMMEDIATE FOR EACH ROW EXECUTE PROCEDURE triggers.validate_sitemaps();
+
+
+--
+-- Name: provider_crawlers validate_user_account_ids; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE CONSTRAINT TRIGGER validate_user_account_ids AFTER INSERT OR UPDATE ON app.provider_crawlers NOT DEFERRABLE INITIALLY IMMEDIATE FOR EACH ROW EXECUTE PROCEDURE triggers.validate_user_account_ids();
+
+
+--
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -2413,6 +3126,30 @@ ALTER TABLE ONLY app.courses
 
 
 --
+-- Name: courses courses_up_to_date_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.courses
+    ADD CONSTRAINT courses_up_to_date_id_fkey FOREIGN KEY (up_to_date_id) REFERENCES app.courses(id) ON DELETE SET NULL;
+
+
+--
+-- Name: crawler_domains crawler_domains_provider_crawler_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.crawler_domains
+    ADD CONSTRAINT crawler_domains_provider_crawler_id_fkey FOREIGN KEY (provider_crawler_id) REFERENCES app.provider_crawlers(id) ON DELETE CASCADE;
+
+
+--
+-- Name: crawling_events crawling_events_provider_crawler_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.crawling_events
+    ADD CONSTRAINT crawling_events_provider_crawler_id_fkey FOREIGN KEY (provider_crawler_id) REFERENCES app.provider_crawlers(id) ON DELETE CASCADE;
+
+
+--
 -- Name: enrollments enrollments_course_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -2461,6 +3198,14 @@ ALTER TABLE ONLY app.oauth_accounts
 
 
 --
+-- Name: orphaned_profiles orphaned_profiles_user_account_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.orphaned_profiles
+    ADD CONSTRAINT orphaned_profiles_user_account_id_fkey FOREIGN KEY (user_account_id) REFERENCES app.user_accounts(id) ON DELETE CASCADE;
+
+
+--
 -- Name: posts posts_admin_account_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -2474,6 +3219,30 @@ ALTER TABLE ONLY app.posts
 
 ALTER TABLE ONLY app.posts
     ADD CONSTRAINT posts_original_post_id_fkey FOREIGN KEY (original_post_id) REFERENCES app.posts(id);
+
+
+--
+-- Name: preview_course_images preview_course_images_preview_course_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.preview_course_images
+    ADD CONSTRAINT preview_course_images_preview_course_id_fkey FOREIGN KEY (preview_course_id) REFERENCES app.preview_courses(id);
+
+
+--
+-- Name: preview_courses preview_courses_provider_crawler_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.preview_courses
+    ADD CONSTRAINT preview_courses_provider_crawler_id_fkey FOREIGN KEY (provider_crawler_id) REFERENCES app.provider_crawlers(id) ON DELETE CASCADE;
+
+
+--
+-- Name: preview_courses preview_courses_provider_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.preview_courses
+    ADD CONSTRAINT preview_courses_provider_id_fkey FOREIGN KEY (provider_id) REFERENCES app.providers(id);
 
 
 --
@@ -2506,6 +3275,22 @@ ALTER TABLE ONLY app.promo_accounts
 
 ALTER TABLE ONLY app.promo_accounts
     ADD CONSTRAINT promo_accounts_user_account_id_fkey FOREIGN KEY (user_account_id) REFERENCES app.user_accounts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: provider_crawlers provider_crawlers_provider_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.provider_crawlers
+    ADD CONSTRAINT provider_crawlers_provider_id_fkey FOREIGN KEY (provider_id) REFERENCES app.providers(id) ON DELETE CASCADE;
+
+
+--
+-- Name: slug_histories slug_histories_course_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.slug_histories
+    ADD CONSTRAINT slug_histories_course_id_fkey FOREIGN KEY (course_id) REFERENCES app.courses(id) ON DELETE CASCADE;
 
 
 --
@@ -2612,6 +3397,17 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190923175923'),
 ('20191009074600'),
 ('20191017152900'),
-('20191212123500');
+('20191107132512'),
+('20191107173251'),
+('20191108115021'),
+('20191111180132'),
+('20191209180900'),
+('20191212123500'),
+('20191226144400'),
+('20200107070000'),
+('20200128095304'),
+('20200203120812'),
+('20200203165316'),
+('20200203183213');
 
 

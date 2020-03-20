@@ -1,7 +1,15 @@
 class ProfilesController < ApplicationController
   before_action :store_user_location!, if: :storable_location?
-  before_action :authenticate_user_account!
+  before_action :authenticate_user_account!, except: [:index, :show]
   after_action :clear_notice
+
+  def index
+    @profiles = Profile.publicly_listable.limit(200) + OrphanedProfile.vacant.limit(100)
+  end
+
+  def show
+    @user_account = Profile.find_by(username: params[:id]).user_account
+  end
 
   def new
     @user_account = current_user_account

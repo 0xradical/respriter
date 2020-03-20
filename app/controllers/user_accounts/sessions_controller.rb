@@ -1,5 +1,5 @@
 class UserAccounts::SessionsController < Devise::SessionsController
-  protect_from_forgery prepend: true
+  #protect_from_forgery prepend: true
 
   before_action :destroy_api_session, only: :destroy
   before_action :set_login_redirect_location, only: :new

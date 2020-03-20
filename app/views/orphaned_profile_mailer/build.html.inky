@@ -1,0 +1,50 @@
+<wrapper class="header">
+  <container>
+    <row>
+      <columns>
+        <spacer size="32"></spacer>
+
+        <center>
+          <img src="<%= elements_asset_path('pngs/brand/logo.png') %>" height='32px'>
+        </center>
+
+        <spacer size="16"></spacer>
+      </columns>
+    </row>
+
+    <row>
+      <columns>
+        <spacer class='separator' size='1'></spacer>
+      </columns>
+    </row>
+
+    <row>
+      <columns>
+        <spacer size="12"></spacer>
+
+        <p>
+          <%= t('emails.orphaned_profile.build.body.1') %>,
+        </p>
+
+        <spacer size="24"></spacer>
+
+        <p>
+          <%= t('emails.orphaned_profile.build.body.2_html', profile: link_to(@orphaned_profile.name, orphaned_profile_url(@orphaned_profile.slug))) %>
+        </p>
+
+        <spacer size="24"></spacer>
+
+        <p>
+          <%= t('emails.orphaned_profile.build.body.3_html') %>:
+          <br />
+          <span style='font-size:0.75em'>
+            <%= t('emails.orphaned_profile.build.body.4_html', date: l(@orphaned_profile.claim_code_expires_at, format: :short)) %>
+          </span>
+          <pre style='margin:0.5em 0 1em'><%= link_to(nil, claims_code_url(@orphaned_profile.claim_code, subdomain: @locale == :en ? nil : @locale)) %></pre>
+        </p>
+
+      </columns>
+    </row>
+
+  </container>
+</wrapper>

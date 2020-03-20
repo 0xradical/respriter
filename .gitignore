@@ -26,6 +26,7 @@
 
 *.pem
 *.dump
+*.sql
 
 /Guardfile
 /Dockerfile

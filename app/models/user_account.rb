@@ -11,13 +11,16 @@ class UserAccount < ApplicationRecord
          :omniauthable,
          :jwt_authenticatable,
          jwt_revocation_strategy: Devise::JWT::RevocationStrategies::Null,
-         omniauth_providers: %i[facebook github linkedin],
+         omniauth_providers: %i[facebook reddit github linkedin twitter],
          authentication_keys: {email: false, login: false}
 
   attr_accessor :skip_password_validation, :login
 
   has_many :oauth_accounts, dependent: :destroy
+
   has_one :profile, dependent: :destroy
+  has_one :orphaned_profile
+
   has_many :used_usernames, through: :profile
   accepts_nested_attributes_for :profile
 
@@ -28,9 +31,21 @@ class UserAccount < ApplicationRecord
   has_many :course_reviews
   has_many :certificates, dependent: :destroy
 
-  delegate :avatar_url, to: :profile, allow_nil: true
+  delegate :name,
+    :avatar_url,
+    :short_bio,
+    :interests,
+    :public_profiles,
+    :long_bio,
+    :username,
+    :interests,
+    :instructor,
+    to: :profile, allow_nil: true, prefix: false
 
   validates :email, 'valid_email_2/email': { mx: true, disposable: true, disallow_subaddressing: true}
+
+  scope :is_public,         -> { joins(:profile).where('profiles.public = ?', true) }
+  scope :publicly_listable, -> { is_public.where('profiles.username IS NOT NULL AND profiles.name IS NOT NULL') }
 
   def add_oauth_account(oauth)
     oauth_accounts.find_or_create_by(
@@ -98,4 +113,5 @@ class UserAccount < ApplicationRecord
       where(conditions.to_h).first
     end
   end
+
 end

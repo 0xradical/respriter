@@ -20,6 +20,9 @@ gem 'http'
 gem 'ejs'
 gem 'execjs'
 
+# Memcached
+gem 'dalli'
+
 # SSR
 gem 'vueonrails', '~> 1.x'
 gem 'hypernova'
@@ -67,7 +70,7 @@ gem 'omniauth-oauth2'
 gem 'omniauth-linkedin-oauth2', '~> 1.0.0'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
-gem 'omniauth-google-oauth2'
+gem 'omniauth-twitter'
 
 # Background jobs
 gem 'que',      git: 'https://github.com/que-rb/que.git', ref: 'c3547'
