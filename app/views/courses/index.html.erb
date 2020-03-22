@@ -1,3 +1,9 @@
+<% content_for :meta do %>
+  <title><%= t(".meta.title", search_query: params[:q] ) %></title>
+  <meta name='description' content='<%= t(".meta.description", search_query: params[:q]) %>' />
+  <meta property='og:description' content='<%= t(".meta.description", search_query: params[:q] ) %>' />
+<% end %>
+
 <%= content_for :base_svg_sprites do %>
   <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg') %>"></div>
   <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/country-flags.svg') %>"></div>
