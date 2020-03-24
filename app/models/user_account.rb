@@ -1,4 +1,6 @@
 class UserAccount < ApplicationRecord
+  DOMAIN_VERIFICATION_KEY = 'classpert-site-verification'
+
   devise :database_authenticatable,
          :confirmable,
          :registerable,
@@ -57,15 +59,26 @@ class UserAccount < ApplicationRecord
     end
   end
 
-  # ensure user account is active
-  # def active_for_authentication?
-  # super && !destroyed_at
-  # end
+  def domain_verification_txt_entry
+    "#{DOMAIN_VERIFICATION_KEY}=#{self.domain_verification_token}"
+  end
 
-  # provide a custom message for a deleted account
-  #def inactive_message
-  #   !destroyed_at ? super : :deleted_account
-  # end
+  def domain_verification_cname_entry(domain)
+    "#{self.domain_verification_token}.#{
+      PublicSuffix.parse(domain).domain
+    }"
+  rescue StandardError
+    nil
+  end
+
+  def domain_verification_token
+    if self.id.present? && ENV['DOMAIN_VERIFICATION_SALT'].present?
+      Digest::MD5.hexdigest("#{self.id}#{ENV['DOMAIN_VERIFICATION_SALT']}")
+    else
+      nil
+    end
+  end
+
   def self.find_for_database_authentication(warden_condition)
     conditions = warden_condition.dup
     login = conditions.delete(:login)
