@@ -9,6 +9,8 @@ BEGIN
     RETURN 'image/gif';
   WHEN lower(filename) ~ '.png$' THEN
     RETURN 'image/png';
+  WHEN lower(filename) ~ '.svg$' THEN
+    RETURN 'image/svg+xml';
   WHEN lower(filename) ~ '.pdf$' THEN
     RETURN 'application/pdf';
   ELSE

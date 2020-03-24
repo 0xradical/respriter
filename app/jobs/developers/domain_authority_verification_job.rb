@@ -56,12 +56,12 @@ module Developers
       loop do
         log('Retrying verification') if (self.retries > 0)
 
-        if check_html(crawler_domain)
+        if check_html(crawler_domain, user_account)
           confirm!(user_id, crawler_domain, 'html')
           log('Successfully verified domain via HTML')
 
           return
-        elsif check_dns(crawler_domain)
+        elsif check_dns(crawler_domain, user_account)
           confirm!(user_id, crawler_domain, 'dns')
           log('Successfully verified domain via DNS')
 
@@ -96,7 +96,7 @@ module Developers
       log(e.message, :error)
     end
 
-    def check_html(crawler_domain)
+    def check_html(crawler_domain, user_account)
       log('Verifying HTML page')
 
       crawler_domain.possible_uris.each do |u|
@@ -110,9 +110,9 @@ module Developers
 
             document.css('meta').each do |meta|
               if meta.attributes['name']&.value ==
-                   CrawlerDomain::DOMAIN_VERIFICATION_KEY &&
+                   UserAccount::DOMAIN_VERIFICATION_KEY &&
                    meta.attributes['content']&.value ==
-                     crawler_domain.authority_confirmation_token
+                     user_account.domain_verification_token
                 return true
               end
             end
@@ -132,7 +132,7 @@ module Developers
       false
     end
 
-    def check_dns(crawler_domain)
+    def check_dns(crawler_domain, user_account)
       log('Verifying DNS entries')
       resolver = Dnsruby::DNS.new
 
@@ -140,7 +140,7 @@ module Developers
       begin
         log('Looking for token in TXT DNS entries')
         resolver.each_resource(crawler_domain.domain, 'TXT') do |rr|
-          return true if rr.data == crawler_domain.authority_txt
+          return true if rr.data == user_account.domain_verification_txt_entry
         end
         log('Could not find matching TXT DNS entries')
       rescue Exception => e
@@ -150,7 +150,7 @@ module Developers
 
       begin
         log('Looking for token in CNAME DNS entries')
-        resolver.each_resource(crawler_domain.authority_cname, 'CNAME') do |rr|
+        resolver.each_resource(user_account.domain_verification_cname_entry(crawler_domain.domain), 'CNAME') do |rr|
           return true if rr.rdata.to_s == 'verification.classpert.com'
         end
         log('Could not find matching CNAME DNS entries')
@@ -162,6 +162,7 @@ module Developers
     end
 
     def confirm!(user_id, crawler_domain, confirmation_method)
+      user_account = UserAccount.find_by(id: user_id)
       provider = nil
       provider_crawler = nil
       provider_name = nil
@@ -214,7 +215,7 @@ module Developers
             {
               authority_confirmation_method: confirmation_method,
               authority_confirmation_token:
-                crawler_domain.authority_confirmation_token,
+                user_account.domain_verification_token,
               authority_confirmation_status: 'confirmed',
               authority_confirmation_salt: ENV['DOMAIN_VERIFICATION_SALT'],
               provider_crawler_id: provider_crawler.id
