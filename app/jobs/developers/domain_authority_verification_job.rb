@@ -151,6 +151,7 @@ module Developers
       begin
         log('Looking for token in CNAME DNS entries')
         resolver.each_resource(user_account.domain_verification_cname_entry(crawler_domain.domain), 'CNAME') do |rr|
+          log("Found CNAME entry #{rr.rdata.to_s}")
           return true if rr.rdata.to_s == 'verification.classpert.com'
         end
         log('Could not find matching CNAME DNS entries')
