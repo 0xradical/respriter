@@ -162,6 +162,7 @@ module Developers
     end
 
     def confirm!(user_id, crawler_domain, confirmation_method)
+      user_account = UserAccount.find_by(id: user_id)
       provider = nil
       provider_crawler = nil
       provider_name = nil
