@@ -56,12 +56,12 @@ module Developers
       loop do
         log('Retrying verification') if (self.retries > 0)
 
-        if check_html(crawler_domain)
+        if check_html(crawler_domain, user_account)
           confirm!(user_id, crawler_domain, 'html')
           log('Successfully verified domain via HTML')
 
           return
-        elsif check_dns(crawler_domain)
+        elsif check_dns(crawler_domain, user_account)
           confirm!(user_id, crawler_domain, 'dns')
           log('Successfully verified domain via DNS')
 
@@ -96,7 +96,7 @@ module Developers
       log(e.message, :error)
     end
 
-    def check_html(crawler_domain)
+    def check_html(crawler_domain, user_account)
       log('Verifying HTML page')
 
       crawler_domain.possible_uris.each do |u|
@@ -132,7 +132,7 @@ module Developers
       false
     end
 
-    def check_dns(crawler_domain)
+    def check_dns(crawler_domain, user_account)
       log('Verifying DNS entries')
       resolver = Dnsruby::DNS.new
 
@@ -151,7 +151,6 @@ module Developers
       begin
         log('Looking for token in CNAME DNS entries')
         resolver.each_resource(user_account.domain_verification_cname_entry(crawler_domain.domain), 'CNAME') do |rr|
-          log("Found CNAME entry #{rr.rdata.to_s}")
           return true if rr.rdata.to_s == 'verification.classpert.com'
         end
         log('Could not find matching CNAME DNS entries')
