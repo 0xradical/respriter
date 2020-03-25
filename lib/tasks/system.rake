@@ -111,28 +111,28 @@ namespace :system do
     task :update_orphaned_profiles, %i[url] => %i[environment] do |t, args|
       count, errors = 0, []
       CSV.new(open(args[:url]), headers: :first_row, encoding: 'utf-8').each do |row|
-  
-        begin
+
+        #begin
           op = OrphanedProfile.find_or_initialize_by(id: row['id'])
           op.tap do |p|
-            p.name = row['name'].split(' ').map(&:capitalize).join(' ')
-            p.avatar_url = row['avatar_url']
-            p.long_bio = row['long_bio']
-            p.short_bio = row['short_bio']
-            p.public_profiles = Hash[eval(row['public_profiles']).select { |k, v| v.present? }.map { |k,v| [k, "//#{v.force_encoding('utf-8')}"] }]
-            p.email = row['email']
+            p.name              = row['name'].split(' ').map(&:capitalize).join(' ') unless row['name'].blank?
+            p.avatar_url        = row['avatar_url'] unless row['avatar_url'].blank?
+            p.long_bio          = row['long_bio']   unless row['long_bio'].blank?
+            p.short_bio         = row['short_bio']  unless row['short_bio'].blank?
+            p.public_profiles   = Hash[eval(row['public_profiles']).select { |k, v| v.present? }.map { |k,v| binding.pry; [k, "//#{v.force_encoding('utf-8')}"] }] unless row['public_profiles'].blank?
+            p.email = row['email'] unless row['email'].blank?
           end
 
           op.course_ids =
             OrphanedProfile.courses_by_instructor_name(row['name'].gsub("'", ''))
-              .map { |c| c['id'] }
+            .map { |c| c['id'] } unless row['name'].blank?
 
           op.save
           puts "#{count+=1} Profile updated - id: #{op.id} name: #{op.name} slug: #{op.slug}"
-        rescue
-          errors << row['id']
-          puts "#{count+=1} Error processing #{row}"
-        end
+        # rescue Exception => e
+          # errors << row['id']
+          # puts "#{count+=1} Error processing #{row} | #{e.message}"
+        #end
 
       end
       puts errors
