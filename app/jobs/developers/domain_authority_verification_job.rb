@@ -39,15 +39,15 @@ module Developers
         raise "#100001: Domain's associated user not found on database"
       end
 
-      if crawler_domain.authority_confirmation_status == 'confirmed'
+      if crawler_domain.reload.authority_confirmation_status == 'confirmed'
         raise '#100002: Domain already validated'
       end
 
-      if crawler_domain.authority_confirmation_status == 'confirming'
+      if crawler_domain.reload.authority_confirmation_status == 'confirming'
         raise '#100009: Domain already being validated'
       end
 
-      if crawler_domain.authority_confirmation_status.in?(
+      if crawler_domain.reload.authority_confirmation_status.in?(
            %w[unconfirmed failed]
          )
         crawler_domain.update(authority_confirmation_status: 'confirming')
@@ -201,7 +201,7 @@ module Developers
       crawler_domain.reload
 
       if crawler_domain.provider_crawler_id
-        raise 'Domain already validate by someone else'
+        raise 'Domain already validated by someone else'
       else
         ApplicationRecord.transaction do
           provider = Provider.create(name: provider_name)
