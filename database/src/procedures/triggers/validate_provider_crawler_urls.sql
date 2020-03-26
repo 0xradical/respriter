@@ -6,7 +6,7 @@ BEGIN
     RETURN NEW;
   END IF;
 
-  IF array_length(NEW.urls, 1) > 20 THEN
+  IF array_length(NEW.urls, 1) > 50 THEN
     RAISE EXCEPTION 'Invalid URLs' USING HINT = 'urls must have at most 20 elements';
   END IF;
 
