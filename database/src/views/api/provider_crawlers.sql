@@ -73,9 +73,10 @@ BEGIN
   user_id := current_setting('request.jwt.claim.sub', true)::bigint;
   user_role := current_setting('request.jwt.claim.role', true)::varchar;
 
-  IF NEW.sitemaps[1] IS NULL THEN
-    sitemap := OLD.sitemaps[1];
-  ELSE
+  IF ARRAY_LENGTH(NEW.sitemaps, 1) > 0 AND NEW.sitemaps[1].id IS NOT NULL AND (
+    OLD.sitemaps[1].id IS NULL OR
+    OLD.sitemaps[1].id <> NEW.sitemaps[1].id
+  ) THEN
     sitemap :=
       ( '(' || NEW.sitemaps[1].id  ||  ','
             || 'unverified'    ||  ','
@@ -85,25 +86,47 @@ BEGIN
   END IF;
 
   IF user_role = 'user' AND user_id = ANY(OLD.user_account_ids) THEN
-    UPDATE app.provider_crawlers
-    SET
-      user_account_ids = NEW.user_account_ids,
-      sitemaps         = ARRAY[sitemap]::app.sitemap[]
-    WHERE
-      id = OLD.id
-    RETURNING * INTO new_record;
+    IF sitemap.id IS NOT NULL THEN
+      UPDATE app.provider_crawlers
+      SET
+        user_account_ids = NEW.user_account_ids,
+        sitemaps         = ARRAY[sitemap]::app.sitemap[]
+      WHERE
+        id = OLD.id
+      RETURNING * INTO new_record;
 
-    INSERT INTO public.que_jobs
-      (queue, priority, run_at, job_class, args, data)
-      VALUES
-      (
-        'default',
-        100,
-        NOW(),
-        'Developers::SitemapVerificationJob',
-        ('["' || OLD.id || '","' || sitemap.id  || '"]')::jsonb,
-        '{}'::jsonb
-      );
+      INSERT INTO public.que_jobs
+        (queue, priority, run_at, job_class, args, data)
+        VALUES
+        (
+          'default',
+          100,
+          NOW(),
+          'Developers::SitemapVerificationJob',
+          ('["' || OLD.id || '","' || sitemap.id  || '"]')::jsonb,
+          '{}'::jsonb
+        );
+    ELSE
+      UPDATE app.provider_crawlers
+      SET
+        user_account_ids = NEW.user_account_ids,
+        urls             = NEW.urls
+      WHERE
+        id = OLD.id
+      RETURNING * INTO new_record;
+
+      INSERT INTO public.que_jobs
+        (queue, priority, run_at, job_class, args, data)
+        VALUES
+        (
+          'default',
+          100,
+          NOW(),
+          'Developers::ProviderCrawlerSetupJob',
+          ('["' || OLD.id || '"]')::jsonb,
+          '{}'::jsonb
+        );
+    END IF;
 
     RETURN new_record;
   END IF;
@@ -116,7 +139,8 @@ BEGIN
       published        = NEW.published,
       status           = NEW.status,
       user_account_ids = NEW.user_account_ids,
-      sitemaps         = NEW.sitemaps
+      sitemaps         = NEW.sitemaps,
+      urls             = NEW.urls
     WHERE
       id = OLD.id
     RETURNING * INTO new_record;
@@ -127,6 +151,7 @@ BEGIN
   RAISE insufficient_privilege;
 END;
 $$ SECURITY DEFINER LANGUAGE plpgsql;
+
 
 CREATE TRIGGER api_provider_crawlers_view_instead_of_update
   INSTEAD OF UPDATE

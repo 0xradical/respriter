@@ -17,11 +17,12 @@ module Developers
     end
 
     def run(crawler_domain_id, user_account_id, session_id)
-      job = Class.new(self.class).tap do |klass|
-        klass.session_id = session_id
-        klass.service_name = SERVICE_NAME
-        klass.user_agent_token = nil
-      end.new({})
+      job =
+        Class.new(self.class).tap do |klass|
+          klass.session_id = session_id
+          klass.service_name = SERVICE_NAME
+          klass.user_agent_token = nil
+        end.new({})
 
       job.process(crawler_domain_id, user_account_id)
     end
@@ -150,9 +151,10 @@ module Developers
 
       begin
         log('Looking for token in CNAME DNS entries')
-        resolver.each_resource(user_account.domain_verification_cname_entry(crawler_domain.domain), 'CNAME') do |rr|
-          return true if rr.rdata.to_s == 'verification.classpert.com'
-        end
+        resolver.each_resource(
+          user_account.domain_verification_cname_entry(crawler_domain.domain),
+          'CNAME'
+        ) { |rr| return true if rr.rdata.to_s == 'verification.classpert.com' }
         log('Could not find matching CNAME DNS entries')
       rescue Exception => e
         log('Could not verify via CNAME DNS entries')
@@ -174,8 +176,9 @@ module Developers
         digest = Digest::MD5.hexdigest(crawler_domain.domain)[0..4]
 
         provider_name =
-          [parsed_domain.trd, parsed_domain.sld].compact.flat_map(&:to_s).select do |domain_part|
-            domain_part != "www"
+          [parsed_domain.trd, parsed_domain.sld].compact.flat_map(&:to_s)
+            .select do |domain_part|
+            domain_part != 'www'
           end.flat_map do |domain_part|
             derived =
               domain_part.split(/\./).map do |part|
@@ -187,7 +190,8 @@ module Developers
             ]
           end.sort_by { |h| h[:pos] }.select do |h|
             Provider.where(name: h[:value]).count == 0
-          end.first&.fetch(:value)
+          end.first
+            &.fetch(:value)
       rescue StandardError
         raise '#100006: Name derived from domain url cannot be used'
       end
@@ -325,22 +329,11 @@ module Developers
     end
 
     def setup_provider_crawler(provider_crawler)
-      log('Configuring domain crawler')
+      job = ::Developers::ProviderCrawlerSetupJob.new({})
 
-      crawler_service =
-        ::Integration::Napoleon::ProviderCrawlerService.new(
-          provider_crawler.reload
-        )
+      job.run(provider_crawler.id, SERVICE_NAME, self.class.session_id)
 
-      crawler_service.prepare
-
-      if crawler_service.error
-        raise crawler_service.error
-      else
-        log('Successfully configured domain crawler')
-      end
-    rescue StandardError => e
-      log('#100008: Domain configuration failed', :error)
+      raise job.error if job.error
     end
 
     def start_heartbeat(crawler_domain)
