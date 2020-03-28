@@ -112,7 +112,7 @@ namespace :system do
       count, errors = 0, []
       CSV.new(open(args[:url]), headers: :first_row, encoding: 'utf-8').each do |row|
 
-        #begin
+        begin
           op = OrphanedProfile.find_or_initialize_by(id: row['id'])
           op.tap do |p|
             p.name              = row['name'].split(' ').map(&:capitalize).join(' ') unless row['name'].blank?
@@ -129,10 +129,10 @@ namespace :system do
 
           op.save
           puts "#{count+=1} Profile updated - id: #{op.id} name: #{op.name} slug: #{op.slug}"
-        # rescue Exception => e
-          # errors << row['id']
-          # puts "#{count+=1} Error processing #{row} | #{e.message}"
-        #end
+        rescue Exception => e
+          errors << row['id']
+          puts "#{count+=1} Error processing #{row} | #{e.message}"
+        end
 
       end
       puts errors
@@ -155,80 +155,6 @@ namespace :system do
       Course.find_each(batch_size: 1_500) do |course|
         Course.reset_counters(course.id, :enrollments)
       end
-    end
-  end
-
-  namespace :tags do
-    task :set_curated_tags_from_csv, %i[url] => %i[environment] do |t, args|
-      CSV.new(open(args[:url]), headers: :first_row).each do |row|
-        # Uncurated courses
-        courses =
-          Course.where(
-            "curated_tags = '{}' AND tags @> ARRAY[?]::text[]",
-            [row['provider_tag']]
-          )
-
-        # Get root tags (category) from a curated course
-        root_tags =
-          Course.select('unnest(curated_tags) as tag').by_tags(
-            [row['curated_tag']]
-          )
-            .map(&:tag)
-            .uniq
-            .select { |tag| RootTag.all.map(&:id).include?(tag) }
-
-        if !root_tags.empty?
-          tags = [root_tags.first, row['curated_tag']].uniq.join(',')
-          courses.update_all("curated_tags = '{#{tags}}'")
-          puts "#{row['provider_tag']} tagged with #{tags}"
-        end
-      end
-    end
-
-    task generate_suggestions_csv: %i[environment] do |t, args|
-      filename = "tags_suggestions_#{Time.now.strftime('%Y%m%d%H%M%S')}.csv"
-      filepath = Rails.root.join("tmp/#{filename}")
-
-      curated_tags =
-        I18n.backend.send(:translations)[:en][:tags].keys.map(&:to_s)
-
-      CSV.open(filepath, 'wb') do |csv|
-        csv << %i[provider_tag suggested_tags]
-        Course.distinct_tags.each do |tag|
-          # Normalize the provider tag before comparison
-          normalized_tag =
-            tag.downcase.gsub(' ', '_').gsub('-', '_')
-          max_distance = normalized_tag.size
-
-          # Calculate Levenshtein distance from provider tag with each curated_tag
-          results =
-            Hash[
-              curated_tags.map do |curated_tag|
-                [
-                  curated_tag,
-                  DamerauLevenshtein.distance(
-                    normalized_tag,
-                    curated_tag,
-                    1,
-                    max_distance
-                  )
-                ]
-              end
-            ]
-
-          # Get the 6 best candidates
-          candidates = results.min_by(6) { |k, v| v }
-
-          if candidates[0][1] > 1
-            suggestions = candidates.map { |c| c[0] }.join(' ')
-          else
-            suggestions = candidates[0][0]
-          end
-
-          csv << [tag, suggestions]
-        end
-      end
-      Rake::Task['system:upload_to_s3'].invoke(filename)
     end
   end
 
