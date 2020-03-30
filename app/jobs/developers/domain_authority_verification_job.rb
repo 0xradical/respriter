@@ -292,17 +292,9 @@ module Developers
         end
       end
 
-      log(
-        crawler_domain.id,
-        '#110004: Could not detect sitemap automatically',
-        :error
-      )
+      log('#110004: Could not detect sitemap automatically', :error)
     rescue StandardError => e
-      log(
-        crawler_domain.id,
-        '#110004: Could not detect sitemap automatically',
-        :error
-      )
+      log('#110004: Could not detect sitemap automatically', :error)
     end
 
     def verify_sitemap(
