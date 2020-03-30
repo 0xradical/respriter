@@ -5,11 +5,13 @@ module Developers
     SERVICE_NAME = 'sitemap-verification-service'
 
     def run(provider_crawler_id, sitemap_id, session_id = sitemap_id)
-      job = Class.new(self.class).tap do |klass|
-        klass.session_id = session_id
-        klass.service_name = SERVICE_NAME
-        klass.user_agent_token = ProviderCrawler.find_by(id: provider_crawler_id)&.user_agent_token
-      end.new({})
+      job =
+        Class.new(self.class).tap do |klass|
+          klass.session_id = session_id
+          klass.service_name = SERVICE_NAME
+          klass.user_agent_token =
+            ProviderCrawler.find_by(id: provider_crawler_id)&.user_agent_token
+        end.new({})
 
       job.process(provider_crawler_id, sitemap_id)
     end
@@ -75,22 +77,11 @@ module Developers
     end
 
     def setup_provider_crawler(provider_crawler)
-      log('Configuring domain crawler')
+      job = ::Developers::ProviderCrawlerSetupJob.new({})
 
-      crawler_service =
-        ::Integration::Napoleon::ProviderCrawlerService.new(
-          provider_crawler.reload
-        )
+      job.run(provider_crawler.id, SERVICE_NAME, self.class.session_id)
 
-      crawler_service.prepare
-
-      if crawler_service.error
-        raise crawler_service.error
-      else
-        log('Successfully configured domain crawler')
-      end
-    rescue StandardError => e
-      log('#100008: Domain configuration failed', :error)
+      raise job.error if job.error
     end
   end
 end
