@@ -138,6 +138,28 @@ namespace :system do
       puts errors
     end
 
+    desc 'Populate facebook uid using findmyfbid API'
+    task populate_facebook_uid: %i[environment] do |t,args|
+      OrphanedProfile.where("claimable_public_profiles ->> 'facebook' IS NOT NULL AND claimable_public_profiles -> 'facebook'  ->> 'uid' = ''").each do |op|
+        uri = URI.parse("https://findmyfbid.in/apiv1/")
+
+        req = Net::HTTP::Post.new(uri.path)
+        req.set_form_data('fburl' => "https:#{op.claimable_public_profiles['facebook']['profile_url']}")
+        req['Authorization'] = "Token #{ENV['FIND_MY_FB_ID']}"
+
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
+        res = http.request(req)
+
+        uid = JSON.parse(res.body)['code']
+        op.claimable_public_profiles['facebook']['uid'] = uid
+        op.save
+
+        puts "Orphaned profile #{op.id} - #{op.claimable_public_profiles['facebook']['profile_url']} | #{uid}"
+        sleep(180)
+      end
+    end
+
     desc 'Delete enrollments created by crawlers and spider bots'
     task delete_bot_created_enrollments: %i[environment] do |t, args|
       bots = %w[Googlebot GooglePlusBot SemrushBot bingbot AhrefsBot MJ12bot]
