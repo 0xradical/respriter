@@ -154,9 +154,8 @@ namespace :system do
         uid = JSON.parse(res.body)['code']
         op.claimable_public_profiles['facebook']['uid'] = uid
         op.save
-
-        puts "Orphaned profile #{op.id} - #{op.claimable_public_profiles['facebook']['profile_url']} | #{uid}"
-        sleep(180)
+        puts "Orphaned profile #{op.id} saved - #{op.claimable_public_profiles['facebook']['profile_url']} | #{uid}"
+        sleep(rand(15))
       end
     end
 
