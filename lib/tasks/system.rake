@@ -141,20 +141,27 @@ namespace :system do
     desc 'Populate facebook uid using findmyfbid API'
     task :populate_facebook_uid, %i[sleep_time] => %i[environment] do |t,args|
       OrphanedProfile.where("claimable_public_profiles ->> 'facebook' IS NOT NULL AND claimable_public_profiles -> 'facebook'  ->> 'uid' = ''").each do |op|
-        uri = URI.parse("https://findmyfbid.in/apiv1/")
+        retries = 0
+        begin
+          uri = URI.parse("https://findmyfbid.in/apiv1/")
 
-        req = Net::HTTP::Post.new(uri.path)
-        req.set_form_data('fburl' => "https:#{op.claimable_public_profiles['facebook']['profile_url']}")
-        req['Authorization'] = "Token #{ENV['FIND_MY_FB_ID']}"
+          req = Net::HTTP::Post.new(uri.path)
+          req.set_form_data('fburl' => "https:#{op.claimable_public_profiles['facebook']['profile_url']}")
+          req['Authorization'] = "Token #{ENV['FIND_MY_FB_ID']}"
 
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-        res = http.request(req)
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.use_ssl = true
+          res = http.request(req)
 
-        uid = JSON.parse(res.body)['code']
-        op.claimable_public_profiles['facebook']['uid'] = uid
-        op.save
-        puts "Orphaned profile #{op.id} saved - #{op.claimable_public_profiles['facebook']['profile_url']} | #{uid}"
+          uid = JSON.parse(res.body)['code']
+          op.claimable_public_profiles['facebook']['uid'] = uid
+          op.save
+          puts "Orphaned profile #{op.id} saved - #{op.claimable_public_profiles['facebook']['profile_url']} | #{uid}"
+        rescue
+          sleep(180 + (30 ** retries))
+          retries += 1
+          retry
+        end
         sleep(args[:sleep_time].to_i || 30)
       end
     end
