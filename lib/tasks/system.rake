@@ -139,7 +139,7 @@ namespace :system do
     end
 
     desc 'Populate facebook uid using findmyfbid API'
-    task populate_facebook_uid: %i[environment] do |t,args|
+    task :populate_facebook_uid, %i[sleep_time] => %i[environment] do |t,args|
       OrphanedProfile.where("claimable_public_profiles ->> 'facebook' IS NOT NULL AND claimable_public_profiles -> 'facebook'  ->> 'uid' = ''").each do |op|
         uri = URI.parse("https://findmyfbid.in/apiv1/")
 
@@ -155,7 +155,7 @@ namespace :system do
         op.claimable_public_profiles['facebook']['uid'] = uid
         op.save
         puts "Orphaned profile #{op.id} saved - #{op.claimable_public_profiles['facebook']['profile_url']} | #{uid}"
-        sleep(rand(15))
+        sleep(args[:sleep_time].to_i || 30)
       end
     end
 
