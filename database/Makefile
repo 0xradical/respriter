@@ -2,7 +2,7 @@ APP := migrator
 
 NAME := classpert/database
 
-DATABASE_IMAGE_TAG     := 1.3.8
+DATABASE_IMAGE_TAG     := 1.3.10
 DATABASE_IMAGE_NAME    := $(NAME)\:$(DATABASE_IMAGE_TAG)
 DATABASE_IMAGE_VERSION := $(NAME)\:latest
 
@@ -36,10 +36,10 @@ reload-api: docker-down-postgrest docker-compose-postgrest
 structure: $(CURRENT_STRUCTURE)
 
 migrate-data:
-	@PGPASSWORD=$(POSTGRES_PASSWORD) psql -U $(POSTGRES_USER) -h $(POSTGRES_HOST) -p $(POSTGRES_PORT) -d $(POSTGRES_DB) < debug/data.sql
+	@PGPASSWORD=$(DATABASE_PASSWORD) psql -U $(DATABASE_USER) -h $(DATABASE_HOST) -p $(DATABASE_PORT) -d $(DATABASE_DB) < debug/data.sql
 
 migrate: $(CURRENT_STRUCTURE)
-	@PGPASSWORD=$(POSTGRES_PASSWORD) psql -U $(POSTGRES_USER) -h $(POSTGRES_HOST) -p $(POSTGRES_PORT) -d $(POSTGRES_DB) < $(CURRENT_STRUCTURE)
+	@PGPASSWORD=$(DATABASE_PASSWORD) psql -U $(DATABASE_USER) -h $(DATABASE_HOST) -p $(DATABASE_PORT) -d $(DATABASE_DB) < $(CURRENT_STRUCTURE)
 
 docker-build:
 	$(DOCKER_COMPOSE) build
@@ -91,15 +91,11 @@ wipe:
 	$(DOCKER_COMPOSE) down -v --rmi all --remove-orphans
 	docker system prune -f
 
-.env: examples/env.development
-	@cp examples/env.development .env
-	@echo 'Copied $@'
-
 $(DOCKER_STRUCTURE): $(CURRENT_STRUCTURE_TEMPLATE)
 	@cp $(CURRENT_STRUCTURE_TEMPLATE) $(DOCKER_STRUCTURE)
 	@echo 'Copied $@'
 
-$(CURRENT_STRUCTURE): $(CURRENT_STRUCTURE_TEMPLATE) .env
+$(CURRENT_STRUCTURE): $(CURRENT_STRUCTURE_TEMPLATE)
 	cat $(CURRENT_STRUCTURE_TEMPLATE) | envsubst > $(CURRENT_STRUCTURE)
 	@echo 'Built $@'
 
