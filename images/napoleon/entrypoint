@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+sudo /usr/bin/update_napoleon_etc_hosts
+
+exec $@

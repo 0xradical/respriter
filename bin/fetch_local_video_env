@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import json
+import sys
+import os
+
+stream = os.popen(f'heroku config -j --app {sys.argv[1]}')
+output = stream.read()
+envs   = json.loads(output)
+
+content = '''\
+# Skillshare Video API Key
+SKILLSHARE_SECRET_KEY={skillshare_secret_key}
+
+# Udemy Affiliate API Key
+UDEMY_API_PASSWORD={udemy_api_password}
+UDEMY_API_USER={udemy_api_user}
+\
+'''.format(
+  skillshare_secret_key = envs['SKILLSHARE_SECRET_KEY'],
+  udemy_api_password    = envs['UDEMY_API_PASSWORD'],
+  udemy_api_user        = envs['UDEMY_API_USER']
+)
+
+file = open(sys.argv[2], "w")
+file.write(content)
+file.close()

@@ -4,10 +4,16 @@ Rails.application.configure do
   config.hosts << 'pt-br.lvh.me'
   config.hosts << 'ja.lvh.me'
 
+  config.hosts << 'app.clspt'
+  config.hosts << 'pt-br.app.clspt'
+  config.hosts << 'es.app.clspt'
+  config.hosts << 'jp.app.clspt'
+
   # CORS
   config.middleware.insert_before 0, Rack::Cors do
     allow do
       origins /(?:localhost|lvh\.me):[0-9]{,5}\Z/,
+              /.*\.app\.clspt\Z/,
               /.*\.classpert\.com\Z/,
               /.*\.classpert-staging\.com/
       resource '*',
@@ -59,7 +65,7 @@ Rails.application.configure do
   config.action_mailer.deliver_later_queue_name = 'default'
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = {
-    host: ENV.fetch('HOST', 'localhost'), port: ENV.fetch('PORT', 3_000)
+    host: ENV.fetch('MAIL_HOST', 'localhost'), port: ENV.fetch('MAIL_PORT', 3_000)
   }
 
   config.action_mailer.delivery_method = :smtp

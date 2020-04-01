@@ -1,0 +1,107 @@
+digraph G {
+  graph [ fontname=Helvetica, fontcolor=black, fontsize=5 ];
+  node  [ fontname=Helvetica, fontcolor=black, fontsize=5 ];
+  edge  [ fontname=Helvetica, fontcolor=black, fontsize=5 ];
+
+  compound=true
+
+  subgraph cluster_0 {
+    label = "Utils";
+
+    search       [ label="search"       ];
+    s3           [ label="s3"           ];
+    thumbor      [ label="thumbor",     ];
+    mail         [ label="mail",        ];
+    assets_proxy [ label="assets-proxy" ];
+/*    proxy        [ label="proxy",       ];*/
+
+    thumbor -> s3;
+
+    /*
+    mail         -> proxy [ color="gray" ];
+    thumbor      -> proxy [ color="gray" ];
+    s3           -> proxy [ color="gray" ];
+    assets_proxy -> proxy [ color="gray" ];
+    */
+  }
+
+  subgraph cluster_1 {
+    label = "Web App";
+
+    app       [ label="app"       ];
+    webpacker [ label="webpacker" ];
+    que       [ label="que"       ];
+    database  [ label="database"  ];
+    hypernova [ label="hypernova" ];
+    video     [ label="video"     ];
+
+    app -> webpacker;
+    app -> que       [ color="gray" ];
+    app -> hypernova [ color="gray" ];
+
+    app -> database;
+    que -> database;
+    api -> database;
+
+    app -> s3;
+    app -> thumbor;
+    app -> search;
+    app -> assets_proxy;
+    app -> video;
+    app -> mail;
+    que -> mail;
+
+    /*
+    app       -> proxy [ color="gray" ];
+    webpacker -> proxy [ color="gray" ];
+    hypernova -> proxy [ color="gray" ];
+    */
+  }
+
+  subgraph cluster_2 {
+    label = "Napoleon";
+
+    database_napoleon [ label="napoleon database" ];
+    api_napoleon      [ label="napoleon api"      ];
+    napoleon          [ label="napoleon"          ];
+    provider          [ label="mocked providers"  ];
+
+    api_napoleon -> database_napoleon;
+
+    napoleon -> database_napoleon;
+    napoleon -> s3;
+    napoleon -> mail;
+    napoleon -> provider [ color="gray" ];
+
+    app -> api_napoleon [ color="gray" ];
+
+    /*
+    api_napoleon -> proxy [ color="gray" ];
+    provider     -> proxy [ color="gray" ];
+    */
+  }
+
+  subgraph cluster_3 {
+    label = "User Dashbaord";
+
+    user [ label="user" ];
+    user -> app;
+    user -> api;
+
+    /*
+    user -> proxy [ color="gray" ];
+    */
+  }
+
+  subgraph cluster_4 {
+    label = "Developer Dashbaord";
+
+    developer [ label="developer" ];
+    developer -> app;
+    developer -> api;
+
+    /*
+    developer -> proxy [ color="gray" ];
+    */
+  }
+}

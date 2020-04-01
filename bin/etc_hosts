@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+
+compose = YAML.load_file 'docker-compose.yml'
+
+domains = compose['services'].find_all do |service, params|
+  params['environment'] && params['environment'].any?{ |e| e.match /^VIRTUAL_HOST\=/ }
+end.map do |service, params|
+  env = params['environment'].find{ |e| e.match /^VIRTUAL_HOST\=/ }
+  env.match(/^VIRTUAL_HOST\=(.*)$/)[1].split(',')
+end.flatten.uniq.sort
+
+puts "\033[0;32m# Please, add those domains on /etc/hosts\033[0m\n\n"
+
+domains.find_all{ |d| d[0..1] != '*.' }.each do |domain|
+  puts "127.0.0.1 #{domain}"
+end
+
+puts "\n\033[0;33m# For those, we can't infer automatically which subdomains should be added.\n# DO IT MANUALLY PLEASE\033[0m\n\n"
+
+domains.find_all{ |d| d[0..1] == '*.' }.each do |domain|
+  puts "# 127.0.0.1 #{domain}"
+end
+
+puts "\n\033[0;31mDISCLAIMER: The simpler (and better solution) is to add this on /etc/resolv.conf\033[0m"
+
+puts %{
+domain clspt
+nameserver 127.0.0.1
+port 53
+search clspt
+
+}
+
+puts "\033[0;31mPs.: On MacOS, instead of adding on /etc/resolv.conf, create a file named /etc/resolver/classpert with that content.\033[0m"

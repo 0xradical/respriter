@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex>
+  <url>
+    <loc>http://sitemaps.provider.clspt/single_01.html</loc>
+  </url>
+  <url>
+    <loc>http://sitemaps.provider.clspt/single_02.html</loc>
+  </url>
+  <url>
+    <loc>http://sitemaps.provider.clspt/subscription_01.html</loc>
+  </url>
+  <url>
+    <loc>http://sitemaps.provider.clspt/subscription_02.html</loc>
+  </url>
+  <sitemap>
+    <loc>http://sitemaps.provider.clspt/nested_sitemap.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>http://sitemaps.provider.clspt/missing_sitemap.xml</loc>
+  </sitemap>
+</sitemapindex>

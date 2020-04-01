@@ -8,22 +8,7 @@ default: &default
 
 development:
   <<: *default
-  host:     <%= ENV.fetch 'PG_HOST',     'localhost'              %>
-  port:     <%= ENV.fetch 'PG_PORT',     '5432'                   %>
-  username: <%= ENV.fetch 'PG_USER',     'postgres'               %>
-  database: <%= ENV.fetch 'PG_DATABASE', 'classpert_development'  %>
-
-test:
-  <<: *default
-  host:     <%= ENV.fetch 'PG_TEST_HOST',     ENV.fetch('PG_HOST',     'localhost'  )     %>
-  port:     <%= ENV.fetch 'PG_TEST_PORT',     ENV.fetch('PG_PORT',     '5433'       )     %>
-  username: <%= ENV.fetch 'PG_TEST_USER',     ENV.fetch('PG_USER',     'postgres'   )     %>
-  database: <%= ENV.fetch 'PG_TEST_DATABASE', ENV.fetch('PG_DATABASE', 'quero_test' )     %>
-
-# On Heroku and other platform providers, you may have a full connection URL
-# available as an environment variable. For example:
-#
-#   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
+  url: <%= ENV['DATABASE_URL'] %>
 
 production:
   <<: *default

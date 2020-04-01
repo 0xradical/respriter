@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+source $1
+
+until pg_isready -U $DATABASE_USER -h $DATABASE_HOST; do sleep 0.5; done;
+
+PGPASSWORD=$DATABASE_PASSWORD pg_dump -U $DATABASE_USER -h $DATABASE_HOST -p $DATABASE_PORT -Fc $DATABASE_DB > $2
+
+exit 0

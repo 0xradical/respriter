@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+puts "SET session_replication_role TO replica;"
+
+Dir['db/seeds/*.csv'].map do |path|
+  absolute_path = File.expand_path path, '.'
+  table_name    = File.basename(path).gsub '.csv', ''
+
+  File.open(absolute_path, 'r') do |file|
+    headers = file.gets.chomp
+    puts "COPY app.#{table_name} (#{headers}) FROM '#{absolute_path}' WITH CSV HEADER DELIMITER ',';"
+  end
+end
+
+[
+  'admin_accounts',
+  'images',
+  'landing_pages',
+  'oauth_accounts',
+  'providers',
+  'user_accounts'
+].each do |table|
+  puts "SELECT setval('app.#{table}_id_seq', MAX(id), true) FROM app.#{table};"
+end
+
+puts "SET session_replication_role TO default;"

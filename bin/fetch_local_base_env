@@ -1,0 +1,84 @@
+#!/usr/bin/env python
+
+import json
+import sys
+import os
+
+stream = os.popen(f'heroku config -j --app {sys.argv[1]}')
+output = stream.read()
+envs   = json.loads(output)
+
+content = '''\
+# # Thumbor
+# # Uncomment this if you want to use production thumbor instead of development
+# # Using production's thumbor speeds up a lot development on Docker for Mac
+# THUMBOR_HOST={thumbor_host}
+# THUMBOR_SECURITY_KEY={thumbor_security_key}
+
+# # Path for Bundler
+# # Uncomment this if you want to use gems installed by yourself
+# BUNDLE_PATH=/home/developer/bundle
+
+# # Video Service
+# # Uncomment this if you want to use production Video Service instead of development
+# VIDEO_SERVICE_HOST={video_service_host}
+# VIDEO_SERVICE_KEY={video_service_key}
+
+# AWS CloudFront Signer
+AWS_KEY_PAIR_ID={aws_key_pair_id}
+AWS_PRIVATE_KEY={aws_private_key}
+
+# Affiliate Programs
+RAKUTEN_MARKETING_USERNAME={rakuten_marketing_username}
+RAKUTEN_MARKETING_PASSWORD={rakuten_marketing_password}
+RAKUTEN_MARKETING_SID={rakuten_marketing_sid}
+RAKUTEN_MARKETING_SCOPE={rakuten_marketing_scope}
+RAKUTEN_TOKEN_REQUEST_AUTHORIZATION={rakuten_token_request_authorization}
+IMPACT_RADIUS_ACCOUNT_SID={impact_radius_account_sid}
+IMPACT_RADIUS_AUTH_TOKEN={impact_radius_auth_token}
+AWIN_API_TOKEN={awin_api_token}
+AWIN_PUBLISHER_ID={awin_publisher_id}
+
+# Oauth
+GITHUB_KEY={github_key}
+GITHUB_SECRET={github_secret}
+FACEBOOK_KEY={facebook_key}
+FACEBOOK_SECRET={facebook_secret}
+LINKEDIN_KEY={linkedin_key}
+LINKEDIN_SECRET={linkedin_secret}
+
+# urlbox.io
+URL_BOX_API_KEY={url_box_api_key}
+
+# Github Personal Access Token
+GITHUB_ACCESS_TOKEN={github_access_token}
+\
+'''.format(
+  thumbor_host                        = envs['THUMBOR_HOST'],
+  thumbor_security_key                = envs['THUMBOR_SECURITY_KEY'],
+  video_service_host                  = envs['VIDEO_SERVICE_HOST'],
+  video_service_key                   = envs['VIDEO_SERVICE_KEY'],
+  aws_key_pair_id                     = envs['AWS_KEY_PAIR_ID'],
+  aws_private_key                     = envs['AWS_PRIVATE_KEY'],
+  rakuten_marketing_username          = envs['RAKUTEN_MARKETING_USERNAME'],
+  rakuten_marketing_password          = envs['RAKUTEN_MARKETING_PASSWORD'],
+  rakuten_marketing_sid               = envs['RAKUTEN_MARKETING_SID'],
+  rakuten_marketing_scope             = envs['RAKUTEN_MARKETING_SCOPE'],
+  rakuten_token_request_authorization = envs['RAKUTEN_TOKEN_REQUEST_AUTHORIZATION'],
+  impact_radius_account_sid           = envs['IMPACT_RADIUS_ACCOUNT_SID'],
+  impact_radius_auth_token            = envs['IMPACT_RADIUS_AUTH_TOKEN'],
+  awin_api_token                      = envs['AWIN_API_TOKEN'],
+  awin_publisher_id                   = envs['AWIN_PUBLISHER_ID'],
+  github_key                          = envs['GITHUB_KEY'],
+  github_secret                       = envs['GITHUB_SECRET'],
+  facebook_key                        = envs['FACEBOOK_KEY'],
+  facebook_secret                     = envs['FACEBOOK_SECRET'],
+  linkedin_key                        = envs['LINKEDIN_KEY'],
+  linkedin_secret                     = envs['LINKEDIN_SECRET'],
+  url_box_api_key                     = envs['URL_BOX_API_KEY'],
+  github_access_token                 = envs['GITHUB_ACCESS_TOKEN']
+)
+
+file = open(sys.argv[2], "w")
+file.write(content)
+file.close()
