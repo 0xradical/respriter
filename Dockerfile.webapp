@@ -1,0 +1,21 @@
+FROM classpert/rails AS builder
+MAINTAINER "Dalton Pinto" <dalton@classpert.com>
+
+ARG GITHUB_ACCESS_TOKEN
+
+ENV BUNDLE_PATH=/home/developer/installed_bundle
+
+COPY . /app
+
+RUN bundle install
+RUN rm -rf node_modules && mkdir -p node_modules && npm install --save-exact
+
+FROM classpert/rails
+
+ENV BUNDLE_PATH=/home/developer/installed_bundle
+ENV NODE_PATH=/home/developer/installed_node_modules
+
+COPY --from=builder /home/developer/installed_bundle /home/developer/installed_bundle
+COPY --from=builder /app/node_modules                /home/developer/installed_node_modules
+
+ENTRYPOINT ["/app/bin/docker-entrypoint.sh"]

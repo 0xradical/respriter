@@ -204,6 +204,22 @@ So, for example, if you want to reindex courses on production not waiting for th
 make detached-prd-course-reindex
 ```
 
+### Bundler and Node Modules Dependencies
+
+You can use installed or volumes dependencies. By default installed dependencies used, they are way faster in OSX, but in
+Linux this doesn't make any difference.
+
+If you want to use volume dependencies you must go to the pre-generated envs/local/base.env file and uncomment `BUNDLE_PATH`
+and `NODE_PATH` variables.
+
+One more thing related to it, is that volume dependencies are the only ones you can update with `npm install` or `bundle install`.
+Installed dependencies are per container and not shared along other containers, so if you run those commands you will only
+update `Gemfile.lock` and `package-lock.json`, so you will need to run `make docker-build` to have those images propagated.
+
+One more detail is that if you change the value of `NODE_PATH` env variable, you need to delete symlink file node_modules in
+order to make everything work, so after deleting it, you need to recreate all containers with `make down` so the changes will
+be updated
+
 ### Database Tasks
 
 The most useful task to handle database is `make db-prepare`. It stops databse (if is running), wipes database (if exists)

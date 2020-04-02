@@ -1,7 +1,7 @@
 version: '3'
 services:
   base.clspt: &base
-    image: classpert/rails:4.0.0
+    image: classpert/web-app
     env_file:
       - envs/dev/base.env
       - envs/local/base.env

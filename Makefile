@@ -1,12 +1,21 @@
-NAME                  := classpert/rails
-TAG                   := 4.0.0
-IMG                   := $(NAME)\:$(TAG)
-LATEST                := $(NAME)\:latest
 HEROKU_WEB_APP_NAME   := classpert-web-app
 HEROKU_POSTGREST_NAME := classpert-postgrest
 HEROKU_USER_DASH_NAME := clspt-user-dashboard
 HEROKU_DEV_DASH_NAME  := clspt-developers-dashboard
 HEROKU_VIDEO_NAME     := classpert-video-service
+
+DOCKER_BASE_NAME   := classpert/rails
+DOCKER_BASE_TAG    := 4.0.0
+DOCKER_BASE_FILE   := Dockerfile
+DOCKER_BASE_IMAGE  := $(DOCKER_BASE_NAME):$(DOCKER_BASE_TAG)
+DOCKER_BASE_LATEST := $(DOCKER_BASE_NAME):latest
+
+DOCKER_WEB_APP_NAME   := classpert/web-app
+DOCKER_WEB_APP_TAG    := $(shell cat Gemfile.lock package-lock.json | gsha1sum | sed -e 's/ .*//g')
+DOCKER_WEB_APP_FILE   := Dockerfile.webapp
+DOCKER_WEB_APP_IMAGE  := $(DOCKER_WEB_APP_NAME):$(DOCKER_WEB_APP_TAG)
+DOCKER_WEB_APP_LATEST := $(DOCKER_WEB_APP_NAME):latest
+DOCKER_WEB_APP_ARGS   := GITHUB_ACCESS_TOKEN=$(shell heroku config:get GITHUB_ACCESS_TOKEN --app $(HEROKU_WEB_APP_NAME)-prd)
 
 WORKDIR := $(shell pwd)
 
@@ -39,7 +48,11 @@ configure: $(CUSTOM_ENV_FILES)
 
 setup: setup-app setup-user setup-developer setup-database setup-napoleon ## Sets all apps
 
-setup-app: bundle-install npm-install-save-exact ## Sets up Web App installing all its dependencies
+setup-app: setup-git bundle-install npm-install-save-exact ## Sets up Web App installing all its dependencies
+
+setup-git: ## Set up git submodules
+	@git submodule init
+	@git submodule update
 
 setup-database: ./images/database/production_seed.sql up-persistence course-reindex  ## Sets up Persistence Containers and indexes Search
 
@@ -221,12 +234,19 @@ down-%: $(CUSTOM_ENV_FILES) ## Stops and Removes a service
 	$(DOCKER_COMPOSE) stop $*.clspt
 	$(DOCKER_COMPOSE) rm -f $*.clspt
 
+docker-build-base: ## Builds the base docker image
+	@$(DOCKER) build -f $(DOCKER_BASE_FILE) -t $(DOCKER_BASE_NAME) .
+	@$(DOCKER) tag $(DOCKER_BASE_NAME) $(DOCKER_BASE_LATEST)
+
+docker-push-base: ## Pushes the docker base image to Dockerhub
+	@$(DOCKER) push $(DOCKER_BASE_NAME)
+
 docker-build: ## Builds the docker image
-	@$(DOCKER) build -t $(IMG) .
-	@$(DOCKER) tag $(IMG) $(LATEST)
+	@$(DOCKER) build -f $(DOCKER_WEB_APP_FILE) --build-arg $(DOCKER_WEB_APP_ARGS) -t $(DOCKER_WEB_APP_NAME) .
+	@$(DOCKER) tag $(DOCKER_WEB_APP_NAME) $(DOCKER_WEB_APP_LATEST)
 
 docker-push: ## Pushes the docker image to Dockerhub
-	@$(DOCKER) push $(NAME)
+	@$(DOCKER) push $(DOCKER_WEB_APP_NAME)
 
 clean: $(CUSTOM_ENV_FILES) ## Stop containers, remove old images and prune docker unused resources
 	@$(DOCKER_COMPOSE) down --rmi local --remove-orphans
@@ -341,4 +361,4 @@ images/volumes/ssh_host_rsa_key:
 %: | examples/%.example
 	cp $| $@
 
-.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev console-% npm-install npm-install-save-exact bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search
+.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev console-% npm-install npm-install-save-exact bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search

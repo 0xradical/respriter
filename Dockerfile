@@ -8,7 +8,6 @@
 FROM ruby:2.6.5-slim
 MAINTAINER codextremist <felipe.japm@gmail.com>
 
-ARG yarn_version=1.22.4
 ARG UNAME=developer
 ARG UID=1000
 ARG GID=1000
@@ -38,20 +37,8 @@ WORKDIR /app
 
 USER $UNAME
 
-ENV BUNDLE_PATH=/home/$UNAME/installed_bundle
-ENV NODE_PATH=/home/$UNAME/node_modules
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=C
 
 RUN echo 'export PS1="\[\033[01;34m\]\u\[\033[0m\] @ \[\033[01;32m\]\W\[\033[0m\] > "' >> /home/$UNAME/.bashrc
-
-COPY Gemfile      /app
-COPY Gemfile.lock /app
-RUN  bundle install
-
-# COPY package.json      /app
-# COPY package-lock.json /app
-# RUN  npm install
-
-ENTRYPOINT ["/app/bin/docker-entrypoint.sh"]
