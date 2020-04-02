@@ -233,6 +233,9 @@ do so, it uses a subset of sanitezed data from production that is created by "gi
 images/database/production_seed.sql, this script is dynamically created when you run `make setup-database`, which also
 creates some csv files at db/seeds/ folder. In that folder, also "gitignored" lives all seed data extracted from production.
 
+One more nice detail about this seed, is that every password for user or admin is overwritten to abc123, so it makes
+everything easier to debug!
+
 If you implement a new feature or changed database structure in a way that you may break this auto generation of seeds,
 please, be kind enough to fix it, look at the task `db-build-seeds` at [Makefile](Makefile) and be polite
 to allow other people still could continue using this feature for their daily work.
