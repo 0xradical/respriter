@@ -66,7 +66,7 @@ setup-napoleon: ../napoleon up-database up-api.napoleon ## Sets up Napoleon (its
 	@$(call docker_run_or_plain,base.clspt,bundle exec rails runner bin/setup_napoleon.rb)
 	@echo -e "Napoleon is ready to crawl some providers! To do so, follow this:\n - Run make up-{persistence,provider,napoleon} or make sure those services are up\n - Wait for a while looking at logs to know when it finishes (checks running make logs)\n - Run make sync"
 
-etc_hosts: ## Show domains that should be on /etc/hosts
+etc_hosts: $(CUSTOM_ENV_FILES) ## Show domains that should be on /etc/hosts
 	@$(call docker_run_or_plain,base.clspt,./bin/etc_hosts)
 
 worker: ## Alias to make run-que
@@ -252,7 +252,7 @@ clean: $(CUSTOM_ENV_FILES) ## Stop containers, remove old images and prune docke
 	@$(DOCKER_COMPOSE) down --rmi local --remove-orphans
 	@$(DOCKER) system prune -f
 
-wipe-unnamed-volumes: ## Deletes all volumes on machine, except 
+wipe-unnamed-volumes: ## Deletes all volumes on machine, except
 	@$(DOCKER) volume rm `docker volume ls -q -f dangling=true | sed '/web-app/d'`
 
 wipe-data: ## Deletes volumes with data like database, s3, elasticsearch (don't erase npm and bundler volumes)
@@ -326,7 +326,7 @@ envs/local/developer.env:
 
 envs/local/video.env:
 	@mkdir -p envs/local
-	./bin/fetch_local_developer_env $(HEROKU_VIDEO_NAME)-prd $@
+	./bin/fetch_local_video_env $(HEROKU_VIDEO_NAME)-prd $@
 
 envs/local/%:
 	@mkdir -p envs/local
