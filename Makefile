@@ -236,9 +236,9 @@ restart-persistence: restart-search restart-database restart-s3 ## Runs all pers
 restart-%: $(CUSTOM_ENV_FILES) ## Restarts a service
 	$(DOCKER_COMPOSE) restart $*.clspt
 
-down: cleanup ## Alias for cleanup
+down: clean ## Alias for clean
 
-down-all: cleanup ## Alias for cleanup
+down-all: clean ## Alias for clean
 
 down-user: down-user.app ## Alias for down-user.app
 
