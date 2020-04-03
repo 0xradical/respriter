@@ -66,7 +66,7 @@ services:
     volumes:
       - .:/app
       - /app/volumes
-      - database_data:/var/lib/postgresql/data
+      - database_data:/var/lib/postgresql/data:cached
       - ./images/database/production_seed.sql:/docker-entrypoint-initdb.d/x_seed.sql
       - ./images/database/development_seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
 
@@ -93,7 +93,7 @@ services:
       - 5601
       - 9200:9200
     volumes:
-      - search_data:/home/elasticsearch/elasticsearch/data
+      - search_data:/home/elasticsearch/elasticsearch/data:cached
     depends_on:
       - proxy.clspt
 
@@ -131,7 +131,7 @@ services:
     ports:
       - 9000
     volumes:
-      - s3_data:/storage
+      - s3_data:/storage:cached
     depends_on:
       - proxy.clspt
 
@@ -192,7 +192,7 @@ services:
       - envs/dev/database-napoleon.env
       - envs/local/database-napoleon.env
     volumes:
-      - database_napoleon_data:/var/lib/postgresql/data
+      - database_napoleon_data:/var/lib/postgresql/data:cached
       - ./images/napoleon_database/seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
     ports:
       - 5434:5432
