@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'resolv'
+
+Thread.new do
+  sleep 5
+  puts "\033[0;31m*.provider.clspt will not be found by this container\033[0m"
+  exit 0
+end
+
+address = Resolv::DNS.new.getresources('provider.clspt', Resolv::DNS::Resource::IN::A).first.address
+File.open('/etc/hosts', 'a') do |file|
+  Dir['/app/images/provider/www/*'].map do |folder|
+    file.puts "#{address} #{File.basename folder}.provider.clspt"
+  end
+end
+
+# exec ARGV[0]

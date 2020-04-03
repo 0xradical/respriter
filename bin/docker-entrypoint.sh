@@ -30,4 +30,6 @@ else
   fi;
 fi;
 
+sudo /app/bin/update_etc_hosts
+
 exec ${COMMAND}
