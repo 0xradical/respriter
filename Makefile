@@ -4,18 +4,28 @@ HEROKU_USER_DASH_NAME := clspt-user-dashboard
 HEROKU_DEV_DASH_NAME  := clspt-developers-dashboard
 HEROKU_VIDEO_NAME     := classpert-video-service
 
+UNAME := $(shell uname)
+ifeq ($(UNAME), Darwin)
+	SHA1SUM := gsha1sum
+else
+	# assume linux
+	SHA1SUM := sha1sum
+endif
+
 DOCKER_BASE_NAME   := classpert/rails
 DOCKER_BASE_TAG    := 4.0.0
 DOCKER_BASE_FILE   := Dockerfile
 DOCKER_BASE_IMAGE  := $(DOCKER_BASE_NAME):$(DOCKER_BASE_TAG)
 DOCKER_BASE_LATEST := $(DOCKER_BASE_NAME):latest
 
+GITHUB_ACCESS_TOKEN ?= $(shell heroku config:get GITHUB_ACCESS_TOKEN --app $(HEROKU_WEB_APP_NAME)-prd)
+
 DOCKER_WEB_APP_NAME   := classpert/web-app
-DOCKER_WEB_APP_TAG    := $(shell cat Gemfile.lock package-lock.json | gsha1sum | sed -e 's/ .*//g')
+DOCKER_WEB_APP_TAG    := $(shell cat Gemfile.lock package-lock.json | $(SHA1SUM) | sed -e 's/ .*//g')
 DOCKER_WEB_APP_FILE   := Dockerfile.webapp
 DOCKER_WEB_APP_IMAGE  := $(DOCKER_WEB_APP_NAME):$(DOCKER_WEB_APP_TAG)
 DOCKER_WEB_APP_LATEST := $(DOCKER_WEB_APP_NAME):latest
-DOCKER_WEB_APP_ARGS   := GITHUB_ACCESS_TOKEN=$(shell heroku config:get GITHUB_ACCESS_TOKEN --app $(HEROKU_WEB_APP_NAME)-prd)
+DOCKER_WEB_APP_ARGS   = GITHUB_ACCESS_TOKEN=$(GITHUB_ACCESS_TOKEN?)
 
 WORKDIR := $(shell pwd)
 
@@ -107,6 +117,9 @@ sh-ports-%: $(CUSTOM_ENV_FILES) ## Runs sh for a given container
 sh-%: $(CUSTOM_ENV_FILES) ## Runs sh for a given container with service ports
 	@$(call docker_run_or_plain,$*.clspt,/bin/sh)
 
+hypernova: ./ssr/hypernova.js
+	node ssr/hypernova.js
+
 console: console-dev ## Alias for console-dev
 
 console-dev: $(CUSTOM_ENV_FILES) ## Run rails console for development
@@ -114,6 +127,9 @@ console-dev: $(CUSTOM_ENV_FILES) ## Run rails console for development
 
 console-%: ## Run console for a given env
 	heroku run console --app=$(HEROKU_WEB_APP_NAME)-$*
+
+build-ssr: ## Creates hypernova bundle
+	@$(call docker_run_or_plain,base.clspt,npm run ssr)
 
 npm-install: $(CUSTOM_ENV_FILES) ## Run npm install
 	@$(call docker_run_or_plain,base.clspt,npm install)
@@ -337,6 +353,9 @@ envs/%/database.env:
 	@mkdir -p envs/$*
 	./bin/fetch_database_env $(HEROKU_WEB_APP_NAME)-$* $(HEROKU_POSTGREST_NAME)-$* $@
 
+ssr/hypernova.js: package-lock.json ./app/assets ./config/locales
+	@make -s build-ssr
+
 ./images/database/production_seed.sql: db-build-seeds
 
 images/volumes/ssh_host_ed25519_key:
@@ -361,4 +380,4 @@ images/volumes/ssh_host_rsa_key:
 %: | examples/%.example
 	cp $| $@
 
-.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev console-% npm-install npm-install-save-exact bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search
+.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-install-save-exact bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search

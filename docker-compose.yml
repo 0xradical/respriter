@@ -37,7 +37,7 @@ services:
 
   ssr.clspt:
     <<: *base
-    command: node ssr/hypernova.js
+    command: make hypernova
     environment:
       - VIRTUAL_HOST=ssr.clspt
     ports:
@@ -56,7 +56,7 @@ services:
       - proxy.clspt
 
   database.clspt:
-    image: classpert/database:1.3.9
+    image: classpert/database:1.3.10
     env_file:
       - envs/dev/database.env
       - envs/local/database.env
