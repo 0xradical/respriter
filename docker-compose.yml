@@ -20,6 +20,7 @@ services:
     depends_on:
       - api.clspt
       - webpacker.clspt
+      - ssr.clspt
       - database.clspt
       - search.clspt
       - thumbor.clspt
