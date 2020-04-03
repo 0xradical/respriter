@@ -152,7 +152,6 @@ BEGIN
 END;
 $$ SECURITY DEFINER LANGUAGE plpgsql;
 
-
 CREATE TRIGGER api_provider_crawlers_view_instead_of_update
   INSTEAD OF UPDATE
   ON api.provider_crawlers
