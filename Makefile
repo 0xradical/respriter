@@ -356,7 +356,8 @@ envs/%/database.env:
 ssr/hypernova.js: package-lock.json ./app/assets ./config/locales
 	@make -s build-ssr
 
-./images/database/production_seed.sql: db-build-seeds
+./images/database/production_seed.sql: ./db/seeds
+	@make -s db-build-seeds
 
 images/volumes/ssh_host_ed25519_key:
 	ssh-keygen -t ed25519 -f ssh_host_ed25519_key < /dev/null
