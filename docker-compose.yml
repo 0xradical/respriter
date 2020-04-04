@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   base.clspt: &base
     image: classpert/web-app
@@ -57,7 +57,7 @@ services:
       - proxy.clspt
 
   database.clspt:
-    image: classpert/database:1.3.10
+    image: classpert/database:1.3.11
     env_file:
       - envs/dev/database.env
       - envs/local/database.env
@@ -275,7 +275,7 @@ services:
       - search_data:/home/squerol/volumes/search_data
       - s3_data:/home/squerol/volumes/s3_data
     ports:
-      - '2222:22'
+      - "2222:22"
 
 volumes:
   base_bundle:

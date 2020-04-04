@@ -2,7 +2,7 @@ APP := migrator
 
 NAME := classpert/database
 
-DATABASE_IMAGE_TAG     := 1.3.10
+DATABASE_IMAGE_TAG     := 1.3.11
 DATABASE_IMAGE_NAME    := $(NAME)\:$(DATABASE_IMAGE_TAG)
 DATABASE_IMAGE_VERSION := $(NAME)\:latest
 
@@ -55,7 +55,7 @@ docker-%:
 	$(DOCKER_COMPOSE_RUN) $(MAKE) $*
 
 run: $(CURRENT_STRUCTURE)
-	@$(DOCKER_COMPOSE) up postgrest
+	@$(DOCKER_COMPOSE) up database.clspt
 
 build: $(CURRENT_STRUCTURE_TEMPLATE)
 	@docker build -f Dockerfile.database -t $(DATABASE_IMAGE_NAME) .
