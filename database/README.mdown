@@ -90,3 +90,23 @@ You can get it at `db/structure.sql` after running this:
 ```
 make structure
 ```
+
+# Out Of Order Tables Right now:
+
+- admin_profiles
+- images
+- posts
+- profiles
+- providers
+- provider\_crawlers (in right order but with numbering out of order)
+
+##Why it matters?
+
+### https://wiki.postgresql.org/wiki/Alter_column_position
+
+> 1. physical layout can be optimized by putting fixed size columns at the start of the table
+> 2. ordering columns can make working with a table easier, either by putting result sets in an order that is visually appealing, or by grouping columns based on similar function within a table.
+
+### https://www.2ndquadrant.com/en/blog/on-rocks-and-sand/
+
+> One of the elements which requires management is storage. However, there’s an aspect of storage that escapes inspection almost without exception, and it’s hiding in the shadows between the columns themselves.
