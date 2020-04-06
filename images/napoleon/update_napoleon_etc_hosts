@@ -1,12 +1,16 @@
 #!/usr/bin/env ruby
 
-require 'resolv'
+# require 'resolv'
+#
+# address = Resolv::DNS.new.getresources('provider.clspt', Resolv::DNS::Resource::IN::A).first.address
+# File.open('/etc/hosts', 'a') do |file|
+#   Dir['/var/www/*'].map do |folder|
+#     file.puts "#{address} #{File.basename folder}.provider.clspt"
+#   end
+# end
 
-address = Resolv::DNS.new.getresources('provider.clspt', Resolv::DNS::Resource::IN::A).first.address
 File.open('/etc/hosts', 'a') do |file|
-  Dir['/var/www/*'].map do |folder|
-    file.puts "#{address} #{File.basename folder}.provider.clspt"
+  Dir['/app/images/provider/www/*'].map do |folder|
+    file.puts "172.28.1.118 #{File.basename folder}.provider.clspt"
   end
 end
-
-# exec ARGV[0]

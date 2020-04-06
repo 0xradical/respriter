@@ -182,7 +182,7 @@ db-wipe: wipe-db ## Alias to wipe-db
 wipe-db: $(CUSTOM_ENV_FILES) ## Kill database container and volumes
 	$(DOCKER_COMPOSE) stop database.clspt
 	$(DOCKER_COMPOSE) rm -f database.clspt
-	$(DOCKER) volume rm $(shell basename `pwd`)_database_data
+	$(DOCKER) volume rm $(shell basename `pwd`)_database_data; exit 0
 
 db-restart: $(CUSTOM_ENV_FILES) ## Restart Database (kill containers and recreate with fresh new volume)
 	@make -s wipe-db
