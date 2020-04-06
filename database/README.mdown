@@ -9,6 +9,9 @@ Working under this project is simple, just follow:
 3. You may be requested to edit `db/structure.lock`, if requied, edit it, then return to step 2
 4. When your work is done, run `make structure-migrate-NAME_OF_NEW_MIGRATION`
 5. Edit manually the migration created by latest tasks
+6. Edit makefile image version at `DATABASE_IMAGE_VERSION`
+7. Run `make build` to build new docker image
+8. Run `make release` to publish this image to the rest of the team
 
 ## Out Of Order Tables Right now:
 
