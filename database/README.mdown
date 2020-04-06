@@ -1,97 +1,16 @@
 # Classpert Database
 
-## Running It
+## Development Workflow
 
-```
-make run
-```
+Working under this project is simple, just follow:
 
-## Using It
+1. Edit src folder files
+2. Run `make structure-update` everythime you want to update `db/structure.sql.env`
+3. You may be requested to edit `db/structure.lock`, if requied, edit it, then return to step 2
+4. When your work is done, run `make structure-migrate-NAME_OF_NEW_MIGRATION`
+5. Edit manually the migration created by latest tasks
 
-Just include `classpert/database` docker image into your project.
-
-It is just an postgres 11 alpine image with credentials generated from `.env` used here.
-
-Structure is created on the fly on database startup.
-
-Just need an environment variable `POSTGRES_DB` that could be provided at docker-compose.
-
-## Building from Scratch
-
-To do so we must create a `db/structure.sql` from `db/structure.sql.env` file (notice that `db/structure.sql` is gitignored to avoid password leaking).
-
-Maybe `db/structure.sql` could be outdated. If that happens, we could regenerate it with:
-
-```
-make structure
-```
-
-You can run it without much worries, since it only runs if `db/structure.sql` is outdated.
-
-If it is outdated, I have 1 bad and 2 goods and news for you.
-
-Bad one: Right now `db/structure.sql.env` generation is a little clumsy.
-It aggregates all `.sql` files from `src/`, trying to concatenate each in a proper order... But it doesn't.
-So, you will have to organize **manually**.
-
-Good one: It is not hard, you can run `make docker-migrate`, check what went wrong, move the out-of-order statement
-at `db/structure.sql.env` (**IMPORTANT** at `db/structure.sql.env` not `db/structure.sql`) and keep doing so until
-everything is finished (all migrations run inside a transaction, so if something goes wrong, nothing is persisted).
-
-Good #2: I want to create very soon a tool that does that. Hope this boring process will not be like this forever.
-
-Having a proper `db/structure.sql`, we could create a docker image containing a postgres 11 alpine server with all
-structures already migrated named `classpert/database:latest` running this:
-
-```
-make build
-```
-
-Then migrate it:
-
-```
-make docker-migrate
-```
-
-Or (if inside container):
-
-```
-make migrate
-```
-
-To push it to DockerHub run:
-
-```
-make release
-```
-
-## FAQ
-
-### What about Migrations?
-
-We keep them into db/migrations as plain SQL files that are supposed to be used at production,
-but should be created manually in order to make sure that `db/structure.sql` is compliant with it.
-
-Again, soon we will have a tool to aid on this.
-
-### What about Deploy?
-
-Right now, we should handle it manually.
-
-That's why we must run every migration within a transaction.
-
-I know that some statements as `INDEX CONCURRENTLY ...` doesn't work as intended under transactions
-but right now is the best we can do.
-
-### But I need the structure.sql file for doing X...
-
-You can get it at `db/structure.sql` after running this:
-
-```
-make structure
-```
-
-# Out Of Order Tables Right now:
+## Out Of Order Tables Right now:
 
 - admin_profiles
 - images
@@ -100,13 +19,13 @@ make structure
 - providers
 - provider\_crawlers (in right order but with numbering out of order)
 
-##Why it matters?
+### Why it matters?
 
-### https://wiki.postgresql.org/wiki/Alter_column_position
+#### https://wiki.postgresql.org/wiki/Alter_column_position
 
 > 1. physical layout can be optimized by putting fixed size columns at the start of the table
 > 2. ordering columns can make working with a table easier, either by putting result sets in an order that is visually appealing, or by grouping columns based on similar function within a table.
 
-### https://www.2ndquadrant.com/en/blog/on-rocks-and-sand/
+#### https://www.2ndquadrant.com/en/blog/on-rocks-and-sand/
 
 > One of the elements which requires management is storage. However, there’s an aspect of storage that escapes inspection almost without exception, and it’s hiding in the shadows between the columns themselves.

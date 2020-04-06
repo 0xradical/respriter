@@ -1,6 +1,6 @@
-/database/db/dumps
-/database/debug
-/database/drafts
-/database/log
-/database/tmp
-/database/references
+./db/dumps
+./debug
+./drafts
+./log
+./tmp
+./references

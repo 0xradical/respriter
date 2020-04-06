@@ -193,6 +193,9 @@ db-download: db-download-prd
 db-download-%: envs/%/database.env $(CUSTOM_ENV_FILES) ## Generates and downloads latest postgres dump
 	@$(call docker_run_or_plain,base.clspt,bin/db_download envs/$*/database.env $(PG_DUMP_FILE))
 
+db-%: ## Runs database tasks, see database/Makefile or database/README.mdown for more info
+	@cd database && make -s $*
+
 detached-prd-%: ## Executes `make SOMETHING` detached at production
 	heroku run:detached make $* --app=$(HEROKU_WEB_APP_NAME)-prd
 
@@ -381,4 +384,4 @@ images/volumes/ssh_host_rsa_key:
 %: | examples/%.example
 	cp $| $@
 
-.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-install-save-exact bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search
+.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-install-save-exact bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% db-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search
