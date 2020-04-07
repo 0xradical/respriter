@@ -56,7 +56,7 @@ help:
 
 configure: $(CUSTOM_ENV_FILES)
 
-setup: setup-app setup-user setup-developer setup-database setup-napoleon ## Sets all apps
+setup: setup-app setup-database setup-user setup-developer setup-napoleon ## Sets all apps
 
 setup-app: setup-git bundle-install npm-install-save-exact ## Sets up Web App installing all its dependencies
 
