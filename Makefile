@@ -58,7 +58,7 @@ configure: $(CUSTOM_ENV_FILES)
 
 setup: setup-app setup-database setup-user setup-developer setup-napoleon ## Sets all apps
 
-setup-app: setup-git bundle-install npm-install-save-exact ## Sets up Web App installing all its dependencies
+setup-app: setup-git bundle-install npm-ci ## Sets up Web App installing all its dependencies
 
 setup-git: ## Set up git submodules
 	@git submodule init
@@ -134,8 +134,8 @@ build-ssr: ## Creates hypernova bundle
 npm-install: $(CUSTOM_ENV_FILES) ## Run npm install
 	@$(call docker_run_or_plain,base.clspt,npm install)
 
-npm-install-save-exact: $(CUSTOM_ENV_FILES) ## Run npm install --save-exact
-	@$(call docker_run_or_plain,base.clspt,npm install --save-exact)
+npm-ci: $(CUSTOM_ENV_FILES) ## Run npm ci
+	@$(call docker_run_or_plain,base.clspt,npm ci)
 
 bundle-install: $(CUSTOM_ENV_FILES) ## Run bundle install
 	@$(call docker_run_or_plain,base.clspt,bundle install)
@@ -383,4 +383,4 @@ images/volumes/ssh_host_rsa_key:
 %: | examples/%.example
 	cp $| $@
 
-.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-install-save-exact bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search
+.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-ci bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search

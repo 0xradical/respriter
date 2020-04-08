@@ -9,7 +9,7 @@ ENV NODE_PATH=/home/developer/installed_node_modules
 COPY . /app
 
 RUN bundle install
-RUN rm -rf node_modules && mkdir -p node_modules && npm install --save-exact
+RUN rm -rf node_modules && mkdir -p node_modules && npm ci
 
 FROM classpert/rails
 
