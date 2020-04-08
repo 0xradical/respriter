@@ -154,17 +154,23 @@ services:
       - proxy.clspt
 
   s3.clspt:
-    image: classpert/fakes3
-    command: -r /storage -p 80 -H s3.clspt
+    image: classpert/minio
+    build:
+      context: images/minio/.
+      dockerfile: Dockerfile
+    command: minio server --address :80 /data
+    env_file:
+      - envs/dev/minio.env
+      - envs/local/minio.env
     environment:
       - VIRTUAL_HOST=s3.clspt
+    volumes:
+      - s3_data:/data:cached
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.110
     ports:
       - 80
-    volumes:
-      - s3_data:/storage:cached
     depends_on:
       - proxy.clspt
 
