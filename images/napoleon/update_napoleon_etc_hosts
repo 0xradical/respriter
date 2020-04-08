@@ -10,7 +10,7 @@
 # end
 
 File.open('/etc/hosts', 'a') do |file|
-  Dir['/app/images/provider/www/*'].map do |folder|
+  Dir['/var/www/*'].map do |folder|
     file.puts "172.28.1.118 #{File.basename folder}.provider.clspt"
   end
 end
