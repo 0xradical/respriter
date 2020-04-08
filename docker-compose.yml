@@ -89,7 +89,7 @@ services:
       - ./images/database/development_seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
 
   api.clspt:
-    image: postgrest/postgrest
+    image: postgrest/postgrest:v6.0.2
     env_file:
       - envs/dev/api.env
       - envs/local/api.env
@@ -242,7 +242,7 @@ services:
       - 5434:5432
 
   api.napoleon.clspt:
-    image: postgrest/postgrest
+    image: postgrest/postgrest:v6.0.2
     env_file:
       - envs/dev/api-napoleon.env
       - envs/local/api-napoleon.env
