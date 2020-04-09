@@ -22,3 +22,12 @@ UPDATE pipelines
 SET data = pipelines.data || jsonb_build_object('next_pipeline_id', next_pipeline.id::varchar)
 FROM next_pipeline
 WHERE pipelines.id = $1.id;
+
+-- IMPORTANT: This is only done to make sure this pipeline has at least one process
+INSERT INTO app.pipe_processes (
+  pipeline_id,
+  initial_accumulator
+) VALUES (
+  $1.id,
+  jsonb_build_object('url', NULL)
+);

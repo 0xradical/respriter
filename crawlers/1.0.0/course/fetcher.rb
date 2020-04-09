@@ -1,3 +1,8 @@
+if pipe_process.accumulator[:url].nil?
+  # IMPORTANT: This is only done to make sure this pipeline has at least one process
+  raise Pipe::Error.new(:skipped, 'Empty URL')
+end
+
 token = pipeline.data[:user_agent][:token]
 
 accumulator = pipe_process.accumulator
