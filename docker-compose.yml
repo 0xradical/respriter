@@ -352,7 +352,7 @@ services:
   #   environment:
   #     - VIRTUAL_HOST=logshuttle.clspt
   #     - LOGSPOUT=ignore
-  #     - LOGSPLOUT_URL=http://logspout.clspt/logs
+  #     - LOGSPOUT_URL=http://logspout.clspt/logs
   #     - LOGPLEX_INPUT_URL=https://logplex.clspt:8601
   #     - LOGPLEX_TOKEN=12345
   #   networks:
