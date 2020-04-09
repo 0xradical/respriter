@@ -18,6 +18,7 @@ services:
     <<: *base
     environment:
       - VIRTUAL_HOST=app.clspt,*.app.clspt
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.101
@@ -50,6 +51,7 @@ services:
     command: make hypernova
     environment:
       - VIRTUAL_HOST=ssr.clspt
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.103
@@ -63,6 +65,7 @@ services:
     command: bin/webpack-dev-server
     environment:
       - VIRTUAL_HOST=webpacker.clspt
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.104
@@ -76,6 +79,8 @@ services:
     env_file:
       - envs/dev/database.env
       - envs/local/database.env
+    environment:
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.105
@@ -95,6 +100,7 @@ services:
       - envs/local/api.env
     environment:
       - VIRTUAL_HOST=api.clspt
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.106
@@ -109,6 +115,7 @@ services:
     environment:
       - VIRTUAL_HOST=kibana.clspt
       - VIRTUAL_PORT=5601
+      - LOGSPOUT=ignore
       - "discovery.type=single-node"
     networks:
       fixed_ip_network:
@@ -128,6 +135,7 @@ services:
       - envs/local/thumbor.env
     environment:
       - VIRTUAL_HOST=thumbor.clspt
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.108
@@ -144,6 +152,7 @@ services:
     environment:
       - VIRTUAL_HOST=mail.clspt
       - VIRTUAL_PORT=1080
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.109
@@ -164,6 +173,7 @@ services:
       - envs/local/minio.env
     environment:
       - VIRTUAL_HOST=s3.clspt
+      - LOGSPOUT=ignore
     volumes:
       - s3_data:/data:cached
     networks:
@@ -182,6 +192,7 @@ services:
       - envs/local/assets-proxy.env
     environment:
       - VIRTUAL_HOST=assets-proxy.clspt
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.111
@@ -201,6 +212,7 @@ services:
       - envs/local/user.env
     environment:
       - VIRTUAL_HOST=user.app.clspt
+      - LOGSPOUT=ignore
     volumes:
       - ../user-dashboard:/app
     networks:
@@ -221,6 +233,7 @@ services:
       - envs/local/developer.env
     environment:
       - VIRTUAL_HOST=developer.app.clspt
+      - LOGSPOUT=ignore
     volumes:
       - ../developers-dashboard:/app
     networks:
@@ -238,6 +251,8 @@ services:
     env_file:
       - envs/dev/database-napoleon.env
       - envs/local/database-napoleon.env
+    environment:
+      - LOGSPOUT=ignore
     volumes:
       - database_napoleon_data:/var/lib/postgresql/data:cached
       - ./images/napoleon_database/seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
@@ -254,6 +269,7 @@ services:
       - envs/local/api-napoleon.env
     environment:
       - VIRTUAL_HOST=api.napoleon.clspt
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.115
@@ -270,6 +286,8 @@ services:
     env_file:
       - envs/dev/napoleon.env
       - envs/local/napoleon.env
+    environment:
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.116
@@ -290,6 +308,7 @@ services:
       - envs/local/video.env
     environment:
       - VIRTUAL_HOST=video.clspt
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.117
@@ -304,6 +323,7 @@ services:
     environment:
       - DOMAIN=provider.clspt
       - VIRTUAL_HOST=provider.clspt,*.provider.clspt
+      - LOGSPOUT=ignore
     volumes:
       - ./images/provider/www:/var/www
     networks:
@@ -318,6 +338,7 @@ services:
     image: gliderlabs/logspout
     environment:
       - VIRTUAL_HOST=logspout.clspt
+      - LOGSPOUT=ignore
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
@@ -326,10 +347,80 @@ services:
     ports:
       - 80
 
+  # logshuttle.clspt:
+  #   image: classpert/log-shuttle:1.0.0
+  #   environment:
+  #     - VIRTUAL_HOST=logshuttle.clspt
+  #     - LOGSPOUT=ignore
+  #     - LOGSPLOUT_URL=http://logspout.clspt/logs
+  #     - LOGPLEX_INPUT_URL=https://logplex.clspt:8601
+  #     - LOGPLEX_TOKEN=12345
+  #   networks:
+  #     fixed_ip_network:
+  #       ipv4_address: 172.28.1.120
+  #   depends_on:
+  #     - logspout.clspt
+  #     - logplex.clspt
+
+  # logdrain.clspt:
+  #   image: classpert/log-drain:1.0.0
+  #   command: start
+  #   environment:
+  #     - REDIS_URL=http://redis.clspt
+  #     - ALLOWED_SOURCES=crawling-event,sitemap-verification-service,domain-validation-service,resource-discovery-service,debug-tool-service
+  #   networks:
+  #     fixed_ip_network:
+  #       ipv4_address: 172.28.1.121
+  #   depends_on:
+  #     - redis.clspt
+  #     - logplex.clspt
+
+  logplex.clspt:
+    image: classpert/logplex:1.0.0
+    command: ./_build/default/rel/logplex/bin/logplex foreground
+    # command: tail -f /dev/null
+    hostname: logplex
+    domainname: docker.local
+    environment:
+      - VIRTUAL_HOST=logplex.clspt
+      - LOGSPOUT=ignore
+      - INSTANCE_NAME=logplex.docker.local
+      - LOCAL_IP=127.0.0.1
+      - LOGPLEX_CONFIG_REDIS_URL=redis://redis.clspt:6379/
+      - LOGPLEX_SHARD_URLS=redis://db:6379/#frag1
+      - LOGPLEX_REDGRID_REDIS_URL=redis://redis.clspt:6379/
+      - LOGPLEX_STATS_REDIS_URL=redis://redis.clspt:6379/
+      - LOGPLEX_COOKIE=123
+      - LOGPLEX_AUTH_KEY=secret
+    ports:
+      - 8001
+      - 8002:8002
+      - 8601:8601
+      - 6001:6001
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.122
+    depends_on:
+      - proxy.clspt
+      - redis.clspt
+
+  redis.clspt:
+    image: redis:2.6
+    environment:
+      - VIRTUAL_HOST=redis.clspt
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.123
+    ports:
+      - 6379
+    depends_on:
+      - proxy.clspt
+
   proxy.clspt:
     image: classpert/nginx-proxy
     environment:
       - DEV_DOMAIN=clspt
+      - LOGSPOUT=ignore
     volumes:
       - ./images/proxy/proxy.conf:/etc/nginx/proxy.conf
       - /var/run/docker.sock:/tmp/docker.sock:ro
@@ -343,6 +434,8 @@ services:
   volumes.clspt:
     image: atmoz/sftp:alpine
     command: squerol:squerol123:::volumes
+    environment:
+      - LOGSPOUT=ignore
     volumes:
       - ./images/volumes/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key
       - ./images/volumes/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key
