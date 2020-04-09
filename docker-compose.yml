@@ -383,6 +383,7 @@ services:
     domainname: docker.local
     environment:
       - VIRTUAL_HOST=logplex.clspt
+      - VIRTUAL_PORT=8001
       - LOGSPOUT=ignore
       - INSTANCE_NAME=logplex.docker.local
       - LOCAL_IP=127.0.0.1
