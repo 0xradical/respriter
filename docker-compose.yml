@@ -244,6 +244,8 @@ services:
     depends_on:
       - app.clspt
       - api.clspt
+      - que.clspt
+      - logshuttle.clspt
       - proxy.clspt
 
   database.napoleon.clspt:
@@ -335,15 +337,18 @@ services:
       - proxy.clspt
 
   logdrain.clspt:
-    image: classpert/log-drain:1.0.0
+    image: classpert/log-drain:1.1.0
     command: start
     environment:
       - VIRTUAL_HOST=logdrain.clspt
-      - REDIS_URL=http://redis.clspt:6379
+      - REDIS_URL=redis://redis.clspt:6379
+      - LOGSPOUT=ignore
       - ALLOWED_SOURCES=crawling-event,sitemap-verification-service,domain-validation-service,resource-discovery-service,debug-tool-service
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.119
+    ports:
+      - 8000
     depends_on:
       - proxy.clspt
       - redis.clspt
@@ -364,14 +369,14 @@ services:
       - proxy.clspt
 
   logshuttle.clspt:
-    image: classpert/log-shuttle:1.1.0
+    image: classpert/log-shuttle:1.1.4
     environment:
       - VIRTUAL_HOST=logshuttle.clspt
       - LOGSPOUT=ignore
       - LOGSPOUT_URL=http://logspout.clspt/logs
-      - LOGPLEX_URL=http://logplex.clspt
-      - LOGPLEX_INPUT_URL=http://logplex.clspt:8601
-      - LOGDRAIN_URL=http://logdrain.clspt/drain
+      - LOGPLEX_URL=http://logplex.clspt:8001
+      - LOGPLEX_INPUT_URL=http://logplex.clspt:8601/logs
+      - LOGDRAIN_URL=http://logdrain.clspt:8000/drain
     env_file:
       - envs/dev/logplex.env
       - envs/local/logplex.env
@@ -396,7 +401,7 @@ services:
       - INSTANCE_NAME=logplex.docker.local
       - LOCAL_IP=127.0.0.1
       - LOGPLEX_CONFIG_REDIS_URL=redis://redis.clspt:6379/
-      - LOGPLEX_SHARD_URLS=redis://db:6379/#frag1
+      - LOGPLEX_SHARD_URLS=redis://redis:6379/#frag1
       - LOGPLEX_REDGRID_REDIS_URL=redis://redis.clspt:6379/
       - LOGPLEX_STATS_REDIS_URL=redis://redis.clspt:6379/
     env_file:
@@ -418,6 +423,7 @@ services:
     image: redis:2.6
     environment:
       - VIRTUAL_HOST=redis.clspt
+      - LOGSPOUT=ignore
     networks:
       fixed_ip_network:
         ipv4_address: 172.28.1.123
