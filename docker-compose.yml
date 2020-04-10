@@ -347,9 +347,6 @@ services:
     depends_on:
       - proxy.clspt
       - redis.clspt
-      - logspout.clspt
-      - logplex.clspt
-      - logshuttle.clspt
 
   logspout.clspt:
     image: gliderlabs/logspout
