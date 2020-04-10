@@ -95,7 +95,7 @@ module Napoleon
     end
 
     def version
-      payload['schema_version'] || payload['content'].fetch('version', '0.0.0')
+      payload['schema_version'] || payload['content']['version']
     end
 
     def provider_id
