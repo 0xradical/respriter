@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+source ../envs/dev/logplex.env
+
+while [[ "$(curl -H "Authorization: Basic ${LOGPLEX_AUTH_KEY}" -s -o /dev/null -w ''%{http_code}'' logplex.clspt/healthcheck)" != "200" ]]; do
+  sleep 1;
+  echo 'Waiting for Logplex...';
+done
+
+echo "Creating Logplex channel 'app'"
+# {"channel_id":1,"tokens":{"app":"t.58a10399-c21d-4e1f-9330-366ba99397b0"}}
+curl -H "Authorization: Basic ${LOGPLEX_AUTH_KEY}" -d '{"tokens": ["app"]}' "logplex.clspt/channels" | tee /tmp/logplex-channel
+
+CHANNEL_ID=$(cat /tmp/logplex-channel | python3 -mjson.tool | python3 -c "import sys, json; obj = json.load(sys.stdin); print(obj['channel_id']);")
+CHANNEL_TOKEN=$(cat /tmp/logplex-channel | python3 -mjson.tool | python3 -c "import sys, json; obj = json.load(sys.stdin); print(obj['tokens']['app']);")
+
+rm  /tmp/logplex-channel
+
+echo "Channel token is: ${CHANNEL_TOKEN}"
+# erase and / or create pristine file
+$(> ../envs/local/logshuttle.env)
+echo "LOGPLEX_TOKEN=${CHANNEL_TOKEN}" > ../envs/local/logshuttle.env
