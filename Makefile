@@ -265,7 +265,6 @@ docker-push: ## Pushes the docker image to Dockerhub
 	@$(DOCKER) push $(DOCKER_WEB_APP_NAME)
 
 clean: $(CUSTOM_ENV_FILES) ## Stop containers, remove old images and prune docker unused resources
-	@rm -f envs/local/logshuttle.env
 	@$(DOCKER_COMPOSE) down --rmi local --remove-orphans
 	@$(DOCKER) system prune -f
 
@@ -319,9 +318,6 @@ logs-%: $(CUSTOM_ENV_FILES) ## Show live logs of a given dev containers
 wait-for-elastic-search:
 	@$(call docker_run_or_plain,base.clspt,./bin/wait_for_elastic_search)
 
-wait-for-logplex:
-	@$(call docker_run_or_plain,base.clspt,./bin/wait_for_logplex)
-
 $(PG_DUMP_FILE):
 	@make -s db-download-prd
 
@@ -347,11 +343,6 @@ envs/local/developer.env:
 envs/local/video.env:
 	@mkdir -p envs/local
 	./bin/fetch_local_video_env $(HEROKU_VIDEO_NAME)-prd $@
-
-envs/local/logshuttle.env:
-	@mkdir -p envs/local
-	@touch envs/local/logshuttle.env
-	@make -s wait-for-logplex
 
 envs/local/%:
 	@mkdir -p envs/local
