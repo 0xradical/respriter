@@ -337,11 +337,10 @@ services:
       - proxy.clspt
 
   logdrain.clspt:
-    image: classpert/log-drain:1.1.0
-    command: start
+    image: classpert/log-drain:1.2.0
     environment:
       - VIRTUAL_HOST=logdrain.clspt
-      - REDIS_URL=redis://redis.clspt:6379
+      - REDIS_URL=redis://redis.clspt
       - LOGSPOUT=ignore
       - ALLOWED_SOURCES=crawling-event,sitemap-verification-service,domain-validation-service,resource-discovery-service,debug-tool-service
     networks:
@@ -369,7 +368,7 @@ services:
       - proxy.clspt
 
   logshuttle.clspt:
-    image: classpert/log-shuttle:1.1.4
+    image: classpert/log-shuttle:1.2.0
     environment:
       - VIRTUAL_HOST=logshuttle.clspt
       - LOGSPOUT=ignore
@@ -391,7 +390,6 @@ services:
   logplex.clspt:
     image: classpert/logplex:1.0.0
     command: ./_build/default/rel/logplex/bin/logplex foreground
-    # command: tail -f /dev/null
     hostname: logplex
     domainname: docker.local
     environment:
@@ -400,10 +398,10 @@ services:
       - LOGSPOUT=ignore
       - INSTANCE_NAME=logplex.docker.local
       - LOCAL_IP=127.0.0.1
-      - LOGPLEX_CONFIG_REDIS_URL=redis://redis.clspt:6379/
-      - LOGPLEX_SHARD_URLS=redis://redis:6379/#frag1
-      - LOGPLEX_REDGRID_REDIS_URL=redis://redis.clspt:6379/
-      - LOGPLEX_STATS_REDIS_URL=redis://redis.clspt:6379/
+      - LOGPLEX_CONFIG_REDIS_URL=redis://redis.clspt/
+      - LOGPLEX_SHARD_URLS=redis://redis.clspt/#frag1
+      - LOGPLEX_REDGRID_REDIS_URL=redis://redis.clspt/
+      - LOGPLEX_STATS_REDIS_URL=redis://redis.clspt/
     env_file:
       - envs/dev/logplex.env
       - envs/local/logplex.env
@@ -420,7 +418,9 @@ services:
       - redis.clspt
 
   redis.clspt:
+    # logplex requires this version
     image: redis:2.6
+    command: redis-server
     environment:
       - VIRTUAL_HOST=redis.clspt
       - LOGSPOUT=ignore
