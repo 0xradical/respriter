@@ -5,8 +5,8 @@
 
 ### Requirements
 
-* Docker & Docker Compose
-* [Heroku CLI tool](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+- Docker & Docker Compose
+- [Heroku CLI tool](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
 
 ### Configure
 
@@ -182,7 +182,7 @@ Like console tasks, we have a few more task that deserve mention, are those:
 - `npm-install-save-exact`: invoke `npm install --save-exact` so it will not update package-lock.json
 - `bundle-install`: invoke `bundle install`
 - `rails-migrate`: run rails migrations (probably you will not need this task, see more about database tasks in other section)
-- `course-reindex`: reindex ElasticSearch recreating all data (or creating it for the first time) 
+- `course-reindex`: reindex ElasticSearch recreating all data (or creating it for the first time)
 - `sync-%`: could be `sync-crawling_events` or `sync-courses` to sync Napoleon resources for those given types
 - `sync`: is an alias to `make sync-crawling_events sync-courses` in that order
 
@@ -269,6 +269,18 @@ development database.
 
 There is also a `make logs` that is an alias to `make logs-dev`.
 
+#### Log Draining
+
+In the Developers Dashboard, there's a service called [Classpert's Logdrain](https://github.com/classpert/logdrain) that
+receives logs from Heroku and exposes them in a RESTful API to be consumed.
+
+To replicate this functionality in a development environment, whenever you spin up Developers Dashboard (`make up-developer`, for example), 4 additional logging services will spin up as well:
+
+- [Logspout](https://github.com/gliderlabs/logspout): This service exposes all Docker container logs in a never-ending consumable stream of logs through an HTTP server, located at http://logspout.clspt/logs. This server will only expose container logs for which the environment variable `LOGSPOUT` **was not** set to `ignore`. Currently, only the `que.clspt` service's logs are exposed.
+- [Heroku's Logshuttle](https://github.com/heroku/log-shuttle): This service is responsible to collect and cleanup the logs coming from Logspout and redirect them to a Logplex node (see below) in a syslog format.
+- [Heroku's Logplex](https://github.com/heroku/logplex): This service is responsible to collect logs in syslog format (either from the system's syslog facility or from a logshuttle node) and distribute them to logdraining endpoints (The creation of the logdraining endpoint is done in the logshuttle service, during boot, using logplex's API)
+- [Classpert's Logdrain](https://github.com/classpert/logdrain): The service to which Logplex `POST`s log packets to, after which you can consume in a RESTful fashion (logs endup being exposed at a URL like `http://logdrain.clspt/logs/<ID>.json`).
+
 ### Debugging Dependencies Editing its Source
 
 Since OSX and Linux have a few differences regarding filesystem, mounting binded volumes requires huge IO at OSX, so running rails
@@ -285,7 +297,7 @@ the time between container and host.
 Not only that, I moved those dependencies to named volumes that are shared with host by a SFTP service called **volumes** and
 instrumentalized it with tasks to connect/disconnect to it.
 
-So if you want to edit web app's __node\_modules__ or __bundle__ you can run `make volumes-show` or `make volumes-hide` to connect and
+So if you want to edit web app's **node_modules** or **bundle** you can run `make volumes-show` or `make volumes-hide` to connect and
 disconect the volumes folder located in the root of this project.
 
 By default, in order to get more performance, the given container use installed gems instead of ones in volumes, to use those,
