@@ -246,6 +246,7 @@ services:
       - api.clspt
       - que.clspt
       - logshuttle.clspt
+      - urlbox.clspt
       - proxy.clspt
 
   database.napoleon.clspt:
@@ -429,6 +430,19 @@ services:
         ipv4_address: 172.28.1.123
     ports:
       - 6379
+    depends_on:
+      - proxy.clspt
+
+  urlbox.clspt:
+    image: classpert/screenshooter:1.2.0
+    environment:
+      - VIRTUAL_HOST=urlbox.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.124
+    ports:
+      - 3566
     depends_on:
       - proxy.clspt
 

@@ -1,5 +1,6 @@
 class HTMLScreenshooter
   def capture(url, format = 'png', options = {})
+    urlbox_url = ENV['URL_BOX_URL'].presence || 'https://api.urlbox.io'
     urlbox_apikey = ENV['URL_BOX_API_KEY']
 
     raise 'URL_BOX_API_KEY not set' unless urlbox_apikey.present?
@@ -28,11 +29,11 @@ class HTMLScreenshooter
     response =
       Net::HTTP.get(
         URI(
-          "https://api.urlbox.io/v1/#{urlbox_apikey}/#{format}?#{query_string}"
+          "#{urlbox_url}/v1/#{urlbox_apikey}/#{format}?#{query_string}"
         )
       )
 
-    tempfile = Tempfile.new([SecureRandom.uuid, '.png'])
+    tempfile = Tempfile.new([SecureRandom.uuid, ".#{format}"])
     tempfile.binmode
 
     begin
