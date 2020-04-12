@@ -434,7 +434,7 @@ services:
       - proxy.clspt
 
   urlbox.clspt:
-    image: classpert/screenshooter:1.2.0
+    image: classpert/screenshooter:1.3.0
     environment:
       - VIRTUAL_HOST=urlbox.clspt
       - LOGSPOUT=ignore
@@ -443,6 +443,8 @@ services:
         ipv4_address: 172.28.1.124
     ports:
       - 3566
+    extra_hosts:
+      - "app.clspt:172.28.1.1"
     depends_on:
       - proxy.clspt
 
