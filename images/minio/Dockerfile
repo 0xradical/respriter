@@ -22,6 +22,8 @@ ENV MINIO_ACCESS_KEY_FILE=access_key \
     MINIO_SSE_MASTER_KEY_FILE=sse_master_key
 
 COPY docker-entrypoint.sh /usr/bin/
+RUN mkdir -p /opt/minio/policies
+COPY policies /opt/minio/policies
 COPY --from=0 /go/bin/minio /usr/bin/minio
 COPY --from=0 /go/bin/mc    /usr/bin/mc
 

@@ -96,9 +96,13 @@ until mc config host add minio http://localhost:80 ${MINIO_ACCESS_KEY} ${MINIO_S
   echo 'Waiting Minio Server to boot ...';
 done;
 
-for bucket in $BUCKETS
+for bucket in $MINIO_BUCKETS
 do
   mc mb minio/$bucket;
+  if [ -f "/opt/minio/policies/$bucket.json" ];
+  then
+    mc policy set-json /opt/minio/policies/$bucket.json minio/$bucket
+  fi;
   echo "Created bucket $bucket";
 done;
 ) &
