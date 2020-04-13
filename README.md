@@ -17,7 +17,7 @@ If you edit any of those, you must commit your changes or something really awful
 
 But if you just want to debug something or if some service requires some credentials to work, you should use env files
 located at [envs/local/](envs/local/). Those files are pre-generated and sometimes holds some production credentials and some options
-that may be intersting to you.
+that may be interesting to you.
 
 To pre-populate [envs/local/](envs/local/) you have to run:
 
@@ -25,8 +25,8 @@ To pre-populate [envs/local/](envs/local/) you have to run:
 make configure
 ```
 
-After running it, is nice to take a look at envs/local/base.env. Some commenting and uncommenting some configurations there could
-help you to have an increase of performance, using some production services instead of running a few on development or help to debug
+After running it, is nice to take a look at envs/local/base.env. Commenting and uncommenting some configurations there could
+help you increase performance, using some production services instead of running a few on development or help to debug
 third party dependencies.
 
 ### Configuring Hosts
@@ -165,8 +165,7 @@ to be up, please run make `bash-app`, if not, run just `make bash`.
 
 ### Consoles
 
-If you want to run a rails console you can jsut run `make console` inside or outside docker container context,
-it will detect if it is inside docker or not and then invoke itself in the proper way.
+If you want to run a rails console you can just run `make console` inside or outside a docker container. It will detect the context and then invoke itself in a proper way.
 
 One more thing to say is that `make console` is actually an alias for `make console-%` where possibilies could be:
 `console-dev`, `console-stg` and `console-prd`.
@@ -206,7 +205,7 @@ make detached-prd-course-reindex
 
 ### Bundler and Node Modules Dependencies
 
-You can use installed or volumes dependencies. By default installed dependencies used, they are way faster in OSX, but in
+You can use installed or volumes dependencies. By default installed dependencies are way faster in OSX, but on
 Linux this doesn't make any difference.
 
 If you want to use volume dependencies you must go to the pre-generated envs/local/base.env file and uncomment `BUNDLE_PATH`
@@ -214,18 +213,18 @@ and `NODE_PATH` variables.
 
 One more thing related to it, is that volume dependencies are the only ones you can update with `npm install` or `bundle install`.
 Installed dependencies are per container and not shared along other containers, so if you run those commands you will only
-update `Gemfile.lock` and `package-lock.json`, so you will need to run `make docker-build` to have those images propagated.
+update `Gemfile.lock` and `package-lock.json` you'll need to run `make docker-build` to have those images propagated.
 
-One more detail is that if you change the value of `NODE_PATH` env variable, you need to delete symlink file node_modules in
+One last detail: if you change the value of `NODE_PATH` env variable, you need to delete symlink file node_modules in
 order to make everything work, so after deleting it, you need to recreate all containers with `make down` so the changes will
-be updated
+take effect.
 
 ### Database Tasks
 
-The most useful task to handle database is `make db-prepare`. It stops databse (if is running), wipes database (if exists)
-creates a brand new database (with migrations) gets up all persistence containers and reindex data on ElasticSearch.
+The most useful task to handle database is `make db-prepare`. It stops the database (if it's running), wipes it (if exists)
+,creates a brand new one (with migrations), gets up all persistence containers and reindex data on ElasticSearch.
 
-Actually this task is an alias of other tasks, all mentioned before. Yes, I didn't mention seeds... There is no task to
+Actually this task is an alias for all previously mentioned tasks. Yes, I didn't mention seeds... There is no task to
 run seeds, let me explain better how this is done.
 
 Seed data is created when database container start to run for the first time (or when data volume is empty). In order to
@@ -236,9 +235,9 @@ creates some csv files at db/seeds/ folder. In that folder, also "gitignored" li
 One more nice detail about this seed, is that every password for user or admin is overwritten to abc123, so it makes
 everything easier to debug!
 
-If you implement a new feature or changed database structure in a way that you may break this auto generation of seeds,
+If you implement a new feature or changed database structure in a way that you may break this auto-generation of seeds,
 please, be kind enough to fix it, look at the task `db-build-seeds` at [Makefile](Makefile) and be polite
-to allow other people still could continue using this feature for their daily work.
+to allow other people to continue using this feature for their daily work.
 
 If you really don't want a subset of database, you can download it with `make db-download` then `make db-load`.
 
@@ -260,7 +259,7 @@ You have an alias to `watch-dev`, so it is simpler to use `make watch` for it.
 
 ### Logs
 
-There is a task `make logs-%` that looks simple, but it does a lot of stuff.
+There is a task called `make logs-%` that looks simple, but it does a lot of stuff.
 
 If you give an environment like `logs-dev`, `logs-stg` or `logs-prd`, you see live logs of all containers or dynos of each environment.
 
