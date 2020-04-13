@@ -113,8 +113,8 @@ module Developers
           'png',
           { width: 800, full_page: true, force: true }
         ) { |file| preview_course.add_screenshot!(:mobile, file) }
-      rescue StandardError
-        raise '#120007: Debug screenshotting failed'
+      rescue StandardError => e
+        raise "#120007: Debug screenshotting failed: #{e.message}"
       end
 
       PreviewCourse.transaction do
