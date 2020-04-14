@@ -461,7 +461,7 @@ services:
         ipv4_address: 172.28.1.1
     ports:
       - 80:80
-      - 5353:53/udp
+      - 5300:53/udp
 
   volumes.clspt:
     image: atmoz/sftp:alpine
