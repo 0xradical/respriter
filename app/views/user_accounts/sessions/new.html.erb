@@ -4,51 +4,41 @@
 
   <div class='row justify-content-center'>
     <div class='col-12 col-sm-8 col-md-6 col-lg-4'>
-      <%= link_to t('components.omniauth_sign_in', { provider: 'LinkedIn' }),
-        user_account_linkedin_omniauth_authorize_path,
-        { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'LinkedIn' }) }, style: 'margin-bottom:10px', class: 'btn btn--linkedin btn--medium' } %>
-
-      <%= link_to t('components.omniauth_sign_in', { provider: 'Facebook' }),
-        user_account_facebook_omniauth_authorize_path,
-        { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Facebook' }) }, style: 'margin-bottom:10px', class: 'btn btn--facebook btn--medium' } %>
-
-      <%= link_to t('components.omniauth_sign_in', { provider: 'Github' }),  user_account_github_omniauth_authorize_path,
-        { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Github' }) }, class: 'btn btn--github btn--medium' } %>
-
+      <%= render 'oauth_buttons' %>
     </div>
 
-    <div class='col-12 el:amx-Mt(1em) el:amx-D(n)@>lg'></div>
-
     <div class='col-12 col-sm-8 col-md-6 col-lg-4'>
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class='el:m-form-field'>
-          <div class='el:m-form-field__label el:m-form-field__label--over'>
-            <%= f.label :login, t('activerecord.attributes.user.login') %>
+      <div class='el:amx-Bol@>lg el:amx-Pl(2em)@>lg'>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class='el:m-form-field'>
+            <div class='el:m-form-field__label el:m-form-field__label--over'>
+              <%= f.label :login, t('activerecord.attributes.user.login') %>
+            </div>
+            <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+              <%= f.text_field :login, autofocus: true %>
+            </div>
           </div>
-          <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
-            <%= f.text_field :login, autofocus: true %>
-          </div>
-        </div>
 
-        <div class='el:m-form-field el:amx-Mt(0.75em)'>
-          <div class='el:m-form-field__label el:m-form-field__label--over'>
-            <%= f.label :password %>
+          <div class='el:m-form-field el:amx-Mt(0.75em)'>
+            <div class='el:m-form-field__label el:m-form-field__label--over'>
+              <%= f.label :password %>
+            </div>
+            <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+              <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
+            </div>
           </div>
-          <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
-            <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
-          </div>
-        </div>
 
-        <% if devise_mapping.rememberable? -%>
-          <div class="field el:amx-Mt(0.5em)">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
-          </div>
-        <% end -%>
+          <% if devise_mapping.rememberable? -%>
+            <div class="field el:amx-Mt(0.5em)">
+              <%= f.check_box :remember_me %>
+              <%= f.label :remember_me %>
+            </div>
+          <% end -%>
 
-        <%= f.submit "Log in", class: 'btn btn--primary-flat btn--block el:amx-Mt(1.25em)' %>
+          <%= f.submit "Log in", class: 'btn btn--primary-flat btn--block el:amx-Mt(1.25em)' %>
 
-      <% end %>
-      <%= render "user_accounts/shared/links" %>
+        <% end %>
+        <%= render "user_accounts/shared/links" %>
+      </div>
     </div>
   </div>

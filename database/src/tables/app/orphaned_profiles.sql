@@ -15,8 +15,13 @@ CREATE TABLE app.orphaned_profiles (
   slug                        varchar,
   claimable_emails            varchar[] DEFAULT '{}',
   claimable_public_profiles   jsonb DEFAULT '{}'::jsonb,
-  claim_code                  varchar(7),
+  claim_code                  varchar(64),
+  claim_code_expires_at       timestamptz,
+  claimed_at                  timestamptz,
+  claimed_by                  varchar,
+  teaching_subjects           varchar[] DEFAULT '{}',
   created_at                  timestamptz DEFAULT NOW() NOT NULL,
-  updated_at                  timestamptz DEFAULT NOW() NOT NULL
+  updated_at                  timestamptz DEFAULT NOW() NOT NULL,
+  marked_as_destroyed_at      timestamptz,
   CONSTRAINT                  state__inclusion CHECK (state IN ('disabled','enabled'))
 );

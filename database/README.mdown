@@ -5,8 +5,8 @@
 Working under this project is simple, just follow:
 
 1. Edit src folder files
-2. Run `make structure-update` everythime you want to update `db/structure.sql.env`
-3. You may be requested to edit `db/structure.lock`, if requied, edit it, then return to step 2
+2. Run `make structure-update` every time you want to update `db/structure.sql.env`
+3. You may be requested to edit `db/structure.lock`, if so, edit it then return to step 2
 4. When your work is done, run `make structure-migrate-NAME_OF_NEW_MIGRATION`
 5. Edit manually the migration created by latest tasks
 6. Edit makefile image version at `DATABASE_IMAGE_VERSION`
@@ -20,7 +20,7 @@ Working under this project is simple, just follow:
 - posts
 - profiles
 - providers
-- provider\_crawlers (in right order but with numbering out of order)
+- provider_crawlers (in right order but with numbering out of order)
 
 ### Why it matters?
 

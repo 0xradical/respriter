@@ -228,14 +228,13 @@ Actually this task is an alias for all previously mentioned tasks. Yes, I didn't
 run seeds, let me explain better how this is done.
 
 Seed data is created when database container start to run for the first time (or when data volume is empty). In order to
-do so, it uses a subset of sanitezed data from production that is created by "gitignored" script at
-images/database/production_seed.sql, this script is dynamically created when you run `make setup-database`, which also
-creates some csv files at db/seeds/ folder. In that folder, also "gitignored" lives all seed data extracted from production.
+do so, it uses a subset of sanitized data from production that is created by a "gitignored" script at
+images/database/production_seed.sql. This script is dynamically created when you run `make setup-database`, which in turn
+creates some csv files at db/seeds/ folder. All "gitignored" seed data extracted from production will live under db/seeds/ as well.
 
-One more nice detail about this seed, is that every password for user or admin is overwritten to abc123, so it makes
-everything easier to debug!
+One more nice detail about this seed is that every password for user or admin is overwritten to abc123, so it makes everything easier to debug!
 
-If you implement a new feature or changed database structure in a way that you may break this auto-generation of seeds,
+If you implement a new feature or changed the database structure in a way that you may break this auto-generation of seeds,
 please, be kind enough to fix it, look at the task `db-build-seeds` at [Makefile](Makefile) and be polite
 to allow other people to continue using this feature for their daily work.
 

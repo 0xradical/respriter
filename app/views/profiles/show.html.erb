@@ -1,9 +1,9 @@
 <% content_for :meta do %>
-  <title><%= t(".meta.title", name: @user.name) %> | Classpert</title>
-  <meta name='twitter:title'        content='<%= t(".meta.title",       name: @user.name )%> | Classpert' />
-  <meta name='twitter:description'  content='<%= t(".meta.description", name: @user.name )%>' />
-  <meta name='description'          content='<%= t(".meta.description", name: @user.name )%>' />
-  <meta property='og:description'   content='<%= t(".meta.description", name: @user.name )%>' />
+  <title><%= t(".meta.title", name: @user_account.name) %> | Classpert</title>
+  <meta name='twitter:title'        content='<%= t(".meta.title",       name: @user_account.name )%> | Classpert' />
+  <meta name='twitter:description'  content='<%= t(".meta.description", name: @user_account.name )%>' />
+  <meta name='description'          content='<%= t(".meta.description", name: @user_account.name )%>' />
+  <meta property='og:description'   content='<%= t(".meta.description", name: @user_account.name )%>' />
 <% end %>
 
 <%= content_for :javascript do %>
@@ -18,31 +18,29 @@
       <div class='row'>
         <div class='col-12'>
           <div class='el:m-avatar el:m-avatar--circle el:m-avatar--5x5em'>
-            <% if @user.avatar_url %>
-              <%= image_tag @user.avatar_url %>
+            <% if @user_account.avatar_url %>
+              <%= image_tag @user_account.avatar_url %>
             <% else %>
             <% end %>
           </div><div class='el:amx-D(ib) el:amx-Va(m) el:amx-Ml(0.75em)'>
             <h1 class='el:amx-Fs(1.25em) el:amx-Fw(b)'>
-              <%= @user.name %>
-              <% if @user.instructor %>
-                <span style='font-weight:bold'
-                  class='el:m-tag
-                  el:m-tag--primary-variant-flat
-                  el:m-tag--uppercase
-                  el:m-tag--xxs
-                  el:amx-Ml(0.5em)
-                  el:amx-Va(m)'>
-                  <%= t('.instructor') %>
-                </span>
-              <% end %>
+              <%= @user_account.name %>
+              <span style='font-weight:bold'
+                class='el:m-tag
+                el:m-tag--primary-variant-flat
+                el:m-tag--uppercase
+                el:m-tag--xxs
+                el:amx-Ml(0.5em)
+                el:amx-Va(m)'>
+                <%= t('.instructor') %>
+              </span>
             </h1>
             <div class='el:amx-Fs(0.875em) el:amx-Mt(0.625em) el:amx-Mb(0.125em)'>
-              <%= @user.short_bio %>
+              <%= @user_account.short_bio %>
             </div>
             <div class='el:amx-Mt(0.75em)'>
               <ul class='el:m-list el:m-list--hrz'>
-                <% @user.public_profiles.each do |key, val| %>
+                <% @user_account.public_profiles.each do |key, val| %>
                   <li class='el:amx-Mr(0.5em)'>
                     <a href='<%= val %>' target='_blank' ref='nofollow noreferrer'>
                       <%= svg_use('icons', key, {class: "el:amx-Fi_#{key}", width: '1em', height: '1em'}) %>
@@ -62,12 +60,12 @@
       <div class='row'>
         <div class='col-12'>
 
-          <% if @user.long_bio.present? %>
+          <% if @user_account.long_bio.present? %>
             <h2 class='el:amx-Fs(1.25em)'>
               <%= t('.about_me') %>
             </h2>
             <p style='line-height:1.5em'>
-              <%= @user.long_bio.html_safe %>
+              <%= @user_account.long_bio.html_safe %>
             </p>
           <% end %>
 

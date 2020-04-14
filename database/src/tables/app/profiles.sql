@@ -7,9 +7,15 @@ CREATE TABLE app.profiles (
   date_of_birth       date,
   oauth_avatar_url    varchar,
   uploaded_avatar_url varchar,
-  user_account_id     bigint        REFERENCES app.user_accounts(id) ON DELETE CASCADE,
-  interests           text[]        DEFAULT '{}'::text[],
-  preferences         jsonb         DEFAULT '{}'::jsonb,
-  created_at          timestamptz   DEFAULT NOW() NOT NULL,
-  updated_at          timestamptz   DEFAULT NOW() NOT NULL
+  instructor          boolean     DEFAULT false,
+  long_bio            varchar,
+  public              boolean     DEFAULT true,
+  short_bio           varchar,
+  public_profiles     jsonb       DEFAULT '{}'::jsonb,
+  teaching_subjects   varchar[]   DEFAULT '{}',
+  user_account_id     bigint      REFERENCES app.user_accounts(id) ON DELETE CASCADE,
+  interests           text[]      DEFAULT '{}'::text[],
+  preferences         jsonb       DEFAULT '{}'::jsonb,
+  created_at          timestamptz DEFAULT NOW() NOT NULL,
+  updated_at          timestamptz DEFAULT NOW() NOT NULL
 );

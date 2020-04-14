@@ -1,13 +1,7 @@
-Rails.application.configure do
-  config.hosts << 'lvh.me'
-  config.hosts << 'es.lvh.me'
-  config.hosts << 'pt-br.lvh.me'
-  config.hosts << 'ja.lvh.me'
+# frozen_string_literal: true
 
-  config.hosts << 'app.clspt'
-  config.hosts << 'pt-br.app.clspt'
-  config.hosts << 'es.app.clspt'
-  config.hosts << 'jp.app.clspt'
+Rails.application.configure do
+  config.hosts << /.*\.?app.clspt/
 
   # CORS
   config.middleware.insert_before 0, Rack::Cors do
@@ -44,14 +38,12 @@ Rails.application.configure do
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
-
     config.cache_store = :memory_store
     config.public_file_server.headers = {
       'Cache-Control' => "public, max-age=#{2.days.seconds.to_i}"
     }
   else
     config.action_controller.perform_caching = false
-
     config.cache_store = :null_store
   end
 

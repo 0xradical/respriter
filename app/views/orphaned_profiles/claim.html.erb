@@ -1,0 +1,90 @@
+<div class='el:amx-Bc_su'>
+  <div class='el:amx-Pt(4em) el:amx-Pb(6em)'>
+    <div class='container'>
+      <div class='row'>
+        <div class='col-12 col-md-8 offset-md-2'>
+          <h1 class='el:amx-Fs(1.375em) el:amx-Bob el:amx-Pb(0.5em)'>
+            <%= t('.h1') %>
+          </h1>
+
+          <div class='el:amx-Mt(1em) el:m-avatar el:m-avatar--circle el:m-avatar--5x5em'>
+            <% if @orphaned_profile.avatar_url %>
+              <%= image_tag @orphaned_profile.avatar_url %>
+            <% end %>
+            </div><div class='el:amx-D(ib) el:amx-Va(m) el:amx-Ml(0.75em)'>
+              <h1 class='el:amx-Fs(1.25em) el:amx-Fw(b)'>
+                <%= @orphaned_profile.name %>
+              </h1>
+              <div class='el:amx-Fs(0.875em) el:amx-Mt(0.625em) el:amx-Mb(0.125em)'>
+                <%= link_to t('.view_profile'), orphaned_profile_path(@orphaned_profile.slug),
+                  class: 'el:cmx-content-link', 
+                  target: 'popup' %>
+              </div>
+            </div>
+
+          <p class='el:amx-Lh(1.5em) el:amx-Fs(0.875em) el:amx-Mb(1.25em)'>
+          <span class='el:amx-Fw(b)'><%= t('.text.1', name: @orphaned_profile.name) %></span><br/>
+            <% if @claimable_public_profiles.any? || @orphaned_profile.claimable_emails.any? %>
+              <%= t('.text.2') %>
+            <% else %>
+              <%= t('.text.3_html', link: link_to("contact us", contact_us_path, class: 'el:cmx-content-link')) %>
+            <% end %>
+          </p>
+
+          <% if @claimable_public_profiles.any? %>
+            <div class='el:amx-Mb(2em)'>
+              <h2 class='el:amx-Bob el:amx-Pb(0.5em) el:amx-Fs(1em) el:amx-Mb(0.875em)'><%= t('.h2.1')%></h2>
+              <p class='el:amx-Fs(0.75em) el:amx-Lh(1.5em)'>
+                <%= t('.text.4') %>
+              </p>
+              <ul class='el:m-list el:m-list--unstyled' style='display:block'>
+                <% @claimable_public_profiles.each do |provider, method| %>
+                  <li>
+                    <%= link_to t('components.omniauth_claim_profile', { provider: provider.capitalize }),
+                      send("user_account_#{provider}_omniauth_authorize_path", origin: claims_social_network_path(@orphaned_profile.slug)),
+                      { data: { button: '', :"button-text" => t('components.omniauth_claiming_profile', { provider: provider.capitalize }) }, class: "btn btn--#{provider} btn--sm" } %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+
+          <% if @orphaned_profile.claimable_emails.any? %>
+            <div class='el:amx-Mb(2em)'>
+              <h2 class='el:amx-Bob el:amx-Pb(0.5em) el:amx-Fs(1em) el:amx-Mb(1em)'><%= t('.h2.2') %></h2>
+              <p class='el:amx-Fs(0.875em)'><%= t('.text.5') %>:</p>
+              <ul class='el:m-list el:m-list--unstyled'>
+                <% @orphaned_profile.masked_claimable_emails.each do |mask, email| %>
+                  <li><pre style='letter-spacing:0.25em;border-radius:3px' class='el:amx-C_pr el:amx-Fs(0.75em) el:amx-P(0.25em) el:amx-Bc_bg'><%= mask %></pre></li>
+                <% end %>
+              </ul>
+
+              <p class='el:amx-Lh(1.5em) el:amx-Fs(0.875em)'>
+                <%= t('.text.6') %>
+              </p>
+
+              <div class='el:amx-Mt(2em) el:amx-D(f) el:amx-FxAi(c)'>
+                <div style='flex:1 1 0%'>
+                  <%= form_tag send_verification_link_orphaned_profile_path(@orphaned_profile), class: 'el:amx-M(0)', method: 'put' do %>
+                    <div class='el:amx-Mr(2em) el:m-form-field__input el:m-form-field__input--medium' style='width:60%'>
+                      <%= text_field_tag 'email', nil, placeholder: 'E-mail', style: 'width:100%' %>
+                    </div>
+                    <input type='submit' class='btn btn--primary-flat btn--sm' value='Confirm'>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          </div>
+        </div>
+      <div class='row'>
+        <div class='col-12 col-md-8 offset-md-2'>
+          <div class='el:amx-P(1em|0) el:amx-Bot el:amx-Fs(0.875em)'>
+            <%= t('.text.7_html', link: link_to(t('dictionary.contact_us').downcase, contact_us_path, class: 'el:cmx-content-link')) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

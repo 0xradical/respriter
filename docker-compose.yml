@@ -1,7 +1,7 @@
 version: "3"
 services:
   base.clspt: &base
-    image: classpert/web-app
+    image: classpert/web-app:17016f1cd597b16502f9dc12ab32e79367a1fe35
     env_file:
       - envs/dev/base.env
       - envs/local/base.env
@@ -75,7 +75,7 @@ services:
       - proxy.clspt
 
   database.clspt:
-    image: classpert/database:1.3.11
+    image: classpert/database:1.4.0
     env_file:
       - envs/dev/database.env
       - envs/local/database.env

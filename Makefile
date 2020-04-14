@@ -258,8 +258,7 @@ docker-push-base: ## Pushes the docker base image to Dockerhub
 	@$(DOCKER) push $(DOCKER_BASE_NAME)
 
 docker-build: ## Builds the docker image
-	@$(DOCKER) build -f $(DOCKER_WEB_APP_FILE) --build-arg $(DOCKER_WEB_APP_ARGS) -t $(DOCKER_WEB_APP_NAME) .
-	@$(DOCKER) tag $(DOCKER_WEB_APP_NAME) $(DOCKER_WEB_APP_LATEST)
+	@$(DOCKER) build -f $(DOCKER_WEB_APP_FILE) --build-arg $(DOCKER_WEB_APP_ARGS) -t $(DOCKER_WEB_APP_NAME) -t $(DOCKER_WEB_APP_LATEST) -t $(DOCKER_WEB_APP_IMAGE) .
 
 docker-push: ## Pushes the docker image to Dockerhub
 	@$(DOCKER) push $(DOCKER_WEB_APP_NAME)

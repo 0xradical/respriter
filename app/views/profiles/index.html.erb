@@ -1,0 +1,8 @@
+<% @profiles.each do |op| %>
+  <% if op.kind_of? OrphanedProfile %>
+    <%= link_to op.name, orphaned_profile_path(op.slug) %>
+  <% else %>
+    <%= link_to op.name, profile_path(op.username) %>
+  <% end %>
+  <br />
+<% end %>

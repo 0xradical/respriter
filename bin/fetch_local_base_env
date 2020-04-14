@@ -44,8 +44,6 @@ AWIN_API_TOKEN={awin_api_token}
 AWIN_PUBLISHER_ID={awin_publisher_id}
 
 # Oauth
-GITHUB_KEY={github_key}
-GITHUB_SECRET={github_secret}
 FACEBOOK_KEY={facebook_key}
 FACEBOOK_SECRET={facebook_secret}
 LINKEDIN_KEY={linkedin_key}
@@ -73,8 +71,6 @@ GITHUB_ACCESS_TOKEN={github_access_token}
   impact_radius_auth_token            = envs['IMPACT_RADIUS_AUTH_TOKEN'],
   awin_api_token                      = envs['AWIN_API_TOKEN'],
   awin_publisher_id                   = envs['AWIN_PUBLISHER_ID'],
-  github_key                          = envs['GITHUB_KEY'],
-  github_secret                       = envs['GITHUB_SECRET'],
   facebook_key                        = envs['FACEBOOK_KEY'],
   facebook_secret                     = envs['FACEBOOK_SECRET'],
   linkedin_key                        = envs['LINKEDIN_KEY'],
