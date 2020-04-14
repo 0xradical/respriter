@@ -44,7 +44,7 @@ define only_outside_docker
 endef
 
 define docker_run_or_plain
-	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 $1 $2; else $2; fi;
+	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm $3 -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 $1 $2; else $2; fi;
 endef
 
 define docker_run_with_ports_or_plain
@@ -149,7 +149,7 @@ course-reindex: $(CUSTOM_ENV_FILES) wait-for-elastic-search ## Reindexes Courses
 sync: sync-crawling_events wait-for-elastic-search sync-courses ## Sync web-app with napoleon
 
 sync-%: $(CUSTOM_ENV_FILES) ## Sync web-app with napoleon given resources (courses or crawling_events)
-	@$(call docker_run_or_plain,base.clspt,bundle exec rake system:scheduler:$*_service)
+	@$(call docker_run_or_plain,base.clspt,bundle exec rake system:scheduler:$*_service,-T)
 
 db-prepare: wipe-db up-persistence course-reindex ## Configures database with seed data and index everything
 
