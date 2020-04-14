@@ -28,7 +28,7 @@ puts "\n\033[0;31mDISCLAIMER: The simpler (and better solution) is to add this o
 puts %{
 domain clspt
 nameserver 127.0.0.1
-port 53
+port 5353
 search clspt
 
 }
