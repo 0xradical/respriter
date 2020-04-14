@@ -155,12 +155,12 @@ db-prepare: wipe-db up-persistence course-reindex ## Configures database with se
 
 db-build-seeds: db-build-seeds-stg ## Should be an alias for db-build-seeds-prd, but for now is for db-build-seeds-stg
 
-db-build-seeds-%: envs/%/database.env $(CUSTOM_ENV_FILES) ## Build Seeds from Production or Staging
+db-build-seeds-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Build Seeds from Production or Staging
 	@$(call docker_run_or_plain,base.clspt,bin/db_build_seeds envs/$*/database.env)
 
 db-migrate: db-migrate-dev ## Alias for db-migrate-dev
 
-db-migrate-%: envs/%/database.env $(CUSTOM_ENV_FILES) ## Migrates database for a given env
+db-migrate-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Migrates database for a given env
 	@$(call docker_run_or_plain,base.clspt,bin/db_migrate envs/$*/database.env database/db/migrations)
 
 db-load: db-load-dev ## Alias for db-load-dev
@@ -169,12 +169,12 @@ db-load-dev: $(CUSTOM_ENV_FILES) ## Loads database from latest dump for developm
 	@$(call only_outside_docker,make up-database)
 	@$(call docker_run_or_plain,base.clspt,bin/db_load envs/dev/database.env $(PG_DUMP_FILE))
 
-db-load-%: envs/%/database.env $(CUSTOM_ENV_FILES) ## Loads database from latest dump for a given env
+db-load-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Loads database from latest dump for a given env
 	@$(call docker_run_or_plain,base.clspt,bin/db_load envs/$*/database.env $(PG_DUMP_FILE))
 
 db-reset: db-reset-dev ## Alias for db-reset-dev
 
-db-reset-%: envs/%/database.env $(CUSTOM_ENV_FILES) ## Resets database for a given env
+db-reset-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Resets database for a given env
 	@$(call docker_run_or_plain,base.clspt,bin/db_reset envs/$*/database.env)
 
 db-wipe: wipe-db ## Alias to wipe-db
@@ -190,7 +190,7 @@ db-restart: $(CUSTOM_ENV_FILES) ## Restart Database (kill containers and recreat
 
 db-download: db-download-prd
 
-db-download-%: envs/%/database.env $(CUSTOM_ENV_FILES) ## Generates and downloads latest postgres dump
+db-download-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Generates and downloads latest postgres dump
 	@$(call docker_run_or_plain,base.clspt,bin/db_download envs/$*/database.env $(PG_DUMP_FILE))
 
 detached-prd-%: ## Executes `make SOMETHING` detached at production
@@ -283,7 +283,7 @@ wipe: $(CUSTOM_ENV_FILES) ## Stop containers, clean volumes, remove old images a
 docker-%: $(CUSTOM_ENV_FILES) ## Executes `make SOMETHING` inside base service
 	@$(call docker_run_or_plain,base.clspt,make -s $*)
 
-volumes-show: images/volumes/ssh_host_ed25519_key images/volumes/ssh_host_rsa_key
+volumes-show: ./images/volumes/ssh_host_ed25519_key ./images/volumes/ssh_host_rsa_key
 	@make -s up-volumes
 	@sleep 2
 	sshfs squerol@127.0.0.1:volumes -p 2222 `pwd`/volumes -ovolname=volumes
@@ -320,39 +320,39 @@ wait-for-elastic-search:
 $(PG_DUMP_FILE):
 	@make -s db-download-prd
 
-services.svg: services.gv ## Use graphviz to build services architecture graph
+./services.svg: services.gv ## Use graphviz to build services architecture graph
 	@dot -Tsvg $< -o $@
 
-envs/local/napoleon.env:
+./envs/local/napoleon.env:
 	@mkdir -p envs/local
 	./bin/fetch_local_napoleon_env $@
 
-envs/local/base.env:
+./envs/local/base.env:
 	@mkdir -p envs/local
 	./bin/fetch_local_base_env $(HEROKU_WEB_APP_NAME)-prd $@
 
-envs/local/user.env:
+./envs/local/user.env:
 	@mkdir -p envs/local
 	./bin/fetch_local_user_env $(HEROKU_USER_DASH_NAME)-prd $@
 
-envs/local/developer.env:
+./envs/local/developer.env:
 	@mkdir -p envs/local
 	./bin/fetch_local_developer_env $(HEROKU_DEV_DASH_NAME)-prd $@
 
-envs/local/video.env:
+./envs/local/video.env:
 	@mkdir -p envs/local
 	./bin/fetch_local_video_env $(HEROKU_VIDEO_NAME)-prd $@
 
-envs/local/%:
+./envs/local/%:
 	@mkdir -p envs/local
 	@touch envs/local/$*
 	@echo "Created empty local env file: $*"
 
-envs/%/database.env:
+./envs/%/database.env: LESS_PRIORITY-%
 	@mkdir -p envs/$*
 	./bin/fetch_database_env $(HEROKU_WEB_APP_NAME)-$* $(HEROKU_POSTGREST_NAME)-$* $@
 
-ssr/hypernova.js: package-lock.json ./app/assets ./config/locales
+./ssr/hypernova.js: package-lock.json ./app/assets ./config/locales
 	@make -s build-ssr
 
 ./db/seeds:
@@ -360,12 +360,12 @@ ssr/hypernova.js: package-lock.json ./app/assets ./config/locales
 
 ./images/database/production_seed.sql: ./db/seeds
 
-images/volumes/ssh_host_ed25519_key:
+./images/volumes/ssh_host_ed25519_key:
 	ssh-keygen -t ed25519 -f ssh_host_ed25519_key < /dev/null
 	rm ssh_host_ed25519_key.pub
 	mv ssh_host_ed25519_key $@
 
-images/volumes/ssh_host_rsa_key:
+./images/volumes/ssh_host_rsa_key:
 	ssh-keygen -t rsa -b 4096 -f ssh_host_rsa_key < /dev/null
 	rm ssh_host_rsa_key.pub
 	mv ssh_host_rsa_key $@
@@ -382,4 +382,7 @@ images/volumes/ssh_host_rsa_key:
 %: | examples/%.example
 	cp $| $@
 
-.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-ci bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search
+LESS_PRIORITY-%:
+	@:
+
+.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-ci bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search LESS_PRIORITY-%
