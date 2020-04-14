@@ -228,8 +228,13 @@
               <li class='el:amx-Mb(1em)'>
                 <%= link_to t('dictionary.blog'), '/blog', class: 'el:amx-C_fgV c-link c-link--white', target: '_blank' %>
               </li>
-              <li>
+              <li class='el:amx-Mb(1em)'>
                 <%= link_to t('contact_us.new.title'), '/contact-us', class: 'el:amx-C_fgV c-link c-link--white' %>
+              </li>
+              <li>
+                <%= link_to "https://aws.amazon.com/education/edstart/", rel: 'nofollow', target: '_blank', class: 'c-link c-link--white' do %>
+                  <%= image_pack_tag('media/svg/aws-rocket.svg', class: 'el:amx-Mr(0.125em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %> AWS EdStart Member
+                <% end %>
               </li>
             </ul>
           </div>
