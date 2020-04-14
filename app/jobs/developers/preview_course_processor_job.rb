@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Developers
   class PreviewCourseProcessorJob < BaseJob
     SERVICE_NAME = 'debug-tool-service'
@@ -19,9 +21,7 @@ module Developers
       log('Started debug tool processing')
 
       preview_course = PreviewCourse.find_by(id: id)
-      if preview_course.nil?
-        raise '#120000: Debug structure not found on database'
-      end
+      raise '#120000: Debug structure not found on database' if preview_course.nil?
 
       classpert_uri = ENV['CLASSPERT_URL']
       raise '#120001: Classpert URI not set' if classpert_uri.nil?
@@ -49,9 +49,7 @@ module Developers
       log('Looking for Classpert JSON')
       json = document.css('script[type="application/vnd.classpert+json"] text()').text.presence
 
-      if json.nil?
-        raise "#120003: Course page doesn't have a vnd.classpert+json JSON"
-      end
+      raise "#120003: Course page doesn't have a vnd.classpert+json JSON" if json.nil?
 
       data =
         begin
@@ -64,11 +62,11 @@ module Developers
       log("Using #{schema_version} schema version")
 
       resource =
-      ::Napoleon::IntegrationResource.new(
-        preview_course.id,
-        preview_course.provider,
-        data
-      )
+        ::Napoleon::IntegrationResource.new(
+          preview_course.id,
+          preview_course.provider,
+          data
+        )
 
       log('Validating JSON')
       validator =
@@ -76,7 +74,7 @@ module Developers
 
       _, validation_errors = validator.validate(resource.data)
 
-      if validation_errors.size > 0
+      if !validation_errors.empty?
         validation_errors.each do |validation_error|
           log("Validation error: #{validation_error.message}", :error)
         end
@@ -120,7 +118,7 @@ module Developers
       PreviewCourse.transaction do
         preview_course.update(
           {
-            status: 'succeeded',
+            status:           'succeeded',
             __indexed_json__: preview_course.as_indexed_json
           }
         )
@@ -129,7 +127,7 @@ module Developers
 
         log('Successfully finished debug tool processing')
       end
-    rescue => e
+    rescue StandardError => e
       error = e
     ensure
       if error
