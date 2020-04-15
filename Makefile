@@ -120,6 +120,9 @@ sh-%: $(CUSTOM_ENV_FILES) ## Runs sh for a given container with service ports
 hypernova: ./ssr/hypernova.js
 	node ssr/hypernova.js
 
+rails-server: ## Runs Rails server
+	@$(call docker_run_with_ports_or_plain,app.clspt,bundle exec rails s -b 0.0.0.0)
+
 console: console-dev ## Alias for console-dev
 
 console-dev: $(CUSTOM_ENV_FILES) ## Run rails console for development
