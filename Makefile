@@ -123,7 +123,7 @@ hypernova: ./ssr/hypernova.js
 console: console-dev ## Alias for console-dev
 
 console-dev: $(CUSTOM_ENV_FILES) ## Run rails console for development
-	@$(call docker_run_or_plain,app.clspt,bundle exec rails console)
+	@$(call docker_run_or_plain,base.clspt,bundle exec rails console)
 
 console-%: ## Run console for a given env
 	heroku run console --app=$(HEROKU_WEB_APP_NAME)-$*
