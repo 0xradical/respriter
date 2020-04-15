@@ -329,7 +329,7 @@ class Course < ApplicationRecord
   end
 
   def forwarding_url(click_id)
-    (provider.afn_url_template || url) %
+    (provider.afn_url_template.chomp('/') || url) %
       {
         click_id: click_id,
         course_url:
