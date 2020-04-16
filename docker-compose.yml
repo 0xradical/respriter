@@ -316,7 +316,7 @@ services:
       fixed_ip_network:
         ipv4_address: 172.28.1.117
     ports:
-      - 6666
+      - 80
 
   provider.clspt:
     image: classpert/mocked_providers:latest
