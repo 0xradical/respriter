@@ -17,7 +17,6 @@ environment.plugins.append("VueLoaderPlugin", new VueLoaderPlugin());
 
 environment.config.merge({
   resolve: {
-    modules: [process.env.NODE_PATH],
     alias: {
       vue$: "vue/dist/vue.common.js",
       Swiper$: "swiper",
@@ -46,5 +45,9 @@ environment.config.merge({
     }
   }
 });
+
+if (process.env.NODE_PATH) {
+  environment.config.set("resolve.modules", [process.env.NODE_PATH]);
+}
 
 module.exports = environment;
