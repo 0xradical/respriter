@@ -293,10 +293,14 @@ class Course < ApplicationRecord
   end
 
   def video_thumbnail
-    return nil unless video['thumbnail_url']
+    parameterized_video = EmbeddedVideoParametizer.new(video).parametize
+    return nil unless parameterized_video[:thumbnail_url]
+
     crypto = Thumbor::CryptoURL.new ENV.fetch('THUMBOR_SECURITY_KEY')
-    path =
-      crypto.generate(width: 240, image: CGI.escape(video['thumbnail_url']))
+    path = crypto.generate(
+      width: 240,
+      image: CGI.escape(parameterized_video[:thumbnail_url])
+    )
     ENV.fetch('THUMBOR_HOST').chomp('/') + path
   end
 

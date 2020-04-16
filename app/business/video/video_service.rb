@@ -2,7 +2,11 @@ class Video::VideoService
 
   def self.call(params)
     url = "#{ video_url params.path }?#{ signed_query_params params.path }"
-    { url: url, embed: params.embed }
+    {
+      url:           url,
+      embed:         params.embed,
+      thumbnail_url: params.thumbnail_url
+    }
   end
 
   def self.video_url(path)

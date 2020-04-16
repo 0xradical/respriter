@@ -1,5 +1,9 @@
 class Video::Vimeo
-  def self.call(video_struct)
-    { url: "//player.vimeo.com/video/#{video_struct.id}", embed: true }
+  def self.call(params)
+    {
+      url:           "//player.vimeo.com/video/#{params.id}",
+      thumbnail_url: params.thumbnail_url,
+      embed:         true
+    }
   end
 end
