@@ -37,7 +37,12 @@ PG_DUMP_FILE := db/backups/latest.dump
 
 SERVICES := $(shell /bin/sh -c "cat docker-compose.yml | grep -e '\.clspt:$$' | sed -e 's/  //g' | sed -e 's/\://g' | sed '/volumes/d' | sed '/base/d'")
 
-CUSTOM_ENV_FILES := $(shell ls envs/dev/* | sed 's/\/dev\//\/local\//g' | xargs)
+ifeq ($(RAILS_ENV), production)
+	CUSTOM_ENV_FILES := ''
+else
+	CUSTOM_ENV_FILES := $(shell ls envs/dev/* | sed 's/\/dev\//\/local\//g' | xargs)
+endif
+
 
 define only_outside_docker
 	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $1; fi;
