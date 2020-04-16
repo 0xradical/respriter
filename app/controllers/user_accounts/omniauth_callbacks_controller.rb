@@ -4,8 +4,10 @@ class UserAccounts::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
 
   before_action :add_oauth_account_or_sign_in
 
-  %i[github reddit twitter linkedin facebook].each do |provider| 
-    define_method provider do; end
+  %i[github twitter linkedin facebook].each do |provider| 
+    define_method provider do
+      sign_in_and_redirect @user_account, scope: :user_account
+    end
   end
 
   protected
@@ -19,14 +21,11 @@ class UserAccounts::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
       .find_or_create_by(uid: oauth_data[:uid], provider: oauth_data[:provider]) { |oauth_acc| oauth_acc.raw_data = oauth_data }
     else
       oauth_acc = OauthAccount.user_account_from!(oauth: oauth_data, session: session)
-      sign_in oauth_acc.user_account, scope: :user_account
     end
 
-    if request.env['omniauth.origin'] =~ /\/claims\/social\/[a-zA-Z0-9_-]*$/
-      session[:claim_with] = oauth_acc.id
-    end
+    session[:claim_with] = oauth_acc.id if request.env['omniauth.origin'] =~ /\/claims\/social\/[a-zA-Z0-9_-]*$/
 
-    redirect_to request.env['omniauth.origin'] and return
+    @user_account = oauth_acc.user_account
   end
 
 end
