@@ -123,7 +123,7 @@ module Search
           term: {
             from_index_tool: {
               value: true,
-              boost: 1.5
+              boost: 2.5
             }
           }
         }
