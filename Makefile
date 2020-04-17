@@ -49,7 +49,7 @@ define only_outside_docker
 endef
 
 define docker_run_or_plain
-	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm $3 -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 $1 $2; else $2; fi;
+	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm $3 -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 $1 $2 || $(DOCKER_COMPOSE) exec $3 $1 $2; else $2; fi;
 endef
 
 define docker_run_with_ports_or_plain

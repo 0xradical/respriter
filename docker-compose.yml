@@ -75,7 +75,7 @@ services:
       - proxy.clspt
 
   database.clspt:
-    image: classpert/database:1.4.0
+    image: classpert/database:1.4.1
     env_file:
       - envs/dev/database.env
       - envs/local/database.env
