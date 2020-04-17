@@ -118,7 +118,17 @@ module Search
 
     def fulltext_query
       text_query   = nil
-      should_query = []
+      should_query = [
+        {
+          term: {
+            from_index_tool: {
+              value: true,
+              boost: 0.7
+            }
+          }
+        }
+      ]
+
       if @query.blank?
         text_query = { match_all: Hash.new }
       else
