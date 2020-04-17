@@ -50,12 +50,8 @@ module Search
     def to_h
       main_query = fulltext_query
 
-      if boost.present?
-        main_query[:bool][:should].concat boost_queries
-      end
-
       search_query = {
-        query:       randomized_query(main_query),
+        query:       scored_query(main_query),
         aggs:        aggregation_query,
         post_filter: filter_query,
         size:        @per_page,
@@ -97,37 +93,45 @@ module Search
       end.compact.to_h
     end
 
-    def randomized_query(query)
+    def scored_query(query)
       return query if @session_id.blank?
+
+      functions = boost.present? ? boost_queries : []
 
       {
         function_score: {
           query: query,
-          functions: [
+          functions: functions.concat([
+            {
+              filter: {
+                match_all: {}
+              },
+              weight: (boost.present? ? 10 : 6)/4.0
+            },
             {
               random_score: {
                 seed: @session_id
               },
-              weight: 0.5
+              weight: 1
+            },
+            {
+              filter:{
+                term: {
+                  from_index_tool: true
+                }
+              },
+              weight: 5
             }
-          ],
+          ]),
           score_mode: 'sum',
+          boost_mode: 'multiply'
         }
       }
     end
 
     def fulltext_query
       text_query   = nil
-      should_query = [
-        {
-          term: {
-            from_index_tool: {
-              value: true,
-              boost: 5
-            }
-          }
-        }
-      ]
+      should_query = []
 
       if @query.blank?
         text_query = { match_all: Hash.new }
@@ -183,14 +187,20 @@ module Search
     def boost_queries
       [
         {
-          terms: {
-            root_audio: @boost[:browser_languages]
-          }
+          filter: {
+            terms: {
+              root_audio: @boost[:browser_languages]
+            }
+          },
+          weight: 3.5
         },
         {
-          terms: {
-            subtitles: @boost[:browser_languages]
-          }
+          filter: {
+            terms: {
+              subtitles: @boost[:browser_languages]
+            }
+          },
+          weight: 0.5
         }
       ]
     end

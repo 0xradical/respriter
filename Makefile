@@ -38,7 +38,7 @@ PG_DUMP_FILE := db/backups/latest.dump
 SERVICES := $(shell /bin/sh -c "cat docker-compose.yml | grep -e '\.clspt:$$' | sed -e 's/  //g' | sed -e 's/\://g' | sed '/volumes/d' | sed '/base/d'")
 
 ifeq ($(RAILS_ENV), production)
-	CUSTOM_ENV_FILES := ''
+	CUSTOM_ENV_FILES := LESS_PRIORITY-noop
 else
 	CUSTOM_ENV_FILES := $(shell ls envs/dev/* | sed 's/\/dev\//\/local\//g' | xargs)
 endif

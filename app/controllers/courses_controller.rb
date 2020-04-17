@@ -53,7 +53,7 @@ class CoursesController < ApplicationController
       query:      search_params[:q],
       filter:     (search_params[:filter] || Hash.new).tap{|f| @tag ? f.merge!(curated_tags: [@tag]) : f },
       page:       search_params[:p],
-      session_id: session_tracker.session_payload[:id],
+      session_id: session_tracker.session_payload['id'],
       boost: {
         browser_languages: browser_languages
       }
