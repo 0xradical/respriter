@@ -43,7 +43,6 @@ else
 	CUSTOM_ENV_FILES := $(shell ls envs/dev/* | sed 's/\/dev\//\/local\//g' | xargs)
 endif
 
-
 define only_outside_docker
 	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $1; fi;
 endef
@@ -153,6 +152,12 @@ rails-migrate: $(CUSTOM_ENV_FILES) ## Run rake db:migrate (probably not necessar
 
 course-reindex: $(CUSTOM_ENV_FILES) wait-for-elastic-search ## Reindexes Courses on Elasticsearch
 	@$(call docker_run_or_plain,base.clspt,bundle exec rails runner "Course.reindex!")
+
+course-reindex-dev:
+	@make -s course-reindex
+
+course-reindex-%: LESS_PRIORITY-%
+	@make -s detached-$*-course-reindex
 
 sync: sync-crawling_events wait-for-elastic-search sync-courses ## Sync web-app with napoleon
 
@@ -393,4 +398,4 @@ $(PG_DUMP_FILE):
 LESS_PRIORITY-%:
 	@:
 
-.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-ci bundle-install rails-migrate course-reindex sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search LESS_PRIORITY-%
+.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-ci bundle-install rails-migrate course-reindex course-reindex-dev course-reindex-% sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search LESS_PRIORITY-%
