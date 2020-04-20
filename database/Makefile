@@ -1,112 +1,43 @@
-APP := migrator
+DATABASE_IMAGE_NAME    := classpert/database
+DATABASE_IMAGE_VERSION := 1.4.1
 
-NAME := classpert/database
+DATABASE_IMAGE_TAG     := $(DATABASE_IMAGE_NAME)\:$(DATABASE_IMAGE_VERSION)
+DATABASE_IMAGE_LATEST  := $(DATABASE_IMAGE_NAME)\:latest
 
-DATABASE_IMAGE_TAG     := 1.3.8
-DATABASE_IMAGE_NAME    := $(NAME)\:$(DATABASE_IMAGE_TAG)
-DATABASE_IMAGE_VERSION := $(NAME)\:latest
+RUBY_PATH := $(shell which docker-compose)
 
-WORKDIR := /code
+DOCKER_ENV_FILE := --env-file ../envs/dev/database.env
 
-MAKE := make -s
+RUBY_IMAGE      := ruby:2.6.3-alpine
+DOCKER_RUBY_RUN := docker run --rm -it -v $(shell pwd):/database -w /database $(DOCKER_ENV_FILE) $(RUBY_IMAGE)
 
-CURRENT_STRUCTURE          := db/structure.sql
-CURRENT_STRUCTURE_TEMPLATE := $(CURRENT_STRUCTURE).env
-DOCKER_STRUCTURE           := docker/structure.sql.env
+DOCKER_DB_VOLUMES := -v $(shell pwd)/bin/docker-setup.sh:/docker-entrypoint-initdb.d/setup.sh -v $(shell pwd)/db/structure.sql.env:/docker-entrypoint-initdb.d/structure.sql.env
+DOCKER_DB_RUN     := docker run --rm -it -p 5432:5432 $(DOCKER_ENV_FILE) $(DOCKER_DB_VOLUMES) $(DATABASE_IMAGE_LATEST)
 
-DOCKER_COMPOSE           := docker-compose
-DOCKER_COMPOSE_RUN_FLAGS := run --rm -v $(shell pwd):$(WORKDIR)
-DOCKER_COMPOSE_RUN       := $(DOCKER_COMPOSE) $(DOCKER_COMPOSE_RUN_FLAGS) $(APP)
+define docker_ruby_run_or_plain
+	if [ -n "$(RUBY_PATH)" ]; then $(DOCKER_RUBY_RUN) $1; else $1; fi;
+endef
 
-DOCKER_COMPOSE_PATH := $(shell which docker-compose)
-ifeq ($(DOCKER_COMPOSE_PATH),)
-  BUNDLE_EXEC := bundle exec
-else
-  BUNDLE_EXEC := $(DOCKER_COMPOSE_RUN) bundle exec
-endif
+default: structure-update
 
-SOURCE_FILES := src/schemas.sql src/extensions.sql src/types/**/*.sql src/tables/**/*.sql src/procedures/**/*.sql src/triggers/**/*.sql src/indexes/**/*.sql src/views/**/*.sql src/auth/*.sql src/data/**/*.sql
+structure-update:
+	@$(call docker_ruby_run_or_plain,/database/bin/structure_update)
 
-default: run
+structure-check:
+	@$(call docker_ruby_run_or_plain,/database/bin/structure_check)
 
-reset-db: docker-down-postgres docker-compose-postgres
+structure-migrate-%:
+	@$(call docker_ruby_run_or_plain,/database/bin/structure_update migrate $*)
 
-reload-api: docker-down-postgrest docker-compose-postgrest
+run:
+	$(DOCKER_DB_RUN)
 
-structure: $(CURRENT_STRUCTURE)
-
-migrate-data:
-	@PGPASSWORD=$(POSTGRES_PASSWORD) psql -U $(POSTGRES_USER) -h $(POSTGRES_HOST) -p $(POSTGRES_PORT) -d $(POSTGRES_DB) < debug/data.sql
-
-migrate: $(CURRENT_STRUCTURE)
-	@PGPASSWORD=$(POSTGRES_PASSWORD) psql -U $(POSTGRES_USER) -h $(POSTGRES_HOST) -p $(POSTGRES_PORT) -d $(POSTGRES_DB) < $(CURRENT_STRUCTURE)
-
-docker-build:
-	$(DOCKER_COMPOSE) build
-
-docker-down-%:
-	$(DOCKER_COMPOSE) stop $*
-	$(DOCKER_COMPOSE) rm -fv $*
-
-docker-compose-%:
-	$(DOCKER_COMPOSE) up $*
-
-docker-%:
-	$(DOCKER_COMPOSE_RUN) $(MAKE) $*
-
-run: $(CURRENT_STRUCTURE)
-	@$(DOCKER_COMPOSE) up postgrest
-
-build: $(CURRENT_STRUCTURE_TEMPLATE)
-	@docker build -f Dockerfile.database -t $(DATABASE_IMAGE_NAME) .
-	@docker tag $(DATABASE_IMAGE_NAME) $(DATABASE_IMAGE_VERSION)
+build:
+	@docker build -t $(DATABASE_IMAGE_TAG) .
+	@docker tag $(DATABASE_IMAGE_TAG) $(DATABASE_IMAGE_LATEST)
 
 release:
-	@docker push $(DATABASE_IMAGE_NAME)
-	@docker push $(DATABASE_IMAGE_VERSION)
+	@docker push $(DATABASE_IMAGE_TAG)
+	@docker push $(DATABASE_IMAGE_LATEST)
 
-shell:
-	/bin/bash
-
-console:
-	bundle exec pry
-
-up:
-	@$(DOCKER_COMPOSE) up -d
-
-down:
-	@$(DOCKER_COMPOSE) down --remove-orphans
-
-logs:
-	@$(DOCKER_COMPOSE) logs -f
-
-watch:
-	@watch -n 3 $(DOCKER_COMPOSE) ps
-
-clean:
-	$(DOCKER_COMPOSE) down -v --rmi local --remove-orphans
-	docker system prune -f
-
-wipe:
-	$(DOCKER_COMPOSE) down -v --rmi all --remove-orphans
-	docker system prune -f
-
-.env: examples/env.development
-	@cp examples/env.development .env
-	@echo 'Copied $@'
-
-$(DOCKER_STRUCTURE): $(CURRENT_STRUCTURE_TEMPLATE)
-	@cp $(CURRENT_STRUCTURE_TEMPLATE) $(DOCKER_STRUCTURE)
-	@echo 'Copied $@'
-
-$(CURRENT_STRUCTURE): $(CURRENT_STRUCTURE_TEMPLATE) .env
-	cat $(CURRENT_STRUCTURE_TEMPLATE) | envsubst > $(CURRENT_STRUCTURE)
-	@echo 'Built $@'
-
-$(CURRENT_STRUCTURE_TEMPLATE): $(SOURCE_FILES)
-	@echo "BEGIN;" > $@
-	@awk 'FNR==1{print ""}1' $(SOURCE_FILES) >> $@
-	@echo "COMMIT;" >> $@
-	@echo 'Updated $@'
-
-.PHONY: reset-db reload-api structure migrate-data migrate docker-build docker-down-% docker-compose-% docker-run-% docker-% run build release shell console up down logs watch clean wipe
+.PHONY: structure-update structure-check structure-migrate-% run build release

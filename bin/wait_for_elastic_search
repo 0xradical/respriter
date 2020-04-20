@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' $ELASTICSEARCH_URL)" != "200" ]]; do
+  sleep 1;
+  echo 'Waiting for ElasticSearch...';
+done

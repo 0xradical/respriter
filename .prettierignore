@@ -1,7 +1,1 @@
 **/*.rb
-
-!app/business/napoleon/integration_resource.rb
-!app/controllers/user_accounts/registrations_controller.rb
-!app/controllers/profiles_controller.rb
-!app/jobs/developers/*
-!lib/pg/result_processor.rb

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  
   # Devise
   devise_for :admin_accounts,
              controllers: { sessions: 'admin_accounts/sessions' },
@@ -19,8 +20,8 @@ Rails.application.routes.draw do
          as: :user_account_registration
   end
 
-  get  '/profile' => 'profiles#new'
-  post '/profile' => 'profiles#create'
+  get  '/profile'     => 'profiles#new'
+  post '/profile'     => 'profiles#create'
 
   devise_scope :user_account do
     get '/developers/sign_in(.:format)' => 'developers/sessions#new',
@@ -46,6 +47,9 @@ Rails.application.routes.draw do
 
   resources :posts, path: 'blog'
 
+  resources :user_accounts, path: 'users',        only: [:index, :show]
+  resources :instructors,   path: 'instructors',  only: :index
+
   direct :user_dashboard do
     "#{ENV.fetch('USER_DASHBOARD_URL') { '//user.classpert.com' }}?locale=#{
       I18n.locale
@@ -65,7 +69,18 @@ Rails.application.routes.draw do
   end
 
   resources :videos, only: :show
-  resources :orphaned_profiles, only: :show, path: 'profiles'
+
+  resources :orphaned_profiles, path: 'profiles', only: [:show] do
+    member do
+      get   '/claim',                   action: :claim
+      put   '/send_verification_link',  action: :send_verification_link
+    end
+  end
+
+  namespace :claims do
+    get '/codes/:claim_code/verify',  to: 'codes#verify',           as: :code
+    get '/social/:id',                to: 'social_networks#update', as: :social_network
+  end
 
   get '/forward/:id', to: 'gateway#index', as: :gateway
 

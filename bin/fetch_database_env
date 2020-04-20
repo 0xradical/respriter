@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+
+from urllib.parse import urlparse
+
+import json
+import sys
+import os
+
+stream       = os.popen(f'heroku config -j --app {sys.argv[1]}')
+web_app_envs = json.loads(stream.read())
+web_app_uri  = urlparse(web_app_envs['DATABASE_URL'])
+
+stream         = os.popen(f'heroku config -j --app {sys.argv[2]}')
+postgrest_envs = json.loads(stream.read())
+postgrest_uri  = urlparse(postgrest_envs['DB_URI'])
+
+content = '''\
+# Config
+API_SCHEMA={api_schema}
+API_ANONYMOUS_ROLE={api_anonymous_role}
+
+# Secrets
+AUTHENTICATOR_USER={authenticator_user}
+AUTHENTICATOR_PASSWORD={authenticator_password}
+JWT_SECRET={jwt_secret}
+
+# Certificates
+CERTIFICATE_AWS_REGION={certificate_aws_region}
+CERTIFICATE_AWS_HOST={certificate_aws_host}
+CERTIFICATE_AWS_BUCKET={certificate_aws_bucket}
+CERTIFICATE_AWS_FOLDER={certificate_aws_folder}
+CERTIFICATE_AWS_ACCESS_KEY_ID={certificate_aws_access_key_id}
+CERTIFICATE_AWS_SECRET_ACCESS_KEY={certificate_aws_secret_access_key}
+CERTIFICATE_AWS_IS_PUBLIC={certificate_aws_is_public}
+CERTIFICATE_AWS_IS_HTTPS={certificate_aws_is_https}
+
+# Direct Upload
+DIRECT_UPLOAD_AWS_REGION={direct_upload_aws_region}
+DIRECT_UPLOAD_AWS_HOST={direct_upload_aws_host}
+DIRECT_UPLOAD_AWS_BUCKET={direct_upload_aws_bucket}
+DIRECT_UPLOAD_AWS_ROOT_FOLDER={direct_upload_aws_root_folder}
+DIRECT_UPLOAD_AWS_ACCESS_KEY_ID={direct_upload_aws_access_key_id}
+DIRECT_UPLOAD_AWS_SECRET_ACCESS_KEY={direct_upload_aws_secret_access_key}
+DIRECT_UPLOAD_AWS_IS_PUBLIC={direct_upload_aws_is_public}
+DIRECT_UPLOAD_AWS_IS_HTTPS={direct_upload_aws_is_https}
+
+# Database
+DATABASE_USER={database_user}
+DATABASE_PASSWORD={database_password}
+DATABASE_HOST={database_host}
+DATABASE_PORT={database_port}
+DATABASE_DB={database_db}
+\
+'''.format(
+  authenticator_user                  = postgrest_uri.username,
+  authenticator_password              = postgrest_uri.password,
+  database_user                       = web_app_uri.username,
+  database_password                   = web_app_uri.password,
+  database_host                       = web_app_uri.hostname,
+  database_port                       = web_app_uri.port or 5432,
+  database_db                         = web_app_uri.path[1:],
+  api_schema                          = postgrest_envs['DB_SCHEMA'],
+  api_anonymous_role                  = postgrest_envs['DB_ANON_ROLE'],
+  jwt_secret                          = postgrest_envs['JWT_SECRET'],
+  certificate_aws_region              = postgrest_envs['CERTIFICATE_AWS_REGION'],
+  certificate_aws_host                = postgrest_envs['CERTIFICATE_AWS_HOST'],
+  certificate_aws_bucket              = postgrest_envs['CERTIFICATE_AWS_BUCKET'],
+  certificate_aws_folder              = postgrest_envs['CERTIFICATE_AWS_FOLDER'],
+  certificate_aws_access_key_id       = postgrest_envs['CERTIFICATE_AWS_ACCESS_KEY_ID'],
+  certificate_aws_secret_access_key   = postgrest_envs['CERTIFICATE_AWS_SECRET_ACCESS_KEY'],
+  certificate_aws_is_public           = postgrest_envs['CERTIFICATE_AWS_IS_PUBLIC'],
+  certificate_aws_is_https            = postgrest_envs['CERTIFICATE_AWS_IS_HTTPS'],
+  direct_upload_aws_region            = postgrest_envs['DIRECT_UPLOAD_AWS_REGION'],
+  direct_upload_aws_host              = postgrest_envs['DIRECT_UPLOAD_AWS_HOST'],
+  direct_upload_aws_bucket            = postgrest_envs['DIRECT_UPLOAD_AWS_BUCKET'],
+  direct_upload_aws_root_folder       = postgrest_envs['DIRECT_UPLOAD_AWS_ROOT_FOLDER'],
+  direct_upload_aws_access_key_id     = postgrest_envs['DIRECT_UPLOAD_AWS_ACCESS_KEY_ID'],
+  direct_upload_aws_secret_access_key = postgrest_envs['DIRECT_UPLOAD_AWS_SECRET_ACCESS_KEY'],
+  direct_upload_aws_is_public         = postgrest_envs['DIRECT_UPLOAD_AWS_IS_PUBLIC'],
+  direct_upload_aws_is_https          = postgrest_envs['DIRECT_UPLOAD_AWS_IS_HTTPS']
+)
+
+file = open(sys.argv[3], "w")
+file.write(content)
+file.close()

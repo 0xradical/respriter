@@ -13,6 +13,7 @@ module.exports = {
     libraryTarget: "commonjs2"
   },
   resolve: {
+    modules: [process.env.NODE_PATH],
     alias: {
       "~~hypernova$": path.resolve(
         __dirname,

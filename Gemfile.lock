@@ -86,7 +86,7 @@ GEM
     activerecord (6.0.0)
       activemodel (= 6.0.0)
       activesupport (= 6.0.0)
-    activerecord-import (1.0.3)
+    activerecord-import (1.0.4)
       activerecord (>= 3.2)
     activestorage (6.0.0)
       actionpack (= 6.0.0)
@@ -292,6 +292,7 @@ GEM
     inky-rb (1.3.7.5)
       foundation_emails (~> 2)
       nokogiri
+    jaro_winkler (1.5.4)
     jmespath (1.4.0)
     json (2.2.0)
     json_schemer (0.2.8)
@@ -351,6 +352,7 @@ GEM
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    oauth (0.5.4)
     oauth2 (1.4.2)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
@@ -365,17 +367,20 @@ GEM
     omniauth-github (1.3.0)
       omniauth (~> 1.5)
       omniauth-oauth2 (>= 1.4.0, < 2.0)
-    omniauth-google-oauth2 (0.8.0)
-      jwt (>= 2.0)
-      omniauth (>= 1.1.1)
-      omniauth-oauth2 (>= 1.6)
     omniauth-linkedin-oauth2 (1.0.0)
       omniauth-oauth2
+    omniauth-oauth (1.1.0)
+      oauth
+      omniauth (~> 1.0)
     omniauth-oauth2 (1.6.0)
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
+    omniauth-twitter (1.4.0)
+      omniauth-oauth (~> 1.1)
+      rack
     orm_adapter (0.5.0)
-    parser (2.6.5.0)
+    parallel (1.19.1)
+    parser (2.7.0.5)
       ast (~> 2.4.0)
     pg (1.1.4)
     pg_query (1.2.0)
@@ -433,6 +438,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.20.3, < 2.0)
+    rainbow (3.0.0)
     rake (13.0.0)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
@@ -443,6 +449,7 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rexml (3.2.4)
     robotstxt (0.5.4)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
@@ -465,11 +472,20 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.0)
+    rubocop (0.80.1)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.7.0.1)
+      rainbow (>= 2.2.2, < 4.0)
+      rexml
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 1.7)
+    ruby-progressbar (1.10.1)
     ruby-thumbor (3.0.0)
     ruby-vips (2.0.16)
       ffi (~> 1.9)
     rubyzip (2.0.0)
-    rucaptcha (2.5.1)
+    rucaptcha (2.5.3)
       railties (>= 3.2)
     safe_yaml (1.0.5)
     selenium-webdriver (3.142.6)
@@ -509,16 +525,17 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.6)
-    unparser (0.4.5)
+    unicode-display_width (1.6.1)
+    unparser (0.4.7)
       abstract_type (~> 0.0.7)
       adamantium (~> 0.2.0)
       concord (~> 0.1.5)
       diff-lcs (~> 1.3)
       equalizer (~> 0.0.9)
-      parser (~> 2.6.3)
+      parser (>= 2.6.5)
       procto (~> 0.0.2)
     uri_template (0.7.0)
-    user_agent_parser (2.5.2)
+    user_agent_parser (2.6.0)
     valid_email2 (3.1.0)
       activemodel (>= 3.2)
       mail (~> 2.5)
@@ -550,75 +567,76 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_record_upsert
-  activerecord-import
+  active_record_upsert (~> 0.9.5)
+  activerecord-import (~> 1.0.4)
   affiliate_hub!
   affiliate_hub_awin!
   affiliate_hub_impact_radius!
   affiliate_hub_rakuten_marketing!
-  aws-sdk-cloudfront
-  browser
+  aws-sdk-cloudfront (~> 1.23.0)
+  browser (~> 2.6.1)
   capybara
   capybara-email
-  carrierwave
-  carrierwave-aws
+  carrierwave (~> 2.0.2)
+  carrierwave-aws (~> 1.4.0)
   cucumber-rails
-  damerau-levenshtein
+  damerau-levenshtein (~> 1.3.2)
   database_cleaner
-  devise
+  devise (~> 4.7.1)
   devise-jwt (~> 0.5.8)
-  dnsruby
-  ejs
+  dnsruby (~> 1.61.3)
+  ejs (~> 1.1.1)
   elasticsearch-dsl (~> 0.1.0)
   elasticsearch-model (~> 6.0.0)
   elasticsearch-rails (~> 6.0.0)
-  execjs
+  execjs (~> 2.7.0)
   factory_bot
   factory_bot_rails
-  fast_jsonapi
+  fast_jsonapi (~> 1.5)
   fivemat
   guard-rspec
-  http
-  http-accept
-  httparty
-  hypernova
-  inky-rb
-  json_schemer
-  kaminari
-  lograge
-  mini_magick
-  omniauth-facebook
-  omniauth-github
-  omniauth-google-oauth2
+  http (~> 4.2.0)
+  http-accept (~> 2.1.1)
+  httparty (~> 0.17.1)
+  hypernova (~> 1.4.0)
+  inky-rb (~> 1.3.7.5)
+  json_schemer (~> 0.2.8)
+  kaminari (~> 1.1.1)
+  lograge (~> 0.11.2)
+  mini_magick (~> 4.9.5)
+  omniauth-facebook (~> 5.0.0)
+  omniauth-github (~> 1.3.0)
   omniauth-linkedin-oauth2 (~> 1.0.0)
-  omniauth-oauth2
-  parser
-  pg
-  pg_query
-  premailer-rails
+  omniauth-oauth2 (~> 1.6.0)
+  omniauth-twitter (~> 1.4.0)
+  parser (~> 2.7.0.1)
+  pg (~> 1.1)
+  pg_query (~> 1.2.0)
+  premailer-rails (~> 1.10.3)
   pry
   pry-rails
   public_suffix (~> 4.0.3)
-  puma
+  puma (~> 4.2)
   que!
   que-web
-  rack-cors
+  rack-cors (~> 1.0.3)
   rails (~> 6.0.0)
-  robotstxt
+  robotstxt (~> 0.5.4)
   rspec-mocks
   rspec-rails
-  ruby-thumbor
-  rucaptcha
+  rubocop (~> 0.80.1)
+  ruby-thumbor (~> 3.0.0)
+  rucaptcha (~> 2.5.2)
   selenium-webdriver
-  semantic
-  sentry-raven
+  semantic (~> 1.6.1)
+  sentry-raven (~> 2.12.2)
   shoulda-matchers
   simplecov
-  sitemap_generator
+  sitemap_generator (~> 6.0.2)
   spring
-  unparser
-  user_agent_parser
-  valid_email2
+  unparser (~> 0.4.7)
+  user_agent_parser (~> 2.6.0)
+  valid_email2 (~> 3.1.0)
   vcr
   vueonrails (~> 1.x)
   webmock

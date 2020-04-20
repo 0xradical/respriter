@@ -1,0 +1,5 @@
+db/backups
+db/seeds
+node_modules
+tmp
+images

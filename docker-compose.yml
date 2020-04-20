@@ -1,0 +1,498 @@
+version: "3"
+services:
+  base.clspt: &base
+    image: classpert/web-app:4e606f3876b189943d53168afb0d2c9ad28686db
+    env_file:
+      - envs/dev/base.env
+      - envs/local/base.env
+    volumes:
+      - .:/app
+      - /app/volumes
+      - base_bundle:/home/developer/bundle:cached
+      - base_node_modules:/home/developer/node_modules:cached
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.10
+
+  app.clspt:
+    <<: *base
+    environment:
+      - VIRTUAL_HOST=app.clspt,*.app.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.101
+    ports:
+      - 3000
+    depends_on:
+      - api.clspt
+      - webpacker.clspt
+      - ssr.clspt
+      - database.clspt
+      - search.clspt
+      - thumbor.clspt
+      - assets-proxy.clspt
+      - proxy.clspt
+      - mail.clspt
+      - video.clspt
+
+  que.clspt:
+    <<: *base
+    command: bundle exec que
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.102
+    depends_on:
+      - database.clspt
+      - mail.clspt
+
+  ssr.clspt:
+    <<: *base
+    command: make hypernova
+    environment:
+      - VIRTUAL_HOST=ssr.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.103
+    ports:
+      - 7777
+    depends_on:
+      - proxy.clspt
+
+  webpacker.clspt:
+    <<: *base
+    command: bin/webpack-dev-server
+    environment:
+      - VIRTUAL_HOST=webpacker.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.104
+    ports:
+      - 3035:3035
+    depends_on:
+      - proxy.clspt
+
+  database.clspt:
+    image: classpert/database:1.4.1
+    env_file:
+      - envs/dev/database.env
+      - envs/local/database.env
+    environment:
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.105
+    ports:
+      - 5432:5432
+    volumes:
+      - .:/app
+      - /app/volumes
+      - database_data:/var/lib/postgresql/data:cached
+      - ./images/database/production_seed.sql:/docker-entrypoint-initdb.d/x_seed.sql
+      - ./images/database/development_seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
+
+  api.clspt:
+    image: postgrest/postgrest:v6.0.2
+    env_file:
+      - envs/dev/api.env
+      - envs/local/api.env
+    environment:
+      - VIRTUAL_HOST=api.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.106
+    ports:
+      - 3000
+    depends_on:
+      - database.clspt
+      - proxy.clspt
+
+  search.clspt:
+    image: nshou/elasticsearch-kibana:kibana6
+    environment:
+      - VIRTUAL_HOST=kibana.clspt
+      - VIRTUAL_PORT=5601
+      - LOGSPOUT=ignore
+      - "discovery.type=single-node"
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.107
+    ports:
+      - 5601
+      - 9200:9200
+    volumes:
+      - search_data:/home/elasticsearch/elasticsearch/data:cached
+    depends_on:
+      - proxy.clspt
+
+  thumbor.clspt:
+    image: dalthon/thumbor-s3-storage
+    env_file:
+      - envs/dev/thumbor.env
+      - envs/local/thumbor.env
+    environment:
+      - VIRTUAL_HOST=thumbor.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.108
+    ports:
+      - 80
+    volumes:
+      - ./images/thumbor/thumbor.conf:/thumbor/thumbor.conf
+    depends_on:
+      - s3.clspt
+      - proxy.clspt
+
+  mail.clspt:
+    image: schickling/mailcatcher
+    environment:
+      - VIRTUAL_HOST=mail.clspt
+      - VIRTUAL_PORT=1080
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.109
+    ports:
+      - 1080
+      - 1025:1025
+    depends_on:
+      - proxy.clspt
+
+  s3.clspt:
+    image: classpert/minio
+    build:
+      context: images/minio/.
+      dockerfile: Dockerfile
+    command: minio server --address :80 /data
+    env_file:
+      - envs/dev/minio.env
+      - envs/local/minio.env
+    environment:
+      - VIRTUAL_HOST=s3.clspt
+      - LOGSPOUT=ignore
+    volumes:
+      - s3_data:/data:cached
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.110
+    ports:
+      - 80
+    depends_on:
+      - proxy.clspt
+
+  assets-proxy.clspt:
+    image: nginx:alpine
+    command: /bin/sh -c "envsubst < /etc/nginx/conf.d/upload_assets.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+    env_file:
+      - envs/dev/assets-proxy.env
+      - envs/local/assets-proxy.env
+    environment:
+      - VIRTUAL_HOST=assets-proxy.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.111
+    ports:
+      - 80
+    volumes:
+      - ./images/assets-proxy/upload_assets.template:/etc/nginx/conf.d/upload_assets.template
+    depends_on:
+      - s3.clspt
+      - proxy.clspt
+
+  user.app.clspt:
+    image: classpert/user-dashboard:1.0.0
+    command: run serve
+    env_file:
+      - envs/dev/user.env
+      - envs/local/user.env
+    environment:
+      - VIRTUAL_HOST=user.app.clspt
+      - LOGSPOUT=ignore
+    volumes:
+      - ../user-dashboard:/app
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.112
+    ports:
+      - 8080
+    depends_on:
+      - app.clspt
+      - api.clspt
+      - proxy.clspt
+
+  developer.app.clspt:
+    image: classpert/developers-dashboard:1.0.0
+    command: run serve
+    env_file:
+      - envs/dev/developer.env
+      - envs/local/developer.env
+    environment:
+      - VIRTUAL_HOST=developer.app.clspt
+      - LOGSPOUT=ignore
+    volumes:
+      - ../developers-dashboard:/app
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.113
+    ports:
+      - 8080
+    depends_on:
+      - app.clspt
+      - api.clspt
+      - que.clspt
+      - logshuttle.clspt
+      - urlbox.clspt
+      - proxy.clspt
+
+  database.napoleon.clspt:
+    image: classpert/napoleon_database
+    env_file:
+      - envs/dev/database-napoleon.env
+      - envs/local/database-napoleon.env
+    environment:
+      - LOGSPOUT=ignore
+    volumes:
+      - database_napoleon_data:/var/lib/postgresql/data:cached
+      - ./images/napoleon_database/seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.114
+    ports:
+      - 5434:5432
+
+  api.napoleon.clspt:
+    image: postgrest/postgrest:v6.0.2
+    env_file:
+      - envs/dev/api-napoleon.env
+      - envs/local/api-napoleon.env
+    environment:
+      - VIRTUAL_HOST=api.napoleon.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.115
+    ports:
+      - 3000
+    depends_on:
+      - database.napoleon.clspt
+      - proxy.clspt
+
+  napoleon.clspt:
+    entrypoint: /usr/bin/entrypoint
+    image: classpert/napoleon
+    command: make worker
+    env_file:
+      - envs/dev/napoleon.env
+      - envs/local/napoleon.env
+    environment:
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.116
+    volumes:
+      - ../napoleon:/app
+      - ./images/provider/www:/var/www
+      - ./images/napoleon/entrypoint:/usr/bin/entrypoint
+      - ./images/napoleon/update_napoleon_etc_hosts:/usr/bin/update_napoleon_etc_hosts
+    depends_on:
+      - database.napoleon.clspt
+      - mail.clspt
+      - s3.clspt
+
+  video.clspt:
+    image: classpert/video-service:minimal
+    env_file:
+      - envs/dev/video.env
+      - envs/local/video.env
+    environment:
+      - VIRTUAL_HOST=video.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.117
+    ports:
+      - 80
+
+  provider.clspt:
+    image: classpert/mocked_providers:latest
+    build:
+      context: images/provider/.
+      dockerfile: Dockerfile
+    environment:
+      - DOMAIN=provider.clspt
+      - VIRTUAL_HOST=provider.clspt,*.provider.clspt
+      - LOGSPOUT=ignore
+    volumes:
+      - ./images/provider/www:/var/www
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.118
+    ports:
+      - 80
+    depends_on:
+      - proxy.clspt
+
+  logdrain.clspt:
+    image: classpert/log-drain:1.2.0
+    environment:
+      - VIRTUAL_HOST=logdrain.clspt
+      - REDIS_URL=redis://redis.clspt
+      - LOGSPOUT=ignore
+      - ALLOWED_SOURCES=crawling-event,sitemap-verification-service,domain-validation-service,resource-discovery-service,debug-tool-service
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.119
+    ports:
+      - 8000
+    depends_on:
+      - proxy.clspt
+      - redis.clspt
+
+  logspout.clspt:
+    image: gliderlabs/logspout
+    environment:
+      - VIRTUAL_HOST=logspout.clspt
+      - LOGSPOUT=ignore
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.120
+    ports:
+      - 80
+    depends_on:
+      - proxy.clspt
+
+  logshuttle.clspt:
+    image: classpert/log-shuttle:1.2.0
+    environment:
+      - VIRTUAL_HOST=logshuttle.clspt
+      - LOGSPOUT=ignore
+      - LOGSPOUT_URL=http://logspout.clspt/logs
+      - LOGPLEX_URL=http://logplex.clspt:8001
+      - LOGPLEX_INPUT_URL=http://logplex.clspt:8601/logs
+      - LOGDRAIN_URL=http://logdrain.clspt:8000/drain
+    env_file:
+      - envs/dev/logplex.env
+      - envs/local/logplex.env
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.121
+    depends_on:
+      - logspout.clspt
+      - logplex.clspt
+      - logdrain.clspt
+
+  logplex.clspt:
+    image: classpert/logplex:1.0.0
+    command: ./_build/default/rel/logplex/bin/logplex foreground
+    hostname: logplex
+    domainname: docker.local
+    environment:
+      - VIRTUAL_HOST=logplex.clspt
+      - VIRTUAL_PORT=8001
+      - LOGSPOUT=ignore
+      - INSTANCE_NAME=logplex.docker.local
+      - LOCAL_IP=127.0.0.1
+      - LOGPLEX_CONFIG_REDIS_URL=redis://redis.clspt/
+      - LOGPLEX_SHARD_URLS=redis://redis.clspt/#frag1
+      - LOGPLEX_REDGRID_REDIS_URL=redis://redis.clspt/
+      - LOGPLEX_STATS_REDIS_URL=redis://redis.clspt/
+    env_file:
+      - envs/dev/logplex.env
+      - envs/local/logplex.env
+    ports:
+      - 8001
+      - 8002:8002
+      - 8601:8601
+      - 6001:6001
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.122
+    depends_on:
+      - proxy.clspt
+      - redis.clspt
+
+  redis.clspt:
+    # logplex requires this version
+    image: redis:2.6
+    command: redis-server
+    environment:
+      - VIRTUAL_HOST=redis.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.123
+    ports:
+      - 6379
+    depends_on:
+      - proxy.clspt
+
+  urlbox.clspt:
+    image: classpert/screenshooter:1.3.0
+    environment:
+      - VIRTUAL_HOST=urlbox.clspt
+      - LOGSPOUT=ignore
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.124
+    ports:
+      - 3566
+    extra_hosts:
+      - "app.clspt:172.28.1.1"
+    depends_on:
+      - proxy.clspt
+
+  proxy.clspt:
+    image: classpert/nginx-proxy
+    environment:
+      - DEV_DOMAIN=clspt
+      - LOGSPOUT=ignore
+    volumes:
+      - ./images/proxy/proxy.conf:/etc/nginx/proxy.conf
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.1
+    ports:
+      - 80:80
+      - 5300:53/udp
+
+  volumes.clspt:
+    image: atmoz/sftp:alpine
+    command: squerol:squerol123:::volumes
+    environment:
+      - LOGSPOUT=ignore
+    volumes:
+      - ./images/volumes/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key
+      - ./images/volumes/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key
+      - base_bundle:/home/squerol/volumes/base_bundle
+      - base_node_modules:/home/squerol/volumes/base_node_modules
+      - database_data:/home/squerol/volumes/database_data
+      - search_data:/home/squerol/volumes/search_data
+      - s3_data:/home/squerol/volumes/s3_data
+    networks:
+      fixed_ip_network:
+        ipv4_address: 172.28.1.2
+    ports:
+      - "2222:22"
+
+volumes:
+  base_bundle:
+  base_node_modules:
+  database_data:
+  database_napoleon_data:
+  search_data:
+  s3_data:
+
+networks:
+  fixed_ip_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

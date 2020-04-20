@@ -1,7 +1,11 @@
 class Video::Brightcove
 
-  def self.call(video_struct)
-    { url: video_struct.url, embed: true }
+  def self.call(params)
+    {
+      url:           params.url,
+      embed:         true,
+      thumbnail_url: params.thumbnail_url
+    }
   end
 
 end

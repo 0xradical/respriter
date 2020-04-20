@@ -11,26 +11,16 @@ class OauthAccount < ApplicationRecord
   class << self
 
     def user_account_from!(oauth:, session: {})
-
-      oauth_acc = find_by(provider: oauth['provider'], uid: oauth['uid'])
-
-      if oauth_acc.nil?
-        transaction do
-          oauth_acc = create(provider: oauth['provider'], uid: oauth['uid'])
-          oauth_acc.raw_data = oauth
-          oauth_acc.user_account = UserAccount.find_or_create_by(email: oauth[:info][:email]) do |u|
-            u.password        = Devise.friendly_token[0,20]
-            u.tracking_data   = session[:tracking_data]
-            u.confirmed_at    = Time.current
-          end
-          oauth_acc.save
-          oauth_acc.user_account.skip_confirmation_notification!
-          oauth_acc.user_account.reload
-        end
+      oauth_account = where(provider: oauth[:provider], uid: oauth[:uid]).first_or_initialize
+      oauth_account.raw_data = oauth
+      oauth_account.user_account  = UserAccount.find_or_create_by(email: oauth[:info][:email]) do |account|
+        account.password                  = Devise.friendly_token[0,20]
+        account.tracking_data             = session[:tracking_data]
+        account.confirmed_at              = Time.now
       end
-
-      oauth_acc.user_account
-
+      oauth_account.user_account.reload.profile.oauth_avatar_url = oauth[:info][:image]
+      oauth_account.save!
+      oauth_account
     end
 
   end

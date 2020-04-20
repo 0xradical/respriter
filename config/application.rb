@@ -26,7 +26,7 @@ Bundler.require(*Rails.groups)
 
 module App
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
+
     config.session_store :cookie_store, key: :_app_session, domain: :all
 
     config.load_defaults 5.1
@@ -64,7 +64,7 @@ module App
         ENV.fetch('ELEMENTS_ASSET_HOST') do
           'https://elements-prd.classpert.com'
         end
-      elements_config.asset_version = '5.8.0'
+      elements_config.asset_version = '5.9.1'
     end
 
     config.action_controller.forgery_protection_origin_check = false

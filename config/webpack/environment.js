@@ -46,4 +46,8 @@ environment.config.merge({
   }
 });
 
+if (process.env.NODE_PATH) {
+  environment.config.set("resolve.modules", [process.env.NODE_PATH]);
+}
+
 module.exports = environment;

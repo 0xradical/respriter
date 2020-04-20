@@ -1,0 +1,4 @@
+COPY (
+  SELECT *
+  FROM app.profiles
+) TO STDOUT WITH CSV HEADER DELIMITER ',';

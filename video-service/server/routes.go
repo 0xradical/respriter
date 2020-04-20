@@ -45,5 +45,10 @@ func (router *Router) Routes() {
     middleware.SignedUrl( WithSession(handlers.UdemyLecture) ),
   )
 
+  router.HandleFunc(
+    "/vimeo/thumbnail/{course_id:[0-9]+}",
+    WithSession(handlers.VimeoThumbnail),
+  )
+
   router.NewRoute().PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
 }

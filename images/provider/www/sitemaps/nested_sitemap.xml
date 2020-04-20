@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset>
+  <url>
+    <loc>http://sitemaps.provider.clspt/free_01.html</loc>
+  </url>
+  <url>
+    <loc>http://sitemaps.provider.clspt/free_02.html</loc>
+  </url>
+  <url>
+    <loc>http://sitemaps.provider.clspt/multi_price_01.html</loc>
+  </url>
+  <url>
+    <loc>http://sitemaps.provider.clspt/multi_price_02.html</loc>
+  </url>
+  <url>
+    <loc>http://sitemaps.provider.clspt/missing_course.html</loc>
+  </url>
+  <url>
+    <loc>http://other.domain.com/should-not-fetch.html</loc>
+  </url>
+</urlset>

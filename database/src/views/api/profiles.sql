@@ -3,6 +3,10 @@ CREATE OR REPLACE VIEW api.profiles AS
     id,
     name,
     username,
+    short_bio,
+    long_bio,
+    instructor,
+    public,
     COALESCE(uploaded_avatar_url, oauth_avatar_url) AS avatar_url,
     COALESCE( if_admin(date_of_birth),   if_user_by_id(user_account_id, date_of_birth)   ) AS date_of_birth,
     user_account_id,
@@ -34,7 +38,11 @@ BEGIN
     date_of_birth       = NEW.date_of_birth,
     interests           = NEW.interests,
     preferences         = NEW.preferences,
-    username            = NEW.username
+    username            = NEW.username,
+    short_bio           = NEW.short_bio,
+    long_bio            = NEW.long_bio,
+    instructor          = NEW.instructor,
+    public              = NEW.public
   WHERE
     id = OLD.id;
 

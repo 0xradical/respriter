@@ -1,203 +1,401 @@
-NAME   :=	classpert/rails
-TAG    :=	3.0.2
-IMG    :=	${NAME}\:${TAG}
-LATEST :=	${NAME}\:latest
-HEROKU_APP_NAME := classpert-web-app
-ENV    ?= development
+HEROKU_WEB_APP_NAME   := classpert-web-app
+HEROKU_POSTGREST_NAME := classpert-postgrest
+HEROKU_USER_DASH_NAME := clspt-user-dashboard
+HEROKU_DEV_DASH_NAME  := clspt-developers-dashboard
+HEROKU_VIDEO_NAME     := classpert-video-service
 
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
-	DETECTED_OS := mac
+	SHA1SUM := gsha1sum
 else
 	# assume linux
-	DETECTED_OS := linux
+	SHA1SUM := sha1sum
 endif
 
-PG_HOST      ?= postgres
-PG_USER      ?= postgres
-PG_PORT      ?= 5432
-PG_ROLE_FILE ?= ./db/backups/roles.dump
-PG_DUMP_FILE ?= ./db/backups/latest.dump
+DOCKER_BASE_NAME   := classpert/rails
+DOCKER_BASE_TAG    := 4.0.0
+DOCKER_BASE_FILE   := Dockerfile
+DOCKER_BASE_IMAGE  := $(DOCKER_BASE_NAME):$(DOCKER_BASE_TAG)
+DOCKER_BASE_LATEST := $(DOCKER_BASE_NAME):latest
 
+GITHUB_ACCESS_TOKEN ?= $(shell heroku config:get GITHUB_ACCESS_TOKEN --app $(HEROKU_WEB_APP_NAME)-prd)
+
+DOCKER_WEB_APP_NAME   := classpert/web-app
+DOCKER_WEB_APP_TAG    := $(shell cat Gemfile.lock package-lock.json | $(SHA1SUM) | sed -e 's/ .*//g')
+DOCKER_WEB_APP_FILE   := Dockerfile.webapp
+DOCKER_WEB_APP_IMAGE  := $(DOCKER_WEB_APP_NAME):$(DOCKER_WEB_APP_TAG)
+DOCKER_WEB_APP_LATEST := $(DOCKER_WEB_APP_NAME):latest
+DOCKER_WEB_APP_ARGS   = GITHUB_ACCESS_TOKEN=$(GITHUB_ACCESS_TOKEN)
+
+WORKDIR := $(shell pwd)
+
+DOCKER              := docker
+DOCKER_COMPOSE      := docker-compose
 DOCKER_COMPOSE_PATH := $(shell which docker-compose)
-ifeq ($(DOCKER_COMPOSE_PATH),)
-  BUNDLE_EXEC        := bundle exec
-  BUNDLE_EXEC_TEST   := ENV=test bundle exec
-  DOCKER_COMPOSE_RUN := 
+
+PG_DUMP_FILE := db/backups/latest.dump
+
+SERVICES := $(shell /bin/sh -c "cat docker-compose.yml | grep -e '\.clspt:$$' | sed -e 's/  //g' | sed -e 's/\://g' | sed '/volumes/d' | sed '/base/d'")
+
+ifeq ($(RAILS_ENV), production)
+	CUSTOM_ENV_FILES := LESS_PRIORITY-noop
 else
-  BUNDLE_EXEC        := docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_$(ENV) bundle exec
-  BUNDLE_EXEC_TEST   := docker-compose run -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 app_test bundle exec
-  DOCKER_COMPOSE_RUN := docker-compose run app_$(ENV)
+	CUSTOM_ENV_FILES := $(shell ls envs/dev/* | sed 's/\/dev\//\/local\//g' | xargs)
 endif
-RAKE := $(BUNDLE_EXEC) rake
 
-DOCKER_COMPOSE_POSTGRES_RUN_FLAGS := --rm -v $(shell pwd)/db:/db -v $(shell pwd):/app
-DOCKER_COMPOSE_POSTGRES_RUN       := docker-compose run $(DOCKER_COMPOSE_POSTGRES_RUN_FLAGS) postgres
+define only_outside_docker
+	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $1; fi;
+endef
 
-.PHONY: help update-packages rebuild-and-update-packages bootstrap console que_worker tests rspec cucumber guard yarn yarn-link-% yarn-unlink-% rails_db_migrate db_reset db_reload postgrest_reset db_shell db_download db_migrate db_stg_migrate db_prd_migrate db_load db_restore index_courses sync_courses sync_crawling_events heroku_prd_% heroku_stg_% stg_db_restore tty down clean wipe docker-build docker-push docker-% watch logs prd-logs stg-logs
+define docker_run_or_plain
+	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm $3 -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 $1 $2 || $(DOCKER_COMPOSE) exec $3 $1 $2; else $2; fi;
+endef
+
+define docker_run_with_ports_or_plain
+	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm --service-ports -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 $1 $2; else $2; fi;
+endef
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-update-packages: Gemfile Gemfile.lock package.json ## Updates packages from Gemfile.lock and yarn.lock
-	yarn install --modules-folder=/home/developer/.config/yarn/global/node_modules
-	bundle install
+configure: $(CUSTOM_ENV_FILES)
 
-rebuild-and-update-packages: ## Install new packages and rebuild image
-	make docker-update-packages
-	make docker-build
+setup: setup-app setup-database setup-user setup-developer setup-napoleon ## Sets all apps
 
-bootstrap: Dockerfile docker-compose.yml .env .env.test
-	@docker-compose run --service-ports -e DETECTED_OS=$(DETECTED_OS) app_$(ENV) bin/bootstrap
+setup-app: setup-git bundle-install npm-ci ## Sets up Web App installing all its dependencies
 
-lazy: bootstrap db_restore ## Build your application from scratch and restores the latest dump
-	@docker-compose run -p 3000:3000 app_$(ENV)
+setup-git: ## Set up git submodules
+	@git submodule init
+	@git submodule update
 
-rails: ## Run rails server
-	@docker-compose run -p 3000:3000 app_$(ENV)
+setup-database: ./images/database/production_seed.sql up-persistence course-reindex  ## Sets up Persistence Containers and indexes Search
 
-postgrest:
-	@docker-compose run --service-ports postgrest
+setup-user: ../user-dashboard ## Sets up User Dashboard installing all its dependencies
+	$(DOCKER_COMPOSE) run --rm user.app.clspt install
 
-console: ## Run rails console. Usage e.g: ENV="test" make console
-	@$(BUNDLE_EXEC) rails console
+setup-developer: ../developers-dashboard ## Sets up Developer Dashboard installing all its dependencies
+	$(DOCKER_COMPOSE) run --rm developer.app.clspt install
 
-que_worker:
-	@$(BUNDLE_EXEC) que ./config/environment.rb
+setup-napoleon: ../napoleon up-database up-api.napoleon ## Sets up Napoleon (its dependencies are already installed!)
+	@$(call docker_run_or_plain,base.clspt,bundle exec rails runner bin/setup_napoleon.rb)
+	@echo -e "Napoleon is ready to crawl some providers! To do so, follow this:\n - Run make up-{persistence,provider,napoleon} or make sure those services are up\n - Wait for a while looking at logs to know when it finishes (checks running make logs)\n - Run make sync"
 
-tests: ## Run the complete test suite
-	@docker-compose run -e BROWSER_LANGUAGE=en --service-ports app_test bundle exec cucumber
-	@docker-compose run -e BROWSER_LANGUAGE=pt-BR --service-ports app_test bundle exec cucumber
-	@make rspec
+etc_hosts: $(CUSTOM_ENV_FILES) ## Show domains that should be on /etc/hosts
+	@$(call docker_run_or_plain,base.clspt,./bin/etc_hosts)
 
-rspec: ## Run rspec tests
-	@$(BUNDLE_EXEC_TEST) rspec
+worker: ## Alias to make run-que
 
-cucumber: ## Run cucumber tests. Usage e.g: ARGS="--tags @user-signs-up" make cucumber
-	@docker-compose run --service-ports app_test bundle exec cucumber $(ARGS)
+napoleon-worker: ## Alias to make run-napoleon
 
-guard: ## Run cucumber tests. Usage e.g: ARGS="" make guard
-	@docker-compose run --service-ports app_test bundle exec guard $(ARGS)
+tty: bash-base ## Alias for bash-base
 
-yarn: ## Run yarn. Usage e.g: ARGS="add normalize" make yarn
-	@$(DOCKER_COMPOSE_RUN) yarn $(ARGS)
+bash: bash-base ## Alias for bash-base
 
-yarn-link-%: ## Link yarn to your local package copy. Usage e.g: yarn-link-elements
-	@$(DOCKER_COMPOSE_RUN) yarn link $*
+bash-ports: bash-ports-app ## Alias for bash-ports-app
 
-yarn-unlink-%: ## Unlink yarn from your local package copy. Usage e.g: yarn-unlink-elements
-	@$(DOCKER_COMPOSE_RUN) yarn unlink $*
+bash-ports-user: ## Alias for bash-ports-user.app
 
-rails_db_migrate: ## Run database migration
-	@$(RAKE) db:migrate
+bash-user: ## Alias for bash-user.app
 
-db_reset: db/db.dev.env ## Reset your database
-	$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_reset /db/db.dev.env
+bash-ports-developer: ## Alias for bash-ports-developer.app
 
-db_reload: ## Reload your database
-	docker-compose stop  postgres
-	docker-compose rm -f postgres
-	docker-compose stop  postgres_test
-	docker-compose rm -f postgres_test
-	docker-compose up -d postgres postgres_test
+bash-developer: ## Alias for bash-developer.app
 
-postgrest_reset:
-	docker-compose stop  postgrest
-	docker-compose rm -f postgrest
-	docker-compose up -d postgrest
+sh-ports-user: ## Alias for sh-ports-user.app
 
-db_shell:
-	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/bash
+sh-user: ## Alias for sh-user.app
 
-db_download: db/db.prd.env ## Generates and downloads latest production dump from RDS
-	$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.prd.env && PGPASSWORD=$$DATABASE_PASSWORD pg_dump -U $$DATABASE_USER -h $$DATABASE_HOST -p $$DATABASE_PORT -Fc $$DATABASE_DB > $(PG_DUMP_FILE)'
+sh-ports-developer: ## Alias for sh-ports-developer.app
 
-db_migrate: db/db.dev.env
-	$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_migrate /db/db.dev.env /app/database/db/migrations
+sh-developer: ## Alias for sh-developer.app
 
-db_stg_migrate: db/db.stg.env
-	$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_migrate /db/db.stg.env /app/database/db/migrations
+bash-ports-%: $(CUSTOM_ENV_FILES) ## Runs bash for a given container
+	@$(call docker_run_with_ports_or_plain,$*.clspt,/bin/bash)
 
-db_prd_migrate: db/db.prd.env
-	$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_migrate /db/db.prd.env /app/database/db/migrations
+bash-%: $(CUSTOM_ENV_FILES) ## Runs bash for a given container with service ports
+	@$(call docker_run_or_plain,$*.clspt,/bin/bash)
 
-db_load: $(PG_DUMP_FILE) ## Loads lastest dump creating database
-	make db_reset
-	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c "( until pg_isready -h $(PG_HOST) -U $(PG_USER) -d classpert_$(ENV); do sleep 0.5; done; ) && ( pg_restore --verbose --no-owner -h $(PG_HOST) -U $(PG_USER) -d classpert_$(ENV) < $(PG_DUMP_FILE); exit 0; )"
-	@$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_fix_secrets /db/db.dev.env
+sh-ports-%: $(CUSTOM_ENV_FILES) ## Runs sh for a given container
+	@$(call docker_run_with_ports_or_plain,$*.clspt,/bin/sh)
 
-db_restore: ## Restores lastest dump creating database (if needed), migrates after restore and load elastic_search
-	@make db_load index_courses
+sh-%: $(CUSTOM_ENV_FILES) ## Runs sh for a given container with service ports
+	@$(call docker_run_or_plain,$*.clspt,/bin/sh)
 
-index_courses:
-	$(BUNDLE_EXEC) rails runner "Course.reindex!"
+hypernova: ./ssr/hypernova.js
+	node ssr/hypernova.js
 
-sync_courses:
-	$(BUNDLE_EXEC) rake system:scheduler:courses_service
+rails-server: ## Runs Rails server
+	@$(call docker_run_with_ports_or_plain,app.clspt,bundle exec rails s -b 0.0.0.0)
 
-sync_crawling_events:
-	$(BUNDLE_EXEC) rake system:scheduler:crawling_events_service
+console: console-dev ## Alias for console-dev
 
-heroku_prd_%:
-	heroku run:detached make $* --app=classpert-web-app-prd
+console-dev: $(CUSTOM_ENV_FILES) ## Run rails console for development
+	@$(call docker_run_or_plain,base.clspt,bundle exec rails console)
 
-heroku_stg_%:
-	heroku run:detached make $* --app=classpert-web-app-stg
+console-%: ## Run console for a given env
+	heroku run console --app=$(HEROKU_WEB_APP_NAME)-$*
 
-dev_db_restore: db/db.dev.env $(PG_DUMP_FILE)
-	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.dev.env && PGPASSWORD=$$DATABASE_PASSWORD pg_restore --verbose --clean --no-acl --no-owner -U $$DATABASE_USER -h $$DATABASE_HOST -d $$DATABASE_DB < $(PG_DUMP_FILE); exit 0;'
-	@$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_fix_secrets /db/db.dev.env
+build-ssr: ## Creates hypernova bundle
+	@$(call docker_run_or_plain,base.clspt,npm run ssr)
 
-stg_db_restore: db/db.stg.env $(PG_DUMP_FILE) ## Dumps latest production dump from production and restores in staging
-	@$(DOCKER_COMPOSE_POSTGRES_RUN) /bin/sh -c '. /db/db.stg.env && PGPASSWORD=$$DATABASE_PASSWORD pg_restore --verbose --clean --no-acl --no-owner -U $$DATABASE_USER -h $$DATABASE_HOST -d $$DATABASE_DB < $(PG_DUMP_FILE); exit 0;'
-	@$(DOCKER_COMPOSE_POSTGRES_RUN) /app/bin/db_fix_secrets /db/db.stg.env
+npm-install: $(CUSTOM_ENV_FILES) ## Run npm install
+	@$(call docker_run_or_plain,base.clspt,npm install)
 
-tty: ## Attach a tty to the app container. Usage e.g: ENV=test make tty
-	@docker-compose run --entrypoint /bin/bash app_$(ENV)
+npm-ci: $(CUSTOM_ENV_FILES) ## Run npm ci
+	@$(call docker_run_or_plain,base.clspt,npm ci)
 
-down: ## Run docker-compose down
-	@docker-compose down
+bundle-install: $(CUSTOM_ENV_FILES) ## Run bundle install
+	@$(call docker_run_or_plain,base.clspt,bundle install)
 
-clean: ## Stop containers, remove old images and prune docker unused resources
-	@docker-compose down --rmi local --remove-orphans
-	@docker system prune -f
+rails-migrate: $(CUSTOM_ENV_FILES) ## Run rake db:migrate (probably not necessary and not advised)
+	@$(call docker_run_or_plain,base.clspt,bundle exec rake db:migrate)
 
-wipe: ## Stop containers, remove old images and prune docker unused resources
-	@docker-compose down -v --rmi local --remove-orphans
-	@docker system prune -f
+course-reindex: $(CUSTOM_ENV_FILES) wait-for-elastic-search ## Reindexes Courses on Elasticsearch
+	@$(call docker_run_or_plain,base.clspt,bundle exec rails runner "Course.reindex!")
 
-docker-build: Dockerfile ## Builds the docker image
-	@docker build -t ${IMG} .
-	@docker tag ${IMG} ${LATEST}
+course-reindex-dev:
+	@make -s course-reindex
+
+course-reindex-%: LESS_PRIORITY-%
+	@make -s detached-$*-course-reindex
+
+sync: sync-crawling_events wait-for-elastic-search sync-courses ## Sync web-app with napoleon
+
+sync-%: $(CUSTOM_ENV_FILES) ## Sync web-app with napoleon given resources (courses or crawling_events)
+	@$(call docker_run_or_plain,base.clspt,bundle exec rake system:scheduler:$*_service,-T)
+
+db-prepare: wipe-db up-persistence course-reindex ## Configures database with seed data and index everything
+
+db-build-seeds: db-build-seeds-stg ## Should be an alias for db-build-seeds-prd, but for now is for db-build-seeds-stg
+
+db-build-seeds-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Build Seeds from Production or Staging
+	@$(call docker_run_or_plain,base.clspt,bin/db_build_seeds envs/$*/database.env)
+
+db-migrate: db-migrate-dev ## Alias for db-migrate-dev
+
+db-migrate-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Migrates database for a given env
+	@$(call docker_run_or_plain,base.clspt,bin/db_migrate envs/$*/database.env database/db/migrations)
+
+db-load: db-load-dev ## Alias for db-load-dev
+
+db-load-dev: $(CUSTOM_ENV_FILES) ## Loads database from latest dump for development
+	@$(call only_outside_docker,make up-database)
+	@$(call docker_run_or_plain,base.clspt,bin/db_load envs/dev/database.env $(PG_DUMP_FILE))
+
+db-load-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Loads database from latest dump for a given env
+	@$(call docker_run_or_plain,base.clspt,bin/db_load envs/$*/database.env $(PG_DUMP_FILE))
+
+db-reset: db-reset-dev ## Alias for db-reset-dev
+
+db-reset-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Resets database for a given env
+	@$(call docker_run_or_plain,base.clspt,bin/db_reset envs/$*/database.env)
+
+db-wipe: wipe-db ## Alias to wipe-db
+
+wipe-db: $(CUSTOM_ENV_FILES) ## Kill database container and volumes
+	$(DOCKER_COMPOSE) stop database.clspt
+	$(DOCKER_COMPOSE) rm -f database.clspt
+	$(DOCKER) volume rm $(shell basename `pwd`)_database_data; exit 0
+
+db-restart: $(CUSTOM_ENV_FILES) ## Restart Database (kill containers and recreate with fresh new volume)
+	@make -s wipe-db
+	@make -s up-database
+
+db-download: db-download-prd
+
+db-download-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Generates and downloads latest postgres dump
+	@$(call docker_run_or_plain,base.clspt,bin/db_download envs/$*/database.env $(PG_DUMP_FILE))
+
+detached-prd-%: ## Executes `make SOMETHING` detached at production
+	heroku run:detached make $* --app=$(HEROKU_WEB_APP_NAME)-prd
+
+detached-stg-%: ## Executes `make SOMETHING` detached at staging
+	heroku run:detached make $* --app=$(HEROKU_WEB_APP_NAME)-stg
+
+attached-prd-%: ## Executes `make SOMETHING` attached at production
+	heroku run make $* --app=$(HEROKU_WEB_APP_NAME)-prd
+
+attached-stg-%: ## Executes `make SOMETHING` attached at staging
+	heroku run make $* --app=$(HEROKU_WEB_APP_NAME)-stg
+
+run-all: $(CUSTOM_ENV_FILES) ## Runs all services attached
+	$(DOCKER_COMPOSE) up $(SERVICES)
+
+run-user: run-user.app ## Alias for run-user.app
+
+run-developer: run-developer.app ## Alias for run-developer.app
+
+run-%: $(CUSTOM_ENV_FILES) ## Runs an attached service
+	$(DOCKER_COMPOSE) up $*.clspt
+
+up-all: $(CUSTOM_ENV_FILES) ## Runs all services detached
+	$(DOCKER_COMPOSE) up -d $(SERVICES)
+
+up-user: up-user.app ## Alias for up-user.app
+
+up-developer: up-developer.app ## Alias for up-developer.app
+
+up-persistence: up-search up-database up-s3 ## Runs all persistence related services detached
+
+up-%: $(CUSTOM_ENV_FILES) ## Runs a detached service
+	$(DOCKER_COMPOSE) up -d $*.clspt
+
+restart-user: restart-user.app ## Alias for restart-user.app
+
+restart-developer: restart-developer.app ## Alias for restart-developer.app
+
+restart-persistence: restart-search restart-database restart-s3 ## Runs all persistence related services detached
+
+restart-%: $(CUSTOM_ENV_FILES) ## Restarts a service
+	$(DOCKER_COMPOSE) restart $*.clspt
+
+down: clean ## Alias for clean
+
+down-all: clean ## Alias for clean
+
+down-user: down-user.app ## Alias for down-user.app
+
+down-developer: down-developer.app ## Alias for down-developer.app
+
+down-persistence: down-search down-database down-s3 ## Runs all persistence related services detached
+
+down-%: $(CUSTOM_ENV_FILES) ## Stops and Removes a service
+	$(DOCKER_COMPOSE) stop $*.clspt
+	$(DOCKER_COMPOSE) rm -f $*.clspt
+
+docker-build-base: ## Builds the base docker image
+	@$(DOCKER) build -f $(DOCKER_BASE_FILE) -t $(DOCKER_BASE_NAME) .
+	@$(DOCKER) tag $(DOCKER_BASE_NAME) $(DOCKER_BASE_LATEST)
+
+docker-push-base: ## Pushes the docker base image to Dockerhub
+	@$(DOCKER) push $(DOCKER_BASE_NAME)
+
+docker-build: ## Builds the docker image
+	@$(DOCKER) build -f $(DOCKER_WEB_APP_FILE) --build-arg $(DOCKER_WEB_APP_ARGS) -t $(DOCKER_WEB_APP_NAME) -t $(DOCKER_WEB_APP_LATEST) -t $(DOCKER_WEB_APP_IMAGE) .
 
 docker-push: ## Pushes the docker image to Dockerhub
-	@docker push ${NAME}
+	@$(DOCKER) push $(DOCKER_WEB_APP_NAME)
 
-docker-compose.yml: ### Copies docker-compose.yml from examples
-	cp examples/docker-compose.yml.example docker-compose.yml
+clean: $(CUSTOM_ENV_FILES) ## Stop containers, remove old images and prune docker unused resources
+	@$(DOCKER_COMPOSE) down --rmi local --remove-orphans
+	@$(DOCKER) system prune -f
 
-Dockerfile: examples/Dockerfile.$(DETECTED_OS).example
-	cp $< $@
+wipe-unnamed-volumes: ## Deletes all volumes on machine, except
+	@$(DOCKER) volume rm `docker volume ls -q -f dangling=true | sed '/web-app/d'`
 
-docker-%: ## When running `make docker-SOMETHING` it executes `make SOMETHING` inside docker context
-	@docker-compose run --service-ports app_$(ENV) make -s $*
+wipe-data: ## Deletes volumes with data like database, s3, elasticsearch (don't erase npm and bundler volumes)
+	@$(DOCKER) volume rm web-app_database_data;          exit 0;
+	@$(DOCKER) volume rm web-app_database_napoleon_data; exit 0;
+	@$(DOCKER) volume rm web-app_s3_data;                exit 0;
+	@$(DOCKER) volume rm web-app_search_data;            exit 0;
 
-system.svg: system.gv ## Use graphviz to build system architecture graph
-	@dot -Tsvg $< -o $@
+wipe: $(CUSTOM_ENV_FILES) ## Stop containers, clean volumes, remove old images and prune docker unused resources
+	@$(DOCKER_COMPOSE) down -v --rmi local --remove-orphans
+	@$(DOCKER) system prune -f
 
-watch:
-	watch -n 3 docker-compose ps
+docker-%: $(CUSTOM_ENV_FILES) ## Executes `make SOMETHING` inside base service
+	@$(call docker_run_or_plain,base.clspt,make -s $*)
 
-logs: prd-logs
+volumes-show: ./images/volumes/ssh_host_ed25519_key ./images/volumes/ssh_host_rsa_key
+	@make -s up-volumes
+	@sleep 2
+	sshfs squerol@127.0.0.1:volumes -p 2222 `pwd`/volumes -ovolname=volumes
 
-prd-logs:
-	@heroku logs -t --app classpert-web-app-prd
+volumes-hide:
+	@make -s down-volumes
+	umount `pwd`/volumes
 
-stg-logs:
-	@heroku logs -t --app classpert-web-app-stg
+watch: watch-dev ## Alias for watch-dev
+
+watch-dev: $(CUSTOM_ENV_FILES) ## Shows continually status of dev containers
+	@watch -n 5 $(DOCKER_COMPOSE) ps
+
+watch-%: ## Shows continually status of containers or dynos for a given env
+	@watch -n 5 heroku ps --app $(HEROKU_WEB_APP_NAME)-$*
+
+logs: logs-dev ## Alias for logs-dev
+
+logs-dev: $(CUSTOM_ENV_FILES) ## Show live logs of dev containers
+	@$(DOCKER_COMPOSE) logs -f
+
+logs-prd: ## Show live logs of production dynos
+	@heroku logs -t --app $(HEROKU_WEB_APP_NAME)-prd
+
+logs-stg: ## Show live logs of staging dynos
+	@heroku logs -t --app $(HEROKU_WEB_APP_NAME)-stg
+
+logs-%: $(CUSTOM_ENV_FILES) ## Show live logs of a given dev containers
+	@$(DOCKER_COMPOSE) logs -f $*.clspt
+
+wait-for-elastic-search:
+	@$(call docker_run_or_plain,base.clspt,./bin/wait_for_elastic_search)
 
 $(PG_DUMP_FILE):
-	make db_download
+	@make -s db-download-prd
+
+./services.svg: services.gv ## Use graphviz to build services architecture graph
+	@dot -Tsvg $< -o $@
+
+./envs/local/napoleon.env:
+	@mkdir -p envs/local
+	./bin/fetch_local_napoleon_env $@
+
+./envs/local/base.env:
+	@mkdir -p envs/local
+	./bin/fetch_local_base_env $(HEROKU_WEB_APP_NAME)-prd $@
+
+./envs/local/user.env:
+	@mkdir -p envs/local
+	./bin/fetch_local_user_env $(HEROKU_USER_DASH_NAME)-prd $@
+
+./envs/local/developer.env:
+	@mkdir -p envs/local
+	./bin/fetch_local_developer_env $(HEROKU_DEV_DASH_NAME)-prd $@
+
+./envs/local/video.env:
+	@mkdir -p envs/local
+	./bin/fetch_local_video_env $(HEROKU_VIDEO_NAME)-prd $@
+
+./envs/local/%:
+	@mkdir -p envs/local
+	@touch envs/local/$*
+	@echo "Created empty local env file: $*"
+
+./envs/%/database.env: LESS_PRIORITY-%
+	@mkdir -p envs/$*
+	./bin/fetch_database_env $(HEROKU_WEB_APP_NAME)-$* $(HEROKU_POSTGREST_NAME)-$* $@
+
+./ssr/hypernova.js: package-lock.json ./app/assets ./config/locales
+	@make -s build-ssr
+
+./db/seeds:
+	@make -s db-build-seeds
+
+./images/database/production_seed.sql: ./db/seeds
+
+./images/volumes/ssh_host_ed25519_key:
+	ssh-keygen -t ed25519 -f ssh_host_ed25519_key < /dev/null
+	rm ssh_host_ed25519_key.pub
+	mv ssh_host_ed25519_key $@
+
+./images/volumes/ssh_host_rsa_key:
+	ssh-keygen -t rsa -b 4096 -f ssh_host_rsa_key < /dev/null
+	rm ssh_host_rsa_key.pub
+	mv ssh_host_rsa_key $@
+
+../user-dashboard:
+	cd .. && git clone git@github.com:classpert/user-dashboard.git && cd user-dashboard && git submodule init && git submodule update
+
+../developers-dashboard:
+	cd .. && git clone git@github.com:classpert/developers-dashboard.git && cd developers-dashboard && git submodule init && git submodule update
+
+../napoleon:
+	cd .. && git clone git@github.com:classpert/napoleon.git
 
 %: | examples/%.example
 	cp $| $@
+
+LESS_PRIORITY-%:
+	@:
+
+.PHONY: help configure setup setup-user setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-ci bundle-install rails-migrate course-reindex course-reindex-dev course-reindex-% sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search LESS_PRIORITY-%

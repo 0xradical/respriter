@@ -13,6 +13,12 @@
 !/log/.keep
 !/tmp/.keep
 
+envs/prd
+envs/stg
+envs/local
+
+volumes
+
 .env
 .env.sh
 .env.production
@@ -20,17 +26,15 @@
 .env.test.sh
 
 /db/backups
-/db/db.dev.env
-/db/db.prd.env
-/db/db.stg.env
+/db/seeds
+
+/images/database/production_seed.sql
 
 *.pem
 *.dump
 
 /Guardfile
-/Dockerfile
 /coverage
-/docker-compose.yml
 
 /node_modules
 /yarn-error.log

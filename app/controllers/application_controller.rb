@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     )
   end
 
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :exception, prepend: true
   prepend_before_action :track_session
   before_action :set_locale
   before_action :rendertron?

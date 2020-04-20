@@ -19,7 +19,7 @@ I18nHost.new('classpert.com').each do |locale, host|
       add(post_path(post.slug), { changefreq: 'monthly', priority: 0.9,  lastmod: post.content_changed_at })
     end
 
-    # Bundles
+    # Bundle - Show
     Course.unnest_curated_tags.distinct.map {|c| c.tag.dasherize } .each do |tag|
       add(course_bundle_path(tag), {
         changefreq: 'weekly',
@@ -27,7 +27,7 @@ I18nHost.new('classpert.com').each do |locale, host|
       })
     end
 
-    # Courses
+    # Course - Show
     Course.joins(:provider).published.where("courses.slug IS NOT NULL").find_each do |course|
       add(course_path(provider: course.provider.slug, course: course.slug), {
         changefreq: 'weekly',
@@ -35,7 +35,13 @@ I18nHost.new('classpert.com').each do |locale, host|
       })
     end
 
-    #Orphanes Profiles (Claimable Instructor Profiles)
+    # Orphaned Profile - Index
+    add(instructors_path, {
+      changefreq: 'monthly',
+      priority: 0.9,
+      lastmod: OrphanedProfile.enabled.order(updated_at: :desc).first.updated_at.strftime('%Y-%m-%d')
+    })
+    # Orphaned Profile - Show
     OrphanedProfile.enabled.find_each do |orphaned_profile|
       add(orphaned_profile_path(orphaned_profile.slug), {
         changefreq: 'weekly',
