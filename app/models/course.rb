@@ -318,7 +318,32 @@ class Course < ApplicationRecord
   end
 
   def main_pricing_model
-    pricing_models.first
+    return nil if pricing_models.blank?
+
+    currencies = {
+      'USD' => 0,
+      'EUR' => 1,
+      'GPB' => 2,
+      'BRL' => 3
+    }
+
+    currencies.default = 4
+
+    pricing_models.min_by do |pricing|
+      if pricing['type'] == 'single_course'
+        [
+          0,
+          currencies[ pricing['currency'] ],
+          pricing['price'].to_f
+        ]
+      else
+        [
+          1,
+          currencies[ pricing['currency'] ],
+          pricing['total_price'].to_f
+        ]
+      end
+    end
   end
 
   def trial_period
