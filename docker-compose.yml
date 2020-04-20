@@ -205,7 +205,7 @@ services:
       - proxy.clspt
 
   user.app.clspt:
-    image: classpert/user-dashboard:1.0.0
+    image: classpert/user-dashboard:1.1.0
     command: run serve
     env_file:
       - envs/dev/user.env
