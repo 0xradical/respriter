@@ -18,7 +18,6 @@ class OauthAccount < ApplicationRecord
         account.tracking_data             = session[:tracking_data]
         account.confirmed_at              = Time.now
       end
-      oauth_account.user_account.reload.profile.oauth_avatar_url = oauth[:info][:image]
       oauth_account.save!
       oauth_account
     end
