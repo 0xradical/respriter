@@ -7,79 +7,68 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), method: :post, html: { autocomplete: 'off' } ) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class='col-12 col-sm-8 col-md-6 col-lg-4'>
-    <%= render 'oauth_buttons' %>
-  </div>
-
-  <div class='col-12 el:amx-Mt(1em) el:amx-D(n)@>lg'></div>
-
-  <div class='col-12 col-sm-8 col-md-6 col-lg-4'>
-    <div class='el:amx-Bol@>lg el:amx-Pl(2em)@>lg'>
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), method: :post) do |f| %>
-        <%= devise_error_messages! %>
-
-        <div class='el:m-form-field <%= "el:m-form-field--error" if resource.errors.has_key?(:email) %>'>
-          <div class='el:m-form-field__label el:m-form-field__label--over'>
-            <%= f.label :email %>
-          </div>
-          <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
-          </div>
-        </div>
-
-        <%= f.fields_for :profile, (resource.profile || resource.build_profile) do |profile_fields| %>
-          <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.details[:base]&.select{|error| error[:field] == :username }&.size > 0 %>'>
-            <div class='el:m-form-field__label el:m-form-field__label--over'>
-              <%= profile_fields.label :username %>
-            </div>
-            <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
-              <%= profile_fields.text_field :username, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input' %>
-            </div>
-          </div>
-        <% end %>
-
-        <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.has_key?(:password) %>'>
-          <div class='el:m-form-field__label el:m-form-field__label--over'>
-            <%= f.label :password %>
-          </div>
-          <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
-            <%= f.password_field :password, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
-          </div>
-        </div>
-
-        <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.has_key?(:password_confirmation) %>'>
-          <div class='el:m-form-field__label el:m-form-field__label--over'>
-            <%= f.label :password_confirmation %>
-          </div>
-          <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
-            <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
-          </div>
-        </div>
-
-        <div class='el:m-form-field el:amx-Mt(0.75em)'>
-          <div class='el:m-form-field__label el:m-form-field__label--over'>
-            <%= f.label 'Type the word in the image below' %>
-          </div>
-          <%# do not add space between inline-block divs %>
-          <div class='el:amx-D(f)'>
-            <div style='flex: 0 0 33%'>
-              <%= rucaptcha_image_tag(alt: 'Captcha') %>
-            </div>
-            <div class='el:amx-Ml(1em)' style='flex: 1'>
-              <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
-                <%= rucaptcha_input_tag %>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <%= f.submit t('devise.registrations.new.section'), class: 'btn btn--primary-flat btn--block el:amx-Mt(1.25em)' %>
-
-      <% end %>
-      <%= render "user_accounts/shared/links" %>
+  <div class='el:m-form-field <%= "el:m-form-field--error" if resource.errors.has_key?(:email) %>'>
+    <div class='el:m-form-field__label el:m-form-field__label--over'>
+      <%= f.label :email %>
+    </div>
+    <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
     </div>
   </div>
+
+  <%= f.fields_for :profile, (resource.profile || resource.build_profile) do |profile_fields| %>
+    <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.details[:base]&.select{|error| error[:field] == :username }&.size > 0 %>'>
+      <div class='el:m-form-field__label el:m-form-field__label--over'>
+        <%= profile_fields.label :username %>
+      </div>
+      <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+        <%= profile_fields.text_field :username, autofocus: true, autocomplete: "email", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input' %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.has_key?(:password) %>'>
+    <div class='el:m-form-field__label el:m-form-field__label--over'>
+      <%= f.label :password %>
+    </div>
+    <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+      <%= f.password_field :password, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+    </div>
+  </div>
+
+  <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.has_key?(:password_confirmation) %>'>
+    <div class='el:m-form-field__label el:m-form-field__label--over'>
+      <%= f.label :password_confirmation %>
+    </div>
+    <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+      <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "off", data: { :"form-ctrl-role" => 'input' }, class: 'c-form-ctrl__input'%>
+    </div>
+  </div>
+
+  <div class='el:m-form-field el:amx-Mt(0.75em)'>
+    <div class='el:m-form-field__label el:m-form-field__label--over'>
+      <%= f.label 'Type the word in the image below' %>
+    </div>
+    <%# do not add space between inline-block divs %>
+    <div class='el:amx-D(f)'>
+      <div style='flex: 0 0 33%'>
+        <%= rucaptcha_image_tag(alt: 'Captcha') %>
+      </div>
+      <div class='el:amx-Ml(1em)' style='flex: 1'>
+        <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
+          <%= rucaptcha_input_tag %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= f.submit t('devise.registrations.new.section'), class: 'btn btn--primary-flat btn--block el:amx-Mt(1.25em)' %>
+
+<% end %>
+<%= render "user_accounts/shared/links" %>
+  </div>
 </div>
+
 <style>
   .rucaptcha-image {
     width: 100%;
