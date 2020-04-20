@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
-  config.hosts << /.*\.?app.clspt/
+  config.hosts << /.*\.?app\.clspt/
 
   # CORS
   config.middleware.insert_before 0, Rack::Cors do
