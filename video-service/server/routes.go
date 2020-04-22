@@ -50,5 +50,10 @@ func (router *Router) Routes() {
     WithSession(handlers.VimeoThumbnail),
   )
 
+  router.HandleFunc(
+    "/pluralsight/{clip_id:[a-z0-9-]+}",
+    middleware.SignedUrl( WithSession(handlers.Pluralsight) ),
+  )
+
   router.NewRoute().PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
 }

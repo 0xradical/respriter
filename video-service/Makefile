@@ -8,7 +8,7 @@ WATCH_TIME := 3 # seconds
 APP_NAME := app
 
 IMAGE_NAME    := classpert/video-service
-IMAGE_VERSION := 1.0
+IMAGE_VERSION := 1.1
 
 DEP_FILES     := Gopkg.lock Gopkg.toml
 SRC_FILES     := $(shell find . -type f -name '*.go')
