@@ -1,7 +1,7 @@
 version: "3"
 services:
   base.clspt: &base
-    image: classpert/web-app:4e606f3876b189943d53168afb0d2c9ad28686db
+    image: classpert/web-app:8f0a098623a26b4a07efc8efca381c6f1f1268ec
     env_file:
       - envs/dev/base.env
       - envs/local/base.env

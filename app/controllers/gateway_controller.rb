@@ -1,10 +1,22 @@
 class GatewayController < ApplicationController
 
   def index
-    click_id        = SecureRandom.uuid
-    course          = Course.find(params[:id])
-    forwarding_url  = course.forwarding_url(click_id)
-    enrollment      = course.enrollments.create!({
+    if Browser.new(request.env['HTTP_USER_AGENT']).bot?
+      render 'block_bots', status: 400, layout: false
+      if Rails.env.production?
+        Raven.send_event(
+          level:       'error',
+          message:     "Blocked Bot at Gateway by user agent: #{request.env['HTTP_USER_AGENT']}",
+          environment: 'production'
+        )
+      end
+      return
+    end
+
+    click_id       = SecureRandom.uuid
+    course         = Course.find(params[:id])
+    forwarding_url = course.forwarding_url(click_id)
+    enrollment     = course.enrollments.create!({
       id:                click_id,
       tracked_url:       forwarding_url,
       tracking_data:     session_tracker.session_payload,
