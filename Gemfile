@@ -2,27 +2,27 @@ source 'http://rubygems.org'
 
 ruby '2.6.5'
 
-gem 'rails', '~> 6.0.0'
+gem 'rails',     '~> 6.0.0'
 gem 'webpacker', '~> 4.x'
-gem 'pg', '~> 1.1'
-gem 'puma', '~> 4.2'
-gem 'semantic', '~> 1.6.1'
+gem 'pg',        '~> 1.1'
+gem 'puma',      '~> 4.2'
+gem 'semantic',  '~> 1.6.1'
 
 # ActiveRecord
-gem 'activerecord-import', '~> 1.0.4'
+gem 'activerecord-import',  '~> 1.0.4'
 gem 'active_record_upsert', '~> 0.9.5'
-gem 'fast_jsonapi', '~> 1.5'
+gem 'fast_jsonapi',         '~> 1.5'
 
 # Rack
 gem 'rack-cors', '~> 1.0.3'
-gem 'http', '~> 4.2.0'
+gem 'http',      '~> 4.2.0'
 
-gem 'ejs', '~> 1.1.1'
+gem 'ejs',    '~> 1.1.1'
 gem 'execjs', '~> 2.7.0'
 
 # SSR
 gem 'vueonrails', '~> 1.x'
-gem 'hypernova', '~> 1.4.0'
+gem 'hypernova',  '~> 1.4.0'
 
 # Pagination
 gem 'kaminari', '~> 1.1.1'
@@ -31,8 +31,8 @@ gem 'kaminari', '~> 1.1.1'
 gem 'damerau-levenshtein', '~> 1.3.2'
 
 # MiniMagick
-gem 'mini_magick', '~> 4.9.5'
-gem 'carrierwave', '~> 2.0.2'
+gem 'mini_magick',     '~> 4.9.5'
+gem 'carrierwave',     '~> 2.0.2'
 gem 'carrierwave-aws', '~> 1.4.0'
 
 # Thumbor
@@ -53,33 +53,33 @@ gem 'affiliate_hub_impact_radius',      git: 'https://github.com/codextremist/af
 gem 'affiliate_hub_awin',               git: 'https://github.com/codextremist/affiliate_hub_awin'
 
 # Browser
-gem 'browser', '~> 2.6.1'
+gem 'browser',           '~> 4.0'
 gem 'user_agent_parser', '~> 2.6.0'
-gem 'http-accept', '~> 2.1.1'
+gem 'http-accept',       '~> 2.1.1'
 
 # Rucaptcha
 gem 'rucaptcha', '~> 2.5.2'
 
 # Authentication
-gem 'devise', '~> 4.7.1'
-gem 'devise-jwt', '~> 0.5.8'
-gem 'omniauth-oauth2', '~> 1.6.0'
+gem 'devise',                   '~> 4.7.1'
+gem 'devise-jwt',               '~> 0.5.8'
+gem 'omniauth-oauth2',          '~> 1.6.0'
 gem 'omniauth-linkedin-oauth2', '~> 1.0.0'
-gem 'omniauth-facebook', '~> 5.0.0'
-gem 'omniauth-github', '~> 1.3.0'
-gem 'omniauth-twitter', '~> 1.4.0'
+gem 'omniauth-facebook',        '~> 5.0.0'
+gem 'omniauth-github',          '~> 1.3.0'
+gem 'omniauth-twitter',         '~> 1.4.0'
 
 # Background jobs
-gem 'que',      git: 'https://github.com/que-rb/que.git', ref: 'c3547'
+gem 'que',    git: 'https://github.com/que-rb/que.git', ref: 'c3547'
 gem 'que-web'
 
 # Sitemap
 gem 'sitemap_generator', '~> 6.0.2'
-gem 'robotstxt', '~> 0.5.4'
+gem 'robotstxt',         '~> 0.5.4'
 
 # Email
-gem "valid_email2", '~> 3.1.0'
-gem 'inky-rb', '~> 1.3.7.5', require: 'inky'
+gem "valid_email2",    '~> 3.1.0'
+gem 'inky-rb',         '~> 1.3.7.5', require: 'inky'
 gem 'premailer-rails', '~> 1.10.3'
 
 # LogRage
@@ -89,11 +89,11 @@ gem 'lograge', '~> 0.11.2'
 gem 'httparty', '~> 0.17.1'
 
 # DNS
-gem 'dnsruby', '~> 1.61.3'
+gem 'dnsruby',       '~> 1.61.3'
 gem 'public_suffix', '~> 4.0.3'
 
 # Provider API Syntax checkers for Ruby and SQL source code
-gem 'parser',  '~> 2.7.0.1', require: 'parser/current'
+gem 'parser',   '~> 2.7.0.1', require: 'parser/current'
 gem 'pg_query', '~> 1.2.0'
 gem 'unparser', '~> 0.4.7'
 
