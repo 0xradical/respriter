@@ -11,7 +11,7 @@ CREATE TEMP TABLE user_and_provider (
 
 WITH new_user AS (
   INSERT INTO app.user_accounts ( email, encrypted_password, confirmed_at )
-  VALUES ( 'user@urls.provider.clspt', 'abc123', NOW() )
+  VALUES ( 'user@urls.provider.test', 'abc123', NOW() )
   RETURNING *
 ),
 new_provider AS (
@@ -27,7 +27,7 @@ new_provider_crawler AS (
 ),
 new_crawler_domain AS (
   INSERT INTO app.crawler_domains ( provider_crawler_id, authority_confirmation_status, domain )
-  SELECT new_provider_crawler.id, 'confirmed', 'urls.provider.clspt'
+  SELECT new_provider_crawler.id, 'confirmed', 'urls.provider.test'
   FROM new_provider_crawler
   RETURNING *
 )
@@ -40,14 +40,14 @@ CROSS JOIN new_provider_crawler;
 UPDATE app.provider_crawlers SET
   user_account_ids = ARRAY[other.id],
   urls = ARRAY[
-    'http://urls.provider.clspt/free_01.html',
-    'http://urls.provider.clspt/free_02.html',
-    'http://urls.provider.clspt/multi_price_01.html',
-    'http://urls.provider.clspt/multi_price_02.html',
-    'http://urls.provider.clspt/single_01.html',
-    'http://urls.provider.clspt/single_02.html',
-    'http://urls.provider.clspt/subscription_01.html',
-    'http://urls.provider.clspt/subscription_02.html'
+    'http://urls.provider.test/free_01.html',
+    'http://urls.provider.test/free_02.html',
+    'http://urls.provider.test/multi_price_01.html',
+    'http://urls.provider.test/multi_price_02.html',
+    'http://urls.provider.test/single_01.html',
+    'http://urls.provider.test/single_02.html',
+    'http://urls.provider.test/subscription_01.html',
+    'http://urls.provider.test/subscription_02.html'
   ]
 FROM user_and_provider AS other
 WHERE EXISTS ( SELECT 1 FROM app.providers WHERE slug = 'sitemapless-provider' AND providers.id = provider_crawlers.provider_id )
@@ -57,7 +57,7 @@ WHERE EXISTS ( SELECT 1 FROM app.providers WHERE slug = 'sitemapless-provider' A
 
 WITH new_user AS (
   INSERT INTO app.user_accounts ( email, encrypted_password, confirmed_at )
-  VALUES ( 'user@sitemaps.provider.clspt', 'abc123', NOW() )
+  VALUES ( 'user@sitemaps.provider.test', 'abc123', NOW() )
   RETURNING *
 ),
 new_provider AS (
@@ -73,7 +73,7 @@ new_provider_crawler AS (
 ),
 new_crawler_domain AS (
   INSERT INTO app.crawler_domains ( provider_crawler_id, authority_confirmation_status, domain )
-  SELECT new_provider_crawler.id, 'confirmed', 'sitemaps.provider.clspt'
+  SELECT new_provider_crawler.id, 'confirmed', 'sitemaps.provider.test'
   FROM new_provider_crawler
   RETURNING *
 )
@@ -85,7 +85,7 @@ CROSS JOIN new_provider_crawler;
 
 UPDATE app.provider_crawlers SET
   user_account_ids = ARRAY[other.id],
-  sitemaps         = '{"(\"9d620804-535f-11ea-8c87-0242ac160009\",\"verified\",\"http://sitemaps.provider.clspt/sitemap.xml\",\"sitemap\")"}'
+  sitemaps         = '{"(\"9d620804-535f-11ea-8c87-0242ac160009\",\"verified\",\"http://sitemaps.provider.test/sitemap.xml\",\"sitemap\")"}'
 FROM user_and_provider AS other
 WHERE EXISTS ( SELECT 1 FROM app.providers WHERE slug = 'sitemap-provider' AND providers.id = provider_crawlers.provider_id )
   AND provider_crawlers.provider_id = other.provider_id;
@@ -94,7 +94,7 @@ WHERE EXISTS ( SELECT 1 FROM app.providers WHERE slug = 'sitemap-provider' AND p
 
 WITH new_user AS (
   INSERT INTO app.user_accounts ( email, encrypted_password, confirmed_at )
-  VALUES ( 'user@both.provider.clspt', 'abc123', NOW() )
+  VALUES ( 'user@both.provider.test', 'abc123', NOW() )
   RETURNING *
 ),
 new_provider AS (
@@ -110,7 +110,7 @@ new_provider_crawler AS (
 ),
 new_crawler_domain AS (
   INSERT INTO app.crawler_domains ( provider_crawler_id, authority_confirmation_status, domain )
-  SELECT new_provider_crawler.id, 'confirmed', 'both.provider.clspt'
+  SELECT new_provider_crawler.id, 'confirmed', 'both.provider.test'
   FROM new_provider_crawler
   RETURNING *
 )
@@ -122,12 +122,12 @@ CROSS JOIN new_provider_crawler;
 
 UPDATE app.provider_crawlers SET
   user_account_ids = ARRAY[other.id],
-  sitemaps         = '{"(\"408026d9-f535-ae11-78c8-900061ca2420\",\"verified\",\"http://both.provider.clspt/sitemap.xml\",\"sitemap\")"}',
+  sitemaps         = '{"(\"408026d9-f535-ae11-78c8-900061ca2420\",\"verified\",\"http://both.provider.test/sitemap.xml\",\"sitemap\")"}',
   urls = ARRAY[
-    'http://both.provider.clspt/free_01.html',
-    'http://both.provider.clspt/free_02.html',
-    'http://both.provider.clspt/multi_price_01.html',
-    'http://both.provider.clspt/multi_price_02.html'
+    'http://both.provider.test/free_01.html',
+    'http://both.provider.test/free_02.html',
+    'http://both.provider.test/multi_price_01.html',
+    'http://both.provider.test/multi_price_02.html'
   ]
 FROM user_and_provider AS other
 WHERE EXISTS ( SELECT 1 FROM app.providers WHERE slug = 'both-provider' AND providers.id = provider_crawlers.provider_id )

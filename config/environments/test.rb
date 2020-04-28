@@ -1,5 +1,17 @@
 Rails.application.configure do
 
+  # CORS
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins /.*\.app\.test\Z/
+      resource '*',
+               headers: :any,
+               credentials: true,
+               expose: %w[Authorization],
+               methods: %i[get put patch post delete options]
+    end
+  end
+
   config.action_view.raise_on_missing_translations = true
   # Settings specified here will take precedence over those in config/application.rb.
 
