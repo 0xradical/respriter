@@ -29,6 +29,7 @@ class TrackedAction < ApplicationRecord
       }).to_json
 
       HTTParty.post(ENV['RAVEN_GOD_URI'], body: data, headers: { 'Content-Type' => 'application/json' })
+      sleep(5)
     end
   end
 
