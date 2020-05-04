@@ -219,7 +219,7 @@ services:
       fixed_ip_network:
         ipv4_address: 172.28.1.112
     ports:
-      - 8080
+      - 1080
     depends_on:
       - app.clspt
       - api.clspt
