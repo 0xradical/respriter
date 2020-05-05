@@ -10,18 +10,16 @@ services:
       - /app/volumes
       - base_bundle:/home/developer/bundle:cached
       - base_node_modules:/home/developer/node_modules:cached
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.10
+    links: &sample_providers
+      - provider.clspt:both.provider.clspt
+      - provider.clspt:sitemaps.provider.clspt
+      - provider.clspt:urls.provider.clspt
 
   app.clspt:
     <<: *base
     environment:
       - VIRTUAL_HOST=app.clspt,*.app.clspt
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.101
     ports:
       - 3000
     depends_on:
@@ -39,9 +37,6 @@ services:
   que.clspt:
     <<: *base
     command: bundle exec que
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.102
     depends_on:
       - database.clspt
       - mail.clspt
@@ -52,9 +47,6 @@ services:
     environment:
       - VIRTUAL_HOST=ssr.clspt
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.103
     ports:
       - 7777
     depends_on:
@@ -66,9 +58,6 @@ services:
     environment:
       - VIRTUAL_HOST=webpacker.clspt
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.104
     ports:
       - 3035:3035
     depends_on:
@@ -81,9 +70,6 @@ services:
       - envs/local/database.env
     environment:
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.105
     ports:
       - 5432:5432
     volumes:
@@ -101,9 +87,6 @@ services:
     environment:
       - VIRTUAL_HOST=api.clspt
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.106
     ports:
       - 3000
     depends_on:
@@ -117,9 +100,6 @@ services:
       - VIRTUAL_PORT=5601
       - LOGSPOUT=ignore
       - "discovery.type=single-node"
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.107
     ports:
       - 5601
       - 9200:9200
@@ -136,9 +116,6 @@ services:
     environment:
       - VIRTUAL_HOST=thumbor.clspt
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.108
     ports:
       - 80
     volumes:
@@ -153,9 +130,6 @@ services:
       - VIRTUAL_HOST=mail.clspt
       - VIRTUAL_PORT=1080
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.109
     ports:
       - 1080
       - 1025:1025
@@ -176,9 +150,6 @@ services:
       - LOGSPOUT=ignore
     volumes:
       - s3_data:/data:cached
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.110
     ports:
       - 80
     depends_on:
@@ -193,9 +164,6 @@ services:
     environment:
       - VIRTUAL_HOST=assets-proxy.clspt
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.111
     ports:
       - 80
     volumes:
@@ -215,9 +183,6 @@ services:
       - LOGSPOUT=ignore
     volumes:
       - ../user-dashboard:/app
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.112
     ports:
       - 1080
     depends_on:
@@ -236,11 +201,8 @@ services:
       - LOGSPOUT=ignore
     volumes:
       - ../developers-dashboard:/app
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.113
     ports:
-      - 8080
+      - 1080
     depends_on:
       - app.clspt
       - api.clspt
@@ -259,9 +221,6 @@ services:
     volumes:
       - database_napoleon_data:/var/lib/postgresql/data:cached
       - ./images/napoleon_database/seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.114
     ports:
       - 5434:5432
 
@@ -273,9 +232,6 @@ services:
     environment:
       - VIRTUAL_HOST=api.napoleon.clspt
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.115
     ports:
       - 3000
     depends_on:
@@ -283,7 +239,6 @@ services:
       - proxy.clspt
 
   napoleon.clspt:
-    entrypoint: /usr/bin/entrypoint
     image: classpert/napoleon
     command: make worker
     env_file:
@@ -291,18 +246,13 @@ services:
       - envs/local/napoleon.env
     environment:
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.116
     volumes:
       - ../napoleon:/app
-      - ./images/provider/www:/var/www
-      - ./images/napoleon/entrypoint:/usr/bin/entrypoint
-      - ./images/napoleon/update_napoleon_etc_hosts:/usr/bin/update_napoleon_etc_hosts
     depends_on:
       - database.napoleon.clspt
       - mail.clspt
       - s3.clspt
+    links: *sample_providers
 
   video.clspt:
     image: classpert/video-service:minimal
@@ -312,9 +262,6 @@ services:
     environment:
       - VIRTUAL_HOST=video.clspt
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.117
     ports:
       - 80
 
@@ -329,9 +276,6 @@ services:
       - LOGSPOUT=ignore
     volumes:
       - ./images/provider/www:/var/www
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.118
     ports:
       - 80
     depends_on:
@@ -344,9 +288,6 @@ services:
       - REDIS_URL=redis://redis.clspt
       - LOGSPOUT=ignore
       - ALLOWED_SOURCES=crawling-event,sitemap-verification-service,domain-validation-service,resource-discovery-service,debug-tool-service
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.119
     ports:
       - 8000
     depends_on:
@@ -360,9 +301,6 @@ services:
       - LOGSPOUT=ignore
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.120
     ports:
       - 80
     depends_on:
@@ -380,9 +318,6 @@ services:
     env_file:
       - envs/dev/logplex.env
       - envs/local/logplex.env
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.121
     depends_on:
       - logspout.clspt
       - logplex.clspt
@@ -411,9 +346,6 @@ services:
       - 8002:8002
       - 8601:8601
       - 6001:6001
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.122
     depends_on:
       - proxy.clspt
       - redis.clspt
@@ -425,9 +357,6 @@ services:
     environment:
       - VIRTUAL_HOST=redis.clspt
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.123
     ports:
       - 6379
     depends_on:
@@ -438,13 +367,10 @@ services:
     environment:
       - VIRTUAL_HOST=urlbox.clspt
       - LOGSPOUT=ignore
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.124
     ports:
       - 3566
-    extra_hosts:
-      - "app.clspt:172.28.1.1"
+    links:
+      - provider.clspt:app.clspt
     depends_on:
       - proxy.clspt
 
@@ -456,9 +382,6 @@ services:
     volumes:
       - ./images/proxy/proxy.conf:/etc/nginx/proxy.conf
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.1
     ports:
       - 80:80
       - 5300:53/udp
@@ -476,9 +399,6 @@ services:
       - database_data:/home/squerol/volumes/database_data
       - search_data:/home/squerol/volumes/search_data
       - s3_data:/home/squerol/volumes/s3_data
-    networks:
-      fixed_ip_network:
-        ipv4_address: 172.28.1.2
     ports:
       - "2222:22"
 
@@ -489,10 +409,3 @@ volumes:
   database_napoleon_data:
   search_data:
   s3_data:
-
-networks:
-  fixed_ip_network:
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.28.0.0/16
