@@ -1,8 +1,15 @@
-DATABASE_IMAGE_NAME    := classpert/database
-DATABASE_IMAGE_VERSION := 1.4.1
+UNAME := $(shell uname)
+ifeq ($(UNAME), Darwin)
+	SHA1SUM := gsha1sum
+else
+	# assume linux
+	SHA1SUM := sha1sum
+endif
 
-DATABASE_IMAGE_TAG     := $(DATABASE_IMAGE_NAME)\:$(DATABASE_IMAGE_VERSION)
-DATABASE_IMAGE_LATEST  := $(DATABASE_IMAGE_NAME)\:latest
+DATABASE_IMAGE_NAME   := classpert/database
+DATABASE_IMAGE_TAG    := $(shell cat ./db/structure.sql.env | $(SHA1SUM) | sed -e 's/ .*//g')
+DATABASE_IMAGE        := $(DATABASE_IMAGE_NAME):$(DATABASE_IMAGE_TAG)
+DATABASE_IMAGE_LATEST := $(DATABASE_IMAGE_NAME)\:latest
 
 RUBY_PATH := $(shell which docker-compose)
 
@@ -33,11 +40,11 @@ run:
 	$(DOCKER_DB_RUN)
 
 build:
-	@docker build -t $(DATABASE_IMAGE_TAG) .
-	@docker tag $(DATABASE_IMAGE_TAG) $(DATABASE_IMAGE_LATEST)
+	@docker build -t $(DATABASE_IMAGE) .
+	@docker tag $(DATABASE_IMAGE) $(DATABASE_IMAGE_LATEST)
 
 release:
-	@docker push $(DATABASE_IMAGE_TAG)
+	@docker push $(DATABASE_IMAGE)
 	@docker push $(DATABASE_IMAGE_LATEST)
 
 .PHONY: structure-update structure-check structure-migrate-% run build release

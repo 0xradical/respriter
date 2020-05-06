@@ -4,6 +4,10 @@ HEROKU_USER_DASH_NAME := clspt-user-dashboard
 HEROKU_DEV_DASH_NAME  := clspt-developers-dashboard
 HEROKU_VIDEO_NAME     := classpert-video-service
 
+WORKDIR := $(shell pwd)
+
+GITHUB_ACCESS_TOKEN ?= $(shell heroku config:get GITHUB_ACCESS_TOKEN --app $(HEROKU_WEB_APP_NAME)-prd)
+
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
 	SHA1SUM := gsha1sum
@@ -18,19 +22,27 @@ DOCKER_BASE_FILE   := Dockerfile
 DOCKER_BASE_IMAGE  := $(DOCKER_BASE_NAME):$(DOCKER_BASE_TAG)
 DOCKER_BASE_LATEST := $(DOCKER_BASE_NAME):latest
 
-GITHUB_ACCESS_TOKEN ?= $(shell heroku config:get GITHUB_ACCESS_TOKEN --app $(HEROKU_WEB_APP_NAME)-prd)
-
 DOCKER_WEB_APP_NAME   := classpert/web-app
 DOCKER_WEB_APP_TAG    := $(shell cat Gemfile.lock package-lock.json | $(SHA1SUM) | sed -e 's/ .*//g')
 DOCKER_WEB_APP_FILE   := Dockerfile.webapp
 DOCKER_WEB_APP_IMAGE  := $(DOCKER_WEB_APP_NAME):$(DOCKER_WEB_APP_TAG)
 DOCKER_WEB_APP_LATEST := $(DOCKER_WEB_APP_NAME):latest
-DOCKER_WEB_APP_ARGS   = GITHUB_ACCESS_TOKEN=$(GITHUB_ACCESS_TOKEN)
+DOCKER_WEB_APP_ARGS   := GITHUB_ACCESS_TOKEN=$(GITHUB_ACCESS_TOKEN)
 
-WORKDIR := $(shell pwd)
+USER_IMAGE_NAME := classpert/user-dashboard
+USER_IMAGE_TAG  := $(shell cat ../user-dashboard/package-lock.json | $(SHA1SUM) | sed -e 's/ .*//g')
+USER_IMAGE      := $(USER_IMAGE_NAME):$(USER_IMAGE_TAG)
+
+DATABASE_IMAGE_NAME := classpert/database
+DATABASE_IMAGE_TAG  := $(shell cat ./database/db/structure.sql.env | $(SHA1SUM) | sed -e 's/ .*//g')
+DATABASE_IMAGE      := $(DATABASE_IMAGE_NAME):$(DATABASE_IMAGE_TAG)
+
+DEVELOPER_IMAGE_NAME := classpert/developers-dashboard
+DEVELOPER_IMAGE_TAG  := $(shell cat ../developers-dashboard/package-lock.json | $(SHA1SUM) | sed -e 's/ .*//g')
+DEVELOPER_IMAGE      := $(DEVELOPER_IMAGE_NAME):$(DEVELOPER_IMAGE_TAG)
 
 DOCKER              := docker
-DOCKER_COMPOSE      := docker-compose
+DOCKER_COMPOSE      := WEB_APP_IMAGE=$(DOCKER_WEB_APP_IMAGE) DEVELOPER_IMAGE=$(DEVELOPER_IMAGE) USER_IMAGE=$(USER_IMAGE) DATABASE_IMAGE=$(DATABASE_IMAGE) docker-compose
 DOCKER_COMPOSE_PATH := $(shell which docker-compose)
 
 PG_DUMP_FILE := db/backups/latest.dump
@@ -62,7 +74,7 @@ configure: $(CUSTOM_ENV_FILES)
 
 setup: setup-app setup-database setup-user setup-developer setup-napoleon ## Sets all apps
 
-setup-app: setup-git bundle-install npm-ci ## Sets up Web App installing all its dependencies
+setup-app: setup-git ## Sets up Web App installing all its dependencies
 
 setup-git: ## Set up git submodules
 	@git submodule init
@@ -71,10 +83,10 @@ setup-git: ## Set up git submodules
 setup-database: ./images/database/production_seed.sql up-persistence course-reindex  ## Sets up Persistence Containers and indexes Search
 
 setup-user: ../user-dashboard ## Sets up User Dashboard installing all its dependencies
-	$(DOCKER_COMPOSE) run --rm user.app.clspt install
+	# $(DOCKER_COMPOSE) run --rm user.app.clspt npm ci
 
 setup-developer: ../developers-dashboard ## Sets up Developer Dashboard installing all its dependencies
-	$(DOCKER_COMPOSE) run --rm developer.app.clspt install
+	# $(DOCKER_COMPOSE) run --rm developer.app.clspt npm ci
 
 setup-napoleon: ../napoleon up-database up-api.napoleon ## Sets up Napoleon (its dependencies are already installed!)
 	@$(call docker_run_or_plain,base.clspt,bundle exec rails runner bin/setup_napoleon.rb)

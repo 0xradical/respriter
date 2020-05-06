@@ -1,7 +1,7 @@
 version: "3"
 services:
   base.clspt: &base
-    image: classpert/web-app:8f0a098623a26b4a07efc8efca381c6f1f1268ec
+    image: $WEB_APP_IMAGE
     env_file:
       - envs/dev/base.env
       - envs/local/base.env
@@ -64,7 +64,7 @@ services:
       - proxy.clspt
 
   database.clspt:
-    image: classpert/database:1.4.1
+    image: $DATABASE_IMAGE
     env_file:
       - envs/dev/database.env
       - envs/local/database.env
@@ -173,8 +173,7 @@ services:
       - proxy.clspt
 
   user.app.clspt:
-    image: classpert/user-dashboard:1.1.0
-    command: run serve
+    image: $USER_IMAGE
     env_file:
       - envs/dev/user.env
       - envs/local/user.env
@@ -183,6 +182,7 @@ services:
       - LOGSPOUT=ignore
     volumes:
       - ../user-dashboard:/app
+      - /app/node_modules
     ports:
       - 1080
     depends_on:
@@ -191,8 +191,7 @@ services:
       - proxy.clspt
 
   developer.app.clspt:
-    image: classpert/developers-dashboard:1.0.0
-    command: run serve
+    image: $DEVELOPER_IMAGE
     env_file:
       - envs/dev/developer.env
       - envs/local/developer.env
@@ -201,6 +200,7 @@ services:
       - LOGSPOUT=ignore
     volumes:
       - ../developers-dashboard:/app
+      - /app/node_modules
     ports:
       - 1080
     depends_on:
