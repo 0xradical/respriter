@@ -3,6 +3,8 @@ MAINTAINER "Dalton Pinto" <dalton@classpert.com>
 
 ARG GITHUB_ACCESS_TOKEN
 
+ENV BUNDLE_PATH=/home/developer/installed_bundle
+
 COPY --chown=developer:developer . /app
 
 RUN bundle install
