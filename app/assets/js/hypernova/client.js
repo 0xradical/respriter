@@ -8,7 +8,7 @@ export const hydrateComponent = (Component, parentNode, data) => {
   const node = parentNode.querySelector('div[data-server-rendered="true"]');
 
   if (data) {
-    const { propsData, state, locale } = data;
+    const { propsData, state, _locale } = data;
     const vm = new Component({ propsData });
 
     vm.$store.replaceState(state);
@@ -39,7 +39,7 @@ export const renderVueComponent = (
       if (payloads) {
         payloads.forEach(payload => {
           const { node, data } = payload;
-          const { propsData, state, locale } = data;
+          const { _propsData, _state, locale } = data;
 
           const store = createStore();
           const i18n = createI18n(locale || "en");

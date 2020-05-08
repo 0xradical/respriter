@@ -48,7 +48,11 @@ export const renderVueComponent = (
             return ``;
           });
 
-        return serialize(name, contents, { propsData, state: vm.$store.state });
+        return serialize(name, contents, {
+          propsData,
+          state: vm.$store.state,
+          locale: locale
+        });
       };
     }
   });
