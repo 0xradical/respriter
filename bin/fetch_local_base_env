@@ -19,10 +19,6 @@ content = '''\
 # # Uncomment this if you want to use gems installed by yourself
 # BUNDLE_PATH=/home/developer/bundle
 
-# # Path for Node Modules
-# # Uncomment this if you want to use modules installed by yourself
-# NODE_PATH=/home/developer/node_modules
-
 # # Video Service
 # # Uncomment this if you want to use production Video Service instead of development
 # VIDEO_SERVICE_HOST={video_service_host}

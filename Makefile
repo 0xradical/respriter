@@ -41,8 +41,10 @@ DEVELOPER_IMAGE_NAME := classpert/developers-dashboard
 DEVELOPER_IMAGE_TAG  := $(shell cat ../developers-dashboard/package-lock.json | $(SHA1SUM) | sed -e 's/ .*//g')
 DEVELOPER_IMAGE      := $(DEVELOPER_IMAGE_NAME):$(DEVELOPER_IMAGE_TAG)
 
+LOCAL_NODE_MODULES ?= $(shell [ -f ".local_node_modules" ] && echo "./node_modules:" || echo "")
+
 DOCKER              := docker
-DOCKER_COMPOSE      := WEB_APP_IMAGE=$(DOCKER_WEB_APP_IMAGE) DEVELOPER_IMAGE=$(DEVELOPER_IMAGE) USER_IMAGE=$(USER_IMAGE) DATABASE_IMAGE=$(DATABASE_IMAGE) docker-compose
+DOCKER_COMPOSE      := LOCAL_NODE_MODULES=$(LOCAL_NODE_MODULES) WEB_APP_IMAGE=$(DOCKER_WEB_APP_IMAGE) DEVELOPER_IMAGE=$(DEVELOPER_IMAGE) USER_IMAGE=$(USER_IMAGE) DATABASE_IMAGE=$(DATABASE_IMAGE) docker-compose
 DOCKER_COMPOSE_PATH := $(shell which docker-compose)
 
 PG_DUMP_FILE := db/backups/latest.dump
@@ -276,17 +278,17 @@ down-%: $(CUSTOM_ENV_FILES) ## Stops and Removes a service
 	$(DOCKER_COMPOSE) rm -f $*.clspt
 
 docker-build-base: ## Builds the base docker image
-	@$(DOCKER) build -f $(DOCKER_BASE_FILE) -t $(DOCKER_BASE_NAME) .
-	@$(DOCKER) tag $(DOCKER_BASE_NAME) $(DOCKER_BASE_LATEST)
+	@$(DOCKER) build -f $(DOCKER_BASE_FILE) -t $(DOCKER_BASE_IMAGE) .
+	@$(DOCKER) tag $(DOCKER_BASE_IMAGE) $(DOCKER_BASE_LATEST)
 
 docker-push-base: ## Pushes the docker base image to Dockerhub
-	@$(DOCKER) push $(DOCKER_BASE_NAME)
+	@$(DOCKER) push $(DOCKER_BASE_IMAGE)
 
 docker-build: ## Builds the docker image
 	@$(DOCKER) build -f $(DOCKER_WEB_APP_FILE) --build-arg $(DOCKER_WEB_APP_ARGS) -t $(DOCKER_WEB_APP_NAME) -t $(DOCKER_WEB_APP_LATEST) -t $(DOCKER_WEB_APP_IMAGE) .
 
 docker-push: ## Pushes the docker image to Dockerhub
-	@$(DOCKER) push $(DOCKER_WEB_APP_NAME)
+	@$(DOCKER) push $(DOCKER_WEB_APP_IMAGE)
 
 clean: $(CUSTOM_ENV_FILES) ## Stop containers, remove old images and prune docker unused resources
 	@$(DOCKER_COMPOSE) down --rmi local --remove-orphans

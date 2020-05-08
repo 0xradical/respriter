@@ -209,7 +209,9 @@ You can use installed or volumes dependencies. By default installed dependencies
 Linux this doesn't make any difference.
 
 If you want to use volume dependencies you must go to the pre-generated envs/local/base.env file and uncomment `BUNDLE_PATH`
-and `NODE_PATH` variables.
+to edit installed node gems.
+
+For `node_modules`, you must create an empty file named `.local_node_modules` at root, just that.
 
 One more thing related to it, is that volume dependencies are the only ones you can update with `npm install` or `bundle install`.
 Installed dependencies are per container and not shared along other containers, so if you run those commands you will only
