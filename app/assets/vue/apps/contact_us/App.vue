@@ -49,7 +49,7 @@
           email: undefined,
           reason: "",
           subject: undefined,
-          message: undefined
+          message: ""
         };
       },
       submit() {
