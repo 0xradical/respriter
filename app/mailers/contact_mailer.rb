@@ -3,9 +3,9 @@ class ContactMailer < ApplicationMailer
     @contact = contact
     mail({
       from: from(@contact),
-      to: to(@contact),
+      to: "support@classpert.com",
       subject: subject(@contact),
-      reply_to: to(@contact)
+      reply_to: "support@classpert.com"
     })
   end
 
@@ -14,15 +14,6 @@ class ContactMailer < ApplicationMailer
       "#{contact.name} <#{contact.email}>"
     else
       contact.email
-    end
-  end
-
-  def to(contact)
-    case contact.reason
-    when "customer_support", "bug_report", "feature_suggestion", "manual_profile_claim"
-      "support@classpert.com"
-    else
-      "contact@classpert.com"
     end
   end
 
