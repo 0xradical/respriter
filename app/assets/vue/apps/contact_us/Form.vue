@@ -18,9 +18,9 @@
       </div>
     </div>
 
-    <validation-observer v-slot="{ invalid, validate }" slim>
+    <validation-observer v-slot="{ invalid, validate }" tag="div">
       <form @submit.prevent="validate().then(submit)" class="row">
-        <input name="authenticity_token" :value="auth_token" type="hidden" />
+        <input name="authenticity_token" :value="authToken" type="hidden" />
 
         <validation-provider
           tag="div"
@@ -53,14 +53,14 @@
                 />
                 <icon
                   v-if="errors.length > 0"
-                  class="el:m-form-field__input-icon el:amx-C_er"
-                  name="wrong"
+                  class="el:m-form-field__input-icon el:amx-Fi_er"
+                  name="error"
                   width="1.125em"
                   height="1.125em"
                 ></icon>
                 <icon
                   v-if="contact.name && errors.length == 0"
-                  class="el:m-form-field__input-icon el:amx-C_pr"
+                  class="el:m-form-field__input-icon el:amx-Fi_pr"
                   name="checked"
                   width="1.125em"
                   height="1.125em"
@@ -107,14 +107,14 @@
                 />
                 <icon
                   v-if="errors.length > 0"
-                  class="el:m-form-field__input-icon el:amx-C_er"
-                  name="wrong"
+                  class="el:m-form-field__input-icon el:amx-Fi_er"
+                  name="error"
                   width="1.125em"
                   height="1.125em"
                 ></icon>
                 <icon
                   v-if="contact.email && errors.length == 0"
-                  class="el:m-form-field__input-icon el:amx-C_pr"
+                  class="el:m-form-field__input-icon el:amx-Fi_pr"
                   name="checked"
                   width="1.125em"
                   height="1.125em"
@@ -125,6 +125,69 @@
                 >
                   <span class="el:amx-Fs(0.75em)">{{ errors[0] }}</span>
                 </div>
+              </div>
+            </div>
+          </template>
+        </validation-provider>
+
+        <validation-provider
+          tag="div"
+          name="reason"
+          rules="required"
+          class="col-md-12 offset-lg-4 col-lg-4 el:amx-Mb(2em)"
+        >
+          <template #default="{ errors }">
+            <div
+              class="el:m-form-field"
+              :class="[
+                errors.length > 0 && 'el:m-form-field--error',
+                sending && 'el:m-form-field--disabled'
+              ]"
+            >
+              <div class="el:m-form-field__label el:m-form-field__label--over">
+                <label for="reason">{{
+                  $t("contact_us.new.form.reason.header")
+                }}</label>
+              </div>
+
+              <div class="el:m-select el:select--medium">
+                <select
+                  name="reason"
+                  v-model="contact.reason"
+                  :disabled="sending"
+                >
+                  <option value="">{{
+                    $t("contact_us.new.form.reason.options.select_option")
+                  }}</option>
+                  <option value="customer_support">{{
+                    $t("contact_us.new.form.reason.options.customer_support")
+                  }}</option>
+                  <option value="bug_report">{{
+                    $t("contact_us.new.form.reason.options.bug_report")
+                  }}</option>
+                  <option value="feature_suggestion">{{
+                    $t("contact_us.new.form.reason.options.feature_suggestion")
+                  }}</option>
+                  <option value="commercial_and_partnerships">{{
+                    $t(
+                      "contact_us.new.form.reason.options.commercial_and_partnerships"
+                    )
+                  }}</option>
+                  <option value="manual_profile_claim">{{
+                    $t(
+                      "contact_us.new.form.reason.options.manual_profile_claim"
+                    )
+                  }}</option>
+                  <option value="other">{{
+                    $t("contact_us.new.form.reason.options.other")
+                  }}</option>
+                </select>
+              </div>
+              <div
+                v-if="errors.length > 0"
+                class="el:amx-Mt(0.25em) el:amx-C_er"
+              >
+                <span class="el:amx-Fs(0.75em)">{{ errors[0] }}</span>
               </div>
             </div>
           </template>
@@ -161,14 +224,14 @@
                 />
                 <icon
                   v-if="errors.length > 0"
-                  class="el:m-form-field__input-icon el:amx-C_er"
-                  name="wrong"
+                  class="el:m-form-field__input-icon el:amx-Fi_er"
+                  name="error"
                   width="1.125em"
                   height="1.125em"
                 ></icon>
                 <icon
                   v-if="contact.subject && errors.length == 0"
-                  class="el:m-form-field__input-icon el:amx-C_pr"
+                  class="el:m-form-field__input-icon el:amx-Fi_pr"
                   name="checked"
                   width="1.125em"
                   height="1.125em"
@@ -258,14 +321,14 @@
                 />
                 <icon
                   v-if="errors.length > 0"
-                  class="el:m-form-field__input-icon el:amx-C_er"
-                  name="wrong"
+                  class="el:m-form-field__input-icon el:amx-Fi_er"
+                  name="error"
                   width="1.125em"
                   height="1.125em"
                 ></icon>
                 <icon
                   v-if="mathenticate.answer && errors.length == 0"
-                  class="el:m-form-field__input-icon el:amx-C_pr"
+                  class="el:m-form-field__input-icon el:amx-Fi_pr"
                   name="checked"
                   width="1.125em"
                   height="1.125em"
@@ -320,7 +383,7 @@
         type: Object,
         required: true
       },
-      auth_token: {
+      authToken: {
         type: String,
         required: true
       }
@@ -339,7 +402,7 @@
         axios
           .post(
             `/contact-us.json?authenticity_token=${encodeURIComponent(
-              this.auth_token
+              this.authToken
             )}`,
             {
               contact: this.contact
