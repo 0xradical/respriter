@@ -140,7 +140,7 @@ namespace :system do
 
     desc 'Populate facebook uid using findmyfbid API'
     task :populate_facebook_uid, %i[sleep_time] => %i[environment] do |t,args|
-      OrphanedProfile.where("claimable_public_profiles ->> 'facebook' IS NOT NULL AND claimable_public_profiles -> 'facebook'  ->> 'uid' = ''").each do |op|
+      OrphanedProfile.where("claimable_public_profiles ->> 'facebook' IS NOT NULL AND claimable_public_profiles -> 'facebook' ->> 'uid' IS NULL").each do |op|
         retries = 0
         begin
           uri = URI.parse("https://findmyfbid.in/apiv1/")
