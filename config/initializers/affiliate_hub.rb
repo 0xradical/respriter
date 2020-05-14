@@ -17,9 +17,13 @@ AffiliateHub.setup do |config|
 
   config.setup :awin do |c|
     c.base_uri     = 'https://api.awin.com'
-    c.api_token    = ENV.fetch('AWIN_API_TOKEN')
-    c.publisher_id = ENV.fetch('AWIN_PUBLISHER_ID')
+    c.api_token    = ENV['AWIN_API_TOKEN']
+    c.publisher_id = ENV['AWIN_PUBLISHER_ID']
   end
 
+  config.setup :commission_junction_v3 do |c|
+    c.base_uri = 'https://commission-detail.api.cj.com/v3'
+    c.authorization_token = "Bearer #{ENV['CJ_ACCESS_TOKEN']}"
+  end
 
 end

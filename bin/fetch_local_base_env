@@ -29,15 +29,15 @@ AWS_KEY_PAIR_ID={aws_key_pair_id}
 AWS_PRIVATE_KEY={aws_private_key}
 
 # Affiliate Programs
-RAKUTEN_MARKETING_USERNAME={rakuten_marketing_username}
-RAKUTEN_MARKETING_PASSWORD={rakuten_marketing_password}
-RAKUTEN_MARKETING_SID={rakuten_marketing_sid}
-RAKUTEN_MARKETING_SCOPE={rakuten_marketing_scope}
-RAKUTEN_TOKEN_REQUEST_AUTHORIZATION={rakuten_token_request_authorization}
-IMPACT_RADIUS_ACCOUNT_SID={impact_radius_account_sid}
-IMPACT_RADIUS_AUTH_TOKEN={impact_radius_auth_token}
-AWIN_API_TOKEN={awin_api_token}
-AWIN_PUBLISHER_ID={awin_publisher_id}
+#RAKUTEN_MARKETING_USERNAME={rakuten_marketing_username}
+#RAKUTEN_MARKETING_PASSWORD={rakuten_marketing_password}
+#RAKUTEN_MARKETING_SID={rakuten_marketing_sid}
+#RAKUTEN_MARKETING_SCOPE={rakuten_marketing_scope}
+#RAKUTEN_TOKEN_REQUEST_AUTHORIZATION={rakuten_token_request_authorization}
+#IMPACT_RADIUS_ACCOUNT_SID={impact_radius_account_sid}
+#IMPACT_RADIUS_AUTH_TOKEN={impact_radius_auth_token}
+#AWIN_API_TOKEN={awin_api_token}
+#AWIN_PUBLISHER_ID={awin_publisher_id}
 
 # Oauth
 FACEBOOK_KEY={facebook_key}

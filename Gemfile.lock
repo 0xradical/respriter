@@ -15,6 +15,13 @@ GIT
       affiliate_hub
 
 GIT
+  remote: https://github.com/codextremist/affiliate_hub_cj
+  revision: aa87bcaf513846a1e52a02159d0f55d040fce5f8
+  specs:
+    affiliate_hub_cj (0.1.1)
+      affiliate_hub
+
+GIT
   remote: https://github.com/codextremist/affiliate_hub_impact_radius
   revision: 989bde6a39d7483d6c515802448f4f63c0a0904a
   specs:
@@ -571,6 +578,7 @@ DEPENDENCIES
   activerecord-import (~> 1.0.4)
   affiliate_hub!
   affiliate_hub_awin!
+  affiliate_hub_cj!
   affiliate_hub_impact_radius!
   affiliate_hub_rakuten_marketing!
   aws-sdk-cloudfront (~> 1.23.0)
@@ -579,6 +587,7 @@ DEPENDENCIES
   capybara-email
   carrierwave (~> 2.0.2)
   carrierwave-aws (~> 1.4.0)
+  crack
   cucumber-rails
   damerau-levenshtein (~> 1.3.2)
   database_cleaner

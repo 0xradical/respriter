@@ -46,11 +46,15 @@ gem 'elasticsearch-model', '~> 6.0.0'
 gem 'elasticsearch-rails', '~> 6.0.0'
 gem 'elasticsearch-dsl',   '~> 0.1.0'
 
+# Parsers
+gem 'crack'
+
 # AffiliateHub
 gem 'affiliate_hub',                    git: 'https://github.com/codextremist/affiliate_hub'
 gem 'affiliate_hub_rakuten_marketing',  git: 'https://github.com/codextremist/affiliate_hub_rakuten_marketing'
 gem 'affiliate_hub_impact_radius',      git: 'https://github.com/codextremist/affiliate_hub_impact_radius'
 gem 'affiliate_hub_awin',               git: 'https://github.com/codextremist/affiliate_hub_awin'
+gem 'affiliate_hub_cj',                 git: 'https://github.com/codextremist/affiliate_hub_cj'
 
 # Browser
 gem 'browser',           '~> 4.0'

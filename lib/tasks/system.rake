@@ -73,15 +73,25 @@ namespace :system do
     desc 'Pull tracked actions from all AFNs'
     task tracked_actions_service: %i[environment] do |t, args|
       run_id = SecureRandom.hex(4)
-      Integration::TrackedActions::AwinService.new(run_id).run
       Integration::TrackedActions::ImpactRadiusService.new(run_id).run
       Integration::TrackedActions::RakutenMarketingService.new(run_id).run
+      Integration::TrackedActions::CommissionJunctionService.new(run_id).run
+      Integration::TrackedActions::AwinService.new(run_id).run
     end
 
     namespace :rakuten_marketing do
       desc 'Pull tracked actions from Rakuten Marketing'
       task tracked_actions_service: %i[environment] do |t, args|
         Integration::TrackedActions::RakutenMarketingService.new.run
+      end
+    end
+
+    namespace :commission_junction do
+      desc 'Pull tracked actions from Commission Junction'
+      task :tracked_actions_service, %i[start_date end_date] => %i[environment] do |t, args|
+        start_date = args[:start_date].nil? ? Time.now : Time.parse(args[:start_date])
+        end_date = args[:end_date].nil? ? Time.now : Time.parse(args[:end_date])
+        Integration::TrackedActions::CommissionJunctionService.new.run(start_date: start_date, end_date: end_date)
       end
     end
 

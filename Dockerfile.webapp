@@ -1,4 +1,4 @@
-FROM classpert/rails AS builder
+FROM classpert/rails:4.0.0 AS builder
 MAINTAINER "Dalton Pinto" <dalton@classpert.com>
 
 ARG GITHUB_ACCESS_TOKEN
