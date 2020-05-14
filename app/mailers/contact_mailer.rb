@@ -24,15 +24,15 @@ class ContactMailer < ApplicationMailer
   def tag(contact)
     case contact.reason
     when "customer_support", "manual_profile_claim"
-      "[customer-support]"
+      "<customer-support>"
     when "bug_report"
-      "[customer-support][bug]"
+      "<customer-support><bug>"
     when "feature_suggestion"
-      "[customer-support][feature]"
+      "<customer-support><feature>"
     when "commercial_and_partnerships"
-      "[contact]"
+      "<contact>"
     else
-      "[contact]"
+      "<contact>"
     end
   end
 end

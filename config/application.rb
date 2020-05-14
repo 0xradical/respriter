@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails'
@@ -26,7 +28,6 @@ Bundler.require(*Rails.groups)
 
 module App
   class Application < Rails::Application
-
     config.session_store :cookie_store, key: :_app_session, domain: :all
 
     config.load_defaults 5.1
@@ -64,7 +65,7 @@ module App
         ENV.fetch('ELEMENTS_ASSET_HOST') do
           'https://elements-prd.classpert.com'
         end
-      elements_config.asset_version = '6.0.0'
+      elements_config.asset_version = '6.1.2'
     end
 
     config.action_controller.forgery_protection_origin_check = false
@@ -87,11 +88,11 @@ module App
     # LogRage settings
     config.lograge.enabled = ENV.fetch('ENABLE_LOGRAGE') { false }
     config.lograge.custom_payload do |controller|
-      if controller.kind_of? ApplicationController
+      if controller.is_a? ApplicationController
         env = controller.instance_variable_get('@session_tracker') || {}
 
         qs = env['query_string']
-        ua = env['user_agent']&.map { |k, v| v }&.join('|')
+        ua = env['user_agent']&.map { |_k, v| v }&.join('|')
         ip = env['ip']
         cf_country = env['country']
         session_count = env['session_count']
@@ -103,9 +104,7 @@ module App
         custom_payload['ip'] = ip&.ansi(:yellow) if ip.present?
         custom_payload['ua'] = ua&.ansi(:blue) if ua.present?
         custom_payload['cf_country'] = cf_country if cf_country.present?
-        if session_count.present?
-          custom_payload['session_count'] = session_count
-        end
+        custom_payload['session_count'] = session_count if session_count.present?
         custom_payload['accept_lang'] = accept_lang if accept_lang.present?
         custom_payload
       end

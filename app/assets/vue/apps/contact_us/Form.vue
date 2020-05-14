@@ -196,7 +196,7 @@
         <validation-provider
           tag="div"
           name="subject"
-          rules=""
+          rules="required"
           class="col-md-12 offset-lg-4 col-lg-4 el:amx-Mb(2em)"
         >
           <template #default="{ errors }">
@@ -346,7 +346,7 @@
 
         <div class="col-md-12 offset-lg-6 col-lg-2">
           <button
-            :disabled="invalid || sending"
+            :disabled="server || invalid || sending"
             class="btn btn--block btn--primary-flat"
           >
             {{ $t("contact_us.new.form.action.submit") }}
@@ -365,6 +365,7 @@
     data() {
       return {
         sending: false,
+        server: true,
         mathenticate: {
           first: Math.floor(Math.random() * 5) + 1,
           second: Math.floor(Math.random() * 95) + 1,
@@ -390,6 +391,9 @@
     },
     components: {
       Icon
+    },
+    mounted() {
+      this.server = false;
     },
     methods: {
       submit: function() {
