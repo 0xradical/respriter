@@ -9,3 +9,9 @@ CREATE TRIGGER use_username
   ON app.profiles
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.use_username();
+
+CREATE TRIGGER validate_profiles
+  BEFORE INSERT OR UPDATE
+  ON app.profiles
+  FOR EACH ROW
+    EXECUTE PROCEDURE triggers.validate_profiles();
