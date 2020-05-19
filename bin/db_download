@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+source $1
+
+until pg_isready -U `./bin/parse_uri $POSTGRES_URL user` -h `./bin/parse_uri $POSTGRES_URL host`; do sleep 0.5; done;
+
+mkdir -p $2
+
+if [ -f "$2/pg-0001.dump" ]; then
+  number_of_files=`ls $2/pg-* | wc -l | sed "s/ //g"`
+  dump_file=`printf "$2/pg-%04d.dump" $(( number_of_files + 1 ))`
+else
+  dump_file=$2/pg-0001.dump
+fi
+
+if [[ ! $1 =~ 'dev-' ]]; then
+  echo "\033[0;31mThis will take long hours! See you again tomorrow!\033[0m"
+fi
+
+query_paramsless_url=$(echo $POSTGRES_URL | cut -d\? -f1)
+pg_dump $query_paramsless_url -Fc > $dump_file
+
+exit 0

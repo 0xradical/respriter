@@ -1,0 +1,17 @@
+postgres: &postgres
+  adapter:            postgresql
+  username:           postgres
+  password:           postgres
+  encoding:           unicode
+  pool:               5
+  schema_search_path: app,public
+
+development:
+  <<: *postgres
+  host:     database_dev
+  database: napoleon_dev
+
+test:
+  <<: *postgres
+  host:     database_test
+  database: napoleon_test

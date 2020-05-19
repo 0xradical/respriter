@@ -1,0 +1,93 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+
+root_path      = Pathname.new File.expand_path('..', File.dirname(__FILE__))
+lock_path      = root_path.join('db/structure.lock').to_s
+structure_path = root_path.join('db/structure.sql.env').to_s
+
+relative_lock_path      = root_path.join('db/structure.lock').relative_path_from(root_path).to_s
+relative_structure_path = root_path.join('db/structure.sql.env').relative_path_from(root_path).to_s
+
+files         = File.readlines(lock_path).map(&:chomp).compact
+current_files = root_path.glob('src/**/*.sql').map do |file|
+  Pathname.new(file).relative_path_from(root_path.join('src')).to_s
+end
+
+added_files = current_files - files
+unless added_files.empty?
+  puts "\033[0;31mNew src files detected!\nPlease add them manually at #{relative_lock_path} in the correct order\033[0m\n\n"
+  added_files.each do |file|
+    puts "  #{file}"
+  end
+  puts ''
+  exit -1
+end
+
+removed_files = files - current_files
+updated_files = files - removed_files
+unless removed_files.empty?
+  puts "\033[0;33mSome files were removed!\033[0m\n\n"
+  removed_files.each do |file|
+    puts "  #{file}"
+  end
+  puts ''
+  print "\033[0;31mAre you sure that you want to remove them? [y/N]\033[0m "
+
+  if gets.chomp.downcase != 'y'
+    puts "\033[0;33mOk, check you work before!\n#{relative_lock_path} was not updated\n\033[0m\n\n"
+    exit -1
+  end
+
+  File.write( lock_path, updated_files.join("\n")+"\n" )
+  puts "\033[0;32m#{relative_lock_path} is updated!\033[0m"
+end
+
+if ARGV[0] == 'migrate'
+  File.open(structure_path, 'w') do |file|
+    file.puts "BEGIN;\n\n"
+    updated_files.each do |src_file|
+      file.puts File.read(root_path.join('src', src_file))
+      file.puts "\n"
+    end
+    file.puts "COMMIT;"
+  end
+
+  last_version = Time.now.strftime '%Y%m%d%H%M%S'
+  migration_name = ARGV[1..-1].join(' ').strip.downcase.gsub(/\s+\-/, '_')
+  migration_name = 'new_migration' if migration_name == ''
+  migration_path = root_path.join 'db/migrations/', "#{last_version}-#{migration_name}.sql.env"
+
+  File.open(migration_path.to_s, 'w') do |file|
+    file.puts "BEGIN;\n\n"
+    file.puts `diff #{structure_path}.last #{structure_path}`
+    file.puts "\nINSERT INTO public.schema_migrations (version) VALUES ('#{last_version}');\n\nCOMMIT;"
+  end
+  puts "\033[0;32m#{ migration_path.relative_path_from root_path } is created!\033[0m"
+
+  content  = "INSERT INTO public.schema_migrations(version) VALUES\n"
+  versions = root_path.glob('db/migrations/*.sql.env').map do |file|
+    "  ('#{file.basename.to_s.match(/^\d+/)[0]}')"
+  end.sort
+  content += versions.join(",\n") + ";\n"
+
+  schema_migrations_path = root_path.join 'src/data/public/schema_migrations.sql'
+  File.write schema_migrations_path, content
+  puts "\033[0;32m#{ schema_migrations_path.relative_path_from root_path } is updated!\033[0m"
+end
+
+File.open(structure_path, 'w') do |file|
+  file.puts "BEGIN;\n\n"
+  updated_files.each do |src_file|
+    file.puts File.read( root_path.join('src', src_file) )
+    file.puts "\n"
+  end
+  file.puts "COMMIT;"
+end
+puts "\033[0;32m#{relative_structure_path} is updated!\033[0m"
+
+if ARGV[0] == 'migrate'
+  require 'fileutils'
+  FileUtils.cp structure_path, "#{structure_path}.last"
+  puts "\033[0;32m#{relative_structure_path}.last is updated!\033[0m"
+end

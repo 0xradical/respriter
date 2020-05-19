@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+case $1 in
+napoleon.env)
+  eval `heroku config -s --app napoleon-the-crawler`
+  cat << EOF > envs/local/napoleon.env
+
+# # Anonymizer Proxy
+# PROXY_HOST=$PROXY_HOST
+# PROXY_USER=$PROXY_USER
+# PROXY_PASS=$PROXY_PASS
+
+# Udemy Affiliate API
+UDEMY_CLIENT_ID=$UDEMY_CLIENT_ID
+UDEMY_SECRET=$UDEMY_SECRET
+EOF
+  echo "Created local env file ./envs/local/$1 with envs from production"
+  exit 0
+  ;;
+*)
+  touch ./envs/local/$1
+  echo "Created empty local env file ./envs/local/$1"
+  ;;
+esac

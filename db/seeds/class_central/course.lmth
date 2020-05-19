@@ -1,0 +1,1299 @@
+<html class="sticky-footer" lang="en"> 
+  <head> 
+    <meta content="543074773853-5o4th7sqent0dc5f0slvn0cakr152fpv.apps.googleusercontent.com" name="google-signin-client_id"/> 
+    <meta charset="utf-8"/> 
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/> 
+    <title><@page_title/></title> 
+    <meta content@truncated_meta_content name="description"/> 
+    <meta content@og_title property="og:title"/> 
+    <meta content@og_url property="og:url"/> 
+    <link href@canonical_url rel="canonical"/> 
+    <meta content@og_image property="og:image"/> 
+    <meta content@og_site_name property="og:site_name"/> 
+    <meta content@truncated_og_description property="og:description"/> 
+    <meta content="website" property="og:type"/> 
+    <meta content="851425723" property="fb:admins"/> <!-- Twitter card integration --> 
+    <meta content="product" name="twitter:card"/> 
+    <meta content="@classcentral" name="twitter:site"/> 
+    <meta content@twitter_title name="twitter:title"/> 
+    <meta content@twitter_truncated_description name="twitter:description"/> 
+    <meta content="www.class-central.com" name="twitter:domain"/> 
+    <meta content@twitter_image property="twitter:image:src"/> 
+    <?meta name="twitter:data1" content@twitter_data_1/> 
+    <?meta name="twitter:label1" content@twitter_label_1/> 
+    <?meta name="twitter:data2" content@twitter_data_2/>
+    <?meta name="twitter:label2" content@twitter_label_2/>
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/> 
+    <link href="/favicon.ico" rel="icon" type="image/x-icon"/> 
+    <link href="/bundles/classcentralsite/xml/opensearch.xml" rel="search" title="Class Central MOOC search" type="application/opensearchdescription+xml"/> <!-- Le HTML5 shim, for IE6-8 support of HTML elements --> <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]--> 
+    <link href="/webpack/cc-style.5d2d1608480a82befb3f36914619dd77.css" rel="stylesheet"/> 
+    <link href="/webpack/section-course.8b36df7d50f021fb4794058f3ccbc1c6.css" rel="stylesheet"/> <!-- Google+ Direct connect --> 
+    <link href="https://plus.google.com/107809899089663019971" rel="publisher"/> 
+    <script type="text/javascript">
+        user_logged_in = 0;
+            
+    </script> <!-- Including google analytics. The parameter ganalytics_id must be set in parameters.ini --> 
+    <@analytics_script_tag_1 tag(script) text cdata/>
+    <script src="/webpack/analytics.766aae98d01299c94e36.js"/> 
+    <@analytics_script_tag_2 tag(script) text cdata/>
+  </head> 
+  <body id="page-course"> 
+    <div class="contain-body"> 
+      <div class="contain-page"> 
+        <section class="classcentral-style" id="news-banner"> 
+          <div class="news-banner-container relative z-top cc-gradient-blue padding-small medium-up-padding-xxsmall text-center"> 
+            <a class="block xsmall-only-margin-bottom-small small-only-margin-bottom-small" href@latest_report_url> 
+              <h3 class="inline-block medium-up-margin-right-medium text-3 large-up-text-2 text--white"> 
+                <span class="small-only-hidden xsmall-only-hidden head-5 text--bold text--upper"> The Latest 
+                  <span class="head-3 relative padding-horz-small inline-block" style="top: 2px;">/</span> 
+                </span><@lastest_report_name/>
+              </h3> 
+              <span class="block medium-up-inline-block margin-top-medium margin-bottom-xsmall medium-up-margin-reset"> 
+                <span class="radius relative border-all border--thin border--white text--white padding-vert-xsmall text--bold text-3 padding-horz-medium" style="top: -4px;"> Read </span> 
+              </span> 
+            </a> 
+            <button class="absolute right bottom block margin-xsmall medium-up-margin-medium icon--xsmall icon--center icon-x-white" data-cookie="news_banner" data-cookie-value@~ data-remove-parent="" type="button">Close</button> 
+          </div> 
+        </section> 
+        <div class="classcentral-style header" data-cc-header=""> 
+          <header class="cc-header "> 
+            <nav class="row z-high absolute height-100 width-100 bg-white border-bottom border--thin border--gray-light"> 
+              <h2 class="absolute top left xlarge-up-hidden"> 
+                <a class="cc-header_brandLogo pull inline-block padding-left-small" data-track-click="nav_click" data-track-props="{ \"type\": \"Bar\", \"title\": \"Homepage\" }" href="/"> 
+                  <i class="symbol-classcentral-blue symbol--small" data-hide-if-search-shown="">Class Central</i> 
+                  <i class="icon icon--center icon-lettermark hidden" data-show-if-search-shown="" style="width: 25px;">Class Central</i> 
+                </a> 
+              </h2> 
+              <div class="absolute top left padding-horz-large padding-vert-medium xsmall-only-hidden small-only-hidden medium-only-hidden large-only-hidden"> 
+                <div class="col margin-top-small text-left"> 
+                  <a class="inline-block" data-track-click="nav_click" data-track-props="{ \"type\": \"Bar\", \"title\": \"Homepage\" }" href="/" style="width: 175px;"> 
+                    <h1 class="push"> 
+                      <i class="symbol-classcentral-blue">Class Central</i> 
+                    </h1> 
+                  </a> 
+                </div> 
+                <div class="menu-item hide-if-search-results-shown text-center col menu-item-browse" style="min-width: 125px; height: auto; overflow: auto;"> 
+                  <button class="inline-block padding-bottom-medium" data-sub-menu-toggle="courses"> 
+                    <span class="line--medium icon--right head-5 text--charcoal text--bold icon-chevron-down-charcoal" style="max-width: 150px;"> 
+                      <span class="width-100">Courses</span> 
+                    </span> 
+                  </button> 
+                </div> 
+                <div class="menu-item hide-if-search-results-shown text-center col menu-item-mooc" style="min-width: 125px; height: auto; overflow: auto;"> 
+                  <button class="inline-block padding-bottom-medium" data-sub-menu-toggle="mooc"> 
+                    <span class="line--medium icon--right head-5 text--charcoal text--bold icon-chevron-down-charcoal" style="max-width: 150px;"> 
+                      <span class="width-100">MOOC Report</span> 
+                    </span> 
+                  </button> 
+                </div> 
+              </div> 
+              <form action="/search" class="cc-navBar-search form xsmall-only-absolute small-only-absolute medium-only-absolute large-only-absolute width-100 width-centered border-box xlarge-up-padding-vert-medium" data-cc-search="" method="get"> 
+                <fieldset class="relative"> 
+                  <input autocomplete="off" class="width-100 input--small icon-search-charcoal icon--right" data-cc-search-input="" data-responsive="{
+                \"xlargeUp\": \"input--medium\"
+              }" name="q" placeholder="What do you want to learn?" type="text" value=""/> 
+                  <input class="absolute btn-white btn--small icon--right text--charcoal icon-search-charcoal hidden cc-search-button" data-cc-search-button="" data-responsive="{
+                \"xsmallOnly\": \"icon--center\",
+                \"smallOnly\": \"icon--center\",
+                \"mediumOnly\": \"icon--center\",
+                \"largeOnly\": \"icon--center\"
+              }" data-track-click="nav_click" type="submit" value="Search"/> 
+                  <div class="loading-pulse absolute hidden cc-search-loading-pulse" data-cc-search-loader=""/> 
+                </fieldset> 
+              </form> 
+              <div class="absolute hide-if-search-results-shown top right padding-medium xsmall-only-hidden small-only-hidden medium-only-hidden large-only-hidden"> 
+                <div class="col text-center menu-item-review" style="min-width: 150px;"> 
+                  <a class="inline-block line--medium head-5 text--charcoal icon--left icon-star" data-track-click="nav_click" data-track-props="{ \"type\": \"Bar\", \"title\": \"Write a Review\" }" href="/write-a-review">Write a Review</a> 
+                </div> 
+                <div class="menu-item text-center col" style="width: 175px;"> 
+                  <a class="head-5 text--blue text--bold line--medium" data-track-click="nav_click" data-track-props="{ \"type\": \"User\", \"title\": \"Login\" }" href="/login">Sign in</a> 
+                  <span class="inline-block padding-horz-xsmall text--gray">or</span> 
+                  <a class="head-5 text--blue text--bold line--medium icon--right icon-arrow-right-blue" data-signup="navbar" data-track-click="nav_click" data-track-props="{ \"type\": \"User\", \"title\": \"Register\" }" href="/signup"> Register </a> 
+                </div> 
+              </div> 
+              <div class="animate-fade-entered push padding-horz-xsmall xlarge-up-hidden"> 
+                <div class="menu-item text-center col menu-item-browse medium-up-hidden" data-hide-if-search-shown=""> 
+                  <button class="inline-block" data-sub-menu-click-show="courses"> 
+                    <span class="line--large icon--right head-5 text--charcoal text--bold icon-chevron-down-charcoal"> 
+                      <span class="width-100">Courses</span> 
+                    </span> 
+                  </button> 
+                  <button class="line--large padding-horz-medium icon--xsmall icon-x-charcoal icon--center" data-sub-menu-click-hide="courses" style="display: none;"> Close </button> 
+                </div> 
+                <div class="menu-item text-center col menu-item-browse xsmall-only-hidden small-only-hidden" data-hide-if-search-shown=""> 
+                  <button class="inline-block" data-sub-menu-toggle="courses"> 
+                    <span class="line--large icon--right head-5 text--charcoal text--bold icon-chevron-down-charcoal"> 
+                      <span class="width-100">Courses</span> 
+                    </span> 
+                  </button> 
+                </div> 
+                <button class="margin-horz-xsmall inline-block line--large icon-search-charcoal icon--center" data-cc-search-show="">Search</button> 
+                <div class="inline-block" data-hide-if-search-shown=""> 
+                  <button class="padding-horz-medium inline-block line--large icon-profile-charcoal icon--center xsmall-only-hidden small-only-hidden" data-sub-menu-toggle="user"> Sign in / Register </button> 
+                  <button class="padding-horz-medium inline-block line--large icon-profile-charcoal icon--center medium-up-hidden" data-sub-menu-click-show="user"> Sign in / Register </button> 
+                  <button class="line--large padding-horz-medium icon--xsmall icon-x-charcoal icon--center medium-up-hidden" data-sub-menu-click-hide="user" style="display: none;">Close </button> 
+                </div> 
+                <div class="inline-block"> 
+                  <button class="line--large padding-horz-medium icon--xsmall icon-x-charcoal icon--center hidden" data-cc-search-hide="">Close</button> 
+                </div> 
+              </div> 
+            </nav>
+            <nav class="animate-hidden row z-top fixed top width-100 bg-white border-bottom border--thin border--gray-light" data-cc-sticky-top-bar="" style="height: 60px;"> 
+              <h2 class="absolute top left xsmall-only-hidden small-only-hidden medium-only-hidden large-only-hidden"> 
+                <a class="cc-header_brandLogo pull inline-block padding-left-small" data-track-click="nav_click" data-track-props@nav[home_tracking_properties] href="/"> 
+                  <i class="symbol-classcentral-blue symbol--small">Class Central</i> 
+                </a> 
+              </h2> 
+              <div class="padding-left-small xlarge-up-hidden" style="max-width: 70%;"> 
+                <div class="row col width-3-5 padding-right-small" style="max-width: none;"> 
+                  <span class="line--large head-3 truncate"><@nav[course_name]/></span> 
+                </div> 
+              </div> 
+              <div class="width-2-3 pull inline-block padding-horz-xsmall xsmall-only-hidden small-only-hidden medium-only-hidden large-only-hidden" style="padding-left: 170px;"> 
+                <div class="row col width-3-5 padding-right-small cc-sticky-nav-course-text"> 
+                  <span class="line--large head-3 truncate"><@nav[course_name_2]/></span> 
+                </div> 
+                <div class="margin-top-medium width-1-3 col text-left"> 
+                  <a class="read-reviews-btn review-rating text-5 text--charcoal width-text-right" data-track-click="nav_click" data-track-props@nav[reviews_trackinh_properties] href="#reviews" id="read-reviews"> 
+                    <span style="position: relative; top: 3px;"> 
+                      <span class="text--underline inline-block padding-right-xxsmall" style="height: 15px; line-height: 18px;">
+                        <@nav[reviews_snippet]/>
+                      </span> 
+                    </span> 
+                    <span class="review-rating xsmall-only-hidden small-only-hidden"> 
+                      <+@nav[stars]>
+                        <?i class="icon-star-gray-light icon--xxsmall"/>
+                        <?i class="icon-star icon--xxsmall"/> 
+                      </@nav[stars]>
+                    </span> 
+                    <span class="review-rating medium-up-hidden text--charcoal"> 
+                      <?span class="text--underline"><@nav[score]/></span> 
+                      <?i class="icon-star icon--xxsmall relative" style="top: -2px;"/>
+                      <?i class="icon-star-gray-light icon--xxsmall"/>
+                    </span>
+                  </a> 
+                </div> 
+              </div> 
+              <div class="animate-fade-entered push padding-xsmall relative" id="cb-right"> 
+                <a class="read-reviews-btn xlarge-up-hidden" data-track-click="nav_click" data-track-props@nav[reviews_tracking_properties] href="#reviews" id="read-reviews"> 
+                  <span class="review-rating xsmall-only-hidden small-only-hidden"> 
+                    <+@nav[stars_2]>
+                      <?i class="icon-star-gray-light icon--xxsmall"/>
+                      <?i class="icon-star icon--xxsmall"/> 
+                    </@nav[stars_2]>
+                  </span> 
+                  <span class="review-rating medium-up-hidden text--charcoal"> 
+                    <?span class="text--underline"><@nav[score_2]/></span> 
+                    <?i class="icon-star icon--xxsmall relative" style="top: -2px;"/>
+                    <?i class="icon-star-gray-light icon--xxsmall"/>
+                  </span>
+                </a> 
+                <div class="inline-block margin-left-xsmall xlarge-up-margin-left-small"> 
+                  <a class="btn-green xsmall-only-btn--small small-only-btn--small medium-only-btn--small large-only-btn--small" data-track-props@nav[redirect_to_course_tracking_properties] href@nav[redirect_to_course] onclick@nav[redirect_to_course] target="_blank"> 
+                    <span class="xsmall-only-hidden icon-arrow-right-white icon--right text--bold">Go to class</span> 
+                    <span class="small-up-hidden text--bold">Go to class</span> 
+                  </a> 
+                </div> 
+              </div> 
+            </nav>
+            <section class="cc-subMenu animate-hidden row bg-white z-mid absolute left width-100 shadow border-bottom border-top border--gray-light border--thin border-box" data-responsive="{
+          \"xlargeUp\": \"arrow arrow-top-middle arrow--medium arrow--white\"
+        }" data-sub-menu="courses" id="browse-menu"> 
+              <nav class="cc-subMenu_navContainer xsmall-only-hidden small-only-hidden padding-left-small padding-right-medium padding-vert-large border-box absolute top left border-right border--thin border--gray-light"> 
+                <ul> 
+                  <li class="text-left"> 
+                    <a class="inline-block icon-bullhorn-gray large-only-padding-vert-small medium-only-padding-vert-small padding-vert-medium icon--left" data-key="notable" data-responsive="{
+                  \"xsmallOnly\": \"icon--small\",
+                  \"smallOnly\": \"icon--small\",
+                  \"mediumOnly\": \"icon--small\",
+                  \"largeOnly\": \"icon--small\",
+                  \"xlargeUp\": \"icon--large\"
+                }" data-tab-nav-button="notable" href="/trending"> 
+                      <span class="text--bold text--gray" data-responsive="{
+                    \"xsmallOnly\": \"head-5\",
+                    \"smallOnly\": \"head-5\",
+                    \"mediumOnly\": \"head-5\",
+                    \"largeOnly\": \"head-5\",
+                    \"xlargeUp\": \"head-3 margin-left-medium\"
+                  }"> Notable </span> 
+                    </a> 
+                  </li> 
+                  <li class="text-left"> 
+                    <a class="inline-block icon-subject-gray large-only-padding-vert-small medium-only-padding-vert-small padding-vert-medium icon--left" data-key="subject" data-responsive="{
+                  \"xsmallOnly\": \"icon--small\",
+                  \"smallOnly\": \"icon--small\",
+                  \"mediumOnly\": \"icon--small\",
+                  \"largeOnly\": \"icon--small\",
+                  \"xlargeUp\": \"icon--large\"
+                }" data-tab-nav-button="subject" href="/subjects"> 
+                      <span class="text--bold text--gray" data-responsive="{
+                    \"xsmallOnly\": \"head-5\",
+                    \"smallOnly\": \"head-5\",
+                    \"mediumOnly\": \"head-5\",
+                    \"largeOnly\": \"head-5\",
+                    \"xlargeUp\": \"head-3 margin-left-medium\"
+                  }"> Subject </span> 
+                    </a> 
+                  </li> 
+                  <li class="text-left"> 
+                    <a class="inline-block icon-university-gray large-only-padding-vert-small medium-only-padding-vert-small padding-vert-medium icon--left" data-key="university" data-responsive="{
+                  \"xsmallOnly\": \"icon--small\",
+                  \"smallOnly\": \"icon--small\",
+                  \"mediumOnly\": \"icon--small\",
+                  \"largeOnly\": \"icon--small\",
+                  \"xlargeUp\": \"icon--large\"
+                }" data-tab-nav-button="university" href="/universities"> 
+                      <span class="text--bold text--gray" data-responsive="{
+                    \"xsmallOnly\": \"head-5\",
+                    \"smallOnly\": \"head-5\",
+                    \"mediumOnly\": \"head-5\",
+                    \"largeOnly\": \"head-5\",
+                    \"xlargeUp\": \"head-3 margin-left-medium\"
+                  }"> University </span> 
+                    </a> 
+                  </li> 
+                  <li class="text-left"> 
+                    <a class="inline-block icon-provider-gray large-only-padding-vert-small medium-only-padding-vert-small padding-vert-medium icon--left" data-key="provider" data-responsive="{
+                  \"xsmallOnly\": \"icon--small\",
+                  \"smallOnly\": \"icon--small\",
+                  \"mediumOnly\": \"icon--small\",
+                  \"largeOnly\": \"icon--small\",
+                  \"xlargeUp\": \"icon--large\"
+                }" data-tab-nav-button="provider" href="/providers"> 
+                      <span class="text--bold text--gray" data-responsive="{
+                    \"xsmallOnly\": \"head-5\",
+                    \"smallOnly\": \"head-5\",
+                    \"mediumOnly\": \"head-5\",
+                    \"largeOnly\": \"head-5\",
+                    \"xlargeUp\": \"head-3 margin-left-medium\"
+                  }"> Provider </span> 
+                    </a> 
+                  </li> 
+                </ul> 
+              </nav> 
+              <nav class="border-box border-vert border--thin border--gray-light bg-gray width-100 padding-small text-center" data-responsive="{
+            \"mediumUp\": \"hidden\"
+          }"> 
+                <span class="text--charcoal icon-chevron-down-charcoal icon--right text-2" data-tab-select-text=""> Notable </span> 
+                <select class="absolute left top btn-white btn--small width-100 text--charcoal" data-tab-nav-select="" style="top: 5px; opacity: 0;"> 
+                  <option value="notable">Notable</option> 
+                  <option value="subject">Subject</option> 
+                  <option value="university">University</option> 
+                  <option value="provider">Provider</option> 
+                </select> 
+              </nav> 
+              <div class="border-box width-100 row cc-subMenu_tabContainer xsmall-only-padding-vert-small small-only-padding-vert-small medium-up-padding-vert-large" data-tab-content="notable"> 
+                <section class="row relative"> 
+                  <div class="col border-box" data-responsive="{
+                \"xsmallOnly\": \"width-100\",
+                \"smallOnly\": \"width-100\",
+                \"mediumOnly\": \"width-3-7\",
+                \"largeOnly\": \"width-3-7\",
+                \"xlargeUp\": \"width-1-3\"
+              }"> 
+                    <h3 class="padding-horz-xlarge margin-top-medium medium-only-padding-horz-small large-only-padding-horz-small"> 
+                      <div class="head-4 icon--small icon--left icon-lightening-charcoal"> 
+                        <span class="text--charcoal text--bold head-4 padding-left-xxsmall">New & Trending</span> 
+                      </div> 
+                    </h3> 
+                    <ul class="row padding-top-small medium-only-padding-horz-large large-only-padding-horz-large padding-horz-xxlarge"> 
+                      <li class="col" data-responsive="{
+                    \"xsmallOnly\": \"width-1-2\",
+                    \"smallOnly\": \"width-1-2\",
+                    \"mediumUp\": \"width-100\",
+                    \"xxlargeUp\": \"width-1-2 padding-right-medium\"
+                  }"> 
+                        <a class="unit-horz padding-vert-small " data-track-click="nav_click" data-track-props="{ \"type\": \"Notable\", \"title\": \"Trending\" }" href="/trending"> 
+                          <span class="unit-block unit-fill"> 
+                            <h5 class="text--blue hover--text-underline text-2 text--bold truncate truncate--large ">Trending</h5> 
+                            <p class="text--charcoal text-2"><@trending_courses_count/></p> 
+                          </span> 
+                        </a> 
+                      </li> 
+                      <li class="col" data-responsive="{
+                    \"xsmallOnly\": \"width-1-2\",
+                    \"smallOnly\": \"width-1-2\",
+                    \"mediumUp\": \"width-100\",
+                    \"xxlargeUp\": \"width-1-2 padding-right-medium\"
+                  }"> 
+                        <a class="unit-horz padding-vert-small " data-track-click="nav_click" data-track-props="{ \"type\": \"Notable\", \"title\": \"Just Announced\" }" href="/courses/recentlyAdded"> 
+                          <span class="unit-block unit-fill"> 
+                            <h5 class="text--blue hover--text-underline text-2 text--bold truncate truncate--large ">Just Announced</h5> 
+                            <p class="text--charcoal text-2"><@just_announced_courses_count/></p> 
+                          </span> 
+                        </a> 
+                      </li> 
+                      <li class="col" data-responsive="{
+                    \"xsmallOnly\": \"width-1-2\",
+                    \"smallOnly\": \"width-1-2\",
+                    \"mediumUp\": \"width-100\",
+                    \"xxlargeUp\": \"width-1-2 padding-right-medium\"
+                  }"> 
+                        <a class="unit-horz padding-vert-small " data-track-click="nav_click" data-track-props="{ \"type\": \"Notable\", \"title\": \"Self Paced\" }" href="/courses/selfpaced"> 
+                          <span class="unit-block unit-fill"> 
+                            <h5 class="text--blue hover--text-underline text-2 text--bold truncate truncate--large ">Self Paced</h5> 
+                            <p class="text--charcoal text-2"><@self_paced_courses_count/></p> 
+                          </span> 
+                        </a> 
+                      </li> 
+                      <li class="col" data-responsive="{
+                    \"xsmallOnly\": \"width-1-2\",
+                    \"smallOnly\": \"width-1-2\",
+                    \"mediumUp\": \"width-100\",
+                    \"xxlargeUp\": \"width-1-2 padding-right-medium\"
+                  }"> 
+                        <a class="unit-horz padding-vert-small " data-track-click="nav_click" data-track-props="{ \"type\": \"Notable\", \"title\": \"Starts Now\" }" href="/courses/recent"> 
+                          <span class="unit-block unit-fill"> 
+                            <h5 class="text--blue hover--text-underline text-2 text--bold truncate truncate--large ">Starts Now</h5> 
+                            <p class="text--charcoal text-2"><@about_to_begin_courses_count/></p> 
+                          </span> 
+                        </a> 
+                      </li> 
+                      <li class="text-left" data-responsive="{
+                    \"xxlargeUp\": \"padding-left-xxlarge absolute left bottom\"
+                  }"> 
+                        <a class="btn-white margin-top-medium icon-random-blue icon--left" data-action="meet-your-next-course" data-track-click="nav_click" data-track-props="{ \"type\": \"Trending\", \"title\": \"Recommendations\" }" href="/user/recommendations"> Recommendations </a> 
+                      </li> 
+                    </ul> 
+                  </div> 
+                  <div class="col border-box" data-responsive="{
+                \"xsmallOnly\": \"width-100 padding-top-medium\",
+                \"smallOnly\": \"width-100 padding-top-medium\",
+                \"mediumOnly\": \"width-4-7\",
+                \"largeOnly\": \"width-4-7\",
+                \"mediumUp\": \"border-left border--gray-light border--thin\",
+                \"xlargeUp\": \"width-2-3\"
+              }"> 
+                    <h3 class="padding-horz-xlarge medium-only-padding-horz-small large-only-padding-horz-small margin-top-medium"> 
+                      <div class="head-4 icon--small icon--left icon-star-outline-charcoal"> 
+                        <span class="text--charcoal text--bold head-4 padding-left-xsmall">Top 50 MOOCs</span> 
+                      </div> 
+                    </h3> 
+                    <ul class="row padding-top-small medium-only-padding-horz-large large-only-padding-horz-large padding-horz-xxlarge"> 
+                      <*li(recommendations) class="relative"> 
+                        <a class="block unit-horz padding-vert-small" data-track-click="nav_click" data-track-props@tracking_properties href@course_url> 
+                          <div class="unit-block text--charcoal text-1 large-only-hidden xsmall-only-hidden small-only-hidden medium-only-hidden"> 
+                            <span class="padding-right-medium"><@course_rank/></span> 
+                          </div> 
+                          <div class="unit-block unit-fill"> 
+                            <div class="cc-header_ratingContext"> 
+                              <h5 class="text--blue hover--text-underline text-2 text--bold "> 
+                                <span class="medium-up-hidden"><@~/></span><@course_name/>
+                              </h5> 
+                              <p class="text--charcoal text-2"> 
+                                <em class="text--italic"><@university_name/></em><@provider_name/>
+                              </p> 
+                            </div> 
+                            <div data-responsive="{
+                          \"xsmallOnly\": \"padding-top-xsmall\",
+                          \"smallOnly\": \"padding-top-xsmall\",
+                          \"mediumOnly\": \"padding-top-xsmall\",
+                          \"largeOnly\": \"padding-top-xsmall\",
+                          \"xlargeUp\": \"absolute top right padding-top-medium\"
+                        }"> 
+                              <div class="review-rating text-5 text--charcoal width-text-left"> 
+                                <div> 
+                                  <span class="review-rating xsmall-only-hidden small-only-hidden"> 
+                                    <i class="icon-star icon--xxsmall"/> 
+                                    <i class="icon-star icon--xxsmall"/> 
+                                    <i class="icon-star icon--xxsmall"/> 
+                                    <i class="icon-star icon--xxsmall"/> 
+                                    <i class="icon-star-half icon--xxsmall"/> 
+                                  </span> 
+                                  <span class="review-rating medium-up-hidden text--charcoal"> 
+                                    <span class="text--underline"><@course_score/></span>
+                                    <?i class="icon-star icon--xxsmall relative" style="top: -2px;"/>
+                                    <?i class="icon-star-gray-light icon--xxsmall"/> 
+                                  </span> 
+                                  <div> 
+                                    <span class=" inline-block padding-right-xxsmall" style="height: 15px; line-height: 18px;"><@reviews_count/></span> 
+                                  </div> 
+                                </div> 
+                              </div> 
+                            </div> 
+                          </div> 
+                        </a> 
+                      </li> 
+                      <li class="width-1-1 col xlarge-up-text-right"> 
+                        <a class="btn-blue margin-top-medium margin-bottom-large icon-arrow-right-white icon--right" data-track-click="nav_click" data-track-props="{ \"type\": \"Top 50\", \"title\": \"Top 50 View All\" }" href="/collection/top-free-online-courses">See Top 50 </a> 
+                      </li> 
+                    </ul> 
+                  </div> 
+                </section> 
+              </div> 
+              <div class="border-box width-100 row cc-subMenu_tabContainer xsmall-only-padding-vert-small small-only-padding-vert-small medium-up-padding-vert-large" data-tab-content="subject"> 
+                <ul class="xsmall-only-padding-horz-large small-only-padding-horz-large medium-only-padding-horz-large large-only-padding-horz-large xlarge-up-padding-horz-xxlarge row" style="padding-bottom: 65px;"> 
+                  <li class="cc-subMenu-tabContainerButton padding-vert-medium xsmall-only-col small-only-col xsmall-only-width-100 small-only-width-100 text-center medium-up-absolute medium-up-bottom medium-up-left medium-up-margin-bottom-small"> 
+                    <a class="btn-blue width-100" data-track-click="nav_click" data-track-props="{ \"type\": \"Subject\", \"title\": \"See all Subjects\" }" href="/subjects"> 
+                      <span class="icon-arrow-right-white icon--right text--bold">See all Subjects</span> 
+                    </a> 
+                  </li> 
+                  <+li(subjects) class="width-100 small-up-width-1-2 large-up-width-1-3 xlarge-up-width-1-4 col"> 
+                    <a class="unit-horz padding-vert-small " data-track-click="nav_click" data-track-props@tracking_properties href@subject_url> 
+                      <span class="unit-block unit-fill"> 
+                        <h5 class="text--blue hover--text-underline text-2 text--bold truncate truncate--large "><@subject_name/></h5> 
+                        <p class="text--charcoal text-2"><@courses_count/>
+                          <span class="xsmall-only-hidden small-only-hidden medium-only-hidden large-only-hidden">/ 
+                            <span class="text--bold block xlarge-up-inline">
+                              <span class="text--bold" data-format-number=""><@followers_count/></span> followers
+                            </span> 
+                          </span> 
+                        </p> 
+                      </span> 
+                    </a> 
+                  </li> 
+                </ul> 
+              </div> 
+              <div class="border-box width-100 row cc-subMenu_tabContainer xsmall-only-padding-vert-small small-only-padding-vert-small medium-up-padding-vert-large" data-tab-content="university"> 
+                <ul class="xsmall-only-padding-horz-large small-only-padding-horz-large medium-only-padding-horz-large large-only-padding-horz-large xlarge-up-padding-horz-xxlarge row" style="padding-bottom: 65px;"> 
+                  <li class="cc-subMenu-tabContainerButton cc-subMenu-tabContainerButton-logoAlign padding-vert-medium xsmall-only-col small-only-col xsmall-only-width-100 small-only-width-100 text-center medium-up-absolute medium-up-bottom medium-up-left medium-up-margin-bottom-small"> 
+                    <a class="
+                        btn-blue width-100
+                        " data-track-click="nav_click" data-track-props="{ \"type\": \"University\", \"title\": \"See all Universties\" }" href="/universities"> 
+                      <span class="icon-arrow-right-white icon--right text--bold">See all Universties</span> 
+                    </a> 
+                  </li> 
+                  <+li(universities) class="width-100 small-up-width-1-2 xxlarge-up-width-1-3 medium-up-padding-right-medium col" data-responsive="{
+                \"xxlargeUp\": \"width-1-3\"
+              }"> 
+                    <a class="unit-horz padding-vert-xsmall" data-track-click="nav_click" data-track-props@tracking_properties href@university_url> 
+                      <span class="unit-block padding-right-small"> 
+                        <i class="icon icon--medium icon-mit-gray" data-responsive="{
+                      \"mediumUp\": \"icon--xlarge\"
+                    }"> </i> 
+                      </span> 
+                      <span class="unit-block unit-fill"> 
+                        <h5 class="text--blue hover--text-underline text-2 text--bold truncate truncate--large "><@university_name/></h5> 
+                        <p class="text--charcoal text-2"><@courses_count/>
+                          <span class="xsmall-only-hidden small-only-hidden medium-only-hidden large-only-hidden">/ 
+                            <span class="text--bold block xlarge-up-inline">
+                              <span class="text--bold" data-format-number=""><@followers_count/></span> followers
+                            </span> 
+                          </span> 
+                        </p> 
+                      </span> 
+                    </a> 
+                  </li> 
+                </ul> 
+              </div> 
+              <div class="border-box width-100 row cc-subMenu_tabContainer xsmall-only-padding-vert-small small-only-padding-vert-small medium-up-padding-vert-large" data-tab-content="provider"> 
+                <ul class="xsmall-only-padding-horz-large small-only-padding-horz-large medium-only-padding-horz-large large-only-padding-horz-large xlarge-up-padding-horz-xxlarge row" style="padding-bottom: 65px;"> 
+                  <li class="cc-subMenu-tabContainerButton cc-subMenu-tabContainerButton-logoAlign padding-vert-medium xsmall-only-col small-only-col xsmall-only-width-100 small-only-width-100 text-center medium-up-absolute medium-up-bottom medium-up-left medium-up-margin-bottom-small"> 
+                    <a class="
+
+                          btn-blue width-100
+                        " data-track-click="nav_click" data-track-props="{ \"type\": \"Provider\", \"title\": \"See all Providers\" }" href="/providers"> 
+                      <span class="icon-arrow-right-white icon--right text--bold">See all Providers</span> 
+                    </a> 
+                  </li> 
+                  <+li(providers) class="width-100 small-up-width-1-2 col medium-up-padding-right-medium"> 
+                    <a class="unit-horz padding-vert-small " data-track-click="nav_click" data-track-props@tracking_properties href@provider_path> 
+                      <span class="unit-block padding-right-small"> 
+                        <i class="icon icon--medium icon-coursera-gray" data-responsive="{
+                      \"mediumUp\": \"icon--xlarge\"
+                    }"/> 
+                      </span> 
+                      <span class="unit-block unit-fill"> 
+                        <h5 class="text--blue hover--text-underline text-2 text--bold truncate truncate--large "><@provider_name/></h5> 
+                        <p class="text--charcoal text-2"><@courses_count/>
+                          <span class="xsmall-only-hidden small-only-hidden">/ 
+                            <span class="text--bold block xlarge-up-inline">
+                              <span class="text--bold" data-format-number=""><@followers_count/></span> followers
+                            </span> 
+                          </span> 
+                        </p> 
+                        <p class="margin-top-small text--charcoal xsmall-only-hidden small-only-hidden medium-only-hidden large-only-hidden">
+                          <@provider_description/>
+                        </p> 
+                      </span> 
+                    </a> 
+                  </li> 
+                </ul> 
+              </div> 
+            </section> 
+            <div class="animate-hidden bg-white z-high absolute width-1-3 border-box border-all border--thin border--gray-light shadow" data-cc-search-results="" data-responsive="{
+          \"mediumUp\": \"arrow arrow-top-middle arrow--medium arrow--white\"
+        }" id="search-results"> 
+              <ol data-cc-search-results-list=""/> 
+              <div class="padding-medium text-center border-bottom border--thin border--gray-light bg-white"> 
+                <a class="search-item btn-blue btn--medium padding-horz-large icon--right icon-arrow-right-white" data-cc-search-link="" data-track-click="nav_click" data-track-props="{ \"type\": \"Search\", \"title\": \"Search View All\", \"query\": \"test\" }" href="/search?q=test"> See all results for 
+                  <span class="text--bold" data-cc-search-query-text=""/> 
+                </a> 
+              </div> 
+            </div> 
+            <div class="cc-subMenu animate-hidden bg-white z-top absolute width-1-3 border-all border--thin border--gray-light shadow arrow arrow-top-middle arrow--medium arrow--white" data-auto-align="true" data-sub-menu="mooc" style="top: 87px; max-width: 400px; left: 392.5px; margin-left: -200px;"> 
+              <ol> 
+                <*li(mooc_report_news)> 
+                  <a class="block padding-medium border-bottom border--gray-light border--thin hover-bg-gray" data-track-click="nav_click" data-track-props@tracking_properties href@path> 
+                    <h5 class="text-2 text--bold text--blue"><@title/></h5> 
+                    <p class="text-3 text--charcoal">
+                      <@descripion/>
+                    </p> 
+                    <p class="text-4 text--italic text--gray margin-top-xsmall"><@content_provider/></p> 
+                  </a> 
+                </li> 
+              </ol> 
+              <div class="padding-vert-small padding-horz-medium text-right"> 
+                <a class="btn-white icon--right icon-arrow-right-blue" data-track-click="nav_click" data-track-props="{ \"type\": \"MOOC Report\", \"title\": \"MOOC Report View All\" }" href="/report">See more</a> 
+              </div> 
+            </div> 
+            <div class="animate-hidden cc-subMenu-user bg-white z-top absolute width-1-3 border-all border--thin border--gray-light shadow" data-auto-align="true" data-responsive="{
+          \"xlargeUp\": \"arrow arrow-top-middle arrow--medium arrow--white\"
+        }" data-sub-menu="user"> 
+              <ol class="padding-vert-small"> 
+                <li> 
+                  <a class="block padding-horz-small padding-vert-xsmall" data-track-click="nav_click" data-track-props="{ \"type\": \"User\", \"title\": \"Sign in\" }" href="/login"> 
+                    <h5 class="text-3 text--bold text--blue">Sign in</h5> 
+                  </a> 
+                </li> 
+                <li> 
+                  <a class="block padding-horz-small padding-vert-xsmall" data-signup="navbar" data-track-click="nav_click" data-track-props="{ \"type\": \"User\", \"title\": \"Register\" }" href="/signup"> 
+                    <h5 class="text-3 text--bold text--blue">Register</h5> 
+                  </a> 
+                </li> 
+              </ol> 
+            </div> 
+            <div class="animate-hidden width-100 height-100 fixed top left" data-header-blanket="" id="cc-header-blanket" style="background-color: rgba(0, 0, 0, 0.8);"> </div> 
+          </header> 
+        </div> 
+        <div class="classcentral-style"> 
+          <p class="width-100 padding-top-medium text-center border-box padding-horz-large text--blue text-2">
+             To support our site, Class Central may be compensated by some course providers. 
+          </p> 
+        </div> 
+        <div class="classcentral-style"> 
+          <div class="width-centered padding-horz-small medium-up-padding-horz-medium xlarge-up-padding-horz-large margin-top-medium" style="max-width: 1250px;"> 
+            <ul class="margin-bottom-medium"> 
+              <*li(breadcrumbs) class="inline" ?itemprop="child" itemscope@~ itemtype="http://data-vocabulary.org/Breadcrumb"> 
+                <?i class="icon-chevron-right icon--xxsmall transparent"/> 
+                <a class="text--gray" href@path itemprop="url" onmousedown@google_analytics_script> 
+                  <span itemprop="title"><@name/></span> 
+                </a> 
+              </li> 
+            </ul> 
+          </div> 
+        </div> 
+        <@json_summary_script_tag tag(script) cdata text/>
+        <div class="classcentral-style"> 
+          <div class="row width-centered padding-horz-small medium-up-padding-horz-medium xlarge-up-padding-horz-large" style="max-width: 1250px;"> 
+            <div class="col pull width-100 large-up-width-3-5 xlarge-up-width-2-3 large-up-padding-right-large xlarge-up-padding-right-xxlarge"> 
+              <div class="classcentral-style"> 
+                <h1 class="head-2 medium-up-head-1 text--bold margin-bottom-xsmall medium-up-margin-bottom-small xlarge-up-margin-bottom-xsmall" id="course-title">
+                  <@course_name/>
+                </h1> 
+                <?a style="top: -3px;" class="inline-block head-5 text--upper padding-horz-xsmall text--white bg-banner bg-banner--purple text--bold relative margin-right-xxsmall" href="https://www.class-central.com/collection/top-free-online-courses?utm_source=top-50-course-page">
+                  <@label_name/>
+                </a>
+                <p class="head-4 medium-up-head-3 block large-up-inline-block"> 
+                  <*@universities>
+                    <a class="text--charcoal hover-text--underline" data-overlay-trigger@overlay_trigger_properties href@path onclick@course_google_analytics_onclick_script title@link_title>
+                      <@name/>
+                    </a>
+                    <?@and >and</@and>
+                    <?@comma >,</@comma>
+                  </@universities>
+                  <?@provider>
+                    via 
+                    <a class="text--charcoal text--italic hover-text--underline" data-overlay-trigger@overlay_trigger_properties data-track-click="course_click" data-track-props@course_tracking_properties href@path onclick@course_google_analytics_onclick_script>
+                      <@name/>
+                    </a>
+                  </@provider>
+                </p> 
+                <div class="unit-horz xlarge-up-margin-top-xxsmall margin-bottom-small" id="course-social"> 
+                  <div class="inline-block unit-block padding-right-medium"> 
+                    <span class="review-rating "> 
+                      <+@nav[stars]>
+                        <?i class="icon-star-gray-light icon--xxsmall"/>
+                        <?i class="icon-star icon--xxsmall"/> 
+                      </@nav[stars]>
+                    </span> 
+                    <span class="review-rating hidden text--charcoal"> 
+                      <?span class="text--underline"><@course_score/></span> 
+                      <?i class="icon-star icon--xxsmall relative" style="top: -2px;"/>
+                      <?i class="icon-star-gray-light icon--xxsmall"/>
+                    </span>
+                    <a class="text-4 text--charcoal hover-text--underline medium-up-text-3 padding-left-xsmall relative medium-up-offset-4" href="#reviews" id="read-reviews" onmousedown@google_analytics_reviews_link_script>
+                      <@reviews_snippet/>
+                    </a> 
+                  </div> 
+                  <?div class="
+        block unit-block xlarge-up-inline-block
+        xsmall-only-margin-top-xxsmall
+        small-only-margin-top-xxsmall
+        medium-only-margin-top-xxsmall
+        large-only-margin-top-xxsmall
+      "> 
+                    <div class="inline-block relative margin-right-xxsmall" style="padding-left: 88px;"> 
+                      <div class="absolute left"> 
+                        <ul class="inline-block relative"> 
+                          <*li(people_interested) class="inline-block relative" style@~> 
+                            <a class="border-box border-all inline-block relative" href@user_path onmousedown@user_link_google_analytics_tracking rel="nofollow" title@user_link_title style@style_with_background_image> 
+                              <span class="text-center absolute width-100 left text--bold" style@acronym_style>
+                                <@user_acronym/>
+                              </span> 
+                              <span class="bg-cover block absolute width-100 height-100 left top" style@style_with_background_image/> 
+                            </a> 
+                          </li> 
+                        </ul> 
+                      </div> 
+                      <strong class="head-3 medium-up-head-2 text--bold text--charcoal" data-format-number=""><@interested_users_count/></strong> 
+                    </div> 
+                    <span class="text-4 medium-up-text-3 text--charcoal relative" style="top: -2px;"> students interested</span> 
+                  </div> 
+                </div> 
+              </div> 
+              <?a href@credential[path] onmousedown@credential[google_analytics_script]> 
+                <span class="btn-white btn--small text--charcoal icon--left icon-credential">Earn A Credential</span> 
+                <span class="text--charcoal margin-left-xxsmall">Part of the</span> 
+                <span class="text--blue"><@credential[name]/></span> 
+              </a> 
+            </div> 
+            <div class="col push width-100 large-up-width-2-5 xlarge-up-width-1-3 large-up-padding-left-small margin-top-xsmall"> 
+              <div class="classcentral-style"> 
+                <div class="shadow border-all border--xgray border--thin"> 
+                  <?div class="ratio ratio--9-16 bg-gray bg-cover border-bottom border--thin border--gray-xlight" data-trailer-container@trailer_container style@style_with_background_image>
+                    <?div class="video-container ratio-content width-100 height-100"/>
+                    <?div class="video-button z-high absolute left width-100 text-center" style="top: 40%;">
+                      <button class="relative shadow btn-white btn-circle icon--center btn--large icon-play" data-trailer@trailer data-track-click="course_click" data-track-props@tracking_properties>
+                        <div style="right: 22px;" class="loading-pulse hidden absolute cc-search-loading-pulse"/>
+                      </button>
+                    </div>
+                  </div> 
+                  <div class="padding-horz-small medium-up-padding-horz-medium xxlarge-up-padding-horz-large padding-vert-medium row"> 
+                    <@add_script node/>
+                    <div class="col width-2-3 xlarge-up-width-3-5 xxlarge-up-width-2-3 padding-left-small"> 
+                      <a class="btn--large btn-green width-100" href@redirect_to_course_link id="btnProviderCoursePage" onclick@redirect_to_course_google_analytics_script target="_blank"> 
+                        <span class="text-1 text--bold" style="font-size: 20px;">Go to class</span> 
+                        <span class="small-only-hidden xsmall-only-hidden xlarge-only-hidden"> 
+                          <i class="icon icon-arrow-right-white "/> 
+                        </span> 
+                      </a> 
+                    </div> 
+                  </div> 
+                  <ul> 
+                    <li class="border-box padding-vert-small padding-horz-small medium-up-padding-horz-large border-top border--thin border--gray width-100 row"> 
+                      <strong class="text-3 text--upper text--bold width-1-3 col">Provider</strong> 
+                      <a class="text-2 text--charcoal hover-text--underline width-2-3 block col" data-overlay-trigger@provider_overlay_trigger_properties_2 href@provider_path_2 onclick@provider_google_analytics_link_script title@provider_link_title_2>
+                        <@provider_name_2/>
+                      </a> 
+                    </li> 
+                    <li class="border-box padding-vert-small padding-horz-small medium-up-padding-horz-large border-top border--thin border--gray width-100 row"> 
+                      <strong class="text-3 text--upper text--bold width-1-3 col">Subject</strong> 
+                      <a class="text-2 text--charcoal hover-text--underline width-2-3 block col" data-overlay-trigger@subject_overlay_trigger_properties_2 href@subject_path onclick@subject_google_analytics_link_script title@subject_link_title><@subject_name/></a> 
+                    </li> 
+                    <li class="border-box padding-vert-small padding-horz-small medium-up-padding-horz-large border-top border--thin border--gray width-100 row"> 
+                      <strong class="text-3 text--upper text--bold width-1-3 col">$ Cost</strong> 
+                      <span class="text-2 text--charcoal width-2-3 block col">
+                        <@cost_description/>
+                      </span> 
+                    </li> 
+                    <?li class="border-box padding-vert-small padding-horz-small medium-up-padding-horz-large border-top border--thin border--gray width-100 row"> 
+                      <strong class="text-3 text--upper text--bold width-1-3 col">Session</strong> 
+                      <a class="text-2 text--charcoal hover-text--underline width-2-3 block col" href@course_status_path>
+                        <@course_status/>
+                      </a> 
+                    </li> 
+                    <?li class="border-box padding-vert-small padding-horz-small medium-up-padding-horz-large border-top border--thin border--gray width-100 row"> 
+                      <strong class="text-3 text--upper text--bold width-1-3 col">Language</strong> 
+                      <a class="text-2 text--charcoal hover-text--underline width-2-3 block col" href@language_path>
+                        <@language/>
+                      </a> 
+                    </li> 
+                    <?li class="border-box padding-vert-small padding-horz-small medium-up-padding-horz-large border-top border--thin border--gray width-100 row"> 
+                      <strong class="text-3 text--upper text--bold width-1-3 col">Certificate</strong> 
+                      <span class="text-2 text--charcoal width-2-3 block col"><@certificate_description/></span> 
+                    </li>
+                    <?li class="border-box padding-vert-small padding-horz-small medium-up-padding-horz-large border-top border--thin border--gray width-100 row">
+                      <strong class="text-3 text--upper text--bold width-1-3 col">Effort</strong>
+                      <span class="text-2 text--charcoal width-2-3 block col"><@effort/></span>
+                    </li>
+                    <li class="border-box padding-vert-small padding-horz-small medium-up-padding-horz-large border-top border--thin border--gray width-100 row"> 
+                      <strong class="text-3 text--upper text--bold width-1-3 col">Start Date</strong> 
+                      <span class="width-2-3 block col"> 
+                        <select class="margin-left-xxsmall icon--right icon-chevron-down-charcoal text-2 text--charcoal border-all border--white bg-white relative" id="sessionOptions" style@~> 
+                          <*@start_dates>
+                            <?@group>
+                              <optgroup label@name/> 
+                            </@group>
+                            <?@option>
+                              <option content@yyyy_mm_dd_date data-sessionstartdate@dd_mm_yyyy_date data-sessionstatus="1" data-sessiontype@type data-url@course_url ?selected@current_date_selected><@raw_date/></option> 
+                            </@option>
+                          </@start_dates>
+                        </select> 
+                      </span> 
+                    </li> 
+                    <?li class="border-box padding-vert-small padding-horz-small medium-up-padding-horz-large border-top border--thin border--gray width-100 row"> 
+                      <strong class="text-3 text--upper text--bold width-1-3 col">Duration</strong> 
+                      <span class="text-2 text--charcoal width-2-3 block col"><@duration/></span> 
+                    </li> 
+                  </ul> 
+                  <p class="padding-medium medium-up-padding-large text-center border-top border--thin border--gray"> 
+                    <span class="text-2 text--charcoal block margin-bottom-small margin-horz-small">
+                      Taken this course? Share your experience with other students.
+                    </span> 
+                    <a class="btn-blue icon--left icon-star-white" href@new_course_review_path onmousedown@new_course_review_google_analytics_script rel="nofollow"> Write review </a> 
+                  </p> 
+                </div> 
+              </div> 
+              <div class="xsmall-only-hidden small-only-hidden">
+                <*aside(ignore_this) class="margin-vert-large margin-horz-medium"> 
+                  <@revisions_or_interviews node/>
+                </aside> 
+              </div> 
+              <div class="classcentral-style"> 
+                <div class="hidden xlarge-up-block margin-top-xxlarge"> 
+                  <*a(after_menu_ads) class="xsmall-only-hidden small-only-hidden width-100 relative unit-horz margin-bottom-large padding-medium border-all border--thin radius" data-track-impression="ad_impression" data-track-props@tracking_properties href@url onmousedown@google_analytics_script rel="nofollow" style@~ target="_blank"> 
+                    <p class="text-2 text--charcoal margin-bottom-xxsmall"> 
+                      <span class="text--bold block padding-right-large" style="color: #FF8E6C;"><@title/></span> 
+                      <span class="text--italic"><@provider_url/></span> 
+                    </p> 
+                    <p class="text-3 text--charcoal block">
+                      <@description/>
+                    </p> 
+                    <span class="text-3 border-all border--thin padding-horz-xxsmall padding-top-xxsmall radius text--bold absolute top margin-top-small" style="right: 15px; border-color: #FF8E6C; color: #FF8E6C;"> AD </span> 
+                  </a> 
+                </div> 
+              </div> 
+            </div> 
+            <div class="col pull width-100 large-up-width-3-5 xlarge-up-width-2-3 large-up-padding-right-large xlarge-up-padding-right-xxlarge"> 
+              <section class="classcentral-style" id="course-summary"> 
+                <div class="xsmall-only-hidden small-only-hidden border-all border--gray-xlight border--thin margin-vert-medium padding-vert-medium"> 
+                  <div class="row hr-vert"> 
+                    <*div(top_page_ads) class@~> 
+                      <div class="relative padding-horz-large" data-track-impression="ad_impression" data-track-props@tracking_properties> 
+                        <span class="text-3 absolute top right text--bold padding-right-medium" style="color: #FF8E6C;"> AD </span> 
+                        <a class="unit-horz cursor-pointer" href@url onmousedown@google_analytics_script rel="nofollow" target="_blank"> 
+                          <span class="unit-block padding-right-xxsmall" style="vertical-align: top;"> 
+                            <i class="icon-link-blue icon--xsmall" style="height: 20px;"/> 
+                          </span> 
+                          <span class="unit-block unit-fill text--charcoal padding-right-large"> 
+                            <strong class="inline-block text--bold text--blue text-2"><@title/></strong> 
+                            <span class="block text--charcoal"><@provider_snippet/></span> 
+                          </span> 
+                        </a> 
+                      </div> 
+                    </div> 
+                  </div> 
+                </div>
+
+                  <div class="classcentral-style" id="course-nav"> 
+                    <nav class="bg-white border-bottom border--gray-light border--thin text-center width-100"> 
+                      <div data-container=""> 
+                        <ul data-sub-container=""> 
+                          <?li class="inline-block"> 
+                            <button class="padding-horz-xsmall large-up-padding-horz-medium padding-vert-xsmall inline-block text--bold head-6 medium-up-head-4 text--charcoal" data-slideto="overview" data-slideto-offset="-106" data-track-click="course_click" data-track-props@top_nav[overview_tracking_properties]>Overview</button>
+                          </li> 
+                          <?li class="inline-block"> 
+                            <button class="padding-horz-xsmall large-up-padding-horz-medium padding-vert-xsmall inline-block text--bold head-6 medium-up-head-4 text--charcoal" data-slideto="syllabus" data-slideto-offset="-106" data-track-click="course_click" data-track-props@top_nav[syllabus_tracking_properties]>Syllabus</button>
+                          </li> 
+                          <?li class="inline-block"> 
+                            <button class="padding-horz-xsmall large-up-padding-horz-medium padding-vert-xsmall inline-block" data-slideto="help" data-slideto-offset="-106" data-track-click="course_click" data-track-props@top_nav[help_center_tracking_properties]> 
+                              <span class="xsmall-only-hidden small-only-hidden text--bold head-6 medium-up-head-4 text--charcoal">Help Center</span> 
+                              <span class="text--bold head-6 medium-up-head-4 text--charcoal medium-up-hidden">Help</span> 
+                            </button> 
+                          </li> 
+                          <?li class="medium-up-inline-block xsmall-only-hidden small-only-hidden"> 
+                            <button class="padding-horz-xsmall large-up-padding-horz-medium padding-vert-xsmall inline-block text--bold head-6 medium-up-head-4 text--charcoal" data-slideto="related" data-slideto-offset="-106" data-track-click="course_click" data-track-props@top_nav[related_courses_tracking_properties]>Related Courses</button> 
+                          </li> 
+                          <li class="inline-block"> 
+                            <button class="padding-horz-xsmall large-up-padding-horz-medium padding-vert-xsmall inline-block text--bold head-6 medium-up-head-4 text--charcoal" data-slideto="reviews" data-slideto-offset="-106" data-track-click="course_click" data-track-props@top_nav[reviews_tracking_properties]>Reviews</button> 
+                          </li> 
+                        </ul> 
+                      </div> 
+                    </nav> 
+                  </div>
+
+                <div class="padding-vert-large"> 
+                  <h2 class="head-2 medium-up-head-1 margin-bottom-small" id="overview">Overview</h2> 
+                  <article class="wysiwyg text-2 medium-up-text-1 margin-bottom-large"> 
+                    <?@provider_advice>
+                      <p class="margin-bottom-medium text-center large-up-text-left"> 
+                        <span class="text-2 text--bold margin-right-small"><@title/></span> 
+                        <a class="btn-white icon--left icon-lightbulb-skyblue" href@url onmousedown@google_analytics_script target="_blank"><@button_text/></a> 
+                      </p>
+                    </@provider_advice>
+                    <div class="relative " data-expand-article-target="overview">
+                      <@course_overview node/>
+                    </div>
+                    <?p class="margin-vert-small text-left"> 
+                      <button class="xsmall-only-width-100 small-only-width-100 btn--large btn-blue-outline icon--right icon--small icon-chevron-down-blue margin-bottom-large" data-expand-article="overview"> Read more </button> 
+                    </p> 
+                  </article> 
+                  <?h2 class="head-2 medium-up-head-1 margin-bottom-small" id="syllabus">Syllabus</h2> 
+                  <?article class="wysiwyg text-2 medium-up-text-1 margin-bottom-large"> 
+                    <div class="relative fade-bottom fade-hidden" data-expand-article-target="syllabus"> 
+                      <@syllabus node/>
+                    </div> 
+                  </article> 
+                  <?p class="margin-vert-small text-left"> 
+                    <button class="xsmall-only-width-100 small-only-width-100 btn--large btn-blue-outline icon--right icon--small icon-chevron-down-blue margin-bottom-large" data-expand-article="syllabus"> Read more </button> 
+                  </p> 
+                  <?div class="text-1 margin-top-medium"> 
+                    <div class="row"> 
+                      <h4 class="col width-100 text--bold inline-block margin-bottom-xsmall"> Taught by </h4> 
+                      <div class="col width-100 text-2 medium-up-text-1"><@taught_by/></div> 
+                    </div> 
+                  </div> 
+                </div> 
+                <?div class="border-top border--gray-dark border--thin padding-top-medium">
+                  <h4 class="text-1 width-100 text--bold inline-block margin-bottom-xsmall">
+                    Class Central Charts
+                  </h4>
+                  <ul class="text-2 medium-up-text-1 margin-bottom-medium">
+                    <*li(charts)>
+                      <strong><@position/></strong> in
+                      <+@subject>
+                        <a class="text--blue" href@path onmousedown@google_analytics_script>
+                          <@name/>
+                        </a>
+                        <?@next> > </@next>
+                      </@subject>
+                    </li>
+                  </ul>
+                </div>
+                <?div class="text-1 border-top border--gray-dark border--thin row padding-top-medium"> 
+                  <h4 class="col width-100 text--bold inline-block margin-bottom-xsmall"> Tags </h4> 
+                  <div class="col width-100"> 
+                    <*a(tags) class="block medium-up-inline-block btn-gray btn--medium text--normal margin-bottom-xsmall medium-up-margin-right-xsmall" href@path onmousedown@google_analytics_script>
+                      <@name/>
+                    </a> 
+                  </div> 
+                </div> 
+              </section> 
+              <?section class="border-top border--gray-dark border--thin margin-vert-medium"> 
+                <h2 class="head-2 medium-up-head-1 margin-top-medium" id="help">Help Center</h2> 
+                <?p class="text-1 margin-top-medium"> Most commonly asked questions about 
+                  <i class="xsmall-only-hidden small-only-hidden icon-coursera icon--large"/> 
+                  <a class="xsmall-only-hidden small-only-hidden head-3 text--bold text--charcoal relative" href@help_section[provider][path] style="left: -5px; top: 2px;"><@help_section[provider][name]/></a> 
+                  <a class="medium-up-hidden text--bold text--blue relative" href@help_section[provider][path_2]><@help_section[provider][name_2]/></a> 
+                </p> 
+                <?ul class="margin-bottom-large"> 
+                  <*li(help_section[faq]) class="margin-vert-xsmall"> 
+                    <a class="text--blue text-1" href@path><@title/></a> 
+                  </li> 
+                </ul> 
+                <?div class="text-left margin-top-medium margin-bottom-xlarge"> 
+                  <a class="xsmall-only-width-100 small-only-width-100 btn-blue-outline btn--large" href@help_section[more][provider_path] title@help_section[more][title]> 
+                    <span class="xsmall-only-hidden text--bold">Browse </span> More 
+                    <span><@help_section[more][provider_snippet]/></span> 
+                  </a> 
+                </div> 
+              </section> 
+              <section class="border-top border--gray-dark border--thin margin-vert-medium" id="related"> 
+                <h3 class="head-2 medium-up-head-1 margin-top-large margin-bottom-small">
+                  <@related_or_highest_rated_courses_snippet/>
+                </h3>
+                <ul> 
+                  <*li(similar_courses) class@~> 
+                    <div class="col width-10-16 text-left"> 
+                      <ul class="text-3 block"> 
+                        <*li(universities) class="inline"> 
+                          <a class="uni-name text--charcoal hover-text--underline" href@path onclick@google_analytics_script title@link_title>
+                            <@name/>
+                          </a> 
+                        </li> 
+                      </ul> 
+                      <a class="text--charcoal text-2 medium-up-text-1 text--bold block course-name" href@course_path onmousedown@course_google_analytics_script>
+                        <@course_name/>
+                      </a> 
+                      <span class="via">via</span> 
+                      <a class="initiativelinks text--charcoal text--italic hover-text--underline" href@provider_path onclick@provider_google_analytics_script title@provider_link_title>
+                        <@provider_name/>
+                      </a> 
+                    </div> 
+                    <div class="col width-6-16 text-right padding-top-medium"> </div> 
+                  </li>
+                </ul> 
+                <?div class="text-left margin-top-medium margin-bottom-xlarge"> 
+                  <a class="xsmall-only-width-100 small-only-width-100 btn-blue-outline btn--large" href@more_subject_path onclick@more_subject_google_analytics_script title@more_link_title> 
+                    <span class="xsmall-only-hidden text--bold">Browse</span> More 
+                    <span><@more_subject_snippet/></span> 
+                  </a> 
+                </div> 
+              </section> 
+              <div class="course-all-reviews border-top border--gray-dark border--thin padding-vert-large" id="course-all-reviews"> 
+                <header class="xsmall-only-margin-bottom-medium small-only-margin-bottom-medium reviews-header"> 
+                  <@reviews_header>
+                    <h2 id="reviews">
+                      <?span class="head-2 medium-up-head-1 margin-bottom-small"> Reviews </span> 
+                      <?span class="head-2 medium-up-head-1 margin-bottom-small"> Review </span>
+                      <span class="text-1 block">
+                         <@snippet/>
+                      </span> 
+                      <div class="margin-vert-medium"> 
+                        <span class="review-rating xsmall-only-hidden small-only-hidden"> 
+                          <+@stars>
+                            <?i class="icon-star-gray-light icon--xxsmall"/>
+                            <?i class="icon-star icon--xxsmall"/> 
+                          </@stars>
+                        </span> 
+                        <span class="review-rating medium-up-hidden text--charcoal"> 
+                          <?span class="text--underline"><@score/></span> 
+                          <?i class="icon-star icon--xxsmall relative" style="top: -2px;"/>
+                          <?i class="icon-star-gray-light icon--xxsmall"/>
+                        </span>
+                        <span class="relative inline-block text-3 text--charcoal margin-left-xsmall" style="top: 3px">Based on 
+                          <strong class="text-1 text--bold"><@reviews_count/></strong> reviews 
+                        </span> 
+                      </div> 
+                    </h2> 
+                    <div class="margin-vert-medium row"> 
+                      <ul class="col width-100 medium-up-width-1-3"> 
+                        <+li(rating_distribution) class="row"> 
+                          <span class="col width-3-16 text--gray text-3"><@star_snippet/></span> 
+                          <span class="col width-10-16 bg-gray relative" style="height: 10px; top: 2px"> 
+                            <span class="bg-yellow absolute height-100 left top" style@~/> 
+                          </span> 
+                          <span class="col width-3-16 text--charcoal text-3 padding-left-xsmall"><@percent_rating/></span> 
+                        </li>
+                      </ul> 
+                      <div class="col width-100 medium-up-width-2-3 push text-center xsmall-only-hidden small-only-hidden text-center" style="position: relative; top: -20px;"> 
+                        <img src="https://ccweb.imgix.net/https%3A%2F%2Fwww.class-central.com%2Fbundles%2Fclasscentralsite%2Fimages%2Freviews-illustration.png?auto=compress&ixlib=php-2.1.1&s=d3ef1b9ee41b43e638a872fdf3a9c9e7" width="250"/> 
+                      </div> 
+                    </div> 
+                    <div class="text-2"> 
+                      <p class="margin-bottom-medium">
+                        Did you take this course? Share your experience with other students.
+                      </p> 
+                      <a class="xsmall-only-width-100 small-only-width-100 btn-blue review-button" href="/review/new/8619" onmousedown="ga('send','event', 'Create Review Link', 'Write a review', 'Psychodiagnostics and Psychological Assessment')" rel="nofollow"> 
+                        <span class="text-1 icon--left icon-star-white text--bold">Write a review</span> 
+                      </a> 
+                      <div> 
+                        <?div class="single-reviews-wrap" id="course-reviews-container"> 
+                          <div class="pagination-block text-center medium-up-text-right relative"> 
+                            <?ul class="inline-block"> 
+                              <?li class="inline-block margin-horz-xxsmall"> 
+                                <span class="text--charcoal padding-xsmall bg-gray radius">
+                                  1
+                                </span> 
+                              </li> 
+                              <?li class="inline-block margin-horz-xxsmall "> 
+                                <button class="text-2 text--blue" data-courseid@top_pagination[course_id] data-paginate="" data-start="20">
+                                  2
+                                </button> 
+                              </li> 
+                              <?li class="inline-block margin-horz-xxsmall xsmall-only-hidden"> 
+                                <button class="text-2 text--blue" data-courseid@top_pagination[course_id_2] data-paginate="" data-start="40">
+                                  3
+                                </button>
+                              </li>
+                              <?li class="inline-block margin-horz-xxsmall"> 
+                                <span class="text--gray margin-right-xxsmall">…</span> 
+                                <button class="text-2 text--blue" data-courseid@top_pagination[course_id_3] data-paginate="" data-start@cant_u_believe>
+                                  <@four_or_more/>
+                                </button> 
+                              </li> 
+                            </ul> 
+                            <?button class="icon--xsmall padding-xsmall icon--center icon-chevron-right-blue" data-courseid@top_pagination[course_id_3] data-paginate="" data-start="20" href="#">
+                              >
+                            </button> 
+                          </div> 
+                          <div id="reviews-items"> 
+                            <*div(first_page_reviews) class="border-all  border--gray-xlight radius padding-large single-review margin-top-medium margin-bottom-large" id@div_id style@~> 
+                              <meta content@content/> 
+                              <div class="row"> 
+                                <div class="col width-100 large-up-width-1-4 xlarge-up-width-3-16"> 
+                                  <?strong class="text-2 text--bold">
+                                    <@author/>
+                                  </strong>
+                                  <?div class="unit-horz"> 
+                                    <div class="unit-block padding-right-xsmall"> 
+                                      <?a class="border-box border-all inline-block relative" href@user_path onmousedown@user_google_analytics_script rel="nofollow" style@~ title@user_link_title> 
+                                        <span class="text-center absolute width-100 left text--bold" style@~>
+                                          <@user_acronym/>
+                                        </span> 
+                                        <span class="bg-cover block absolute width-100 height-100 left top" style@style_with_background_image/> 
+                                      </a> 
+                                    </div> 
+                                    <strong class="unit-block unit-fill text-2 text--bold">
+                                      <@author/>
+                                    </strong> 
+                                  </div>
+                                </div> 
+                                <div class="col width-100 large-up-width-3-4 xlarge-up-width-13-16 xlarge-up-padding-left-medium"> 
+                                  <span class="review-rating xsmall-only-hidden small-only-hidden"> 
+                                    <+@stars>
+                                      <?i class="icon-star-gray-light icon--xxsmall"/>
+                                      <?i class="icon-star icon--xxsmall"/> 
+                                    </@stars>
+                                  </span> 
+                                  <span class="review-rating medium-up-hidden text--charcoal"> 
+                                    <span class="text--underline"><@score/></span> 
+                                    <?i class="icon-star icon--xxsmall relative" style="top: -2px;"/>
+                                    <?i class="icon-star-gray-light icon--xxsmall"/>
+                                  </span> 
+                                  <a class="review-date relative text--charcoal inline-block padding-left-xxsmall" href@path><@time_ago_in_words/></a> 
+                                  <meta content@review_meta_score/> 
+                                  <div class="review-title title-with-image margin-top-xsmall text-2"> 
+                                    <?span class="author"><?@author_2/></span>
+                                    <?@author_block>
+                                      by
+                                      <a class="text--charcoal" href@path onmousedown@google_analytics_script rel="nofollow">
+                                        <span class="author"><?@author/></span> 
+                                      </a> 
+                                    </@author_block>
+                                    <span class="text--italic"> 
+                                      <@user_experience tag text/>
+                                    </span> 
+                                  </div> 
+                                  <div class="review-content text-2 margin-vert-small"> 
+                                    <?div data-expand-preview@~> 
+                                      <div class="margin-right-xsmall inline">
+                                         <@truncated_description text node/>
+                                      </div> 
+                                      <button class="text-2 icon--right icon-chevron-down-blue text--blue" data-expand@~>
+                                        Read more
+                                      </button> 
+                                    </div> 
+                                    <div class@description_div_class data-expand-target@~>
+                                      <@description tag text/>
+                                    </div>
+                                  </div>
+                                  <?div id="ext-review-link">
+                                    <a class="margin-bottom-medium text-2 text--blue icon--left icon-expand-blue" href@external_review_url target="_blank">
+                                      Full Review
+                                    </a>
+                                  </div>
+                                  <div class="row"> 
+                                    <div class="col width-1-2"> 
+                                      <?div class="unit-horz"> 
+                                        <span class="review-feedback unit-block head-2 text--bold padding-right-xsmall"><@helpful_count/></span> 
+                                        <span class="unit-block unit-fill text-4">
+                                          <?@people_found> people found </@people_found>
+                                          <?@person_found> person found </@person_found>
+                                          <br/> this review helpful 
+                                        </span> 
+                                      </div> 
+                                    </div> 
+                                    <div class="col width-1-2 text-right"> 
+                                      <div class="text-3 question" id@review_feedback_div_id>
+                                        <span class="xsmall-only-hidden small-only-hidden">
+                                          Was this review helpful to you?
+                                        </span> 
+                                        <span class="yes-no padding-left-xsmall"> 
+                                          <a class="btn-white btn-circle border--blue btn--medium review-feedback" data-reviewid@id href="#" onmousedown@helpful_link_google_analytics_script> 
+                                            <span class="icon--center icon-thumbsup-blue">Yes</span> 
+                                          </a> 
+                                        </span> 
+                                      </div> 
+                                    </div> 
+                                  </div> 
+                                </div> 
+                              </div> 
+                            </div> 
+                          </div> 
+                          <div class="pagination-block text-center relative"> 
+                            <?ul class="inline-block"> 
+                              <?li class="inline-block margin-horz-xxsmall"> 
+                                <span class="text--charcoal padding-xsmall bg-gray radius">
+                                  1
+                                </span> 
+                              </li> 
+                              <?li class="inline-block margin-horz-xxsmall "> 
+                                <button class="text-2 text--blue" data-courseid@top_pagination[course_id] data-paginate="" data-start="20">
+                                  2
+                                </button> 
+                              </li> 
+                              <?li class="inline-block margin-horz-xxsmall xsmall-only-hidden"> 
+                                <button class="text-2 text--blue" data-courseid@top_pagination[course_id_2] data-paginate="" data-start="40">
+                                  3
+                                </button> 
+                              </li> 
+                              <?li class="inline-block margin-horz-xxsmall"> 
+                                <span class="text--gray margin-right-xxsmall">…</span> 
+                                <button class="text-2 text--blue" data-courseid@top_pagination[course_id_3] data-paginate="" data-start@cant_u_believe>
+                                  <@four_or_more/>
+                                </button> 
+                              </li> 
+                            </ul> 
+                            <?button class="icon--xsmall padding-xsmall icon--center icon-chevron-right-blue" data-courseid@top_pagination[course_id_3] data-paginate="" data-start="20" href="#">
+                              >
+                            </button>
+                          </div> 
+                        </div> 
+                      </div> 
+                    </div>
+                  </@reviews_header>
+                </header>
+              </div> 
+            </div>
+            <@form_popup tag(script) cdata text/>
+          </div> 
+          <div class="classcentral-style"> <!-- signup --> 
+            <section class="bg-cc-gradient text-center padding-medium medium-up-padding-xxlarge margin-vert-large"> 
+              <div class="padding-vert-large"> 
+                <header class="margin-bottom-large"> 
+                  <h2 class="symbol-classcentral-blue">Class Central</h2> 
+                  <p class="head-3 medium-up-head-2 margin-top-medium width-centered" style="max-width: 600px;">
+                    Get personalized course recommendations, track subjects and courses with reminders, and more.
+                  </p> 
+                </header> 
+                <a class="btn-blue btn--large" data-signup="interlude" data-track-click="interlude_click" data-track-props@footer[tracking_properties][sign_up] href="/signup"> Sign up for free </a> 
+              </div> 
+            </section> 
+            <footer class="width-centered bg-white" style="max-width: 1200px;"> 
+              <div class="row text-center padding-large large-up-padding-xxlarge"> 
+                <div class="col width-100 large-up-width-3-5 row border-box padding-bottom-xxlarge" id="footer-links"> 
+                  <div class="col width-100 medium-up-width-1-2 text-center large-up-text-left border-box large-up-padding-right-medium"> 
+                    <h4 class="head-3 margin-bottom-medium">Browse online courses and MOOCs By</h4> 
+                    <ul class="margin-bottom-large"> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][random] href="/random" title="Are you feeling lucky?"> Random </a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][providers] href="/providers"> Providers </a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][universities] href="/universities"> Universities </a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][institutions] href="/institutions"> Institutions </a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][subject] href="/subjects"> Subjects </a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][careers] href="/careers"> Careers </a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][languages] href="/languages"> Languages </a> 
+                      </li> 
+                    </ul> 
+                  </div> 
+                  <div class="col width-100 medium-up-width-1-2 text-center large-up-text-left border-box large-up-padding-right-medium"> 
+                    <h4 class="head-3 margin-bottom-medium">Quick Links</h4> 
+                    <ul class="margin-bottom-large"> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][quick_links][top_mooc] href="/report/top-moocs/" title="Top 50 MOOCs of All Time">Top 50 MOOCs of All Time</a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][quick_links][improve_writing] href="/report/writing-free-online-courses/" title="25 Free Online Courses to Improve Your Writing Skills">Improve Your Writing Skills</a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][quick_links][edx] href="/provider/edx" title="edX">edX</a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][quick_links][coursera] href="/provider/coursera" title="Coursera">Coursera</a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][quick_links][udacity] href="/provider/udacity" title="Udacity">Udacity</a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][quick_links][future_learn] href="/provider/futurelearn" title="FutureLearn">FutureLearn</a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][quick_links][stanford] href="/university/stanford" title="Stanford">Stanford</a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][quick_links][harvard] href="/university/harvard" title="Harvard">Harvard</a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][quick_links][mit] href="/university/mit" title="MIT">MIT</a> 
+                      </li> 
+                      <li class="margin-vert-xxsmall"> 
+                        <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][quick_links][google] href="/institution/google" title="Google">Google</a> 
+                      </li> 
+                    </ul> 
+                  </div> 
+                </div> 
+                <div class="col xsmall-only-width-centered small-only-width-centered medium-only-width-centered width-100 medium-up-width-3-4 large-up-width-2-5 text-center large-up-text-left"> 
+                  <h3 class="head-3 margin-bottom-small">Class Central Newsletter</h3> 
+                  <p class="text--charcoal text-2">Never miss a course.</p> 
+                  <form action="/newsletters/subscribeTo/mooc-report" class="form margin-top-medium margin-bottom-small" method="post"> 
+                    <div class="row"> 
+                      <input class="col width-100 medium-up-width-3-5" name="email" placeholder="Your email" required="" type="email"/> 
+                      <div class="col width-100 medium-up-width-2-5"> 
+                        <button class="btn-blue width-100 xsmall-only-margin-top-small small-only-margin-top-small medium-up-margin-left-medium" type="submit">Subscribe</button> 
+                      </div> 
+                    </div> 
+                  </form> 
+                  <p class="text--gray text-3">No spam. Unsubscribe at any time.</p> 
+                  <h3 class="head-3 margin-bottom-small margin-top-large">About Class Central</h3> 
+                  <p class="text--charcoal text-2">
+                    Class Central is a search engine and reviews site for free online courses popularly known as MOOCs or Massive Open Online Courses.
+                  </p> 
+                  <ul class="margin-top-medium"> 
+                    <li class="margin-right-xsmall inline-block"> 
+                      <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][more][mooc_report] href="/report">MOOC Report</a> 
+                    </li> 
+                    <li class="margin-right-xsmall inline-block"> 
+                      <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][more][help_center] href="/help/">Help Center</a> 
+                    </li> 
+                    <li class="margin-right-xsmall inline-block"> 
+                      <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][more][faq] href="/faq" title="Frequently asked questions about MOOCs"> FAQ </a> 
+                    </li> 
+                    <li class="margin-right-xsmall inline-block"> 
+                      <a class="text-2 text--blue" data-track-click="footer_click" data-track-props@footer[tracking_properties][more][contact] href="mailto:contact@class-central.com" title="Class Central Contact"> Contact Us </a> 
+                    </li> 
+                  </ul> 
+                </div> 
+                <div class="col width-100 margin-vert-large text-left" id="footer-copyright"> 
+                  <span class="symbol-classcentral-gray symbol--small inline-block relative" style="top: 2px;"/> 
+                  <span class="text-3 text--gray inline-block large-up-padding-left-small">© Copyright 2011-2018</span> 
+                  <a class="text-3 text--gray text--underline inline-block large-up-margin-left-xsmall" data-track-click="footer_click" data-track-props@footer[tracking_properties][more][privacy_policy] href="/about/privacy-policy">Privacy Policy</a> 
+                </div> 
+              </div> 
+              <div class="flash-messages hidden"> </div> 
+            </footer> 
+          </div> 
+        </div> 
+        <script type="text/javascript">
+  window.TOUCHSCREEN = false;
+  window.addEventListener("touchstart", () => {
+    document.body.classList.add("touch");
+    window.TOUCHSCREEN = true;
+  });
+
+        </script> 
+        <script type="text/javascript"#>
+          <@cdata_banner cdata/>
+        </script> 
+        <script src="/webpack/cc.9b2409e78614837d70e7.js"/> 
+        <script type="text/javascript">
+      CC.Class['Signup'].showSignupPrompt(20000);
+  
+  
+    
+        </script> 
+        <div class="classcentral-style"> 
+          <div data-modal=""> 
+            <div class="scrollable-y z-top border-box fixed top left height-100 padding-small large-up-padding-xlarge row width-100" data-modal-blanket="" style="background-color: rgba(80, 116, 233, 0.85)"> 
+              <div class="bg-white radius border-box width-centered width-100 relative" data-content="" style="max-width: 900px;"> 
+                <p class="loading-pulse absolute cc-search-loading-pulse" style="top: 40%; left: 50%;"/> 
+              </div> 
+              <div class="text-center padding-vert-medium" data-modal-close=""> 
+                <button class="text--white text--bold text-2" data-modal-blanket=""> Close </button> 
+              </div> 
+            </div> 
+          </div> 
+        </div> 
+        <div class="classcentral-style"> 
+          <div class="medium-up-hidden z-top bg-white border-box border-all border--thin border--gray-xlight padding-large fixed bottom right shadow width-100" id="signup-mobile-modal"> 
+            <h3 class="head-4 small-up-head-3 text-center text-middle text--bold margin-bottom-xxsmall"> 
+              <img alt="Never stop learning" class="inline-block margin-right-xsmall" src="https://ccweb.imgix.net/https%3A%2F%2Fwww.class-central.com%2Fbundles%2Fclasscentralsite%2Fimages%2Fsignup-illus-mobile.png?auto=compress&ixlib=php-2.1.1&s=dd1d72bee617822170840b6f09a7b34a" width="75"/> Never Stop Learning! 
+            </h3> 
+            <p class="text--charcoal text-3 small-up-text-2 width-centered width-100 small-up-width-2-3">
+               Get personalized course recommendations, track subjects and courses with reminders, and more. 
+            </p> 
+            <div class="text-center margin-top-small"> 
+              <a class="btn-blue padding-horz-xlarge" data-track-click="" data-track-props@footer[tracking_properties][sign_up] href="/signup?signup_source=popup_mobile"> Sign up for free </a> 
+            </div> 
+            <button class="absolute top right margin-xsmall" data-remove-parent="" type="button"> 
+              <i class="block icon--xsmall icon-x-charcoal"/> 
+            </button> 
+          </div> 
+        </div> 
+        <div id="cc-overlay" style="display: none;"> 
+          <div class="classcentral-style" id="cc-container" style="width: 400px; min-height: 250px; position: relative;"> 
+            <div class="absolute width-100 height-100 top left"> 
+              <p class="loading-pulse absolute cc-search-loading-pulse" style="top: 40%; left: 50%;"/> 
+            </div> 
+          </div> 
+        </div> 
+        <@lorem node/>
+      </div>
+    </div>
+  </body> 
+</html>

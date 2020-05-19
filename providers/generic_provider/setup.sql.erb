@@ -1,0 +1,135 @@
+-- auto-generated, do not change!
+-- run `make build-seeds` instead
+
+WITH
+
+next_template AS (
+  INSERT INTO app.pipeline_templates (
+    name,
+    success_script_type,
+    success_script,
+    dataset_id,
+    pipes
+  ) SELECT
+    'GenericProvider Course Pipeline',
+    'sql',
+    '
+      INSERT INTO public.que_jobs (job_class, args)
+      VALUES (''Pipeline::NotifyJob'', array_to_json(ARRAY[($1.id)::varchar]));
+
+      UPDATE app.resources
+      SET content = content || jsonb_build_object(''published'', false)
+      WHERE
+        content->>''provider_name''     = $1.data->>''provider_name''
+        AND content->>''published''     = ''true''
+        AND content->>''execution_id'' != ($1.pipeline_execution_id)::varchar;
+    ',
+    '<%= dataset_id %>',
+    '
+    [
+      {
+        "type": "Fetcher",
+        "script": {
+          "type": "ruby",
+          "source_code": <%= course_fetcher %>
+        }
+      },
+      {
+        "type": "ResourceCreator",
+        "script": {
+          "type": "ruby",
+          "source_code": <%= course_creator %>
+        }
+      }
+    ]
+    '
+  RETURNING *
+)
+
+INSERT INTO app.pipeline_templates (
+  name,
+  data,
+  bootstrap_script_type,
+  bootstrap_script,
+  success_script_type,
+  success_script,
+  dataset_id,
+  pipes
+) SELECT
+  'GenericProvider Sitemap Pipeline',
+  jsonb_build_object(
+    'next_pipeline_template_id', next_template.id::varchar,
+    'crawler_id',                '979eee3f-de99-5814-e487-b630727d2b91',
+    'user_agent',                jsonb_build_object(
+      'version', '1.0.0',
+      'token',   'd727036b-784e-4185-99ed-f3ee2b91e979'
+    ),
+    'provider_name',             'Generic Provider',
+    'domains',                   jsonb_build_array(
+      'other_provider',
+      'provider.clspt',
+      'other_provider.clspt'
+    ),
+    'sitemaps',                  jsonb_build_array(
+      'http://provider.clspt/sitemap_01.xml',
+      'http://provider.clspt/sitemap_02.xml',
+      'http://provider.clspt/sitemap_03.xml'
+    )
+  ),
+  'sql',
+  '
+    WITH next_pipeline AS (
+      INSERT INTO app.pipelines (
+        pipeline_execution_id,
+        pipeline_template_id,
+        data
+      ) VALUES (
+        $1.pipeline_execution_id,
+        ($1.data->>''next_pipeline_template_id'')::uuid,
+        $1.data - ''next_pipeline_template_id''
+      )
+      RETURNING *
+    )
+
+    UPDATE pipelines
+    SET data = pipelines.data || jsonb_build_object(''next_pipeline_id'', next_pipeline.id::varchar)
+    FROM next_pipeline
+    WHERE pipelines.id = $1.id;
+
+    INSERT INTO app.pipe_processes (
+      pipeline_id,
+      initial_accumulator
+    ) SELECT
+      $1.id,
+      jsonb_build_object(''url'', sitemap)
+    FROM jsonb_array_elements_text($1.data->''sitemaps'') AS sitemap;
+
+    SELECT app.pipeline_call($1.id);
+  ',
+  'sql',
+  'SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);',
+  '<%= dataset_id %>',
+  '[
+    {
+      "type": "Fetcher",
+      "script": {
+        "type":        "ruby",
+        "source_code": <%= sitemap_fetcher %>
+      }
+    },
+    {
+      "type": "Demux",
+      "script": {
+        "type":        "ruby",
+        "source_code": <%= sitemap_demux %>
+      }
+    },
+    {
+      "type": "Demux",
+      "script": {
+        "type":        "ruby",
+        "source_code": <%= sitemap_demux_sitemaps %>
+      }
+    }
+  ]'
+FROM next_template;

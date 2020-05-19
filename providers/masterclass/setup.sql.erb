@@ -1,0 +1,91 @@
+-- auto-generated, do not change!
+-- run `make build-seeds` instead
+
+WITH
+
+next_template AS (
+  INSERT INTO app.pipeline_templates (
+    name,
+    dataset_id,
+    pipes
+  ) SELECT
+    'MasterClass Course Pipeline',
+    '<%= dataset_id %>',
+    '
+    [
+      {
+        "http": {
+          "headers": {
+            "user_agent": "<%= user_agent %>"
+          }
+        },
+        "type": "Fetcher",
+        "script": {
+          "type": "ruby",
+          "source_code": <%= course_fetcher %>
+        }
+      },
+      {
+        "type": "ResourceCreator"
+      }
+    ]
+    '
+  RETURNING *
+)
+
+INSERT INTO app.pipeline_templates (
+  name,
+  data,
+  bootstrap_script_type,
+  bootstrap_script,
+  success_script_type,
+  success_script,
+  dataset_id,
+  pipes
+) SELECT
+  'MasterClass Sitemap Pipeline',
+  jsonb_build_object(
+    'next_pipeline_template_id', next_template.id::varchar,
+    'sitemap_url',               '<%= sitemap_url %>'
+  ),
+  'sql',
+  '
+    WITH next_pipeline AS (
+      INSERT INTO app.pipelines (
+        pipeline_execution_id,
+        pipeline_template_id
+      ) VALUES (
+        $1.pipeline_execution_id,
+        ($1.data->>''next_pipeline_template_id'')::uuid
+      )
+      RETURNING *
+    )
+
+    UPDATE pipelines
+    SET data = pipelines.data || jsonb_build_object(''{next_pipeline_id}'', next_pipeline.id::varchar)
+    FROM next_pipeline
+    WHERE pipelines.id = $1.id;
+
+    INSERT INTO app.pipe_processes (pipeline_id, initial_accumulator) VALUES ($1.id, (''{"url":"'' || ($1.data->>''sitemap_url'') || ''"}'')::jsonb);
+    SELECT app.pipeline_call($1.id);
+  ',
+  'sql',
+  'SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);',
+  '<%= dataset_id %>',
+  '[
+    {
+      "type": "Fetcher",
+      "gzip": true,
+      "http": {
+        "headers": { "user_agent": "<%= user_agent %>" }
+      }
+    },
+    {
+      "type": "Demux",
+      "script": {
+        "type":        "ruby",
+        "source_code": <%= sitemap_demux %>
+      }
+    }
+  ]'
+FROM next_template;
