@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+source $1
+
+database_db=`./bin/parse_uri $POSTGRES_URL path`
+database_host=`./bin/parse_uri $POSTGRES_URL host`
+database_password=`./bin/parse_uri $POSTGRES_URL password`
+database_port=`./bin/parse_uri $POSTGRES_URL port`
+database_user=`./bin/parse_uri $POSTGRES_URL user`
+
+timestamps=`ls $2/ | sort | grep -o -E '^[^-]+' | sed "s/\(.*\)/'\1'/g" | sed '$!s/$/,/'`
+missing_timestamps=`echo "SELECT migration_version FROM unnest(ARRAY[$timestamps]) AS migration_version WHERE NOT EXISTS (SELECT version FROM schema_migrations WHERE version = migration_version);" | PGPASSWORD=$database_password psql -U $database_user -h $database_host -p $database_port -d $database_db | grep -o -E '^ [[:digit:]]+' | grep -o -E '[[:digit:]]+' | sort`
+
+for timestamp in $missing_timestamps; do
+  file=`ls $2/$timestamp* | head -n 1`
+  cat $file | envsubst | PGPASSWORD=$database_password psql -U $database_user -h $database_host -p $database_port -d $database_db > /dev/null
+  migration_succeded=`echo "SELECT version FROM schema_migrations WHERE version='$timestamp';" | PGPASSWORD=$database_password psql -U $database_user -h $database_host -p $database_port -d $database_db | grep "$timestamp"`;
+  if [ -z "$migration_succeded" ]; then
+    echo -e "\e[31mFailed $file\e[0m";
+    exit -1
+  else
+    echo -e "\e[32mMigrated $file\e[0m";
+  fi
+done

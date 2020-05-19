@@ -1,0 +1,351 @@
+-- auto-generated, do not change!
+-- run `build-seeds` instead
+
+WITH
+
+courses_pipeline AS (
+  INSERT INTO app.pipeline_templates (
+    name,
+    dataset_id,
+    pipes
+  ) SELECT
+    'Linkedin Learning Courses Pipeline',
+    '<%= dataset_id %>',
+    '[
+      {
+        "type": "Fetcher",
+        "http": {
+          "headers": {
+            "user_agent":      "<%= user_agent %>",
+            "accept":          "<%= accept_page_header %>",
+            "accept_language": "<%= accept_language %>"
+          }
+        },
+        "script": {
+          "type":        "ruby",
+          "source_code": <%= course_fetcher %>
+        }
+      },
+      {
+        "type":"ResourceValidator"
+      },
+      {
+        "type":"ResourceCreator"
+      }
+    ]'
+  RETURNING *
+),
+
+search_pipeline AS (
+  INSERT INTO app.pipeline_templates (
+    name,
+    data,
+    bootstrap_script_type,
+    bootstrap_script,
+    success_script_type,
+    success_script,
+    dataset_id,
+    pipes
+  ) SELECT
+    'Linkedin Learning Search Pipeline',
+    ('{"next_pipeline_template_id":"' || courses_pipeline.id || '"}')::jsonb,
+    'sql',
+    '
+      WITH next_pipeline AS (
+        INSERT INTO app.pipelines (
+          pipeline_execution_id,
+          pipeline_template_id
+        ) VALUES (
+          $1.pipeline_execution_id,
+          ($1.data->>''next_pipeline_template_id'')::uuid
+        )
+        RETURNING *
+      )
+
+      UPDATE app.pipelines
+      SET data = pipelines.data || jsonb_build_object( ''next_pipeline_id'', next_pipeline.id )
+      FROM next_pipeline
+      WHERE pipelines.id = $1.id;
+    ',
+    'sql',
+    '
+      UPDATE app.pipelines
+      SET data = $1.data || data
+      WHERE id = ($1.data->>''next_pipeline_id'')::uuid;
+
+      DELETE FROM app.pipe_processes
+      WHERE
+      pipeline_id = ($1.data->>''next_pipeline_id'')::uuid AND
+      EXISTS (
+        SELECT 1
+        FROM app.pipe_processes AS other
+        WHERE
+          other.pipeline_id                   = ($1.data->>''next_pipeline_id'')::uuid AND
+          other.id                            > pipe_processes.id                      AND
+          other.initial_accumulator->>''url'' = pipe_processes.initial_accumulator->>''url''
+      );
+
+      SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);
+    ',
+    '<%= dataset_id %>',
+    '[
+      {
+        "type": "Fetcher",
+        "http": {
+          "headers": {
+            "user_agent":                "<%= user_agent %>",
+            "accept":                    "<%= accept_api_header %>",
+            "accept_language":           "<%= accept_language %>",
+            "X-RestLi-Protocol-Version": "2.0.0",
+            "X-LI-Track":                "{\"clientVersion\":\"1.0.2878\",\"osName\":\"web\",\"timezoneOffset\":1,\"mpName\":\"learning-web\"}",
+            "X-LI-Lang":                 "en_US",
+            "X-LIL-Intl-Library":        "en_US",
+            "X-Requested-With":          "XMLHttpRequest"
+          }
+        },
+        "script": {
+          "type": "ruby",
+          "source_code": <%= search_fetcher %>
+        }
+      },
+      {
+        "type":"Demux"
+      }
+    ]'
+  FROM courses_pipeline
+  RETURNING *
+),
+
+software_product_pipeline AS (
+  INSERT INTO app.pipeline_templates (
+    name,
+    data,
+    bootstrap_script_type,
+    bootstrap_script,
+    success_script_type,
+    success_script,
+    dataset_id,
+    pipes
+  ) SELECT
+    'Linkedin Learning Software Cartesian Product',
+    (
+      '{
+        "next_pipeline_template_id":"' || search_pipeline.id || '",
+        "facet_tracking_name": "SOFTWARE"
+      }'
+    )::jsonb,
+    'sql',
+    '
+      WITH next_pipeline AS (
+        INSERT INTO app.pipelines (
+          pipeline_execution_id,
+          pipeline_template_id
+        ) VALUES (
+          $1.pipeline_execution_id,
+          ($1.data->>''next_pipeline_template_id'')::uuid
+        )
+        RETURNING *
+      )
+
+      UPDATE app.pipelines
+      SET data = pipelines.data || jsonb_build_object( ''next_pipeline_id'', next_pipeline.id )
+      FROM next_pipeline
+      WHERE pipelines.id = $1.id;
+    ',
+    'sql',
+    '
+      UPDATE app.pipelines
+      SET data = $1.data || data
+      WHERE id = ($1.data->>''next_pipeline_id'')::uuid;
+
+      SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);
+    ',
+    '<%= dataset_id %>',
+    '[
+      {
+        "type": "Fetcher",
+        "http": {
+          "headers": {
+            "user_agent":                "<%= user_agent %>",
+            "accept":                    "<%= accept_api_header %>",
+            "accept_language":           "<%= accept_language %>",
+            "X-RestLi-Protocol-Version": "2.0.0",
+            "X-LI-Track":                "{\"clientVersion\":\"1.0.2878\",\"osName\":\"web\",\"timezoneOffset\":1,\"mpName\":\"learning-web\"}",
+            "X-LI-Lang":                 "en_US",
+            "X-LIL-Intl-Library":        "en_US",
+            "X-Requested-With":          "XMLHttpRequest"
+          }
+        },
+        "script": {
+          "type": "ruby",
+          "source_code": <%= cartesian_fetcher %>
+        }
+      },
+      {
+        "type":"Demux"
+      }
+    ]'
+  FROM search_pipeline
+  RETURNING *
+),
+
+topic_product_pipeline AS (
+  INSERT INTO app.pipeline_templates (
+    name,
+    data,
+    bootstrap_script_type,
+    bootstrap_script,
+    success_script_type,
+    success_script,
+    dataset_id,
+    pipes
+  ) SELECT
+    'Linkedin Learning Topic Cartesian Product',
+    (
+      '{
+        "next_pipeline_template_id":"' || software_product_pipeline.id || '",
+        "facet_tracking_name": "TOPICS"
+      }'
+    )::jsonb,
+    software_product_pipeline.bootstrap_script_type,
+    software_product_pipeline.bootstrap_script,
+    software_product_pipeline.success_script_type,
+    software_product_pipeline.success_script,
+    '<%= dataset_id %>',
+    software_product_pipeline.pipes
+  FROM software_product_pipeline
+  RETURNING *
+),
+
+level_product_pipeline AS (
+  INSERT INTO app.pipeline_templates (
+    name,
+    data,
+    bootstrap_script_type,
+    bootstrap_script,
+    success_script_type,
+    success_script,
+    dataset_id,
+    pipes
+  ) SELECT
+    'Linkedin Learning Level Cartesian Product',
+    (
+      '{
+        "next_pipeline_template_id":"' || topic_product_pipeline.id || '",
+        "facet_tracking_name": "LEVEL"
+      }'
+    )::jsonb,
+    topic_product_pipeline.bootstrap_script_type,
+    topic_product_pipeline.bootstrap_script,
+    topic_product_pipeline.success_script_type,
+    topic_product_pipeline.success_script,
+    '<%= dataset_id %>',
+    topic_product_pipeline.pipes
+  FROM topic_product_pipeline
+  RETURNING *
+)
+
+INSERT INTO app.pipeline_templates (
+  name,
+  data,
+  bootstrap_script_type,
+  bootstrap_script,
+  success_script_type,
+  success_script,
+  dataset_id,
+  pipes
+) SELECT
+  'Linkedin Learning Bootstrap Pipeline',
+  ('{
+      "next_pipeline_template_id": "' || level_product_pipeline.id || '",
+      "pricing_url":               "<%= pricing_url %>",
+      "search_page_url":           "<%= search_page_url %>",
+      "base_api_url":              "<%= base_api_url %>",
+      "base_referer_api_url":      "<%= base_referer_api_url %>"
+    }'
+  )::jsonb,
+  'sql',
+  '
+    WITH next_pipeline AS (
+      INSERT INTO app.pipelines (
+        pipeline_execution_id,
+        pipeline_template_id
+      ) VALUES (
+        $1.pipeline_execution_id,
+        ($1.data->>''next_pipeline_template_id'')::uuid
+      )
+      RETURNING *
+    )
+
+    UPDATE app.pipelines
+    SET data = pipelines.data || jsonb_build_object( ''next_pipeline_id'', next_pipeline.id )
+    FROM next_pipeline
+    WHERE pipelines.id = $1.id;
+
+    INSERT INTO app.pipe_processes (pipeline_id, initial_accumulator) VALUES ($1.id, (''{"url":"'' || ($1.data->>''pricing_url'') || ''"}'')::jsonb);
+    SELECT app.pipeline_call($1.id);
+  ',
+  'sql',
+  '
+    UPDATE app.pipelines
+    SET data = $1.data || data
+    WHERE id = ($1.data->>''next_pipeline_id'')::uuid;
+
+    WITH RECURSIVE pipeline_search_ids( id, next_id, pipeline_template_id ) AS (
+        SELECT id, (data->>''next_pipeline_id'')::uuid, pipeline_template_id FROM app.pipelines WHERE id = $1.id
+      UNION ALL
+        SELECT pipelines.id, (pipelines.data->>''next_pipeline_id'')::uuid, pipelines.pipeline_template_id
+        FROM pipeline_search_ids, app.pipelines
+        WHERE pipelines.id = pipeline_search_ids.next_id
+    ),
+
+    search_pipeline AS (
+      SELECT pipeline_search_ids.*
+      FROM pipeline_search_ids
+      JOIN app.pipeline_templates ON
+        pipeline_templates.id = pipeline_template_id
+      WHERE pipeline_templates.name = ''Linkedin Learning Search Pipeline''
+    )
+
+    UPDATE app.pipelines
+    SET data = pipelines.data || jsonb_build_object( ''search_pipeline_id'', search_pipeline.id )
+    FROM pipeline_search_ids, search_pipeline
+    WHERE pipelines.id = pipeline_search_ids.id;
+
+    SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);
+  ',
+  '<%= dataset_id %>',
+  '[
+    {
+      "type":"Fetcher",
+      "http": {
+        "headers": {
+          "user_agent":      "<%= user_agent %>",
+          "accept":          "<%= accept_page_header %>",
+          "accept_language": "<%= accept_language %>"
+        }
+      },
+      "script": {
+        "type": "ruby",
+        "source_code": <%= pricing_fetcher %>
+      }
+    },
+    {
+      "type": "Fetcher",
+      "http": {
+        "headers": {
+          "user_agent":      "<%= user_agent %>",
+          "accept":          "<%= accept_page_header %>",
+          "accept_language": "<%= accept_language %>"
+        }
+      },
+      "script": {
+        "type": "ruby",
+        "source_code": <%= search_page_fetcher %>
+      }
+    },
+    {
+      "type":"Demux"
+    }
+  ]'
+FROM level_product_pipeline;

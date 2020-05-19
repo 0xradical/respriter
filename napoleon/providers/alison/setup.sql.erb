@@ -1,0 +1,187 @@
+-- auto-generated, do not change!
+-- run `make build-seeds` instead
+
+WITH
+
+course_template AS (
+  INSERT INTO pipeline_templates (
+    name,
+    dataset_id,
+    success_script_type,
+    success_script,
+    pipes
+  ) VALUES (
+    'Alison Course Pipeline',
+    '<%= dataset_id %>',
+    'sql',
+    '
+      WITH stale_resources AS (
+        SELECT
+          data->>''alternate_course_url''             AS url,
+          (pipe_processes.accumulator->>''id'')::uuid AS old_resource_id,
+          resources.id                                AS resource_id
+        FROM pipe_processes
+        INNER JOIN resources ON
+          resources.content->>''url'' = data->>''alternate_course_url''
+        WHERE
+          pipeline_id = $1.id
+          AND data->>''alternate_course_url'' IS NOT NULL
+      )
+
+      UPDATE resources
+      SET content = jsonb_set(resources.content, ''{alternate_course}'', (''"'' || resource_id::varchar || ''"'')::jsonb)
+      FROM stale_resources
+      WHERE
+        id = old_resource_id;
+
+      INSERT INTO que_jobs (job_class, args)
+      VALUES (''Pipeline::NotifyJob'', array_to_json(ARRAY[$1.id]));
+    ',
+    '
+    [
+      {
+        "type": "Fetcher",
+        "http": {
+          "headers": {
+            "Accept":     "*/*",
+            "User-Agent": "Napoleon the Crawler"
+          }
+        },
+        "cache": {
+          "ignore_cached_data": true
+        },
+        "status_map": [
+          [ [ 200, 299 ], "pending" ],
+          [ 429, "skipped" ],
+          [ 404, "skipped" ],
+          [ 500, "skipped" ]
+        ],
+        "script": {
+          "type":        "ruby",
+          "source_code": <%= course_fetcher %>
+        }
+      },
+      {
+        "type": "Fetcher",
+        "http": {
+          "headers": {
+            "Accept":     "*/*",
+            "User-Agent": "Napoleon the Crawler"
+          }
+        },
+        "cache": {
+          "ignore_cached_data": true
+        },
+        "script": {
+          "type":        "ruby",
+          "source_code": <%= course_content_fetcher %>
+        }
+      },
+      {
+        "type": "ResourceCreator",
+        "script": {
+          "type":        "ruby",
+          "source_code": <%= course_creator %>
+        }
+      }
+    ]
+    '
+  )
+  RETURNING *
+)
+
+INSERT INTO pipeline_templates (
+  name,
+  data,
+  bootstrap_script_type,
+  bootstrap_script,
+  success_script_type,
+  success_script,
+  dataset_id,
+  pipes
+) SELECT
+  'Alison Sitemaps Pipeline',
+  jsonb_build_object('next_pipeline_template_id', course_template.id::varchar, 'sitemaps', '<%= JSON.dump sitemaps %>'::jsonb),
+  'sql',
+  '
+    WITH next_pipeline AS (
+      INSERT INTO pipelines (
+        label, pipeline_template_id
+      ) VALUES (
+        $1.label,
+        ($1.data->>''next_pipeline_template_id'')::uuid
+      )
+      RETURNING *
+    )
+
+    UPDATE pipelines
+    SET data = jsonb_set(pipelines.data, ''{next_pipeline_id}'', (''"'' || next_pipeline.id || ''"'')::jsonb)
+    FROM next_pipeline
+    WHERE pipelines.id = $1.id;
+
+    INSERT INTO pipe_processes (
+      pipeline_id,
+      initial_accumulator
+    ) SELECT
+        $1.id,
+        jsonb_build_object(''language'', sitemaps->0, ''url'', sitemaps->1)
+      FROM jsonb_array_elements($1.data->''sitemaps'') AS sitemaps;
+
+    SELECT pipeline_call($1.id);
+  ',
+  'sql',
+  '
+    WITH delayed_jobs AS (
+      SELECT
+        id,
+        rank() OVER (ORDER BY id) AS delay
+      FROM pipe_processes
+      WHERE
+        pipeline_id = ($1.data->>''next_pipeline_id'')::uuid
+    )
+
+    INSERT INTO que_jobs
+      ( priority, job_class, args, run_at )
+    SELECT
+      90,
+      ''PipeProcess::CallJob'',
+      array_to_json(ARRAY[delayed_jobs.id::varchar]),
+      NOW() + ((delay*15)::varchar || '' seconds'')::interval
+    FROM delayed_jobs;
+  ',
+  '<%= dataset_id %>',
+  '[
+    {
+      "type": "Fetcher",
+      "http": {
+        "headers": {
+          "Accept":     "*/*",
+          "User-Agent": "Napoleon the Crawler"
+        }
+      },
+      "cache": {
+        "ignore_cached_data": true
+      },
+      "script": {
+        "type":        "ruby",
+        "source_code": <%= sitemap_fetcher %>
+      }
+    },
+    {
+      "type": "Demux",
+      "script": {
+        "type":        "ruby",
+        "source_code": <%= sitemap_demux %>
+      }
+    }
+  ]'
+FROM course_template;
+
+UPDATE pipeline_templates AS last_template
+SET
+  schedule_pipeline_template_id = first_template.id,
+  schedule_interval             = '1 weeks'
+FROM pipeline_templates AS first_template
+WHERE
+  first_template.name = 'Alison Sitemaps Pipeline' AND
+  last_template.name  = 'Alison Course Pipeline';

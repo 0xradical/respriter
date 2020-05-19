@@ -1,0 +1,336 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+
+class SQLSourceFile
+  attr_reader :path, :size, :file
+
+  attr_accessor :parent, :left, :right, :color
+
+  CHUNK_SIZE = 32
+  ROOT_PATH  = Pathname.new File.expand_path('..', File.dirname(__FILE__))
+
+  def initialize(path)
+    @path = path
+    @size = File.size absolute_path
+    @file = File.open absolute_path, 'r'
+    self.class.search_index.insert self
+    self.class.all << self
+  end
+
+  def absolute_path
+    ROOT_PATH.join('src', path).to_s
+  end
+
+  def key
+    @key ||= @file.read CHUNK_SIZE
+  end
+
+  def search_compare(search_node)
+    search_node.ensure_key_size key.size
+    search_node.key[0..(key.size-1)] <=> key
+  end
+
+  def increase_key
+    if chunk = @file.read(CHUNK_SIZE)
+      @key += chunk
+    else
+      nil
+    end
+  end
+
+  def insert_lower_than_compare?(other, recursive = false)
+    min_size = [self.key.size, other.key.size].min
+    interest_range = if recursive
+      (min_size - CHUNK_SIZE)..(min_size-1)
+    else
+      0..(min_size-1)
+    end
+    cmp = self.key[interest_range] < other.key[interest_range]
+    return cmp if self.key[interest_range] != other.key[interest_range]
+
+    case self.key.size <=> other.key.size
+    when -1
+      return cmp if increase_key.nil?
+    when 0
+      self_increased  = increase_key
+      other_increased = other.increase_key
+      return cmp if self_increased.nil? || other_increased.nil?
+    when 1
+      return cmp if other.increase_key.nil?
+    end
+
+    insert_lower_than_compare? other
+  end
+
+  def inspect(root = false)
+    "(#{ @left.nil? ? 'ø' : @left.inspect }<-{#{root ? "{#{@path}}": @path}}->#{ @right.nil? ? 'ø' : @right.inspect })"
+  end
+
+  def sibling
+    return nil unless @parent
+
+    if @parent.left == self
+      @parent.right
+    else
+      @parent.left
+    end
+  end
+
+  def rotate_left
+    new_root        = @right
+    new_root.parent = @parent
+
+    @right        = new_root.left
+    new_root.left = self
+    @parent       = new_root
+    @right.parent = self if @right
+
+    if new_root.parent
+      case self
+      when new_root.parent.left
+        new_root.parent.left = new_root
+      when new_root.parent.right
+        new_root.parent.right = new_root
+      end
+    end
+  end
+
+  def rotate_right
+    new_root        = @left
+    new_root.parent = @parent
+
+    @left          = new_root.right
+    new_root.right = self
+    @parent        = new_root
+    @left.parent   = self if @left
+
+    if new_root.parent
+      case self
+      when new_root.parent.left
+        new_root.parent.left = new_root
+      when new_root.parent.right
+        new_root.parent.right = new_root
+      end
+    end
+  end
+
+  def self.search(path)
+    files = []
+    search_node = SearchNode.new path
+    count = all.count
+    all.count.times do |n|
+      if node = search_index.search(search_node)
+        puts "#{ format '%3d', n+1 }/#{count}: #{node.path}"
+        files << node.path
+        search_node.advance_file node.size
+      else
+        search_node.raise_missing_content_error
+      end
+    end
+    search_node.file.close
+    files
+  end
+
+  def self.search_index
+    @search_index ||= RedBlackTree.new
+  end
+
+  def self.close_index
+    all.each do |src|
+      src.file.close
+    end
+  end
+
+  def self.all
+    @all ||= []
+  end
+
+  def self.populate_search_index
+    ROOT_PATH.glob('src/**/*.sql').each do |path|
+      relative_path = Pathname.new(path).relative_path_from(ROOT_PATH.join('src')).to_s
+      SQLSourceFile.new relative_path
+    end
+    SQLSourceFile.close_index
+  end
+
+  def self.generate_graph(path)
+    File.open(path, 'w') do |file|
+      file.puts "digraph G {"
+      SQLSourceFile.search_index.root.generate_graph(file)
+      file.puts "}"
+    end
+  end
+
+  def generate_graph(file)
+    if @left
+      file.puts "  \"#{@path}\" -> \"#{@left.path}\" [color=\"red\"];"
+      @left.generate_graph file
+    end
+    if @right
+      file.puts "  \"#{@path}\" -> \"#{@right.path}\" [color=\"blue\"];"
+      @right.generate_graph file
+    end
+  end
+
+  class SearchNode
+    attr_reader :path, :file, :key
+
+    OFFSET = 8
+
+    def initialize(path)
+      @path = path
+      @file = File.open absolute_path, 'r'
+      @file.read OFFSET
+      @key = ''
+    end
+
+    def absolute_path
+      ROOT_PATH.join(path).to_s
+    end
+
+    def ensure_key_size(size)
+      if @key.size < size
+        @key += @file.read(size - @key.size)
+      end
+    end
+
+    def advance_file(size)
+      @file.seek(size - @key.size + 1, IO::SEEK_CUR)
+      @key = ''
+    end
+
+    def raise_missing_content_error
+      position = @file.pos - @key.size + 1
+      @file.rewind
+      lineno = @file.read(position).chars.count{ |c| c == "\n" } + 1
+      raise "At #{@path}:#{lineno} starts content that could not be found in src files\n.Missing part starts with:\n#{ @file.read 200 }"
+    end
+  end
+
+  class RedBlackTree
+    attr_reader :root
+
+    def initialize
+      @root = nil
+    end
+
+    def search(search_node, current_root = @root)
+      case current_root.search_compare(search_node)
+      when -1
+        return nil unless current_root.left
+        search search_node, current_root.left
+      when 0
+        current_root
+      when 1
+        return nil unless current_root.right
+        search search_node, current_root.right
+      end
+    end
+
+    def insert(node)
+      insert_recurse @root, node
+      insert_repair_tree node
+
+      @root = node
+      @root = @root.parent while @root.parent
+    end
+
+    def inspect
+      "RedBlackTree: #{ @root.nil? ? 'ø' : @root.inspect(true) }"
+    end
+
+    protected
+    def insert_recurse(current_root, node)
+      if current_root
+        if node.insert_lower_than_compare?(current_root)
+          if current_root.left
+            insert_recurse current_root.left, node
+            return
+          else
+            current_root.left = node
+          end
+        else
+          if current_root.right
+            insert_recurse current_root.right, node
+            return
+          else
+            current_root.right = node
+          end
+        end
+      end
+
+      node.parent = current_root
+      node.left   = nil
+      node.right  = nil
+      node.color  = :red
+    end
+
+    def insert_repair_tree(node)
+      if node.parent.nil?
+        insert_case_1 node
+      elsif node.parent.color == :black
+        insert_case_2 node
+      elsif node.parent.sibling&.color == :red
+        insert_case_3 node
+      else
+        insert_case_4 node
+      end
+    end
+
+    def insert_case_1(node)
+      node.color = :black
+    end
+
+    def insert_case_2(node)
+    end
+
+    def insert_case_3(node)
+      node.parent.color         = :black
+      node.parent.sibling.color = :black
+      node.parent.parent.color  = :red
+      insert_repair_tree node.parent.parent
+    end
+
+    def insert_case_4(node)
+      parent       = node.parent
+      grand_parent = parent.parent
+
+      if node == parent.right && parent == grand_parent.left
+        parent.rotate_left
+        node = node.left
+      elsif node == parent.left && parent == grand_parent.right
+        parent.rotate_right
+        node = node.right
+      end
+
+      insert_case_4_step_2 node
+    end
+
+    def insert_case_4_step_2(node)
+      parent       = node.parent
+      grand_parent = parent.parent
+
+      if node == parent.left
+        grand_parent.rotate_right
+      else
+        grand_parent.rotate_left
+      end
+
+      parent.color       = :black
+      grand_parent.color = :red
+    end
+  end
+end
+
+SQLSourceFile.populate_search_index
+SQLSourceFile.generate_graph 'tmp/structure.dot'
+puts "\033[0;32mtmp/structure.dot is updated!\033[0m"
+
+# puts "All src files:"
+# puts SQLSourceFile.all.map(&:path).sort
+
+files     = SQLSourceFile.search 'db/structure.sql.env'
+lock_path = SQLSourceFile::ROOT_PATH.join 'db/structure.lock'
+File.write(lock_path, files.join("\n")+"\n")
+puts "\033[0;32mdb/structure.lock is updated!\033[0m"

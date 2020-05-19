@@ -1,0 +1,11 @@
+FROM postgres:11.4-alpine
+
+RUN apk update               && \
+    apk upgrade              && \
+    apk add --update gettext && \
+    rm -rf /var/cache/apk/*
+
+COPY bin/docker-setup.sh  /docker-entrypoint-initdb.d/setup.sh
+COPY db/structure.sql.env /docker-entrypoint-initdb.d/structure.sql.env
+
+CMD ["postgres"]

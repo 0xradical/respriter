@@ -1,0 +1,189 @@
+<html>
+  <body>
+    <+@entries>
+      <?@course>
+        <tr itemscope="" itemtype="http://schema.org/Event"> 
+          <td class="add-column text-center width-2-16 medium-up-width-2-16 xlarge-up-width-1-16"> 
+            <div class="subjectSlug" style="display: none"><@subject/></div> 
+            <div class="languageSlug" style="display: none"><@language/></div> 
+            <div class="course-startdate" style="display: none"><@start_date/></div> 
+            <div class="course-rating-value" style="display: none"><@rating/></div> 
+            <div class="course-provider" style="display: none"><@provider/></div> 
+            <div class="sessionSlug" style="display:none;"><@session_slug/></div> 
+            <div class="dropdown" data-dropdown=""> 
+              <a class="
+                          icon--center inline-block
+                          icon--medium icon-list-add-blue                      add-button dropdown-toggle" data-dropdown-anchor="" data-toggle="dropdown" href="#" id@~ style="height: 25px;"> 
+                <span id@~/> 
+              </a> 
+              <div class="z-top dropdown-menu radius bg-white absolute padding-bottom-small border-all border--thin border--gray-xlight" data-dropdown-menu="" style="width: 200px; display: none;"> 
+                <ul class="text-left"> 
+                  <li class="dropdown-list-header bg-gray padding-xsmall padding-left-medium margin-bottom-small">My Courses</li> 
+                  <ul> 
+                    <li class="padding-horz-small"> 
+                      <fieldset class="checkbox checkbox--medium checkbox--standard padding-xxsmall relative"> 
+                        <input class="course-list-checkbox" data-course-id@input_course_id data-course-name@input_course_name data-source="providertable" data-track-click="listing_click" data-track-props@interested_tracking_properties id@~ name@~ type="checkbox" value="1"/> 
+                        <label class="filter-dropdown-toggle sub-category" for@~> 
+                          <span> 
+                            <span class="checkbox--icon margin-xxsmall checkbox--icon-solid"> 
+                              <span class="icon icon-checkmark-white"/> 
+                            </span> 
+                            <span class="checkbox--label checkbox--label-solid inline-block">Interested</span> 
+                          </span> 
+                        </label> 
+                      </fieldset> 
+                    </li> 
+                    <li class="padding-horz-small"> 
+                      <fieldset class="checkbox checkbox--medium checkbox--standard padding-xxsmall relative"> 
+                        <input class="course-list-checkbox" data-course-id@~ data-course-name@~ data-source="providertable" data-track-click="listing_click" data-track-props@enrolled_tracking_properties id@~ name@~ type="checkbox" value="2"/> 
+                        <label class="filter-dropdown-toggle sub-category" for@~> 
+                          <span> 
+                            <span class="checkbox--icon margin-xxsmall checkbox--icon-solid"> 
+                              <span class="icon icon-checkmark-white"/> 
+                            </span> 
+                            <span class="checkbox--label checkbox--label-solid inline-block">Enrolled</span> 
+                          </span> 
+                        </label> 
+                      </fieldset> 
+                    </li> 
+                    <li class="padding-horz-small"> 
+                      <fieldset class="checkbox checkbox--medium checkbox--standard padding-xxsmall relative"> 
+                        <input class="course-list-checkbox" data-course-id@~ data-course-name@~ data-source="providertable" data-track-click="listing_click" data-track-props@taking_tracking_properties id@~ name@~ type="checkbox" value="7"/> 
+                        <label class="filter-dropdown-toggle sub-category" for@~> 
+                          <span> 
+                            <span class="checkbox--icon margin-xxsmall checkbox--icon-solid"> 
+                              <span class="icon icon-checkmark-white"/> 
+                            </span> 
+                            <span class="checkbox--label checkbox--label-solid inline-block">Taking right now</span> 
+                          </span> 
+                        </label> 
+                      </fieldset> 
+                    </li> 
+                    <li class="padding-horz-small"> 
+                      <fieldset class="checkbox checkbox--medium checkbox--standard padding-xxsmall relative"> 
+                        <input class="course-list-checkbox" data-course-id@~ data-course-name@~ data-source="providertable" data-track-click="listing_click" data-track-props@partially_completed_tracking_properties id@~ name@~ type="checkbox" value="5"/> 
+                        <label class="filter-dropdown-toggle sub-category" for@~> 
+                          <span> 
+                            <span class="checkbox--icon margin-xxsmall checkbox--icon-solid"> 
+                              <span class="icon icon-checkmark-white"/> 
+                            </span> 
+                            <span class="checkbox--label checkbox--label-solid inline-block">Partially Completed</span> 
+                          </span> 
+                        </label> 
+                      </fieldset> 
+                    </li> 
+                    <li class="padding-horz-small"> 
+                      <fieldset class="checkbox checkbox--medium checkbox--standard padding-xxsmall relative"> 
+                        <input class="course-list-checkbox" data-course-id@~ data-course-name@~ data-source="providertable" data-track-click="listing_click" data-track-props@completed_tracking_properties id@~ name@~ type="checkbox" value="3"/> 
+                        <label class="filter-dropdown-toggle sub-category" for@~> 
+                          <span> 
+                            <span class="checkbox--icon margin-xxsmall checkbox--icon-solid"> 
+                              <span class="icon icon-checkmark-white"/> 
+                            </span> 
+                            <span class="checkbox--label checkbox--label-solid inline-block">Completed</span> 
+                          </span> 
+                        </label> 
+                      </fieldset> 
+                    </li> 
+                    <li class="padding-horz-small"> 
+                      <fieldset class="checkbox checkbox--medium checkbox--standard padding-xxsmall relative"> 
+                        <input class="course-list-checkbox" data-course-id@~ data-course-name@~ data-source="providertable" data-track-click="listing_click" data-track-props@audited_tracking_properties id@~ name@~ type="checkbox" value="4"/> 
+                        <label class="filter-dropdown-toggle sub-category" for@~> 
+                          <span> 
+                            <span class="checkbox--icon margin-xxsmall checkbox--icon-solid"> 
+                              <span class="icon icon-checkmark-white"/> 
+                            </span> 
+                            <span class="checkbox--label checkbox--label-solid inline-block">Audited</span> 
+                          </span> 
+                        </label> 
+                      </fieldset> 
+                    </li> 
+                    <li class="padding-horz-small"> 
+                      <fieldset class="checkbox checkbox--medium checkbox--standard padding-xxsmall relative"> 
+                        <input class="course-list-checkbox" data-course-id@~ data-course-name@~ data-source="providertable" data-track-click="listing_click" data-track-props@dropped_tracking_properties id@~ name@~ type="checkbox" value="6"/> 
+                        <label class="filter-dropdown-toggle sub-category" for@~> 
+                          <span> 
+                            <span class="checkbox--icon margin-xxsmall checkbox--icon-solid"> 
+                              <span class="icon icon-checkmark-white"/> 
+                            </span> 
+                            <span class="checkbox--label checkbox--label-solid inline-block">Dropped</span> 
+                          </span> 
+                        </label> 
+                      </fieldset> 
+                    </li> 
+                  </ul> 
+                </ul> 
+              </div> 
+            </div> 
+          </td> 
+          <td class="course-name-column relative width-12-16 medium-up-width-10-16 large-up-width-8-16 xlarge-up-width-9-16"> 
+            <ul class="table-uni-list text-3 block"> 
+              <*li(universities) class="inline"> 
+                <a class="uni-name text--charcoal hover-text--underline" data-overlay-trigger@overlay_trigger data-track-click="listing_click" data-track-props@tracking_properties href@path onclick@google_analytics_course_script title@link_title>
+                  <@name/>
+                </a> 
+              </li> 
+            </ul> 
+            <a class="text--charcoal text-2 medium-up-text-1 block course-name" data-track-click="listing_click" data-track-props@course_tracking_properties href@course_path itemprop="url" onmousedown@mousedown_tracking_script title@course_link_title>
+              <span class="course-name-text text--bold" itemprop="name"><@course_name/></span>
+              <?i class@icon_after_course_name/> 
+            </a> 
+            <?span class="block"> via 
+              <a class="initiativelinks text--charcoal text--italic hover-text--underline" data-overlay-trigger@provider_overlay_trigger data-track-click="listing_click" data-track-props@provider_tracking_properties href@provider_path onclick@google_analytics_provider_course_script title@provider_link_title><@provider_name/></a> 
+              <span class="hidden medium-up-block large-up-inline-block icon--left text-4 small-up-text-3  large-up-margin-left-xxsmall  icon-clock-charcoal"><@duration/></span> 
+              <span class="block medium-up-hidden text-4 small-up-text-3  large-up-margin-left-xxsmall "><@duration_2/></span>
+              <?button class="block medium-up-inline-block text--blue icon--left icon-play text-4 medium-up-margin-left-xxsmall xsmall-only-margin-top-xxsmall small-only-margin-top-xxsmall" data-track-click="listing_click" data-track-props@trailer_button_tracking_properties data-trailer@trailer_properties>Watch Trailer</button> 
+            </span> 
+            <?div class="course-name-column-cred text-3 margin-top-xsmall truncate xsmall-only-hide small-only-hide"> 
+              <a data-track-click="listing_click" data-track-props@credentials_tracking_properties href@credentials_path onmousedown@credentials_google_analytics_script> 
+                <span class="btn-white btn--small text--charcoal icon--left icon-credential">Earn A Credential</span> 
+                <span class="text--charcoal margin-left-xxsmall"><@credential_detail/></span> 
+                <span class="text--blue"><@credential_name/></span> 
+              </a> 
+            </div> 
+          </td> 
+          <td class="start-date text-right text-2 text--charcoal xsmall-only-hidden small-only-hidden medium-only-hidden large-up-width-3-16" ?content@start_date data-timestamp@start_date_timestamp ?itemprop@item_prop><@start_date_text/></td> 
+          <td class="course-rating-column text-center medium-up-text-right width-2-16 medium-up-width-4-16 large-up-width-3-16" data-timestamp="0"> 
+            <@reviews_nodes node/>
+          </td> 
+        </tr>
+      </@course>
+      <?@ad>
+        <tr> 
+          <td class="text-middle width-2-16 medium-up-width-2-16 xlarge-up-width-1-16"> 
+            <span class="width-100 inline-block text-3 text--blue text-center padding-vert-xsmall"> 
+              <span class="text--bold relative border-all border--blue radius border--thin" style="left: -3px; padding: 1px 2px 0px 2px;"> AD </span> 
+            </span> 
+          </td> 
+          <td class="course-name-column relative width-12-16 medium-up-width-10-16 large-up-width-8-16 xlarge-up-width-9-16" data-track-impression="ad_impression" data-track-props@tracking_properties> 
+            <ul class="table-uni-list text-3 block">
+              <*li(universities) class="inline"> 
+                <a class="uni-name text--charcoal" rel="nofollow" target="_blank" href@path onmousedown@mousedown_tracking_script>
+                  <@name/>
+                </a>
+              </li>
+            </ul> 
+            <a class="text--charcoal text-2 medium-up-text-1 block course-name ad-name" href@url onmousedown@mousedown_tracking_code rel="nofollow" target="_blank" title@course_link_title>
+              <span class="text--bold" itemprop="name"><@course_name/></span> 
+            </a> via 
+            <a class="initiativelinks text--italic text--charcoal" href@url_2 onclick@click_tracking_code rel="nofollow" target="_blank" title@university_link_title><@university_name/></a> 
+          </td> 
+          <td class="start-date text-right text-2 xsmall-only-hidden small-only-hidden medium-only-hidden large-up-width-3-16"><@course_time_kind/></td> 
+          <td class="course-rating-column text-center medium-up-text-right width-2-16 medium-up-width-4-16 large-up-width-3-16" data-timestamp="5"> 
+            <span class="review-rating xsmall-only-hidden small-only-hidden"> 
+              <i class="icon-star icon--xxsmall"/> 
+              <i class="icon-star icon--xxsmall"/> 
+              <i class="icon-star icon--xxsmall"/> 
+              <i class="icon-star icon--xxsmall"/> 
+              <i class="icon-star icon--xxsmall"/> 
+            </span> 
+            <span class="review-rating medium-up-hidden text--charcoal"> 
+              <span class=""><@score/></span> 
+              <i class="icon-star icon--xxsmall relative" style="top: -2px;"/> 
+            </span> 
+          </td> 
+        </tr>
+      </@ad>
+    </@entries>
+  </body>
+</html>
