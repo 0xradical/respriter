@@ -77,6 +77,7 @@ namespace :system do
       Integration::TrackedActions::RakutenMarketingService.new(run_id).run
       Integration::TrackedActions::CommissionJunctionService.new(run_id).run
       Integration::TrackedActions::AwinService.new(run_id).run
+      Integration::TrackedActions::ShareASaleService.new(run_id).run
     end
 
     namespace :rakuten_marketing do
@@ -112,6 +113,13 @@ namespace :system do
       desc 'Pull tracked actions from Impact Radius'
       task tracked_actions_service: %i[environment] do |t, args|
         Integration::TrackedActions::ImpactRadiusService.new.run
+      end
+    end
+
+    namespace :share_a_sale do
+      desc 'Pull tracked actions from ShareASale'
+      task tracked_actions_service: %i[environment] do |t, args|
+        Integration::TrackedActions::ShareASaleService.new.run
       end
     end
   end

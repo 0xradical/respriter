@@ -26,4 +26,12 @@ AffiliateHub.setup do |config|
     c.authorization_token = "Bearer #{ENV['CJ_ACCESS_TOKEN']}"
   end
 
+  config.setup :shareasale_v22 do |c|
+    c.base_uri      = 'https://api.shareasale.com/x.cfm'
+    c.api_token     = ENV['SHARE_A_SALE_API_TOKEN']# KHOl9lhUNDJw9nR8'
+    c.api_secret    = ENV['SHARE_A_SALE_API_SECRET']#'IHc1pb8a2DVcti6gIXd0vm3w3GIroe5f'
+    c.affiliate_id  = ENV['SHARE_A_SALE_AFFILIATE_ID']
+    c.format        = 'xml'
+  end
+
 end

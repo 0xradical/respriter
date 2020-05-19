@@ -36,6 +36,13 @@ GIT
       affiliate_hub
 
 GIT
+  remote: https://github.com/codextremist/affiliate_hub_shareasale
+  revision: a6632ee938deba7e30fcb93a42ead36f9aa6c24a
+  specs:
+    affiliate_hub_shareasale (0.1.0)
+      affiliate_hub
+
+GIT
   remote: https://github.com/que-rb/que.git
   revision: c3547f5154ddbf66ab8a3e0546dab3e7276d09fd
   ref: c3547
@@ -581,6 +588,7 @@ DEPENDENCIES
   affiliate_hub_cj!
   affiliate_hub_impact_radius!
   affiliate_hub_rakuten_marketing!
+  affiliate_hub_shareasale!
   aws-sdk-cloudfront (~> 1.23.0)
   browser (~> 4.0)
   capybara
