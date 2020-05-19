@@ -118,8 +118,9 @@ namespace :system do
 
     namespace :share_a_sale do
       desc 'Pull tracked actions from ShareASale'
-      task tracked_actions_service: %i[environment] do |t, args|
-        Integration::TrackedActions::ShareASaleService.new.run
+      task :tracked_actions_service, %i[start_date] => %i[environment] do |t, args|
+        start_date = args[:start_date].nil? ? Time.now : Time.parse(args[:start_date])
+        Integration::TrackedActions::ShareASaleService.new.run(start_date)
       end
     end
   end
