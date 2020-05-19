@@ -22,6 +22,7 @@ DOCKER              := docker
 DOCKER_COMPOSE      := DATABASE_IMAGE=$(DATABASE_IMAGE) APP_IMAGE=$(APP_IMAGE) docker-compose
 DOCKER_COMPOSE_PATH := $(shell which docker-compose)
 
+WORKERS         ?= 1
 DB_DUMPS_FOLDER := ./db/dumps
 SEEDS_DIR       := ./db/seeds
 SEEDS_FILES     := $(shell ls providers/*/*.sql.erb | sed 's/.erb//' | sed 's/providers\//\.\/db\/seeds\//')
@@ -124,6 +125,9 @@ restart-stg: ## Restarts all napoleon stg dynos
 
 restart-api-%: ## Restarts all napoleon api dynos for a given env
 	@heroku ps:restart --app $(HEROKU_POSTGREST_NAME)-$*
+
+worker:
+	@$(call docker_run_or_plain,napoleon,bundle exec que -w $(WORKERS) ./app.rb)
 
 console: console-dev ## Alias to console-dev
 	@$(call docker_run_or_plain,napoleon,bundle exec pry -r ./app.rb)
@@ -230,4 +234,4 @@ $(SEEDS_DIR)/%/setup.sql: ./providers/%.rb ./providers/%
 	@mkdir -p ./envs/$*
 	@./bin/create_remote_database_env $*
 
-.PHONY: build-seeds build-provider-% setup-provider-% setup-provider-dev-% setup-provider-stg-% setup-provider-prd-% clean-pipelines db-download db-download-% db-load db-load-dev-% db-load-prd-% db-load-stg-% db-reset db-reset-dev db-reset-% db-migrate db-migrate-dev db-migrate-% run run-% up up-% down down-% restart-% restart-prd restart-stg restart-api-% console console-% console-prd console-stg psql psql-dev psql-% bash bash-% bash-ports-% sh sh-% sh-ports-% test rspec spec cucumber docker-build docker-push logs logs-% logs-prd logs-stg logs-api-% watch watch-prd watch-stg watch-api-% clean wipe LESS_PRIORITY-%
+.PHONY: build-seeds build-provider-% setup-provider-% setup-provider-dev-% setup-provider-stg-% setup-provider-prd-% clean-pipelines db-download db-download-% db-load db-load-dev-% db-load-prd-% db-load-stg-% db-reset db-reset-dev db-reset-% db-migrate db-migrate-dev db-migrate-% run run-% up up-% down down-% restart-% restart-prd restart-stg worker restart-api-% console console-% console-prd console-stg psql psql-dev psql-% bash bash-% bash-ports-% sh sh-% sh-ports-% test rspec spec cucumber docker-build docker-push logs logs-% logs-prd logs-stg logs-api-% watch watch-prd watch-stg watch-api-% clean wipe LESS_PRIORITY-%
