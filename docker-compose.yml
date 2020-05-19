@@ -213,7 +213,7 @@ services:
       - proxy.clspt
 
   database.napoleon.clspt:
-    image: classpert/napoleon_database
+    image: $NAPOLEON_DATABASE_IMAGE
     env_file:
       - envs/dev/database-napoleon.env
       - envs/local/database-napoleon.env
@@ -240,7 +240,7 @@ services:
       - proxy.clspt
 
   napoleon.clspt:
-    image: classpert/napoleon
+    image: $NAPOLEON_APP_IMAGE
     command: make worker
     env_file:
       - envs/dev/napoleon.env
@@ -248,7 +248,7 @@ services:
     environment:
       - LOGSPOUT=ignore
     volumes:
-      - ../napoleon:/app
+      - ./napoleon:/app
     depends_on:
       - database.napoleon.clspt
       - mail.clspt

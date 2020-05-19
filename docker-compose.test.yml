@@ -196,7 +196,7 @@ services:
       - urlbox.test
 
   database.napoleon.test:
-    image: classpert/napoleon_database
+    image: $NAPOLEON_DATABASE_IMAGE
     env_file:
       - envs/test/database-napoleon.env
     environment:
@@ -224,8 +224,7 @@ services:
       - database.napoleon.test
 
   napoleon.test:
-    entrypoint: /usr/bin/entrypoint
-    image: classpert/napoleon
+    image: $NAPOLEON_APP_IMAGE
     command: make worker
     env_file:
       - envs/test/napoleon.env
@@ -239,7 +238,7 @@ services:
       - urls.provider.test:172.20.1.118
       - sitemaps.provider.test:172.20.1.118
     volumes:
-      - ../napoleon:/app:cached
+      - ./napoleon:/app:cached
     depends_on:
       - database.napoleon.test
       - mail.test

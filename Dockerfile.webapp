@@ -10,7 +10,7 @@ COPY --chown=developer:developer . /app
 RUN bundle install
 RUN rm -rf node_modules && mkdir -p node_modules && npm ci
 
-FROM classpert/rails
+FROM classpert/rails:4.0.0
 
 ENV BUNDLE_PATH=/home/developer/installed_bundle
 ENV NODE_PATH=/app/node_modules

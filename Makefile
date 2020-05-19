@@ -41,10 +41,18 @@ DEVELOPER_IMAGE_NAME := classpert/developers-dashboard
 DEVELOPER_IMAGE_TAG  := $(shell cat ../developers-dashboard/package-lock.json | $(SHA1SUM) | sed -e 's/ .*//g')
 DEVELOPER_IMAGE      := $(DEVELOPER_IMAGE_NAME):$(DEVELOPER_IMAGE_TAG)
 
+NAPOLEON_APP_IMAGE_NAME := classpert/napoleon
+NAPOLEON_APP_IMAGE_TAG  := $(shell cat ./napoleon/Gemfile.lock | $(SHA1SUM) | sed -e 's/ .*//g')
+NAPOLEON_APP_IMAGE      := $(NAPOLEON_APP_IMAGE_NAME):$(NAPOLEON_APP_IMAGE_TAG)
+
+NAPOLEON_DATABASE_IMAGE_NAME := classpert/napoleon_database
+NAPOLEON_DATABASE_IMAGE_TAG  := $(shell cat ./napoleon/database/db/structure.sql.env | $(SHA1SUM) | sed -e 's/ .*//g')
+NAPOLEON_DATABASE_IMAGE      := $(NAPOLEON_DATABASE_IMAGE_NAME):$(NAPOLEON_DATABASE_IMAGE_TAG)
+
 LOCAL_NODE_MODULES ?= $(shell [ -f ".local_node_modules" ] && echo "./node_modules:" || echo "")
 
 DOCKER              := docker
-DOCKER_COMPOSE      := LOCAL_NODE_MODULES=$(LOCAL_NODE_MODULES) WEB_APP_IMAGE=$(DOCKER_WEB_APP_IMAGE) DEVELOPER_IMAGE=$(DEVELOPER_IMAGE) USER_IMAGE=$(USER_IMAGE) DATABASE_IMAGE=$(DATABASE_IMAGE) docker-compose
+DOCKER_COMPOSE      := LOCAL_NODE_MODULES=$(LOCAL_NODE_MODULES) NAPOLEON_APP_IMAGE=$(NAPOLEON_APP_IMAGE) NAPOLEON_DATABASE_IMAGE=$(NAPOLEON_DATABASE_IMAGE) WEB_APP_IMAGE=$(DOCKER_WEB_APP_IMAGE) DEVELOPER_IMAGE=$(DEVELOPER_IMAGE) USER_IMAGE=$(USER_IMAGE) DATABASE_IMAGE=$(DATABASE_IMAGE) docker-compose
 DOCKER_COMPOSE_PATH := $(shell which docker-compose)
 
 PG_DUMP_FILE := db/backups/latest.dump
@@ -90,7 +98,7 @@ setup-user: ../user-dashboard ## Sets up User Dashboard installing all its depen
 setup-developer: ../developers-dashboard ## Sets up Developer Dashboard installing all its dependencies
 	# $(DOCKER_COMPOSE) run --rm developer.app.clspt npm ci
 
-setup-napoleon: ../napoleon up-database up-api.napoleon ## Sets up Napoleon (its dependencies are already installed!)
+setup-napoleon: up-database up-api.napoleon ## Sets up Napoleon (its dependencies are already installed!)
 	@$(call docker_run_or_plain,base.clspt,bundle exec rails runner bin/setup_napoleon.rb)
 	@echo -e "Napoleon is ready to crawl some providers! To do so, follow this:\n - Run make up-{persistence,provider,napoleon} or make sure those services are up\n - Wait for a while looking at logs to know when it finishes (checks running make logs)\n - Run make sync"
 
@@ -402,9 +410,6 @@ $(PG_DUMP_FILE):
 
 ../developers-dashboard:
 	cd .. && git clone git@github.com:classpert/developers-dashboard.git && cd developers-dashboard && git submodule init && git submodule update
-
-../napoleon:
-	cd .. && git clone git@github.com:classpert/napoleon.git
 
 %: | examples/%.example
 	cp $| $@
