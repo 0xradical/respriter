@@ -182,8 +182,10 @@ services:
       - VIRTUAL_HOST=user.app.clspt
       - LOGSPOUT=ignore
     volumes:
-      - ../user-dashboard:/app
+      - ./user-dashboard:/app
       - /app/node_modules
+      - ./i18n:/app/src/locales:cached
+      - ./components:/app/src/components/external:cached
     ports:
       - 1080
     depends_on:
@@ -200,8 +202,10 @@ services:
       - VIRTUAL_HOST=developer.app.clspt
       - LOGSPOUT=ignore
     volumes:
-      - ../developers-dashboard:/app
+      - ./developers-dashboard:/app
       - /app/node_modules
+      - ./i18n:/app/src/locales:cached
+      - ./components:/app/src/components/external:cached
     ports:
       - 1080
     depends_on:

@@ -1,0 +1,157 @@
+---
+pt-BR:
+  user:
+    greetings: "Olá, %{name}"
+    logout: Sair
+    next: Próximo
+    previous: Voltar
+    submit: Enviar
+    submitting: Enviando...
+    free: GRATUITO
+    upload: Enviar Foto
+    avatar:
+      submit: Enviar
+      cancel: Cancelar
+    tabs:
+      account_settings: Configurações da Conta
+      promo: Bônus de $10
+      interests: Interesses
+    side_menus:
+      account_settings:
+        profile: Perfil
+        email: E-mail
+        password: Senha
+        language: Idioma
+      promo:
+        get_a_10_bonus: Bônus de $10
+        certificate: Certificado
+        paypal_account: Conta do Paypal
+    sections:
+      account_settings:
+        email:
+          title: Alterar e-mail
+          your_current_email_is: "<b>Seu email atual é</b>: %{email}"
+          awaiting_confirmation: "aguardando confirmação"
+        password:
+          title: Alterar Senha
+          info: Clique no botão abaixo e enviaremos um e-mail com instruções para mudança de senha
+          change_password_button: Alterar Senha
+          success_message: Um e-mail com instruções de mudança de senha foi enviado para %{email}
+          error_message: Opa! Ocorreu um erro ao enviar um e-mail para %{email}. Tente novamente mais tarde
+        profile:
+          title: Editar Perfil
+          success_message: Seu perfil foi atualizado com sucesso
+          error_message: Opa! Ocorreu um erro ao atualizar seu perfil
+        language:
+          title: Modificar Idioma
+      promo:
+        get_a_10_bonus:
+          title: Preencha as informações a seguir para ganhar um bônus de $10
+          order_id: "Número do Pedido"
+          price: Preço do Curso
+          purchase_date: "Data de Compra"
+          bonus_status: "Status"
+          bonus_statuses:
+            initial: "Em análise"
+            pending: "Em análise"
+            locked: "Em análise"
+            accepted: Pago
+            approved: Pago
+            rejected: Rejeitado
+            default: "Em análise"
+          bonus_statuses_additional:
+            pending: "Nosso time já está analisando seus dados"
+            failed: "As informações enviadas foram rejeitadas"
+        certificate:
+          title: "Seu certificado"
+          change:
+            call_out: "Precisa mudar seu certificado ?"
+            link: "Envie outro arquivo"
+        paypal_account:
+          title: "Sua conta do Paypal"
+          change:
+            call_out: "Precisa mudar sua conta do Paypal ?"
+            link: "Clique aqui para mudar"
+      interests:
+        info_text: Selecione alguns assuntos para melhorar sua experiência na Classpert!
+        select_a_topic_title: Selecionar assuntos
+        interests_title: Interesses
+        online_courses_info: "%{courses} cursos online"
+        remove_interest: Remover
+        placeholder: Selecionar assuntos
+        select: Selecionar
+        deselect: Desselecionar
+    components:
+      file_uploader:
+        file_label: "Escolher arquivo"
+        file_size_feedback: "%{file} excede tamanho máximo de %{size}"
+        progress_feedback:
+          loading: "Enviando seu arquivo ..."
+          error: "Opa! Ocorreu um erro durante o envio do seu arquivo ..."
+          success: "Arquivo enviado!"
+      help:
+        call_out: "Precisa de ajuda ?"
+        link: "Entre em contato conosco"
+    modals:
+      promo:
+        title: Obrigado!
+        body: Iremos analisar seu certificado e atualizaremos
+          o status em até <b>3 dias</b>
+        social:
+          callout: "Compartilhe com seus amigos:"
+          text: Encontrei um curso na Classpert e ganhei um bônus de $10. Saiba mais em %{site}
+        button: "OK"
+    forms:
+      email:
+        email_field_label: Novo e-mail
+        email_field_placeholder: Digite seu novo e-mail
+        email_field_feedback_text:
+        email_confirmation_field_label: Confirmar novo e-mail
+        email_confirmation_field_placeholder: Digite seu novo e-mail
+        email_confirmation_field_feedback_text:
+        password_field_label: Senha
+        password_field_placeholder: Digite sua senha atual
+        password_field_feedback_text:
+        submit: Enviar
+      profile:
+        name_field_label: Nome
+        name_field_placeholder: Digite seu nome
+        name_field_feedback_text:
+        username_field_label: Usuário
+        username_field_placeholder: Escolha seu usuário
+        username_field_invalid_feedback_text: "Deve ser um usuário válido"
+        username_field_uniqueness_feedback_text:
+        shortbio_field_label: Descrição pessoal
+        shortbio_field_placeholder: Uma pequena frase descrevendo quem você é
+        country_field_label: País
+        country_field_select: Selecione país
+        instructor_field_label: Sou instrutor(a)
+        public_field_label: Exibir meu perfil publicamente
+        social_profiles_field_header: Adicione perfis de redes sociais
+        social_profiles_field_about: >-
+          Adicione seus perfis de redes sociais. Eles aparecerão na sua página de perfil
+          da Classpert. Se você for instrutor(a), é uma boa oportunidade de se conectar com seus estudantes.
+        social_profiles_field_label: Redes Sociais
+        social_profiles_field_select: Adicionar perfil de rede social
+        elearning_profiles_field_header: Adicione perfis de plataformas de e-learning
+        elearning_profiles_field_about: >-
+          Adicione seus perfis de plataforma de e-learning. Eles aparecerão na sua página de perfil
+          da Classpert. Se você for instrutor(a), é uma boa oportunidade de ajudar seus estudantes
+          a achar seus cursos em diferentes plataformas.
+        elearning_profiles_field_label: Plataformas de E-learning
+        elearning_profiles_field_select: Adicionar perfil de plataforma de e-learning
+        about_field_label: Sobre mim
+        about_field_placeholder: >-
+          Use esse espaço para falar sobre você mesmo, o que você faz da vida, seus hobbies, interesses, conquistas, etc.
+        submit: Atualizar Perfil
+      certificate:
+        certificate_field_label: "Envie seu certificado"
+      promo:
+        price_field_label: "Quanto você pagou pelo seu curso?"
+        purchase_date_field_label: "Quando você comprou seu curso?"
+        order_id_field_label: "Número do Pedido"
+        order_id_field_placeholder: "Número associado à compra (Order ID)"
+      paypal_account:
+        paypal_email_field_label: "Conta do Paypal"
+        paypal_email_field_placeholder: "Conta do Paypal que receberá $10"
+        paypal_email_field_invalid_feedback_text: "Deve ser um e-mail válido"

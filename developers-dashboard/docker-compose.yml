@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+
+  developer:
+    image: $APP_IMAGE
+    build: .
+    env_file:
+      - envs/developer.env
+      - envs/local.env
+    environment:
+      - VIRTUAL_HOST=developer.app.clspt
+    ports:
+      - 1080
+    volumes:
+      - .:/app
+      - $LOCAL_NODE_MODULES/app/node_modules
+    networks:
+      - web-app_default
+
+  mockserver:
+    image:   mockserver/mockserver
+    command: -serverPort 1080 -logLevel INFO -proxyRemoteHost proxy.clspt -proxyRemotePort 80
+    ports:
+      - 1080:1080
+    networks:
+      - web-app_default
+
+  cypress:
+    image: $CYPRESS_IMAGE
+    build: ./test
+    env_file:
+      - envs/cypress.env
+    links:
+      - developer:developer.app.clspt
+      - mockserver:api.clspt
+      - mockserver:app.clspt
+      - mockserver:logdrain.clspt
+      - mockserver:s3.clspt
+    depends_on:
+      - developer
+      - mockserver
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./test/cypress:/app/cypress
+      - ./test/cypress.json:/app/cypress.json
+    networks:
+      - web-app_default
+
+networks:
+  web-app_default:
+    external: true
