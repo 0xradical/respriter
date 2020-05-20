@@ -1,0 +1,22 @@
+ja:
+  validations:
+    messages:
+      const: "Field %{field} should contain %{value} as value"
+      type: "Field %{field} should be of type %{type}"
+      multiple_type: "Field %{field} should be one of those types: %{types}"
+      enum: "Field %{field} should have one of those values %{values}"
+      format: "Filed %{field} should match %{format} format"
+      minimum: "Field %{field} should be at least %{value}"
+      maximum: "Field %{field} should be at most %{value}"
+      exclusive_minimum: "Field %{field} should be greater than %{value}"
+      exclusive_maximum: "Field %{field} should be lower than %{value}"
+      min_items: "Field %{field} should have at least %{value} items"
+      max_items: "Field %{field} should have at most %{value} items"
+      pattern: "Field %{field} should match %{pattern} regexp"
+      multiple_of: "Field %{field} should be multiple of %{value}"
+      min_length: "Field %{field} should have at least %{value} as length size"
+      max_length: "Field %{field} should have at most %{value} as length size"
+      min_properties: "Field %{field} should have at least %{value} properties"
+      max_properties: "Field %{field} should have at most %{value} properties"
+      unique_items: "Field %{field} should have unique items"
+      required: "Field %{field} should have those keys: %{missing_keys}"
