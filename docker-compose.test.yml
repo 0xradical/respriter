@@ -1,7 +1,7 @@
 version: "3"
 services:
   base.test: &base
-    image: classpert/web-app:4e606f3876b189943d53168afb0d2c9ad28686db
+    image: $WEB_APP_IMAGE
     env_file:
       - envs/test/base.env
       - envs/local/developer.env
@@ -70,7 +70,7 @@ services:
       - 3035
 
   database.test:
-    image: classpert/database:1.4.1
+    image: $DATABASE_IMAGE
     env_file:
       - envs/test/database.env
     environment:
@@ -155,7 +155,7 @@ services:
       - 80
 
   user.app.test:
-    image: classpert/user-dashboard:1.1.0
+    image: $USER_IMAGE
     command: run serve
     env_file:
       - envs/test/user.env
@@ -163,7 +163,7 @@ services:
     environment:
       - LOGSPOUT=ignore
     volumes:
-      - ../user-dashboard:/app:cached
+      - ./user-dashboard:/app:cached
     networks:
       fixed_ip_network:
         ipv4_address: 172.20.1.112
@@ -174,7 +174,7 @@ services:
       - api.test
 
   developer.app.test:
-    image: classpert/developers-dashboard:1.0.0
+    image: $DEVELOPER_IMAGE
     command: run serve
     env_file:
       - envs/test/developer.env
