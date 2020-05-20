@@ -6,6 +6,8 @@ services:
       - envs/dev/base.env
       - envs/local/base.env
     volumes:
+      - ./i18n:/app/config/locales
+      - ./components:/app/app/assets/vue/components
       - .:/app
       - /app/volumes
       - $LOCAL_NODE_MODULES/app/node_modules
