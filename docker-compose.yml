@@ -6,10 +6,11 @@ services:
       - envs/dev/base.env
       - envs/local/base.env
     volumes:
+      - ./web-app:/app
       - ./i18n:/app/config/locales
       - ./components:/app/app/assets/vue/components
-      - ./web-app:/app
-      - /app/volumes
+      - ./envs:/app/envs
+      - ./Makefile:/app/Makefile
       - $LOCAL_NODE_MODULES/app/node_modules
       - base_bundle:/home/developer/bundle:cached
       - base_node_modules:/home/developer/node_modules:cached
@@ -76,8 +77,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - .:/app
-      - /app/volumes
+      - ./web-app:/app
       - database_data:/var/lib/postgresql/data:cached
       - ./images/database/production_seed.sql:/docker-entrypoint-initdb.d/x_seed.sql
       - ./images/database/development_seed.sql:/docker-entrypoint-initdb.d/z_seed.sql

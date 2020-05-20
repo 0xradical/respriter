@@ -18,13 +18,13 @@ endif
 
 DOCKER_BASE_NAME   := classpert/rails
 DOCKER_BASE_TAG    := 4.0.0
-DOCKER_BASE_FILE   := Dockerfile
+DOCKER_BASE_FILE   := web-app/Dockerfile
 DOCKER_BASE_IMAGE  := $(DOCKER_BASE_NAME):$(DOCKER_BASE_TAG)
 DOCKER_BASE_LATEST := $(DOCKER_BASE_NAME):latest
 
 DOCKER_WEB_APP_NAME   := classpert/web-app
-DOCKER_WEB_APP_TAG    := $(shell cat Gemfile.lock package-lock.json | $(SHA1SUM) | sed -e 's/ .*//g')
-DOCKER_WEB_APP_FILE   := Dockerfile.webapp
+DOCKER_WEB_APP_TAG    := $(shell cat ./web-app/Gemfile.lock ./web-app/package-lock.json | $(SHA1SUM) | sed -e 's/ .*//g')
+DOCKER_WEB_APP_FILE   := web-app/Dockerfile.webapp
 DOCKER_WEB_APP_IMAGE  := $(DOCKER_WEB_APP_NAME):$(DOCKER_WEB_APP_TAG)
 DOCKER_WEB_APP_LATEST := $(DOCKER_WEB_APP_NAME):latest
 DOCKER_WEB_APP_ARGS   := GITHUB_ACCESS_TOKEN=$(GITHUB_ACCESS_TOKEN)
@@ -82,13 +82,7 @@ help:
 
 configure: $(CUSTOM_ENV_FILES)
 
-setup: setup-app setup-database setup-napoleon ## Sets all apps
-
-setup-app: setup-git ## Sets up Web App installing all its dependencies
-
-setup-git: ## Set up git submodules
-	@git submodule init
-	@git submodule update
+setup: setup-database setup-napoleon ## Sets all apps
 
 setup-database: ./images/database/production_seed.sql up-persistence course-reindex  ## Sets up Persistence Containers and indexes Search
 
@@ -381,13 +375,13 @@ $(PG_DUMP_FILE):
 	@mkdir -p envs/$*
 	./bin/fetch_database_env $(HEROKU_WEB_APP_NAME)-$* $(HEROKU_POSTGREST_NAME)-$* $@
 
-./ssr/hypernova.js: package-lock.json ./app/assets ./config/locales
+./web-app/ssr/hypernova.js: package-lock.json ./app/assets ./config/locales
 	@make -s build-ssr
 
-./db/seeds:
+./web-app/db/seeds:
 	@make -s db-build-seeds
 
-./images/database/production_seed.sql: ./db/seeds
+./images/database/production_seed.sql: ./web-app/db/seeds
 
 ./images/volumes/ssh_host_ed25519_key:
 	ssh-keygen -t ed25519 -f ssh_host_ed25519_key < /dev/null

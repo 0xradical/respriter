@@ -6,17 +6,17 @@ services:
       - envs/test/base.env
       - envs/local/developer.env
     volumes:
+      - ./web-app:/app
       - ./i18n:/app/config/locales
       - ./components:/app/app/assets/vue/components
-      - ./web-app:/app
-      - /app/volumes
+      - ./envs:/app/envs
       - $LOCAL_NODE_MODULES/app/node_modules
       - base_bundle:/home/developer/bundle:cached
       - base_node_modules:/home/developer/node_modules:cached
-    extra_hosts:
-      - both.provider.test:172.20.1.118
-      - urls.provider.test:172.20.1.118
-      - sitemaps.provider.test:172.20.1.118
+    links: &sample_providers
+      - provider.clspt:both.provider.clspt
+      - provider.clspt:sitemaps.provider.clspt
+      - provider.clspt:urls.provider.clspt
 
   app.test:
     <<: *base
@@ -194,10 +194,7 @@ services:
       - envs/test/napoleon.env
     environment:
       - LOGSPOUT=ignore
-    extra_hosts:
-      - both.provider.test:172.20.1.118
-      - urls.provider.test:172.20.1.118
-      - sitemaps.provider.test:172.20.1.118
+    links: *sample_providers
     volumes:
       - ./napoleon:/app:cached
     depends_on:
