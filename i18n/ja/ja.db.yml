@@ -1,0 +1,31 @@
+---
+ja:
+  db:
+    unmapped_constraint: Invalid data.
+    profiles_username_idx: Username is already in use.
+    used_usernames_username_idx: Username is already taken.
+    username_format: "Username should only contain alphanumeric chars or any of these: .-_"
+    username_consecutive_dash: Username should not have consecutive dashes (-).
+    username_consecutive_underline: Username should not have consecutive underlines (_).
+    username_boundary_dash: Username should not start or end with a dash (-).
+    username_boundary_underline: Username should not start or end with an underline (_).
+    username_length_upper: Username should be at most 15 characters long.
+    username_length_lower: Username should be at least 5 characters long.
+    username_lowercased: Username characters should all be lower cased.
+    username_change_within_update_threshold: Username cannot be changed within 15 days.
+    username_cannot_be_null: Username cannot be blank.
+    username_cannot_be_erased: Username cannot be blank.
+    username__format: "Username should only contain alphanumeric chars or any of these: .-_"
+    username__consecutive_dash: Username should not have consecutive dashes (-).
+    username__consecutive_underline: Username should not have consecutive underlines (_).
+    username__boundary_dash: Username should not start or end with a dash (-).
+    username__boundary_underline: Username should not start or end with an underline (_).
+    username__length_upper: Username should be at most 15 characters long.
+    username__length_lower: Username should be at least 5 characters long.
+    username__lowercased: Username characters should all be lower cased.
+    username__change_within_update_threshold: Username cannot be changed within 15 days.
+    username__cannot_be_null: Username cannot be blank.
+    username__cannot_be_erased: Username cannot be blank.
+    public_profile__cannot_be_null: "%{platform} profile cannot be blank."
+    public_profile__invalid_uri: "%{platform} profile URL is not valid"
+    public_profile__invalid_format: "%{platform} profile format is not valid"

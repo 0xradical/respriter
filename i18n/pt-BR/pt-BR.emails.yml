@@ -1,0 +1,31 @@
+pt-BR:
+  emails:
+    course_review:
+      subjects:
+        1: 'Como foi sua experiência com %{course} da %{provider}?'
+        2: "Pergunta rápida, %{name}"
+        3: "Sua vez, %{name}"
+      body:
+        1: >-
+          Olá
+        2_html: >-
+          Recentemente você se matriculou no curso <b>%{course} da %{provider}</b>.
+        3: >-
+          Teria um minuto para avaliar como foi sua experiência?
+        4: >-
+          Obrigado por usar Classpert!
+    orphaned_profile:
+      build:
+        subject: Confirm instructor profile claim
+        body:
+          1: >-
+            Hi
+          2_html: >-
+            You're receiving this e-mail because someone is trying to claim %{profile} profile.
+            If you believe someone else is inadvertently trying to claim your profile, please reply to this
+            email to report this incident.
+          3_html: >-
+            To confirm this action, click on the link below
+          4_html: >-
+            This link expires at %{date}
+
