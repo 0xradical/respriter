@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if [ "$1" = "" ]; then
+  COMMAND="bundle exec rails s -b 0.0.0.0"
+else
+  COMMAND="$@"
+fi
+
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' $APP_HOST)" != "200" ]]; do
+  sleep 1;
+  echo 'Waiting for app...';
+done
+
+exec ${COMMAND}
