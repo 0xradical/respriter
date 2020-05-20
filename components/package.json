@@ -1,0 +1,55 @@
+{
+  "name": "@classpert/components",
+  "version": "1.0.0",
+  "description": "A bundle for Vue common components used at Classpert",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack",
+    "webpack-dev-server": "webpack-dev-server",
+    "build": "npm run webpack -- --env.mode production",
+    "dev": "npm run webpack-dev-server -- --env.mode development --hot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/classpert/components.git"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/classpert/components/issues"
+  },
+  "homepage": "https://github.com/classpert/components#readme",
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "css-loader": "^3.2.1",
+    "dompurify": "^2.0.7",
+    "ejs-loader": "^0.3.5",
+    "html-webpack-plugin": "^3.2.0",
+    "json-loader": "^0.5.7",
+    "lodash": "^4.17.15",
+    "marked": "^0.7.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.13.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "postcss-scss": "^2.0.0",
+    "sass-loader": "^8.0.0",
+    "tippy": "0.0.0",
+    "tippy.js": "^5.1.2",
+    "vue": "^2.6.10",
+    "vue-i18n": "^8.15.1",
+    "vue-lazy-hydration": "^1.0.0-beta.9",
+    "vue-loader": "^15.7.2",
+    "vue-social-sharing": "^2.4.7",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2",
+    "yaml-loader": "^0.5.0"
+  }
+}
