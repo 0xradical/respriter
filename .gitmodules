@@ -1,6 +1,6 @@
 [submodule "config/locales"]
-	path = config/locales
+	path = web-app/config/locales
 	url = https://7d12b077c98890abd66f41944901afcd4192f04a:x-oauth-basic@github.com/classpert/i18n.git
 [submodule "app/assets/vue/components"]
-	path = app/assets/vue/components
+	path = web-app/app/assets/vue/components
 	url = https://7d12b077c98890abd66f41944901afcd4192f04a:x-oauth-basic@github.com/classpert/components.git
