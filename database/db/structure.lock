@@ -6,6 +6,7 @@ types/app/category.sql
 types/app/contact_reason.sql
 types/app/crawler_status.sql
 types/app/iso639_code.sql
+types/app/iso3166_1_alpha2_code.sql
 types/app/level.sql
 types/app/pace.sql
 types/app/payment_source.sql
@@ -88,6 +89,7 @@ procedures/triggers/md5_url.sql
 procedures/triggers/sort_prices.sql
 procedures/triggers/track_updated_at.sql
 procedures/triggers/use_username.sql
+procedures/triggers/validate_profiles.sql
 procedures/triggers/validate_provider_crawler_urls.sql
 procedures/triggers/validate_sitemaps.sql
 procedures/triggers/validate_user_account_ids.sql

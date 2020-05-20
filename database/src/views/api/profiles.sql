@@ -7,11 +7,14 @@ CREATE OR REPLACE VIEW api.profiles AS
     long_bio,
     instructor,
     public,
+    country,
     COALESCE(uploaded_avatar_url, oauth_avatar_url) AS avatar_url,
     COALESCE( if_admin(date_of_birth),   if_user_by_id(user_account_id, date_of_birth)   ) AS date_of_birth,
     user_account_id,
     COALESCE( if_admin(interests),       if_user_by_id(user_account_id, interests)       ) AS interests,
-    COALESCE( if_admin(preferences),     if_user_by_id(user_account_id, preferences)     ) AS preferences
+    COALESCE( if_admin(preferences),     if_user_by_id(user_account_id, preferences)     ) AS preferences,
+    COALESCE( if_admin(social_profiles), if_user_by_id(user_account_id, social_profiles) ) AS social_profiles,
+    COALESCE( if_admin(elearning_profiles), if_user_by_id(user_account_id, elearning_profiles) ) AS elearning_profiles
   FROM app.profiles;
 
 CREATE OR REPLACE FUNCTION triggers.api_profiles_view_instead() RETURNS trigger AS $$
@@ -42,7 +45,10 @@ BEGIN
     short_bio           = NEW.short_bio,
     long_bio            = NEW.long_bio,
     instructor          = NEW.instructor,
-    public              = NEW.public
+    public              = NEW.public,
+    country             = NEW.country,
+    social_profiles     = NEW.social_profiles,
+    elearning_profiles  = NEW.elearning_profiles
   WHERE
     id = OLD.id;
 
