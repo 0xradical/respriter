@@ -182,7 +182,7 @@ services:
     environment:
       - LOGSPOUT=ignore
     volumes:
-      - ../developers-dashboard:/app:cached
+      - ./developers-dashboard:/app:cached
     networks:
       fixed_ip_network:
         ipv4_address: 172.20.1.113

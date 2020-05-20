@@ -200,7 +200,7 @@ services:
       - VIRTUAL_HOST=developer.app.clspt
       - LOGSPOUT=ignore
     volumes:
-      - ../developers-dashboard:/app
+      - ./developers-dashboard:/app
       - /app/node_modules
     ports:
       - 1080

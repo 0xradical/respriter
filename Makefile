@@ -82,7 +82,7 @@ help:
 
 configure: $(CUSTOM_ENV_FILES)
 
-setup: setup-app setup-database setup-developer setup-napoleon ## Sets all apps
+setup: setup-app setup-database setup-napoleon ## Sets all apps
 
 setup-app: setup-git ## Sets up Web App installing all its dependencies
 
@@ -91,9 +91,6 @@ setup-git: ## Set up git submodules
 	@git submodule update
 
 setup-database: ./images/database/production_seed.sql up-persistence course-reindex  ## Sets up Persistence Containers and indexes Search
-
-setup-developer: ../developers-dashboard ## Sets up Developer Dashboard installing all its dependencies
-	# $(DOCKER_COMPOSE) run --rm developer.app.clspt npm ci
 
 setup-napoleon: up-database up-api.napoleon ## Sets up Napoleon (its dependencies are already installed!)
 	@$(call docker_run_or_plain,base.clspt,bundle exec rails runner bin/setup_napoleon.rb)
@@ -402,13 +399,10 @@ $(PG_DUMP_FILE):
 	rm ssh_host_rsa_key.pub
 	mv ssh_host_rsa_key $@
 
-../developers-dashboard:
-	cd .. && git clone git@github.com:classpert/developers-dashboard.git && cd developers-dashboard && git submodule init && git submodule update
-
 %: | examples/%.example
 	cp $| $@
 
 LESS_PRIORITY-%:
 	@:
 
-.PHONY: help configure setup setup-developer etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-ci bundle-install rails-migrate course-reindex course-reindex-dev course-reindex-% sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search LESS_PRIORITY-%
+.PHONY: help configure setup etc_hosts worker napoleon-worker tty bash bash-ports bash-ports-% bash-% sh-ports-% sh-% rails app que hypernova webpacker console console-dev build-ssr console-% npm-install npm-ci bundle-install rails-migrate course-reindex course-reindex-dev course-reindex-% sync sync-% db-prepare db-build-seeds db-build-seeds-% db-migrate db-migrate-% db-load db-load-dev db-load-% db-reset db-reset-% db-wipe wipe-db db-restart db-download db-download-% detached-prd-% detached-stg-% attached-prd-% attached-stg-% run-all run-user run-developer run-% up-all up-user up-developer up-persistence up-% restart-% down-% docker-build-base docker-push-base docker-build docker-push clean wipe-unnamed-volumes wipe-data wipe docker-% volumes-show volumes-hide watch watch-dev watch-% logs logs-dev logs-prd logs-stg logs-% wait-for-elastic-search LESS_PRIORITY-%
