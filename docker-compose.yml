@@ -184,6 +184,8 @@ services:
     volumes:
       - ./user-dashboard:/app
       - /app/node_modules
+      - ./i18n:/app/src/locales:cached
+      - ./components:/app/src/components/external:cached
     ports:
       - 1080
     depends_on:
@@ -202,6 +204,8 @@ services:
     volumes:
       - ./developers-dashboard:/app
       - /app/node_modules
+      - ./i18n:/app/src/locales:cached
+      - ./components:/app/src/components/external:cached
     ports:
       - 1080
     depends_on:
