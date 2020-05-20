@@ -8,7 +8,7 @@ services:
     volumes:
       - ./i18n:/app/config/locales
       - ./components:/app/app/assets/vue/components
-      - .:/app
+      - ./web-app:/app
       - /app/volumes
       - $LOCAL_NODE_MODULES/app/node_modules
       - base_bundle:/home/developer/bundle:cached
