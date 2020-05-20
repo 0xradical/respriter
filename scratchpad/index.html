@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      media="screen"
+      href="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/icon-font.css"
+    />
+    <link
+      rel="stylesheet"
+      media="screen"
+      href="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/bundle.css"
+    />
+    <link
+      rel="stylesheet"
+      media="screen"
+      href="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/atomic.full.css"
+    />
+    <script src="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/bundle.js"></script>
+    <script src="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/vars.js"></script>
+    <title>Classpert | Components</title>
+  </head>
+  <body>
+    <div style="width:0;height:0;overflow:hidden">
+      <div
+        data-svg-sprite="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/svgs/lib/icons.svg"
+      ></div>
+      <div
+        data-svg-sprite="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/svgs/packs/tags.svg"
+      ></div>
+      <div
+        data-svg-sprite="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/svgs/packs/providers.svg"
+      ></div>
+    </div>
+    <div id="app"></div>
+  </body>
+</html>
