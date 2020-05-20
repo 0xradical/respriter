@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="shortcut icon"
+      href="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/favicons/favicon.ico"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/favicons/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="48x48"
+      href="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/favicons/favicon-48x48.png"
+    />
+
+    <link
+      rel="stylesheet"
+      media="screen"
+      href="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/icon-font.css"
+    />
+    <link
+      rel="stylesheet"
+      media="screen"
+      href="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/bundle.css"
+    />
+    <script src="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/bundle.js"></script>
+    <script src="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/vars.js"></script>
+    <title>Dashboard | Classpert</title>
+    <!-- Google Tag Manager -->
+    <script>
+      (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-K5JDRZV");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <div style="width:0;height:0;overflow:hidden">
+      <div
+        data-svg-sprite="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/svgs/sprites/brand.svg"
+      ></div>
+      <div
+        data-svg-sprite="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/svgs/sprites/tags.svg"
+      ></div>
+      <div
+        data-svg-sprite="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/svgs/sprites/i18n.svg"
+      ></div>
+      <div
+        data-svg-sprite="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/svgs/sprites/icons.svg"
+      ></div>
+      <div
+        data-svg-sprite="<%= VUE_APP_ELEMENTS_HOST %>/<%= VUE_APP_ELEMENTS_VERSION %>/svgs/sprites/providers.svg"
+      ></div>
+    </div>
+    <noscript>
+      <strong
+        >We're sorry but user-dashboard doesn't work properly without JavaScript
+        enabled. Please enable it to continue.</strong
+      >
+    </noscript>
+    <div id="app"></div>
+  </body>
+</html>
