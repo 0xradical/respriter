@@ -38,9 +38,11 @@ AWS_PRIVATE_KEY={aws_private_key}
 #IMPACT_RADIUS_AUTH_TOKEN={impact_radius_auth_token}
 #AWIN_API_TOKEN={awin_api_token}
 #AWIN_PUBLISHER_ID={awin_publisher_id}
-#SHARE_A_SALE_API_TOKEN=${share_a_sale_api_token}
-#SHARE_A_SALE_API_SECRET=${share_a_sale_api_secret}
-#SHARE_A_SALE_AFFILIATE_ID=${share_a_sale_affiliate_id}
+#SHARE_A_SALE_API_TOKEN={share_a_sale_api_token}
+#SHARE_A_SALE_API_SECRET={share_a_sale_api_secret}
+#SHARE_A_SALE_AFFILIATE_ID={share_a_sale_affiliate_id}
+#CJ_ACCESS_TOKEN={cj_access_token}
+#CJ_REQUESTOR_CID={cj_requestor_cid}
 
 # Oauth
 FACEBOOK_KEY={facebook_key}
@@ -70,6 +72,11 @@ GITHUB_ACCESS_TOKEN={github_access_token}
   impact_radius_auth_token            = envs['IMPACT_RADIUS_AUTH_TOKEN'],
   awin_api_token                      = envs['AWIN_API_TOKEN'],
   awin_publisher_id                   = envs['AWIN_PUBLISHER_ID'],
+  share_a_sale_api_token              = envs['SHARE_A_SALE_API_TOKEN'],
+  share_a_sale_api_secret             = envs['SHARE_A_SALE_API_SECRET'],
+  share_a_sale_affiliate_id           = envs['SHARE_A_SALE_AFFILIATE_ID'],
+  cj_access_token                     = envs['CJ_ACCESS_TOKEN'],
+  cj_requestor_cid                    = envs['CJ_REQUESTOR_CID'],
   facebook_key                        = envs['FACEBOOK_KEY'],
   facebook_secret                     = envs['FACEBOOK_SECRET'],
   linkedin_key                        = envs['LINKEDIN_KEY'],
