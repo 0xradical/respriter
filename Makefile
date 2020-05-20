@@ -188,7 +188,7 @@ sync-%: $(CUSTOM_ENV_FILES) ## Sync web-app with napoleon given resources (cours
 
 db-prepare: wipe-db up-persistence course-reindex ## Configures database with seed data and index everything
 
-db-build-seeds: db-build-seeds-stg ## Should be an alias for db-build-seeds-prd, but for now is for db-build-seeds-stg
+db-build-seeds: db-build-seeds-prd ## Should be an alias for db-build-seeds-prd, but for now is for db-build-seeds-prd
 
 db-build-seeds-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Build Seeds from Production or Staging
 	@$(call docker_run_or_plain,base.clspt,bin/db_build_seeds envs/$*/database.env)
