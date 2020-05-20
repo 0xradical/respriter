@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="16px" viewBox="0 0 14 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>atom/icon/interactive/dashboard/email</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2.3.1-D-CP---Settings" transform="translate(-186.000000, -305.000000)" stroke="currentColor">
+            <g id="menu" transform="translate(165.000000, 273.000000)">
+                <g id="change-email" transform="translate(20.000000, 32.000000)">
+                    <g id="atom/icon/interactive/dashboard/profile">
+                        <path d="M8,7.7 C9.88957261,7.7 11.5,5.97833337 11.5,4 C11.5,2.06700338 9.93299662,0.5 8,0.5 C6.06700338,0.5 4.5,2.06700338 4.5,4 C4.5,5.97833337 6.11042739,7.7 8,7.7 Z" id="Oval"></path>
+                        <path d="M1.50713882,15.5 L14.4928612,15.5 C14.3552948,10.7692779 12.2282443,8.5 8,8.5 C3.77175565,8.5 1.64470517,10.7692779 1.50713882,15.5 Z" id="Path-25"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
