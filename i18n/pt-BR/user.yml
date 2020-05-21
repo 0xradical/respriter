@@ -89,6 +89,8 @@ pt-BR:
           loading: "Enviando seu arquivo ..."
           error: "Opa! Ocorreu um erro durante o envio do seu arquivo ..."
           success: "Arquivo enviado!"
+      social_media_input:
+        placeholder: " resto do link / copiar & colar link"
       help:
         call_out: "Precisa de ajuda ?"
         link: "Entre em contato conosco"
