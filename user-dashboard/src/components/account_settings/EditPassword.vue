@@ -16,8 +16,8 @@
   </section-frame>
 </template>
 <script>
-import env from "../../config/environment";
-import SectionFrame from "../SectionFrame.vue";
+import env from "~config/environment";
+import SectionFrame from "~components/SectionFrame.vue";
 
 export default {
   data() {
@@ -35,27 +35,25 @@ export default {
 
   methods: {
     submit() {
-      var vm = this;
-
       this.$crossOriginXHR
         .post(env.forgotPasswordPath, {
           user_account: {
-            email: vm.$store.state.user_account.email
+            email: this.$store.state.user_account.email
           }
         })
-        .then(function() {
-          vm.alert.message = vm.$i18n.t(
+        .then(() => {
+          this.alert.message = this.$i18n.t(
             "user.sections.account_settings.password.success_message",
-            { email: vm.$store.state.user_account.email }
+            { email: this.$store.state.user_account.email }
           );
-          vm.alert.type = "success";
+          this.alert.type = "success";
         })
-        .catch(function() {
-          vm.alert.message = vm.$i18n.t(
+        .catch(() => {
+          this.alert.message = this.$i18n.t(
             "user.sections.account_settings.password.error_message",
-            { email: vm.$store.state.user_account.email }
+            { email: this.$store.state.user_account.email }
           );
-          vm.alert.type = "danger";
+          this.alert.type = "danger";
         });
     }
   }

@@ -18,7 +18,7 @@ export default {
     color: {
       type: String,
       required: false,
-      default: "gray5"
+      default: "fg"
     }
   },
   components: {

@@ -6,7 +6,7 @@ const SET = "set";
 const CREATE = "create";
 const UPDATE = "update";
 
-export const primitives = {
+export const operations = {
   AUTH,
   GET,
   SET,
@@ -15,14 +15,13 @@ export const primitives = {
 };
 
 const types = {
-  [namespaces.CERTIFICATE]: { AUTH, GET },
   [namespaces.LOCALE]: { SET },
   [namespaces.PROFILE]: { GET, CREATE, UPDATE },
   [namespaces.USER_ACCOUNT]: { GET, UPDATE }
 };
 
-export function namespacedPrimitive(namespace, primitive) {
-  return `${namespace}/${primitive}`;
+export function namespacedOperation(namespace, operation) {
+  return `${namespace}/${operation}`;
 }
 
 export default types;

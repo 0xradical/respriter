@@ -1,6 +1,6 @@
-import { pgrestApi as api } from "../../config/axiosInstances";
-import { update } from "../../lib/utils";
-import { primitives } from "../types";
+import { pgrestApi as api } from "~config/axiosInstances";
+import { update } from "~utils";
+import { operations } from "../types";
 
 const state = {
   email: "",
@@ -9,25 +9,25 @@ const state = {
 };
 
 const mutations = {
-  [primitives.GET](state, payload) {
-    update(state, payload);
+  [operations.GET](state, payload) {
+    update(state)(payload);
   },
-  [primitives.UPDATE](state, payload) {
-    update(state, payload);
+  [operations.UPDATE](state, payload) {
+    update(state)(payload);
   }
 };
 
 const actions = {
-  [primitives.GET]({ commit }, { user_account_id }) {
+  [operations.GET]({ commit }, { userAccountId }) {
     return new Promise((resolve, reject) => {
       api
-        .get(`/user_accounts?id=eq.${user_account_id}&select=email,profiles(*)`)
+        .get(`/user_accounts?id=eq.${userAccountId}&select=email,profiles(*)`)
         .then(
           response => {
             const payload = response.data[0];
 
             if (payload) {
-              commit(primitives.GET, {
+              commit(operations.GET, {
                 ...payload,
                 loaded: true
               });
@@ -41,11 +41,11 @@ const actions = {
         );
     });
   },
-  [primitives.UPDATE]({ commit }, { user_account_id, payload }) {
+  [operations.UPDATE]({ commit }, { userAccountId, payload }) {
     return new Promise((resolve, reject) => {
-      api.patch(`/user_accounts?id=eq.${user_account_id}`, payload).then(
+      api.patch(`/user_accounts?id=eq.${userAccountId}`, payload).then(
         response => {
-          commit(primitives.UPDATE, {
+          commit(operations.UPDATE, {
             ...payload,
             loaded: true
           });

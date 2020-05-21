@@ -1,5 +1,5 @@
 FROM node:10.16.1-alpine AS builder
-MAINTAINER "Dalton Pinto" <dalton@classpert.com>
+LABEL author="Dalton Pinto <dalton@classpert.com>"
 
 ARG GITHUB_ACCESS_TOKEN
 

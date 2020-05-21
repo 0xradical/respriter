@@ -1,4 +1,4 @@
-import { primitives } from "../types";
+import { operations } from "../types";
 
 const state = {
   code: "en",
@@ -8,7 +8,7 @@ const state = {
 };
 
 const mutations = {
-  [primitives.SET](state, locale) {
+  [operations.SET](state, locale) {
     state.code = locale;
     state.decimalSeparator = (1.1)
       .toLocaleString(locale || "en")

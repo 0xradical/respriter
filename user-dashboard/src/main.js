@@ -95,7 +95,6 @@ configure({
   }
 });
 
-// Add validation rules
 extend("required", required);
 extend("email", email);
 extend("min", min);
@@ -124,6 +123,9 @@ Vue.prototype.$session = session;
 Vue.prototype.$domains = appDomains;
 Vue.prototype.$rootTags = rootTags;
 Vue.prototype.$uuid = uuidv4;
+Vue.prototype.$countryCodes = Object.keys(
+  translations.en.iso3166_1_alpha2_codes
+);
 
 new Vue({
   i18n,
