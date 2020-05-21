@@ -40,6 +40,12 @@ en:
           success_message: An e-mail with the instructions on how to change your password was sent to %{email}
           error_message: Ops! An error occurred while sending an e-mail to %{email}. Try again later
         profile:
+          subsections:
+            personal:
+              title: Personal Information
+            instructor:
+              header: I'm an instructor
+              title: Profile Page
           title: Edit Profile
           success_message: Your profile was successfully updated
           error_message: Ops! An error occured when trying to update your profile
@@ -90,6 +96,8 @@ en:
           loading: "Uploading your file ..."
           error: "Oops! There was an error while uploading your file ..."
           success: "File uploaded!"
+      social_media_input:
+        placeholder: " rest of link / copy & paste link"
       help:
         call_out: "Need any help ?"
         link: "Contact us"

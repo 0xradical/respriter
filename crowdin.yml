@@ -1,0 +1,6 @@
+files:
+  - source: /en/en.*.yml
+    ignore:
+      - /en/*.devise.yml
+      - /en/*.base.yml
+    translation: /%language%/%original_file_name%
