@@ -20,6 +20,7 @@
           }
         "
         :placeholder="$t('user.components.social_media_input.placeholder')"
+        :disabled="disabled"
         @input="model = $event.target.value"
         :value="model"
       />
@@ -71,6 +72,10 @@ export default {
       type: String,
       required: true
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     serverSideErrors: {
       type: Array,
       default() {
@@ -81,7 +86,7 @@ export default {
   methods: {
     onpaste,
     transform(validator) {
-      return function (pasted) {
+      return function(pasted) {
         const validation = validator(pasted);
         return validation.valid ? validation.id : validation.originalValue;
       };
@@ -91,7 +96,7 @@ export default {
     this.errors = [...this.serverSideErrors];
   },
   watch: {
-    serverSideErrors: function (errors) {
+    serverSideErrors: function(errors) {
       this.errors = [...errors];
     }
   },

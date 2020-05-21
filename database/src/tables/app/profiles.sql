@@ -11,7 +11,7 @@ CREATE TABLE app.profiles (
   long_bio            varchar,
   public              boolean     DEFAULT true,
   country             app.iso3166_1_alpha2_code,
-  short_bio           varchar,
+  short_bio           varchar     CONSTRAINT short_bio__length CHECK (LENGTH(short_bio) <= 60),
   public_profiles     jsonb       DEFAULT '{}'::jsonb,
   social_profiles     jsonb       DEFAULT '{}'::jsonb,
   elearning_profiles  jsonb       DEFAULT '{}'::jsonb,

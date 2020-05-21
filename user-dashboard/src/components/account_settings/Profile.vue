@@ -1,6 +1,6 @@
 <template>
-  <validation-observer v-slot="{ invalid }" tag="div">
-    <section-frame :alert="alert">
+  <validation-observer v-slot="{ invalid, errors: allErrors }" tag="div">
+    <section-frame :alert="alert.basic" ref="basic-frame">
       <span class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u)">
         {{
           $t(
@@ -57,7 +57,7 @@
             field="username"
             :errors="[
               ...clientSideErrors,
-              ...(serverSideErrors.username || [])
+              ...(serverSideErrors.basic.username || [])
             ]"
             :disabled="loading || sending"
             :label="$t('user.forms.profile.username_field_label')"
@@ -73,30 +73,30 @@
         </validation-provider>
       </form>
     </section-frame>
-    <section-frame :alert="alert" class="el:amx-Mt(1.5em)">
+    <section-frame
+      :alert="alert.instructor"
+      :disabled="!profile.instructor"
+      class="el:amx-Mt(1.5em)"
+      ref="instructor-frame"
+    >
       <template #header>
         <div
-          class="el:amx-Pos(r) el:amx-Fw(b) el:amx-Bob el:amx-Pl(2em) el:amx-Pr(2em) el:amx-Pt(1.5em) el:amx-Pb(1.5em)"
+          class="el:amx-Pos(r) el:amx-D(f) el:amx-Bob el:amx-Pl(2em) el:amx-Pr(2em) el:amx-Pt(1.5em) el:amx-Pb(1.5em)"
         >
-          <span>{{
+          <span class="el:amx-Fw(b)" style="flex: 1">{{
             $t(
               "user.sections.account_settings.profile.subsections.instructor.header"
             )
           }}</span>
-          <div class="el:amx-Pos(a)" style="right: 1.75em; top: 1.5em;">
-            <label
-              class="el:m-switch el:m-switch--flat-primary"
-              for="instructor"
-            >
-              <input
-                @click="profile.instructor = !profile.instructor"
-                :checked="profile.instructor"
-                type="checkbox"
-                id="instructor"
-              />
-              <div class="el:m-switch__slider"></div>
-            </label>
-          </div>
+          <label class="el:m-switch el:m-switch--flat-primary" for="instructor">
+            <input
+              @click="profile.instructor = !profile.instructor"
+              :checked="profile.instructor"
+              type="checkbox"
+              id="instructor"
+            />
+            <div class="el:m-switch__slider"></div>
+          </label>
         </div>
       </template>
 
@@ -111,15 +111,38 @@
         >
       </div>
       <form class="el:amx-Mt(1.5em)" action="#" ref="form">
+        <validation-provider
+          #default="{ errors: clientSideErrors }"
+          tag="div"
+          class="el:amx-Mb(1em)"
+          name="shortbio"
+          :rules="{
+            required: false,
+            max: 60
+          }"
+        >
+          <text-area-field
+            field="shortbio"
+            :errors="clientSideErrors"
+            :disabled="loading || sending"
+            :label="$t('user.forms.profile.shortbio_field_label')"
+            :placeholder="$t('user.forms.profile.shortbio_field_placeholder')"
+            height="100px"
+            :value="profile.shortBio"
+            @input="v => (profile.shortBio = v)"
+          >
+          </text-area-field>
+        </validation-provider>
+
         <text-area-field
-          class="el:amx-Mb(0.875em)"
-          field="shortbio"
+          class="el:amx-Mb(1em)"
+          field="longbio"
           :disabled="loading || sending"
-          :label="$t('user.forms.profile.shortbio_field_label')"
-          :placeholder="$t('user.forms.profile.shortbio_field_placeholder')"
-          height="100px"
-          :value="profile.shortBio"
-          @input="v => (profile.shortBio = v)"
+          :label="$t('user.forms.profile.about_field_label')"
+          :placeholder="$t('user.forms.profile.about_field_placeholder')"
+          height="200px"
+          :value="profile.longBio"
+          @input="v => (profile.longBio = v)"
         >
         </text-area-field>
 
@@ -146,31 +169,28 @@
           </div>
         </div>
 
-        <div class="el:m-checkbox el:amx-Mb(3em)">
-          <div class="el:m-checkbox__selector">
-            <input :checked="profile.public" type="checkbox" />
-            <label @click="profile.public = !profile.public"></label>
-          </div>
-          <span
-            @click="profile.public = !profile.public"
-            class="el:m-checkbox__label"
-            >{{ $t("user.forms.profile.public_field_label") }}</span
-          >
+        <div class="el:amx-D(f) el:amx-Mb(2em)">
+          <span class="el:amx-Fw(b) el:amx-Fs(0.875em)" style="flex: 1">{{
+            $t("user.forms.profile.public_field_label")
+          }}</span>
+          <label class="el:m-switch el:m-switch--flat-primary" for="public">
+            <input
+              @click="profile.public = !profile.public"
+              :checked="profile.public"
+              type="checkbox"
+              id="public"
+            />
+            <div class="el:m-switch__slider"></div>
+          </label>
         </div>
 
         <h4>{{ $t("user.forms.profile.social_profiles_field_header") }}</h4>
 
-        <p class="el:amx-Fs(0.875em)">
+        <p class="el:amx-Fs(0.75em)">
           {{ $t("user.forms.profile.social_profiles_field_about") }}
         </p>
 
         <div class="el:m-form-field el:amx-Mt(1em)">
-          <div class="el:m-form-field__label el:m-form-field__label--over">
-            <label for="social_profiles">{{
-              $t("user.forms.profile.social_profiles_field_label")
-            }}</label>
-          </div>
-
           <div class="el:m-select" style="width: 93%;">
             <select
               @change="e => selectedPlatform('social')(e)"
@@ -193,8 +213,8 @@
             <social-media-input
               :platform="platform"
               :server-side-errors="
-                serverSideErrors.social_profile &&
-                  serverSideErrors.social_profile[platform]
+                serverSideErrors.instructor.social_profile &&
+                  serverSideErrors.instructor.social_profile[platform]
               "
               type="social"
               :key="platform"
@@ -220,17 +240,11 @@
           {{ $t("user.forms.profile.elearning_profiles_field_header") }}
         </h4>
 
-        <p class="el:amx-Fs(0.875em)">
+        <p class="el:amx-Fs(0.75em)">
           {{ $t("user.forms.profile.elearning_profiles_field_about") }}
         </p>
 
         <div class="el:m-form-field el:amx-Mt(1em)">
-          <div class="el:m-form-field__label el:m-form-field__label--over">
-            <label for="elearning_profiles">{{
-              $t("user.forms.profile.elearning_profiles_field_label")
-            }}</label>
-          </div>
-
           <div class="el:m-select" style="width: 93%;">
             <select
               @change="e => selectedPlatform('elearning')(e)"
@@ -253,8 +267,8 @@
             <social-media-input
               :platform="platform"
               :server-side-errors="
-                serverSideErrors.elearning_profile &&
-                  serverSideErrors.elearning_profile[platform]
+                serverSideErrors.instructor.elearning_profile &&
+                  serverSideErrors.instructor.elearning_profile[platform]
               "
               type="elearning"
               :key="platform"
@@ -275,23 +289,20 @@
             </svg>
           </template>
         </div>
-
-        <text-area-field
-          class="el:amx-Mt(3em) el:amx-Mb(1em)"
-          field="longbio"
-          :disabled="loading || sending"
-          :label="$t('user.forms.profile.about_field_label')"
-          :placeholder="$t('user.forms.profile.about_field_placeholder')"
-          height="200px"
-          :value="profile.longBio"
-          @input="v => (profile.longBio = v)"
-        >
-        </text-area-field>
       </form>
     </section-frame>
 
     <input
-      :disabled="loading || invalid || sending"
+      :disabled="
+        loading ||
+          sending ||
+          (allErrors &&
+            ((allErrors.username && allErrors.username.length > 0) ||
+              (allErrors.name && allErrors.name.length > 0) ||
+              (profile.instructor &&
+                allErrors.shortbio &&
+                allErrors.shortbio.length > 0)))
+      "
       @click.prevent="submit"
       type="submit"
       class="el:amx-Mt(1.5em) btn btn--primary-flat btn--medium btn--block"
@@ -331,8 +342,14 @@ const scrollOptions = {
   y: true
 };
 const scrollDuration = 300;
-
 const scroll = curryN(3, ScrollTo.scrollTo)(__, scrollDuration, scrollOptions);
+const BASIC_SECTION_FIELDS = ["name", "username"];
+const INSTRUCTOR_SECTION_FIELDS = [
+  "shortbio",
+  "longbio",
+  "social_profiles",
+  "elearning_profiles"
+];
 
 export default {
   data() {
@@ -367,10 +384,19 @@ export default {
       countries: [],
       loading: true,
       sending: false,
-      serverSideErrors: [],
+      serverSideErrors: {
+        basic: [],
+        instructor: []
+      },
       alert: {
-        message: "",
-        type: ""
+        basic: {
+          message: "",
+          type: ""
+        },
+        instructor: {
+          message: "",
+          type: ""
+        }
       }
     };
   },
@@ -491,7 +517,8 @@ export default {
     },
     submit(event) {
       event.preventDefault();
-      this.serverSideErrors = [];
+      this.serverSideErrors.basic = [];
+      this.serverSideErrors.instructor = [];
       this.sending = true;
 
       const userAccountId = this.$session.getUserId();
@@ -508,14 +535,14 @@ export default {
       this.persist({ userAccountId, payload })
         .then(() => {
           this.sending = false;
-          this.alert = {
+          this.alert.basic = {
             message: this.$t(
               "user.sections.account_settings.profile.success_message"
             ),
             type: "success"
           };
-          setTimeout(() => (this.alert = {}), 5000);
-          scroll(document.body);
+          setTimeout(() => (this.alert.basic = {}), 5000);
+          scroll(this.$refs["basic-frame"]);
         })
         .catch(error => {
           this.sending = false;
@@ -529,17 +556,27 @@ export default {
             /\.$/,
             ""
           );
-
-          this.serverSideErrors = {
+          const errors = {
             [errorField]: errorHint?.platform
               ? { [errorHint.platform]: [errorMessage] }
               : [errorMessage]
           };
 
-          this.alert = {
-            message: errorMessage,
-            type: "danger"
-          };
+          if (errors.username || errors.name) {
+            this.serverSideErrors.basic = errors;
+            this.alert.basic = {
+              message: errorMessage,
+              type: "danger"
+            };
+            scroll(this.$refs["basic-frame"]);
+          } else {
+            this.serverSideErrors.instructor = errors;
+            this.alert.instructor = {
+              message: errorMessage,
+              type: "danger"
+            };
+            scroll(this.$refs["instructor-frame"]);
+          }
         });
     }
   }

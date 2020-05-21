@@ -9,6 +9,7 @@ pt-BR:
       username: "usuário"
       email: "e-mail"
       email_confirmation: "confirmação de e-mail"
+      shortbio: "frase de perfil"
       password: "senha"
       subject: "assunto"
       reason: "motivo de contato"

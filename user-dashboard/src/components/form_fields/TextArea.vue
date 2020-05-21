@@ -1,10 +1,16 @@
 <template>
-  <div class="el:m-form-field">
+  <div
+    class="el:m-form-field"
+    :class="[
+      disabled && 'el:m-form-field--disabled',
+      hasErrors && 'el:m-form-field--error'
+    ]"
+  >
     <div
       class="el:m-form-field__label"
       :class="[labelOver && 'el:m-form-field__label--over']"
     >
-      <label :for="field">{{ label }}</label>
+      <label :for="field" :disabled="disabled">{{ label }}</label>
     </div>
     <div class="el:m-form-field__textarea">
       <textarea
@@ -16,6 +22,10 @@
           width: '100%'
         }"
       ></textarea>
+
+      <div v-if="hasErrors" class="el:amx-C_er">
+        <span class="el:amx-Fs(0.75em)">{{ errors[0] }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -32,6 +42,12 @@ export default {
       required: false,
       default: "150px"
     },
+    errors: {
+      type: Array,
+      default() {
+        return [];
+      }
+    },
     label: {
       type: String,
       required: true
@@ -46,9 +62,16 @@ export default {
     },
     placeholder: {
       type: String
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
+    hasErrors() {
+      return this.errors.length > 0;
+    },
     model: {
       get() {
         return this.value;
@@ -60,3 +83,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+label[disabled] {
+  color: var(--foreground-low);
+}
+</style>
