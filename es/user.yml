@@ -89,6 +89,8 @@ es:
           loading: "Enviando su archivo ..."
           error: "¡Uy! Hubo un error al enviar su archivo ..."
           success: "¡Archivo enviado!"
+      social_media_input:
+        placeholder: " resto del enlace / copiar y pegar enlace"
       help:
         call_out: "¿Necesita ayuda?"
         link: "Contáctanos"
