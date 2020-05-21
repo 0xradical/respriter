@@ -83,18 +83,19 @@
               "user.sections.account_settings.profile.subsections.instructor.header"
             )
           }}</span>
-          <div
-            class="el:amx-Pos(a) el:m-checkbox el:amx-Mb(1.125em)"
-            style="right: 1.125em; top: 50%; transform: translateY(50%);"
-          >
-            <div class="el:m-checkbox__selector">
-              <input :checked="profile.instructor" type="checkbox" />
-              <label @click="profile.instructor = !profile.instructor"></label>
-            </div>
-            <span
-              @click="profile.instructor = !profile.instructor"
-              class="el:m-checkbox__label"
-            ></span>
+          <div class="el:amx-Pos(a)" style="right: 1.75em; top: 1.5em;">
+            <label
+              class="el:m-switch el:m-switch--flat-primary"
+              for="instructor"
+            >
+              <input
+                @click="profile.instructor = !profile.instructor"
+                :checked="profile.instructor"
+                type="checkbox"
+                id="instructor"
+              />
+              <div class="el:m-switch__slider"></div>
+            </label>
           </div>
         </div>
       </template>
@@ -193,7 +194,7 @@
               :platform="platform"
               :server-side-errors="
                 serverSideErrors.social_profile &&
-                serverSideErrors.social_profile[platform]
+                  serverSideErrors.social_profile[platform]
               "
               type="social"
               :key="platform"
@@ -253,7 +254,7 @@
               :platform="platform"
               :server-side-errors="
                 serverSideErrors.elearning_profile &&
-                serverSideErrors.elearning_profile[platform]
+                  serverSideErrors.elearning_profile[platform]
               "
               type="elearning"
               :key="platform"
@@ -387,10 +388,10 @@ export default {
 
   watch: {
     // coming from /account-settings directly
-    loaded: function () {
+    loaded: function() {
       this.init();
     },
-    "$i18n.locale": function () {
+    "$i18n.locale": function() {
       this.computeCountries();
     }
   },

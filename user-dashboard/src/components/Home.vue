@@ -77,16 +77,14 @@
             </li>
             <li>
               <label
-                data-el-theme-toggle-switch=""
-                for="theme-switcher-off-canvas"
-                class="el:m-theme-toggle-switch el:amx-Mr(1em)"
-                style="vertical-align: middle;"
-                ><input
-                  type="checkbox"
-                  @click="switchTheme"
-                  id="theme-switcher-off-canvas" />
-                <div class="el:m-theme-toggle-switch__slider"></div
-              ></label>
+                @click="switchTheme"
+                data-el-theme-toggler
+                class="el:m-switch el:m-switch--theme-toggler"
+                for="checkbox3"
+              >
+                <input type="checkbox" id="checkbox3" />
+                <div class="el:m-switch__slider"></div>
+              </label>
             </li>
           </ul>
         </template>
