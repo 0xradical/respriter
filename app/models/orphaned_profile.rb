@@ -40,20 +40,44 @@ class OrphanedProfile < ApplicationRecord
   def transfer_ownership!(user_account)
     return if has_been_successfully_claimed?
     transaction do
-      user_account.profile.tap do |p|
+      profile = user_account.profile.tap do |p|
         p.public                  = true
         p.instructor              = true
         p.name                    ||= name
         p.uploaded_avatar_url     ||= avatar_url
         p.long_bio                ||= long_bio
         p.short_bio               ||= short_bio
-        p.public_profiles.merge!(public_profiles)
+        p.teaching_subjects       ||= teaching_subjects
+        p.website                 ||= website
         p.save!
       end
       self.claimed_by = user_account.username
       self.claim_code = nil
       mark_as_destroyed!
     end
+
+    social_profiles.each do |k,v|
+      begin
+        user_account.profile.social_profiles.merge!(Hash[k,"https:#{v}"])
+        user_account.profile.save!
+      rescue ActiveRecord::StatementInvalid
+        user_account.profile.reload
+        puts "Error #{k}, #{v}"
+        next
+      end
+    end
+
+    elearning_profiles.each do |k,v|
+      begin
+        user_account.profile.elearning_profiles.merge!(Hash[k,"https:#{v}"])
+        user_account.profile.save!
+      rescue ActiveRecord::StatementInvalid
+        user_account.profile.reload
+        puts "Error #{k}, #{v}"
+        next
+      end
+    end
+
   end
 
   def courses
@@ -98,6 +122,16 @@ class OrphanedProfile < ApplicationRecord
   def mark_as_destroyed!
     self.marked_as_destroyed_at = Time.now + 6.months
     save!
+  end
+  
+  def elearning_profiles
+    public_profiles.select do |k| 
+      ['pluralsight', 'skillshare', 'linkedin_learning', 'udemy', 'treehouse', 'masterclass', 'platzi'].include?(k)
+    end
+  end
+
+  def social_profiles
+    public_profiles.select { |k| !elearning_profiles.keys.include?(k) }
   end
 
   %w(github twitter facebook linkedin).each do |provider|
