@@ -15,3 +15,9 @@ CREATE TRIGGER validate_profiles
   ON app.profiles
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.validate_profiles();
+
+CREATE TRIGGER validate_website
+  BEFORE INSERT OR UPDATE
+  ON app.profiles
+  FOR EACH ROW
+    EXECUTE PROCEDURE triggers.validate_website();

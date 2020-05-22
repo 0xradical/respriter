@@ -10,6 +10,7 @@ CREATE TABLE app.profiles (
   instructor          boolean     DEFAULT false,
   long_bio            varchar,
   public              boolean     DEFAULT true,
+  website             varchar,
   country             app.iso3166_1_alpha2_code,
   short_bio           varchar     CONSTRAINT short_bio__length CHECK (LENGTH(short_bio) <= 60),
   public_profiles     jsonb       DEFAULT '{}'::jsonb,

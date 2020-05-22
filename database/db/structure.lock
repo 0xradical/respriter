@@ -93,6 +93,7 @@ procedures/triggers/validate_profiles.sql
 procedures/triggers/validate_provider_crawler_urls.sql
 procedures/triggers/validate_sitemaps.sql
 procedures/triggers/validate_user_account_ids.sql
+procedures/triggers/validate_website.sql
 triggers/app/admin_accounts.sql
 triggers/app/admin_profiles.sql
 triggers/app/certificates.sql
