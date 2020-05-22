@@ -2,10 +2,17 @@ es:
   validations:
     messages:
       challenge: "La respuesta es incorrecta"
-      mismatch: "El campo {_field_} debe ser igual a {_target_}"
+      is_valid_domain: "domain is not valid"
+      sitemap: "sitemap provided is not valid"
       domain_included_in: "dominio no incluido en sus dominios verificados"
+      url: "Value should be an URI (host with protocol)"
+      url_path: "{_field_} should be a path of {host}"
+      url_path_excluded_root: '{_field_} should be a path of {host} ("/" not allowed)'
+      mismatch: "El campo {_field_} debe ser igual a {_target_}"
     attributes:
       name: "nombre"
+      domain: "domain"
+      sitemap: "sitemap"
       username: "usuario"
       email: "correo electrónico"
       email_confirmation: "confirmación de correo electrónico"
@@ -16,6 +23,9 @@ es:
       message: "mensaje"
       challenge: "de seguridad"
       price: "precio"
+      course_url: "course url"
+      sitemap_url: "sitemap url"
+      provider_name: "name"
       purchase_date: "fecha de compra"
       order_id: "número de pedido"
       paypal_account: "cuenta de Paypal"
@@ -29,599 +39,253 @@ es:
   oauth:
     connect: "Conectar con %{provider}"
     connected: "Conectado con %{provider}"
-  components:
-    card:
-      free_course_tip: >-
-        You can take this course for free. Certificates, group discussions,
-        exercises, offline viewing, among others may not be included. To unlock
-        all features and get full access you must subscribe to the paid plan
-      subscription_tip: >-
-        This provider offers a %{period} free trial. At the end of this period,
-        the subscription fee will be charged.It gives you unlimited access to
-        their courses. You may cancel the subscription at any time.
-    icons:
-      clock: "Duración"
-      level: "Nivel"
-      user_and_monitor: "Ritmo del curso"
-      institution: "Institución"
-    omniauth_sign_in: "Conectar con %{provider}"
-    omniauth_signin_in: "Conectando con %{provider}"
-    omniauth_claim_profile: "Reclamar a través de %{provider}"
-    omniauth_claiming_profile: "Reclamar a través de %{provider}"
-    searchbar_placeholder: Buscar cursos...
-  promo:
-    title: "Convierta sua conocimient en dinero en Classpert"
-    subtitle: "Encuentre un curso en Classpert, envíenos su certificado y reciba %{benefit} en su cuenta de PayPal."
-    benefit: "un bono de $10"
-    login: "Inicia sesión para participar"
-    nologin: "Continuar como invitado"
-    read_instructions: "Leer las instrucciones de promoción"
-  shared:
-    banner:
-      title_html: >-
-        ¡Convierta su <b>conocimiento en dinero</b> en Classpert!
-      subtitle_html: >-
-        Encuentre un curso en Classpert, envíenos su certificado de finalización
-        y gane un <span class='el:amx-C_se el:amx-Ws(nr)'>bono de $10</span> a su cuenta de PayPal.
-      instructions: >-
-        Leer Instrucciones
-      log_in: >-
-        Inicia sesión para participar
-  static_pages:
-    promo:
-      banner:
-        title_html: >-
-          ¡Convierta su <b>conocimiento en dinero</b> en Classpert!
-        subtitle_html: >-
-          Encuentre un curso en Classpert, envíenos su certificado de finalización
-          y gane un <span class='el:amx-C_se el:amx-Ws(nr)'>bono de $10</span> a su cuenta de PayPal.
-      tabs:
-        how_it_works: "Cómo funciona"
-        promo_terms: "Términos de la promo"
-      sign_up:
-        header: "Registrate en Classpert"
-        body_html: >-
-          Crea una cuenta en Classpert. Si ya estás registrado, inicie una sesión
-          para participar.
-      find_course:
-        header: "Encuentra un curso a través de Classpert.com"
-        body_html: >-
-          Use el buscador de Classpert para encontrar el curso que desea tomar.
-
-          Haga clic en <b>"Ir al curso"</b> e inscríbase en el curso elegido (su clic
-          se registrará).
-      complete_course:
-        header: "Completa el curso"
-        body_html: >-
-          Para recibir su bono de $10, debe completar el curso elegido y obtener
-          su certificado.
-      upload_certificate:
-        header: "Envía su certificado"
-        body_html: >-
-          Inicie sesión en Classpert, cargue su certificado y agregue su cuenta PayPal.
-      payment_processing:
-        header: "Recibir el pago"
-        body_html: >-
-          Esto és por nuestra cuenta. Nuestro equipo enviará su pago dentro de los
-          3 días hábiles posteriores a su solicitud.
-      contact_us:
-        body_html: >-
-          <b>¿Tienes más preguntas?</b> <a class='el:amx-C_pr el:amx-Fw(b)' href='/contact-us'>Contáctanos</a>
-      promo_terms:
-        item_1: >-
-          Los pagos solo se realizarán a través de PayPal;
-        item_2: >-
-          El bono promocional está limitado a uno por cuenta de PayPal;
-        item_3: >-
-          Esta promoción está restringida a los primeros 100 (cien) participantes
-          que presenten el certificado;
-        item_4: >-
-          Nos reservamos el derecho de terminar esta promoción a nuestro exclusivo criterio;
-        item_5: >-
-          Solo los clics registrados después de la fecha de inicio de la promoción serán elegibles
-          para recibir el bono;
-        item_6: >-
-          Nos reservamos el derecho de retener, denegar o cancelar cualquier
-          bono a nuestro exclusivo criterio debido a actividades que consideremos
-          fraudulentas, abusivas, poco éticas, sospechosas o inconsistentes con
-          esta promoción.
-  contact_us:
-    new:
-      meta:
-        title: Cursos en línea de las Mejores Plataformas | Classpert
-        description: >-
-          Busque y compare cursos en línea de plataformas como Udemy, Coursera, Pluralsight, Edx,
-          Linkedin Learning y muchas otras. Ahorre tiempo y dinero con Classpert.
-      title: "Contáctenos"
-      subtitle: "Nuestro equipo está aquí para ayudarlo"
-      form:
-        name:
-          header: "Nombre"
-          placeholder: "Escribe tu nombre"
-        email:
-          header: "Correo electrónico"
-          placeholder: "Ingrese su correo electrónico"
-        subject:
-          header: "Asunto"
-          placeholder: "Dudas, sugerencias, críticas ..."
-        reason:
-          header: "Motivo de Contacto"
-          options:
-            select_option: "Seleccionar Opción"
-            customer_support: "Atención al Cliente"
-            bug_report: "Reportar un Error"
-            feature_suggestion: "Sugerir Funcionalidad"
-            commercial_and_partnerships: "Comercial y Asociaciones"
-            manual_profile_claim: "Reclamo de Perfil — Verificación Manual"
-            other: "Otro"
-        message:
-          header: "Mensaje"
-          placeholder: "Ingrese su mensaje ..."
-        challenge:
-          header: "¿Cuál es la respuesta de %{question} ?"
-          placeholder: "Respuesta"
-        action:
-          submit: "Enviar"
-      successful:
-        title: "¡Gracias!"
-        subtitle: "Su mensaje ha sido enviado con éxito. Nuestro equipo responderá pronto."
-        action:
-          another_message: "Enviar otro mensaje"
-          homepage: "Buscar un curso"
-  course_reviews:
-    show:
-      form:
-        rating:
-          title_html: >-
-            Califica tu experiencia. Ayuda a otros estudiantes al calificar <b>%{course} por %{provider}<b/>
-        completion:
-          title: ¿Completaste el curso?
-          values:
-            yep: "Si"
-            nope: "No"
-        feedback:
-          title: ¿Desea agregar informaciones adicionales?
-          placeholder: Felicitaciones, sugerencias o críticas
-        send: Enviar calificacion
-      submission:
-        header: ¡Gracias por la calificación!
-        body: >-
-          Siempre estamos buscando mejorar nuestra plataforma y
-          Tu opinión es esencial.
-        link: Ir a la página de inicio
-  course_bundles:
-    index:
-      description_html: >-
-        Encuentra tutoriales y cursos gratuitos o pagados de %{tag}. <br/> Elija
-        entre los temas seleccionados y aprenda con los mejores instructores e
-        instituciones
-      title_html: "Cursos de %{tag}"
-    meta:
-      description_html: >-
-        Encuentra tutoriales y cursos gratuitos o pagados de %{tag}. <br/> Elija
-        entre los temas seleccionados y aprenda con los mejores instructores e
-        instituciones
-      title_html: "Cursos de %{tag}"
-    show:
-      description_html: >-
-        Encuentra tutoriales y cursos gratuitos o pagados de %{tag}. <br/> Elija
-        entre los temas seleccionados y aprenda con los mejores instructores e
-        instituciones
-      title_html: "Cursos de %{tag}"
-    social_share:
-      description_html: >-
-        Encuentra tutoriales y cursos gratuitos o pagados de %{tag}. <br/> Elija
-        entre los temas seleccionados y aprenda con los mejores instructores e
-        instituciones
-      title_html: "Cursos de %{tag}"
-  courses:
-    index:
-      meta:
-        title: "%{search_query} Cursos | Classpert"
-        description: "Encuentra y compara cursos de %{search_query}. Ahorre tiempo y dinero con Classpert"
-      arts_and_design:
-        html:
-          hero_title: >-
-            Aprender habilidades y conocimientos artísticos prácticos. Explore
-            una amplia variedad de temas para elegir en Artes y Diseño.
-            Encuentra cursos online pagados y gratuitos con certificado
-        meta:
-          description: >-
-            Aprender habilidades y conocimientos artísticos prácticos. Explore
-            una amplia variedad de temas para elegir en Artes y Diseño.
-            Encuentra cursos online pagados y gratuitos con certificado
-          title: Cursos en línea de Artes y Diseño | Classpert
-      business:
-        html:
-          hero_title: >-
-            Avanza en todos los aspectos del mundo empresarial moderno. Fomente
-            habilidades valiosas en finanzas, operaciones, administración y
-            estrategia. Encuentra cursos online pagados y gratuitos con
-            certificado
-        meta:
-          description: >-
-            Avanza en todos los aspectos del mundo empresarial moderno. Fomente
-            habilidades valiosas en finanzas, operaciones, administración y
-            estrategia. Encuentra cursos online pagados y gratuitos con
-            certificado
-          title: Cursos en línea de Business | Classpert
-      health_and_fitness:
-        html:
-          hero_title: >-
-            Aumenta su conocimiento sobre el mantenimiento de la salud, la
-            prevención de enfermedades y la reducción de conductas de riesgo.
-            Vive más tiempo y consigue tus objetivos. Encuentra cursos online
-            pagados y gratuitos con certificado
-        meta:
-          description: >-
-            Aumenta su conocimiento sobre el mantenimiento de la salud, la
-            prevención de enfermedades y la reducción de conductas de riesgo.
-            Vive más tiempo y consigue tus objetivos. Encuentra cursos online
-            pagados y gratuitos con certificado
-          title: Cursos en línea de Salud y Belleza | Classpert
-      language_and_communication:
-        html:
-          hero_title: >-
-            Desarrolla habilidades de escucha, lectura, expresión oral y
-            escritura. Domina tus habilidades de comunicación verbal y no
-            verbal. Encuentra cursos online pagados y gratuitos con certificado
-        meta:
-          description: >-
-            Desarrolla habilidades de escucha, lectura, expresión oral y
-            escritura. Domina tus habilidades de comunicación verbal y no
-            verbal. Encuentra cursos online pagados y gratuitos con certificado
-          title: Cursos en línea de Lengua y Comunicación | Classpert
-      life_sciences:
-        html:
-          hero_title: >-
-            Comprender las estructuras físicas, los procesos químicos y las
-            interacciones moleculares de las estructuras vivas. Empuja tus
-            fronteras con cursos de las mejores universidades del mundo.
-            Encuentra cursos online pagados y gratuitos con certificado
-        meta:
-          description: >-
-            Comprende las estructuras físicas, los procesos químicos y las
-            interacciones moleculares de las estructuras vivas. Empuja tus
-            fronteras con cursos de las mejores universidades del mundo.
-            Encuentra cursos online pagados y gratuitos con certificado
-          title: Cursos en línea de Ciencias de la Vida | Classpert
-      math_and_logic:
-        html:
-          hero_title: >-
-            Estudia álgebra, geometría, aritmética, estadística y más.
-            Desarrolla tu razonamiento y pensamiento analítico. Encuentra cursos
-            online pagados y gratuitos con certificado
-        meta:
-          description: >-
-            Estudia álgebra, geometría, aritmética, estadística y más.
-            Desarrolla tu razonamiento y pensamiento analítico. Encuentra cursos
-            online pagados y gratuitos con certificado
-          title: Cursos en línea de Matemáticas y Lógica | Classpert
-      personal_development:
-        html:
-          hero_title: >-
-            El desarrollo personal es decisivo para el crecimiento en todos los
-            aspectos de la vida. Alcanza todo tu potencial en la vida personal y
-            profesional. Encuentra cursos online pagados y gratuitos con
-            certificado
-        meta:
-          description: >-
-            El desarrollo personal es decisivo para el crecimiento en todos los
-            aspectos de la vida. Alcanza todo tu potencial en la vida personal y
-            profesional. Encuentra cursos online pagados y gratuitos con
-            certificado
-          title: Cursos en línea de Desarrollo Personal | Classpert
-      social_sciences:
-        html:
-          hero_title: >-
-            Estudia todos los aspectos de la sociedad humana y la vida social.
-            Comprende muchos de los problemas más grandes del mundo. Encuentra
-            cursos online pagados y gratuitos con certificado
-        meta:
-          description: >-
-            Estudia todos los aspectos de la sociedad humana y la vida social.
-            Comprende muchos de los problemas más grandes del mundo. Encuentra
-            cursos online pagados y gratuitos con certificado
-          title: Cursos en línea de Ciencias Sociales | Classpert
-    show:
-      meta:
-        title: "Curso en Línea %{course} | Classpert"
-        description: "Tome el Curso en Línea %{course} con certificado. Consulte la información del curso y las evaluaciones de los estudiantes que han asistido."
   dictionary:
     online_courses: Cursos en línea
-    audios: Audios
-    blog: Blog
-    cancel_search: Cerrar la pesquisa
-    categories: Categorías
+    terms_and_conditions: "Términos y Condiciones"
+    privacy_policy: "Política de Privacidad"
+    blog: "Blog"
+    contact_us: "Contáctanos"
+    home: "Home"
+    hi: "¡Hola"
+    share: "Compartir !"
+    levels:
+      beginner: "Principiante"
+      intermediate: "Intermedio"
+      advanced: "Avanzado"
+      all: "Todos"
+    preview_this_course:
+      short: "Previa"
+      long: "Vista previa"
+    preview_not_available:
+      short: "No disponible"
+      long: "Vista previa no disponible"
     certificate:
-      free: Gratis
-      included: Incluido
-      paid: Pagados
-    clear_all_filters: Limpiar todos los filtros
-    clear_filter: Limpiar filtro
+      included: "Incluido"
+      free: "Gratis"
+      paid: "Pagados"
+    details:
+      header: "Detalles del Curso"
+      see: "Ver detalles"
+      show: "Mostrar detalles"
+      hide: "Ocultar detalles"
+    tags:
+      header: "Tags Relacionadas"
+    similar:
+      header: "Related Courses"
     description:
       header: "Descripción del Curso"
       view: "Ver descripción"
       show: "Ver descripción"
       hide: "Ocultar descripción"
-    details:
-      header: "Detalles del Curso"
-      see: "Ver detalles"
-      hide: "Ocultar detalles"
-      show: "Mostrar detalles"
-    tags:
-      header: "Tags Relacionadas"
-      similar:
-        header: "Cursos Relacionados"
-    display_filter: Mostrar filtro
-    extra_paid_content: Contenido extra pagado
-    favorite: Favorito
-    filter_results: Filtrar resultados
-    filters: Filtros
-    for: para
-    for_this_course: Por este curso
-    free: Gratis
-    free_trial: prueba gratis
-    from: De
-    go_to_course: Ir al curso
-    go_to_profile: Mi Perfil
-    highest_price: Precio más alto
-    in_currency: USD
-    length: Tiempo de duración
-    levels:
-      advanced: Avanzado
-      all: Todos
-      beginner: Principiante
-      intermediate: Intermedio
-    lowest_price: Precio más bajo
-    max: Max
-    max_price: Max. $
-    min: Min
-    next_page: Segiuente página
-    no_options_available: No opciones disponibles
-    no_suggestions_message: No sugerencias
-    not_available: No disponible
-    only_free: Solo gratis
+    syllabus:
+      header: "Título"
+      view: "Ver"
+    see_syllabus: "Ver plan de estudios"
+    trial_period: "Periodo de prueba"
+    free_trial: "prueba gratis"
+    extra_paid_content: "Contenido extra pagado"
     pace:
-      instructor_paced: ""
-      live_class: Clase en vivo
-      self_paced: Ritmo propio
-    preview_not_available:
-      long: Vista previa no disponible
-      short: No disponible
-    preview_this_course:
-      long: Vista previa
-      short: Previa
-    previous_page: Página anterior
-    price: Precio
+      instructor_paced: "Instructor-paced"
+      self_paced: "Ritmo propio"
+      live_class: "Clase en vivo"
+    subscription_period:
+      months: "mes"
+      years: "año"
+    for_this_course: "Por este curso"
+    not_available: "No disponible"
+    sign_in: "Entrar"
+    sign_up: "Registrate"
+    sign_out: "Salir"
+    price: "Precio"
     pricing:
       all_courses: "todos los cursos"
       this_course_only: "solo este curso"
       tooltip: "%{provider} ofrece %{offer}. Al final de este período, se cobrará el precio de la inscripción. Este pago le dará acceso ilimitado a los cursos y la cancelación se puede hacer en cualquier momento."
-    privacy_policy: Política de Privacidad
-    providers: Plataformas
+    in_currency: "USD"
+    from: "De"
+    to: "A"
+    min: "Min"
+    max: "Max"
+    search: "Buscar"
+    cancel_search: "Cerrar la pesquisa"
+    filters: "Filtros"
+    audios: "Audios"
+    subtitles: "Leyendas"
+    categories: "Categorías"
+    max_price: "Max. $"
+    providers: "Plataformas"
     about: "Classpert"
-    relevance: Relevancia
-    search: Buscar
+    length: "Tiempo de duración"
+    previous_page: "Página anterior"
+    next_page: "Segiuente página"
     search_results: "Mostrando %{total} resultados"
-    see_syllabus: Ver plan de estudios
-    share: Compartir !
-    show_results: Mostrar Resultados
-    sign_in: Entrar
-    sign_out: Salir
-    sign_up: Registrate
-    sort_by: Ordenar por
-    sort_by_selected: Seleccionado
-    subscription_period:
-      months: mes
-      years: año
-    subtitles: Leyendas
-    syllabus:
-      header: Título
-      view: Ver
-    terms_and_conditions: Términos y Condiciones
-    contact_us: "Contáctanos"
-    home: "Home"
-    hi: "¡Hola"
-    to: A
-    top_reviewed: Mejor evaluados
-    trial_period: Periodo de prueba
-  home:
-    index:
-      about_us_title_1: Buscador de cursos en línea de Classpert
-      about_us_text_1_html: >-
-        Compare cursos en línea de más de %{providers_count} plataformas de aprendizaje diferentes en
-        más de 15 idiomas. Obtenga información detallada sobre precios, mire los videos
-        introductorios, lea el programa de estudios y vea las calificaciones antes de elegir un
-        curso en línea.
-      about_us_title_2: cursos en línea
-      about_us_text_2_html: >-
-        Explore el catálogo más grande de cursos en línea en un solo lugar. Encuentre cursos en línea
-        de <b>informatica</b>, <b>ciencia de datos</b>, <b>marketing</b>, <b>negocios</b>,
-        <b>desarrollo personal</b> y más. ¿Buscas cursos con certificados gratis? Enriquezca su
-        currículum con increíbles cursos en línea sin gastar un centavo.
-      about_us_title_3: plataformas de cursos en línea
-      about_us_text_3_html: >-
-        Descubre los mejores sítios de cursos en línea del mundo en Classpert. Obtenga toda la
-        información relevante sobre las clases en línea de <a
-        href='/blog/review-of-udemy'><b>Udemy</b></a>, <a
-        href='/blog/coursera-en-espanol'><b>Coursera</b></a>, <b>edX</b>, <a
-        href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a
-        href='/blog/udacity-review'><b>Udacity</b></a>,
-        <a href='/blog/treehouse-review'><b>Treehouse</b></a>,
-        <a href='/blog/masterclass-review'><b>MasterClass</b></a>,
-        <b>Platzi</b> entre otros. Encuentre cursos
-        en línea gratuitos, cursos de pago único y modelos de suscripción.
-      about_us_button_text_3: ver todas las plataformas
-      about_us_title_4: Buscador de cursos MOOC
-      about_us_text_4_html: >-
-        Explore cursos en línea gratuitos con certificados en plataformas como Edx, Coursera y Miríadax, y
-        de instituciones como Harvard, Stanford, Yale, Berkeley,
-        MIT, Google, Microsoft y muchos más. Encuentra MOOCs que cubren diferentes temas como
-        <b>inteligencia artificial</b>, <b>big data</b>, <b>blockchain</b>, <b>negocios y
-        administración</b>, <b>programación</b>, <b>seguridad informatica</b>, <b>ciencia de
-        datos</b>, <b>emprendimiento</b>, <b>Excel</b>, <b>desarrollo web</b> y otros.
-      about_us_button_text_4: ver todos los MOOCs
-      careers:
-        data_scientist: Científico de datos
-        game_developer: Desarrollador de videojuegos
-        mobile_app_developer: Desarrollador de aplicaciones móviles
-        software_developer: Desarrollador de software
-        web_developer: Desarrollador web
-      hero_html: Busca y compara <b>cursos en línea</b> de varias plataformas
-      kickstart_your_career: Impulsa tu carrera
-      kickstart_your_career_sub: >-
-        Nuestros expertos han seleccionado los mejores cursos en línea para
-        comenzar su carrera
-      meta:
-        description: >-
-          Busque y compare cursos en línea de plataformas como Udemy, Coursera, Pluralsight, Edx,
-          Linkedin Learning y muchas otras. Ahorre tiempo y dinero con Classpert.
-        title: Cursos en línea y MOOCs de las Mejores Plataformas | Classpert
-      new_to_classpert: ¿Nuevo en Classpert?
-      watch_the_video: Ver el video
+    only_free: "Solo gratis"
+    free: "Gratis"
+    for: "para"
+    sort_by: "Ordenar por"
+    sort_by_selected: "Seleccionado"
+    clear_all_filters: "Limpiar todos los filtros"
+    clear_filter: "Limpiar filtro"
+    filter_results: "Filtrar resultados"
+    show_results: "Mostrar Resultados"
+    display_filter: "Mostrar filtro"
+    lowest_price: "Precio más bajo"
+    highest_price: "Precio más alto"
+    relevance: "Relevancia"
+    no_suggestions_message: "No sugerencias"
+    no_options_available: "No opciones disponibles"
+    top_reviewed: "Mejor evaluados"
+    favorite: "Favorito"
+    go_to_course: "Ir al curso"
+    go_to_profile: "Mi Perfil"
+  meta:
+    icons:
+      user_and_monitor: "Instructor"
+      clock: "Duración"
+      level: "Nivel"
+      institution: "Institución"
   iso639_codes:
-    af: Afrikáans
-    am: Amhárico
-    ar: Árabe
-    ar-EG: Árabe (Egipto)
-    ar-JO: Árabe (Jordán)
-    ar-LB: Árabe (Líbano)
-    ar-SY: Árabe (Siria)
-    az: Azerí
-    be: Bielorruso
-    bg: Búlgaro
-    bn: Bengalí
-    bo: Tibetano
-    bs: Bosnio
-    ca: Catalán
-    co: Corso
-    cs: Checo
-    cy: Galés
-    da: Danés
-    de: Alemán
-    de-DE: Alemán (Alemania)
-    el: Griego (moderno)
-    en: Inglés
-    en-AU: Inglés (Australia)
-    en-BZ: Inglés (Belize)
-    en-CA: Inglés (Canada)
-    en-GB: Inglés (Reino Unido)
-    en-IN: Inglés (India)
-    en-NZ: Inglés (Nueva Zelanda)
-    en-US: Inglés (EE.UU.)
-    en-ZA: Inglés (Sudáfrica)
-    eo: Esperanto
-    es: Español
-    es-AR: Español (Argentina)
-    es-BO: Español (Bolivia)
-    es-CL: Español (Chile)
-    es-CO: Español (Colombia)
-    es-EC: Español (Ecuador)
-    es-ES: Español (España)
-    es-GT: Español (Guatemala)
-    es-MX: Español (Mexico)
-    es-PE: Español (Peru)
-    es-VE: Español (Venezuela)
-    et: Estonio
-    eu: Euskera
-    fa: Persa
-    fi: Finlandés
-    fil: Filipino
-    fr: Francés
-    fr-BE: Francés (Bélgica)
-    fr-CH: Francés (Suiza)
-    fr-FR: Francés (Francia)
-    fy: Frisón
-    ga: Irlandés
-    gd: Gaélico Escocés
-    gl: Gallego
-    gu: Guyaratí
-    ha: Hausa
-    he: Hebreo
-    hi: Hindú
-    hr: Croata
-    ht: Haitiano
-    hu: Húngaro
-    hy: Armenio
-    id: Indonesio
-    ig: Igbo
-    iw: Hebreu
-    is: Islandés
-    it: Italiano
-    it-IT: Italiano (Italia)
-    ja: Japonés
-    jp: Japonés
-    jp-JP: Japonés (Japón)
-    ka: Georgiano
-    kk: Kazajo
-    km: Camboyano
-    kn: Canarés
-    ko: Coreano
-    ku: Kurdo
-    ky: Kirguís
-    lb: Luxemburgués
-    lo: Lao
-    lt: Lituano
-    lv: Letón
-    mg: Malgache
-    mi: Maorí
-    mk: Macedonio
-    ml: Malayalam
-    mn: Mongol
-    mr: Maratí
-    ms: Malayo
-    mt: Maltés
-    my: Birmano
-    nb: Noruego Bokmål
-    ne: Nepalí
-    nl: Holandés
-    nl-BE: Holandés (Belgica)
-    nl-NL: Holandés (Holanda)
-    no: Noruego
-    pa: Panyabí
-    pl: Polaco
-    pl-PL: Polaco (Polonia)
+    ar-EG: "Árabe (Egipto)"
+    ar-JO: "Árabe (Jordán)"
+    ar-LB: "Árabe (Líbano)"
+    ar-SY: "Árabe (Siria)"
+    de-DE: "Alemán (Alemania)"
+    en-AU: "Inglés (Australia)"
+    en-BZ: "Inglés (Belize)"
+    en-CA: "Inglés (Canada)"
+    en-GB: "Inglés (Reino Unido)"
+    en-IN: "Inglés (India)"
+    en-NZ: "Inglés (Nueva Zelanda)"
+    en-US: "Inglés (EE.UU.)"
+    en-ZA: "Inglés (Sudáfrica)"
+    es-AR: "Español (Argentina)"
+    es-BO: "Español (Bolivia)"
+    es-CL: "Español (Chile)"
+    es-CO: "Español (Colombia)"
+    es-EC: "Español (Ecuador)"
+    es-ES: "Español (España)"
+    es-GT: "Español (Guatemala)"
+    es-MX: "Español (Mexico)"
+    es-PE: "Español (Peru)"
+    es-VE: "Español (Venezuela)"
+    fr-BE: "Francés (Bélgica)"
+    fr-CH: "Francés (Suiza)"
+    fr-FR: "Francés (Francia)"
+    it-IT: "Italiano (Italia)"
+    jp-JP: "Japonés (Japón)"
+    nl-BE: "Holandés (Belgica)"
+    nl-NL: "Holandés (Holanda)"
+    pl-PL: "Polaco (Polonia)"
+    pt-BR: "Portugués (Brasil)"
+    pt-PT: "Portugués (Portugal)"
+    sv-SV: "Sueco (Suiza)"
+    zh-CN: "Chino (China)"
+    zh-CMN: "Chino"
+    zh-HANS: "Chino"
+    zh-HANT: "Chino"
+    zh-TW: "Chino (Taiwan)"
+    af: "Afrikáans"
+    am: "Amhárico"
+    ar: "Árabe"
+    az: "Azerí"
+    be: "Bielorruso"
+    bg: "Búlgaro"
+    bn: "Bengalí"
+    bo: "Tibetano"
+    bs: "Bosnio"
+    ca: "Catalán"
+    co: "Corso"
+    cs: "Checo"
+    cy: "Galés"
+    da: "Danés"
+    de: "Alemán"
+    el: "Griego (moderno)"
+    en: "Inglés"
+    eo: "Esperanto"
+    es: "Español"
+    et: "Estonio"
+    eu: "Euskera"
+    fa: "Persa"
+    fi: "Finlandés"
+    fil: "Filipino"
+    fr: "Francés"
+    fy: "Frisón"
+    ga: "Irlandés"
+    gd: "Gaélico Escocés"
+    gl: "Gallego"
+    gu: "Guyaratí"
+    ha: "Hausa"
+    he: "Hebreo"
+    hi: "Hindú"
+    hr: "Croata"
+    ht: "Haitiano"
+    hu: "Húngaro"
+    hy: "Armenio"
+    id: "Indonesio"
+    ig: "Igbo"
+    is: "Islandés"
+    it: "Italiano"
+    iw: "Hebreu"
+    ja: "Japonés"
+    jp: "Japonés"
+    ka: "Georgiano"
+    kk: "Kazajo"
+    km: "Camboyano"
+    kn: "Canarés"
+    ko: "Coreano"
+    ku: "Kurdo"
+    ky: "Kirguís"
+    lb: "Luxemburgués"
+    lo: "Lao"
+    lt: "Lituano"
+    lv: "Letón"
+    mg: "Malgache"
+    mi: "Maorí"
+    mk: "Macedonio"
+    ml: "Malayalam"
+    mn: "Mongol"
+    mr: "Maratí"
+    ms: "Malayo"
+    mt: "Maltés"
+    my: "Birmano"
+    nb: "Noruego Bokmål"
+    ne: "Nepalí"
+    nl: "Holandés"
+    no: "Noruego"
+    pa: "Panyabí"
+    pl: "Polaco"
     ps: "Pastú "
-    pt: Portugués
-    pt-BR: Portugués (Brasil)
-    pt-PT: Portugués (Portugal)
-    ro: Rumano
-    ru: Ruso
-    rw: Ruandés
-    sd: Sindhi
-    si: Cingalés
-    sk: Eslovaco
-    sl: Esloveno
-    sn: Shona
-    so: Somalí
-    sq: Albanés
-    sr: Serbio
-    st: Sesotho
-    sv: Sueco
-    sv-SV: Sueco (Suiza)
-    sw: Suajili
-    ta: Tamil
-    te: Télugu
-    tg: Tayiko
-    th: Tailandés
-    tl: Tagalo
-    tr: Turco
-    tt: Tártaro
-    uk: Ucraniano
-    ur: Urdu
-    uz: Uzbeko
-    vi: Vietnamita
-    xh: Xhosa
-    yi: Yídish
-    yo: Yoruba
-    zh: Chino
-    zh-CMN: Chino
-    zh-CN: Chino (China)
-    zh-HANS: Chino
-    zh-HANT: Chino
-    zh-TW: Chino (Taiwan)
-    zu: Zulú
+    pt: "Portugués"
+    ro: "Rumano"
+    ru: "Ruso"
+    rw: "Ruandés"
+    sd: "Sindhi"
+    si: "Cingalés"
+    sk: "Eslovaco"
+    sl: "Esloveno"
+    sn: "Shona"
+    so: "Somalí"
+    sq: "Albanés"
+    sr: "Serbio"
+    st: "Sesotho"
+    sv: "Sueco"
+    sw: "Suajili"
+    ta: "Tamil"
+    te: "Télugu"
+    tg: "Tayiko"
+    th: "Tailandés"
+    tl: "Tagalo"
+    tr: "Turco"
+    tt: "Tártaro"
+    uk: "Ucraniano"
+    ur: "Urdu"
+    uz: "Uzbeko"
+    vi: "Vietnamita"
+    xh: "Xhosa"
+    yi: "Yídish"
+    yo: "Yoruba"
+    zh: "Chino"
+    zu: "Zulú"
   iso3166_1_alpha2_codes:
     "AF": "Afganistán"
     "AL": "Albania"
@@ -748,7 +412,6 @@ es:
     "LT": "Lituania"
     "LU": "Luxemburgo"
     "MO": "Macao"
-    "MK": "Macedonia del Norte"
     "MG": "Madagascar"
     "MW": "Malawi"
     "MY": "Malasia"
@@ -780,6 +443,7 @@ es:
     "NG": "Nigeria"
     "NU": "Niue"
     "NF": "Isla Norfolk"
+    "MK": "Macedonia del Norte"
     "MP": "Isla Marianas del Norte"
     "NO": "Noruega"
     "OM": "Omán"
@@ -873,26 +537,303 @@ es:
     "SX": "Sint Maarten (neerlandesa)"
     "SS": "Sudán del Sur"
     "XK": "Kosovo"
-  meta:
+  components:
+    omniauth_sign_in: "Conectar con %{provider}"
+    omniauth_signin_in: "Conectando con %{provider}"
+    omniauth_claim_profile: "Reclamar a través de %{provider}"
+    omniauth_claiming_profile: "Reclamar a través de %{provider}"
+    searchbar_placeholder: "Buscar cursos..."
     icons:
-      clock: Duración
-      institution: Institución
-      level: Nivel
-      user_and_monitor: Instructor
-  user_accounts: &user_accounts_base
+      user_and_monitor: "Ritmo del curso"
+      level: "Nivel"
+      clock: "Duración"
+      institution: "Institución"
+    card:
+      subscription_tip: >-
+        This provider offers a %{period} free trial. At the end of this period, the subscription fee will be charged.It gives you unlimited access to their courses. You may cancel the subscription at any time.
+      free_course_tip: >-
+        You can take this course for free. Certificates, group discussions, exercises, offline viewing, among others may not be included. To unlock all features and get full access you must subscribe to the paid plan
+  promo:
+    title: "Convierta sua conocimient en dinero en Classpert"
+    subtitle: "Encuentre un curso en Classpert, envíenos su certificado y reciba %{benefit} en su cuenta de PayPal."
+    benefit: "un bono de $10"
+    login: "Inicia sesión para participar"
+    nologin: "Continuar como invitado"
+    read_instructions: "Leer las instrucciones de promoción"
+  shared:
+    banner:
+      title_html: >-
+        ¡Convierta su <b>conocimiento en dinero</b> en Classpert!
+      subtitle_html: >-
+        Encuentre un curso en Classpert, envíenos su certificado de finalización y gane un <span class='el:amx-C_se el:amx-Ws(nr)'>bono de $10</span> a su cuenta de PayPal.
+      instructions: >-
+        Leer Instrucciones
+      log_in: >-
+        Inicia sesión para participar
+  static_pages:
+    promo:
+      banner:
+        title_html: >-
+          ¡Convierta su <b>conocimiento en dinero</b> en Classpert!
+        subtitle_html: >-
+          Encuentre un curso en Classpert, envíenos su certificado de finalización y gane un <span class='el:amx-C_se el:amx-Ws(nr)'>bono de $10</span> a su cuenta de PayPal.
+      tabs:
+        how_it_works: "Cómo funciona"
+        promo_terms: "Términos de la promo"
+      sign_up:
+        header: "Registrate en Classpert"
+        body_html: >-
+          Crea una cuenta en Classpert. Si ya estás registrado, inicie una sesión para participar.
+      find_course:
+        header: "Encuentra un curso a través de Classpert.com"
+        body_html: >-
+          Use el buscador de Classpert para encontrar el curso que desea tomar. 
+          Haga clic en <b>"Ir al curso"</b> e inscríbase en el curso elegido (su clic se registrará).
+      complete_course:
+        header: "Completa el curso"
+        body_html: >-
+          Para recibir su bono de $10, debe completar el curso elegido y obtener su certificado.
+      upload_certificate:
+        header: "Envía su certificado"
+        body_html: >-
+          Inicie sesión en Classpert, cargue su certificado y agregue su cuenta PayPal.
+      payment_processing:
+        header: "Recibir el pago"
+        body_html: >-
+          Esto és por nuestra cuenta. Nuestro equipo enviará su pago dentro de los 3 días hábiles posteriores a su solicitud.
+      contact_us:
+        body_html: >-
+          <b>¿Tienes más preguntas?</b> <a class='el:amx-C_pr el:amx-Fw(b)' href='/contact-us'>Contáctanos</a>
+      promo_terms:
+        item_1: >-
+          Los pagos solo se realizarán a través de PayPal;
+        item_2: >-
+          El bono promocional está limitado a uno por cuenta de PayPal;
+        item_3: >-
+          Esta promoción está restringida a los primeros 100 (cien) participantes que presenten el certificado;
+        item_4: >-
+          Nos reservamos el derecho de terminar esta promoción a nuestro exclusivo criterio;
+        item_5: >-
+          Solo los clics registrados después de la fecha de inicio de la promoción serán elegibles para recibir el bono;
+        item_6: >-
+          Nos reservamos el derecho de retener, denegar o cancelar cualquier bono a nuestro exclusivo criterio debido a actividades que consideremos fraudulentas, abusivas, poco éticas, sospechosas o inconsistentes con esta promoción.
+  home:
+    index:
+      hero_html: "Busca y compara <b>cursos en línea</b> de varias plataformas"
+      new_to_classpert: "¿Nuevo en Classpert?"
+      watch_the_video: "Ver el video"
+      kickstart_your_career: "Impulsa tu carrera"
+      kickstart_your_career_sub: "Nuestros expertos han seleccionado los mejores cursos en línea para comenzar su carrera"
+      about_us_title_1: Buscador de cursos en línea de Classpert
+      about_us_text_1_html: >-
+        Compare cursos en línea de más de %{providers_count} plataformas de aprendizaje diferentes en más de 15 idiomas. Obtenga información detallada sobre precios, mire los videos introductorios, lea el programa de estudios y vea las calificaciones antes de elegir un curso en línea.
+      about_us_title_2: cursos en línea
+      about_us_text_2_html: >-
+        Explore el catálogo más grande de cursos en línea en un solo lugar. Encuentre cursos en línea de <b>informatica</b>, <b>ciencia de datos</b>, <b>marketing</b>, <b>negocios</b>, <b>desarrollo personal</b> y más. ¿Buscas cursos con certificados gratis? Enriquezca su currículum con increíbles cursos en línea sin gastar un centavo.
+      about_us_title_3: plataformas de cursos en línea
+      about_us_text_3_html: >-
+        Descubre los mejores sítios de cursos en línea del mundo en Classpert. Obtenga toda la información relevante sobre las clases en línea de <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <a href='/blog/coursera-en-espanol'><b>Coursera</b></a>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>, <b>Platzi</b> entre otros. Encuentre cursos en línea gratuitos, cursos de pago único y modelos de suscripción.
+      about_us_button_text_3: ver todas las plataformas
+      about_us_title_4: Buscador de cursos MOOC
+      about_us_text_4_html: >-
+        Explore cursos en línea gratuitos con certificados en plataformas como Edx, Coursera y Miríadax, y de instituciones como Harvard, Stanford, Yale, Berkeley, MIT, Google, Microsoft y muchos más. Encuentra MOOCs que cubren diferentes temas como <b>inteligencia artificial</b>, <b>big data</b>, <b>blockchain</b>, <b>negocios y administración</b>, <b>programación</b>, <b>seguridad informatica</b>, <b>ciencia de datos</b>, <b>emprendimiento</b>, <b>Excel</b>, <b>desarrollo web</b> y otros.
+      about_us_button_text_4: ver todos los MOOCs
+      careers:
+        data_scientist: Científico de datos
+        game_developer: Desarrollador de videojuegos
+        mobile_app_developer: Desarrollador de aplicaciones móviles
+        software_developer: Desarrollador de software
+        web_developer: Desarrollador web
+      meta:
+        title: "Cursos en línea y MOOCs de las Mejores Plataformas | Classpert"
+        description: >-
+          Busque y compare cursos en línea de plataformas como Udemy, Coursera, Pluralsight, Edx, Linkedin Learning y muchas otras. Ahorre tiempo y dinero con Classpert.
+  contact_us:
+    new:
+      meta:
+        title: "Cursos en línea de las Mejores Plataformas | Classpert"
+        description: >-
+          Busque y compare cursos en línea de plataformas como Udemy, Coursera, Pluralsight, Edx, Linkedin Learning y muchas otras. Ahorre tiempo y dinero con Classpert.
+      title: "Contáctenos"
+      subtitle: "Nuestro equipo está aquí para ayudarlo"
+      form:
+        name:
+          header: "Nombre"
+          placeholder: "Escribe tu nombre"
+        email:
+          header: "Correo electrónico"
+          placeholder: "Ingrese su correo electrónico"
+        subject:
+          header: "Asunto"
+          placeholder: "Dudas, sugerencias, críticas ..."
+        reason:
+          header: "Motivo de Contacto"
+          options:
+            select_option: "Seleccionar Opción"
+            customer_support: "Atención al Cliente"
+            bug_report: "Reportar un Error"
+            feature_suggestion: "Sugerir Funcionalidad"
+            commercial_and_partnerships: "Comercial y Asociaciones"
+            manual_profile_claim: "Reclamo de Perfil — Verificación Manual"
+            other: "Otro"
+        message:
+          header: "Mensaje"
+          placeholder: "Ingrese su mensaje ..."
+        challenge:
+          header: "¿Cuál es la respuesta de %{question} ?"
+          placeholder: "Respuesta"
+        action:
+          submit: "Enviar"
+      successful:
+        title: "¡Gracias!"
+        subtitle: "Su mensaje ha sido enviado con éxito. Nuestro equipo responderá pronto."
+        action:
+          another_message: "Enviar otro mensaje"
+          homepage: "Buscar un curso"
+  course_reviews:
+    show:
+      form:
+        rating:
+          title_html: >-
+            Califica tu experiencia. Ayuda a otros estudiantes al calificar <b>%{course} por %{provider}<b/>
+        completion:
+          title: '¿Completaste el curso?'
+          values:
+            yep: "Si"
+            nope: "No"
+        feedback:
+          title: '¿Desea agregar informaciones adicionales?'
+          placeholder: Felicitaciones, sugerencias o críticas
+        send: Enviar calificacion
+      submission:
+        header: '¡Gracias por la calificación!'
+        body: >-
+          Siempre estamos buscando mejorar nuestra plataforma y Tu opinión es esencial.
+        link: Ir a la página de inicio
+  courses:
+    index:
+      meta:
+        title: "%{search_query} Cursos | Classpert"
+        description: "Encuentra y compara cursos de %{search_query}. Ahorre tiempo y dinero con Classpert"
+      arts_and_design:
+        meta:
+          title: "Cursos en línea de Artes y Diseño | Classpert"
+          description: >-
+            Aprender habilidades y conocimientos artísticos prácticos. Explore una amplia variedad de temas para elegir en Artes y Diseño. Encuentra cursos online pagados y gratuitos con certificado
+        html:
+          hero_title: >-
+            Aprender habilidades y conocimientos artísticos prácticos. Explore una amplia variedad de temas para elegir en Artes y Diseño. Encuentra cursos online pagados y gratuitos con certificado
+      business:
+        meta:
+          title: "Cursos en línea de Business | Classpert"
+          description: >-
+            Avanza en todos los aspectos del mundo empresarial moderno. Fomente habilidades valiosas en finanzas, operaciones, administración y estrategia. Encuentra cursos online pagados y gratuitos con certificado
+        html:
+          hero_title: >-
+            Avanza en todos los aspectos del mundo empresarial moderno. Fomente habilidades valiosas en finanzas, operaciones, administración y estrategia. Encuentra cursos online pagados y gratuitos con certificado
+      language_and_communication:
+        meta:
+          title: "Cursos en línea de Lengua y Comunicación | Classpert"
+          description: >-
+            Desarrolla habilidades de escucha, lectura, expresión oral y escritura. Domina tus habilidades de comunicación verbal y no verbal. Encuentra cursos online pagados y gratuitos con certificado
+        html:
+          hero_title: >-
+            Desarrolla habilidades de escucha, lectura, expresión oral y escritura. Domina tus habilidades de comunicación verbal y no verbal. Encuentra cursos online pagados y gratuitos con certificado
+      life_sciences:
+        meta:
+          title: "Cursos en línea de Ciencias de la Vida | Classpert"
+          description: >-
+            Comprende las estructuras físicas, los procesos químicos y las interacciones moleculares de las estructuras vivas. Empuja tus fronteras con cursos de las mejores universidades del mundo. Encuentra cursos online pagados y gratuitos con certificado
+        html:
+          hero_title: >-
+            Comprender las estructuras físicas, los procesos químicos y las interacciones moleculares de las estructuras vivas. Empuja tus fronteras con cursos de las mejores universidades del mundo. Encuentra cursos online pagados y gratuitos con certificado
+      math_and_logic:
+        meta:
+          title: "Cursos en línea de Matemáticas y Lógica | Classpert"
+          description: >-
+            Estudia álgebra, geometría, aritmética, estadística y más. Desarrolla tu razonamiento y pensamiento analítico. Encuentra cursos online pagados y gratuitos con certificado
+        html:
+          hero_title: >-
+            Estudia álgebra, geometría, aritmética, estadística y más. Desarrolla tu razonamiento y pensamiento analítico. Encuentra cursos online pagados y gratuitos con certificado
+      personal_development:
+        meta:
+          title: "Cursos en línea de Desarrollo Personal | Classpert"
+          description: >-
+            El desarrollo personal es decisivo para el crecimiento en todos los aspectos de la vida. Alcanza todo tu potencial en la vida personal y profesional. Encuentra cursos online pagados y gratuitos con certificado
+        html:
+          hero_title: >-
+            El desarrollo personal es decisivo para el crecimiento en todos los aspectos de la vida. Alcanza todo tu potencial en la vida personal y profesional. Encuentra cursos online pagados y gratuitos con certificado
+      social_sciences:
+        meta:
+          title: "Cursos en línea de Ciencias Sociales | Classpert"
+          description: >-
+            Estudia todos los aspectos de la sociedad humana y la vida social. Comprende muchos de los problemas más grandes del mundo. Encuentra cursos online pagados y gratuitos con certificado
+        html:
+          hero_title: >-
+            Estudia todos los aspectos de la sociedad humana y la vida social. Comprende muchos de los problemas más grandes del mundo. Encuentra cursos online pagados y gratuitos con certificado
+      health_and_fitness:
+        meta:
+          title: "Cursos en línea de Salud y Belleza | Classpert"
+          description: >-
+            Aumenta su conocimiento sobre el mantenimiento de la salud, la prevención de enfermedades y la reducción de conductas de riesgo. Vive más tiempo y consigue tus objetivos. Encuentra cursos online pagados y gratuitos con certificado
+        html:
+          hero_title: >-
+            Aumenta su conocimiento sobre el mantenimiento de la salud, la prevención de enfermedades y la reducción de conductas de riesgo. Vive más tiempo y consigue tus objetivos. Encuentra cursos online pagados y gratuitos con certificado
+    show:
+      meta:
+        title: "Curso en Línea %{course} | Classpert"
+        description: "Tome el Curso en Línea %{course} con certificado. Consulte la información del curso y las evaluaciones de los estudiantes que han asistido."
+  course_bundles:
+    meta:
+      title_html: "Cursos de %{tag}"
+      description_html: "Encuentra tutoriales y cursos gratuitos o pagados de %{tag}. <br/> Elija entre los temas seleccionados y aprenda con los mejores instructores e instituciones"
+    social_share:
+      title_html: Cursos de %{tag}
+      description_html: Encuentra tutoriales y cursos gratuitos o pagados de %{tag}. <br/> Elija entre los temas seleccionados y aprenda con los mejores instructores e instituciones
+    index:
+      title_html: Cursos de %{tag}
+      description_html: Encuentra tutoriales y cursos gratuitos o pagados de %{tag}. <br/> Elija entre los temas seleccionados y aprenda con los mejores instructores e instituciones
+    show:
+      title_html: Cursos de %{tag}
+      description_html: Encuentra tutoriales y cursos gratuitos o pagados de %{tag}. <br/> Elija entre los temas seleccionados y aprenda con los mejores instructores e instituciones
+  posts:
+    base:
+      tags:
+        computer_science: "Computer Science"
+        e_learning: "E-Learning"
+        blockchain_and_cryptocurrency: "Blockchain and Cryptocurrency"
+    index:
+      tags:
+        computer_science: Computer Science
+        e_learning: E-Learning
+        blockchain_and_cryptocurrency: Blockchain and Cryptocurrency
+    show:
+      tags:
+        computer_science: Computer Science
+        e_learning: E-Learning
+        blockchain_and_cryptocurrency: Blockchain and Cryptocurrency
+  user_accounts:
     show:
       meta:
         title: "%{name} | Perfil y Cursos"
         description: "Mira el perfil de %{name} en Classpert. Encuentra todos los cursos de %{name} en un solo lugar!"
       instructor: Instructor
-      about_me: Sobre el instructor
-      are_you: ¿Eres %{name}?
+      are_you: '¿Eres %{name}?'
       claim_profile: Reclamar este perfil
+      about_me: Sobre el instructor
+      courses: "Cursos"
+      disclaimer: Esta página fue creada con información pública y no está escrita por el instructor.
+  orphaned_profiles:
+    show:
+      meta:
+        title: '%{name} | Perfil y Cursos'
+        description: Mira el perfil de %{name} en Classpert. Encuentra todos los cursos de %{name} en un solo lugar!
+      instructor: Instructor
+      are_you: '¿Eres %{name}?'
+      claim_profile: Reclamar este perfil
+      about_me: Sobre el instructor
       courses: Cursos
       disclaimer: Esta página fue creada con información pública y no está escrita por el instructor.
-
-  orphaned_profiles:
-    <<: *user_accounts_base
     claim:
       success: La propiedad de este perfil se transfirió con éxito a su cuenta. Ahora puede editar la información de esta página en su panel de control.
       h1: Reclamar Perfil
@@ -905,23 +846,18 @@ es:
         2: >-
           Si podemos verificar su identidad utilizando los métodos disponibles, la propiedad de este perfil se transferirá automáticamente a su cuenta.
         3_html: >-
-          Unfortunately, there are no available methods to verify this profile.
-          Please, %{link} to begin a manual verification process.
+          Unfortunately, there are no available methods to verify this profile. Please, %{link} to begin a manual verification process.
         4: >-
-          Identificamos redes sociales asociadas con este perfil. Use cualquier método a
-          continuación para demostrar su identidad. Si reclama un perfil de empresa, utilice una
-          cuenta de red social vinculada a su empresa.
+          Identificamos redes sociales asociadas con este perfil. Use cualquier método a continuación para demostrar su identidad. Si reclama un perfil de empresa, utilice una cuenta de red social vinculada a su empresa.
         5: >-
           Here are some e-mails we believe belong to you
         6: >-
-          Type any of the above listed emails so a link will be sent to the matched
-          e-mail.
-        7_html: Si no puede probar su identidad utilizando uno de los métodos disponibles, %{link} para comenzar un proceso de verificación manual
-
+          Type any of the above listed emails so a link will be sent to the matched e-mail.
+        7_html: >-
+          Si no puede probar su identidad utilizando uno de los métodos disponibles, %{link} para comenzar un proceso de verificación manual
     send_verification_link:
       success: Hemos enviado un correo electrónico a %{email} con un enlace e instrucciones sobre cómo reclamar este perfil. Este enlace caduca en %{time}
       fail: El correo electrónico %{email} no coincide con ninguno de los registrados.
-
   claims:
     codes:
       verify:
@@ -931,35 +867,38 @@ es:
       update:
         success: La propiedad de este perfil se transfirió con éxito a su cuenta. Ahora puede editar la información de esta página en su panel de control
         fail: Claim failed! Session data is empty. Make sure cookies and javascript are enabled
+  instructors:
+    index:
+      meta:
+        title: "Instructors | Classpert"
+        description: Instructors
+      h1: Instructors
+      filter_by_subject:
+        label: by subject
+        prompt: Select a subject
+      courses_count: "%{count} courses"
+      teaching_at: teaching at
+      text:
+        1: "No instructors for subject %{subject}"
   pages:
     dashboard_index:
-      html:
-        account_settings_form_button: Salvar
-        account_settings_header: Configuraciones de la Cuenta
-        account_settings_link: Configuraciones de la Cuenta
-        add_oauth_accounts_header: Agregar otras cuentas
-        connected_oauth_accounts_header: Cuentas Conectadas
-        destroy_account_button: Cancelar Cuenta
-        destroy_account_header: Cancelar Cuenta
-        interests_link: Áreas de Interés
-        language_preferences_header: Preferencias de Idioma
-        profile_link: Perfil
-        secure_your_account_button: ""
-        secure_your_account_header: ""
-        select_interest_placeholder: Elija sus áreas de interés
-        upload_image_button: Elegir foto
       meta:
-        title: Zona para Miembros | Classpert
-  posts:
-    base: &post_base
-      tags:
-        computer_science: "Computer Science"
-        e_learning: "E-Learning"
-        blockchain_and_cryptocurrency: "Blockchain and Cryptocurrency"
-    index:
-      <<: *post_base
-    show:
-      <<: *post_base
+        title: "Zona para Miembros | Classpert"
+      html:
+        account_settings_header: "Configuraciones de la Cuenta"
+        secure_your_account_header: "Secure your Account"
+        secure_your_account_button: "Create a password"
+        account_settings_link: "Configuraciones de la Cuenta"
+        account_settings_form_button: "Salvar"
+        profile_link: "Perfil"
+        interests_link: "Áreas de Interés"
+        language_preferences_header: "Preferencias de Idioma"
+        connected_oauth_accounts_header: "Cuentas Conectadas"
+        add_oauth_accounts_header: "Agregar otras cuentas"
+        destroy_account_header: "Cancelar Cuenta"
+        destroy_account_button: "Cancelar Cuenta"
+        upload_image_button: "Elegir foto"
+        select_interest_placeholder: "Elija sus áreas de interés"
   profiles:
     new:
       notice: Debe completar un usuario antes de continuar.

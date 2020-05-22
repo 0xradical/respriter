@@ -84,31 +84,31 @@ es:
     autodesk_fusion_360: Autodesk Fusion 360
     autonomous_system: Sistemas Autónomos
     aws: Certificación AWS
-    aws_api_gateway:  AWS API Gateway
+    aws_api_gateway: AWS API Gateway
     aws_cloudformation: AWS Cloudformation
     aws_cloudfront: AWS Cloudfront
-    aws_cloudsearch:  AWS Cloudsearch
+    aws_cloudsearch: AWS Cloudsearch
     aws_codedeploy: AWS Codedeploy
-    aws_cognito:  AWS Cognito
+    aws_cognito: AWS Cognito
     aws_dynamodb: AWS DynamoDB
-    aws_ec2:  AWS EC2
-    aws_glacier:  AWS Glacier
-    aws_iam:  AWS IAM
-    aws_rds:  AWS RDS
+    aws_ec2: AWS EC2
+    aws_glacier: AWS Glacier
+    aws_iam: AWS IAM
+    aws_rds: AWS RDS
     aws_s3: AWS S3
     aws_waf: AWS WAF
-    azure: Azure   
+    azure: Azure
     babeljs: Babel.js
     bachata_dance: Bachata
     backbonejs: Backbone.js
     backend_development: Desarrollo Backend
     bartending: Barman
     basecamp: Basecamp
-    bash_programming: Bash   
+    bash_programming: Bash
     basic_math: Matemáticas Básicas
     basic_physics: Física Básica
     bass_guitar: Bajo
-    beer_brewing: Cerveza Artesanal 
+    beer_brewing: Cerveza Artesanal
     beethovens_piano: Piano de Beethoven
     behance: Behance
     behavioral_sciences: Ciencias Comportamentales
@@ -134,7 +134,6 @@ es:
     bulma: Bulma
     bunny_drawing: Como Dibujar un Conejito
     business: Negocios
-    business_analisys: Análisis de Negocios
     business_analysis: Análisis de Negocios
     business_intelligence: Business Intelligence
     business_management: Gestión de Negocios
@@ -179,7 +178,7 @@ es:
     color_theory: Teoría del Color
     communication: Comunicación
     communication_skills: Habilidades de Comunicación
-    compass: Compass   
+    compass: Compass
     compilers: Compiladores
     comptia_security: Comptia Security+
     computational_biology: Biología Computacional
@@ -199,8 +198,8 @@ es:
     convertkit: ConvertKit
     cooking: Culinario
     copywriting: Redación
-    cordova: Cordova   
-    core_os: CoreOS   
+    cordova: Cordova
+    core_os: CoreOS
     course_development: Desarrollo de Cursos
     cpanel: cPanel
     cplusplus_programming: C++
@@ -211,7 +210,7 @@ es:
     crm: CRM (Customer Relationship Manager)
     crochet: Croché
     crystal_programming: Crystal
-    csharp_programming: C#
+    csharp_programming: 'C#'
     css: CSS
     cucumber_test_framework: Cucumber
     culture: Cultura
@@ -246,14 +245,14 @@ es:
     digital_image_processing: Procesamiento de Imagen Digital
     digital_marketing: Marketing Digital
     digital_media: Medios Digitales
-    digital_ocean:  DigitalOcean
+    digital_ocean: DigitalOcean
     digital_painting: Pintura Digital
     discrete_random_variable: Variable Aleatoria Discreta
     discrete_random_variables: Variables Aleatorias Discretas
     disease_and_disorder: Enfermidades
     django: Django
     djembe_drum: Djembe
-    docker: Docker   
+    docker: Docker
     dog_drawing: Como Dibujar un Perro
     doodle_art: Doodle Art
     dotnet: Microsoft .NET
@@ -329,7 +328,7 @@ es:
     flat_character_design: Personaje 2D
     flexbox: Flexbox
     flower_arrangement: Arreglo Floral
-    flutter: Flutter   
+    flutter: Flutter
     flying_car: Auto Volador
     food_drawing: Como Dibujar Comida
     food_nutrition: Nutrición
@@ -342,7 +341,7 @@ es:
     front_end: Desarrollo Front End
     front_end_developer: Desarrollo Front End
     fruity_loops: Fruity Loops
-    fsharp_programming: F#
+    fsharp_programming: 'F#'
     full_stack_developer: Desarrollo Full Stack
     game_character_creation: Crear Personajes para Juego
     game_development: Desarrollo de Juegos
@@ -563,7 +562,7 @@ es:
     nursing: Enfermería
     nutrition: Nutrición
     nutrition_and_wellness: Nutrición y Bienestar
-    nuxtjs:  Nuxt.js
+    nuxtjs: Nuxt.js
     oauth: OAuth
     object_oriented_programming: Programación Orientada a Objetos
     objective_c: Objective-C
@@ -606,7 +605,7 @@ es:
     poker: Poker
     political_science: La Ciencia Política
     politics: Política
-    porn_addiction: Tratamiento de la adicción a la pornografía
+    porn_addiction_treatment: Porn Addiction Treatment
     portfolio_analysis: Análisis de Cartera
     portuguese: Portugués
     postgresql: PostgreSQL
@@ -664,11 +663,11 @@ es:
     salsa_dancing: Como Bailar Salsa
     sanic: Sanic
     sap: SAP
-    sas_programming:  SAS Programming
+    sas_programming: SAS Programming
     sass: Sass
     scala_programming: Scala
     sccm: SCCM
-    scratch:  Scratch
+    scratch: Scratch
     scratch_games: Juegos con Scratch
     scripting_for_testers: Scriting para Probadores
     sculptris: Sculptris
@@ -718,7 +717,7 @@ es:
     sql: SQL
     sqlite: SQLite
     sscp_certification: Certificación SSCP
-    stata:  Stata
+    stata: Stata
     statistical_modeling: Modelo Estadístico
     statistical_thermodynamics: Termodinámica Estadística
     statistics_and_probability: Estadística y Probabilidad
@@ -737,7 +736,7 @@ es:
     survey: Estudio
     suse: OpenSUSE
     sustainability: Sostenibilidad
-    sveltejs:  Svelte.js
+    sveltejs: Svelte.js
     swedish: Sueco
     swift: Swift
     swing_tranding: Swing Trading

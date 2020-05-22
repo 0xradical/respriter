@@ -1,4 +1,3 @@
----
 es:
   user:
     greetings: "Hola, %{name}"
@@ -9,6 +8,7 @@ es:
     submitting: Enviando...
     free: GRATIS
     upload: Enviar Foto
+    generic_api_error: "Could not process request"
     avatar:
       submit: Enviar
       cancel: Cancelar
@@ -37,11 +37,17 @@ es:
           info: Haga clic en el botón a continuación y le enviaremos un correo electrónico con las instrucciones para cambiar la contraseña
           change_password_button: Cambiar Contraseña
           success_message: Se envió un correo electrónico con instrucciones de cambio de contraseña a% {email}
-          error_message: ¡Uy! Se produjo un error al enviar un correo electrónico a% {email}. Intenta nuevamente más tarde
+          error_message: '¡Uy! Se produjo un error al enviar un correo electrónico a% {email}. Intenta nuevamente más tarde'
         profile:
+          subsections:
+            personal:
+              title: Personal Information
+            instructor:
+              header: I'm an instructor
+              title: Profile Page
           title: Editar Perfil
           success_message: Su perfil se actualizó correctamente
-          error_message: ¡Uy! Se produjo un error al actualizar tu perfil
+          error_message: '¡Uy! Se produjo un error al actualizar tu perfil'
         language:
           title: Cambiar Idioma
       promo:
@@ -52,13 +58,13 @@ es:
           purchase_date: "Fecha de Compra"
           bonus_status: "Situación"
           bonus_statuses:
-            initial: "En análisis"
-            pending: "En análisis"
-            locked: "En análisis"
+            initial: En análisis
+            pending: En análisis
+            locked: En análisis
             accepted: Pagado
             approved: Pagado
             rejected: Rechazado
-            default: "En análisis"
+            default: En análisis
           bonus_statuses_additional:
             pending: "Nuestro equipo ya está analizando sus datos"
             failed: "La información presentada ha sido rechazada"
@@ -73,7 +79,7 @@ es:
             call_out: "¿Necesita cambiar su cuenta de Paypal?"
             link: "Haga clic aquí para cambiar"
       interests:
-        info_text: ¡Selecciona algunos temas para mejorar tu experiencia Classpert!
+        info_text: '¡Selecciona algunos temas para mejorar tu experiencia Classpert!'
         select_a_topic_title: Seleccionar temas
         interests_title: Intereses
         online_courses_info: "%{courses} cursos en línea"
@@ -97,8 +103,7 @@ es:
     modals:
       promo:
         title: "¡Gracias!"
-        body: Revisaremos su certificado y lo actualizaremos
-          su situación dentro de <b> 3 días </b>
+        body: Revisaremos su certificado y lo actualizaremos su situación dentro de <b> 3 días </b>
         social:
           callout: "Comparta con sus amigos:"
           text: Encontré un curso en Classpert y gané un bono de $10. Obtenga más información en %{site}
@@ -131,14 +136,12 @@ es:
         public_field_label: Ver mi perfil públicamente
         social_profiles_field_header: Agregar perfiles sociales
         social_profiles_field_about: >-
-          Agrega tus perfiles de redes sociales. Aparecerán en su página de perfil de Classpert.
-          Si usted es un instructor, esta es una buena oportunidad para conectarse con sus alumnos.
+          Agrega tus perfiles de redes sociales. Aparecerán en su página de perfil de Classpert. Si usted es un instructor, esta es una buena oportunidad para conectarse con sus alumnos.
         social_profiles_field_label: Redes sociales
         social_profiles_field_select: Agregar perfil de red social
         elearning_profiles_field_header: Agregar perfiles de plataforma de e-learning
         elearning_profiles_field_about: >-
-          Agregue sus perfiles de plataforma de e-learning. Aparecerán en su página de perfil de Classpert.
-          Si es instructor, esta es una buena oportunidad para ayudar a sus estudiantes a encontrar sus cursos en diferentes plataformas.
+          Agregue sus perfiles de plataforma de e-learning. Aparecerán en su página de perfil de Classpert. Si es instructor, esta es una buena oportunidad para ayudar a sus estudiantes a encontrar sus cursos en diferentes plataformas.
         elearning_profiles_field_label: Plataformas de E-learning
         elearning_profiles_field_select: Adicionar perfil de plataforma de e-learning
         about_field_label: Sobre mi
