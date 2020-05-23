@@ -4,12 +4,12 @@
       <span class="el:m-label">
         <icon
           name="profile"
-          :color="selected === 1 ? 'fg' : 'fgL'"
+          :color="selected === 1 ? 'fg' : 'fgM'"
           class="el:m-label__icon el:amx-Mr(0.75em)"
         ></icon>
         <span
           class="el:m-label__text el:amx-Fs(0.875em)"
-          :class="selected === 1 ? 'el:amx-C_fg' : 'el:amx-C_fgL'"
+          :class="selected === 1 ? 'el:amx-C_fg' : 'el:amx-C_fgM'"
         >
           {{ $t("user.side_menus.account_settings.profile") }}
         </span>
@@ -20,12 +20,12 @@
       <span class="el:m-label">
         <icon
           name="password"
-          :color="selected === 2 ? 'fg' : 'fgL'"
+          :color="selected === 2 ? 'fg' : 'fgM'"
           class="el:m-label__icon el:amx-Mr(0.75em)"
         ></icon>
         <span
           class="el:m-label__text el:amx-Fs(0.875em)"
-          :class="selected === 2 ? 'el:amx-C_fg' : 'el:amx-C_fgL'"
+          :class="selected === 2 ? 'el:amx-C_fg' : 'el:amx-C_fgM'"
         >
           {{ $t("user.side_menus.account_settings.password") }}
         </span>
