@@ -1,4 +1,3 @@
----
 ja:
   user:
     greetings: "Hi, %{name}"
@@ -15,7 +14,7 @@ ja:
       cancel: Cancel
     tabs:
       account_settings: Account Settings
-      promo: $10 bonus
+      promo: '$10 bonus'
       interests: Interests
     side_menus:
       account_settings:
@@ -24,7 +23,7 @@ ja:
         password: Password
         language: Language
       promo:
-        get_a_10_bonus: $10 bonus
+        get_a_10_bonus: '$10 bonus'
         certificate: Certificate
         paypal_account: Paypal Account
     sections:
@@ -40,6 +39,12 @@ ja:
           success_message: An e-mail with the instructions on how to change your password was sent to %{email}
           error_message: Ops! An error occurred while sending an e-mail to %{email}. Try again later
         profile:
+          subsections:
+            personal:
+              title: Personal Information
+            instructor:
+              header: I'm an instructor
+              title: Profile Page
           title: Edit Profile
           success_message: Your profile was successfully updated
           error_message: Ops! An error occured when trying to update your profile
@@ -98,8 +103,7 @@ ja:
     modals:
       promo:
         title: "Thank you!"
-        body: We'll analyze your certificate. You can expect an
-          update in <b>3 days</b>
+        body: We'll analyze your certificate. You can expect an update in <b>3 days</b>
         social:
           callout: "Share with your friends:"
           text: I found a course via Classpert and got a $10 bonus. Learn more at %{site}
@@ -132,16 +136,12 @@ ja:
         public_field_label: Show my profile to everyone
         social_profiles_field_header: Add your social media profiles
         social_profiles_field_about: >-
-          Add your profiles from social media platforms. They will show up on
-          your Classpert profile page. If you're an instructor, it's an
-          opportunity to connect with your students.
+          Add your profiles from social media platforms. They will show up on your Classpert profile page. If you're an instructor, it's an opportunity to connect with your students.
         social_profiles_field_label: Social Media
         social_profiles_field_select: Add social media profile
         elearning_profiles_field_header: Add your e-learning platforms profiles
         elearning_profiles_field_about: >-
-          Add your profiles from e-learning platforms. They will show up on
-          your Classpert profile page. If you're an instructor, it's an opportunitiy to help students
-          find your courses on different platforms you teach.
+          Add your profiles from e-learning platforms. They will show up on your Classpert profile page. If you're an instructor, it's an opportunitiy to help students find your courses on different platforms you teach.
         elearning_profiles_field_label: E-learning Platforms
         elearning_profiles_field_select: Add e-learning platform profile
         about_field_label: About

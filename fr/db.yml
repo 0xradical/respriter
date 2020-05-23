@@ -1,4 +1,4 @@
-ja:
+fr:
   db:
     unmapped_constraint: Invalid data.
     profiles_username_idx: Username is already in use.

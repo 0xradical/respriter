@@ -1,0 +1,22 @@
+pt-BR:
+  validations:
+    messages:
+      const: "O campo %{field} deve conter %{value} como valor"
+      type: "O campo %{field} deve ser do tipo %{type}"
+      multiple_type: "O campo %{field} deve ser um desses tipos: %{types}"
+      enum: "O campo %{field} deve ter um dos valores %{values}"
+      format: "Campo %{field} deve corresponder ao formato %{format}"
+      minimum: "O campo %{field} deve ser pelo menos %{value}"
+      maximum: "O campo %{field} deve ser no máximo %{value}"
+      exclusive_minimum: "O campo %{field} deve ser maior que %{value}"
+      exclusive_maximum: "O campo %{field} deve ser menor que %{value}"
+      min_items: "O campo %{field} deve ter pelo menos %{value} itens"
+      max_items: "O campo %{field} deve ter no máximo %{value} itens"
+      pattern: "O campo %{field} deve corresponder a %{pattern} regexp"
+      multiple_of: "O campo %{field} deve ser múltiplo de %{value}"
+      min_length: "O campo %{field} deve ter pelo menos %{value} de tamanho"
+      max_length: "O campo %{field} deve ter no máximo %{value} de tamanho"
+      min_properties: "O campo %{field} deve ter pelo menos %{value} propriedades"
+      max_properties: "O campo %{field} deve ter no máximo %{value} propriedades"
+      unique_items: "O campo %{field} deve ter itens únicos"
+      required: "O campo %{field} deve ter essas chaves: %{missing_keys}"

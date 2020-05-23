@@ -1,5 +1,4 @@
----
-en:
+de:
   user:
     greetings: "Hi, %{name}"
     logout: Log out
@@ -15,7 +14,7 @@ en:
       cancel: Cancel
     tabs:
       account_settings: Account Settings
-      promo: $10 bonus
+      promo: '$10 bonus'
       interests: Interests
     side_menus:
       account_settings:
@@ -24,7 +23,7 @@ en:
         password: Password
         language: Language
       promo:
-        get_a_10_bonus: $10 bonus
+        get_a_10_bonus: '$10 bonus'
         certificate: Certificate
         paypal_account: Paypal Account
     sections:
@@ -104,8 +103,7 @@ en:
     modals:
       promo:
         title: "Thank you!"
-        body: We'll analyze your certificate. You can expect an
-          update in <b>3 days</b>
+        body: We'll analyze your certificate. You can expect an update in <b>3 days</b>
         social:
           callout: "Share with your friends:"
           text: I found a course via Classpert and got a $10 bonus. Learn more at %{site}
@@ -138,14 +136,14 @@ en:
         public_field_label: Show my profile to everyone
         social_profiles_field_header: Add your social media profiles
         social_profiles_field_about: >-
-          It's an opportunity to show your work and connect with your students.
+          Add your profiles from social media platforms. They will show up on your Classpert profile page. If you're an instructor, it's an opportunity to connect with your students.
         social_profiles_field_label: Social Media
-        social_profiles_field_select: Add profile
+        social_profiles_field_select: Add social media profile
         elearning_profiles_field_header: Add your e-learning platforms profiles
         elearning_profiles_field_about: >-
-          Courses from these platforms will be visible on your profile page.
+          Add your profiles from e-learning platforms. They will show up on your Classpert profile page. If you're an instructor, it's an opportunitiy to help students find your courses on different platforms you teach.
         elearning_profiles_field_label: E-learning Platforms
-        elearning_profiles_field_select: Add profile
+        elearning_profiles_field_select: Add e-learning platform profile
         about_field_label: About
         about_field_placeholder: >-
           Use this space to talk about yourself, what you do for a living, your hobbies, interests, achievements, etc.

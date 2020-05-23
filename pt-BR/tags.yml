@@ -1,5 +1,5 @@
 pt-BR:
-  tags: &tags
+  tags:
     3d_coat: 3D Coat
     3d_printing: Impressão 3D
     3ds_max: 3ds Max
@@ -68,7 +68,7 @@ pt-BR:
     architecture: Arquitetura
     arduino: Arduino
     art_culture: Arte & Cultura
-    articulate_storyline: Articulate Storyline
+    articulate_storyline: Articular Storyline
     artificial_intelligence: Inteligência Artificial
     arts_and_design: Artes e Design
     artstudio_pro: ArtStudio Pro
@@ -84,17 +84,17 @@ pt-BR:
     autodesk_fusion_360: Autodesk Fusion 360
     autonomous_system: Sistemas Autônomos
     aws: Certifição AWS
-    aws_api_gateway:  AWS API Gateway
+    aws_api_gateway: AWS API Gateway
     aws_cloudformation: AWS Cloudformation
     aws_cloudfront: AWS Cloudfront
-    aws_cloudsearch:  AWS Cloudsearch
+    aws_cloudsearch: AWS Cloudsearch
     aws_codedeploy: AWS Codedeploy
-    aws_cognito:  AWS Cognito
+    aws_cognito: AWS Cognito
     aws_dynamodb: AWS DynamoDB
-    aws_ec2:  AWS EC2
-    aws_glacier:  AWS Glacier
-    aws_iam:  AWS IAM
-    aws_rds:  AWS RDS
+    aws_ec2: AWS EC2
+    aws_glacier: AWS Glacier
+    aws_iam: AWS IAM
+    aws_rds: AWS RDS
     aws_s3: AWS S3
     aws_waf: AWS WAF
     azure: Azure
@@ -108,7 +108,7 @@ pt-BR:
     basic_math: Matemática Básica
     basic_physics: Física Básica
     bass_guitar: Baixo
-    beer_brewing: Cerveja Artesanal 
+    beer_brewing: Cerveja Artesanal
     beethovens_piano: Piano de Beethoven
     behance: Behance
     behavioral_sciences: Ciências Comportamentais
@@ -134,11 +134,10 @@ pt-BR:
     bulma: Bulma
     bunny_drawing: Como Desenhar um Coelho
     business: Negócios
-    business_analisys: Análise de Negócios
     business_analysis: Análise de Negócios
-    business_intelligence: Business Intelligence
+    business_intelligence: Inteligência de Negócios
     business_management: Gestão de Negócios
-    c_programming: C
+    c_programming: Programação em C
     cake_decorating: Decoração de Bolo
     cake_php: CakePHP
     calculus: Cálculo
@@ -211,7 +210,7 @@ pt-BR:
     crm: CRM (Customer Relationship Manager)
     crochet: Crochê
     crystal_programming: Crystal
-    csharp_programming: C#
+    csharp_programming: 'C#'
     css: CSS
     cucumber_test_framework: Cucumber
     culture: Cultura
@@ -246,7 +245,7 @@ pt-BR:
     digital_image_processing: Processamento Digital de Imagem
     digital_marketing: Marketing Digital
     digital_media: Mídias Digitais
-    digital_ocean:  DigitalOcean
+    digital_ocean: DigitalOcean
     digital_painting: Pintura Digital
     discrete_random_variable: Variável Aleatória Discreta
     discrete_random_variables: Variáveis Aleatórias Discretas
@@ -342,7 +341,7 @@ pt-BR:
     front_end: Front End
     front_end_developer: Desenvolvimento Front End
     fruity_loops: Fruity Loops
-    fsharp_programming: F#
+    fsharp_programming: 'F#'
     full_stack_developer: Desenvolvimento Full Stack
     game_character_creation: Criação de Personagens para Jogos
     game_development: Desenvolvimento de Jogos
@@ -563,7 +562,7 @@ pt-BR:
     nursing: Enfermagem
     nutrition: Nutrição
     nutrition_and_wellness: Nutrição e Bem-estar
-    nuxtjs:  Nuxt.js
+    nuxtjs: Nuxt.js
     oauth: OAuth
     object_oriented_programming: Programação Orientada a Objetos
     objective_c: Objective-C
@@ -664,11 +663,11 @@ pt-BR:
     salsa_dancing: Como Dançar Salsa
     sanic: Sanic
     sap: SAP
-    sas_programming:  SAS Programming
+    sas_programming: SAS Programming
     sass: Sass
     scala_programming: Scala
     sccm: SCCM
-    scratch:  Scratch
+    scratch: Scratch
     scratch_games: Jogos com Scratch
     scripting_for_testers: Script de testes
     sculptris: Sculptris
@@ -718,7 +717,7 @@ pt-BR:
     sql: SQL
     sqlite: SQLite
     sscp_certification: Certificação SSCP
-    stata:  Stata
+    stata: Stata
     statistical_modeling: Modelagem Estatística
     statistical_thermodynamics: Termodinâmca Estatística
     statistics_and_probability: Estatística e Probabilidade
@@ -737,7 +736,7 @@ pt-BR:
     survey: Pesquisa de Opinião
     suse: OpenSUSE
     sustainability: Sustentabilidade
-    sveltejs:  Svelte.js
+    sveltejs: Svelte.js
     swedish: Sueco
     swift: Swift
     swing_tranding: Swing Trade
@@ -799,7 +798,7 @@ pt-BR:
     web_assembly: Web Assembly
     web_design: Web Design
     web_development: Desenvolvimento Web
-    web_scraping: Web Scraping  
+    web_scraping: Web Scraping
     webflow: Webflow
     webpack: Webpack
     wechat: WeChat
