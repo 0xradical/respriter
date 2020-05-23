@@ -39,12 +39,16 @@ pt-BR:
           success_message: Um e-mail com instruções de mudança de senha foi enviado para %{email}
           error_message: Opa! Ocorreu um erro ao enviar um e-mail para %{email}. Tente novamente mais tarde
         profile:
-          subsections:
+          sections:
             personal:
               title: Informações Pessoais
             instructor:
-              header: Sou um instrutor
-              title: Página do Perfil
+              title: Meu Perfil
+              sections:
+                privacy_settings: Configurações de Privacidade
+                about_me: Quem sou eu
+                social_media: Redes Sociais
+                elearning_platforms: Plataformas de E-learning
           title: Editar Perfil
           success_message: Seu perfil foi atualizado com sucesso
           error_message: Opa! Ocorreu um erro ao atualizar seu perfil
@@ -136,18 +140,18 @@ pt-BR:
         public_field_label: Exibir meu perfil publicamente
         social_profiles_field_header: Adicione perfis de redes sociais
         social_profiles_field_about: >-
-          Adicione seus perfis de redes sociais. Eles aparecerão na sua página de perfil da Classpert. Se você for instrutor(a), é uma boa oportunidade de se conectar com seus estudantes.
+          É uma oportunidade para mostrar seu trabalho e se conectar com seus alunos.
         social_profiles_field_label: Redes Sociais
-        social_profiles_field_select: Adicionar perfil de rede social
+        social_profiles_field_select: Adicionar perfil
         elearning_profiles_field_header: Adicione perfis de plataformas de e-learning
         elearning_profiles_field_about: >-
-          Adicione seus perfis de plataforma de e-learning. Eles aparecerão na sua página de perfil da Classpert. Se você for instrutor(a), é uma boa oportunidade de ajudar seus estudantes a achar seus cursos em diferentes plataformas.
+          Os cursos dessas plataformas ficarão visíveis na sua página de perfil.
         elearning_profiles_field_label: Plataformas de E-learning
-        elearning_profiles_field_select: Adicionar perfil de plataforma de e-learning
+        elearning_profiles_field_select: Adicionar perfil
         about_field_label: Sobre mim
         about_field_placeholder: >-
           Use esse espaço para falar sobre você mesmo, o que você faz da vida, seus hobbies, interesses, conquistas, etc.
-        submit: Atualizar Perfil
+        submit: Atualizar
       certificate:
         certificate_field_label: "Envie seu certificado"
       promo:

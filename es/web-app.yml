@@ -2,16 +2,16 @@ es:
   validations:
     messages:
       challenge: "La respuesta es incorrecta"
-      is_valid_domain: "domain is not valid"
-      sitemap: "sitemap provided is not valid"
+      is_valid_domain: "dominio no es válido"
+      sitemap: "sitemap proporcionado no es válido"
       domain_included_in: "dominio no incluido en sus dominios verificados"
-      url: "Value should be an URI (host with protocol)"
-      url_path: "{_field_} should be a path of {host}"
-      url_path_excluded_root: '{_field_} should be a path of {host} ("/" not allowed)'
+      url: "El valor debe ser una URI (host con protocolo)"
+      url_path: "{_field_} debe ser una ruta de {host}"
+      url_path_excluded_root: '{_field_} debe ser una ruta de {host} (no se permite "/")'
       mismatch: "El campo {_field_} debe ser igual a {_target_}"
     attributes:
       name: "nombre"
-      domain: "domain"
+      domain: "dominio"
       sitemap: "sitemap"
       username: "usuario"
       email: "correo electrónico"
@@ -23,9 +23,9 @@ es:
       message: "mensaje"
       challenge: "de seguridad"
       price: "precio"
-      course_url: "course url"
+      course_url: "url del curso"
       sitemap_url: "sitemap url"
-      provider_name: "name"
+      provider_name: "nombre"
       purchase_date: "fecha de compra"
       order_id: "número de pedido"
       paypal_account: "cuenta de Paypal"
@@ -71,7 +71,7 @@ es:
     tags:
       header: "Tags Relacionadas"
     similar:
-      header: "Related Courses"
+      header: "Cursos relacionados"
     description:
       header: "Descripción del Curso"
       view: "Ver descripción"
@@ -104,7 +104,7 @@ es:
     in_currency: "USD"
     from: "De"
     to: "A"
-    min: "Min"
+    min: "Mín"
     max: "Max"
     search: "Buscar"
     cancel_search: "Cerrar la pesquisa"
