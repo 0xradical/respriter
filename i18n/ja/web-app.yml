@@ -10,25 +10,25 @@ ja:
       url_path_excluded_root: '{_field_} should be a path of {host} ("/" not allowed)'
       mismatch: "The field {_field_} doesn't match {_target_}"
     attributes:
-      name: name
-      domain: domain
-      sitemap: sitemap
-      username: username
-      email: e-mail
-      email_confirmation: e-mail confirmation
+      name: "name"
+      domain: "domain"
+      sitemap: "sitemap"
+      username: "username"
+      email: "e-mail"
+      email_confirmation: "e-mail confirmation"
       shortbio: "short bio"
-      password: password
-      subject: subject
-      reason: contact reason
-      message: message
-      challenge: challenge
-      price: price
-      course_url: course url
-      sitemap_url: sitemap url
-      purchase_date: purchase date
-      order_id: order ID
-      paypal_account: Paypal account
-      provider_name: name
+      password: "password"
+      subject: "subject"
+      reason: "contact reason"
+      message: "message"
+      challenge: "challenge"
+      price: "price"
+      course_url: "course url"
+      sitemap_url: "sitemap url"
+      provider_name: "name"
+      purchase_date: "purchase date"
+      order_id: "order ID"
+      paypal_account: "Paypal account"
       inlined_urls: "URLs"
   careers:
     data_scientist: Data Scientist

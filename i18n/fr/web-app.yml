@@ -16,6 +16,7 @@ fr:
       username: "username"
       email: "e-mail"
       email_confirmation: "e-mail confirmation"
+      shortbio: "short bio"
       password: "password"
       subject: "subject"
       reason: "contact reason"

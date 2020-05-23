@@ -8,7 +8,7 @@ es:
     submitting: Enviando...
     free: GRATIS
     upload: Enviar Foto
-    generic_api_error: "Could not process request"
+    generic_api_error: "No se pudo procesar la solicitud"
     avatar:
       submit: Enviar
       cancel: Cancelar
@@ -39,12 +39,16 @@ es:
           success_message: Se envió un correo electrónico con instrucciones de cambio de contraseña a% {email}
           error_message: '¡Uy! Se produjo un error al enviar un correo electrónico a% {email}. Intenta nuevamente más tarde'
         profile:
-          subsections:
+          sections:
             personal:
-              title: Personal Information
+              title: Información Personal
             instructor:
-              header: I'm an instructor
-              title: Profile Page
+              title: Mi Perfil
+              sections:
+                privacy_settings: Configuración de Privacidad
+                about_me: Sobre mí
+                social_media: Redes Sociales
+                elearning_platforms: Plataformas de E-learning
           title: Editar Perfil
           success_message: Su perfil se actualizó correctamente
           error_message: '¡Uy! Se produjo un error al actualizar tu perfil'
@@ -136,18 +140,18 @@ es:
         public_field_label: Ver mi perfil públicamente
         social_profiles_field_header: Agregar perfiles sociales
         social_profiles_field_about: >-
-          Agrega tus perfiles de redes sociales. Aparecerán en su página de perfil de Classpert. Si usted es un instructor, esta es una buena oportunidad para conectarse con sus alumnos.
+          Es una oportunidad para mostrar tu trabajo y conectar con tus estudiantes.
         social_profiles_field_label: Redes sociales
-        social_profiles_field_select: Agregar perfil de red social
+        social_profiles_field_select: Agregar Perfil
         elearning_profiles_field_header: Agregar perfiles de plataforma de e-learning
         elearning_profiles_field_about: >-
-          Agregue sus perfiles de plataforma de e-learning. Aparecerán en su página de perfil de Classpert. Si es instructor, esta es una buena oportunidad para ayudar a sus estudiantes a encontrar sus cursos en diferentes plataformas.
+          Los cursos de estas plataformas serán visibles en tu página de perfil.
         elearning_profiles_field_label: Plataformas de E-learning
-        elearning_profiles_field_select: Adicionar perfil de plataforma de e-learning
+        elearning_profiles_field_select: Agregar Perfil
         about_field_label: Sobre mi
         about_field_placeholder: >-
           Use este espacio para hablar sobre usted, lo que hace con su vida, sus pasatiempos, intereses, logros, etc.
-        submit: Actualizar el Perfil
+        submit: Actualizar
       certificate:
         certificate_field_label: "Envía tu certificado"
       promo:
