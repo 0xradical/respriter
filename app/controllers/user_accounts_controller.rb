@@ -5,7 +5,7 @@ class UserAccountsController < ApplicationController
   end
 
   def show
-    @user = UserAccount.joins(:profile).find_by('profiles.username = ?',params[:id])
+    @user = UserAccount.joins(:profile).find_by!('profiles.username = ? AND profiles.public = true', params[:id])
   end
 
 end
