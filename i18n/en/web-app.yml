@@ -41,6 +41,7 @@ en:
     connected: "Connected with %{provider}"
   dictionary: &dictionary
     online_courses: Online courses
+    index_tool: Index Tool
     terms_and_conditions: "Terms and Conditions"
     privacy_policy: "Privacy Policy"
     blog: "Blog"

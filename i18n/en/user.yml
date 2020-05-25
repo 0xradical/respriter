@@ -102,6 +102,7 @@ en:
           success: "File uploaded!"
       social_media_input:
         placeholder: " rest of link / copy & paste link"
+        placeholder_mobile: "your id / copy & paste link"
       help:
         call_out: "Need any help ?"
         link: "Contact us"
@@ -138,6 +139,10 @@ en:
         shortbio_field_placeholder: A short sentence describing who you are
         country_field_label: Country
         country_field_select: Select country
+        website_field_label: Website
+        website_field_placeholder: Add your website
+        website_field_about: >-
+          Is your website an online course platform? Access our %{index_tool} and get listed on Classpert!
         instructor_field_label: I'm an instructor
         public_field_label: Show my profile to everyone
         social_profiles_field_header: Add your social media profiles
