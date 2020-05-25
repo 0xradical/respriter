@@ -49,6 +49,7 @@ class OrphanedProfile < ApplicationRecord
         p.short_bio               ||= short_bio
         p.teaching_subjects       ||= teaching_subjects
         p.website                 ||= website
+        p.course_ids              = course_ids
         p.save!
       end
       self.claimed_by = user_account.username
