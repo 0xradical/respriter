@@ -131,7 +131,7 @@ export default {
   },
   watch: {
     profile(n) {
-      this.local = pick(Object.keys(FIELDS.keys), this.n);
+      this.local = pick(Object.keys(FIELDS), this.n);
     }
   },
   methods: {

@@ -9,6 +9,7 @@ const state = {
   username: "",
   shortBio: "",
   longBio: "",
+  website: "",
   instructor: false,
   public: true,
   country: "",

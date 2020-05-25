@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div ref="personal">
+    <div ref="personal" id="personal-information">
       <personal-profile
         :profile="profile"
         :loading="loading"
         @success="scroll($refs.personal)"
       />
     </div>
-    <div ref="instructor">
+    <div ref="instructor" id="my-profile">
       <instructor-profile
         :profile="profile"
         :loading="loading"

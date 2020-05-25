@@ -1,48 +1,75 @@
 <template>
-  <div class="el:amx-Pos(r)">
-    <div
-      class="el:amx-D(f) el:amx-Pos(r) user:sm-input"
-      :class="{
-        'el:amx-Mb(1em) user:sm-input--error': errors && errors.length
-      }"
-    >
-      <div class="el:amx-D(ib) el:amx-D(f) user:sm-input__left">
-        <svg class="user:sm-input__icon">
-          <use :class="`el:amx-Fi_${iconColor}`" :xlink:href="icon" /></svg
-        ><b>{{ canonicalURL("") }}</b>
-      </div>
+  <div
+    class="el:amx-D(f) el:amx-FxAi(c) el:amx-Mb(2em)@<sm"
+    :class="[errors && errors.length && 'el:amx-Mb(2em)@>lg']"
+  >
+    <div style="flex: 1" class="el:amx-Pos(r) el:amx-D(ib)">
+      <div
+        class="el:amx-D(f) el:amx-Pos(r) user:sm-input"
+        :class="{
+          'user:sm-input--error': errors && errors.length
+        }"
+      >
+        <div class="el:amx-D(ib) el:amx-D(f) user:sm-input__left">
+          <svg class="user:sm-input__icon">
+            <use :class="`el:amx-Fi_${iconColor}`" :xlink:href="icon" /></svg
+          ><b class="el:amx-D(n)@<sm">{{ canonicalURL("") }}</b>
+        </div>
 
-      <input
-        class="el:amx-D(ib) user:sm-input__right"
-        @paste.prevent="
-          e => {
-            model = onpaste(transform(validator))(e);
-          }
-        "
-        :placeholder="$t('user.components.social_media_input.placeholder')"
-        :disabled="disabled"
-        @input="model = $event.target.value"
-        :value="model"
-      />
-      <svg
+        <input
+          class="el:amx-D(ib) el:amx-D(n)@<sm user:sm-input__right"
+          @paste.prevent="
+            e => {
+              model = onpaste(transform(validator))(e);
+            }
+          "
+          :placeholder="$t('user.components.social_media_input.placeholder')"
+          :disabled="disabled"
+          @input="model = $event.target.value"
+          :value="model"
+        />
+        <input
+          class="el:amx-D(ib) el:amx-D(n)@>lg user:sm-input__right"
+          @paste.prevent="
+            e => {
+              model = onpaste(transform(validator))(e);
+            }
+          "
+          :placeholder="
+            $t('user.components.social_media_input.placeholder_mobile')
+          "
+          :disabled="disabled"
+          @input="model = $event.target.value"
+          :value="model"
+        />
+        <svg
+          v-if="errors && errors.length"
+          class="user:sm-input__icon el:amx-Pos(a) el:amx-C_er"
+        >
+          <use xlink:href="#icons-wrong" />
+        </svg>
+        <svg
+          v-if="model && !(errors && errors.length)"
+          class="user:sm-input__icon el:amx-Pos(a) el:amx-Fi_pr"
+        >
+          <use xlink:href="#icons-checked" />
+        </svg>
+      </div>
+      <div
         v-if="errors && errors.length"
-        class="user:sm-input__icon el:amx-Pos(a) el:amx-C_er"
+        class="el:amx-Pos(a) el:amx-D(n)@<sm el:amx-C_er"
+        style="top: 2.75em;"
       >
-        <use xlink:href="#icons-wrong" />
-      </svg>
-      <svg
-        v-if="model && !(errors && errors.length)"
-        class="user:sm-input__icon el:amx-Pos(a) el:amx-Fi_pr"
-      >
-        <use xlink:href="#icons-checked" />
-      </svg>
+        <span class="el:amx-Fs(0.75em)">{{ errors[0] }}</span>
+      </div>
+      <div class="el:amx-Pos(a) el:amx-D(n)@>lg" style="top: 2.75em;">
+        <span class="el:amx-Fs(0.75em)">{{
+          canonicalURL(this.model || "")
+        }}</span>
+      </div>
     </div>
-    <div
-      v-if="errors && errors.length"
-      class="el:amx-Pos(a) el:amx-C_er"
-      style="top: 2.75em;"
-    >
-      <span class="el:amx-Fs(0.75em)">{{ errors[0] }}</span>
+    <div style="flex: 0 0 2em" class="el:amx-Ta(c)">
+      <slot :errors="errors" name="control"> </slot>
     </div>
   </div>
 </template>

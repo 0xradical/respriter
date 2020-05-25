@@ -1,6 +1,7 @@
 import { snakeCase, toLower } from "lodash";
 import { replace } from "ramda";
 import { required } from "vee-validate/dist/rules";
+import { isURL } from "~utils";
 
 export function mismatch(i18n) {
   return {
@@ -151,8 +152,15 @@ export function platformFormat(i18n) {
   };
 }
 
+export function url(i18n) {
+  return {
+    validate: value => isURL(value)
+  };
+}
+
 export default {
   mismatch,
+  url,
   usernameFormat,
   usernameConsecutiveDash,
   usernameConsecutiveUnderline,

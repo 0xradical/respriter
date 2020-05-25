@@ -48,34 +48,6 @@
               class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u)"
               >{{
                 $t(
-                  "user.sections.account_settings.profile.sections.instructor.sections.privacy_settings"
-                )
-              }}</span
-            >
-          </div>
-
-          <div class="el:amx-D(f)">
-            <span class="el:amx-Fw(b) el:amx-Fs(0.875em)" style="flex: 1">{{
-              $t("user.forms.profile.public_field_label")
-            }}</span>
-            <label class="el:m-switch el:m-switch--flat-primary" for="public">
-              <input
-                @click="local.public = !local.public"
-                :checked="local.public"
-                type="checkbox"
-                id="public"
-              />
-              <div class="el:m-switch__slider"></div>
-            </label>
-          </div>
-        </div>
-
-        <div class="el:amx-Mb(2em)">
-          <div class="el:amx-Mb(1em)">
-            <span
-              class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u)"
-              >{{
-                $t(
                   "user.sections.account_settings.profile.sections.instructor.sections.about_me"
                 )
               }}</span
@@ -138,6 +110,34 @@
               </select>
             </div>
           </div>
+
+          <validation-provider
+            #default="{ errors: clientSideErrors }"
+            tag="div"
+            class="el:amx-Mb(1em)"
+            name="website"
+            :rules="{
+              url: true
+            }"
+          >
+            <text-input-field
+              class="el:amx-Mb(1em)"
+              field="website"
+              :errors="[
+                ...clientSideErrors,
+                ...(serverSideErrors.website || [])
+              ]"
+              :disabled="loading || sending"
+              :label="$t('user.forms.profile.website_field_label')"
+              input-size="medium"
+              :input-block="true"
+              :input-placeholder="
+                $t('user.forms.profile.website_field_placeholder')
+              "
+              :value="local.website"
+              @input="v => (local.website = v)"
+            />
+          </validation-provider>
         </div>
 
         <div class="el:amx-Mb(2em)">
@@ -173,31 +173,32 @@
                 </select>
               </div>
 
-              <template v-for="(platform, index) in platforms.social.added">
+              <div
+                :class="[index === 0 ? 'el:amx-Mt(1.5em)' : 'el:amx-Mt(1em)']"
+                :key="platform"
+                v-for="(platform, index) in platforms.social.added"
+              >
                 <social-media-input
                   :platform="platform"
                   :server-side-errors="
-                    serverSideErrors.social_profile &&
-                      serverSideErrors.social_profile[platform]
+                    serverSideErrors.public_profile &&
+                      serverSideErrors.public_profile[platform]
                   "
                   type="social"
-                  :key="platform"
-                  :class="[
-                    'el:amx-D(ib)',
-                    index === 0 ? 'el:amx-Mt(1.5em)' : 'el:amx-Mt(1em)'
-                  ]"
-                  style="width: 93%;"
                   :value="platforms.social.ids"
                   @input="onInputPlatformID"
-                ></social-media-input>
-                <svg
-                  @click="removeProfilePlatform('social')(platform)"
-                  :key="`${platform}-remove`"
-                  class="user:platform-remover"
                 >
-                  <use xlink:href="#icons-trash" />
-                </svg>
-              </template>
+                  <template #control>
+                    <svg
+                      @click="removeProfilePlatform('social')(platform)"
+                      :key="`${platform}-remove`"
+                      class="user:platform-remover"
+                    >
+                      <use xlink:href="#icons-trash" />
+                    </svg>
+                  </template>
+                </social-media-input>
+              </div>
             </div>
           </div>
         </div>
@@ -236,31 +237,60 @@
               </select>
             </div>
 
-            <template v-for="(platform, index) in platforms.elearning.added">
+            <div
+              :class="[index === 0 ? 'el:amx-Mt(1.5em)' : 'el:amx-Mt(1em)']"
+              :key="platform"
+              v-for="(platform, index) in platforms.elearning.added"
+            >
               <social-media-input
                 :platform="platform"
                 :server-side-errors="
-                  serverSideErrors.elearning_profile &&
-                    serverSideErrors.elearning_profile[platform]
+                  serverSideErrors.public_profile &&
+                    serverSideErrors.public_profile[platform]
                 "
                 type="elearning"
-                :key="platform"
-                :class="[
-                  'el:amx-D(ib)',
-                  index === 0 ? 'el:amx-Mt(1.5em)' : 'el:amx-Mt(1em)'
-                ]"
-                style="width: 93%;"
                 :value="platforms.elearning.ids"
                 @input="onInputPlatformID"
-              ></social-media-input>
-              <svg
-                @click="removeProfilePlatform('elearning')(platform)"
-                :key="`${platform}-remove`"
-                class="user:platform-remover"
               >
-                <use xlink:href="#icons-trash" />
-              </svg>
-            </template>
+                <template #control>
+                  <svg
+                    @click="removeProfilePlatform('elearning')(platform)"
+                    :key="`${platform}-remove`"
+                    class="user:platform-remover"
+                  >
+                    <use xlink:href="#icons-trash" />
+                  </svg>
+                </template>
+              </social-media-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="el:amx-Mb(2em)">
+          <div class="el:amx-Mb(1em)">
+            <span
+              class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u)"
+              >{{
+                $t(
+                  "user.sections.account_settings.profile.sections.instructor.sections.privacy_settings"
+                )
+              }}</span
+            >
+          </div>
+
+          <div class="el:amx-D(f)">
+            <span class="el:amx-Fw(b) el:amx-Fs(0.875em)" style="flex: 1">{{
+              $t("user.forms.profile.public_field_label")
+            }}</span>
+            <label class="el:m-switch el:m-switch--flat-primary" for="public">
+              <input
+                @click="local.public = !local.public"
+                :checked="local.public"
+                type="checkbox"
+                id="public"
+              />
+              <div class="el:m-switch__slider"></div>
+            </label>
           </div>
         </div>
 
@@ -302,6 +332,7 @@ const FIELDS = {
   longBio: undefined,
   public: false,
   country: undefined,
+  website: undefined,
   instructor: false,
   socialProfiles: {},
   elearningProfiles: {}
@@ -376,7 +407,7 @@ export default {
   },
   watch: {
     profile(n) {
-      this.local = pick(Object.keys(FIELDS.keys), this.n);
+      this.local = pick(Object.keys(FIELDS), this.n);
     },
     "$i18n.locale": function() {
       this.computeCountries();
@@ -515,7 +546,6 @@ export default {
 .user\:platform-remover {
   display: inline-block;
   cursor: pointer;
-  margin-left: 0.25em;
   width: 1.125em;
   height: 1.125em;
   fill: var(--foreground-medium);
