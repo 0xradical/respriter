@@ -1,26 +1,26 @@
-de:
+en:
   validations:
     messages:
-      challenge: "Die Antwort ist falsch"
-      is_valid_domain: "domain ist nicht gültig"
-      sitemap: "angegebene Sitemap ist ungültig"
-      domain_included_in: "domain nicht in Ihren verifizierten Domains enthalten"
-      url: "Wert sollte ein URI sein (Host mit Protokoll)"
-      url_path: "{_field_} sollte ein Pfad von {host} sein"
-      url_path_excluded_root: '{_field_} sollte ein Pfad von {host} sein ("/" nicht erlaubt)'
-      mismatch: "{_field_} stimmt nicht mit {_target_} überein"
+      challenge: "The answer is incorrect"
+      is_valid_domain: "domain is not valid"
+      sitemap: "sitemap provided is not valid"
+      domain_included_in: "domain not included in your verified domains"
+      url: "Value should be an URI (host with protocol)"
+      url_path: "{_field_} should be a path of {host}"
+      url_path_excluded_root: '{_field_} should be a path of {host} ("/" not allowed)'
+      mismatch: "{_field_} doesn't match {_target_}"
     attributes:
       name: "name"
-      domain: "Domain"
+      domain: "domain"
       sitemap: "sitemap"
-      username: "Benutzername"
+      username: "username"
       email: "e-mail"
-      email_confirmation: "e-mail Bestätigung"
+      email_confirmation: "e-mail confirmation"
       shortbio: "short bio"
-      password: "Passwort"
+      password: "password"
       subject: "subject"
       reason: "contact reason"
-      message: "Nachricht"
+      message: "message"
       challenge: "challenge"
       price: "price"
       course_url: "course url"
@@ -30,7 +30,7 @@ de:
       order_id: "order ID"
       paypal_account: "Paypal account"
       inlined_urls: "URLs"
-  careers:
+  careers: &careers
     data_scientist: Data Scientist
     game_developer: Game Developer
     mobile_app_developer: Mobile App Developer
@@ -39,7 +39,7 @@ de:
   oauth:
     connect: "Connect with %{provider}"
     connected: "Connected with %{provider}"
-  dictionary:
+  dictionary: &dictionary
     online_courses: Online courses
     index_tool: Index Tool
     terms_and_conditions: "Terms and Conditions"
@@ -551,9 +551,13 @@ de:
       institution: "Institution"
     card:
       subscription_tip: >-
-        This provider offers a %{period} free trial. At the end of this period, the subscription fee will be charged. It gives you unlimited access to their courses. You may cancel the subscription at any time.
+        This provider offers a %{period} free trial. At the end of this period, the
+        subscription fee will be charged. It gives you unlimited access to their courses. You may cancel
+        the subscription at any time.
       free_course_tip: >-
-        You can take this course for free. Certificates, group discussions, exercises, offline viewing, among others may not be included. To unlock all features and get full access you must subscribe to the paid plan
+        You can take this course for free. Certificates, group discussions, exercises,
+        offline viewing, among others may not be included. To unlock all features and get full access
+        you must subscribe to the paid plan
   promo:
     title: "Turn your knowledge into cash on Classpert"
     subtitle: "Find a course on Classpert, send us your certificate and get a %{benefit} in your Paypal account."
@@ -566,7 +570,8 @@ de:
       title_html: >-
         Turn your <b>knowledge into cash</b> on Classpert!
       subtitle_html: >-
-        Complete a course, upload your certificate and get a <span class='el:amx-C_se el:amx-Ws(nr)'>$10 bonus</span> in your PayPal account.
+        Complete a course, upload your certificate and get a
+        <span class='el:amx-C_se el:amx-Ws(nr)'>$10 bonus</span> in your PayPal account.
       instructions: >-
         Read Instructions
       log_in: >-
@@ -577,30 +582,39 @@ de:
         title_html: >-
           Turn your <b>knowledge into cash</b> on Classpert
         subtitle_html: >-
-          Complete a course, upload your certificate and get a <span class='el:amx-C_se el:amx-Ws(nr)'>$10 bonus</span> directly to a PayPal account.
+          Complete a course, upload your certificate and get a
+          <span class='el:amx-C_se el:amx-Ws(nr)'>$10 bonus</span> directly to
+          a PayPal account.
       tabs:
         how_it_works: "How it works"
         promo_terms: "Promo Terms"
       sign_up:
         header: "Sign up to Classpert"
         body_html: >-
-          Create an account on Classpert. If you're already registered, make sure you're logged in to participate.
+          Create an account on Classpert. If you're already registered,
+          make sure you're logged in to participate.
       find_course:
         header: "Find a course on Classpert.com"
         body_html: >-
-          Use Classpert's online course search engine to find the course you want to take. Click on <b>"Go to Course"</b> button and enroll yourself in the selected course (your click will be registered)
+          Use Classpert's online course search engine to find the course you want to take.
+
+          Click on <b>"Go to Course"</b> button and enroll yourself in the selected
+          course (your click will be registered)
       complete_course:
         header: "Complete the course"
         body_html: >-
-          To be eligible to receive your $10 bonus, you must complete the selected course and get your certificate.
+          To be eligible to receive your $10 bonus, you must complete
+          the selected course and get your certificate.
       upload_certificate:
         header: "Upload your certificate"
         body_html: >-
-          Log into Classpert, upload your certificate and add your PayPal account.
+          Log into Classpert, upload your certificate and add
+          your PayPal account.
       payment_processing:
         header: "Payment processing"
         body_html: >-
-          This is on us. Our team will send your payment within 3 business days after your request.
+          This is on us. Our team will send your payment within 3 business
+          days after your request.
       contact_us:
         body_html: >-
           <b>Still have questions?</b> Don't hesitate to <a class='el:amx-C_pr el:amx-Fw(b)' href='/contact-us'>contact us</a>.
@@ -616,7 +630,9 @@ de:
         item_5: >-
           Only clicks registered after the promotion start date will be eligible to receive the bonus;
         item_6: >-
-          We reserve the right to withhold, deny or cancel any bonus in our sole discretion due to activities we consider to be fraudulent, abusive, unethical, suspicious or inconsistent with this promo.
+          We reserve the right to withhold, deny or cancel any bonus in our sole discretion due to
+          activities we consider to be fraudulent, abusive, unethical, suspicious or inconsistent
+          with this promo.
   home:
     index:
       hero_html: "Find and compare <b>online courses</b> from multiple e-learning platforms"
@@ -626,34 +642,48 @@ de:
       kickstart_your_career_sub: "Our experts have handpicked the best online courses to start your career"
       about_us_title_1: Classpert's online course search engine
       about_us_text_1_html: >-
-        Compare online courses side-by-side from over %{providers_count} different e-learning platforms in more than 15 languages. Get detailed information on pricing, watch video previews, read the syllabus, and see reviews before deciding which online course to take.
+        Compare online courses side-by-side from over %{providers_count} different e-learning
+        platforms in more than 15 languages. Get detailed information on pricing, watch video
+        previews, read the syllabus, and see reviews before deciding which online course to take.
       about_us_title_2: online courses
       about_us_text_2_html: >-
-        Explore the largest catalog of online courses in one place. Find online courses in <b>computer science</b>, <b>data science</b>, <b>marketing</b>, <b>business</b>, <b>personal development</b> and many more. Looking for college credits? Search for online courses with certificates, some universities accept completion certificates as credits.
+        Explore the largest catalog of online courses in one place. Find online courses in
+        <b>computer science</b>, <b>data science</b>, <b>marketing</b>,
+        <b>business</b>, <b>personal development</b> and many more. Looking for college credits?
+        Search for online courses with certificates, some universities accept completion
+        certificates as credits.
       about_us_title_3: e-learning platforms
       about_us_text_3_html: >-
-        Discover the world’s best online course platforms on Classpert. Get all relevant information on online courses from <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <b>Coursera</b>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/skillshare-review'><b>Skillshare</b></a>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a> among other e-learning platforms.  Find free online courses, single payment courses, and subscription models.
+        Discover the world’s best online course platforms on Classpert. Get all relevant information
+        on online courses from <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <b>Coursera</b>,
+        <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a
+        href='/blog/treehouse-review'><b>Treehouse</b></a>, <a
+        href='/blog/skillshare-review'><b>Skillshare</b></a>, <a
+        href='/blog/udacity-review'><b>Udacity</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>
+        among other e-learning platforms.  Find free
+        online courses, single payment courses, and subscription models.
       about_us_button_text_3: view all platforms
       about_us_title_4: MOOC Finder
       about_us_text_4_html: >-
-        Search for free online courses with certificates from Harvard, Stanford, Yale, UC Berkeley, MIT, Google, Microsoft and many more. Find MOOCs covering different subjects like artificial intelligence, big data, blockchain, business and management, programming, cybersecurity, data science, entrepreneurship, Excel, web development and others.
+        Search for free online courses with certificates from Harvard, Stanford, Yale, UC Berkeley,
+        MIT, Google, Microsoft and many more. Find MOOCs covering different subjects like artificial
+        intelligence, big data, blockchain, business and management, programming, cybersecurity,
+        data science, entrepreneurship, Excel, web development and others.
       about_us_button_text_4: view all moocs
       careers:
-        data_scientist: Data Scientist
-        game_developer: Game Developer
-        mobile_app_developer: Mobile App Developer
-        software_developer: Software Developer
-        web_developer: Web Developer
+        <<: *careers
       meta:
         title: "Find Online Courses from Top Platforms | Classpert"
         description: >-
-          Compare online courses side-by-side from platforms like Udemy, Coursera, Pluralsight, edX, LinkedIn Learning and more. Save time and money with Classpert!
+          Compare online courses side-by-side from platforms like Udemy, Coursera, Pluralsight, edX, LinkedIn Learning and more.
+          Save time and money with Classpert!
   contact_us:
     new:
       meta:
         title: "Find Online Courses from Top Platforms | Classpert"
         description: >-
-          Compare online courses side-by-side from platforms like Udemy, Coursera, Pluralsight, edX, LinkedIn Learning and more. Save time and money with Classpert!
+          Compare online courses side-by-side from platforms like Udemy, Coursera, Pluralsight, edX, LinkedIn Learning and more.
+          Save time and money with Classpert!
       title: "Contact us"
       subtitle: "Our team is ready to help you"
       form:
@@ -708,7 +738,8 @@ de:
       submission:
         header: Thanks for your feedback!
         body: >-
-          We're always seeking to improve our platform and your opinion is essential.
+          We're always seeking to improve our platform and
+          your opinion is essential.
         link: Go back home
   courses:
     index:
@@ -719,99 +750,117 @@ de:
         meta:
           title: "Arts and Design Online Courses | Classpert"
           description: >-
-            Learn practical artistic skills and knowledge. Explore a wide variety of subjects to choose from in Arts and Design. Find paid and free online courses with certificate
+            Learn practical artistic skills and knowledge. Explore a wide variety of
+            subjects to choose from in Arts and Design. Find paid and free online courses with
+            certificate
         html:
           hero_title: >-
-            Learn practical artistic skills and knowledge. Explore a wide variety of subjects to choose from in Arts and Design. Find paid and free online courses with certificate
+            Learn practical artistic skills and knowledge. Explore a wide variety of
+            subjects to choose from in Arts and Design. Find paid and free online courses with
+            certificate
       business:
         meta:
           title: "Business Online Courses | Classpert"
           description: >-
-            Advance in every aspect of the modern Business environment. Nurture valuable abilities in finance, operations, management, and strategy. Find paid and free online courses with certificate
+            Advance in every aspect of the modern Business environment. Nurture valuable
+            abilities in finance, operations, management, and strategy. Find paid and free online
+            courses with certificate
         html:
           hero_title: >-
-            Advance in every aspect of the modern Business environment. Nurture valuable abilities in finance, operations, management, and strategy. Find paid and free online courses with certificate
+            Advance in every aspect of the modern Business environment. Nurture valuable
+            abilities in finance, operations, management, and strategy. Find paid and free online
+            courses with certificate
       language_and_communication:
         meta:
           title: "Language and Communication Online Courses | Classpert"
           description: >-
-            Develop skills of listening, reading, speaking and writing. Master your verbal and non-verbal communication abilities. Find paid and free online courses with certificate
+            Develop skills of listening, reading, speaking and writing. Master your verbal
+            and non-verbal communication abilities. Find paid and free online courses with certificate
         html:
           hero_title: >-
-            Develop skills of listening, reading, speaking and writing. Master your verbal and non-verbal communication abilities. Find paid and free online courses with certificate
+            Develop skills of listening, reading, speaking and writing. Master your verbal
+            and non-verbal communication abilities. Find paid and free online courses with certificate
       life_sciences:
         meta:
           title: "Life Sciences Online Courses | Classpert"
           description: >-
-            Understand physical structures, chemical processes and molecular interactions of living structures. Push your frontiers with courses from top universities worldwide. Find paid and free online courses with certificate
+            Understand physical structures, chemical processes and molecular interactions
+            of living structures. Push your frontiers with courses from top universities worldwide. Find
+            paid and free online courses with certificate
         html:
           hero_title: >-
-            Understand physical structures, chemical processes and molecular interactions of living structures. Push your frontiers with courses from top universities worldwide. Find paid and free online courses with certificate
+            Understand physical structures, chemical processes and molecular interactions
+            of living structures. Push your frontiers with courses from top universities worldwide. Find
+            paid and free online courses with certificate
       math_and_logic:
         meta:
           title: "Math and Logic Online Courses | Classpert"
           description: >-
-            Study algebra, geometry, arithmetic, statistics and more. Develop your reasoning and analytical thinking. Find paid and free online courses with certificate
+            Study algebra, geometry, arithmetic, statistics and more. Develop your
+            reasoning and analytical thinking. Find paid and free online courses with certificate
         html:
           hero_title: >-
-            Study algebra, geometry, arithmetic, statistics and more. Develop your reasoning and analytical thinking. Find paid and free online courses with certificate
+            Study algebra, geometry, arithmetic, statistics and more. Develop your
+            reasoning and analytical thinking. Find paid and free online courses with certificate
       personal_development:
         meta:
           title: "Personal Development Online Courses | Classpert"
           description: >-
-            Personal development is decisive to growth in all aspects of life. Achieve your full potential in personal life and professional career. Find paid and free online courses with certificate
+            Personal development is decisive to growth in all aspects of life. Achieve
+            your full potential in personal life and professional career. Find paid and free online
+            courses with certificate
         html:
           hero_title: >-
-            Personal development is decisive to growth in all aspects of life. Achieve your full potential in personal life and professional career. Find paid and free online courses with certificate
+            Personal development is decisive to growth in all aspects of life. Achieve
+            your full potential in personal life and professional career. Find paid and free online
+            courses with certificate
       social_sciences:
         meta:
           title: "Social Sciences | Classpert"
           description: >-
-            Study all aspects of human society and social life. Understand many of the worlds biggest issues. Find paid and free online courses with certificate
+            Study all aspects of human society and social life. Understand many of the
+            worlds biggest issues. Find paid and free online courses with certificate
         html:
           hero_title: >-
-            Study all aspects of human society and social life. Understand many of the worlds biggest issues. Find paid and free online courses with certificate
+            Study all aspects of human society and social life. Understand many of the
+            worlds biggest issues. Find paid and free online courses with certificate
       health_and_fitness:
         meta:
           title: "Health and Fitness | Classpert"
           description: >-
-            Increase your knowledge about health maintenance, disease prevention, and risky behaviors reduction. Live longer and achieve your goals. Find paid and free online courses with certificate
+            Increase your knowledge about health maintenance, disease prevention, and
+            risky behaviors reduction. Live longer and achieve your goals. Find paid and free online
+            courses with certificate
         html:
           hero_title: >-
-            Increase your knowledge about health maintenance, disease prevention, and risky behaviors reduction. Live longer and achieve your goals. Find paid and free online courses with certificate
+            Increase your knowledge about health maintenance, disease prevention, and
+            risky behaviors reduction. Live longer and achieve your goals. Find paid and free online
+            courses with certificate
     show:
       meta:
         title: "%{course} Online Course | Classpert"
         description: "Learn %{course} on this Online Course with certificate. Find information about the course and read reviews left by students who have already taken it."
   course_bundles:
-    meta:
+    meta: &meta
       title_html: "%{tag} Courses"
       description_html: "Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions."
     social_share:
-      title_html: '%{tag} Courses'
-      description_html: Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions.
+      <<: *meta
     index:
-      title_html: '%{tag} Courses'
-      description_html: Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions.
+      <<: *meta
     show:
-      title_html: '%{tag} Courses'
-      description_html: Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions.
+      <<: *meta
   posts:
-    base:
+    base: &post_base
       tags:
         computer_science: "Computer Science"
         e_learning: "E-Learning"
         blockchain_and_cryptocurrency: "Blockchain and Cryptocurrency"
     index:
-      tags:
-        computer_science: Computer Science
-        e_learning: E-Learning
-        blockchain_and_cryptocurrency: Blockchain and Cryptocurrency
+      <<: *post_base
     show:
-      tags:
-        computer_science: Computer Science
-        e_learning: E-Learning
-        blockchain_and_cryptocurrency: Blockchain and Cryptocurrency
+      <<: *post_base
+
   unsubscriptions:
     show:
       title: "The e-mail %{email} was successfully unsubscribed"
@@ -830,7 +879,8 @@ de:
         success: "Success: Your e-mail notification settings have been updated!"
         no_option: "Please choose an option"
         no_details: If you choose "Other", please detail the unsubscription reason
-  user_accounts:
+
+  user_accounts: &user_accounts_base
     show:
       meta:
         title: "%{name} | Profile & Courses"
@@ -841,17 +891,9 @@ de:
       about_me: About the instructor
       courses: "Courses"
       disclaimer: This page was created with public information available on the web and is not authored by the instructor.
+
   orphaned_profiles:
-    show:
-      meta:
-        title: '%{name} | Profile & Courses'
-        description: Check out %{name}'s profile on Classpert. Find all %{name}'s courses in only one place!
-      instructor: Instructor
-      are_you: Are you %{name}?
-      claim_profile: Claim profile
-      about_me: About the instructor
-      courses: Courses
-      disclaimer: This page was created with public information available on the web and is not authored by the instructor.
+    <<: *user_accounts_base
     claim:
       success: The ownership of this profile was successfully transferred to your account. You can now edit the information on this page through your dashboard
       h1: Claim Profile
@@ -866,13 +908,17 @@ de:
         3_html: >-
           Unfortunately, there are no available methods to verify this profile.
         4: >-
-          We identified social networks associated with this profile. Use any method below to prove your identity. If you're claiming a company profile, use a social network account linked to your company.
+          We identified social networks associated with this profile. Use any
+          method below to prove your identity. If you're claiming a company profile, use
+          a social network account linked to your company.
         5: >-
           Here are some e-mails we believe belong to you
         6: >-
-          Type any of the above listed emails so a link will be sent to the matched e-mail.
+          Type any of the above listed emails so a link will be sent to the matched
+          e-mail.
         7_html: >-
-          If you're unable to prove your identity using one of the available methods, %{link} to begin a manual verification process.
+          If you're unable to prove your identity using one of the available methods, %{link} to begin a manual
+          verification process.
     send_verification_link:
       success: We've sent an e-mail to %{email} with a link and instructions on how to claim this profile. This link expires in %{time}
       fail: Email %{email} does not match any of the registered ones
