@@ -101,6 +101,7 @@ es:
           success: "¡Archivo enviado!"
       social_media_input:
         placeholder: " resto del enlace / copiar y pegar enlace"
+        placeholder_mobile: "tu id / copiar y pegar enlace"
       help:
         call_out: "¿Necesita ayuda?"
         link: "Contáctanos"
@@ -136,6 +137,10 @@ es:
         shortbio_field_placeholder: Una breve oración que describe quién eres
         country_field_label: País
         country_field_select: Seleccionar país
+        website_field_label: Sitio web
+        website_field_placeholder: Añadir tu sitio web
+        website_field_about: >-
+          ¿Tu sitio web es una plataforma de cursos en línea? Accede a nuestro %{index_tool} y aparece en Classpert!
         instructor_field_label: Soy instructor
         public_field_label: Ver mi perfil públicamente
         social_profiles_field_header: Agregar perfiles sociales
@@ -143,11 +148,17 @@ es:
           Es una oportunidad para mostrar tu trabajo y conectar con tus estudiantes.
         social_profiles_field_label: Redes sociales
         social_profiles_field_select: Agregar Perfil
+        social_profiles_field_select_0: Añadir perfiles
+        social_profiles_field_select_1: 1 perfil añadido. Añadir más
+        social_profiles_field_select_n: "%{n} perfiles añadidos. Añadir más"
         elearning_profiles_field_header: Agregar perfiles de plataforma de e-learning
         elearning_profiles_field_about: >-
           Los cursos de estas plataformas serán visibles en tu página de perfil.
         elearning_profiles_field_label: Plataformas de E-learning
         elearning_profiles_field_select: Agregar Perfil
+        elearning_profiles_field_select_0: Añadir perfiles
+        elearning_profiles_field_select_1: 1 perfil añadido. Añadir más
+        elearning_profiles_field_select_n: "%{n} perfiles añadidos. Añadir más"
         about_field_label: Sobre mi
         about_field_placeholder: >-
           Use este espacio para hablar sobre usted, lo que hace con su vida, sus pasatiempos, intereses, logros, etc.

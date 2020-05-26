@@ -41,6 +41,7 @@ es:
     connected: "Conectado con %{provider}"
   dictionary:
     online_courses: Cursos en línea
+    index_tool: Index Tool
     terms_and_conditions: "Términos y Condiciones"
     privacy_policy: "Política de Privacidad"
     blog: "Blog"
@@ -587,8 +588,7 @@ es:
       find_course:
         header: "Encuentra un curso a través de Classpert.com"
         body_html: >-
-          Use el buscador de Classpert para encontrar el curso que desea tomar. 
-          Haga clic en <b>"Ir al curso"</b> e inscríbase en el curso elegido (su clic se registrará).
+          Use el buscador de Classpert para encontrar el curso que desea tomar. Haga clic en <b>"Ir al curso"</b> e inscríbase en el curso elegido (su clic se registrará).
       complete_course:
         header: "Completa el curso"
         body_html: >-

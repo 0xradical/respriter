@@ -101,6 +101,7 @@ ja:
           success: "File uploaded!"
       social_media_input:
         placeholder: " rest of link / copy & paste link"
+        placeholder_mobile: "あなたのid / コピーと貼り付けリンク"
       help:
         call_out: "Need any help ?"
         link: "Contact us"
@@ -136,6 +137,10 @@ ja:
         shortbio_field_placeholder: あなたが誰であるかを説明する短い文
         country_field_label: 国名
         country_field_select: 国を選択
+        website_field_label: ウェブサイト
+        website_field_placeholder: ウェブサイトを追加
+        website_field_about: >-
+          あなたのウェブサイトはオンラインコースのプラットフォームですか? %{index_tool} にアクセスしてClasspertに掲載されています!
         instructor_field_label: 私は講師です
         public_field_label: 全員に自分のプロフィールを表示
         social_profiles_field_header: ソーシャルメディアのプロファイルを追加
@@ -143,11 +148,17 @@ ja:
           それはあなたの仕事を示し、あなたの学生とつながる機会です。
         social_profiles_field_label: ソーシャルメディア
         social_profiles_field_select: プロファイルを追加
+        social_profiles_field_select_0: プロファイルを追加
+        social_profiles_field_select_1: 1つのプロファイル。もっと追加
+        social_profiles_field_select_n: "%{n}つのプロファイル。もっと追加"
         elearning_profiles_field_header: eラーニングプラットフォームのプロファイルを追加
         elearning_profiles_field_about: >-
           これらのプラットフォームのコースはプロフィールページに表示されます。
         elearning_profiles_field_label: Eラーニングプラットフォーム
         elearning_profiles_field_select: プロファイルを追加
+        elearning_profiles_field_select_0: プロファイルを追加
+        elearning_profiles_field_select_1: 1つのプロファイル。もっと追加
+        elearning_profiles_field_select_n: "%{n}つのプロファイル。もっと追加"
         about_field_label: About
         about_field_placeholder: >-
           あなた自身について話すために、このスペースを使用して、あなたが生活のために何をするか、あなたの趣味、興味、成果など。
