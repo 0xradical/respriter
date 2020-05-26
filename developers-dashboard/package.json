@@ -2,6 +2,10 @@
   "name": "developers-dashboard",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.6.x",
+    "npm": "6.9.x"
+  },
   "scripts": {
     "serve": "vue-cli-service serve --port 1080",
     "build": "vue-cli-service build",
