@@ -11,7 +11,7 @@ class OrphanedProfile < ApplicationRecord
           callback_options: { unless: -> { slug.present? } }
 
   scope :enabled,           -> { where(state: 'enabled') }
-  scope :vacant,            -> { enabled.where("user_account_id IS NULL") }
+  scope :vacant,            -> { enabled.where("claimed_by IS NULL") }
   scope :with_slug,         -> { where.not(slug: nil) }
   scope :teaching_subjects, ->(subjects) { where('teaching_subjects @> ARRAY[?]::varchar[]', subjects) }
 
