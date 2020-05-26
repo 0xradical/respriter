@@ -236,7 +236,7 @@
                     <use :xlink:href="`#i18n-${key.toLowerCase()}`" />
                   </svg>
                   <span style="vertical-align: middle;">{{
-                    $t(`iso639_codes.${key}`)
+                    $i18n.i(`iso639_codes.${key}`, key)[0]
                   }}</span>
                 </a>
               </div>
@@ -256,7 +256,7 @@
                     <use :xlink:href="`#i18n-${key.toLowerCase()}`" />
                   </svg>
                   <span style="vertical-align: middle;">{{
-                    $t(`iso639_codes.${key}`)
+                    $i18n.i(`iso639_codes.${key}`, key)[0]
                   }}</span>
                 </a>
               </div>

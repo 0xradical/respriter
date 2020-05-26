@@ -10,7 +10,7 @@
           class="el:amx-Pos(r) el:amx-D(f) el:amx-Bob el:amx-Pl(2em) el:amx-Pr(2em) el:amx-Pt(1.5em) el:amx-Pb(1.5em)"
         >
           <span
-            class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-Tt(u)"
+            class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-Tt(u) el:amx-Ls(5%)"
             style="flex: 1"
             >{{
               $t(
@@ -45,7 +45,7 @@
         <div class="el:amx-Mb(2em)">
           <div class="el:amx-Mb(1em)">
             <span
-              class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u)"
+              class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u) el:amx-Ls(5%)"
               >{{
                 $t(
                   "user.sections.account_settings.profile.sections.instructor.sections.about_me"
@@ -136,14 +136,26 @@
               "
               :value="local.website"
               @input="v => (local.website = v)"
-            />
+              ><template #description>
+                <p
+                  class="el:amx-Fs(0.75em)"
+                  v-html="
+                    $t('user.forms.profile.website_field_about', {
+                      index_tool: `<a class='el:cmx-content-link' href='https://listing.classpert.com' target='_blank'>${$t(
+                        'dictionary.index_tool'
+                      )}</a>`
+                    })
+                  "
+                ></p>
+              </template>
+            </text-input-field>
           </validation-provider>
         </div>
 
         <div class="el:amx-Mb(2em)">
           <div class="el:amx-Mb(1em)">
             <span
-              class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u)"
+              class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u) el:amx-Ls(5%)"
               >{{
                 $t(
                   "user.sections.account_settings.profile.sections.instructor.sections.social_media"
@@ -161,7 +173,14 @@
                   :disabled="platforms.social.available.length === 0"
                 >
                   <option value="">{{
-                    $t("user.forms.profile.social_profiles_field_select")
+                    platforms.social.added.length > 1
+                      ? $t(
+                          "user.forms.profile.social_profiles_field_select_n",
+                          { n: platforms.social.added.length }
+                        )
+                      : $t(
+                          `user.forms.profile.social_profiles_field_select_${platforms.social.added.length}`
+                        )
                   }}</option>
                   <option
                     v-for="option in platforms.social.available"
@@ -206,7 +225,7 @@
         <div class="el:amx-Mb(2em)">
           <div class="el:amx-Mb(1em)">
             <span
-              class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u)"
+              class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u) el:amx-Ls(5%)"
               >{{
                 $t(
                   "user.sections.account_settings.profile.sections.instructor.sections.elearning_platforms"
@@ -225,7 +244,14 @@
                 :disabled="platforms.elearning.available.length === 0"
               >
                 <option value="">{{
-                  $t("user.forms.profile.elearning_profiles_field_select")
+                  platforms.elearning.added.length > 1
+                    ? $t(
+                        "user.forms.profile.elearning_profiles_field_select_n",
+                        { n: platforms.elearning.added.length }
+                      )
+                    : $t(
+                        `user.forms.profile.elearning_profiles_field_select_${platforms.elearning.added.length}`
+                      )
                 }}</option>
                 <option
                   v-for="option in platforms.elearning.available"
@@ -266,10 +292,18 @@
           </div>
         </div>
 
-        <div class="el:amx-Mb(2em)">
+        <input
+          :disabled="loading || sending || invalid"
+          @click.prevent="submit"
+          type="submit"
+          class="el:amx-Mt(1.5em) el:amx-Mb(2em) btn btn--primary-flat btn--medium btn--block"
+          :value="$t('user.forms.profile.submit')"
+        />
+
+        <div>
           <div class="el:amx-Mb(1em)">
             <span
-              class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u)"
+              class="el:amx-Fs(0.875em) el:amx-Fw(b) el:amx-C_fgM el:amx-Tt(u) el:amx-Ls(5%)"
               >{{
                 $t(
                   "user.sections.account_settings.profile.sections.instructor.sections.privacy_settings"
@@ -284,7 +318,10 @@
             }}</span>
             <label class="el:m-switch el:m-switch--flat-primary" for="public">
               <input
-                @click="local.public = !local.public"
+                @click="
+                  local.public = !local.public;
+                  save({ public: local.public }, { alert: false });
+                "
                 :checked="local.public"
                 type="checkbox"
                 id="public"
@@ -293,14 +330,6 @@
             </label>
           </div>
         </div>
-
-        <input
-          :disabled="loading || sending || invalid"
-          @click.prevent="submit"
-          type="submit"
-          class="el:amx-Mt(1.5em) btn btn--primary-flat btn--medium btn--block"
-          :value="$t('user.forms.profile.submit')"
-        />
       </form>
     </section-frame>
   </validation-observer>

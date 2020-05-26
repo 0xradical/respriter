@@ -5,9 +5,14 @@
         <div
           class="el:amx-D(f) el:amx-Bob el:amx-Pl(2em) el:amx-Pr(2em) el:amx-Pt(1.5em) el:amx-Pb(1.5em)"
         >
-          <span class="el:amx-Fw(b) el:amx-Tt(u) el:amx-Fs(0.875em)">{{
-            $t("user.sections.account_settings.profile.sections.personal.title")
-          }}</span>
+          <span
+            class="el:amx-Fw(b) el:amx-Tt(u) el:amx-Fs(0.875em) el:amx-Ls(5%)"
+            >{{
+              $t(
+                "user.sections.account_settings.profile.sections.personal.title"
+              )
+            }}</span
+          >
         </div>
       </template>
 
