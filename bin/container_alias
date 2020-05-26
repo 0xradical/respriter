@@ -1,0 +1,148 @@
+#!/usr/bin/env sh
+
+case `echo $1 | sed "s/[-_]/./g"` in
+base)
+  echo "base.clspt"
+  exit 0
+  ;;
+web.app)
+  echo "app.clspt"
+  exit 0
+  ;;
+app)
+  echo "app.clspt"
+  exit 0
+  ;;
+worker)
+  echo "que.clspt"
+  exit 0
+  ;;
+que)
+  echo "que.clspt"
+  exit 0
+  ;;
+ssr)
+  echo "ssr.clspt"
+  exit 0
+  ;;
+webpacker)
+  echo "webpacker.clspt"
+  exit 0
+  ;;
+database)
+  echo "database.clspt"
+  exit 0
+  ;;
+api)
+  echo "api.clspt"
+  exit 0
+  ;;
+search)
+  echo "search.clspt"
+  exit 0
+  ;;
+thumbor)
+  echo "thumbor.clspt"
+  exit 0
+  ;;
+mail)
+  echo "mail.clspt"
+  exit 0
+  ;;
+s3)
+  echo "s3.clspt"
+  exit 0
+  ;;
+user.app)
+  echo "user.app.clspt"
+  exit 0
+  ;;
+user)
+  echo "user.app.clspt"
+  exit 0
+  ;;
+developer.app)
+  echo "developer.app.clspt"
+  exit 0
+  ;;
+developer)
+  echo "developer.app.clspt"
+  exit 0
+  ;;
+indextool)
+  echo "developer.app.clspt"
+  exit 0
+  ;;
+database.napoleon)
+  echo "database.napoleon.clspt"
+  exit 0
+  ;;
+napoleon.database)
+  echo "database.napoleon.clspt"
+  exit 0
+  ;;
+napoleon.api)
+  echo "api.napoleon.clspt"
+  exit 0
+  ;;
+api.napoleon)
+  echo "api.napoleon.clspt"
+  exit 0
+  ;;
+worker.napoleon)
+  echo "napoleon.clspt"
+  exit 0
+  ;;
+napoleon.worker)
+  echo "napoleon.clspt"
+  exit 0
+  ;;
+napoleon)
+  echo "napoleon.clspt"
+  exit 0
+  ;;
+video)
+  echo "video.clspt"
+  exit 0
+  ;;
+provider)
+  echo "provider.clspt"
+  exit 0
+  ;;
+logdrain)
+  echo "logdrain.clspt"
+  exit 0
+  ;;
+logspout)
+  echo "logspout.clspt"
+  exit 0
+  ;;
+logshuttle)
+  echo "logshuttle.clspt"
+  exit 0
+  ;;
+logplex)
+  echo "logplex.clspt"
+  exit 0
+  ;;
+redis)
+  echo "redis.clspt"
+  exit 0
+  ;;
+urlbox)
+  echo "urlbox.clspt"
+  exit 0
+  ;;
+proxy)
+  echo "proxy.clspt"
+  exit 0
+  ;;
+volumes)
+  echo "volumes.clspt"
+  exit 0
+  ;;
+*)
+  echo $1 | sed "s/[-_]/./g"
+  ;;
+esac
+

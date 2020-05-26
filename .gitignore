@@ -13,6 +13,9 @@
 !/log/.keep
 !/tmp/.keep
 
+database/db/dumps
+database/db/seeds
+
 envs/prd
 envs/stg
 envs/local

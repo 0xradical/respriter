@@ -1,5 +1,9 @@
 # Classpert Database
 
+## Usage
+
+Runs `make help` or just `make` to know more about all database related tasks
+
 ## Development Workflow
 
 Working under this project is simple, just follow:
