@@ -5,7 +5,9 @@ RUN apk update               && \
     apk add --update gettext && \
     rm -rf /var/cache/apk/*
 
-COPY bin/docker-setup.sh  /docker-entrypoint-initdb.d/setup.sh
-COPY db/structure.sql.env /docker-entrypoint-initdb.d/structure.sql.env
+WORKDIR /database
+
+COPY .                   /database
+COPY bin/docker-setup.sh /docker-entrypoint-initdb.d/setup.sh
 
 CMD ["postgres"]

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+if [[ ! $1 = 'dev' ]]; then
+  read -r -p "Are You Sure? This action erases production or staging database [Y/n] " am_sure
+  if [[ ! $am_sure =~ ^[Yy]$ ]]; then
+    echo 'Reload Database Aborted!'
+    exit 1
+  fi
+fi
+
+until pg_isready -U `./bin/parse_uri $POSTGRES_URL user` -h `./bin/parse_uri $POSTGRES_URL host`; do sleep 0.5; done;
+
+latest_dump_file=$2/`ls $2 | sort | tail -n 1`
+
+query_paramsless_url=$(echo $POSTGRES_URL | cut -d\? -f1)
+pg_restore --verbose --clean --no-acl --no-owner -d $query_paramsless_url < $latest_dump_file
+
+# Drop Roles
+psql $query_paramsless_url -c 'DROP ROLE IF EXISTS "anonymous"; DROP ROLE IF EXISTS "user"; DROP ROLE IF EXISTS "authenticator";'
+
+# Recreate them
+psql $query_paramsless_url -f /database/src/auth/anonymous.sql
+psql $query_paramsless_url -f /database/src/auth/user.sql
+psql $query_paramsless_url -f /database/src/auth/authenticator.sql
+
+# A little hack to fix authenticator password
+psql $query_paramsless_url -c "ALTER ROLE \"authenticator\" WITH PASSWORD '$AUTHENTICATOR_PASSWORD'; UPDATE settings.secrets SET value = '$JWT_SECRET' WHERE key = 'app.jwt_secret';"
+
+exit 0

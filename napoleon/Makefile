@@ -34,11 +34,11 @@ else
 endif
 
 define docker_run_or_plain
-	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm $3 -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 `./bin/container_alias $1` $2; else $2; fi;
+	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm $3 -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 `$(MAKE_BIN)/container_alias $1` $2; else $2; fi;
 endef
 
 define docker_run_with_ports_or_plain
-	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm --service-ports -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 `./bin/container_alias $1` $2; else $2; fi;
+	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm --service-ports -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 `$(MAKE_BIN)/container_alias $1` $2; else $2; fi;
 endef
 
 default: help
@@ -100,22 +100,22 @@ run: $(CUSTOM_ENV_FILES) ## Runs all containers attached
 	$(DOCKER_COMPOSE) up
 
 run-%: $(CUSTOM_ENV_FILES) ## Run a given container attached
-	$(DOCKER_COMPOSE) up `./bin/container_alias $*`
+	$(DOCKER_COMPOSE) up `$(MAKE_BIN)/container_alias $*`
 
 up: $(CUSTOM_ENV_FILES) ## Run all containers dettached
 	$(DOCKER_COMPOSE) up -d
 
 up-%: $(CUSTOM_ENV_FILES) ## Run a given container dettached
-	$(DOCKER_COMPOSE) up -d `./bin/container_alias $*`
+	$(DOCKER_COMPOSE) up -d `$(MAKE_BIN)/container_alias $*`
 
 down: clean ## Alias to clean
 
 down-%: $(CUSTOM_ENV_FILES) ## Stops a given container
-	$(DOCKER_COMPOSE) down `./bin/container_alias $*`
-	$(DOCKER_COMPOSE) rm -f `./bin/container_alias $*`
+	$(DOCKER_COMPOSE) down `$(MAKE_BIN)/container_alias $*`
+	$(DOCKER_COMPOSE) rm -f `$(MAKE_BIN)/container_alias $*`
 
 restart-%: $(CUSTOM_ENV_FILES) LESS_PRIORITY-% ## Restarts a given container
-	$(DOCKER_COMPOSE) restart `./bin/container_alias $*`
+	$(DOCKER_COMPOSE) restart `$(MAKE_BIN)/container_alias $*`
 
 restart-prd: ## Restarts all napoleon prd dynos
 	@heroku ps:restart --app $(HEROKU_PRD_APP)
@@ -187,7 +187,7 @@ logs: $(CUSTOM_ENV_FILES) ## Display and follow all dev logs
 	@$(DOCKER_COMPOSE) logs -f
 
 logs-%: $(CUSTOM_ENV_FILES) LESS_PRIORITY-% ## Display and follow dev logs for a given container
-	@$(DOCKER_COMPOSE) logs -f `./bin/container_alias $*`
+	@$(DOCKER_COMPOSE) logs -f `$(MAKE_BIN)/container_alias $*`
 
 logs-prd: ## Display and follow all napoleon prd logs
 	@heroku logs -t --app $(HEROKU_PRD_APP)

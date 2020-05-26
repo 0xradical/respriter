@@ -2,12 +2,18 @@ version: "3"
 services:
   base.clspt: &base
     image: $WEB_APP_IMAGE
+    build:
+      context: ./web-app
+      args:
+        - GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN
     env_file:
       - envs/dev/base.env
       - envs/local/base.env
     volumes:
-      - .:/app
-      - /app/volumes
+      - ./web-app:/app
+      - ./i18n:/app/config/locales
+      - ./components:/app/app/assets/vue/components
+      - ./envs:/app/envs
       - $LOCAL_NODE_MODULES/app/node_modules
       - base_bundle:/home/developer/bundle:cached
       - base_node_modules:/home/developer/node_modules:cached
@@ -66,6 +72,7 @@ services:
 
   database.clspt:
     image: $DATABASE_IMAGE
+    build: database/.
     env_file:
       - envs/dev/database.env
       - envs/local/database.env
@@ -74,11 +81,8 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - .:/app
-      - /app/volumes
+      - ./database:/database
       - database_data:/var/lib/postgresql/data:cached
-      - ./images/database/production_seed.sql:/docker-entrypoint-initdb.d/x_seed.sql
-      - ./images/database/development_seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
 
   api.clspt:
     image: postgrest/postgrest:v6.0.2
@@ -139,9 +143,7 @@ services:
 
   s3.clspt:
     image: classpert/minio
-    build:
-      context: images/minio/.
-      dockerfile: Dockerfile
+    build: images/minio/.
     command: minio server --address :80 /data
     env_file:
       - envs/dev/minio.env
@@ -175,6 +177,11 @@ services:
 
   user.app.clspt:
     image: $USER_IMAGE
+    build:
+      context: user-dashboard/.
+      dockerfile: Dockerfile
+      args:
+        - GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN
     env_file:
       - envs/dev/user.env
       - envs/local/user.env
@@ -195,6 +202,11 @@ services:
 
   developer.app.clspt:
     image: $DEVELOPER_IMAGE
+    build:
+      context: developers-dashboard/.
+      dockerfile: Dockerfile
+      args:
+        - GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN
     env_file:
       - envs/dev/developer.env
       - envs/local/developer.env
@@ -218,14 +230,15 @@ services:
 
   database.napoleon.clspt:
     image: $NAPOLEON_DATABASE_IMAGE
+    build: ./napoleon/database
     env_file:
       - envs/dev/database-napoleon.env
       - envs/local/database-napoleon.env
     environment:
       - LOGSPOUT=ignore
     volumes:
+      - ./napoleon/database:/database
       - database_napoleon_data:/var/lib/postgresql/data:cached
-      - ./images/napoleon_database/seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
     ports:
       - 5434:5432
 
@@ -245,6 +258,7 @@ services:
 
   napoleon.clspt:
     image: $NAPOLEON_APP_IMAGE
+    build: ./napoleon
     command: make worker
     env_file:
       - envs/dev/napoleon.env
@@ -272,9 +286,7 @@ services:
 
   provider.clspt:
     image: classpert/mocked_providers:latest
-    build:
-      context: images/provider/.
-      dockerfile: Dockerfile
+    build: images/provider/.
     environment:
       - DOMAIN=provider.clspt
       - VIRTUAL_HOST=provider.clspt,*.provider.clspt
