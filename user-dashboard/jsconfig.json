@@ -6,15 +6,15 @@
     "module": "commonjs",
     "baseUrl": ".",
     "paths": {
-      "~external/*": ["src/components/external/src/*"],
-      "~utils": ["src/lib/utils/index.js"],
-      "~utils/*": ["src/lib/utils/*"],
-      "~validations": ["src/lib/validations/index.js"],
-      "~validations/*": ["src/lib/validations/*"],
-      "~store": ["src/store/index.js"],
-      "~store/*": ["src/store/*"],
-      "~components/*": ["src/components/*"],
-      "~config/*": ["src/config/*"]
+      "~external/*": ["./src/components/external/src/*"],
+      "~utils": ["./src/lib/utils/index.js"],
+      "~utils/*": ["./src/lib/utils/*"],
+      "~validations": ["./src/lib/validations/index.js"],
+      "~validations/*": ["./src/lib/validations/*"],
+      "~store": ["./src/store/index.js"],
+      "~store/*": ["./src/store/*"],
+      "~components/*": ["./src/components/*"],
+      "~config/*": ["./src/config/*"]
     }
   },
   "include": ["./src/**/*"]

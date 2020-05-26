@@ -63,9 +63,11 @@
         <span class="el:amx-Fs(0.75em)">{{ errors[0] }}</span>
       </div>
       <div class="el:amx-Pos(a) el:amx-D(n)@>lg" style="top: 2.75em;">
-        <span class="el:amx-Fs(0.75em)">{{
-          canonicalURL(this.model || "")
-        }}</span>
+        <span
+          class="el:amx-Fs(0.75em)"
+          :class="errors && errors.length && 'el:amx-C_er'"
+          >{{ canonicalURL(this.model || "") }}</span
+        >
       </div>
     </div>
     <div style="flex: 0 0 2em" class="el:amx-Ta(c)">

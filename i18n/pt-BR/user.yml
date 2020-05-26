@@ -60,7 +60,7 @@ pt-BR:
           order_id: "Número do Pedido"
           price: Preço do Curso
           purchase_date: "Data de Compra"
-          bonus_status: "Status"
+          bonus_status: "Situação"
           bonus_statuses:
             initial: Em análise
             pending: Em análise
@@ -101,6 +101,7 @@ pt-BR:
           success: "Arquivo enviado!"
       social_media_input:
         placeholder: " resto do link / copiar & colar link"
+        placeholder_mobile: "seu id / copiar e colar link"
       help:
         call_out: "Precisa de ajuda ?"
         link: "Entre em contato conosco"
@@ -136,6 +137,10 @@ pt-BR:
         shortbio_field_placeholder: Uma pequena frase descrevendo quem você é
         country_field_label: País
         country_field_select: Selecione país
+        website_field_label: Site
+        website_field_placeholder: Adicione o seu site
+        website_field_about: >-
+          O seu site é uma plataforma de curso online? Acesse nosso %{index_tool} e seja listado na Classpert!
         instructor_field_label: Sou instrutor(a)
         public_field_label: Exibir meu perfil publicamente
         social_profiles_field_header: Adicione perfis de redes sociais
@@ -143,11 +148,17 @@ pt-BR:
           É uma oportunidade para mostrar seu trabalho e se conectar com seus alunos.
         social_profiles_field_label: Redes Sociais
         social_profiles_field_select: Adicionar perfil
+        social_profiles_field_select_0: Adicionar perfis
+        social_profiles_field_select_1: 1 perfil adicionado. Adicionar mais
+        social_profiles_field_select_n: "%{n} perfis adicionados. Adicionar mais"
         elearning_profiles_field_header: Adicione perfis de plataformas de e-learning
         elearning_profiles_field_about: >-
           Os cursos dessas plataformas ficarão visíveis na sua página de perfil.
         elearning_profiles_field_label: Plataformas de E-learning
         elearning_profiles_field_select: Adicionar perfil
+        elearning_profiles_field_select_0: Adicionar perfis
+        elearning_profiles_field_select_1: 1 perfil adicionado. Adicionar mais
+        elearning_profiles_field_select_n: "%{n} perfis adicionados. Adicionar mais"
         about_field_label: Sobre mim
         about_field_placeholder: >-
           Use esse espaço para falar sobre você mesmo, o que você faz da vida, seus hobbies, interesses, conquistas, etc.

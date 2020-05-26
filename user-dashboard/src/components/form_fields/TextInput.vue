@@ -13,6 +13,7 @@
     >
       <label v-html="label" :for="field"></label>
     </div>
+    <slot name="description"></slot>
     <div
       class="el:m-form-field__input"
       :class="[

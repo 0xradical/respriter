@@ -20,4 +20,3 @@ es:
       max_properties: "El campo %{field} debe tener como máximo %{value} elementos"
       unique_items: "El campo %{field} debe tener elementos únicos"
       required: "El campo %{field} debe tener esas claves: %{missing_keys}"
-      
