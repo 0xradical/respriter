@@ -812,6 +812,24 @@ pt-BR:
         computer_science: Ciência da Computação
         e_learning: E-Learning
         blockchain_and_cryptocurrency: Blockchain e Criptomoeda
+  unsubscriptions:
+    show:
+      title: "A inscrição do email %{email} foi removida com sucesso"
+      subtitle: "Você não receberá mais newsletters e comunicação de marketing da Classpert"
+      option_request_intro: "A fim de melhorar nossos serviços, por favor nos informe por que você gostaria de parar de receber nossos e-mails."
+      options:
+        too_often: "Estou recebendo e-mails com muita frequência"
+        not_relevant: "O conteúdo não é relevante para mim"
+        doesnt_like_mail_marketing: "Não é um problema específico com a Classpert, eu simplesmente não gosto de e-mail marketing em geral"
+        other: "Outro"
+        up_to_200_characters: "Até 200 caracteres"
+        please_detail: "Por favor, explique o motivo do cancelamento de sua inscrição"
+      submit: "Enviar"
+      go_to_classpert: "Ir para Classpert.com"
+      alerts:
+        success: "Sucesso: Suas configurações de notificação por e-mail foram atualizadas!"
+        no_option: "Por favor, escolha uma opção"
+        no_details: Se você escolher "Outro", por favor detalhe o motivo do cancelamento
   user_accounts:
     show:
       meta:

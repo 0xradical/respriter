@@ -861,6 +861,25 @@ en:
     show:
       <<: *post_base
 
+  unsubscriptions:
+    show:
+      title: "The e-mail %{email} was successfully unsubscribed"
+      subtitle: "You won't receive newsletters and marketing communication from Classpert anymore"
+      option_request_intro: "In order to improve our services, please tell us why you would like to stop receiving our e-mails."
+      options:
+        too_often: "I am receiving emails too often"
+        not_relevant: "The content is not relevant to me"
+        doesnt_like_mail_marketing: "It's not a specific problem with Classpert, I just don't like mail marketing in general"
+        other: "Other"
+        up_to_200_characters: "Up to 200 characters"
+        please_detail: "Please detail your unsubscription reason"
+      submit: "Submit"
+      go_to_classpert: "Go to Classpert.com"
+      alerts:
+        success: "Success: Your e-mail notification settings have been updated!"
+        no_option: "Please choose an option"
+        no_details: If you choose "Other", please detail the unsubscription reason
+
   user_accounts: &user_accounts_base
     show:
       meta:
