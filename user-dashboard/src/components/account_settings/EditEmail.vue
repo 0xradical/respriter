@@ -208,7 +208,7 @@
 </template>
 
 <script>
-import SectionFrame from "../SectionFrame.vue";
+import SectionFrame from "~components/SectionFrame.vue";
 
 export default {
   data() {

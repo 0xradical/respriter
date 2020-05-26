@@ -37,7 +37,7 @@
                 $t("dictionary.contact_us")
               }}</a>
             </li>
-            <li>
+            <li class="el:amx-Mr(2em)">
               <dropdown-menu>
                 <template #action>
                   <span v-for="(value, key) in visibleLocaleOption" :key="key">
@@ -68,12 +68,23 @@
                       <span
                         style="vertical-align: middle;"
                         class="el:amx-C_fgV"
-                        >{{ $t(`iso639_codes.${key}`) }}</span
+                        >{{ $i18n.i(`iso639_codes.${key}`, key)[0] }}</span
                       >
                     </a>
                   </li>
                 </template>
               </dropdown-menu>
+            </li>
+            <li>
+              <label
+                @click="switchTheme"
+                data-el-theme-toggler
+                class="el:m-switch el:m-switch--theme-toggler"
+                for="checkbox3"
+              >
+                <input type="checkbox" id="checkbox3" />
+                <div class="el:m-switch__slider"></div>
+              </label>
             </li>
           </ul>
         </template>
@@ -113,36 +124,36 @@
       <template>
         <div
           :class="['el:o-off-canvas-menu__header-slot', 'el:amx-Bob_gray1']"
-          style="height:3.5rem"
+          style="height: 3.5rem;"
         >
           <div
             class="el:o-off-canvas-menu__control"
             @click="$store.commit('menu/close')"
           ></div>
 
-          <div style="height:32px;">
+          <div style="height: 32px;">
             <img
-              v-if="$store.state.profile.avatar_url != ''"
-              :src="$store.state.profile.avatar_url"
+              v-if="$store.state.profile.avatarUrl != ''"
+              :src="$store.state.profile.avatarUrl"
               width="32px"
               class="el:amx-D(ib)"
-              style="border-radius: 50%;vertical-align: top;"
+              style="border-radius: 50%; vertical-align: top;"
             />
             <img
               v-else
               src="../assets/avatar-default.svg"
               width="32px"
               class="el:amx-D(ib)"
-              style="border-radius: 50%;vertical-align: top;"
+              style="border-radius: 50%; vertical-align: top;"
             />
             <div class="el:amx-D(ib) el:amx-Ml(0.5em)">
               <div
                 class="el:amx-Pos(r) el:amx-Fw(b) el:amx-Fs(1em)"
-                style="top:-2px;"
+                style="top: -2px;"
               >
                 {{ $t("user.greetings", { name: $store.state.profile.name }) }}
               </div>
-              <div class="el:amx-Pos(r)" style="top:2px;">
+              <div class="el:amx-Pos(r)" style="top: 2px;">
                 <router-link
                   to="/account-settings"
                   @click.native="$store.commit('menu/close')"
@@ -154,7 +165,7 @@
                     width="8px"
                     height="8px"
                     class="el:amx-D(ib) el:amx-Va(m) el:amx-Pos(r) el:amx-Ml(0.25em) el:amx-Fi_pr"
-                    style="transform:rotate(-90deg);"
+                    style="transform: rotate(-90deg);"
                   >
                     <use xlink:href="#icons-arrow-down" />
                   </svg>
@@ -180,17 +191,17 @@
                   :key="rootTag.id"
                   :href="webAppURL + '/' + rootTag.id.replace(/_/g, '-')"
                 >
-                  <li style="padding:4px 0px">
+                  <li style="padding: 4px 0px;">
                     <span
                       class="el:m-label"
-                      style="height:60px;text-align:left"
+                      style="height: 60px; text-align: left;"
                     >
                       <svg class="el:m-label__icon">
                         <use :xlink:href="`#tags-${rootTag.id}`" />
                       </svg>
                       <span
                         class="el:m-label__text el:amx-Ml(0.5em)"
-                        style="word-break:break-word;max-width:160px"
+                        style="word-break: break-word; max-width: 160px;"
                         >{{ $t(`tags.${rootTag.id}`) }}</span
                       >
                     </span>
@@ -225,7 +236,7 @@
                     <use :xlink:href="`#i18n-${key.toLowerCase()}`" />
                   </svg>
                   <span style="vertical-align: middle;">{{
-                    $t(`iso639_codes.${key}`)
+                    $i18n.i(`iso639_codes.${key}`, key)[0]
                   }}</span>
                 </a>
               </div>
@@ -236,7 +247,7 @@
                 class="el:amx-Mb(1em)"
                 :key="key"
               >
-                <a @click="setLocale(key)" style="cursor: pointer">
+                <a @click="setLocale(key)" style="cursor: pointer;">
                   <svg
                     width="16px"
                     height="16px"
@@ -245,7 +256,7 @@
                     <use :xlink:href="`#i18n-${key.toLowerCase()}`" />
                   </svg>
                   <span style="vertical-align: middle;">{{
-                    $t(`iso639_codes.${key}`)
+                    $i18n.i(`iso639_codes.${key}`, key)[0]
                   }}</span>
                 </a>
               </div>
@@ -308,18 +319,18 @@
 <script>
 import { createNamespacedHelpers as helpers } from "vuex";
 import { invert, pickBy } from "lodash";
-import namespaces from "../store/namespaces";
-import { primitives, namespacedPrimitive } from "../store/types";
-import { webAppDomainURL } from "../config/domains";
-import { paths } from "../config/environment";
-import Header from "./Header.vue";
-import DropdownMenu from "./DropdownMenu.vue";
-import Tabs from "external/Tabs.vue";
-import Navbar from "./Navbar.vue";
-import Footer from "./Footer.vue";
-import OffCanvasMenu from "external/OffCanvasMenu.vue";
-import Collapsible from "external/Collapsible.vue";
-import ProgressBar from "external/ProgressBar.vue";
+import namespaces from "~store/namespaces";
+import { operations, namespacedOperation } from "~store/types";
+import { webAppDomainURL } from "~config/domains";
+import { paths } from "~config/environment";
+import Header from "~components/Header.vue";
+import DropdownMenu from "~components/DropdownMenu.vue";
+import Navbar from "~components/Navbar.vue";
+import Footer from "~components/Footer.vue";
+import Tabs from "~external/Tabs.vue";
+import OffCanvasMenu from "~external/OffCanvasMenu.vue";
+import Collapsible from "~external/Collapsible.vue";
+import ProgressBar from "~external/ProgressBar.vue";
 
 const { mapMutations: mapLocaleMutations } = helpers(namespaces.LOCALE);
 
@@ -352,7 +363,8 @@ export default {
       localeOptions: {
         en: "hidden",
         es: "hidden",
-        "pt-BR": "hidden"
+        "pt-BR": "hidden",
+        ja: "hidden"
       },
 
       tabs: {
@@ -365,7 +377,7 @@ export default {
   created() {
     this.$store.subscribe((mutation, state) => {
       if (
-        mutation.type === namespacedPrimitive(namespaces.LOCALE, primitives.SET)
+        mutation.type === namespacedOperation(namespaces.LOCALE, operations.SET)
       ) {
         this.changeLocale(state.locale.code);
       }
@@ -373,7 +385,7 @@ export default {
 
     this.setLocale(this.$route.query.locale || "en");
     this.updateUserAccount({ loading: true });
-    this.initUserAccount({ user_account_id: this.$session.getUserId() })
+    this.initUserAccount({ userAccountId: this.$session.getUserId() })
       .then(user => {
         const profile = user?.profiles && user?.profiles[0];
         const profileUsername = profile?.username;
@@ -418,16 +430,16 @@ export default {
 
   methods: {
     ...mapLocaleMutations({
-      setLocale: primitives.SET
+      setLocale: operations.SET
     }),
     ...mapUserAccountActions({
-      initUserAccount: primitives.GET
+      initUserAccount: operations.GET
     }),
     ...mapUserAccountMutations({
-      updateUserAccount: primitives.UPDATE
+      updateUserAccount: operations.UPDATE
     }),
     ...mapProfileMutations({
-      initProfile: primitives.GET
+      initProfile: operations.GET
     }),
     getTab(name) {
       return invert(this.tabs)[name];
@@ -442,6 +454,12 @@ export default {
         this.localeOptions[key] = "hidden";
       }
       this.localeOptions[val] = "visible";
+    },
+    switchTheme() {
+      const currentTheme = document.body.parentElement.dataset.theme;
+      const theme = currentTheme === "light" ? "dark" : "light";
+
+      document.body.parentElement.dataset.theme = theme;
     }
   }
 };

@@ -15,6 +15,8 @@ services:
     volumes:
       - .:/app
       - $LOCAL_NODE_MODULES/app/node_modules
+      - ../i18n:/app/src/locales:cached
+      - ../components:/app/src/components/external:cached
     networks:
       - web-app_default
 

@@ -11,7 +11,12 @@ module.exports = {
         // "~~lazy-hydration$": require.resolve("vue-lazy-hydration"),
         // "~~lazy-hydration$": path.resolve(__dirname, "src/vendor/empty.js"),
         "~~lodash$": require.resolve("lodash"),
-        external: path.resolve("src/components/external/src")
+        "~external": path.resolve("src/components/external/src"),
+        "~utils": path.resolve("src/lib/utils"),
+        "~validations": path.resolve("src/lib/validations"),
+        "~store": path.resolve("src/store"),
+        "~components": path.resolve("src/components"),
+        "~config": path.resolve("src/config")
       }
     },
     module: {

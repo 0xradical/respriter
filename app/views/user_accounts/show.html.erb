@@ -11,18 +11,25 @@
   <%= javascript_packs_with_chunks_tag 'vcard' %>
 <% end %>
 
+<%= content_for :svg_sprites do %>
+  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/country-flags.svg') %>"></div>
+<% end %>
+
 <div>
   <div class='el:amx-Bc_su el:amx-P(2.5em|0)'>
 
     <div class='container'>
       <div class='row'>
         <div class='col-12'>
-          <div class='el:m-avatar el:m-avatar--circle el:m-avatar--5x5em'>
+          <div style='position:relative' class='el:m-avatar el:m-avatar--circle el:m-avatar--5x5em'>
             <% if @user.avatar_url %>
               <%= image_tag @user.avatar_url %>
             <% else %>
             <% end %>
-          </div><div class='el:amx-D(ib) el:amx-Va(m) el:amx-Ml(0.75em)'>
+            <div style='position:absolute;bottom:0;right:.5em'>
+              <%= svg_use('country-flags', @user.country&.downcase, {width: '1.25em', height: '1.25em'}) %>
+            </div>
+          </div><div class='el:amx-D(ib) el:amx-Va(m) el:amx-Ml(1em)'>
             <h1 class='el:amx-Fs(1.25em) el:amx-Fw(b)'>
               <%= @user.name %>
               <% if @user.instructor %>
@@ -42,7 +49,21 @@
             </div>
             <div class='el:amx-Mt(0.75em)'>
               <ul class='el:m-list el:m-list--hrz'>
-                <% @user.public_profiles.each do |key, val| %>
+                <% if @user.website.present? %>
+                  <li class='el:amx-Mr(0.5em)'>
+                    <a href='<%= @user.website %>' target='_blank' ref='nofollow noreferrer'>
+                      <%= svg_use('icons', 'website', {class: "el:amx-Fi_fg", width: '1em', height: '1em'}) %>
+                    </a>
+                  </li>
+                <% end %>
+                <% @user.elearning_profiles.each do |key, val| %>
+                  <li class='el:amx-Mr(0.5em)'>
+                    <a href='<%= val %>' target='_blank' ref='nofollow noreferrer'>
+                      <%= svg_use('providers', key, {class: "el:amx-Fi_#{key}", width: '1em', height: '1em'}) %>
+                    </a>
+                  </li>
+                <% end %>
+                <% @user.social_profiles.each do |key, val| %>
                   <li class='el:amx-Mr(0.5em)'>
                     <a href='<%= val %>' target='_blank' ref='nofollow noreferrer'>
                       <%= svg_use('icons', key, {class: "el:amx-Fi_#{key}", width: '1em', height: '1em'}) %>
@@ -71,31 +92,31 @@
             </p>
           <% end %>
 
-          <%# unless @user.courses.empty? %>
+          <% unless @user.courses.empty? %>
             <h2 class='el:amx-Fs(1.25em) el:amx-M(1em|0)'>
-              <%#= t('.courses', name: @user.name) %>
+              <%= t('.courses', name: @user.name) %>
             </h2>
 
             <div class='row swiper-container d-md-none' data-swiepable style='width:100%;height:350px;'>
               <div class='swiper-wrapper'>
-                <%# @user.courses.each do |course| %>
+                <% @user.courses.each do |course| %>
                   <div class='el:amx-Mb(1em) swiper-slide'>
-                    <%#= render 'vcard', course: course.as_indexed_json %>
+                    <%= render 'vcard', course: course.as_indexed_json %>
                   </div>
-                <%# end %>
+                <% end %>
               </div>
             </div>
 
             <div class='row d-none d-md-flex'>
-              <%# @user.courses.each do |course| %>
+              <% @user.courses.each do |course| %>
                 <div class='col-md-6 col-lg-4 col-xl-3'>
                   <div class='el:amx-Mb(1em)'>
-                    <%#= render 'vcard', course: course.as_indexed_json %>
+                    <%= render 'vcard', course: course.as_indexed_json %>
                   </div>
                 </div>
-              <%# end %>
+              <% end %>
             </div>
-          <%# end %>
+          <% end %>
 
         </div>
       </div>

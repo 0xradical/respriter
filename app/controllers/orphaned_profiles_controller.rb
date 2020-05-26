@@ -33,7 +33,7 @@ class OrphanedProfilesController < ApplicationController
       OrphanedProfileMailer.build(@orphaned_profile, params[:email], I18n.locale).deliver_later
       redirect_to orphaned_profile_path(@orphaned_profile.slug)
     else
-      flash[:alert] = t('fail', email: params[:email])
+      flash[:alert] = t('.fail', email: params[:email])
       redirect_to claim_orphaned_profile_path(@orphaned_profile.slug)
     end
   end

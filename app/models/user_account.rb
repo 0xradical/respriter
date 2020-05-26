@@ -35,7 +35,12 @@ class UserAccount < ApplicationRecord
     :avatar_url,
     :short_bio,
     :interests,
-    :public_profiles,
+    :social_profiles,
+    :elearning_profiles,
+    :teaching_subjects,
+    :course_ids,
+    :website,
+    :country,
     :long_bio,
     :username,
     :interests,
@@ -113,5 +118,28 @@ class UserAccount < ApplicationRecord
       where(conditions.to_h).first
     end
   end
+
+  # Here goes gambit! Remove after we build a proper relationship between instructor and
+  # courses
+  def courses
+    Course.where(id: course_ids).limit(50)
+  end
+
+  def self.courses_by_instructor_name(name)
+    query = <<-SQL
+    WITH
+    A AS (
+    SELECT
+      id
+      ,jsonb_array_elements(instructors) AS instructor
+    FROM courses
+    )
+    SELECT *
+    FROM A
+    WHERE (instructor->>'name') = '#{name}';
+    SQL
+    ActiveRecord::Base.connection.execute(query)
+  end
+
 
 end

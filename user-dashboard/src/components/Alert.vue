@@ -1,5 +1,5 @@
 <template>
-  <div v-show="open" class="el:m-alert" :class="alertClass">
+  <div v-show="open" v-if="message" class="el:m-alert" :class="alertClass">
     <slot>{{ message }}</slot>
   </div>
 </template>

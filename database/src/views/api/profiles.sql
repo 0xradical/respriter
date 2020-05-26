@@ -3,18 +3,20 @@ CREATE OR REPLACE VIEW api.profiles AS
     id,
     name,
     username,
-    short_bio,
-    long_bio,
-    instructor,
-    public,
-    country,
+    COALESCE( if_admin(short_bio), if_user_by_id(user_account_id, short_bio) ) AS short_bio,
+    COALESCE( if_admin(long_bio), if_user_by_id(user_account_id, long_bio) ) AS long_bio,
+    COALESCE( if_admin(instructor), if_user_by_id(user_account_id, instructor) ) AS instructor,
+    COALESCE( if_admin(public), if_user_by_id(user_account_id, public) ) AS public,
+    COALESCE( if_admin(country), if_user_by_id(user_account_id, country) ) AS country,
+    COALESCE( if_admin(website), if_user_by_id(user_account_id, website) ) AS website,
     COALESCE(uploaded_avatar_url, oauth_avatar_url) AS avatar_url,
     COALESCE( if_admin(date_of_birth),   if_user_by_id(user_account_id, date_of_birth)   ) AS date_of_birth,
     user_account_id,
     COALESCE( if_admin(interests),       if_user_by_id(user_account_id, interests)       ) AS interests,
     COALESCE( if_admin(preferences),     if_user_by_id(user_account_id, preferences)     ) AS preferences,
     COALESCE( if_admin(social_profiles), if_user_by_id(user_account_id, social_profiles) ) AS social_profiles,
-    COALESCE( if_admin(elearning_profiles), if_user_by_id(user_account_id, elearning_profiles) ) AS elearning_profiles
+    COALESCE( if_admin(elearning_profiles), if_user_by_id(user_account_id, elearning_profiles) ) AS elearning_profiles,
+    COALESCE( if_admin(course_ids), if_user_by_id(user_account_id, course_ids) ) AS course_ids
   FROM app.profiles;
 
 CREATE OR REPLACE FUNCTION triggers.api_profiles_view_instead() RETURNS trigger AS $$
@@ -46,7 +48,9 @@ BEGIN
     long_bio            = NEW.long_bio,
     instructor          = NEW.instructor,
     public              = NEW.public,
+    website             = NEW.website,
     country             = NEW.country,
+    course_ids          = NEW.course_ids,
     social_profiles     = NEW.social_profiles,
     elearning_profiles  = NEW.elearning_profiles
   WHERE

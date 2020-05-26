@@ -1,5 +1,4 @@
 export default {
-  CERTIFICATE: "certificate",
   LOCALE: "locale",
   MENU: "menu",
   PROGRESS_BAR: "progress_bar",

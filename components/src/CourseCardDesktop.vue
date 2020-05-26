@@ -24,7 +24,10 @@
           :valueClasses="['el:amx-Fs(0.75em) el:amx-C_fgM']"
           v-if="instructor"
         >
-          <span>{{ instructor.name }}</span>
+          <a v-if="instructor.profile_path" :href="instructor.profile_path">
+            {{ instructor.name }}
+          </a>
+          <span v-else>{{ instructor.name }}</span>
         </course-attribute>
         <course-attribute
           icon="clock"

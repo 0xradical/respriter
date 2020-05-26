@@ -24,7 +24,7 @@ BEGIN
         INTO _host, _url_path;
 
       IF (_host IS NULL) OR (_url_path IS NULL) THEN
-        RAISE EXCEPTION 'social_profiles update failed' USING DETAIL = 'public_profile__invalid_uri';
+        RAISE EXCEPTION 'social_profiles update failed' USING DETAIL = 'public_profile__invalid_uri', HINT = json_build_object('value', _url);
       END IF;
 
       CASE _platform
@@ -161,7 +161,7 @@ BEGIN
         INTO _host, _url_path;
 
       IF (_host IS NULL) OR (_url_path IS NULL) THEN
-        RAISE EXCEPTION 'elearning_profiles update failed' USING DETAIL = 'public_profile__invalid_uri';
+        RAISE EXCEPTION 'elearning_profiles update failed' USING DETAIL = 'public_profile__invalid_uri', HINT = json_build_object('value', _url);
       END IF;
 
       CASE _platform

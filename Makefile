@@ -296,7 +296,7 @@ clean: $(CUSTOM_ENV_FILES) ## Stop containers, remove old images and prune docke
 	@$(DOCKER_COMPOSE) down --rmi local --remove-orphans
 	@$(DOCKER) system prune -f
 
-wipe-unnamed-volumes: ## Deletes all volumes on machine, except
+wipe-unnamed-volumes: ## Deletes all unnamed volumes on machine
 	@$(DOCKER) volume rm `docker volume ls -q -f dangling=true | sed '/web-app/d'`
 
 wipe-data: ## Deletes volumes with data like database, s3, elasticsearch (don't erase npm and bundler volumes)

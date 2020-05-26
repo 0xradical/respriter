@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-lg-4 d-none d-lg-block">
+    <div class="col-lg-3 d-none d-lg-block">
       <div class="el:amx-Pt(1.5em) el:amx-Pb(0.5em) el:amx-Bc_su">
         <ul class="el:m-list el:m-list--unstyled">
           <li v-for="i in numOfItems" :key="i">
@@ -25,7 +25,7 @@
         </ul>
       </div>
     </div>
-    <div class="col-12 col-lg-8">
+    <div class="col-12 col-lg-9">
       <div v-for="i in numOfItems" v-show="showSection(i)" :key="i">
         <slot :name="`side-menu-item-${i}-content`"></slot>
       </div>
@@ -54,13 +54,13 @@ export default {
     this.viewport = this.getViewport();
     this.facetedNavigationEnabled = this.isFacetedNavigationEnabled();
 
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       window.addEventListener("resize", this.setViewport);
     });
   },
 
   watch: {
-    viewport: function() {
+    viewport: function () {
       this.facetedNavigationEnabled = this.isFacetedNavigationEnabled();
     }
   },

@@ -2,8 +2,8 @@
   <div>
     <div class="el:m-avatar el:m-avatar--circle el:m-avatar--64x64">
       <img
-        v-if="$store.state.profile.avatar_url != ''"
-        :src="$store.state.profile.avatar_url"
+        v-if="$store.state.profile.avatarUrl != ''"
+        :src="$store.state.profile.avatarUrl"
       />
       <img v-else src="../assets/avatar-default.svg" />
       <div class="el:m-avatar__overlay el:m-avatar__overlay--upload-icon">
@@ -49,7 +49,7 @@ export default {
   methods: {
     onSuccessUpload(response) {
       this.$store.commit("profile/update", {
-        avatar_url: response.data.attributes.file.url
+        avatarUrl: response.data.attributes.file.url
       });
     },
 

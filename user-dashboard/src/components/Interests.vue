@@ -71,8 +71,8 @@
 <script>
 import { map, reduce, without, values } from "lodash";
 import { createNamespacedHelpers as helpers } from "vuex";
-import namespaces from "../store/namespaces";
-import { primitives } from "../store/types";
+import namespaces from "~store/namespaces";
+import { operations } from "~store/types";
 
 const { mapActions, mapMutations } = helpers(namespaces.PROFILE);
 
@@ -86,13 +86,11 @@ export default {
   },
 
   created() {
-    this.initProfile({ user_account_id: this.$session.getUserId() }).then(
-      () => {
-        this.options = this.loadOptions();
-        this.interests = this.$store.state.profile.interests;
-        this.loading = false;
-      }
-    );
+    this.initProfile({ userAccountId: this.$session.getUserId() }).then(() => {
+      this.options = this.loadOptions();
+      this.interests = this.$store.state.profile.interests;
+      this.loading = false;
+    });
   },
 
   computed: {
@@ -113,19 +111,18 @@ export default {
 
   methods: {
     slug(tag) {
-      var vm = this;
-      return `${vm.$domains[vm.$store.state.locale.code]}/${tag.replace(
+      return `${this.$domains[this.$store.state.locale.code]}/${tag.replace(
         "_",
         "-"
       )}?utm_source=user_dashboard&utm_campaign=${tag}&utm_medium=interests`;
     },
 
     ...mapMutations({
-      change: primitives.UPDATE
+      change: operations.UPDATE
     }),
     ...mapActions({
-      initProfile: primitives.GET,
-      persist: primitives.UPDATE
+      initProfile: operations.GET,
+      persist: operations.UPDATE
     }),
 
     loadOptions() {
@@ -137,7 +134,7 @@ export default {
           r[k] = {
             tag: k,
             label: v,
-            $isDisabled: this.$store.state.profile.interests.includes(k)
+            $isDisabled: this.$store.state.profile?.interests?.includes(k)
               ? true
               : false
           };
@@ -152,7 +149,7 @@ export default {
       this.interests = [...this.interests, option.tag];
 
       this.persist({
-        user_account_id: this.$session.getUserId(),
+        userAccountId: this.$session.getUserId(),
         payload: { interests: this.interests }
       });
     },
@@ -162,7 +159,7 @@ export default {
       option.$isDisabled = false;
 
       this.persist({
-        user_account_id: this.$session.getUserId(),
+        userAccountId: this.$session.getUserId(),
         payload: { interests: this.interests }
       });
     }

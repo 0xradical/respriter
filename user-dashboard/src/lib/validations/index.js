@@ -1,4 +1,7 @@
 import { snakeCase, toLower } from "lodash";
+import { replace } from "ramda";
+import { required } from "vee-validate/dist/rules";
+import { isURL } from "~utils";
 
 export function mismatch(i18n) {
   return {
@@ -21,7 +24,10 @@ export function usernameFormat(i18n) {
       }
     },
     message(_, values) {
-      return i18n.t(`db.${snakeCase(values._rule_)}`, values);
+      return i18n.t(
+        `db.${replace(/^username_/, "username__", snakeCase(values._rule_))}`,
+        values
+      );
     }
   };
 }
@@ -36,7 +42,10 @@ export function usernameConsecutiveDash(i18n) {
       }
     },
     message(_, values) {
-      return i18n.t(`db.${snakeCase(values._rule_)}`, values);
+      return i18n.t(
+        `db.${replace(/^username_/, "username__", snakeCase(values._rule_))}`,
+        values
+      );
     }
   };
 }
@@ -51,7 +60,10 @@ export function usernameConsecutiveUnderline(i18n) {
       }
     },
     message(_, values) {
-      return i18n.t(`db.${snakeCase(values._rule_)}`, values);
+      return i18n.t(
+        `db.${replace(/^username_/, "username__", snakeCase(values._rule_))}`,
+        values
+      );
     }
   };
 }
@@ -66,7 +78,10 @@ export function usernameBoundaryDash(i18n) {
       }
     },
     message(_, values) {
-      return i18n.t(`db.${snakeCase(values._rule_)}`, values);
+      return i18n.t(
+        `db.${replace(/^username_/, "username__", snakeCase(values._rule_))}`,
+        values
+      );
     }
   };
 }
@@ -81,7 +96,10 @@ export function usernameBoundaryUnderline(i18n) {
       }
     },
     message(_, values) {
-      return i18n.t(`db.${snakeCase(values._rule_)}`, values);
+      return i18n.t(
+        `db.${replace(/^username_/, "username__", snakeCase(values._rule_))}`,
+        values
+      );
     }
   };
 }
@@ -96,17 +114,59 @@ export function usernameLowercased(i18n) {
       }
     },
     message(_, values) {
-      return i18n.t(`db.${snakeCase(values._rule_)}`, values);
+      return i18n.t(
+        `db.${replace(/^username_/, "username__", snakeCase(values._rule_))}`,
+        values
+      );
     }
+  };
+}
+
+export function platformRequired(i18n) {
+  return {
+    validate: required.validate,
+    message(_, values) {
+      return i18n.t("db.public_profile__cannot_be_null", {
+        platform: values._field_
+      });
+    },
+    computesRequired: true
+  };
+}
+
+export function platformFormat(i18n) {
+  return {
+    params: ["validation"],
+    validate: (value, { validation }) => {
+      if (value && validation.valid) {
+        return true;
+      }
+
+      return false;
+    },
+    message(_, values) {
+      return i18n.t("db.public_profile__invalid_format", {
+        platform: values._field_
+      });
+    }
+  };
+}
+
+export function url(i18n) {
+  return {
+    validate: value => isURL(value)
   };
 }
 
 export default {
   mismatch,
+  url,
   usernameFormat,
   usernameConsecutiveDash,
   usernameConsecutiveUnderline,
   usernameBoundaryDash,
   usernameBoundaryUnderline,
-  usernameLowercased
+  usernameLowercased,
+  platformFormat,
+  platformRequired
 };
