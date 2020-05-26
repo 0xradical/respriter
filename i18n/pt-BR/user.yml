@@ -1,4 +1,3 @@
----
 pt-BR:
   user:
     greetings: "Olá, %{name}"
@@ -9,6 +8,7 @@ pt-BR:
     submitting: Enviando...
     free: GRATUITO
     upload: Enviar Foto
+    generic_api_error: "Não foi possível processar a solicitação"
     avatar:
       submit: Enviar
       cancel: Cancelar
@@ -39,6 +39,16 @@ pt-BR:
           success_message: Um e-mail com instruções de mudança de senha foi enviado para %{email}
           error_message: Opa! Ocorreu um erro ao enviar um e-mail para %{email}. Tente novamente mais tarde
         profile:
+          sections:
+            personal:
+              title: Informações Pessoais
+            instructor:
+              title: Meu Perfil
+              sections:
+                privacy_settings: Configurações de Privacidade
+                about_me: Quem sou eu
+                social_media: Redes Sociais
+                elearning_platforms: Plataformas de E-learning
           title: Editar Perfil
           success_message: Seu perfil foi atualizado com sucesso
           error_message: Opa! Ocorreu um erro ao atualizar seu perfil
@@ -50,15 +60,15 @@ pt-BR:
           order_id: "Número do Pedido"
           price: Preço do Curso
           purchase_date: "Data de Compra"
-          bonus_status: "Status"
+          bonus_status: "Situação"
           bonus_statuses:
-            initial: "Em análise"
-            pending: "Em análise"
-            locked: "Em análise"
+            initial: Em análise
+            pending: Em análise
+            locked: Em análise
             accepted: Pago
             approved: Pago
             rejected: Rejeitado
-            default: "Em análise"
+            default: Em análise
           bonus_statuses_additional:
             pending: "Nosso time já está analisando seus dados"
             failed: "As informações enviadas foram rejeitadas"
@@ -91,14 +101,14 @@ pt-BR:
           success: "Arquivo enviado!"
       social_media_input:
         placeholder: " resto do link / copiar & colar link"
+        placeholder_mobile: "seu id / copiar e colar link"
       help:
         call_out: "Precisa de ajuda ?"
         link: "Entre em contato conosco"
     modals:
       promo:
-        title: Obrigado!
-        body: Iremos analisar seu certificado e atualizaremos
-          o status em até <b>3 dias</b>
+        title: "Obrigado!"
+        body: Iremos analisar seu certificado e atualizaremos o status em até <b>3 dias</b>
         social:
           callout: "Compartilhe com seus amigos:"
           text: Encontrei um curso na Classpert e ganhei um bônus de $10. Saiba mais em %{site}
@@ -127,25 +137,32 @@ pt-BR:
         shortbio_field_placeholder: Uma pequena frase descrevendo quem você é
         country_field_label: País
         country_field_select: Selecione país
+        website_field_label: Site
+        website_field_placeholder: Adicione o seu site
+        website_field_about: >-
+          O seu site é uma plataforma de curso online? Acesse nosso %{index_tool} e seja listado na Classpert!
         instructor_field_label: Sou instrutor(a)
         public_field_label: Exibir meu perfil publicamente
         social_profiles_field_header: Adicione perfis de redes sociais
         social_profiles_field_about: >-
-          Adicione seus perfis de redes sociais. Eles aparecerão na sua página de perfil
-          da Classpert. Se você for instrutor(a), é uma boa oportunidade de se conectar com seus estudantes.
+          É uma oportunidade para mostrar seu trabalho e se conectar com seus alunos.
         social_profiles_field_label: Redes Sociais
-        social_profiles_field_select: Adicionar perfil de rede social
+        social_profiles_field_select: Adicionar perfil
+        social_profiles_field_select_0: Adicionar perfis
+        social_profiles_field_select_1: 1 perfil adicionado. Adicionar mais
+        social_profiles_field_select_n: "%{n} perfis adicionados. Adicionar mais"
         elearning_profiles_field_header: Adicione perfis de plataformas de e-learning
         elearning_profiles_field_about: >-
-          Adicione seus perfis de plataforma de e-learning. Eles aparecerão na sua página de perfil
-          da Classpert. Se você for instrutor(a), é uma boa oportunidade de ajudar seus estudantes
-          a achar seus cursos em diferentes plataformas.
+          Os cursos dessas plataformas ficarão visíveis na sua página de perfil.
         elearning_profiles_field_label: Plataformas de E-learning
-        elearning_profiles_field_select: Adicionar perfil de plataforma de e-learning
+        elearning_profiles_field_select: Adicionar perfil
+        elearning_profiles_field_select_0: Adicionar perfis
+        elearning_profiles_field_select_1: 1 perfil adicionado. Adicionar mais
+        elearning_profiles_field_select_n: "%{n} perfis adicionados. Adicionar mais"
         about_field_label: Sobre mim
         about_field_placeholder: >-
           Use esse espaço para falar sobre você mesmo, o que você faz da vida, seus hobbies, interesses, conquistas, etc.
-        submit: Atualizar Perfil
+        submit: Atualizar
       certificate:
         certificate_field_label: "Envie seu certificado"
       promo:

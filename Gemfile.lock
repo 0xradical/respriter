@@ -498,6 +498,7 @@ GEM
     ruby-thumbor (3.0.0)
     ruby-vips (2.0.16)
       ffi (~> 1.9)
+    ruby_http_client (3.5.0)
     rubyzip (2.0.0)
     rucaptcha (2.5.3)
       railties (>= 3.2)
@@ -506,6 +507,8 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic (1.6.1)
+    sendgrid-ruby (6.2.1)
+      ruby_http_client (~> 3.4)
     sentry-raven (2.12.2)
       faraday (>= 0.7.6, < 1.0)
     shellany (0.0.1)
@@ -646,6 +649,7 @@ DEPENDENCIES
   rucaptcha (~> 2.5.2)
   selenium-webdriver
   semantic (~> 1.6.1)
+  sendgrid-ruby
   sentry-raven (~> 2.12.2)
   shoulda-matchers
   simplecov

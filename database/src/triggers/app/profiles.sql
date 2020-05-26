@@ -15,3 +15,9 @@ CREATE TRIGGER validate_profiles
   ON app.profiles
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.validate_profiles();
+
+CREATE TRIGGER create_profiles_subscription
+  AFTER INSERT
+  ON app.profiles
+  FOR EACH ROW
+    EXECUTE PROCEDURE triggers.create_subscription();

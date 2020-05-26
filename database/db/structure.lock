@@ -46,6 +46,7 @@ tables/app/promo_accounts.sql
 tables/app/promo_account_logs.sql
 tables/app/provider_logos.sql
 tables/app/slug_histories.sql
+tables/app/subscriptions.sql
 tables/public/ar_internal_metadata.sql
 procedures/public/que_validate_tags.sql
 tables/public/que_jobs.sql
@@ -82,6 +83,7 @@ procedures/settings/get.sql
 procedures/settings/set.sql
 procedures/triggers/course_keep_slug.sql
 procedures/triggers/course_normalize_languages.sql
+procedures/triggers/create_subscription.sql
 procedures/triggers/encrypt_password.sql
 procedures/triggers/gen_compound_ext_id.sql
 procedures/triggers/insert_or_add_to_provider.sql
@@ -138,6 +140,7 @@ indexes/app/promo_accounts.sql
 indexes/app/provider_logos.sql
 indexes/app/providers.sql
 indexes/app/slug_histories.sql
+indexes/app/subscriptions.sql
 indexes/app/tracked_actions.sql
 indexes/app/tracked_searches.sql
 indexes/app/used_usernames.sql
