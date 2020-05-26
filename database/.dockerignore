@@ -1,4 +1,6 @@
 ./db/dumps
+./db/seeds
+./db/*_seeds.sql
 ./debug
 ./drafts
 ./log
