@@ -10,6 +10,7 @@ Rails.application.configure do
               /.*\.app\.clspt\Z/,
               /.*\.classpert\.com\Z/,
               /.*\.classpert-staging\.com/
+
       resource '*',
                headers: :any,
                credentials: true,

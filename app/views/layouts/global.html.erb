@@ -131,7 +131,11 @@
       <%= yield :banner %>
     <% end %>
 
-    <%= render 'application/navbar' %>
+    <% if content_for(:navbar)%>
+      <% yield(:navbar) %>
+    <% else %>
+      <%= render 'application/navbar' %>
+    <% end %>
 
     <% flash.each do |key, value| %>
       <div class='el:amx-Fs(0.875em) el:m-alert el:m-alert--<%= alert_alias(key) %>'>
@@ -143,6 +147,10 @@
 
     <%= yield :body %>
 
+
+    <% if content_for(:footer)%>
+      <% yield(:footer) %>
+    <% else %>
     <footer>
     <div class='el:amx-C_fgV el:amx-Bc_bgV el:amx-Pt(2em) el:amx-Pb(2em)'>
       <div class='container'>
@@ -290,6 +298,7 @@
       </div>
     </div>
     </footer>
+    <% end %>
 
     <%= render 'offcanvas_menu' %>
     <%= javascript_pack_tag 'vendor', 'application',   async: true %>

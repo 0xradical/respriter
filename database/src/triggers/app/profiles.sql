@@ -21,3 +21,9 @@ CREATE TRIGGER validate_website
   ON app.profiles
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.validate_website();
+
+CREATE TRIGGER create_profiles_subscription
+  AFTER INSERT
+  ON app.profiles
+  FOR EACH ROW
+    EXECUTE PROCEDURE triggers.create_subscription();
