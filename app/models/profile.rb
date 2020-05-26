@@ -7,6 +7,7 @@ class Profile < ApplicationRecord
 
   belongs_to :user_account
 
+  scope :instructor,        -> { where(instructor: true) }
   scope :is_public,         -> { where(public: true) }
   scope :publicly_listable, -> { is_public.where.not(username: nil) }
 
