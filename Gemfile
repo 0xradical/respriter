@@ -86,6 +86,7 @@ gem 'robotstxt',         '~> 0.5.4'
 gem "valid_email2",    '~> 3.1.0'
 gem 'inky-rb',         '~> 1.3.7.5', require: 'inky'
 gem 'premailer-rails', '~> 1.10.3'
+gem 'sendgrid-ruby'
 
 # LogRage
 gem 'lograge', '~> 0.11.2'

@@ -1,9 +1,5 @@
 {
-  "addons": [
-    "bonsai",
-    "heroku-redis",
-    "scheduler"
-  ],
+  "addons": ["bonsai", "heroku-redis", "scheduler"],
   "buildpacks": [
     {
       "url": "heroku/ruby"
@@ -11,7 +7,7 @@
   ],
   "env": {
     "HEROKU_API_KEY": {
-    " required": true
+      " required": true
     },
     "AWIN_API_TOKEN": {
       "required": true
@@ -183,7 +179,7 @@
     },
     "worker": {
       "quantity": 1,
-       "size": "performance-m"
+      "size": "performance-m"
     }
   },
   "name": "web-app",

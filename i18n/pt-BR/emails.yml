@@ -2,7 +2,7 @@ pt-BR:
   emails:
     course_review:
       subjects:
-        1: 'Como foi sua experiência com %{course} da %{provider}?'
+        1: "Como foi sua experiência com %{course} da %{provider}?"
         2: "Pergunta rápida, %{name}"
         3: "Sua vez, %{name}"
       body:
@@ -16,16 +16,13 @@ pt-BR:
           Obrigado por usar Classpert!
     orphaned_profile:
       build:
-        subject: Confirm instructor profile claim
+        subject: Confirmar reivindicação de perfil de instrutor
         body:
           1: >-
-            Hi
+            Olá
           2_html: >-
-            You're receiving this e-mail because someone is trying to claim %{profile} profile.
-            If you believe someone else is inadvertently trying to claim your profile, please reply to this
-            email to report this incident.
+            Você está recebendo este e-mail porque alguém está tentando reivindicar o perfil %{profile}. Svocê acredita que outra pessoa está tentando reivindicar seu perfil, por favor responda a este email para relatar este incidente.
           3_html: >-
-            To confirm this action, click on the link below
+            Para confirmar esta ação, clique no link abaixo
           4_html: >-
-            This link expires at %{date}
-
+            Este link expira em %{date}

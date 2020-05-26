@@ -1,4 +1,4 @@
-ja:
+de:
   tags:
     3d_coat: 3D Coat
     3d_printing: 3D Printing
@@ -70,7 +70,7 @@ ja:
     art_culture: Art and Culture
     articulate_storyline: Articulate Storyline
     artificial_intelligence: Artificial Intelligence
-    arts_and_design: 芸術・デザイン
+    arts_and_design: Arts and Design
     artstudio_pro: ArtStudio Pro
     asana: Asana
     aseprite: Aseprite
@@ -133,7 +133,7 @@ ja:
     builderall: Builderall
     bulma: Bulma
     bunny_drawing: Bunny Drawing
-    business: ビジネス
+    business: Business
     business_analysis: Business Analysis
     business_intelligence: Business Intelligence
     business_management: Business Management
@@ -187,7 +187,7 @@ ja:
     computer_design: Computer Design
     computer_networking: Computer Networking
     computer_networks: Computer Networks
-    computer_science: コンピュータサイエンス
+    computer_science: Computer Science
     computer_vision: Computer Vision
     concept_art: Concept Art
     constitution: Constitution
@@ -224,7 +224,7 @@ ja:
     data_analysis: Data Analysis
     data_manipulation: Data Manipulation
     data_mining: Data Mining
-    data_science: データサイエンス
+    data_science: Data Science
     data_science_interview_prep: Data Science Interview Prep
     data_scientist: Data Scientist
     data_streaming: Data Streaming
@@ -391,7 +391,7 @@ ja:
     haskell_programming: Haskell
     hbase: HBase
     health: Health
-    health_and_fitness: 健康・運動
+    health_and_fitness: Health and Fitness
     health_and_safety: Health and Safety
     health_care: Health Care
     healthy_sex_life: Healthy Sex Life
@@ -471,7 +471,7 @@ ja:
     kubernetes: Kubernetes
     kyokushin_karate: Kyokushin Karate
     language: Language
-    language_and_communication: 言語・コミュニケーション
+    language_and_communication: Language and Communication
     laravel: Laravel
     latex: LaTex
     law: Law
@@ -480,7 +480,7 @@ ja:
     lettering: Lettering
     lettering_logo: Lettering Logo
     libgdx: LibGDX
-    life_sciences: 生命科学
+    life_sciences: Life Sciences
     lifestyle: Lifestyle
     linear_algebra: Linear Algebra
     linear_models: Linear Models
@@ -503,7 +503,7 @@ ja:
     manychat: ManyChat
     mariadb: MariaDB
     markdown: Markdown
-    marketing: マーケティング
+    marketing: Marketing
     marketing_analytics: Marketing Analytics
     marketing_positioning: Marketing Positioning
     marmoset_toolbag: Marmoset Toolbag
@@ -513,7 +513,7 @@ ja:
     material_design_lite: Material Design Lite
     materialize: Materialize
     math: Math
-    math_and_logic: 数学・論理
+    math_and_logic: Math and Logic
     matlab: Matlab
     matrix: Matrix
     maya: Maya
@@ -585,7 +585,7 @@ ja:
     parenting: Parenting
     pentatonic_scale: Pentatonic Scale
     perl_programming: Perl
-    personal_development: 自己啓発
+    personal_development: Personal Development
     personal_finance: Personal Finance
     perspective_drawing: Perspective Drawing
     persuasive_writing: Persuasive Writing
@@ -594,7 +594,7 @@ ja:
     photo_manipulation: Photo Manipulation
     photography: Photography
     php_programming: PHP
-    physical_science_and_engineering: 物理科学・工学
+    physical_science_and_engineering: Physical Science and Engineering
     physics: Physics
     piano: Piano
     piano_theory: Piano Theory
@@ -699,7 +699,7 @@ ja:
     slack: Slack
     slide_guitar: Slide Guitar
     smashwords: Smashwords
-    social_sciences: 社会科学
+    social_sciences: Social Sciences
     sociology: Sociology
     software_architecture: Software Architecture
     software_design_patterns: Software Design Patterns

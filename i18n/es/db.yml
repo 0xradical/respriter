@@ -1,4 +1,3 @@
----
 es:
   db:
     unmapped_constraint: Datos incorrectos.

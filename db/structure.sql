@@ -314,6 +314,23 @@ CREATE TYPE app.preview_course_status AS ENUM (
 
 
 --
+-- Name: provider_logo; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.provider_logo AS (
+	id uuid,
+	provider_id bigint,
+	file character varying,
+	user_account_id bigint,
+	created_at timestamp with time zone,
+	updated_at timestamp with time zone,
+	fetch_url text,
+	upload_url text,
+	file_content_type character varying
+);
+
+
+--
 -- Name: sitemap; Type: TYPE; Schema: app; Owner: -
 --
 
@@ -334,6 +351,21 @@ CREATE TYPE app.source AS ENUM (
     'import',
     'admin'
 );
+
+
+--
+-- Name: username; Type: DOMAIN; Schema: app; Owner: -
+--
+
+CREATE DOMAIN app.username AS public.citext
+	CONSTRAINT username_boundary_dash CHECK ((NOT ((VALUE OPERATOR(public.~*) '^-'::public.citext) OR (VALUE OPERATOR(public.~*) '-$'::public.citext))))
+	CONSTRAINT username_boundary_underline CHECK ((NOT ((VALUE OPERATOR(public.~*) '^_'::public.citext) OR (VALUE OPERATOR(public.~*) '_$'::public.citext))))
+	CONSTRAINT username_consecutive_dash CHECK ((NOT (VALUE OPERATOR(public.~*) '--'::public.citext)))
+	CONSTRAINT username_consecutive_underline CHECK ((NOT (VALUE OPERATOR(public.~*) '__'::public.citext)))
+	CONSTRAINT username_format CHECK ((NOT (VALUE OPERATOR(public.~*) '[^0-9a-zA-Z\.\-\_]'::public.citext)))
+	CONSTRAINT username_length_lower CHECK ((length((VALUE)::text) >= 5))
+	CONSTRAINT username_length_upper CHECK ((length((VALUE)::text) <= 15))
+	CONSTRAINT username_lowercased CHECK (((VALUE)::text = lower((VALUE)::text)));
 
 
 --
@@ -431,6 +463,8 @@ BEGIN
     RETURN 'image/gif';
   WHEN lower(filename) ~ '.png$' THEN
     RETURN 'image/png';
+  WHEN lower(filename) ~ '.svg$' THEN
+    RETURN 'image/svg+xml';
   WHEN lower(filename) ~ '.pdf$' THEN
     RETURN 'application/pdf';
   ELSE
@@ -549,14 +583,14 @@ CREATE FUNCTION app.sign_certificate_s3_fetch(id uuid, filename character varyin
 BEGIN
   RETURN app.sign_s3_fetch(
     'us-east-1',
-    's3.us-east-1.amazonaws.com',
-    'clspt-uploads-prd',
+    's3.clspt',
+    'clspt-uploads-dev',
     '/signed/certificates',
     id::varchar || '-' || filename,
-    'AKIAWS4RUC67NPKGDLKB',
-    'j75dpfYlJXYTkl7bpiSReR03XG9Y60U18DaY5fFL',
+    'minion',
+    'bananabanana',
     expires_in,
-    'TRUE'::boolean
+    'FALSE'::boolean
   );
 END;
 $$;
@@ -572,15 +606,62 @@ CREATE FUNCTION app.sign_certificate_s3_upload(id uuid, filename character varyi
 BEGIN
   RETURN app.sign_s3_upload(
     'us-east-1',
-    's3.us-east-1.amazonaws.com',
-    'clspt-uploads-prd',
+    's3.clspt',
+    'clspt-uploads-dev',
     '/signed/certificates',
     id::varchar || '-' || filename,
-    'AKIAWS4RUC67NPKGDLKB',
-    'j75dpfYlJXYTkl7bpiSReR03XG9Y60U18DaY5fFL',
+    'minion',
+    'bananabanana',
     expires_in,
     'FALSE'::boolean,
-    'TRUE'::boolean
+    'FALSE'::boolean
+  );
+END;
+$$;
+
+
+--
+-- Name: sign_direct_s3_fetch(uuid, character varying, character varying, integer); Type: FUNCTION; Schema: app; Owner: -
+--
+
+CREATE FUNCTION app.sign_direct_s3_fetch(id uuid, filename character varying, folder character varying, expires_in integer) RETURNS text
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  RETURN app.sign_s3_fetch(
+    'us-east-1',
+    's3.clspt',
+    'clspt-uploads-dev',
+    '/signed' || '/' || folder,
+    id::varchar || '-' || filename,
+    'minion',
+    'bananabanana',
+    expires_in,
+    'FALSE'::boolean
+  );
+END;
+$$;
+
+
+--
+-- Name: sign_direct_s3_upload(uuid, character varying, character varying, integer); Type: FUNCTION; Schema: app; Owner: -
+--
+
+CREATE FUNCTION app.sign_direct_s3_upload(id uuid, filename character varying, folder character varying, expires_in integer) RETURNS text
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  RETURN app.sign_s3_upload(
+    'us-east-1',
+    's3.clspt',
+    'clspt-uploads-dev',
+    '/signed' || '/' || folder,
+    id::varchar || '-' || filename,
+    'minion',
+    'bananabanana',
+    expires_in,
+    'FALSE'::boolean,
+    'FALSE'::boolean
   );
 END;
 $$;
@@ -1116,13 +1197,15 @@ CREATE TABLE app.provider_crawlers (
     user_agent_token uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     provider_id bigint,
     published boolean DEFAULT false NOT NULL,
+    scheduled boolean DEFAULT false NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     status app.crawler_status DEFAULT 'unverified'::app.crawler_status NOT NULL,
     user_account_ids bigint[] DEFAULT '{}'::bigint[] NOT NULL,
     sitemaps app.sitemap[] DEFAULT '{}'::app.sitemap[] NOT NULL,
     version character varying,
-    settings jsonb
+    settings jsonb,
+    urls character varying[] DEFAULT '{}'::character varying[] NOT NULL
 );
 
 
@@ -1152,6 +1235,7 @@ CREATE VIEW api.crawler_domains AS
 CREATE TABLE app.crawling_events (
     id uuid DEFAULT public.uuid_generate_v1() NOT NULL,
     provider_crawler_id uuid,
+    execution_id uuid NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     sequence bigint,
@@ -1167,6 +1251,7 @@ CREATE TABLE app.crawling_events (
 CREATE VIEW api.crawling_events AS
  SELECT event.id,
     event.provider_crawler_id,
+    event.execution_id,
     event.created_at,
     event.updated_at,
     event.sequence,
@@ -1223,7 +1308,9 @@ CREATE TABLE app.courses (
     instructors jsonb DEFAULT '[]'::jsonb,
     curated_tags character varying[] DEFAULT '{}'::character varying[],
     refinement_tags character varying[],
-    up_to_date_id uuid
+    up_to_date_id uuid,
+    last_execution_id uuid,
+    schema_version character varying
 );
 
 
@@ -1253,6 +1340,8 @@ CREATE TABLE app.enrollments (
 CREATE TABLE app.providers (
     id bigint NOT NULL,
     name public.citext,
+    name_dirty boolean DEFAULT true NOT NULL,
+    name_changed_at timestamp with time zone,
     description text,
     slug character varying,
     afn_url_template character varying,
@@ -1260,7 +1349,8 @@ CREATE TABLE app.providers (
     published_at timestamp with time zone,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    encoded_deep_linking boolean DEFAULT false
+    encoded_deep_linking boolean DEFAULT false,
+    CONSTRAINT providers_check CHECK ((name_dirty OR ((NOT name_dirty) AND (name_changed_at IS NOT NULL))))
 );
 
 
@@ -1451,16 +1541,26 @@ CREATE VIEW api.preview_course_images AS
 --
 
 CREATE TABLE app.profiles (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     name character varying,
+    username app.username,
+    _username character varying,
+    username_changed_at timestamp with time zone,
     date_of_birth date,
     oauth_avatar_url character varying,
+    uploaded_avatar_url character varying,
+    instructor boolean DEFAULT false,
+    long_bio character varying,
+    public boolean DEFAULT true,
+    short_bio character varying,
+    public_profiles jsonb DEFAULT '{}'::jsonb,
+    teaching_subjects character varying[] DEFAULT '{}'::character varying[],
     user_account_id bigint,
     interests text[] DEFAULT '{}'::text[],
     preferences jsonb DEFAULT '{}'::jsonb,
-    username character varying,
-    uploaded_avatar_url character varying,
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    CONSTRAINT username_format CHECK (((username)::text ~* '^\w{5,15}$'::text))
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT username_format CHECK (((_username)::text ~* '^\w{5,15}$'::text))
 );
 
 
@@ -1472,6 +1572,10 @@ CREATE VIEW api.profiles AS
  SELECT profiles.id,
     profiles.name,
     profiles.username,
+    profiles.short_bio,
+    profiles.long_bio,
+    profiles.instructor,
+    profiles.public,
     COALESCE(profiles.uploaded_avatar_url, profiles.oauth_avatar_url) AS avatar_url,
     COALESCE(public.if_admin(profiles.date_of_birth), public.if_user_by_id(profiles.user_account_id, profiles.date_of_birth)) AS date_of_birth,
     profiles.user_account_id,
@@ -1501,7 +1605,7 @@ CREATE TABLE app.promo_accounts (
     CONSTRAINT price__greater_than CHECK ((price >= (0)::numeric)),
     CONSTRAINT price__less_than CHECK ((price <= (5000)::numeric)),
     CONSTRAINT purchase_date__less_than CHECK ((purchase_date < now())),
-    CONSTRAINT state__inclusion CHECK (((state)::text = ANY (ARRAY[('initial'::character varying)::text, ('pending'::character varying)::text, ('locked'::character varying)::text, ('rejected'::character varying)::text, ('approved'::character varying)::text])))
+    CONSTRAINT state__inclusion CHECK (((state)::text = ANY ((ARRAY['initial'::character varying, 'pending'::character varying, 'locked'::character varying, 'rejected'::character varying, 'approved'::character varying])::text[])))
 );
 
 
@@ -1535,15 +1639,61 @@ CREATE VIEW api.provider_crawlers AS
     provider_crawlers.user_agent_token,
     provider_crawlers.provider_id,
     provider_crawlers.published,
+    provider_crawlers.scheduled,
     provider_crawlers.created_at,
     provider_crawlers.updated_at,
     provider_crawlers.status,
     provider_crawlers.user_account_ids,
     provider_crawlers.sitemaps,
     provider_crawlers.version,
-    provider_crawlers.settings
+    provider_crawlers.settings,
+    provider_crawlers.urls
    FROM app.provider_crawlers
   WHERE (((provider_crawlers.status <> 'deleted'::app.crawler_status) AND public.if_user_by_ids(provider_crawlers.user_account_ids, true)) OR (CURRENT_USER = 'admin'::name));
+
+
+--
+-- Name: direct_uploads; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.direct_uploads (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    user_account_id bigint,
+    file character varying,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT valid_file_format CHECK ((lower((file)::text) ~ '.(gif|jpg|jpeg|png|pdf|svg)$'::text))
+);
+
+
+--
+-- Name: provider_logos; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.provider_logos (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    direct_upload_id uuid NOT NULL,
+    provider_id bigint NOT NULL
+);
+
+
+--
+-- Name: provider_logos; Type: VIEW; Schema: api; Owner: -
+--
+
+CREATE VIEW api.provider_logos AS
+ SELECT provider_logos.id,
+    provider_logos.provider_id,
+    direct_uploads.file,
+    direct_uploads.user_account_id,
+    direct_uploads.created_at,
+    direct_uploads.updated_at,
+    app.sign_direct_s3_fetch(direct_uploads.id, direct_uploads.file, (('provider_logos/'::text || ((provider_logos.provider_id)::character varying)::text))::character varying, 3600) AS fetch_url,
+    app.sign_direct_s3_upload(direct_uploads.id, direct_uploads.file, (('provider_logos/'::text || ((provider_logos.provider_id)::character varying)::text))::character varying, 3600) AS upload_url,
+    app.content_type_by_extension(direct_uploads.file) AS file_content_type
+   FROM (app.provider_logos
+     JOIN app.direct_uploads ON ((direct_uploads.id = provider_logos.direct_upload_id)))
+  WHERE ((CURRENT_USER = 'admin'::name) OR ((CURRENT_USER = 'user'::name) AND ((current_setting('request.jwt.claim.sub'::text, true))::bigint = direct_uploads.user_account_id)));
 
 
 --
@@ -1553,6 +1703,8 @@ CREATE VIEW api.provider_crawlers AS
 CREATE VIEW api.providers AS
  SELECT provider.id,
     provider.name,
+    provider.name_dirty,
+    provider.name_changed_at,
     provider.description,
     provider.slug,
     provider.afn_url_template,
@@ -1651,13 +1803,13 @@ ALTER SEQUENCE app.admin_accounts_id_seq OWNED BY app.admin_accounts.id;
 --
 
 CREATE TABLE app.admin_profiles (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     name character varying,
     bio text,
     preferences jsonb,
     admin_account_id bigint,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
 );
 
 
@@ -1711,7 +1863,7 @@ CREATE TABLE app.course_reviews (
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     CONSTRAINT rating__greater_than CHECK ((rating >= (1)::numeric)),
     CONSTRAINT rating__less_than CHECK ((rating <= (5)::numeric)),
-    CONSTRAINT state__inclusion CHECK (((state)::text = ANY (ARRAY[('pending'::character varying)::text, ('accessed'::character varying)::text, ('submitted'::character varying)::text])))
+    CONSTRAINT state__inclusion CHECK (((state)::text = ANY ((ARRAY['pending'::character varying, 'accessed'::character varying, 'submitted'::character varying])::text[])))
 );
 
 
@@ -1757,9 +1909,9 @@ CREATE TABLE app.images (
     file character varying,
     pos integer DEFAULT 0,
     imageable_type character varying,
+    imageable_id uuid,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    imageable_id uuid
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
 );
 
 
@@ -1821,16 +1973,6 @@ ALTER SEQUENCE app.landing_pages_id_seq OWNED BY app.landing_pages.id;
 
 
 --
--- Name: napoleon_course_mapping; Type: TABLE; Schema: app; Owner: -
---
-
-CREATE TABLE app.napoleon_course_mapping (
-    old_resource_id uuid NOT NULL,
-    resource_id uuid
-);
-
-
---
 -- Name: oauth_accounts; Type: TABLE; Schema: app; Owner: -
 --
 
@@ -1885,10 +2027,15 @@ CREATE TABLE app.orphaned_profiles (
     slug character varying,
     claimable_emails character varying[] DEFAULT '{}'::character varying[],
     claimable_public_profiles jsonb DEFAULT '{}'::jsonb,
-    claim_code character varying(7),
+    claim_code character varying(64),
+    claim_code_expires_at timestamp with time zone,
+    claimed_at timestamp with time zone,
+    claimed_by character varying,
+    teaching_subjects character varying[] DEFAULT '{}'::character varying[],
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    CONSTRAINT state__inclusion CHECK (((state)::text = ANY (ARRAY[('disabled'::character varying)::text, ('enabled'::character varying)::text])))
+    marked_as_destroyed_at timestamp with time zone,
+    CONSTRAINT state__inclusion CHECK (((state)::text = ANY ((ARRAY['disabled'::character varying, 'enabled'::character varying])::text[])))
 );
 
 
@@ -1897,6 +2044,7 @@ CREATE TABLE app.orphaned_profiles (
 --
 
 CREATE TABLE app.posts (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     slug character varying,
     title character varying,
     body text,
@@ -1910,9 +2058,8 @@ CREATE TABLE app.posts (
     admin_account_id bigint,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    use_cover_image boolean DEFAULT false,
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    original_post_id uuid
+    original_post_id uuid,
+    use_cover_image boolean DEFAULT false
 );
 
 
@@ -1974,6 +2121,17 @@ CREATE TABLE app.tracked_searches (
     tracked_data jsonb,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: used_usernames; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.used_usernames (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    profile_id uuid NOT NULL,
+    username app.username NOT NULL
 );
 
 
@@ -2201,6 +2359,14 @@ ALTER TABLE ONLY app.crawling_events
 
 
 --
+-- Name: direct_uploads direct_uploads_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.direct_uploads
+    ADD CONSTRAINT direct_uploads_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: enrollments enrollments_pkey; Type: CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -2230,14 +2396,6 @@ ALTER TABLE ONLY app.images
 
 ALTER TABLE ONLY app.landing_pages
     ADD CONSTRAINT landing_pages_pkey PRIMARY KEY (id);
-
-
---
--- Name: napoleon_course_mapping napoleon_course_mapping_pkey; Type: CONSTRAINT; Schema: app; Owner: -
---
-
-ALTER TABLE ONLY app.napoleon_course_mapping
-    ADD CONSTRAINT napoleon_course_mapping_pkey PRIMARY KEY (old_resource_id);
 
 
 --
@@ -2313,6 +2471,14 @@ ALTER TABLE ONLY app.provider_crawlers
 
 
 --
+-- Name: provider_logos provider_logos_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.provider_logos
+    ADD CONSTRAINT provider_logos_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: providers providers_pkey; Type: CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -2342,6 +2508,14 @@ ALTER TABLE ONLY app.tracked_actions
 
 ALTER TABLE ONLY app.tracked_searches
     ADD CONSTRAINT tracked_searches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: used_usernames used_usernames_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.used_usernames
+    ADD CONSTRAINT used_usernames_pkey PRIMARY KEY (id);
 
 
 --
@@ -2396,7 +2570,7 @@ ALTER TABLE ONLY public.schema_migrations
 -- Name: app_crawler_domains_unique_domain_idx; Type: INDEX; Schema: app; Owner: -
 --
 
-CREATE UNIQUE INDEX app_crawler_domains_unique_domain_idx ON app.crawler_domains USING btree (domain) WHERE (authority_confirmation_status = 'confirmed'::app.authority_confirmation_status);
+CREATE UNIQUE INDEX app_crawler_domains_unique_domain_idx ON app.crawler_domains USING btree (domain);
 
 
 --
@@ -2613,7 +2787,7 @@ CREATE INDEX index_profiles_on_user_account_id ON app.profiles USING btree (user
 -- Name: index_profiles_on_username; Type: INDEX; Schema: app; Owner: -
 --
 
-CREATE UNIQUE INDEX index_profiles_on_username ON app.profiles USING btree (username);
+CREATE UNIQUE INDEX index_profiles_on_username ON app.profiles USING btree (_username);
 
 
 --
@@ -2621,6 +2795,20 @@ CREATE UNIQUE INDEX index_profiles_on_username ON app.profiles USING btree (user
 --
 
 CREATE UNIQUE INDEX index_promo_accounts_on_user_account_id ON app.promo_accounts USING btree (user_account_id);
+
+
+--
+-- Name: index_provider_logos_on_direct_upload_id; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE UNIQUE INDEX index_provider_logos_on_direct_upload_id ON app.provider_logos USING btree (direct_upload_id);
+
+
+--
+-- Name: index_provider_logos_on_provider_id; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE UNIQUE INDEX index_provider_logos_on_provider_id ON app.provider_logos USING btree (provider_id);
 
 
 --
@@ -2705,6 +2893,27 @@ CREATE UNIQUE INDEX index_user_accounts_on_reset_password_token ON app.user_acco
 --
 
 CREATE UNIQUE INDEX index_user_accounts_on_unlock_token ON app.user_accounts USING btree (unlock_token);
+
+
+--
+-- Name: profiles_username_idx; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE UNIQUE INDEX profiles_username_idx ON app.profiles USING btree (username);
+
+
+--
+-- Name: used_usernames_profile_id_username_idx; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE UNIQUE INDEX used_usernames_profile_id_username_idx ON app.used_usernames USING btree (profile_id, username);
+
+
+--
+-- Name: used_usernames_username_idx; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE UNIQUE INDEX used_usernames_username_idx ON app.used_usernames USING btree (username);
 
 
 --
@@ -2806,6 +3015,13 @@ CREATE TRIGGER api_provider_crawlers_view_instead_of_update INSTEAD OF UPDATE ON
 
 
 --
+-- Name: provider_logos api_provider_logos_view_instead; Type: TRIGGER; Schema: api; Owner: -
+--
+
+CREATE TRIGGER api_provider_logos_view_instead INSTEAD OF INSERT OR UPDATE ON api.provider_logos FOR EACH ROW EXECUTE PROCEDURE triggers.api_provider_logos_view_instead();
+
+
+--
 -- Name: providers api_providers_view_instead_of_update; Type: TRIGGER; Schema: api; Owner: -
 --
 
@@ -2838,13 +3054,6 @@ CREATE TRIGGER course_normalize_languages BEFORE INSERT OR UPDATE ON app.courses
 --
 
 CREATE TRIGGER course_normalize_languages BEFORE INSERT OR UPDATE ON app.preview_courses FOR EACH ROW EXECUTE PROCEDURE triggers.course_normalize_languages();
-
-
---
--- Name: user_accounts create_profile_for_user_account; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER create_profile_for_user_account AFTER INSERT ON app.user_accounts FOR EACH ROW EXECUTE PROCEDURE triggers.create_profile_for_user_account();
 
 
 --
@@ -2897,10 +3106,52 @@ CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.admin_profiles FOR EACH ROW
 
 
 --
+-- Name: certificates track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.certificates FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: contacts track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.contacts FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: course_reviews track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.course_reviews FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
 -- Name: courses track_updated_at; Type: TRIGGER; Schema: app; Owner: -
 --
 
 CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.courses FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: crawler_domains track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.crawler_domains FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: crawling_events track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.crawling_events FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: direct_uploads track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.direct_uploads FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
 
 
 --
@@ -2939,6 +3190,13 @@ CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.oauth_accounts FOR EACH ROW
 
 
 --
+-- Name: orphaned_profiles track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.orphaned_profiles FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
 -- Name: posts track_updated_at; Type: TRIGGER; Schema: app; Owner: -
 --
 
@@ -2946,10 +3204,52 @@ CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.posts FOR EACH ROW EXECUTE 
 
 
 --
+-- Name: preview_course_images track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.preview_course_images FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: preview_courses track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.preview_courses FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: profiles track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.profiles FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: promo_accounts track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.promo_accounts FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: provider_crawlers track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.provider_crawlers FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
 -- Name: providers track_updated_at; Type: TRIGGER; Schema: app; Owner: -
 --
 
 CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.providers FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+
+
+--
+-- Name: slug_histories track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.slug_histories FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
 
 
 --
@@ -2974,80 +3274,17 @@ CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.user_accounts FOR EACH ROW 
 
 
 --
--- Name: contacts track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+-- Name: profiles use_username; Type: TRIGGER; Schema: app; Owner: -
 --
 
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.contacts FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
-
-
---
--- Name: certificates track_updated_at; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.certificates FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+CREATE TRIGGER use_username AFTER INSERT OR UPDATE ON app.profiles FOR EACH ROW EXECUTE PROCEDURE triggers.use_username();
 
 
 --
--- Name: promo_accounts track_updated_at; Type: TRIGGER; Schema: app; Owner: -
+-- Name: provider_crawlers validate_provider_crawler_urls; Type: TRIGGER; Schema: app; Owner: -
 --
 
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.promo_accounts FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
-
-
---
--- Name: course_reviews track_updated_at; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.course_reviews FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
-
-
---
--- Name: orphaned_profiles track_updated_at; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.orphaned_profiles FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
-
-
---
--- Name: provider_crawlers track_updated_at; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.provider_crawlers FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
-
-
---
--- Name: crawler_domains track_updated_at; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.crawler_domains FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
-
-
---
--- Name: crawling_events track_updated_at; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.crawling_events FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
-
-
---
--- Name: preview_courses track_updated_at; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.preview_courses FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
-
-
---
--- Name: preview_course_images track_updated_at; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.preview_course_images FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
-
-
---
--- Name: slug_histories track_updated_at; Type: TRIGGER; Schema: app; Owner: -
---
-
-CREATE TRIGGER track_updated_at BEFORE UPDATE ON app.slug_histories FOR EACH ROW EXECUTE PROCEDURE triggers.track_updated_at();
+CREATE CONSTRAINT TRIGGER validate_provider_crawler_urls AFTER INSERT OR UPDATE ON app.provider_crawlers NOT DEFERRABLE INITIALLY IMMEDIATE FOR EACH ROW EXECUTE PROCEDURE triggers.validate_provider_crawler_urls();
 
 
 --
@@ -3147,6 +3384,14 @@ ALTER TABLE ONLY app.crawler_domains
 
 ALTER TABLE ONLY app.crawling_events
     ADD CONSTRAINT crawling_events_provider_crawler_id_fkey FOREIGN KEY (provider_crawler_id) REFERENCES app.provider_crawlers(id) ON DELETE CASCADE;
+
+
+--
+-- Name: direct_uploads direct_uploads_user_account_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.direct_uploads
+    ADD CONSTRAINT direct_uploads_user_account_id_fkey FOREIGN KEY (user_account_id) REFERENCES app.user_accounts(id);
 
 
 --
@@ -3286,6 +3531,22 @@ ALTER TABLE ONLY app.provider_crawlers
 
 
 --
+-- Name: provider_logos provider_logos_direct_upload_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.provider_logos
+    ADD CONSTRAINT provider_logos_direct_upload_id_fkey FOREIGN KEY (direct_upload_id) REFERENCES app.direct_uploads(id);
+
+
+--
+-- Name: provider_logos provider_logos_provider_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.provider_logos
+    ADD CONSTRAINT provider_logos_provider_id_fkey FOREIGN KEY (provider_id) REFERENCES app.providers(id);
+
+
+--
 -- Name: slug_histories slug_histories_course_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -3302,86 +3563,20 @@ ALTER TABLE ONLY app.tracked_actions
 
 
 --
+-- Name: used_usernames used_usernames_profile_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.used_usernames
+    ADD CONSTRAINT used_usernames_profile_id_fkey FOREIGN KEY (profile_id) REFERENCES app.profiles(id) ON DELETE CASCADE;
+
+
+--
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO app,public,api;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20180101010101'),
-('20180101010102'),
-('20180101010103'),
-('20180101010104'),
-('20180101010105'),
-('20180101010106'),
-('20180101010107'),
-('20180101010108'),
-('20180101010109'),
-('20180405131603'),
-('20180405131604'),
-('20180523201233'),
-('20180523201244'),
-('20180525023807'),
-('20180607040455'),
-('20180607042446'),
-('20181015193451'),
-('20181015193452'),
-('20181017123839'),
-('20181018075955'),
-('20181030111522'),
-('20181102111502'),
-('20181113000000'),
-('20181115164155'),
-('20181115164156'),
-('20181127193928'),
-('20181128123550'),
-('20181129103819'),
-('20181205214627'),
-('20181206020722'),
-('20181213172406'),
-('20181214163153'),
-('20181217193900'),
-('20181219141415'),
-('20181220182109'),
-('20181226142754'),
-('20190122215523'),
-('20190208194421'),
-('20190216154846'),
-('20190217234501'),
-('20190218212408'),
-('20190220000225'),
-('20190222125654'),
-('20190226205725'),
-('20190226205726'),
-('20190226223828'),
-('20190228203835'),
-('20190228220559'),
-('20190306194201'),
-('20190310005126'),
-('20190310024220'),
-('20190310031745'),
-('20190310032740'),
-('20190310062807'),
-('20190313223626'),
-('20190313223627'),
-('20190328144400'),
-('20190408141738'),
-('20190408173350'),
-('20190416123653'),
-('20190503093752'),
-('20190506184046'),
-('20190515101502'),
-('20190515104037'),
-('20190521153938'),
-('20190529190629'),
-('20190606133958'),
-('20190607133958'),
-('20190610174143'),
-('20190611223206'),
-('20190615220137'),
-('20190616024703'),
-('20190705153206'),
-('20190805181853'),
 ('20190819000000'),
 ('20190819214900'),
 ('20190826172519'),
@@ -3408,6 +3603,22 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200128095304'),
 ('20200203120812'),
 ('20200203165316'),
-('20200203183213');
+('20200203183213'),
+('20200211192257'),
+('20200213183318'),
+('20200217174600'),
+('20200218175146'),
+('20200221092300'),
+('20200221182700'),
+('20200304173100'),
+('20200307102619'),
+('20200310145105'),
+('20200311142800'),
+('20200316074600'),
+('20200319071300'),
+('20200322074600'),
+('20200327164000'),
+('20200401180601'),
+('20200417184601');
 
 

@@ -1,4 +1,3 @@
----
 es:
   user:
     greetings: "Hola, %{name}"
@@ -9,6 +8,7 @@ es:
     submitting: Enviando...
     free: GRATIS
     upload: Enviar Foto
+    generic_api_error: "No se pudo procesar la solicitud"
     avatar:
       submit: Enviar
       cancel: Cancelar
@@ -37,11 +37,21 @@ es:
           info: Haga clic en el botón a continuación y le enviaremos un correo electrónico con las instrucciones para cambiar la contraseña
           change_password_button: Cambiar Contraseña
           success_message: Se envió un correo electrónico con instrucciones de cambio de contraseña a% {email}
-          error_message: ¡Uy! Se produjo un error al enviar un correo electrónico a% {email}. Intenta nuevamente más tarde
+          error_message: '¡Uy! Se produjo un error al enviar un correo electrónico a% {email}. Intenta nuevamente más tarde'
         profile:
+          sections:
+            personal:
+              title: Información Personal
+            instructor:
+              title: Mi Perfil
+              sections:
+                privacy_settings: Configuración de Privacidad
+                about_me: Sobre mí
+                social_media: Redes Sociales
+                elearning_platforms: Plataformas de E-learning
           title: Editar Perfil
           success_message: Su perfil se actualizó correctamente
-          error_message: ¡Uy! Se produjo un error al actualizar tu perfil
+          error_message: '¡Uy! Se produjo un error al actualizar tu perfil'
         language:
           title: Cambiar Idioma
       promo:
@@ -52,13 +62,13 @@ es:
           purchase_date: "Fecha de Compra"
           bonus_status: "Situación"
           bonus_statuses:
-            initial: "En análisis"
-            pending: "En análisis"
-            locked: "En análisis"
+            initial: En análisis
+            pending: En análisis
+            locked: En análisis
             accepted: Pagado
             approved: Pagado
             rejected: Rechazado
-            default: "En análisis"
+            default: En análisis
           bonus_statuses_additional:
             pending: "Nuestro equipo ya está analizando sus datos"
             failed: "La información presentada ha sido rechazada"
@@ -73,7 +83,7 @@ es:
             call_out: "¿Necesita cambiar su cuenta de Paypal?"
             link: "Haga clic aquí para cambiar"
       interests:
-        info_text: ¡Selecciona algunos temas para mejorar tu experiencia Classpert!
+        info_text: '¡Selecciona algunos temas para mejorar tu experiencia Classpert!'
         select_a_topic_title: Seleccionar temas
         interests_title: Intereses
         online_courses_info: "%{courses} cursos en línea"
@@ -91,14 +101,14 @@ es:
           success: "¡Archivo enviado!"
       social_media_input:
         placeholder: " resto del enlace / copiar y pegar enlace"
+        placeholder_mobile: "tu id / copiar y pegar enlace"
       help:
         call_out: "¿Necesita ayuda?"
         link: "Contáctanos"
     modals:
       promo:
         title: "¡Gracias!"
-        body: Revisaremos su certificado y lo actualizaremos
-          su situación dentro de <b> 3 días </b>
+        body: Revisaremos su certificado y lo actualizaremos su situación dentro de <b> 3 días </b>
         social:
           callout: "Comparta con sus amigos:"
           text: Encontré un curso en Classpert y gané un bono de $10. Obtenga más información en %{site}
@@ -127,24 +137,32 @@ es:
         shortbio_field_placeholder: Una breve oración que describe quién eres
         country_field_label: País
         country_field_select: Seleccionar país
+        website_field_label: Sitio web
+        website_field_placeholder: Añadir tu sitio web
+        website_field_about: >-
+          ¿Tu sitio web es una plataforma de cursos en línea? Accede a nuestro %{index_tool} y aparece en Classpert!
         instructor_field_label: Soy instructor
         public_field_label: Ver mi perfil públicamente
         social_profiles_field_header: Agregar perfiles sociales
         social_profiles_field_about: >-
-          Agrega tus perfiles de redes sociales. Aparecerán en su página de perfil de Classpert.
-          Si usted es un instructor, esta es una buena oportunidad para conectarse con sus alumnos.
+          Es una oportunidad para mostrar tu trabajo y conectar con tus estudiantes.
         social_profiles_field_label: Redes sociales
-        social_profiles_field_select: Agregar perfil de red social
+        social_profiles_field_select: Agregar Perfil
+        social_profiles_field_select_0: Añadir perfiles
+        social_profiles_field_select_1: 1 perfil añadido. Añadir más
+        social_profiles_field_select_n: "%{n} perfiles añadidos. Añadir más"
         elearning_profiles_field_header: Agregar perfiles de plataforma de e-learning
         elearning_profiles_field_about: >-
-          Agregue sus perfiles de plataforma de e-learning. Aparecerán en su página de perfil de Classpert.
-          Si es instructor, esta es una buena oportunidad para ayudar a sus estudiantes a encontrar sus cursos en diferentes plataformas.
+          Los cursos de estas plataformas serán visibles en tu página de perfil.
         elearning_profiles_field_label: Plataformas de E-learning
-        elearning_profiles_field_select: Adicionar perfil de plataforma de e-learning
+        elearning_profiles_field_select: Agregar Perfil
+        elearning_profiles_field_select_0: Añadir perfiles
+        elearning_profiles_field_select_1: 1 perfil añadido. Añadir más
+        elearning_profiles_field_select_n: "%{n} perfiles añadidos. Añadir más"
         about_field_label: Sobre mi
         about_field_placeholder: >-
           Use este espacio para hablar sobre usted, lo que hace con su vida, sus pasatiempos, intereses, logros, etc.
-        submit: Actualizar el Perfil
+        submit: Actualizar
       certificate:
         certificate_field_label: "Envía tu certificado"
       promo:
