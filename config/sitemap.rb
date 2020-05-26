@@ -41,11 +41,19 @@ I18nHost.new('classpert.com').each do |locale, host|
       priority: 0.9,
       lastmod: OrphanedProfile.enabled.order(updated_at: :desc).first.updated_at.strftime('%Y-%m-%d')
     })
+
     # Orphaned Profile - Show
-    OrphanedProfile.enabled.find_each do |orphaned_profile|
+    OrphanedProfile.vacant.find_each do |orphaned_profile|
       add(orphaned_profile_path(orphaned_profile.slug), {
         changefreq: 'weekly',
         priority: 0.8
+      })
+    end
+
+    Profile.instructor.publicly_listable.find_each do |profile|
+      add(user_account_path(profile.username), {
+        changefreq: 'monthly',
+        priority: 0.7
       })
     end
 
