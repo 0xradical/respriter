@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-case `echo $1 | sed "s/[-_]/./g"` in
+case `echo $1 | sed "s/-dev$//g" | sed "s/[-_]/./g"` in
 base)
   echo "base.clspt"
   exit 0

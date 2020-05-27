@@ -85,29 +85,11 @@ down-%: $(CUSTOM_ENV_FILES) ## Stops a given container
 restart-%: $(CUSTOM_ENV_FILES) LESS_PRIORITY-% ## Restarts a given container
 	$(DOCKER_COMPOSE) restart `$(MAKE_BIN)/container_alias $*`
 
-restart-prd: ## Restarts all napoleon prd dynos
-	@heroku ps:restart --app $(HEROKU_PRD_APP)
-
-restart-stg: ## Restarts all napoleon stg dynos
-	@heroku ps:restart --app $(HEROKU_STG_APP)
-
-restart-api-%: ## Restarts all napoleon api dynos for a given env
-	@heroku ps:restart --app $(HEROKU_POSTGREST_NAME)-$*
-
 worker:
 	@$(call docker_run_or_plain,napoleon,bundle exec que -w $(WORKERS) ./app.rb)
 
-console: console-dev ## Alias to console-dev
+console: ## Runs console at dev env
 	@$(call docker_run_or_plain,napoleon,bundle exec pry -r ./app.rb)
-
-console-dev: $(CUSTOM_ENV_FILES) ## Runs console at dev env
-	@$(call docker_run_or_plain,$*,bundle exec pry -r ./app.rb)
-
-console-prd: ## Runs console at prd env
-	@heroku run console --app $(HEROKU_PRD_APP)
-
-console-stg: ## Runs console at stg env
-	@heroku run console --app $(HEROKU_STG_APP)
 
 psql: psql-dev ## Alias to psql-dev
 
@@ -157,26 +139,8 @@ logs: $(CUSTOM_ENV_FILES) ## Display and follow all dev logs
 logs-%: $(CUSTOM_ENV_FILES) LESS_PRIORITY-% ## Display and follow dev logs for a given container
 	@$(DOCKER_COMPOSE) logs -f `$(MAKE_BIN)/container_alias $*`
 
-logs-prd: ## Display and follow all napoleon prd logs
-	@heroku logs -t --app $(HEROKU_PRD_APP)
-
-logs-stg: ## Display and follow all napoleon stg logs
-	@heroku logs -t --app $(HEROKU_STG_APP)
-
-logs-api-%: ## Display and follow all napoleon postgrest api logs for a given env
-	@heroku logs -t --app $(HEROKU_POSTGREST_NAME)-$*
-
 watch: $(CUSTOM_ENV_FILES) ## Inspect running containers
 	@watch -n 3 $(DOCKER_COMPOSE) ps
-
-watch-prd: ## Inspect running prd dynos
-	@watch -n 3 heroku ps --app $(HEROKU_PRD_APP)
-
-watch-stg: ## Inspect running stg dynos
-	@watch -n 3 heroku ps --app $(HEROKU_STG_APP)
-
-watch-api-%: ## Inspect running napoleon postgrest api dynos for a given env
-	@watch -n 3 heroku ps --app $(HEROKU_POSTGREST_NAME)-$*
 
 clean: $(CUSTOM_ENV_FILES) ## Stops all containers and clean docker env BUT KEEP VOLUMES
 	@$(DOCKER_COMPOSE) down --rmi local --remove-orphans
@@ -202,4 +166,4 @@ $(SEEDS_DIR)/%/setup.sql: ./providers/%.rb ./providers/%
 	@mkdir -p ./envs/$*
 	@./bin/create_remote_database_env $*
 
-.PHONY: build-seeds build-provider-% setup-provider-% setup-provider-dev-% setup-provider-stg-% setup-provider-prd-% clean-pipelines run run-% up up-% down down-% restart-% restart-prd restart-stg worker restart-api-% console console-% console-prd console-stg psql psql-dev psql-% bash bash-% bash-ports-% sh sh-% sh-ports-% test rspec spec cucumber docker-build docker-push logs logs-% logs-prd logs-stg logs-api-% watch watch-prd watch-stg watch-api-% clean wipe LESS_PRIORITY-%
+.PHONY: build-seeds build-provider-% setup-provider-% setup-provider-dev-% setup-provider-stg-% setup-provider-prd-% clean-pipelines run run-% up up-% down down-% restart-% worker console psql psql-dev psql-% bash bash-% bash-ports-% sh sh-% sh-ports-% test rspec spec cucumber docker-build docker-push logs logs-% watch clean wipe LESS_PRIORITY-%

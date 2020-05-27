@@ -18,8 +18,9 @@ define docker_ruby_run_or_plain
 	if [ -n "$(RUBY_PATH)" ]; then $(DOCKER_RUBY_RUN) $1; else $1; fi;
 endef
 
-DOCKER         := docker
-DOCKER_COMPOSE := LOCAL_NODE_MODULES=$(LOCAL_NODE_MODULES) GITHUB_ACCESS_TOKEN=$(GITHUB_ACCESS_TOKEN) $(DOCKER_COMPOSE_IMAGES) docker-compose
+DOCKER              := docker
+DOCKER_COMPOSE_VARS := LOCAL_NODE_MODULES=$(LOCAL_NODE_MODULES) GITHUB_ACCESS_TOKEN=$(GITHUB_ACCESS_TOKEN) $(DOCKER_COMPOSE_IMAGES)
+DOCKER_COMPOSE      := $(DOCKER_COMPOSE_VARS) docker-compose
 
 help: ## Get help
 	@grep -hE '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'

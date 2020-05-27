@@ -21,9 +21,7 @@ help: ## Get help
 rails-server: ## Runs Rails server
 	@$(call docker_run_with_ports_or_plain,app,bundle exec rails s -b 0.0.0.0)
 
-console: console-dev ## Alias for console-dev
-
-console-dev: ## Run rails console for development
+console: ## Run rails console for development
 	@$(call docker_run_or_plain,app,bundle exec rails console)
 
 npm-install: ## Run npm install
@@ -64,4 +62,4 @@ wait-for-elastic-search:
 LESS_PRIORITY-%:
 	@:
 
-.PHONY: help rails-server console console-dev hypernova LESS_PRIORITY-%
+.PHONY: help rails-server console hypernova LESS_PRIORITY-%

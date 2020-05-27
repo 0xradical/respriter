@@ -38,18 +38,15 @@ wipe: $(LOCAL_ENV_FILES) ## Stops all containers and clean docker env AND DELETE
 	@docker system prune -f
 
 restart-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Restarts a given container
-	$(DOCKER_COMPOSE) restart `$(MAKE_BIN)/container_alias $*`
+	@$(DOCKER_COMPOSE_VARS) $(MAKE_BIN)/remote_or_dev $* "heroku ps:restart --app `$(MAKE_BIN)/remote_alias $*`" "docker-compose restart `$(MAKE_BIN)/container_alias $*`"
 
-restart-remote-%: ## Restarts all dynos for a given remote app
-	@heroku ps:restart --app `$(MAKE_BIN)/remote_alias $*`
-
-console-%: LESS_PRIORITY-% ## Run console for a given app
-	@heroku run console --app `$(MAKE_BIN)/remote_alias $*`
+console-%: LESS_PRIORITY-% ## Run console for a given app, local or remote
+	@$(DOCKER_COMPOSE_VARS) $(MAKE_BIN)/remote_or_dev $* "heroku run console --app `$(MAKE_BIN)/remote_alias $*`" "docker-compose run --rm `$(MAKE_BIN)/container_alias $*` make console"
 
 bash: bash-app ## Alias to bash-app
 
 bash-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Runs bash for a given container
-	@$(call docker_run_or_plain,$*,/bin/bash)
+	@$(DOCKER_COMPOSE_VARS) $(MAKE_BIN)/remote_or_dev $* "heroku run bash --app `$(MAKE_BIN)/remote_alias $*`" "docker-compose run --rm `$(MAKE_BIN)/container_alias $*` /bin/bash"
 
 bash-ports-%: $(LOCAL_ENV_FILES) ## Runs bash for a given container with service ports
 	@$(call docker_run_with_ports_or_plain,$*,/bin/bash)
@@ -57,7 +54,7 @@ bash-ports-%: $(LOCAL_ENV_FILES) ## Runs bash for a given container with service
 sh: sh-app ## Alias to sh-app
 
 sh-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Runs sh for a given container
-	@$(call docker_run_or_plain,$*,/bin/sh)
+	@$(DOCKER-COMPOSE) run --rm `$(MAKE_BIN)/container_alias $*` /bin/sh
 
 sh-ports-%: $(LOCAL_ENV_FILES) ## Runs sh for a given container with service ports
 	@$(call docker_run_with_ports_or_plain,$*,/bin/sh)
@@ -76,15 +73,12 @@ logs: $(LOCAL_ENV_FILES) ## Display and follow all dev logs
 	@$(DOCKER_COMPOSE) logs -f
 
 logs-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Display and follow dev logs for a given container
-	@$(DOCKER_COMPOSE) logs -f `$(MAKE_BIN)/container_alias $*`
-
-logs-remote-%: ## Display and follow all logs for a remote app
-	@heroku logs -t --app `$(MAKE_BIN)/remote_alias $*`
+	@$(DOCKER_COMPOSE_VARS) $(MAKE_BIN)/remote_or_dev $* "heroku logs -t --app `$(MAKE_BIN)/remote_alias $*`" "docker-compose logs -f `$(MAKE_BIN)/container_alias $*`"
 
 watch: $(LOCAL_ENV_FILES) ## Inspect running containers
 	@watch -n 3 $(DOCKER_COMPOSE) ps
 
-watch-remote-%: ## Inspect running dynos for a remote app
+watch-%: ## Inspect running dynos for a remote app
 	@watch -n 3 heroku ps --app `$(MAKE_BIN)/remote_alias $*`
 
-.PHONY: run run-% up up-% up-persistence down down-% clean wipe restart-% restart-remote-% console-% bash bash-% bash-ports-% sh sh-% sh-ports-% detached-make-% attached-make-% logs logs-% logs-remote-% watch watch-remote-%
+.PHONY: run run-% up up-% up-persistence down down-% clean wipe restart-% console-% bash bash-% bash-ports-% sh sh-% sh-ports-% detached-make-% attached-make-% logs logs-% logs-remote-% watch watch-%
