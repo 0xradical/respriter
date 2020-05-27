@@ -40,7 +40,21 @@
             </div>
             <div class='el:amx-Mt(0.75em)'>
               <ul class='el:m-list el:m-list--hrz'>
-                <% @orphaned_profile.public_profiles.each do |key, val| %>
+                <% if @orphaned_profile.website.present? %>
+                  <li class='el:amx-Mr(0.5em)'>
+                    <a href='<%= "#{@orphaned_profile.website}?utm_source=classpert" %>' target='_blank' ref='nofollow'>
+                      <%= svg_use('icons', 'website', {class: "el:amx-Fi_fg", width: '1em', height: '1em'}) %>
+                    </a>
+                  </li>
+                <% end %>
+                <% @orphaned_profile.elearning_profiles.each do |key, val| %>
+                  <li class='el:amx-Mr(0.5em)'>
+                    <a href='<%= val %>' target='_blank' ref='nofollow noreferrer'>
+                      <%= svg_use('providers', key, {class: "el:amx-Fi_#{key}", width: '1em', height: '1em'}) %>
+                    </a>
+                  </li>
+                <% end %>
+                <% @orphaned_profile.social_profiles.each do |key, val| %>
                   <li class='el:amx-Mr(0.5em)'>
                     <a href='<%= val %>' target='_blank' ref='nofollow noreferrer'>
                       <%= svg_use('icons', key, {class: "el:amx-Fi_#{key}", width: '1em', height: '1em'}) %>

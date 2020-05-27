@@ -48,13 +48,19 @@ class OrphanedProfile < ApplicationRecord
         p.long_bio                ||= long_bio
         p.short_bio               ||= short_bio
         p.teaching_subjects       ||= teaching_subjects
-        p.website                 ||= website
         p.course_ids              = course_ids
         p.save!
       end
       self.claimed_by = user_account.username
       self.claim_code = nil
       mark_as_destroyed!
+    end
+
+    begin
+      user_account.profile.website ||= "http:#{website}"
+      user_account.profile.save!
+    rescue ActiveRecord::StatementInvalid
+      user_account.profile.reload
     end
 
     social_profiles.each do |k,v|
