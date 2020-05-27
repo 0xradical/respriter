@@ -64,38 +64,6 @@ clean-pipelines: $(CUSTOM_ENV_FILES) ## Deletes all que_jobs, pipeline_templates
 	@echo "Cleaning Pipelines"
 	@$(call docker_run_or_plain,napoleon,./bin/psql ./envs/dev/database.env -c "DELETE FROM que_jobs; DELETE FROM app.pipeline_templates; DELETE FROM app.pipelines; DELETE FROM app.pipe_processes;")
 
-db-download: db-download-prd ## Alias to db-download-prd
-
-db-download-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) ## Creates a database dump for a given env
-	@$(call docker_run_or_plain,base,bin/db_download ./envs/$*/database.env $(DB_DUMPS_FOLDER)/$*)
-
-db-load: db-load-dev-prd ## Alias to db-load-dev-prd
-
-db-load-dev-%: $(CUSTOM_ENV_FILES) ## At dev database, apply dump from a given env
-	@$(call docker_run_or_plain,napoleon,bin/db_load ./envs/dev/database.env $(DB_DUMPS_FOLDER)/$*)
-
-db-load-prd-%: ./envs/prd/database.env $(CUSTOM_ENV_FILES) LESS_PRIORITY-% ## [BE CAREFULL] At prd database, apply dump from a given env
-	@$(call docker_run_or_plain,base,bin/db_load ./envs/prd/database.env $(DB_DUMPS_FOLDER)/$*)
-
-db-load-stg-%: ./envs/stg/database.env $(CUSTOM_ENV_FILES) LESS_PRIORITY-% ## [BE CAREFULL] At stg database, apply dump from a given env
-	@$(call docker_run_or_plain,base,bin/db_load ./envs/stg/database.env $(DB_DUMPS_FOLDER)/$*)
-
-db-reset: db-reset-dev ## Alias to db-reset-dev
-
-db-reset-dev: ./envs/dev/database.env $(CUSTOM_ENV_FILES) ## Resets dev database
-	@$(call docker_run_or_plain,napoleon,bin/db_reset envs/dev/database.env)
-
-db-reset-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) LESS_PRIORITY-% ## Resets Database for a given env
-	@$(call docker_run_or_plain,base,bin/db_reset envs/$*/database.env)
-
-db-migrate: db-migrate-dev ## Alias to db-migrate-dev
-
-db-migrate-dev: ./envs/dev/database.env $(CUSTOM_ENV_FILES) ## Migrates env database
-	@$(call docker_run_or_plain,napoleon,bin/db_migrate ./envs/dev/database.env ./database/db/migrations)
-
-db-migrate-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) LESS_PRIORITY-% ## Migrates database for a given env
-	@$(call docker_run_or_plain,base,bin/db_migrate ./envs/$*/database.env ./database/db/migrations)
-
 run: $(CUSTOM_ENV_FILES) ## Runs all containers attached
 	$(DOCKER_COMPOSE) up
 
@@ -234,4 +202,4 @@ $(SEEDS_DIR)/%/setup.sql: ./providers/%.rb ./providers/%
 	@mkdir -p ./envs/$*
 	@./bin/create_remote_database_env $*
 
-.PHONY: build-seeds build-provider-% setup-provider-% setup-provider-dev-% setup-provider-stg-% setup-provider-prd-% clean-pipelines db-download db-download-% db-load db-load-dev-% db-load-prd-% db-load-stg-% db-reset db-reset-dev db-reset-% db-migrate db-migrate-dev db-migrate-% run run-% up up-% down down-% restart-% restart-prd restart-stg worker restart-api-% console console-% console-prd console-stg psql psql-dev psql-% bash bash-% bash-ports-% sh sh-% sh-ports-% test rspec spec cucumber docker-build docker-push logs logs-% logs-prd logs-stg logs-api-% watch watch-prd watch-stg watch-api-% clean wipe LESS_PRIORITY-%
+.PHONY: build-seeds build-provider-% setup-provider-% setup-provider-dev-% setup-provider-stg-% setup-provider-prd-% clean-pipelines run run-% up up-% down down-% restart-% restart-prd restart-stg worker restart-api-% console console-% console-prd console-stg psql psql-dev psql-% bash bash-% bash-ports-% sh sh-% sh-ports-% test rspec spec cucumber docker-build docker-push logs logs-% logs-prd logs-stg logs-api-% watch watch-prd watch-stg watch-api-% clean wipe LESS_PRIORITY-%
