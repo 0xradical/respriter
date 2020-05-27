@@ -43,7 +43,7 @@ ja:
             personal:
               title: 個人情報
             instructor:
-              title: 自分のプロフィール
+              title: Profile Page
               sections:
                 privacy_settings: プライバシー設定
                 about_me: 自分について
@@ -133,14 +133,14 @@ ja:
         username_field_placeholder: ユーザー名を選択
         username_field_invalid_feedback_text: "有効なユーザー名である必要があります"
         username_field_uniqueness_feedback_text:
-        shortbio_field_label: 短いバイオ機能
+        shortbio_field_label: Headline
         shortbio_field_placeholder: あなたが誰であるかを説明する短い文
         country_field_label: 国名
         country_field_select: 国を選択
         website_field_label: ウェブサイト
         website_field_placeholder: ウェブサイトを追加
         website_field_about: >-
-          あなたのウェブサイトはオンラインコースのプラットフォームですか? %{index_tool} にアクセスしてClasspertに掲載されています!
+          Do you have your own website where you already sell your courses? Access our %{index_tool} and get listed on Classpert!
         instructor_field_label: 私は講師です
         public_field_label: 全員に自分のプロフィールを表示
         social_profiles_field_header: ソーシャルメディアのプロファイルを追加
@@ -153,15 +153,15 @@ ja:
         social_profiles_field_select_n: "%{n}つのプロファイル。もっと追加"
         elearning_profiles_field_header: eラーニングプラットフォームのプロファイルを追加
         elearning_profiles_field_about: >-
-          これらのプラットフォームのコースはプロフィールページに表示されます。
+          E-learning platforms where users can find your courses
         elearning_profiles_field_label: Eラーニングプラットフォーム
         elearning_profiles_field_select: プロファイルを追加
         elearning_profiles_field_select_0: プロファイルを追加
         elearning_profiles_field_select_1: 1つのプロファイル。もっと追加
         elearning_profiles_field_select_n: "%{n}つのプロファイル。もっと追加"
-        about_field_label: About
+        about_field_label: Bio
         about_field_placeholder: >-
-          あなた自身について話すために、このスペースを使用して、あなたが生活のために何をするか、あなたの趣味、興味、成果など。
+          Use this space to talk about yourself, your hobbies, work and achievements.
         submit: 更新
       certificate:
         certificate_field_label: "Upload your certificate"

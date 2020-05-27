@@ -43,7 +43,7 @@ pt-BR:
             personal:
               title: Informações Pessoais
             instructor:
-              title: Meu Perfil
+              title: Página do Perfil
               sections:
                 privacy_settings: Configurações de Privacidade
                 about_me: Quem sou eu
@@ -60,7 +60,7 @@ pt-BR:
           order_id: "Número do Pedido"
           price: Preço do Curso
           purchase_date: "Data de Compra"
-          bonus_status: "Situação"
+          bonus_status: "Status"
           bonus_statuses:
             initial: Em análise
             pending: Em análise
@@ -133,14 +133,14 @@ pt-BR:
         username_field_placeholder: Escolha seu usuário
         username_field_invalid_feedback_text: "Deve ser um usuário válido"
         username_field_uniqueness_feedback_text:
-        shortbio_field_label: Descrição pessoal
+        shortbio_field_label: Frase de efeito
         shortbio_field_placeholder: Uma pequena frase descrevendo quem você é
         country_field_label: País
         country_field_select: Selecione país
         website_field_label: Site
         website_field_placeholder: Adicione o seu site
         website_field_about: >-
-          O seu site é uma plataforma de curso online? Acesse nosso %{index_tool} e seja listado na Classpert!
+          Você tem seu próprio site onde já vende seus cursos? Acesse nossa %{index_tool} e seja listado na Classpert!
         instructor_field_label: Sou instrutor(a)
         public_field_label: Exibir meu perfil publicamente
         social_profiles_field_header: Adicione perfis de redes sociais
@@ -153,7 +153,7 @@ pt-BR:
         social_profiles_field_select_n: "%{n} perfis adicionados. Adicionar mais"
         elearning_profiles_field_header: Adicione perfis de plataformas de e-learning
         elearning_profiles_field_about: >-
-          Os cursos dessas plataformas ficarão visíveis na sua página de perfil.
+          Plataformas de e-learning onde os usuários podem encontrar seus cursos
         elearning_profiles_field_label: Plataformas de E-learning
         elearning_profiles_field_select: Adicionar perfil
         elearning_profiles_field_select_0: Adicionar perfis
@@ -161,7 +161,7 @@ pt-BR:
         elearning_profiles_field_select_n: "%{n} perfis adicionados. Adicionar mais"
         about_field_label: Sobre mim
         about_field_placeholder: >-
-          Use esse espaço para falar sobre você mesmo, o que você faz da vida, seus hobbies, interesses, conquistas, etc.
+          Use esse espaço para falar sobre você, seus hobbies, trabalhos e conquistas.
         submit: Atualizar
       certificate:
         certificate_field_label: "Envie seu certificado"

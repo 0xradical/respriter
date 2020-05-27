@@ -44,7 +44,7 @@ en:
             personal:
               title: Personal Information
             instructor:
-              title: My Profile
+              title: Profile Page
               sections:
                 privacy_settings: Privacy Settings
                 about_me: About Me
@@ -135,14 +135,14 @@ en:
         username_field_placeholder: Choose your username
         username_field_invalid_feedback_text: "Must be a valid username"
         username_field_uniqueness_feedback_text:
-        shortbio_field_label: Short Bio
+        shortbio_field_label: Headline
         shortbio_field_placeholder: A short sentence describing who you are
         country_field_label: Country
         country_field_select: Select country
         website_field_label: Website
         website_field_placeholder: Add your website
         website_field_about: >-
-          Is your website an online course platform? Access our %{index_tool} and get listed on Classpert!
+          Do you have your own website where you already sell your courses? Access our %{index_tool} and get listed on Classpert!
         instructor_field_label: I'm an instructor
         public_field_label: Show my profile to everyone
         social_profiles_field_header: Add your social media profiles
@@ -155,15 +155,15 @@ en:
         social_profiles_field_select_n: "%{n} profiles added. Add more"
         elearning_profiles_field_header: Add your e-learning platforms profiles
         elearning_profiles_field_about: >-
-          Courses from these platforms will be visible on your profile page.
+          E-learning platforms where users can find your courses
         elearning_profiles_field_label: E-learning Platforms
         elearning_profiles_field_select: Add profile
         elearning_profiles_field_select_0: Add profiles
         elearning_profiles_field_select_1: 1 profile added. Add more
         elearning_profiles_field_select_n: "%{n} profiles added. Add more"
-        about_field_label: About
+        about_field_label: Bio
         about_field_placeholder: >-
-          Use this space to talk about yourself, what you do for a living, your hobbies, interests, achievements, etc.
+          Use this space to talk about yourself, your hobbies, work and achievements.
         submit: Update
       certificate:
         certificate_field_label: "Upload your certificate"
