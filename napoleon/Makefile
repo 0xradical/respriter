@@ -2,6 +2,8 @@ HEROKU_POSTGREST_NAME := napoleon-postgrest-
 HEROKU_PRD_APP        := napoleon-the-crawler
 HEROKU_STG_APP        := napoleon-stg
 
+MAKE_BIN := ./bin
+
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
 	SHA1SUM := gsha1sum
@@ -46,7 +48,8 @@ default: help
 
 build-seeds: $(SEEDS_FILES) ## Creates or updates seeds for each provider (only those that are required)
 
-build-provider-%: $(SEEDS_DIR)/%/setup.sql ## Creates or updates for a given provider
+build-provider-%: ## Creates or updates for a given provider
+	@make -s $(SEEDS_DIR)/$*/setup.sql
 
 setup-provider-%: LESS_PRIORITY-% ## Alias to setup-provider-dev-%
 	@make -s setup-provider-dev-$*
@@ -153,7 +156,7 @@ wipe: $(CUSTOM_ENV_FILES) ## Stops all containers and clean docker env AND DELET
 LESS_PRIORITY-%:
 	@:
 
-$(SEEDS_DIR)/%/setup.sql: ./providers/%.rb ./providers/%
+./db/seeds/%/setup.sql: ./providers/%.rb ./providers/%
 	@mkdir -p `dirname $@`
 	@$(call docker_run_or_plain,base,ruby $<)
 	@echo "Seed file $@ created or updated!"
