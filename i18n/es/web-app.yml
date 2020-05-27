@@ -588,7 +588,7 @@ es:
       find_course:
         header: "Encuentra un curso a través de Classpert.com"
         body_html: >-
-          Use el buscador de Classpert para encontrar el curso que desea tomar. 
+          Use el buscador de Classpert para encontrar el curso que desea tomar.
           Haga clic en <b>"Ir al curso"</b> e inscríbase en el curso elegido (su clic se registrará).
       complete_course:
         header: "Completa el curso"
@@ -815,23 +815,22 @@ es:
         blockchain_and_cryptocurrency: Blockchain and Cryptocurrency
   unsubscriptions:
     show:
-      title: "The e-mail %{email} was successfully unsubscribed"
-      subtitle: "You won't receive newsletters and marketing communication from Classpert anymore"
-      option_request_intro: "In order to improve our services, please tell us why you would like to stop receiving our e-mails."
+      title: "El correo electrónico %{email} se ha cancelado correctamente la suscripción"
+      subtitle: "Ya no recibirás boletines de noticias ni comunicación de marketing de Classpert"
+      option_request_intro: "Para mejorar nuestros servicios, por favor indique por qué desea dejar de recibir nuestros correos electrónicos."
       options:
-        too_often: "I am receiving emails too often"
-        not_relevant: "The content is not relevant to me"
-        doesnt_like_mail_marketing: "It's not a specific problem with Classpert, I just don't like mail marketing in general"
-        other: "Other"
-        up_to_200_characters: "Up to 200 characters"
-        please_detail: "Please detail your unsubscription reason"
-      submit: "Submit"
-      go_to_classpert: "Go to Classpert.com"
+        too_often: "Estoy recibiendo correos electrónicos con demasiada frecuencia"
+        not_relevant: "El contenido no es relevante para mi"
+        doesnt_like_mail_marketing: "No es un problema específico con Classpert, simplemente no me gusta el marketing de correo en general"
+        other: "Otro"
+        up_to_200_characters: "Hasta 200 caracteres"
+        please_detail: "Por favor detalla el motivo de tu cancelación de suscripción"
+      submit: "Enviar"
+      go_to_classpert: "Ir a Classpert.com"
       alerts:
-        success: "Success: Your e-mail notification settings have been updated!"
-        no_option: "Please choose an option"
-        no_details: If you choose "Other", please detail the unsubscription reason
-  user_accounts:
+        success: "Éxito: ¡Se han actualizado los ajustes de las notificaciones por correo electrónico!"
+        no_option: "Por favor, elija una opción"
+        no_details: Si elige "Otro", por favor detalla la razón de darse de baja  user_accounts:
     show:
       meta:
         title: "%{name} | Perfil y Cursos"
