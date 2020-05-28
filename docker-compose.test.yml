@@ -1,4 +1,5 @@
-version: "3"
+version: "3.5"
+
 services:
   base.test: &base
     image: $WEB_APP_IMAGE
@@ -301,3 +302,7 @@ services:
 volumes:
   base_bundle:
   base_node_modules:
+
+networks:
+  default:
+    name: classpert

@@ -1,4 +1,5 @@
-version: "3"
+version: "3.5"
+
 services:
   base.clspt: &base
     image: $WEB_APP_IMAGE
@@ -421,8 +422,18 @@ services:
 
 volumes:
   base_bundle:
+    name: classpert_dev_base_bundle
   base_node_modules:
+    name: classpert_dev_base_node_modules
   database_data:
+    name: classpert_dev_database_data
   database_napoleon_data:
+    name: classpert_dev_database_napoleon_data
   search_data:
+    name: classpert_dev_search_data
   s3_data:
+    name: classpert_dev_s3_data
+
+networks:
+  default:
+    name: classpert

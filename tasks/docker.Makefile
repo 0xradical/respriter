@@ -9,7 +9,7 @@ define docker_run_or_plain
 endef
 
 define docker_run_with_ports_or_plain
-	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm --service-ports -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 `$(MAKE_BIN)/container_alias $1` $2; else $2; fi;
+	@$(call docker_run_or_plain,$1,$2,--service-ports $3)
 endef
 
 docker-build: $(LOCAL_ENV_FILES) ## Builds all required images

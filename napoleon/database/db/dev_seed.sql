@@ -1,13 +1,13 @@
 INSERT INTO app.datasets (
   id, name, sequence
 ) VALUES (
-  'c1225396-28e1-11ea-9078-0242ac150002', 'Classpert', 999999999
+  '0e9cdf2c-44e7-11e9-8c55-22000aef2c9b', 'Classpert', 999999999
 );
 
 INSERT INTO app.users (
   dataset_id, username, password
 ) VALUES (
-  'c1225396-28e1-11ea-9078-0242ac150002', 'user', 'abc123'
+  '0e9cdf2c-44e7-11e9-8c55-22000aef2c9b', 'user', 'abc123'
 );
 
 INSERT INTO app.resource_schemas (
@@ -17,7 +17,7 @@ INSERT INTO app.resource_schemas (
   specification,
   public_specification
 ) VALUES (
-  'c1225396-28e1-11ea-9078-0242ac150002',
+  '0e9cdf2c-44e7-11e9-8c55-22000aef2c9b',
   'course',
   '1.0.0',
   '
