@@ -588,7 +588,8 @@ ja:
       find_course:
         header: "Find a course on Classpert.com"
         body_html: >-
-          Classpertのオンライン講義検索エンジンを使用して、受講したい講義を発見。 <b>[コースに移動]</b>ボタンをクリックして、選択した講義に登録しましょう（クリックが登録されます）
+          Classpertのオンライン講義検索エンジンを使用して、受講したい講義を発見。 
+           <b>[コースに移動]</b>ボタンをクリックして、選択した講義に登録しましょう（クリックが登録されます）
       complete_course:
         header: "Complete the course"
         body_html: >-

@@ -588,7 +588,8 @@ fr:
       find_course:
         header: "Find a course on Classpert.com"
         body_html: >-
-          Use Classpert's online course search engine to find the course you want to take. Click on <b>"Go to Course"</b> button and enroll yourself in the selected course (your click will be registered)
+          Use Classpert's online course search engine to find the course you want to take. 
+          Click on <b>"Go to Course"</b> button and enroll yourself in the selected course (your click will be registered)
       complete_course:
         header: "Complete the course"
         body_html: >-

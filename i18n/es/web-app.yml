@@ -16,7 +16,7 @@ es:
       username: "usuario"
       email: "correo electrónico"
       email_confirmation: "confirmación de correo electrónico"
-      shortbio: "frase de perfil"
+      shortbio: "short bio"
       password: "contraseña"
       subject: "asunto"
       reason: "motivo de contacto"
@@ -868,9 +868,9 @@ es:
         4: >-
           Identificamos redes sociales asociadas con este perfil. Use cualquier método a continuación para demostrar su identidad. Si reclama un perfil de empresa, utilice una cuenta de red social vinculada a su empresa.
         5: >-
-          Here are some e-mails we believe belong to you
+          Aquí están algunos correos electrónicos que creemos que te pertenecen
         6: >-
-          Type any of the above listed emails so a link will be sent to the matched e-mail.
+          Escriba cualquiera de los correos electrónicos mencionados anteriormente para que se envíe un enlace al correo electrónico correspondiente.
         7_html: >-
           Si no puede probar su identidad utilizando uno de los métodos disponibles, %{link} para comenzar un proceso de verificación manual
     send_verification_link:
@@ -884,7 +884,7 @@ es:
     social_networks:
       update:
         success: La propiedad de este perfil se transfirió con éxito a su cuenta. Ahora puede editar la información de esta página en su panel de control
-        fail: Claim failed! Session data is empty. Make sure cookies and javascript are enabled
+        fail: Reclamo fallido! Los datos de la sesión están vacíos. Asegúrese de que las cookies y javascript están habilitados
   instructors:
     index:
       meta:
@@ -893,9 +893,9 @@ es:
       h1: Instructors
       filter_by_subject:
         label: by subject
-        prompt: Select a subject
+        prompt: Seleccionar temas
       courses_count: "%{count} courses"
-      teaching_at: teaching at
+      teaching_at: enseñando en
       text:
         1: "No instructors for subject %{subject}"
   pages:
@@ -904,8 +904,8 @@ es:
         title: "Zona para Miembros | Classpert"
       html:
         account_settings_header: "Configuraciones de la Cuenta"
-        secure_your_account_header: "Secure your Account"
-        secure_your_account_button: "Create a password"
+        secure_your_account_header: "Asegure su cuenta"
+        secure_your_account_button: "Crear una contraseña"
         account_settings_link: "Configuraciones de la Cuenta"
         account_settings_form_button: "Salvar"
         profile_link: "Perfil"
