@@ -64,17 +64,22 @@
               max: 60
             }"
           >
-            <text-area-field
+            <text-input-field
               field="shortbio"
-              :errors="clientSideErrors"
+              :errors="[
+                ...clientSideErrors,
+                ...(serverSideErrors.shortbio || [])
+              ]"
               :disabled="loading || sending"
               :label="$t('user.forms.profile.shortbio_field_label')"
-              :placeholder="$t('user.forms.profile.shortbio_field_placeholder')"
-              height="100px"
+              input-size="medium"
+              :input-block="true"
+              :input-placeholder="
+                $t('user.forms.profile.shortbio_field_placeholder')
+              "
               :value="local.shortBio"
               @input="v => (local.shortBio = v)"
-            >
-            </text-area-field>
+            />
           </validation-provider>
 
           <text-area-field
