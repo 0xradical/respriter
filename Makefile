@@ -58,7 +58,7 @@ wipe-db: $(LOCAL_ENV_FILES) ## Kill database container and volumes
 	$(DOCKER) volume rm $(shell basename `pwd`)_database_data; exit 0
 
 wipe-unnamed-volumes: ## (Very destructive) Removes all dangling volumes, except web-app's
-	@$(DOCKER) volume rm `docker volume ls -q -f dangling=true | sed '/web-app/d'`
+	@$(DOCKER) volume rm `docker volume ls -q -f dangling=true | sed '/classpert/d'`
 
 wipe-data: ## Deletes volumes with data like database, s3, elasticsearch (don't erase npm and bundler volumes)
 	@$(DOCKER) volume rm web-app_database_data;          exit 0;
