@@ -1,6 +1,7 @@
 CREATE TABLE app.profiles (
   id                  uuid          DEFAULT public.uuid_generate_v4() PRIMARY KEY,
   name                varchar,
+  _name               varchar,
   username            app.username,
   _username           varchar       CONSTRAINT username__format CHECK (_username ~* '^\w{5,15}$'),
   username_changed_at timestamptz,
