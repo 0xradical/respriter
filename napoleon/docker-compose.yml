@@ -40,12 +40,11 @@ services:
       context: ./database
       dockerfile: Dockerfile
     ports:
-      - 5432:5432
+      - 5434:5432
     env_file:
       - envs/dev/database.env
       - envs/local/database.env
     volumes:
-      - ./images/database/seed.sql:/docker-entrypoint-initdb.d/x_seed.sql
       - database_data:/var/lib/postgresql/data:cached
 
   api.napoleon.clspt:
@@ -169,4 +168,10 @@ services:
 
 volumes:
   s3_data:
+    name: classpert_napoleon_dev_s3_data
   database_data:
+    name: classpert_napoleon_dev_database_data
+
+networks:
+  default:
+    name: classpert

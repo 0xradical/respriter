@@ -17,16 +17,12 @@ services:
       - $LOCAL_NODE_MODULES/app/node_modules
       - ../i18n:/app/src/locales:cached
       - ../components:/app/src/components/external:cached
-    networks:
-      - web-app_default
 
   mockserver:
     image:   mockserver/mockserver
     command: -serverPort 1080 -logLevel INFO -proxyRemoteHost proxy.clspt -proxyRemotePort 80
     ports:
       - 1080:1080
-    networks:
-      - web-app_default
 
   cypress:
     image: $CYPRESS_IMAGE
@@ -46,9 +42,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./test/cypress:/app/cypress
       - ./test/cypress.json:/app/cypress.json
-    networks:
-      - web-app_default
 
 networks:
-  web-app_default:
-    external: true
+  default:
+    name: classpert
