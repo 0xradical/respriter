@@ -17,7 +17,7 @@ DOCKER_ENV_FILE := --env-file ../envs/dev/database.env
 DOCKER_RUBY_RUN := docker run --rm -it -v $(shell pwd):/database -w /database $(DOCKER_ENV_FILE) $(RUBY_IMAGE)
 
 DOCKER_DB_VOLUMES := -v $(shell pwd):/database
-DOCKER_DB_RUN     := docker run --rm -it --network web-app_default $(DOCKER_DB_VOLUMES)
+DOCKER_DB_RUN     := docker run --rm -it --network classpert $(DOCKER_DB_VOLUMES)
 
 define docker_ruby_run_or_plain
 	if [ -n "$(RUBY_PATH)" ]; then $(DOCKER_RUBY_RUN) $1; else $1; fi;
