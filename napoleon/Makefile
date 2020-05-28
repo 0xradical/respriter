@@ -40,7 +40,7 @@ define docker_run_or_plain
 endef
 
 define docker_run_with_ports_or_plain
-	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm --service-ports -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 `$(MAKE_BIN)/container_alias $1` $2; else $2; fi;
+	@$(call docker_run_or_plain,$1,$2,--service-ports $3)
 endef
 
 default: help
@@ -94,13 +94,11 @@ worker:
 console: ## Runs console at dev env
 	@$(call docker_run_or_plain,napoleon,bundle exec pry -r ./app.rb)
 
-psql: psql-dev ## Alias to psql-dev
+psql: ## Alias to psql-dev
+	@make -s psql-dev
 
-psql-dev: ./envs/dev/database.env $(CUSTOM_ENV_FILES) ## Runs psql console for dev
-	@$(call docker_run_or_plain,napoleon,./bin/psql ./envs/dev/database.env)
-
-psql-%: ./envs/%/database.env $(CUSTOM_ENV_FILES) LESS_PRIORITY-% ## Runs psql console for a given env
-	@$(call docker_run_or_plain,base,./bin/psql ./envs/$*/database.env)
+psql-%: ## Opens psql console for a given env
+	@cd .. && make -s psql-napoleon-$*
 
 bash: bash-napoleon ## Alias to bash-napoleon
 
@@ -169,4 +167,4 @@ LESS_PRIORITY-%:
 	@mkdir -p ./envs/$*
 	@./bin/create_remote_database_env $*
 
-.PHONY: build-seeds build-provider-% setup-provider-% setup-provider-dev-% setup-provider-stg-% setup-provider-prd-% clean-pipelines run run-% up up-% down down-% restart-% worker console psql psql-dev psql-% bash bash-% bash-ports-% sh sh-% sh-ports-% test rspec spec cucumber docker-build docker-push logs logs-% watch clean wipe LESS_PRIORITY-%
+.PHONY: build-seeds build-provider-% setup-provider-% setup-provider-dev-% setup-provider-stg-% setup-provider-prd-% clean-pipelines run run-% up up-% down down-% restart-% worker console psql psql-% bash bash-% bash-ports-% sh sh-% sh-ports-% test rspec spec cucumber docker-build docker-push logs logs-% watch clean wipe LESS_PRIORITY-%

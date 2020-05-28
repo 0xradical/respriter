@@ -43,6 +43,9 @@ restart-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Restarts a given container
 console-%: LESS_PRIORITY-% ## Run console for a given app, local or remote
 	@$(DOCKER_COMPOSE_VARS) $(MAKE_BIN)/remote_or_dev $* "heroku run console --app `$(MAKE_BIN)/remote_alias $*`" "docker-compose run --rm `$(MAKE_BIN)/container_alias $*` make console"
 
+psql-%:
+	@$(DOCKER) run --rm -it --env-file $(MONOREPO_PATH)/`$(MAKE_BIN)/database_alias $*` -v `pwd`:/repo -w /repo --network classpert postgres:11.4-alpine sh -c 'psql `echo $$POSTGRES_URL | sed "s/?.*//g"`'
+
 bash: bash-app ## Alias to bash-app
 
 bash-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Runs bash for a given container
@@ -81,4 +84,4 @@ watch: $(LOCAL_ENV_FILES) ## Inspect running containers
 watch-%: ## Inspect running dynos for a remote app
 	@watch -n 3 heroku ps --app `$(MAKE_BIN)/remote_alias $*`
 
-.PHONY: run run-% up up-% up-persistence down down-% clean wipe restart-% console-% bash bash-% bash-ports-% sh sh-% sh-ports-% detached-make-% attached-make-% logs logs-% logs-remote-% watch watch-%
+.PHONY: run run-% up up-% up-persistence down down-% clean wipe restart-% console-% psql-% bash bash-% bash-ports-% sh sh-% sh-ports-% detached-make-% attached-make-% logs logs-% logs-remote-% watch watch-%
