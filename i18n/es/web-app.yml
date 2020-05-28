@@ -830,7 +830,8 @@ es:
       alerts:
         success: "Éxito: ¡Se han actualizado los ajustes de las notificaciones por correo electrónico!"
         no_option: "Por favor, elija una opción"
-        no_details: Si elige "Otro", por favor detalla la razón de darse de baja  user_accounts:
+        no_details: Si elige "Otro", por favor detalla la razón de darse de baja
+  user_accounts:
     show:
       meta:
         title: "%{name} | Perfil y Cursos"
