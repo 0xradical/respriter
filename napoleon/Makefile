@@ -17,17 +17,16 @@ APP_IMAGE_TAG  := $(shell cat Gemfile.lock | $(SHA1SUM) | sed -e 's/ .*//g')
 APP_IMAGE      := $(APP_IMAGE_NAME):$(APP_IMAGE_TAG)
 
 DATABASE_IMAGE_NAME := classpert/napoleon_database
-DATABASE_IMAGE_TAG  := $(shell cat ./database/db/structure.sql.env | $(SHA1SUM) | sed -e 's/ .*//g')
+DATABASE_IMAGE_TAG  := $(shell cat ../napoleon-database/db/structure.sql.env | $(SHA1SUM) | sed -e 's/ .*//g')
 DATABASE_IMAGE      := $(DATABASE_IMAGE_NAME):$(DATABASE_IMAGE_TAG)
 
 DOCKER              := docker
 DOCKER_COMPOSE      := DATABASE_IMAGE=$(DATABASE_IMAGE) APP_IMAGE=$(APP_IMAGE) docker-compose
 DOCKER_COMPOSE_PATH := $(shell which docker-compose)
 
-WORKERS         ?= 1
-DB_DUMPS_FOLDER := ./db/dumps
-SEEDS_DIR       := ./db/seeds
-SEEDS_FILES     := $(shell ls providers/*/*.sql.erb | sed 's/.erb//' | sed 's/providers\//\.\/db\/seeds\//')
+WORKERS     ?= 1
+SEEDS_DIR   := ./db/seeds
+SEEDS_FILES := $(shell ls providers/*/*.sql.erb | sed 's/.erb//' | sed 's/providers\//\.\/db\/seeds\//')
 
 ifeq ($(RAILS_ENV), production)
 	CUSTOM_ENV_FILES := LESS_PRIORITY-noop

@@ -1,5 +1,3 @@
-# pipeline de preço de subscription
-# url: https://subscriptions-production.pluralsight.com/catalog/api/v1/localized-products
 call
 payload            = pipe_process.accumulator[:payload]
 pricing            = JSON.load(payload)
