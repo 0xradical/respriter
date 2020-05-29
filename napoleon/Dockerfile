@@ -33,4 +33,4 @@ RUN bundle install && bundle clean
 
 USER $USERNAME
 
-CMD ["rackup", "-s", "puma", "--port", "4567", "--host", "0.0.0.0"]
+CMD bundle exec rackup -s puma --port 4567 --host 0.0.0.0
