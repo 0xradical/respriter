@@ -42,7 +42,7 @@ db-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Run database make tasks
 	@cd database && make -s $*
 
 napoleon_db-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Run napoleon database make tasks
-	@cd napoleon/database && make -s $*
+	@cd napoleon-database && make -s $*
 
 app-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Alias to web-app-%
 	@make -s web-app-$*

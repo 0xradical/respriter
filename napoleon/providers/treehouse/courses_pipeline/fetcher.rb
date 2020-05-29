@@ -53,7 +53,7 @@ if document.css("[data-src='" + trailer_url.path + "']").present?
   is_trailer     = true
   http_headers   = { :'X-CSRF-Token' => document.css("meta[name='csrf-token']").attribute('content').text, :'X-Requested-With' => 'XMLHttpRequest' }
 else
-  # algumas páginas não tem trailer mas tem primeiro video em /stages
+  # some pages don't have trailer but have first video available
   # ex.: https://teamtreehouse.com/library/rest-apis-with-express
   pipe_process.accumulator[:url] = url + '/stages'
 

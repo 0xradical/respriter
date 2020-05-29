@@ -199,7 +199,6 @@ else # nil ou BaseVariant
   ]
 end
 
-# status sempre é available mas as sessões não ...
 status = 'available'
 
 content[:prices]       = prices

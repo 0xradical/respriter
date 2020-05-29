@@ -37,7 +37,7 @@ services:
   database.napoleon.clspt:
     image: $DATABASE_IMAGE
     build:
-      context: ./database
+      context: ../napoleon-database
       dockerfile: Dockerfile
     ports:
       - 5434:5432
@@ -45,6 +45,7 @@ services:
       - envs/dev/database.env
       - envs/local/database.env
     volumes:
+      - ../napoleon-database:/database
       - database_data:/var/lib/postgresql/data:cached
 
   api.napoleon.clspt:
@@ -145,6 +146,8 @@ services:
       - 5432
     env_file:
       - envs/test/database.env
+    volumes:
+      - ../napoleon-database:/database
 
   proxy.test:
     image: classpert/napoleon_test_proxy

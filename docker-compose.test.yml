@@ -8,9 +8,9 @@ services:
       - envs/local/developer.env
     volumes:
       - ./web-app:/app
+      - ./envs:/app/envs
       - ./i18n:/app/config/locales
       - ./components:/app/app/assets/vue/components
-      - ./envs:/app/envs
       - $LOCAL_NODE_MODULES/app/node_modules
       - base_bundle:/home/developer/bundle:cached
       - base_node_modules:/home/developer/node_modules:cached
@@ -173,7 +173,7 @@ services:
     environment:
       - LOGSPOUT=ignore
     volumes:
-      - ./images/napoleon_database/seed.sql:/docker-entrypoint-initdb.d/z_seed.sql
+      - ./napoleon-database:/database
     ports:
       - 5432
 
@@ -301,7 +301,9 @@ services:
 
 volumes:
   base_bundle:
+    name: classpert_dev_base_bundle
   base_node_modules:
+    name: classpert_dev_base_node_modules
 
 networks:
   default:
