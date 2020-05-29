@@ -588,7 +588,7 @@ ja:
       find_course:
         header: "Find a course on Classpert.com"
         body_html: >-
-          Classpertのオンライン講義検索エンジンを使用して、受講したい講義を発見。 
+          Classpertのオンライン講義検索エンジンを使用して、受講したい講義を発見。
            <b>[コースに移動]</b>ボタンをクリックして、選択した講義に登録しましょう（クリックが登録されます）
       complete_course:
         header: "Complete the course"
@@ -789,13 +789,13 @@ ja:
       title_html: "%{tag} Courses"
       description_html: "Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions."
     social_share:
-      title_html: '%{tag} Courses'
+      title_html: "%{tag} Courses"
       description_html: Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions.
     index:
-      title_html: '%{tag} Courses'
+      title_html: "%{tag} Courses"
       description_html: Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions.
     show:
-      title_html: '%{tag} Courses'
+      title_html: "%{tag} Courses"
       description_html: Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions.
   posts:
     base:
@@ -845,7 +845,7 @@ ja:
   orphaned_profiles:
     show:
       meta:
-        title: '%{name} | Profile & Courses'
+        title: "%{name} | Profile & Courses"
         description: Check out %{name}'s profile on Classpert. Find all %{name}'s courses in only one place!
       instructor: Instructor
       are_you: Are you %{name}?
@@ -899,6 +899,7 @@ ja:
       teaching_at: teaching at
       text:
         1: "No instructors for subject %{subject}"
+        1_none: "No instructors"
   pages:
     dashboard_index:
       meta:

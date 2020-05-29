@@ -698,16 +698,16 @@ es:
           title_html: >-
             Califica tu experiencia. Ayuda a otros estudiantes al calificar <b>%{course} por %{provider}<b/>
         completion:
-          title: '¿Completaste el curso?'
+          title: "¿Completaste el curso?"
           values:
             yep: "Si"
             nope: "No"
         feedback:
-          title: '¿Desea agregar informaciones adicionales?'
+          title: "¿Desea agregar informaciones adicionales?"
           placeholder: Felicitaciones, sugerencias o críticas
         send: Enviar calificacion
       submission:
-        header: '¡Gracias por la calificación!'
+        header: "¡Gracias por la calificación!"
         body: >-
           Siempre estamos buscando mejorar nuestra plataforma y Tu opinión es esencial.
         link: Ir a la página de inicio
@@ -837,7 +837,7 @@ es:
         title: "%{name} | Perfil y Cursos"
         description: "Mira el perfil de %{name} en Classpert. Encuentra todos los cursos de %{name} en un solo lugar!"
       instructor: Instructor
-      are_you: '¿Eres %{name}?'
+      are_you: "¿Eres %{name}?"
       claim_profile: Reclamar este perfil
       about_me: Sobre el instructor
       courses: "Cursos"
@@ -845,10 +845,10 @@ es:
   orphaned_profiles:
     show:
       meta:
-        title: '%{name} | Perfil y Cursos'
+        title: "%{name} | Perfil y Cursos"
         description: Mira el perfil de %{name} en Classpert. Encuentra todos los cursos de %{name} en un solo lugar!
       instructor: Instructor
-      are_you: '¿Eres %{name}?'
+      are_you: "¿Eres %{name}?"
       claim_profile: Reclamar este perfil
       about_me: Sobre el instructor
       courses: Cursos
@@ -899,6 +899,7 @@ es:
       teaching_at: enseñando en
       text:
         1: "No instructors for subject %{subject}"
+        1_none: "No instructors"
   pages:
     dashboard_index:
       meta:

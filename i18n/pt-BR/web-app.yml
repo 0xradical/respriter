@@ -899,6 +899,7 @@ pt-BR:
       teaching_at: teaching at
       text:
         1: "No instructors for subject %{subject}"
+        1_none: "No instructors"
   pages:
     dashboard_index:
       meta:
