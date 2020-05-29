@@ -3,6 +3,7 @@ ifeq ("$(shell pwd)","/app")
 else
   MONOREPO_PATH := ..
   MAKE_BIN      := ../bin
+  SERVICES      := $(shell /bin/sh -c "cat $(MONOREPO_PATH)/docker-compose.yml | grep -e '\.clspt:$$' | sed -e 's/  //g' | sed -e 's/\://g' | sed '/volumes/d' | sed '/base/d'")
 
   include ../tasks/images.Makefile
   include ../tasks/docker.Makefile
@@ -11,9 +12,12 @@ else
   GITHUB_ACCESS_TOKEN ?= $(shell heroku config:get GITHUB_ACCESS_TOKEN --app $(HEROKU_WEB_APP_NAME)-prd)
   LOCAL_NODE_MODULES  ?= $(shell [ -f "$(MONOREPO_PATH)/.local_node_modules" ] && echo "./node_modules:" || echo "")
 
-  DOCKER         := docker
-  DOCKER_COMPOSE := LOCAL_NODE_MODULES=$(LOCAL_NODE_MODULES) GITHUB_ACCESS_TOKEN=$(GITHUB_ACCESS_TOKEN) $(DOCKER_COMPOSE_IMAGES) docker-compose -f ../docker-compose.yml
+  DOCKER              := docker
+  DOCKER_COMPOSE_VARS := LOCAL_NODE_MODULES=$(LOCAL_NODE_MODULES) GITHUB_ACCESS_TOKEN=$(GITHUB_ACCESS_TOKEN) $(DOCKER_COMPOSE_IMAGES)
+  DOCKER_COMPOSE      := $(DOCKER_COMPOSE_VARS) docker-compose -f ../docker-compose.yml
 endif
+
+.DEFAULT_GOAL := help
 
 help: ## Get help
 	@grep -hE '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'

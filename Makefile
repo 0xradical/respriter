@@ -1,11 +1,13 @@
 MONOREPO_PATH := .
 MAKE_BIN      := ./bin
+SERVICES      := $(shell /bin/sh -c "cat $(MONOREPO_PATH)/docker-compose.yml | grep -e '\.clspt:$$' | sed -e 's/  //g' | sed -e 's/\://g' | sed '/volumes/d' | sed '/base/d'")
 
 include tasks/envs.Makefile
 include tasks/images.Makefile
 include tasks/docker.Makefile
 include tasks/launcher.Makefile
 
+VOLUME_PREFIX       := classpert_dev
 GITHUB_ACCESS_TOKEN ?= $(shell heroku config:get GITHUB_ACCESS_TOKEN --app $(HEROKU_WEB_APP_NAME)-prd)
 LOCAL_NODE_MODULES  ?= $(shell [ -f "$(MONOREPO_PATH)/.local_node_modules" ] && echo "./node_modules:" || echo "")
 
@@ -21,6 +23,8 @@ endef
 DOCKER              := docker
 DOCKER_COMPOSE_VARS := LOCAL_NODE_MODULES=$(LOCAL_NODE_MODULES) GITHUB_ACCESS_TOKEN=$(GITHUB_ACCESS_TOKEN) $(DOCKER_COMPOSE_IMAGES)
 DOCKER_COMPOSE      := $(DOCKER_COMPOSE_VARS) docker-compose
+
+.DEFAULT_GOAL := help
 
 help: ## Get help
 	@grep -hE '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
@@ -55,16 +59,17 @@ reload-app: wipe-db up-persistence app-course-reindex ## Cleans database, reload
 wipe-db: $(LOCAL_ENV_FILES) ## Kill database container and volumes
 	$(DOCKER_COMPOSE) stop database.clspt
 	$(DOCKER_COMPOSE) rm -f database.clspt
-	$(DOCKER) volume rm $(shell basename `pwd`)_database_data; exit 0
+	$(DOCKER) volume rm $(VOLUME_PREFIX)_database_data; exit 0
 
 wipe-unnamed-volumes: ## (Very destructive) Removes all dangling volumes, except web-app's
 	@$(DOCKER) volume rm `docker volume ls -q -f dangling=true | sed '/classpert/d'`
 
 wipe-data: ## Deletes volumes with data like database, s3, elasticsearch (don't erase npm and bundler volumes)
-	@$(DOCKER) volume rm web-app_database_data;          exit 0;
-	@$(DOCKER) volume rm web-app_database_napoleon_data; exit 0;
-	@$(DOCKER) volume rm web-app_s3_data;                exit 0;
-	@$(DOCKER) volume rm web-app_search_data;            exit 0;
+	@cd .. && make -s 
+	@$(DOCKER) volume rm $(VOLUME_PREFIX)_database_data;          exit 0;
+	@$(DOCKER) volume rm $(VOLUME_PREFIX)_database_napoleon_data; exit 0;
+	@$(DOCKER) volume rm $(VOLUME_PREFIX)_s3_data;                exit 0;
+	@$(DOCKER) volume rm $(VOLUME_PREFIX)_search_data;            exit 0;
 
 volumes-show: ./images/volumes/ssh_host_ed25519_key ./images/volumes/ssh_host_rsa_key ## Share mounted volumes
 	@mkdir -p volumes
