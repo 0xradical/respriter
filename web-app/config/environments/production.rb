@@ -1,13 +1,14 @@
-Rails.application.configure do
+# frozen_string_literal: true
 
+Rails.application.configure do
   config.hosts << /.*\.?classpert(?:-staging)?\.com/
 
   # CORS
   config.middleware.insert_before 0, Rack::Cors do
     allow do
       origins /.*\.classpert\.com\Z/, /.*\.classpert-staging\.com\Z/
-      resource '*', headers: :any, credentials: true, expose: %w(Authorization),
-      methods: [:get, :put, :patch, :post, :delete, :options]
+      resource '*', headers: :any, credentials: true, expose: %w[Authorization],
+      methods: %i[get put patch post delete options]
     end
   end
 
@@ -61,7 +62,7 @@ Rails.application.configure do
   config.log_level = ENV.fetch('LOG_LEVEL') { :info }
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -71,7 +72,8 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = {
-    host: ENV.fetch('HOST', 'classpert.com')
+    host:     ENV.fetch('HOST', 'classpert.com'),
+    protocol: 'https'
   }
   config.action_mailer.smtp_settings = {
     address:              ENV['SMTP_ADDRESS'],
@@ -99,7 +101,7 @@ Rails.application.configure do
 
   # Use a different logger for distributed setups.
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)

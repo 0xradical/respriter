@@ -57,7 +57,7 @@ module App
       Dir[Rails.root.join('config', 'locales', '**', '*.yml')]
     config.i18n.available_locales = %w[en es pt-BR ja]
 
-    config.action_mailer.default_url_options = { host: 'classpert.com' }
+    config.action_mailer.default_url_options = { protocol: 'https', host: 'classpert.com' }
     config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
 
     Elements.configure do |elements_config|
