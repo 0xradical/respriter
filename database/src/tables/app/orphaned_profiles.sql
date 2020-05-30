@@ -20,6 +20,7 @@ CREATE TABLE app.orphaned_profiles (
   claimed_at                  timestamptz,
   claimed_by                  varchar,
   teaching_subjects           varchar[] DEFAULT '{}',
+  teaching_at                 varchar[] DEFAULT '{}',
   created_at                  timestamptz DEFAULT NOW() NOT NULL,
   updated_at                  timestamptz DEFAULT NOW() NOT NULL,
   marked_as_destroyed_at      timestamptz,

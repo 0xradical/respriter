@@ -11,20 +11,32 @@
       <div class='col-12'>
         <div class='el:amx-Bob el:amx-Pb(0.75em)'>
           <div class='row'>
-            <div class='col-6'>
+            <div class='col-12 col-sm-6'>
               <h1 class='el:amx-Fs(1.5em) el:amx-P(0.5em|0)'>
                 <%= t('.h1') %>
               </h1>
             </div>
-            <div class='offset-2 col-4 el:amx-Ta(r)'>
-              <div class='el:amx-D(ib) el:amx-Ta(l) el:amx-Fs(0.875em) el:amx-Ml(2em)'>
+            <div class='col-12 col-sm-6 offset-md-2 col-md-4 el:amx-Ta(r)@>lg'>
+              <div class='el:amx-D(ib) el:amx-Ta(l) el:amx-Fs(0.875em)'>
+                <div class='el:amx-D(ib) el:amx-Pr(0.75em)' style='width:50%'>
+                <span class='el:amx-Mb(0.5em)'><%= t('.filter_by_subject.label') %></span>
+                <%= form_tag instructors_path, class: 'el:amx-Mb(0) el:amx-Mt(0.5em)', method: 'get' do %>
+                  <%= select_tag 'teaching_at',
+                    options_for_select(Provider.published.map(&:name)),
+                    prompt: t('.filter_by_subject.prompt'),
+                    style: 'width:100%;',
+                    onchange: 'this.form.submit();' %>
+                <% end %>
+                </div><div class='el:amx-D(ib)' style='width:50%;'>
                 <span class='el:amx-Mb(0.5em)'><%= t('.filter_by_subject.label') %></span>
                 <%= form_tag instructors_path, class: 'el:amx-Mb(0) el:amx-Mt(0.5em)', method: 'get' do %>
                   <%= select_tag 'teaching_subjects',
-                    options_for_select(I18n.backend.send(:translations)[:en][:tags].map { |k,v|  [v,k ]},params[:teaching_subjects]),
+                    options_for_select(I18n.backend.send(:translations)[:en][:tags].map { |k,v|  [v,k]},params[:teaching_subjects]),
                     prompt: t('.filter_by_subject.prompt'),
+                    style: 'width:100%;',
                     onchange: 'this.form.submit();' %>
                 <% end %>
+                </div>
               </div>
             </div>
           </div>
@@ -35,22 +47,61 @@
     <div class='row el:amx-Mt(1em)'>
       <% if @instructors.any? %>
         <% @instructors.each do |instructor| %>
-          <div class='col-lg-4'>
+          <div class='col-12 col-sm-6 col-md-4 col-lg-3'>
             <%= link_to orphaned_profile_path(instructor.slug) do %>
-              <div class='el:m-sticker el:amx-Mb(1em)'>
-                <%= image_tag instructor.avatar_url, class: 'el:m-sticker__media el:m-sticker__media--lg', style: 'border-radius:50%' %><span class='el:m-sticker__text'>
-                  <span class='el:m-sticker__primary-label'><%= truncate(instructor.name, length: 30) %></span>
-                  <span class='el:m-sticker__secondary-label'>
-                    <span class='el:amx-Fs(0.875em)'><%= t('.teaching_at') %></span>
-                    <ul class='el:amx-Ml(0.5em) el:m-list el:m-list--hrz'>
-                      <% instructor.courses.joins(:provider).distinct('providers.name').pluck('providers.name').each do |key| %>
-                        <li class='el:amx-Mr(0.5em)'>
-                          <%= svg_use('providers', key.downcase.gsub(' ','-'), {width: '1em', height: '1em'}) %>
-                        </li>
-                      <% end %>
-                    </ul> <span class='el:amx-C_fgM'>|</span> &nbsp; <%= t('.courses_count', count: instructor.courses.count )%>
-                  </span>
+              <% subject = (instructor.teaching_subjects & RootTag.all.map(&:id))&.first %>
+              <div class="el:o-profile-vcard el:amx-Mt(1.25em)">
+                <div 
+                  class="el:o-profile-vcard__cover-slot" 
+                  style='<%= "background-image:url(#{asset_pack_path('media/images/' + subject + '.jpg')})" if subject %>'></div>
+                <div class="el:o-profile-vcard__avatar-slot">
+                  <%= image_tag instructor.avatar_url, style: 'border-radius:50%;width:100%;height:100%', alt: instructor.name %>
+                </div>
+                <span class="el:o-profile-vcard__title">
+                  <%= truncate(instructor.name, length: 26) %>
                 </span>
+                <div class="el:o-profile-vcard__head-slot">
+                  <ul class='el:m-list el:m-list--hrz'>
+                    <% instructor.teaching_at.each do |key| %>
+                      <li class='el:amx-Mr(0.5em)'>
+                        <%= svg_use('providers', key.downcase.gsub(' ','-'), {width: '1em', height: '1em'}) %>
+                      </li>
+                    <% end %>
+                    <% if instructor.website %>
+                      <li>
+                        <%= svg_use('icons', 'website', {width: '1em', height: '1em' }) %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+                <div class="el:o-profile-vcard__body-slot">
+                  <div class="el:amx-D(f)">
+                    <svg
+                      width="0.75em"
+                      height="0.75em"
+                      class="el:amx-Mr(0.5em) el:amx-Fi_fgM"
+                    >
+                      <use xlink:href="#icons-camera" />
+                    </svg>
+                      <span class="el:amx-Fs(0.75em) el:amx-C_fgM"><%= t('.courses_count', count: instructor.courses.count )%></span>
+                  </div>
+                  <div class="el:amx-D(f) el:amx-Mt(0.5em)">
+                    <svg
+                      width="0.75em"
+                      height="0.75em"
+                      class="el:amx-Mr(0.5em) el:amx-Fi_fgM"
+                    >
+                    <use xlink:href="#icons-monitor-gear" />
+                    </svg>
+                    <span class="el:amx-Fs(0.75em) el:amx-C_fgM">
+                      <% if subject %>
+                        <%= t("tags.#{subject}")%>
+                      <% else %>
+                        <%= t("dictionary.not_available")%>
+                      <% end %>
+                    </span>
+                  </div>
+                </div>
               </div>
             <% end %>
           </div>
