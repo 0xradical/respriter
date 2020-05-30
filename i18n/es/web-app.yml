@@ -895,6 +895,9 @@ es:
       filter_by_subject:
         label: by subject
         prompt: Seleccionar temas
+      filter_by_elearning_platform:
+        label: por plataformas de cursos
+        prompt: Seleccione una plataforma
       courses_count: "%{count} courses"
       teaching_at: enseñando en
       text:

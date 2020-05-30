@@ -940,6 +940,9 @@ en:
       filter_by_subject:
         label: by subject
         prompt: Select a subject
+      filter_by_elearning_platform:
+        label: by e-learning platform
+        prompt: Select a platform
       courses_count: "%{count} courses"
       teaching_at: teaching at
       text:

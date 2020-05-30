@@ -588,8 +588,7 @@ pt-BR:
       find_course:
         header: "Encontre um curso via Classpert.com"
         body_html: >-
-          Use o buscador da Classpert para encontrar o curso que você deseja fazer.
-          Clique em <b>"Ir para o curso"</b> e inscreva-se no curso escolhido (seu clique ficará registrado)
+          Use o buscador da Classpert para encontrar o curso que você deseja fazer. Clique em <b>"Ir para o curso"</b> e inscreva-se no curso escolhido (seu clique ficará registrado)
       complete_course:
         header: "Complete o curso"
         body_html: >-
@@ -845,7 +844,7 @@ pt-BR:
   orphaned_profiles:
     show:
       meta:
-        title: "%{name} | Perfil e Cursos"
+        title: '%{name} | Perfil e Cursos'
         description: Veja o perfil de %{name} na Classpert. Encontre todos os cursos de %{name} em um só lugar!
       instructor: Instrutor
       are_you: Você é %{name}?
@@ -895,6 +894,9 @@ pt-BR:
       filter_by_subject:
         label: by subject
         prompt: Select a subject
+      filter_by_elearning_platform:
+        label: por plataforma de cursos
+        prompt: Selecione uma plataforma
       courses_count: "%{count} courses"
       teaching_at: teaching at
       text:
