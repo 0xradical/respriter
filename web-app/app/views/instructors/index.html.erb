@@ -17,13 +17,16 @@
               </h1>
             </div>
             <div class='col-12 col-sm-6 offset-md-2 col-md-4 el:amx-Ta(r)@>lg'>
+              <% if params[:teaching_at] || params[:teaching_subjects] %>
+                <span class='el:amx-Fs(0.75em) el:amx-C_er'><%= link_to "clear filter", instructors_path %></span>
+              <% end %>
               <div class='el:amx-D(ib) el:amx-Ta(l) el:amx-Fs(0.875em)'>
                 <div class='el:amx-D(ib) el:amx-Pr(0.75em)' style='width:50%'>
-                <span class='el:amx-Mb(0.5em)'><%= t('.filter_by_subject.label') %></span>
+                <span class='el:amx-Mb(0.5em)'><%= t('.filter_by_elearning_platform.label') %></span>
                 <%= form_tag instructors_path, class: 'el:amx-Mb(0) el:amx-Mt(0.5em)', method: 'get' do %>
                   <%= select_tag 'teaching_at',
-                    options_for_select(Provider.published.map(&:name)),
-                    prompt: t('.filter_by_subject.prompt'),
+                    options_for_select(["Pluralsight", "Coursera", "SkillShare", "Linkedin Learning", "Udemy", "Udacity", "Edx", "Treehouse", "Platzi"], params[:teaching_at]),
+                    prompt: t('.filter_by_elearning_platform.prompt'),
                     style: 'width:100%;',
                     onchange: 'this.form.submit();' %>
                 <% end %>
