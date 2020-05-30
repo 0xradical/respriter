@@ -1,4 +1,0 @@
-Sitemap: https://classpert.com/sitemap.xml.gz
-
-User-agent: *
-Disallow: /forward/
