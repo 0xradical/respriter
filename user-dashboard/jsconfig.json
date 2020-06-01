@@ -6,7 +6,7 @@
     "module": "commonjs",
     "baseUrl": ".",
     "paths": {
-      "~external/*": ["./src/components/external/src/*"],
+      "~external/*": ["./../components/src/*"],
       "~utils": ["./src/lib/utils/index.js"],
       "~utils/*": ["./src/lib/utils/*"],
       "~validations": ["./src/lib/validations/index.js"],
@@ -17,5 +17,5 @@
       "~config/*": ["./src/config/*"]
     }
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "./../components/src/**/*"]
 }
