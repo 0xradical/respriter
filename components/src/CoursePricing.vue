@@ -6,13 +6,7 @@
       v-if="course.subscription_type && trialCallout && hasTrial"
     >
       <span
-        class="
-        el:m-tag
-        el:m-tag--bold
-        el:m-tag--xxs
-        el:m-tag--primary-variant-flat
-        el:amx-D(ib)
-        "
+        class="el:m-tag el:m-tag--bold el:m-tag--xxs el:m-tag--primary-variant-flat el:amx-D(ib)"
       >
         {{ trialLocale }} {{ $t("dictionary.free_trial") }}
       </span>
@@ -45,7 +39,7 @@
       <div class="el:amx-D(f)">
         <span
           class="el:m-label__text el:amx-Fs(0.625em) el:amx-Fw(b) el:amx-C_fg el:amx-Ta(r) el:amx-Pr(0.25em)"
-          style="flex:1;"
+          style="flex: 1;"
         >
           + {{ $t("dictionary.pricing.all_courses") }}
         </span>
@@ -59,7 +53,7 @@
               'el:amx-C_fg'
             ]"
             name="question"
-            style="flex: 0 0 1em"
+            style="flex: 0 0 1em;"
           >
           </icon>
         </span>
@@ -103,7 +97,7 @@
       icon: Icon
     },
     mounted() {
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         if (this.$refs.tooltip) {
           tippy(this.$refs.tooltip, {
             content: this.tooltipContent

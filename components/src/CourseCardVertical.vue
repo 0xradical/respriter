@@ -6,67 +6,63 @@
         :rootClasses="['el:amx-W(100%)']"
       ></video-preview>
     </div>
-    <div class="el:o-vcard__content el:amx-Pos(r)">
-      <div class="el:m-label el:amx-M(0.75em|0)">
-        <svg class="el:m-label__icon">
-          <use :xlink:href="`#providers-${course.provider_slug}`" />
+    <div class="el:o-vcard__content el:amx-D(f) el:amx-FxDi(c)">
+      <div class="el:amx-Mb(0.5em) el:amx-D(f)">
+        <svg width="0.875em" height="0.875em" class="el:amx-Mr(0.25em)">
+          <use :xlink:href="`#providers-${course.provider_slug}`"></use>
         </svg>
-        <span class="el:m-label__text">{{ course.provider_name }}</span>
+        <span class="el:amx-Fs(0.75em) el:amx-C_fg">{{
+          course.provider_name
+        }}</span>
       </div>
 
-      <div class="el:m-text-clipbox el:amx-Mb(0.5em)">
+      <div
+        class="el:m-text-clipbox el:m-text-clipbox--centered el:amx-Mb(0.5em)"
+      >
         <div
-          class="el:amx-Fs(0.875em) el:m-text-clipbox__text
-        el:m-text-clipbox__text--bold
-        el:m-text-clipbox__text--3-lined"
+          class="el:amx-Fs(0.875em) el:m-text-clipbox__text el:m-text-clipbox__text--bold"
         >
           {{ course.name }}
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;" class="el:amx-Mb(0.75em)">
-        <div style="width:50%;">
-          <div
-            v-if="instructor"
-            class="el:amx-D(f) el:m-label el:amx-C_fg el:amx-M(0.75em|0) el:amx-Fs(0.75em)"
-          >
-            <icon
-              :iconClasses="[
-                'el:m-label__icon',
-                'el:amx-Fs(0.8em)',
-                'el:amx-Fi_fg',
-                'el:amx-Mr(0.25em)'
-              ]"
-              name="id-badge"
-              style="flex: 0 0 1em"
+      <div class="el:amx-Mt(a) el:amx-Mb(0.625em) el:amx-D(f) el:amx-FxAi(c)">
+        <div class="el:amx-W(50%)">
+          <div v-if="instructor" class="el:amx-D(f) el:amx-Mb(0.625em)">
+            <svg
+              width="0.75em"
+              height="0.75em"
+              style="flex: 0 0 0.75em;"
+              class="el:amx-Fi_fgM el:amx-Mr(0.5em)"
             >
-            </icon>
-            <div
-              class="el:m-label__text el:amx-D(ib)"
-              style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: calc(100% - 1.25em); position: relative; top: 1px;"
+              <use xlink:href="#icons-id-badge"></use>
+            </svg>
+            <a
+              class="el:amx-Fs(0.75em) el:amx-D(ib) el:amx-C_fg el:cmx-text-trunc"
+              style="max-width: calc(100% - 1.25em);"
+              v-if="instructor.profile_path"
+              :href="instructor.profile_path"
             >
-              <a v-if="instructor.profile_path" :href="instructor.profile_path">
-                {{ instructor.name }}
-              </a>
-              <span v-else>{{ instructor.name }}</span>
-            </div>
+              {{ instructor.name }}
+            </a>
+            <span
+              class="el:amx-Fs(0.75em) el:amx-D(ib) el:amx-C_fg el:cmx-text-trunc"
+              style="max-width: calc(100% - 1.25em);"
+              v-else
+              >{{ instructor.name }}</span
+            >
           </div>
 
-          <div
-            v-if="course.effort"
-            class="el:m-label el:amx-C_fg el:amx-M(0.75em|0) el:amx-Fs(0.75em)"
-          >
-            <icon
-              :iconClasses="[
-                'el:m-label__icon',
-                'el:amx-Fs(0.8em)',
-                'el:amx-Fi_fg'
-              ]"
-              name="clock"
-              style="flex: 0 0 1em"
+          <div v-if="course.effort" class="el:amx-D(f)">
+            <svg
+              width="0.75em"
+              height="0.75em"
+              style="flex: 0 0 0.75em;"
+              class="el:amx-Fi_fgM el:amx-Mr(0.5em)"
             >
-            </icon>
-            <span class="el:m-label__text">
+              <use xlink:href="#icons-clock"></use>
+            </svg>
+            <span class="el:amx-Fs(0.75em) el:amx-C_fgM el:amx-D(ib)">
               {{
                 $t(
                   `datetime.distance_in_words.x_hours.${
@@ -79,12 +75,12 @@
           </div>
         </div>
 
-        <div style="width:50%;">
+        <div class="el:amx-W(50%)">
           <course-pricing :course="course"></course-pricing>
         </div>
       </div>
 
-      <div class="el:amx-Pos(a) el:amx-W(100%)" style="bottom: 0">
+      <div class="el:amx-Mt(a)">
         <a
           class="btn btn--primary-border btn--xs btn--block"
           rel="nofollow"

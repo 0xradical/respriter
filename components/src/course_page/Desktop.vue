@@ -15,8 +15,8 @@
               <div class="">
                 <course-provider
                   :rootClasses="['el:amx-Mb(0.5em)']"
-                  :logoClasses="['el:amx-Fs(1.25em)']"
-                  :nameClasses="['el:amx-Fs(0.875em)']"
+                  :logoClasses="['el:amx-Fs(1.75em) el:amx-Mr(0.25em)']"
+                  :nameClasses="['el:amx-Fs(0.75em)']"
                   :course="course"
                 >
                 </course-provider>
@@ -25,14 +25,16 @@
                   :course="course"
                   :titleClasses="['el:amx-Fs(1.5em)']"
                   :lines="3"
+                  :hyperlink="false"
+                  tag="h1"
                 >
                 </course-title>
               </div>
             </div>
           </div>
           <div class="col-3 el:amx-D(f)">
-            <div style="position:relative;flex:1;">
-              <div style="position:absolute; bottom: 0; width: 100%;">
+            <div style="position: relative; flex: 1;">
+              <div style="position: absolute; bottom: 0; width: 100%;">
                 <course-pricing
                   :course="course"
                   :priceClasses="['el:amx-Fs(1.8em)']"
@@ -111,7 +113,8 @@
                   :course="course"
                   :rootClasses="['el:amx-Mt(1.5em)']"
                   :attributeClasses="['el:amx-Mb(1.125em)']"
-                  :attributeIconClasses="['el:amx-Mr(0.5em)']"
+                  :attributeIconClasses="['el:amx-Fs(1.5em) el:amx-Mr(0.5em)']"
+                  :attributeValueClasses="['el:amx-Fs(0.875em)']"
                   :showUnavailable="false"
                 >
                 </course-attribute-list>

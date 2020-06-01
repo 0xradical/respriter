@@ -36,12 +36,12 @@
       <div class="row">
         <div class="el:amx-D(n)@<sm col-lg-3">
           <span
-            style="font-size:0.875em;display:inline-block;line-height:1.15em;padding:20px 0"
+            class="el:amx-D(ib) el:amx-Fs(0.875em) el:amx-Lh(1) el:amx-P(1.25em)"
           ></span>
         </div>
         <div class="col-12 col-lg-9">
           <span
-            style="display:inline-block;line-height:1em;font-size:0.875em;padding:20px 0;width:100%"
+            class="el:amx-D(ib) el:amx-W(100%) el:amx-Fs(0.875em) el:amx-Lh(1) el:amx-P(1.25em|0)"
           >
             {{
               $t("dictionary.search_results", {
@@ -119,7 +119,7 @@
                 href="#"
                 class="el:amx-C_er el:amx-Fw(b) el:amx-Fs(0.625em)"
                 @click.prevent="clearFilters"
-                style="margin: auto 0;text-align:right;"
+                style="margin: auto 0; text-align: right;"
               >
                 {{ $t("dictionary.clear_all_filters") }}
               </a>
@@ -143,18 +143,22 @@
               <span class="el:amx-D(ib) el:amx-Mr(0.25em)">{{
                 $t("dictionary.sort_by")
               }}</span>
-              <select
-                :value="orderCurrentOption.key"
-                @change="sortByChanged({ key: $event.target.value })"
-              >
-                <option
-                  v-for="option in orderOptions"
-                  :key="option.key"
-                  :value="option.key"
+              <div class="el:m-select el:amx-D(ib)">
+                <select
+                  :value="orderCurrentOption.key"
+                  class="el:amx-Fs(0.75em)"
+                  style="width: 130px;"
+                  @change="sortByChanged({ key: $event.target.value })"
                 >
-                  {{ $t(`dictionary.${option.i18n_key}`) }}
-                </option>
-              </select>
+                  <option
+                    v-for="option in orderOptions"
+                    :key="option.key"
+                    :value="option.key"
+                  >
+                    {{ $t(`dictionary.${option.i18n_key}`) }}
+                  </option>
+                </select>
+              </div>
             </span>
             <a
               class="el:amx-C_pr el:amx-Fw(b) el:amx-Ws(nw)"
@@ -229,7 +233,7 @@
         isMobile: false,
         orderCurrentOption: this.orderOptionByKey("rel"),
         orderOptionsToggled: false,
-        orderOptionsToggle: function(callback) {
+        orderOptionsToggle: function (callback) {
           this.orderOptionsToggled = !this.orderOptionsToggled;
           callback();
         }
@@ -297,7 +301,7 @@
       // otherwise will double trigger record fetching
       this.$watch(
         "params",
-        function(nVal, oVal) {
+        function (nVal, oVal) {
           if (!_.isEqual(nVal, oVal)) {
             this.fetchResults();
           }
@@ -401,7 +405,7 @@
           }
         ]);
       },
-      defaultParams: function(currentQuery) {
+      defaultParams: function (currentQuery) {
         return {
           order: {},
           filter: {
@@ -429,8 +433,8 @@
         window.history.replaceState({}, "foo", url.replace(".json", ""));
 
         vm.isFetchingRecords = true;
-        fetch(url, { method: "GET" }).then(function(resp) {
-          resp.json().then(function(json) {
+        fetch(url, { method: "GET" }).then(function (resp) {
+          resp.json().then(function (json) {
             vm.$store.commit("setData", json);
             vm.isFetchingRecords = false;
           });
