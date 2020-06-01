@@ -1,7 +1,7 @@
 <template>
   <div class="el:o-hcard">
     <div class="el:o-hcard__slot-0 el:amx-Mr(0.75em)">
-      <div style="width:12.5em">
+      <div style="width: 12.5em;">
         <video-preview :course="course"></video-preview>
       </div>
     </div>
@@ -9,8 +9,8 @@
     <div class="el:o-hcard__slot-1">
       <course-provider
         :rootClasses="['el:amx-Mb(0.5em)']"
-        :logoClasses="['el:amx-Fs(1.25em)']"
-        :nameClasses="['el:amx-Fs(0.875em)']"
+        :logoClasses="['el:amx-Fs(1.75em) el:amx-Mr(0.25em)']"
+        :nameClasses="['el:amx-Fs(0.75em)']"
         :course="course"
       >
       </course-provider>
@@ -20,8 +20,8 @@
       <div class="el:amx-Mt(a)">
         <course-attribute
           icon="id-badge"
-          :iconClasses="['el:amx-Fs(0.75em) el:amx-Fi_fgM']"
-          :valueClasses="['el:amx-Fs(0.75em) el:amx-C_fgM']"
+          :iconClasses="['el:amx-Fi_fgM']"
+          :labelClasses="['el:amx-C_fgM']"
           v-if="instructor"
         >
           <a v-if="instructor.profile_path" :href="instructor.profile_path">
@@ -32,8 +32,8 @@
         <course-attribute
           icon="clock"
           :rootClasses="[instructor && 'el:amx-Mt(0.25em)']"
-          :iconClasses="['el:amx-Fs(0.75em) el:amx-Fi_fgM']"
-          :valueClasses="['el:amx-Fs(0.75em) el:amx-C_fgM']"
+          :iconClasses="['el:amx-Fi_fgM']"
+          :labelClasses="['el:amx-C_fgM']"
           v-if="course.effort"
         >
           {{
@@ -69,7 +69,7 @@
             class="el:amx-Fs(0.625em) btn btn--rounded btn--primary-border"
             :href="
               course.details_path ||
-                `/${course.provider_slug}/courses/${course.slug}`
+              `/${course.provider_slug}/courses/${course.slug}`
             "
             target="_blank"
           >

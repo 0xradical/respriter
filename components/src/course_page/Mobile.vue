@@ -13,8 +13,9 @@
           <div class="col">
             <div class="el:amx-D(f) el:amx-FxFd(c)">
               <course-provider
-                :logoClasses="['el:amx-Fs(1em)']"
-                :nameClasses="['el:amx-Fs(0.875em)']"
+                :rootClasses="['el:m-attribute--stretch']"
+                :logoClasses="['el:amx-Fs(1.25em) el:amx-Mr(0.25em)']"
+                :nameClasses="['el:amx-Fs(0.75em)']"
                 :course="course"
               >
               </course-provider>
@@ -27,6 +28,8 @@
               :course="course"
               :titleClasses="['el:amx-Fs(1.5em)']"
               :lines="5"
+              :hyperlink="false"
+              tag="h1"
             >
             </course-title>
           </div>
@@ -81,7 +84,8 @@
                   :course="course"
                   :rootClasses="['el:amx-Mt(1.5em)']"
                   :attributeClasses="['el:amx-Mb(1.125em)']"
-                  :attributeIconClasses="['el:amx-Mr(0.5em)']"
+                  :attributeIconClasses="['el:amx-Fs(1.25em) el:amx-Mr(0.5em)']"
+                  :attributeValueClasses="['el:amx-Fs(0.875em)']"
                   :showUnavailable="false"
                 >
                 </course-attribute-list>

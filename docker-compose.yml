@@ -12,9 +12,9 @@ services:
       - envs/local/base.env
     volumes:
       - ./web-app:/app
+      - ./envs:/app/envs
       - ./i18n:/app/config/locales
       - ./components:/app/app/assets/vue/components
-      - ./envs:/app/envs
       - $LOCAL_NODE_MODULES/app/node_modules
       - base_bundle:/home/developer/bundle:cached
       - base_node_modules:/home/developer/node_modules:cached
@@ -231,14 +231,14 @@ services:
 
   database.napoleon.clspt:
     image: $NAPOLEON_DATABASE_IMAGE
-    build: ./napoleon/database
+    build: ./napoleon-database
     env_file:
       - envs/dev/database-napoleon.env
       - envs/local/database-napoleon.env
     environment:
       - LOGSPOUT=ignore
     volumes:
-      - ./napoleon/database:/database
+      - ./napoleon-database:/database
       - database_napoleon_data:/var/lib/postgresql/data:cached
     ports:
       - 5434:5432

@@ -5,6 +5,10 @@ base)
   echo "napoleon"
   exit 0
   ;;
+app)
+  echo "napoleon"
+  exit 0
+  ;;
 anonymous-proxy)
   echo "anonymous.proxy.clspt"
   exit 0

@@ -1,11 +1,12 @@
-DOCKER_COMPOSE_PATH := $(shell which docker-compose)
+DOCKER_COMPOSE_PATH    := $(shell which docker-compose)
+DOCKER_CONTAINER_ALIAS ?= $(MAKE_BIN)/container_alias
 
 define only_outside_docker
 	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $1; fi;
 endef
 
 define docker_run_or_plain
-	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm $3 -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 `$(MAKE_BIN)/container_alias $1` $2; else $2; fi;
+	if [ -n "$(DOCKER_COMPOSE_PATH)" ]; then $(DOCKER_COMPOSE) run --rm $3 -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 `$(DOCKER_CONTAINER_ALIAS) $1` $2; else $2; fi;
 endef
 
 define docker_run_with_ports_or_plain

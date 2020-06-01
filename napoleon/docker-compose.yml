@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   napoleon: &napoleon
-    image: $APP_IMAGE
+    image: $NAPOLEON_APP_IMAGE
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,8 +13,8 @@ services:
   napoleon.clspt:
     <<: *napoleon
     env_file:
-      - envs/dev/napoleon.env
-      - envs/local/napoleon.env
+      - ../envs/dev/napoleon.env
+      - ../envs/local/napoleon.env
     environment:
       - VIRTUAL_HOST=napoleon.clspt
     ports:
@@ -26,32 +26,34 @@ services:
 
   worker.napoleon.clspt:
     <<: *napoleon
+    command: make worker
     env_file:
-      - envs/dev/napoleon.env
-      - envs/local/napoleon.env
+      - ../envs/dev/napoleon.env
+      - ../envs/local/napoleon.env
     depends_on:
       - s3.clspt
       - mail.clspt
       - database.napoleon.clspt
 
   database.napoleon.clspt:
-    image: $DATABASE_IMAGE
+    image: $NAPOLEON_DATABASE_IMAGE
     build:
-      context: ./database
+      context: ../napoleon-database
       dockerfile: Dockerfile
     ports:
       - 5434:5432
     env_file:
-      - envs/dev/database.env
-      - envs/local/database.env
+      - ../envs/dev/database-napoleon.env
+      - ../envs/local/database-napoleon.env
     volumes:
+      - ../napoleon-database:/database
       - database_data:/var/lib/postgresql/data:cached
 
   api.napoleon.clspt:
     image: postgrest/postgrest:v6.0.2
     env_file:
-      - envs/dev/api.env
-      - envs/local/api.env
+      - ../envs/dev/api-napoleon.env
+      - ../envs/local/api-napoleon.env
     environment:
       - VIRTUAL_HOST=api.napoleon.clspt
     ports:
@@ -64,8 +66,8 @@ services:
     image: classpert/minio
     command: minio server --address :80 /data
     env_file:
-      - envs/dev/minio.env
-      - envs/local/minio.env
+      - ../envs/dev/minio.env
+      - ../envs/local/minio.env
     environment:
       - VIRTUAL_HOST=s3.clspt
     volumes:
@@ -131,7 +133,7 @@ services:
   napoleon.test:
     <<: *napoleon
     env_file:
-      - envs/test/napoleon.env
+      - ../envs/test/napoleon.env
     depends_on:
       - s3.clspt
       - mail.clspt
@@ -140,11 +142,13 @@ services:
       - heavyload.service.test
 
   database.napoleon.test:
-    image: $DATABASE_IMAGE
+    image: $NAPOLEON_DATABASE_IMAGE
     ports:
       - 5432
     env_file:
-      - envs/test/database.env
+      - ../envs/test/database-napoleon.env
+    volumes:
+      - ../napoleon-database:/database
 
   proxy.test:
     image: classpert/napoleon_test_proxy

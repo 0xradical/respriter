@@ -3,8 +3,9 @@
     <div class="el:o-hcard-offcanvas__content-slot">
       <div class="el:o-hcard-offcanvas__header-slot el:amx-Mb(1.5em)">
         <course-provider
-          :logoClasses="['el:amx-Fs(1.5em)']"
-          :nameClasses="['el:amx-Fs(0.875em)']"
+          :rootClasses="['el:amx-Mb(0.5em)']"
+          :logoClasses="['el:amx-Fs(1.75em) el:amx-Mr(0.25em)']"
+          :nameClasses="['el:amx-Fs(0.75em)']"
           :course="course"
         >
         </course-provider>
@@ -29,19 +30,21 @@
         </course-title>
 
         <div class="el:amx-D(f)">
-          <video-preview
-            :course="course"
-            :rootClasses="['el:amx-Mr(1.75em)']"
-            style="flex: 50%;"
-          >
-          </video-preview>
+          <div style="flex: 50%;">
+            <video-preview
+              style="width: auto;"
+              :course="course"
+              :rootClasses="['el:amx-Mr(1.75em)']"
+            >
+            </video-preview>
+          </div>
 
           <course-attribute-list
             :course="course"
-            :rootClasses="['el:amx-D(f)', 'el:amx-FxJc(sb)', 'el:amx-FxDi(c)']"
-            :attributeClasses="['el:amx-Fs(0.875em)']"
-            :attributeIconClasses="['el:amx-Mr(0.5em)']"
-            style="flex: 50%"
+            :attributeClasses="['el:amx-Mb(1.125em)']"
+            :attributeIconClasses="['el:amx-Fs(1.5em) el:amx-Mr(0.5em)']"
+            :attributeValueClasses="['el:amx-Fs(0.875em)']"
+            style="flex: 50%;"
           >
           </course-attribute-list>
         </div>

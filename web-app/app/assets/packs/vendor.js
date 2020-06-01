@@ -9,7 +9,7 @@ import "swiper/dist/css/swiper.css";
 
 tippy.setDefaultProps({
   animation: "fade",
-  theme: "quero",
+  theme: "classpert",
   arrow: true
 });
 
