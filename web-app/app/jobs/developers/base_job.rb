@@ -26,7 +26,7 @@ module Developers
         end
         response = http.request(request)
 
-        if !response.code.to_i.in?([301, 302])
+        if !response.code.to_i.in?([301, 302, 308])
           response
         else
           if redirections > 5
