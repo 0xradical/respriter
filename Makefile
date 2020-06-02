@@ -29,6 +29,9 @@ DOCKER_COMPOSE      := $(DOCKER_COMPOSE_VARS) docker-compose
 help: ## Get help
 	@grep -hE '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
 
+check-network: $(LOCAL_ENV_FILES)
+	@[[ `$(DOCKER) network ls --format "{{.Name}}" | grep -w classpert` = "" ]] && $(DOCKER) network create classpert > /dev/null && echo 'Network classpert created'; exit 0
+
 configure: $(LOCAL_ENV_FILES) $(DATABASE_ENVS) ## Generates gitignored env files
 
 etc_hosts: $(LOCAL_ENV_FILES) ## Show domains that should be on /etc/hosts
@@ -100,4 +103,4 @@ volumes-hide: ## Close sharing of mounted volumes
 LESS_PRIORITY-%:
 	@:
 
-.PHONY: help configure etc_hosts setup setup-database setup-napoleon db-% napoleon_db-% app-% web-app-% reload-app wipe-db wipe-unnamed-volumes wipe-data volumes-show volumes-hide
+.PHONY: help check-network configure etc_hosts setup setup-database setup-napoleon db-% napoleon_db-% app-% web-app-% reload-app wipe-db wipe-unnamed-volumes wipe-data volumes-show volumes-hide
