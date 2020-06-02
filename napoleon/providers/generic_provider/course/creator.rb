@@ -38,7 +38,6 @@ content[:slug] = [
 
 pipe_process.accumulator = {
   kind:           'course',
-  schema_version: '1.0.0',
   unique_id:      Digest::SHA1.hexdigest("#{pipeline.data[:crawler_id]}-#{content[:id]}"),
   content:        content,
   relations:      Hash.new

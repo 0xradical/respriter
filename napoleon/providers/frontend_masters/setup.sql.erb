@@ -13,7 +13,16 @@ courses_template AS (
     '<%= dataset_id %>',
     '[
       {
-        "type": "Fetcher"
+        "http": {
+          "headers": {
+            "user_agent": "<%= user_agent %>"
+          }
+        },
+        "type": "Fetcher",
+        "script": {
+          "type": "ruby",
+          "source_code": <%= course_fetcher %>
+        }
       },
       {
         "type":"ResourceCreator"
@@ -35,7 +44,7 @@ INSERT INTO app.pipeline_templates (
   'Frontend Masters Sitemap Pipeline',
   jsonb_build_object(
     'next_pipeline_template_id', courses_template.id::varchar,
-    'sitemap_url',               'https://sitemap.url/sitemap.xml'
+    'sitemap_url',               '<%= sitemap_url %>'
   ),
   'sql',
   '
@@ -60,34 +69,26 @@ INSERT INTO app.pipeline_templates (
       initial_accumulator
     ) VALUES (
       $1.id,
-      jsonb_build_object(''sitemap_url'', $1.data->>sitemap_url)
+      jsonb_build_object(''url'', $1.data->>''sitemap_url'')
     );
-
     SELECT app.pipeline_call($1.id);
   ',
   'sql',
-  '
-    DELETE FROM app.pipe_processes
-    WHERE
-    pipeline_id = ($1.data->>''next_pipeline_id'')::uuid AND
-    EXISTS (
-      SELECT 1
-      FROM app.pipe_processes AS other
-      WHERE
-        other.pipeline_id                   = ($1.data->>''next_pipeline_id'')::uuid AND
-        other.id                            > pipe_processes.id                      AND
-        other.initial_accumulator->>''url'' = pipe_processes.initial_accumulator->>''url''
-    );
-
-    SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);
-  ',
+  '    SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);  ',
   '<%= dataset_id %>',
   '[
     {
-      "type": "Fetcher"
+      "type": "Fetcher",
+      "http": {
+        "headers": { "user_agent": "<%= user_agent %>" }
+      }
     },
     {
-      "type": "Demux"
+      "type": "Demux",
+      "script": {
+        "type":        "ruby",
+        "source_code": <%= sitemap_demux %>
+      }
     }
   ]'
 FROM courses_template;
