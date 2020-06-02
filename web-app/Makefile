@@ -57,13 +57,16 @@ sync-%: ## Sync web-app with napoleon given resources (courses or crawling_event
 hypernova: ./ssr/hypernova.js ## Compiles (if needed) and runs hypernova server side rendering server
 	node ssr/hypernova.js
 
+build-ssr:
+	@$(call docker_run_or_plain,base,npm run ssr)
+
 wait-for-elastic-search:
 	@$(call docker_run_or_plain,base,./bin/wait_for_elastic_search)
 
 ./ssr/hypernova.js: package-lock.json ./app/assets ./config/locales
-	npm run ssr
+	@make -s build-ssr
 
 LESS_PRIORITY-%:
 	@:
 
-.PHONY: help rails-server console hypernova LESS_PRIORITY-%
+.PHONY: help rails-server console hypernova build-ssr LESS_PRIORITY-%
