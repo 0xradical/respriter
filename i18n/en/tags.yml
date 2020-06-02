@@ -85,17 +85,17 @@ en:
     autodesk_fusion_360: Autodesk Fusion 360
     autonomous_system: Autonomous System
     aws: AWS & Certification
-    aws_api_gateway:  AWS API Gateway
+    aws_api_gateway: AWS API Gateway
     aws_cloudformation: AWS Cloudformation
     aws_cloudfront: AWS Cloudfront
-    aws_cloudsearch:  AWS Cloudsearch
+    aws_cloudsearch: AWS Cloudsearch
     aws_codedeploy: AWS Codedeploy
-    aws_cognito:  AWS Cognito
+    aws_cognito: AWS Cognito
     aws_dynamodb: AWS DynamoDB
-    aws_ec2:  AWS EC2
-    aws_glacier:  AWS Glacier
-    aws_iam:  AWS IAM
-    aws_rds:  AWS RDS
+    aws_ec2: AWS EC2
+    aws_glacier: AWS Glacier
+    aws_iam: AWS IAM
+    aws_rds: AWS RDS
     aws_s3: AWS S3
     aws_waf: AWS WAF
     azure: Azure
@@ -206,7 +206,7 @@ en:
     cplusplus_programming: C++
     creativity: Creativity
     creature_design: Creature Design
-    credit_analysis: Credit Analyis
+    credit_analysis: Credit Analysis
     critical_thinking: Critical Thinking
     crm: CRM (Customer Relationship Manager)
     crochet: Crochet
@@ -246,7 +246,7 @@ en:
     digital_image_processing: Digital Image Processing
     digital_marketing: Digital Marketing
     digital_media: Digital Media
-    digital_ocean:  DigitalOcean
+    digital_ocean: DigitalOcean
     digital_painting: Digital Painting
     discrete_random_variable: Discrete Random Variable
     discrete_random_variables: Discrete Random Variables
@@ -279,7 +279,7 @@ en:
     electronics: Electronics
     elicitation: Elicitation
     elixir_programming: Elixir
-    elliot_waves: Elliot Waves
+    elliott_waves: Elliott Waves
     emacs: Emacs
     embedded_linux: Embedded Linux
     embedded_systems: Embedded Systems
@@ -287,7 +287,7 @@ en:
     embroidery: Embroidery
     emotional_intelligence: Emotional Intelligence
     energy: Energy
-    energy_and_earth_sciences:  Energy and Earth Sciences
+    energy_and_earth_sciences: Energy and Earth Sciences
     engineering: Engineering
     english: English
     english_composition: English Composition
@@ -563,12 +563,12 @@ en:
     nursing: Nursing
     nutrition: Nutrition
     nutrition_and_wellness: Nutrition and Wellness
-    nuxtjs:  Nuxt.js
+    nuxtjs: Nuxt.js
     oauth: OAuth
     object_oriented_programming: Object Oriented Programming
     objective_c: Objective-C
     ocaml_programming: OCaml
-    office_365_educators: Ofiice 365 for Educators
+    office_365_educators: Office 365 for Educators
     office_productivity: Office Productivity
     omnisphere: Omnisphere
     online_education: Online Education
@@ -664,11 +664,11 @@ en:
     salsa_dancing: Salsa Dancing
     sanic: Sanic
     sap: SAP
-    sas_programming:  SAS Programming
+    sas_programming: SAS Programming
     sass: Sass
     scala_programming: Scala
     sccm: SCCM
-    scratch:  Scratch
+    scratch: Scratch
     scratch_games: Scratch Games
     scripting_for_testers: Scripting for Testers
     sculptris: Sculptris
@@ -718,7 +718,7 @@ en:
     sql: SQL
     sqlite: SQLite
     sscp_certification: SSCP Certification
-    stata:  Stata
+    stata: Stata
     statistical_modeling: Statistical Modeling
     statistical_thermodynamics: Statistical Thermodynamics
     statistics_and_probability: Statistics and Probability
@@ -736,8 +736,8 @@ en:
     supply_chain: Supply Chain
     survey: Survey
     suse: OpenSUSE
-    sustainability: Sustainability 
-    sveltejs:  Svelte.js
+    sustainability: Sustainability
+    sveltejs: Svelte.js
     swedish: Swedish
     swift: Swift
     swing_tranding: Swing Tranding

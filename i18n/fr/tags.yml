@@ -205,12 +205,12 @@ fr:
     cplusplus_programming: C++
     creativity: Creativity
     creature_design: Creature Design
-    credit_analysis: Credit Analyis
+    credit_analysis: Credit Analysis
     critical_thinking: Critical Thinking
     crm: CRM (Customer Relationship Manager)
     crochet: Crochet
     crystal_programming: Crystal
-    csharp_programming: 'C#'
+    csharp_programming: "C#"
     css: CSS
     cucumber_test_framework: Cucumber
     culture: Culture
@@ -278,7 +278,7 @@ fr:
     electronics: Electronics
     elicitation: Elicitation
     elixir_programming: Elixir
-    elliot_waves: Elliot Waves
+    elliott_waves: Elliott Waves
     emacs: Emacs
     embedded_linux: Embedded Linux
     embedded_systems: Embedded Systems
@@ -341,7 +341,7 @@ fr:
     front_end: Front End
     front_end_developer: Front End Developer
     fruity_loops: Fruity Loops
-    fsharp_programming: 'F#'
+    fsharp_programming: "F#"
     full_stack_developer: Full Stack Developer
     game_character_creation: Game Character Creation
     game_development: Game Development
@@ -567,7 +567,7 @@ fr:
     object_oriented_programming: Object Oriented Programming
     objective_c: Objective-C
     ocaml_programming: OCaml
-    office_365_educators: Ofiice 365 for Educators
+    office_365_educators: Office 365 for Educators
     office_productivity: Office Productivity
     omnisphere: Omnisphere
     online_education: Online Education
