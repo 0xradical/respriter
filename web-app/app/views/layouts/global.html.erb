@@ -22,12 +22,10 @@
     <meta name="author" content="Classpert">
     <meta name="copyright" content="Classpert">
     <meta name="designer" content="Classpert">
-    <%# https://yoast.com/hreflang-ultimate-guide/#hreflang-canonical %>
-    <link rel="canonical" href="<%= request.original_url %>">
 
     <!-- Global OpenGraph Meta -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:url" content="<%= current_url_without_query_params %>">
     <meta property="og:locale" content="<%= I18n.locale %>">
 
     <!-- Global Twitter Meta -->
@@ -40,19 +38,20 @@
 
     <!-- Custom SEO Meta with fallback  -->
     <% unless content_for?(:meta_hreflang) %>
-    <link rel="alternate" hreflang="en"         href="https://classpert.com<%= request.path %>">
-    <link rel="alternate" hreflang="pt-br"      href="https://pt-br.classpert.com<%= request.path %>">
-    <link rel="alternate" hreflang="es"         href="https://es.classpert.com<%= request.path %>">
-    <link rel="alternate" hreflang="x-default"  href="https://classpert.com<%= request.path %>"/>
+      <link rel="canonical" href="<%= current_url_without_query_params %>">
+      <link rel="alternate" hreflang="en"         href="https://classpert.com<%= request.path %>">
+      <link rel="alternate" hreflang="pt-br"      href="https://pt-br.classpert.com<%= request.path %>">
+      <link rel="alternate" hreflang="es"         href="https://es.classpert.com<%= request.path %>">
+      <link rel="alternate" hreflang="x-default"  href="https://classpert.com<%= request.path %>"/>
     <% else %>
-    <%= yield :meta_hreflang %>
+      <%= yield :meta_hreflang %>
     <% end %>
 
     <% unless content_for?(:meta_og_image) %>
       <meta property='og:image' content="<%= asset_url('/images/classpert-social.png') %>" />
       <meta name="twitter:image" content="<%= asset_url('/images/classpert-social.png') %>" />
     <% else %>
-    <%= yield :meta_og_image %>
+      <%= yield :meta_og_image %>
     <% end %>
 
     <!-- schema.org -->
