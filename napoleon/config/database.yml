@@ -8,7 +8,7 @@ postgres: &postgres
 
 development:
   <<: *postgres
-  host:     database_dev
+  host:     database.napoleon.clspt
   database: napoleon_dev
 
 test:
