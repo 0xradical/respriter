@@ -1,176 +1,176 @@
 ja:
   user:
-    greetings: "Hi, %{name}"
-    logout: Log out
-    next: Next
-    previous: Previous
-    submit: Submit
-    submitting: Submitting...
-    free: FREE
-    upload: Upload
-    generic_api_error: "Could not process request"
+    greetings: "こんにちは、 %{name} さん"
+    logout: ログアウト
+    next: 次へ
+    previous: 前へ
+    submit: 送信
+    submitting: 送信中...
+    free: 無料
+    upload: アップロード
+    generic_api_error: "リクエストを処理できませんでした"
     avatar:
-      submit: Submit
-      cancel: Cancel
+      submit: 送信
+      cancel: キャンセル
     tabs:
-      account_settings: Account Settings
-      promo: '$10 bonus'
-      interests: Interests
+      account_settings: アカウント設定
+      promo: 10ドルボーナス
+      interests: 興味・関心
     side_menus:
       account_settings:
-        profile: Profile
-        email: Email
-        password: Password
-        language: Language
+        profile: プロフィール
+        email: メールアドレス
+        password: パスワード
+        language: 言語
       promo:
-        get_a_10_bonus: '$10 bonus'
-        certificate: Certificate
-        paypal_account: Paypal Account
+        get_a_10_bonus: 10ドルボーナス
+        certificate: 修了証
+        paypal_account: Paypal アカウント
     sections:
       account_settings:
         email:
-          title: Edit Email
-          your_current_email_is: "<b>Your current email is</b>: %{email}"
-          awaiting_confirmation: "awaiting confirmation"
+          title: メールアドレスを編集
+          your_current_email_is: "<b>あなたの現在のメールアドレス </b>: %{email}"
+          awaiting_confirmation: "確認待ちです"
         password:
-          title: Change Password
-          info: Click on the button below and we'll send you an e-mail with instructions to reset your password
-          change_password_button: Change Password
-          success_message: An e-mail with the instructions on how to change your password was sent to %{email}
-          error_message: Ops! An error occurred while sending an e-mail to %{email}. Try again later
+          title: パスワードを変更
+          info: 下のボタンをクリックすると、パスワードをリセットする手順を記載したメールが送信されます
+          change_password_button: パスワードを変更
+          success_message: '%{email} にパスワードの変更方法を記載したメールが送信されました'
+          error_message: '%{email} へのメール送信中にエラーが発生しました。後でもう一度お試しください'
         profile:
           sections:
             personal:
               title: 個人情報
             instructor:
-              title: Profile Page
+              title: プロフィールページ
               sections:
                 privacy_settings: プライバシー設定
                 about_me: 自分について
                 social_media: ソーシャルメディア
-                elearning_platforms: Eラーニングプラットフォーム
-          title: プロファイルを編集
+                elearning_platforms: eラーニングプラットフォーム
+          title: プロフィールを編集
           success_message: プロフィールが正常に更新されました
-          error_message: Ops! An error occured when trying to update your profile
+          error_message: プロフィールの更新中にエラーが発生しました
         language:
           title: 言語を変更
       promo:
         get_a_10_bonus:
-          title: Fill in the information below to earn a $10 bonus
-          order_id: "Order ID"
-          price: Price
-          purchase_date: "Date"
-          bonus_status: "Status"
+          title: 以下の情報を入力して、10ドルボーナスを獲得しよう
+          order_id: "注文 ID"
+          price: 価格
+          purchase_date: "日付"
+          bonus_status: "ステータス"
           bonus_statuses:
-            initial: Analyzing
-            pending: Analyzing
-            locked: Analyzing
-            accepted: Paid
-            approved: Paid
-            rejected: Rejected
-            default: Analyzing
+            initial: 分析中
+            pending: 分析中
+            locked: 分析中
+            accepted: 支払い済み
+            approved: 支払い済み
+            rejected: 却下済み
+            default: 分析中
           bonus_statuses_additional:
-            pending: "Our team is already checking your information"
-            failed: "The provided information was rejected"
+            pending: "担当チームがあなたの情報を確認中です"
+            failed: "提供された情報は却下されました"
         certificate:
-          title: "Your certificate"
+          title: "あなたの修了証"
           change:
-            call_out: "Need to change your certificate ?"
-            link: "Send another file"
+            call_out: "修了証の変更が必要ですか？"
+            link: "他のファイルを送信"
         paypal_account:
-          title: "Your Paypal Account"
+          title: "あなたの Paypal アカウント"
           change:
-            call_out: "Need to change you Paypal account ?"
-            link: "Click here to change"
+            call_out: "Paypal アカウントを変更しますか？"
+            link: "変更する場合はここをクリック"
       interests:
-        info_text: Select some subjects to improve your experience on Classpert!
-        select_a_topic_title: Select subjects
-        interests_title: Interests
-        online_courses_info: "%{courses} online courses"
-        remove_interest: Remove
-        placeholder: Select subjects
-        select: Select
-        deselect: Deselect
+        info_text: 複数の科目を選択して、Classpert の体験を向上させよう！
+        select_a_topic_title: 科目を選択
+        interests_title: 興味・関心
+        online_courses_info: "%{courses} オンラインコース"
+        remove_interest: 削除する
+        placeholder: 科目を選択
+        select: 選択する
+        deselect: 選択を外す
     components:
       file_uploader:
-        file_label: "Choose file"
-        file_size_feedback: "%{file} exceeds the max allowed size of %{size}"
+        file_label: "ファイルを選択"
+        file_size_feedback: "%{file} は最大許容サイズ %{size} を超えています"
         progress_feedback:
-          loading: "Uploading your file ..."
-          error: "Oops! There was an error while uploading your file ..."
-          success: "File uploaded!"
+          loading: "ファイルをアップロード中..."
+          error: "ファイルのアップロード中にエラーが発生しました..."
+          success: "ファイルがアップロードが完了しました！"
       social_media_input:
-        placeholder: " rest of link / copy & paste link"
-        placeholder_mobile: "あなたのid / コピーと貼り付けリンク"
+        placeholder: "残りのリンク / コピー＆貼り付けリンク"
+        placeholder_mobile: "あなたの ID / コピー＆貼り付けリンク"
       help:
-        call_out: "Need any help ?"
-        link: "Contact us"
+        call_out: "サポートが必要ですか？"
+        link: "お問い合わせ"
     modals:
       promo:
-        title: "Thank you!"
-        body: We'll analyze your certificate. You can expect an update in <b>3 days</b>
+        title: "ありがとうございました！"
+        body: 修了証を分析します。通常 <b>3日</b> で結果が出ます。
         social:
-          callout: "Share with your friends:"
-          text: I found a course via Classpert and got a $10 bonus. Learn more at %{site}
+          callout: "友達と共有する:"
+          text: Classpert でコースを見つけ、10ドルのボーナスをもらいました。詳細こちらから %{site}
         button: "OK"
     forms:
       email:
-        email_field_label: New e-mail
-        email_field_placeholder: Enter your new e-mail
+        email_field_label: 新しいメールアドレス
+        email_field_placeholder: 新しいメールアドレスを入力してください
         email_field_feedback_text:
-        email_confirmation_field_label: Confirm your new e-mail
-        email_confirmation_field_placeholder: Enter your new e-mail
+        email_confirmation_field_label: 新しいメールアドレスを確認
+        email_confirmation_field_placeholder: 新しいメールアドレスを入力してください
         email_confirmation_field_feedback_text:
-        password_field_label: Password
-        password_field_placeholder: Enter your current password
+        password_field_label: パスワード
+        password_field_placeholder: 現在のパスワードを入力してください
         password_field_feedback_text:
-        submit: 提出する
+        submit: 送信
       profile:
         name_field_label: 名前
         name_field_placeholder: 名前を入力してください
         name_field_feedback_text:
         username_field_label: ユーザー名
-        username_field_placeholder: ユーザー名を選択
-        username_field_invalid_feedback_text: "有効なユーザー名である必要があります"
+        username_field_placeholder: ユーザー名を選択してください
+        username_field_invalid_feedback_text: "有効なユーザー名を入力してください "
         username_field_uniqueness_feedback_text:
-        shortbio_field_label: Headline
-        shortbio_field_placeholder: あなたが誰であるかを説明する短い文
-        country_field_label: 国名
-        country_field_select: 国を選択
+        shortbio_field_label: ヘッドライン
+        shortbio_field_placeholder: あなたを説明する短い文を入力してください
+        country_field_label: 国
+        country_field_select: 国を選択してください
         website_field_label: ウェブサイト
-        website_field_placeholder: ウェブサイトを追加
+        website_field_placeholder: あなたのウェブサイトを追加
         website_field_about: >-
-          Do you have your own website where you already sell your courses? Access our %{index_tool} and get listed on Classpert!
+          コースを提供するウェブサイトを既に持っていますか？%{index_tool} にアクセスして Classpert に掲載しましょう！
         instructor_field_label: 私は講師です
-        public_field_label: 全員に自分のプロフィールを表示
-        social_profiles_field_header: ソーシャルメディアのプロファイルを追加
+        public_field_label: 全体にプロフィールを公開
+        social_profiles_field_header: ソーシャルメディアのプロフィールを追加
         social_profiles_field_about: >-
-          それはあなたの仕事を示し、あなたの学生とつながる機会です。
+          あなたの仕事を紹介し、生徒と繋がる機会です。
         social_profiles_field_label: ソーシャルメディア
-        social_profiles_field_select: プロファイルを追加
-        social_profiles_field_select_0: プロファイルを追加
-        social_profiles_field_select_1: 1つのプロファイル。もっと追加
-        social_profiles_field_select_n: "%{n}つのプロファイル。もっと追加"
-        elearning_profiles_field_header: eラーニングプラットフォームのプロファイルを追加
+        social_profiles_field_select: プロフィールを追加
+        social_profiles_field_select_0: プロフィールを追加
+        social_profiles_field_select_1: プロフィールが 1 つ追加されました。もっと追加する
+        social_profiles_field_select_n: "%{n} のプロフィールが追加されました。もっと追加する"
+        elearning_profiles_field_header: eラーニングプラットフォームのプロフィールを追加
         elearning_profiles_field_about: >-
-          E-learning platforms where users can find your courses
-        elearning_profiles_field_label: Eラーニングプラットフォーム
-        elearning_profiles_field_select: プロファイルを追加
-        elearning_profiles_field_select_0: プロファイルを追加
-        elearning_profiles_field_select_1: 1つのプロファイル。もっと追加
-        elearning_profiles_field_select_n: "%{n}つのプロファイル。もっと追加"
-        about_field_label: Bio
+          ユーザーがあなたのコースを見つけることができる eラーニングのプラットフォーム
+        elearning_profiles_field_label: eラーニングプラットフォーム
+        elearning_profiles_field_select: プロフィールを追加
+        elearning_profiles_field_select_0: プロフィールを追加
+        elearning_profiles_field_select_1: プロフィールが 1 つ追加されました。もっと追加する
+        elearning_profiles_field_select_n: "%{n} のプロフィールが追加されました。もっと追加する"
+        about_field_label: 略歴
         about_field_placeholder: >-
-          Use this space to talk about yourself, your hobbies, work and achievements.
+          このスペースを利用して自分自身、趣味、仕事、成果などについて紹介しましょう。
         submit: 更新
       certificate:
-        certificate_field_label: "Upload your certificate"
+        certificate_field_label: "修了証をアップロード"
       promo:
-        price_field_label: "How much did you pay for your course?"
-        purchase_date_field_label: "When did you buy your course?"
-        order_id_field_label: "Order ID"
-        order_id_field_placeholder: "Order ID associated with the purchase"
+        price_field_label: "コースの料金はいくらでしたか？"
+        purchase_date_field_label: "コースはいつ購入しましたか？"
+        order_id_field_label: "注文 ID"
+        order_id_field_placeholder: "購入に関連する注文 ID"
       paypal_account:
-        paypal_email_field_label: "Paypal Account"
-        paypal_email_field_placeholder: "Paypal account that will get $10"
-        paypal_email_field_invalid_feedback_text: "Must be a valid email"
+        paypal_email_field_label: "Paypal アカウント"
+        paypal_email_field_placeholder: "10ドルを受け取る Paypal アカウント"
+        paypal_email_field_invalid_feedback_text: "有効なメールアドレスを入力してください"

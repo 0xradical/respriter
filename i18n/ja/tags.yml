@@ -1,13 +1,13 @@
 ja:
   tags:
-    3d_coat: 3D Coat
-    3d_printing: 3D Printing
+    3d_coat: 3D-Coat
+    3d_printing: 3Dプリンティング
     3ds_max: 3ds Max
-    a_b_testing: A/B Testing
+    a_b_testing: A/Bテスト
     ableton_live: Ableton Live
-    accounting: Accounting
-    achology: Achology
-    acrylic_painting: Acrylic Painting
+    accounting: 会計・経理
+    achology: アーコロジー (現代応用心理学)
+    acrylic_painting: アクリル画
     adobe_after_effects: Adobe After Effects
     adobe_animate: Adobe Animate
     adobe_audition: Adobe Audition
@@ -27,68 +27,68 @@ ja:
     adobe_photoshop_elements: Adobe Photoshop Elements
     adobe_portfolio: Adobe Portfolio
     adobe_prelude: Adobe Prelude
-    adobe_premiere_elements: Adobe Premiere Elements
+    adobe_premiere_elements: Adobe Premier Elements
     adobe_premiere_pro: Adobe Premiere Pro
     adobe_spark: Adobe Spark
     adobe_story: Adobe Story
     adobe_story_plus: Adobe Story Plus
     adobe_xd: Adobe Xd
-    adult_learning: Adult Learning
-    affiliate_marketing: Affiliate Marketing
+    adult_learning: アダルトラーニング
+    affiliate_marketing: アフィリエイトマーケティング
     affinity_designer: Affinity Designer
     affinity_photo: Affinity Photo
-    agile_methodology: Agile Methodology
-    agriculture: Agriculture
+    agile_methodology: アジャイルメソドロジー
+    agriculture: 農学
     ahrefs: Ahrefs
     ajax: Ajax
-    algebra: Algebra
-    algebra_and_geometry: Algebra and Geometry
-    algorithmic_trading: Algorithmic Trading
-    algorithms: Algorithms
-    american_english: American English
-    anatomy: Anatomy
-    anatomy_and_physiology: Anatomy and Physiology
-    android_development: Android Development
+    algebra: 代数学
+    algebra_and_geometry: 代数・幾何学
+    algorithmic_trading: アルゴリズム取引
+    algorithms: アルゴリズム
+    american_english: 英語 (アメリカ)
+    anatomy: 解剖学
+    anatomy_and_physiology: 解剖生理学
+    android_development: Android 開発
     angularjs: Angular
-    animal_health: Animal Health
-    animals_drawing: Animals Drawing
+    animal_health: 動物の健康
+    animals_drawing: 動物の絵
     ansible: Ansible
     ansys: Ansys
-    anthropology: Anthropology
+    anthropology: 人類学
     apache: Apache
     apache_ant: Apache Ant
     apache_camel: Apache Camel
     apache_hive: Apache Hive
     apache_maven: Apache Maven
     apache_spark: Apache Spark
-    app_monetization: App Monetization
+    app_monetization: アプリ収益化
     arangodb: ArangoDB
     arch_linux: Arch Linux
-    archaeology: Archaeology
-    architecture: Architecture
+    archaeology: 考古学
+    architecture: 建築学
     arduino: Arduino
-    art_culture: Art and Culture
+    art_culture: 芸術・文化
     articulate_storyline: Articulate Storyline
-    artificial_intelligence: Artificial Intelligence
+    artificial_intelligence: 人工知能 (AI)
     arts_and_design: 芸術・デザイン
     artstudio_pro: ArtStudio Pro
     asana: Asana
     aseprite: Aseprite
-    asp_net: ASP NET
-    assembly: Assembly
-    astronomy: Astronomy
-    atom_text_editor: Atom Text Editor
-    austrian_economics: Austrian Economics
+    asp_net: ASP.NET
+    assembly: アセンブリ
+    astronomy: 天文学
+    atom_text_editor: Atom テキストエディタ
+    austrian_economics: オーストリア経済学
     auth0: Auth0
-    autocad: Autocad
+    autocad: AutoCAD
     autodesk_fusion_360: Autodesk Fusion 360
-    autonomous_system: Autonomous System
-    aws: AWS & Certification
+    autonomous_system: 自律システム (AS)
+    aws: AWS 認定資格
     aws_api_gateway: AWS API Gateway
-    aws_cloudformation: AWS Cloudformation
-    aws_cloudfront: AWS Cloudfront
-    aws_cloudsearch: AWS Cloudsearch
-    aws_codedeploy: AWS Codedeploy
+    aws_cloudformation: AWS CloudFormation
+    aws_cloudfront: AWS CloudFront
+    aws_cloudsearch: AWS CloudSearch
+    aws_codedeploy: AWS CodeDeploy
     aws_cognito: AWS Cognito
     aws_dynamodb: AWS DynamoDB
     aws_ec2: AWS EC2
@@ -99,355 +99,355 @@ ja:
     aws_waf: AWS WAF
     azure: Azure
     babeljs: Babel.js
-    bachata_dance: Bachata Dance
+    bachata_dance: バチャータダンス
     backbonejs: Backbone.js
-    backend_development: Backend Development
-    bartending: Bartending
+    backend_development: バックエンド開発
+    bartending: バーテンダー
     basecamp: Basecamp
-    bash_programming: Bash Scripting Language
-    basic_math: Basic Math
-    basic_physics: Basic Physics
-    bass_guitar: Bass Guitar
-    beer_brewing: Beer Brewing
-    beethovens_piano: Beethoven's Piano
+    bash_programming: Bash スクリプト言語
+    basic_math: 基礎数学
+    basic_physics: 基礎物理学
+    bass_guitar: ベースギター
+    beer_brewing: ビール醸造
+    beethovens_piano: ベートーヴェンのピアノ
     behance: Behance
-    behavioral_sciences: Behavioral Sciences
-    big_data: Big Data
-    bing_ads: Bing Ads
-    biochemistry: Biochemistry
-    bioinformatics: Bioinformatics
-    biology: Biology
-    bird_drawing: Bird Drawing
+    behavioral_sciences: 行動科学
+    big_data: ビッグデータ
+    bing_ads: Bing 広告
+    biochemistry: 生化学
+    bioinformatics: バイオインフォマティクス
+    biology: 生物学
+    bird_drawing: 鳥の絵
     bitbucket: Bitbucket
-    bitcoin: Bitcoin
+    bitcoin: Bitcoin (ビットコイン)
     blender: Blender
-    blockchain_and_cryptocurrency: Blockchain and Cryptocurrency
-    board_games: Board Games
-    bodhran: Bodhran
+    blockchain_and_cryptocurrency: ブロックチェーンと暗号通貨
+    board_games: ボードゲーム
+    bodhran: バウロン
     bootstrap: Bootstrap
     bower: Bower
-    brand_building: Brand Building
-    brazilian_portuguese: Brazilian Portuguese
+    brand_building: ブランド構築
+    brazilian_portuguese: ポルトガル語 (ブラジル)
     browserify: Browserify
     buildbox: Buildbox
     builderall: Builderall
     bulma: Bulma
-    bunny_drawing: Bunny Drawing
+    bunny_drawing: うさぎの絵
     business: ビジネス
-    business_analysis: Business Analysis
-    business_intelligence: Business Intelligence
-    business_management: Business Management
+    business_analysis: 経営分析
+    business_intelligence: ビジネスインテリジェンス (BI)
+    business_management: ビジネスマネジメント
     c_programming: C
-    cake_decorating: Cake Decorating
+    cake_decorating: ケーキデコレーション
     cake_php: CakePHP
-    calculus: Calculus
-    calculus_2: Calculus 2
-    calisthenics: Calisthenics
+    calculus: 微分積分学
+    calculus_2: 微分積分学 2
+    calisthenics: 自重トレーニング
     canva: Canva
-    career_advice: Career Advice
-    career_development: Career Development
-    carpentry: Carpentry
-    cartoon_characters_drawing: Cartoon Characters Drawing
+    career_advice: キャリア支援
+    career_development: キャリアアップ
+    carpentry: 大工
+    cartoon_characters_drawing: 漫画キャラクターの絵
     cassandra: Cassandra
-    cat_drawing: Cat Drawing
+    cat_drawing: 猫の絵
     catia: CATIA
-    cel_animation: Cel Animation
+    cel_animation: セルアニメ
     centos: CentOS
-    character_animation: Character Animation
+    character_animation: キャラクターアニメーション
     chef: Chef
-    chemistry: Chemistry
-    chess: Chess
-    chibi_characters_drawing: Chibi Characters Drawing
-    chinese: Chinese
-    chord_progressions: Chord Progressions
-    chrome_developer_tools: Chrome Developer Tools
-    chrome_extension: Chrome Extension Development
+    chemistry: 化学
+    chess: チェス
+    chibi_characters_drawing: ちびキャラの絵
+    chinese: 中国語
+    chord_progressions: コード進行
+    chrome_developer_tools: Chrome デベロッパーツール
+    chrome_extension: Chrome 拡張機能開発
     cinema_4d: Cinema 4D
-    cisco: Cisco & Certification
-    civil_engineering: Civil Engineering
-    climate_change: Climate Change
-    clinical_nursing_skills: Clinical Nursing Skills
+    cisco: Cisco 認定資格
+    civil_engineering: 土木工学
+    climate_change: 気候変動
+    clinical_nursing_skills: 臨床看護スキル
     clip_studio_paint: Clip Studio Paint
     clojure_programming: Clojure
-    cloud_development: Cloud Development
-    coaching: Coaching
+    cloud_development: クラウド開発
+    coaching: コーチング
     cobol_programming: COBOL
     cocos_2d: Cocos2D
-    coded_ui: Coded UI
+    coded_ui: コード化された UI
     coffeescript: CoffeeScript
-    color_theory: Color Theory
-    communication: Communication
-    communication_skills: Communication Skills
+    color_theory: 色彩理論
+    communication: コミュニケーション
+    communication_skills: コミュニケーションスキル
     compass: Compass
-    compilers: Compilers
-    comptia_security: Comptia Security+
-    computational_biology: Computational Biology
-    computer_aided_design: Computer Aided Design (CAD)
-    computer_architecture: Computer Architecture
-    computer_design: Computer Design
-    computer_networking: Computer Networking
-    computer_networks: Computer Networks
+    compilers: コンパイラ
+    comptia_security: CompTIA Security+
+    computational_biology: 計算生物学
+    computer_aided_design: CAD
+    computer_architecture: コンピュータアーキテクチャ
+    computer_design: コンピュータ設計
+    computer_networking: コンピュータネットワーキング
+    computer_networks: コンピュータネットワーク
     computer_science: コンピュータサイエンス
-    computer_vision: Computer Vision
-    concept_art: Concept Art
-    constitution: Constitution
+    computer_vision: コンピュータビジョン
+    concept_art: コンセプトアート
+    constitution: 憲法
     construct_2: Construct 2
     construct_3: Construct 3
-    content_marketing: Content Marketing
-    conversational_english: Conversational English
+    content_marketing: コンテンツマーケティング
+    conversational_english: 英会話
     convertkit: ConvertKit
-    cooking: Cooking
-    copywriting: Copywriting
+    cooking: 料理
+    copywriting: コピーライティング
     cordova: Cordova
     core_os: CoreOS
-    course_development: Course Development
+    course_development: コース開発
     cpanel: cPanel
     cplusplus_programming: C++
-    creativity: Creativity
-    creature_design: Creature Design
-    credit_analysis: Credit Analyis
-    critical_thinking: Critical Thinking
-    crm: CRM (Customer Relationship Manager)
-    crochet: Crochet
+    creativity: クリエイティビティ
+    creature_design: 生き物のデザイン
+    credit_analysis: クレジット分析
+    critical_thinking: クリティカルシンキング
+    crm: カスタマーリレーションシップマネジメント (CRM)
+    crochet: かぎ針編み
     crystal_programming: Crystal
     csharp_programming: 'C#'
     css: CSS
     cucumber_test_framework: Cucumber
-    culture: Culture
-    curanderismo: Curanderismo
-    cute_drawings: Cute Drawings
-    cybersecurity: Cybersecurity
-    czech: Czech
+    culture: 文化
+    curanderismo: クランデリスモ
+    cute_drawings: かわいい絵
+    cybersecurity: サイバーセキュリティ
+    czech: チェコ
     d3_js: D3.js
-    dance: Dance
-    danish: Danish
-    data_analysis: Data Analysis
-    data_manipulation: Data Manipulation
-    data_mining: Data Mining
+    dance: ダンス
+    danish: デンマーク語
+    data_analysis: データ分析
+    data_manipulation: データ操作
+    data_mining: データマイニング
     data_science: データサイエンス
-    data_science_interview_prep: Data Science Interview Prep
-    data_scientist: Data Scientist
-    data_streaming: Data Streaming
-    data_structures_and_algorithms: Data Structures and Algorithms
-    data_structures_with_python: Data Structures with Python
-    data_visualization: Data Visualization
-    databases: Databases
+    data_science_interview_prep: データサイエンス面接準備
+    data_scientist: データサイエンティスト
+    data_streaming: データストリーミング
+    data_structures_and_algorithms: データ構造とアルゴリズム
+    data_structures_with_python: Pythonのデータ構造
+    data_visualization: データ可視化
+    databases: データベース
     davinci_resolve_14: Davinci Resolve 14
-    daz_studio: Daz Studio
+    daz_studio: DAZ Studio
     debian: Debian
-    decision_making: Decision Making
-    deep_learning: Deep Learning
-    design: Design
-    design_and_creativity: Design and Creativity
+    decision_making: 意思決定
+    deep_learning: ディープラーニング
+    design: デザイン
+    design_and_creativity: デザインとクリエイティビティ
     design_doll: Design Doll
-    design_sprint_foundations: Design Sprint Foundations
-    devops: Devops
-    digital_image_processing: Digital Image Processing
-    digital_marketing: Digital Marketing
-    digital_media: Digital Media
+    design_sprint_foundations: デザインスプリントの基礎
+    devops: DevOps
+    digital_image_processing: デジタル画像処理
+    digital_marketing: デジタルマーケティング
+    digital_media: デジタルメディア
     digital_ocean: DigitalOcean
-    digital_painting: Digital Painting
-    discrete_random_variable: Discrete Random Variable
-    discrete_random_variables: Discrete Random Variables
-    disease_and_disorder: Disease and Disorder
+    digital_painting: デジタルペインティング
+    discrete_random_variable: 離散型確率変数
+    discrete_random_variables: 離散型確率変数
+    disease_and_disorder: 病気と障害
     django: Django
-    djembe_drum: Djembe Drum
+    djembe_drum: ジャンベ (ドラム)
     docker: Docker
-    dog_drawing: Dog Drawing
-    doodle_art: Doodle Art
+    dog_drawing: 犬の絵
+    doodle_art: ドゥードゥルアート
     dotnet: Microsoft .NET
-    dragon_drawing: Dragon Drawing
-    drawing: Drawing
-    drawing_faces: Drawing Faces
-    drawing_for_kids: Drawing for Kids
-    drawing_legs: Drawing Legs
-    drawing_wildflowers: Drawing Wildflowers
+    dragon_drawing: ドラゴンの絵
+    drawing: 絵
+    drawing_faces: 顔の絵
+    drawing_for_kids: 子ども向けの絵
+    drawing_legs: 足の絵
+    drawing_wildflowers: 野草の絵
     dropbox: Dropbox
-    drums: Drums
+    drums: ドラム
     drupal: Drupal
     dynamics_crm: Dynamics CRM
-    ear_drawing: Ear Drawing
+    ear_drawing: 耳の絵
     eclipse: Eclipse IDE
-    economic_theories: Economic Theories
-    economics: Economics
-    economics_finance: Economics and Finance
+    economic_theories: 経済理論
+    economics: 経済学
+    economics_finance: 経済学・ファイナンス
     elasticsearch: Elasticsearch
-    electrical_engineering: Electrical Engineering
+    electrical_engineering: 電気工学
     electron: Electron JS
-    electron_configuration: Electron Configuration
-    electronics: Electronics
-    elicitation: Elicitation
+    electron_configuration: 電子配置
+    electronics: 電子工学
+    elicitation: エリシテーション
     elixir_programming: Elixir
-    elliot_waves: Elliot Waves
+    elliott_waves: エリオット波動
     emacs: Emacs
-    embedded_linux: Embedded Linux
-    embedded_systems: Embedded Systems
-    ember: EmberJS
-    embroidery: Embroidery
-    emotional_intelligence: Emotional Intelligence
-    energy: Energy
-    energy_and_earth_sciences: Energy and Earth Sciences
-    engineering: Engineering
-    english: English
-    english_composition: English Composition
-    english_verb_tenses: English - Verb Tenses
+    embedded_linux: 組み込み Linux
+    embedded_systems: 組み込みシステム
+    ember: Ember.js
+    embroidery: 刺繍
+    emotional_intelligence: 感情的知性 (EI)
+    energy: エネルギー
+    energy_and_earth_sciences: エネルギーと地球科学
+    engineering: 工学
+    english: 英語
+    english_composition: 英作文
+    english_verb_tenses: 英語 - 動詞時制
     enscape: Enscape
-    entrepreneurship: Entrepreneurship
-    environmental_science: Environmental Science
-    environmental_studies: Environmental Studies
+    entrepreneurship: 起業
+    environmental_science: 環境科学
+    environmental_studies: 環境学
     erlang_programming: Erlang
     es6: ES6
-    esl: ESL
-    esports: eSports
-    ethereum: Ethereum
-    ethical_hacking: Ethical Hacking
-    ethics: Ethics
+    esl: ESL (第二言語としての英語)
+    esports: eスポーツ (eSports)
+    ethereum: イーサリアム (Ethereum)
+    ethical_hacking: 倫理的ハッキング
+    ethics: 倫理学
     excel: Excel
-    exercise_physiology: Exercise Physiology
-    express_js: Express JS
-    extracellular_vesicles: Extracellular Vesicles
-    eye_drawing: Eye Drawing
+    exercise_physiology: 運動生理学
+    express_js: Express.js
+    extracellular_vesicles: 細胞外小胞 (EV)
+    eye_drawing: 目の絵
     facebook: Facebook
-    feather_drawing: Feather Drawing
+    feather_drawing: 羽根の絵
     figma: Figma
-    filipino_language: Filipino Language
-    film_and_theatre: Film and Theatre
-    film_production: Film Production
-    finance: Finance
-    financial_analysis: Financial Analysis
-    financial_math: Financial Math
-    financial_modeling: Financial Modeling
-    finnish: Finnish
-    fire_effect: Fire Effect
+    filipino_language: フィリピン語
+    film_and_theatre: 映画と演劇
+    film_production: 映画技作
+    finance: ファイナンス
+    financial_analysis: 財務分析
+    financial_math: ファイナンス数学
+    financial_modeling: 財務モデリング
+    finnish: フィンランド語
+    fire_effect: 炎エフェクト
     firebase: Firebase
-    first_aid: First Aid
-    fitness: Fitness
+    first_aid: 応急処置
+    fitness: フィットネス
     fl_studio: FL Studio
-    flamenco_guitar: Flamenco Guitar
+    flamenco_guitar: フラメンコギター
     flask: Flask
-    flat_character_design: Flat Character Design
+    flat_character_design: フラットキャラクターデザイン
     flexbox: Flexbox
-    flower_arrangement: Flower Arrangement
+    flower_arrangement: フラワーアレンジメント
     flutter: Flutter
-    flying_car: Flying Car
-    food_drawing: Food Drawing
-    food_nutrition: Food Nutrition
-    food_production: Food Production
-    food_systems: Food Systems
-    forex: Forex
-    fortnite: Fortnite
+    flying_car: 空飛ぶクルマ
+    food_drawing: 食べ物の絵
+    food_nutrition: 食物栄養
+    food_production: 食料生産
+    food_systems: フードシステム
+    forex: 外国為替
+    fortnite: フォートナイト
     freebsd: FreeBSD
-    french: French
-    front_end: Front End
-    front_end_developer: Front End Developer
+    french: フランス語
+    front_end: フロントエンド
+    front_end_developer: フロントエンド開発者
     fruity_loops: Fruity Loops
     fsharp_programming: 'F#'
-    full_stack_developer: Full Stack Developer
-    game_character_creation: Game Character Creation
-    game_development: Game Development
+    full_stack_developer: フルスタック開発者
+    game_character_creation: ゲームキャラクター作成
+    game_development: ゲーム開発
     gamemaker_studio: Gamemaker Studio
-    gamification: Gamification
-    gardening: Gardening
-    gastronomy: Gastronomy
+    gamification: ゲーミフィケーション
+    gardening: ガーデニング
+    gastronomy: ガストロノミー
     gatsby: Gatsby
-    genealogy: Genealogy
-    genetics: Genetics
-    geography: Geography
-    geology: Geology
-    geometry: Geometry
-    geospatial_technology: Geospatial Technology
-    german: German
-    german_prepositions: German Prepositions
-    gestalt: Gestalt
-    gimp: Gimp
-    gimp_photo_editing: Gimp Photo Editing
+    genealogy: 家系学
+    genetics: 遺伝学
+    geography: 地理学
+    geology: 地質学
+    geometry: 幾何学
+    geospatial_technology: 地理空間技術
+    german: ドイツ語
+    german_prepositions: ドイツ語の前置詞
+    gestalt: ゲシュタルト
+    gimp: GIMP
+    gimp_photo_editing: GIMP 画像編集
     gis: GIS
     git: Git
     github: GitHub
-    glitch_text_animation: Glitch Text Animation
+    glitch_text_animation: グリッチテキストアニメーション
     gmat: GMAT
     gns3: GNS3
     go_programming: Go
-    godot_game_engine: Godot Game Engine
+    godot_game_engine: Godot ゲームエンジン
     google_ads: Google Ads
     google_adsense: Google AdSense
     google_adwords: Google AdWords
-    google_adwords_certification: Google Adwords Certification
+    google_adwords_certification: Google Adwords 認定資格
     google_analytics: Google Analytics
-    google_analytics_certification: Google Analytics Certification
+    google_analytics_certification: Google Analytics 認定資格
     google_marketing_platform: Google Marketing Platform
     google_optimize: Google Optimize
     google_tag_manager: Google Tag Manager
     gradle: Gradle
     grafana: Grafana
-    grammar_and_writing: Grammar and Writing
+    grammar_and_writing: 文法とライティング
     graphql: GraphQL
     groovy: Groovy
-    guitar: Guitar
-    gulp_js: Gulp JS
+    guitar: ギター
+    gulp_js: Gulp.js
     hadoop: Hadoop
-    halloween_drawing: Halloween Drawing
-    harmonica: Harmonica
+    halloween_drawing: ハロウィンの絵
+    harmonica: ハーモニカ
     haskell_programming: Haskell
     hbase: HBase
-    health: Health
+    health: 健康
     health_and_fitness: 健康・運動
-    health_and_safety: Health and Safety
-    health_care: Health Care
-    healthy_sex_life: Healthy Sex Life
-    herbalism: Herbalism
+    health_and_safety: 安全衛生
+    health_care: 医療
+    healthy_sex_life: 健康的な性生活
+    herbalism: ハーバリズム
     heroku: Heroku
-    higher_education: Higher Education
-    hindi: Hindi
-    hip_hop_dance: Hip Hop Dance
-    history: History
+    higher_education: 高等教育
+    hindi: ヒンディー語
+    hip_hop_dance: ヒップホップダンス
+    history: 歴史
     hitfilm_express: HitFilm Express
-    hoodoo: Hoodoo
+    hoodoo: ブードゥー
     hootsuite: Hootsuite
-    hortonworks_data_platform: Hortonworks Data Platform
+    hortonworks_data_platform: Hortonworks Data Platform (HDP)
     hotjar: Hotjar
     houdini: Houdini
-    how_to_build_a_calculator: How to Build a Calculator
-    how_to_hypnotize: How to Hypnotize
-    how_to_make_a_discord_bot: How to Make a Discord Bot
-    how_to_save_a_life: How to Save a Life
-    hr: HR
+    how_to_build_a_calculator: 電卓の作り方
+    how_to_hypnotize: 催眠術のかけ方
+    how_to_make_a_discord_bot: Discord Bot の作り方
+    how_to_save_a_life: 命を救う方法
+    hr: 人事
     html5_boilerplate: HTML5 Boilerplate
     html: HTML
     hubspot_crm: HubSpot CRM
-    human_resources: Human Resources
-    human_rights: Human Rights
-    humanities: Humanities
+    human_resources: 人事
+    human_rights: 人権
+    humanities: 人文科学
     indesign: InDesign
-    industry_specific: Industry Specific
-    inferential_statistics: Inferential Statistics
+    industry_specific: 業界特有
+    inferential_statistics: 推測統計学
     infinite_skills: Infinite Skills
-    information_design: Information Design
-    information_technology: Information Technology
+    information_design: 情報デザイン
+    information_technology: IT
     inkscape: Inkscape
-    innovation: Innovation
+    innovation: イノベーション
     instagram: Instagram
-    intellij_idea: IntelliJ Idea
-    intercultural_communication: Intercultural Communication
-    international_relations: International Relations
-    international_studies: International Studies
-    internet_of_things: Internet of Things
-    intro_to_programming: Intro to Programming
-    intro_to_self_driving_car: Intro to Self Driving Car
+    intellij_idea: IntelliJ IDEA
+    intercultural_communication: 異文化間コミュニケーション
+    international_relations: 国際関係
+    international_studies: 国際学
+    internet_of_things: モノのインターネット
+    intro_to_programming: プログラミング入門
+    intro_to_self_driving_car: 自動運転車入門
     invision: Invision
     ionic: Ionic
-    ios: IOS
-    ios_development: iOS Development
-    it_and_software: IT and Software
-    japanese: Japanese
-    japanese_massage: Japanese Massage
+    ios: iOS
+    ios_development: iOS 開発
+    it_and_software: IT とソフトウェア
+    japanese: 日本語
+    japanese_massage: "日本式マッサージ\n"
     jasmine: Jasmine
-    java_for_testers: Java for Testers
+    java_for_testers: テスター向け Java
     java_programming: Java
-    javascript_programming: Javascript
+    javascript_programming: JavaScript
     jekyll: Jekyll
     jenkins: Jenkins
-    jewelry_making: Jewelry Making
+    jewelry_making: ジュエリー制作
     jira: Jira
     joomla: Joomla
     jquery: jQuery
@@ -459,78 +459,78 @@ ja:
     kartra: Kartra
     keynote: Keynote
     keyshot: Keyshot
-    kicad: Kicad
-    kids_coding_languages: Kids Coding Languages
-    knitting: Knitting
+    kicad: KiCad
+    kids_coding_languages: 子ども向けコーディング言語
+    knitting: 編み物
     knockout_js: Knockout.js
-    know_thyself: Know Thyself
+    know_thyself: 汝自身を知れ
     kodu: Kodu
-    korean: Korean
+    korean: 韓国語・朝鮮語
     kotlin_programming: Kotlin
     krita: Krita
     kubernetes: Kubernetes
-    kyokushin_karate: Kyokushin Karate
-    language: Language
+    kyokushin_karate: 極真空手
+    language: 言語
     language_and_communication: 言語・コミュニケーション
     laravel: Laravel
-    latex: LaTex
-    law: Law
-    leadership: Leadership
+    latex: LaTeX
+    law: 法律
+    leadership: リーダーシップ
     less: LESS
-    lettering: Lettering
-    lettering_logo: Lettering Logo
+    lettering: レタリング
+    lettering_logo: レタリング ロゴ
     libgdx: LibGDX
     life_sciences: 生命科学
-    lifestyle: Lifestyle
-    linear_algebra: Linear Algebra
-    linear_models: Linear Models
-    linguistics: Linguistics
+    lifestyle: ライフスタイル
+    linear_algebra: 線形代数
+    linear_models: 線形モデル
+    linguistics: 言語学
     linux_mint: Linux Mint
-    linux_system_administration: Linux System Administration
-    literature: Literature
-    logic: Logic
-    logo_design: Logo Design
-    low_poly_character: Low Poly Character
+    linux_system_administration: Linux システム管理
+    literature: 文学
+    logic: 論理学
+    logo_design: ロゴデザイン
+    low_poly_character: ローポリキャラクター
     lua_programming: Lua
     lumion: Lumion
-    machine_learning: Machine Learning
-    macrame: Macrame
-    magic_card_tricks: Magic Card Tricks
-    mailchimp: Mailchimp
-    makeup_artist: Makeup Artist
-    management_and_leadership: Management and Leadership
+    machine_learning: 機械学習
+    macrame: マクラメ
+    magic_card_tricks: カードマジックのトリック
+    mailchimp: MailChimp
+    makeup_artist: メイクアップアーティスト
+    management_and_leadership: マネジメントとリーダーシップ
     manga_studio: Manga Studio
     manychat: ManyChat
     mariadb: MariaDB
     markdown: Markdown
     marketing: マーケティング
-    marketing_analytics: Marketing Analytics
-    marketing_positioning: Marketing Positioning
+    marketing_analytics: マーケティング分析
+    marketing_positioning: マーケティングポジショニング
     marmoset_toolbag: Marmoset Toolbag
-    martial_arts: Martial Arts
+    martial_arts: 武道
     marvelous_designer: Marvelous Designer
     material_design: Material Design
     material_design_lite: Material Design Lite
     materialize: Materialize
-    math: Math
+    math: 数学
     math_and_logic: 数学・論理
-    matlab: Matlab
-    matrix: Matrix
+    matlab: MATLAB
+    matrix: 行列
     maya: Maya
-    mean_stack: Mean Stack
-    mechanical_engineering: Mechanical Engineering
-    mechanics_for_engineering: Mechanics for Engineering
-    medicine: Medicine
-    medieval_spain: Medieval Spain
-    meditation: Meditation
+    mean_stack: MEANスタック
+    mechanical_engineering: 機械工学
+    mechanics_for_engineering: 工学のための力学
+    medicine: 医学
+    medieval_spain: 中世スペイン
+    meditation: 瞑想
     medium: Medium
     meet_edgar: Meet Edgar
     melodyne: Melodyne
     memcached: Memcached
     merch_by_amazon: Merch by Amazon
-    microbiology: Microbiology
-    microcontrollers: Microcontrollers
-    microservices: Microservices
+    microbiology: 微生物学
+    microcontrollers: マイコン
+    microservices: マイクロサービス
     microsoft_access: Microsoft Access
     microsoft_onenote: Microsoft OneNote
     microsoft_powerpoint: Microsoft Powerpoint
@@ -539,284 +539,284 @@ ja:
     minecrat: Minecraft
     minitab: Minitab
     mixpanel: Mixpanel
-    mobile_development: Mobile Development
+    mobile_development: モバイル開発
     modo: MODO
     mongodb: MongoDB
     mono: Mono
-    music: Music
-    musicianship: Musicianship
+    music: 音楽
+    musicianship: ミュージシャンシップ
     mysql: MySQL
-    mythology: Mythology
-    nanophotonics: Nanophotonics
-    nanotechnology: nanotechnology
-    natural_language_processing: Natural Language Processing
+    mythology: 神話
+    nanophotonics: ナノフォトニクス
+    nanotechnology: ナノテクノロジー
+    natural_language_processing: 自然言語処理
     navisworks: Navisworks
-    negotiation: Negotiation
-    neuro_linguistic_programming: Neuro Linguistic Programming
-    newborn_assessment: Newborn Assessment
-    newton_laws: Newtons Laws
+    negotiation: ネゴシエーション
+    neuro_linguistic_programming: 神経言語プログラミング (NLP)
+    newborn_assessment: 新生児の評価
+    newton_laws: ニュートン法
     nginx: Nginx
-    nodejs: NodeJS
+    nodejs: Node.js
     npm: NPM
     nuke: NUKE
-    nursing: Nursing
-    nutrition: Nutrition
-    nutrition_and_wellness: Nutrition and Wellness
+    nursing: 看護学
+    nutrition: 栄養学
+    nutrition_and_wellness: 栄養とウェルネス
     nuxtjs: Nuxt.js
     oauth: OAuth
-    object_oriented_programming: Object Oriented Programming
+    object_oriented_programming: オブジェクト指向プログラミング
     objective_c: Objective-C
     ocaml_programming: OCaml
-    office_365_educators: Ofiice 365 for Educators
-    office_productivity: Office Productivity
+    office_365_educators: 教育機関向け Office 365
+    office_productivity: オフィスの生産性
     omnisphere: Omnisphere
-    online_education: Online Education
+    online_education: オンライン教育
     onsen_ui: Onsen UI
     onshape: Onshape
     opengl: OpenGL
-    operating_systems: Operating Systems
-    options_trading: Options Trading
-    oracle_cards: Oracle Cards
-    oracle_db: Oracle DB
+    operating_systems: オペレーティング システム (OS)
+    options_trading: オプション取引
+    oracle_cards: オラクルカード
+    oracle_db: Oracle Database
     origami_studio: Origami Studio
     osha_safety_pro: OSHA Safety Pro
-    painting: Painting
+    painting: 絵画
     palfish: Palfish
-    parenting: Parenting
-    pentatonic_scale: Pentatonic Scale
+    parenting: 子育て
+    pentatonic_scale: ペンタトニックスケール
     perl_programming: Perl
     personal_development: 自己啓発
-    personal_finance: Personal Finance
-    perspective_drawing: Perspective Drawing
-    persuasive_writing: Persuasive Writing
-    philosophy: Philosophy
-    philosophy_ethics: Philosophy Ethics
-    photo_manipulation: Photo Manipulation
-    photography: Photography
+    personal_finance: パーソナルファイナンス
+    perspective_drawing: 透視図法の絵
+    persuasive_writing: 説得力のある文章の書き方
+    philosophy: 哲学
+    philosophy_ethics: 哲学倫理学
+    photo_manipulation: 写真の編集
+    photography: 写真
     php_programming: PHP
     physical_science_and_engineering: 物理科学・工学
-    physics: Physics
-    piano: Piano
-    piano_theory: Piano Theory
-    pixel_art_for_games: Pixel Art for Games
-    pmi: Project Management Institute (PMI)
-    pmp: Project Management Professional (PMP)
-    pmp_certification: PMP Certification
-    poker: Poker
-    political_science: Political Science
-    politics: Politics
-    porn_addiction_treatment: Porn Addiction Treatment
-    portfolio_analysis: Portfolio Analysis
-    portuguese: Portuguese
+    physics: 物理学
+    piano: ピアノ
+    piano_theory: ピアノ理論
+    pixel_art_for_games: ゲーム用ドット絵
+    pmi: プロジェクトマネジメント協会 (PMI)
+    pmp: プロジェクトマネジメントプロフェッショナル (PMP)
+    pmp_certification: PMP 認定資格
+    poker: ポーカー
+    political_science: 政治学
+    politics: 政治
+    porn_addiction_treatment: ポルノ中毒の治療
+    portfolio_analysis: ポートフォリオ分析
+    portuguese: ポルトガル語
     postgresql: PostgreSQL
     powershell: Powershell
     powtoon: Powtoon
-    precalculus: Precalculus
+    precalculus: 微積分入門
     primavera_p6: Primavera P6
-    principle_app: Principle App
+    principle_app: Principle アプリ
     pro_tools: Pro Tools
     procreate: Procreate
-    product_design: Product Design
-    productivity: Productivity
-    professional_development: Professional Development
-    programming_languages: Programming Languages
-    project_management: Project Management
+    product_design: プロダクトデザイン
+    productivity: 生産性
+    professional_development: 専門能力開発
+    programming_languages: プログラミング言語
+    project_management: プロジェクトマネジメント
     prolog: Prolog
-    prototyping: Prototyping
-    psychology: Psychology
-    public_health: Public Health
-    public_speaking: Public Speaking
+    prototyping: プロトタイピング
+    psychology: 心理学
+    public_health: 公衆衛生
+    public_speaking: スピーチ
     puppet_forge: Puppet Forge
-    pycharm: Pycharm
+    pycharm: PyCharm
     python_programming: Python
     pytorch: PyTorch
-    qt_programming: QT Programming
-    quantum_computing: Quantum Computing
-    quantum_mechanics: Quantum Mechanics
+    qt_programming: Qt プログラミング
+    quantum_computing: 量子コンピュータ
+    quantum_mechanics: 量子力学
     quickbooks_pro: QuickBooks Pro
-    r_programming: R Programming Language
+    r_programming: R プログラミング言語
     rabbitmq: RabbitMQ
     rails: Rails
     raspberry_pi: Raspberry Pi
     react_native: React Native
     reactjs: React
-    real_estate_investing: Real Estate Investing
+    real_estate_investing: 不動産投資
     realflow: RealFlow
     reddit: Reddit
-    redhat: Redhat Linux
+    redhat: RedHat Linux
     redis: Redis
-    religion: Religion
-    resin_art: Resin Art
+    religion: 宗教
+    resin_art: レジンアート
     rest: REST
     revit: Revit
-    rhino_software: Rhino (Software)
-    rigging: Rigging
+    rhino_software: Rhino
+    rigging: リギング
     roblox_studio: Roblox Studio
-    robotics: Robotics
-    rpg_gamemaker: RPG with Gamemaker
+    robotics: ロボット工学
+    rpg_gamemaker: "GameMaker で ロールプレイングゲーム (RPG)\n"
     ruby_on_rails: Ruby on Rails
     ruby_programming: Ruby
-    russian: Russian
+    russian: ロシア語
     rust_programming: Rust
-    sales: Sales
+    sales: 営業
     salesforce: Salesforce
-    salsa_dancing: Salsa Dancing
-    sanic: Sanic
+    salsa_dancing: サルサダンス
+    sanic: Sanic (サニック)
     sap: SAP
-    sas_programming: SAS Programming
+    sas_programming: SAS プログラミング
     sass: Sass
     scala_programming: Scala
     sccm: SCCM
     scratch: Scratch
-    scratch_games: Scratch Games
-    scripting_for_testers: Scripting for Testers
+    scratch_games: Scratch ゲーム
+    scripting_for_testers: テスター向けスクリプト
     sculptris: Sculptris
-    sculpture: Sculpture
+    sculpture: 彫刻
     sdet: SDET
-    security_and_cryptography: Security and Cryptography
+    security_and_cryptography: セキュリティと暗号化
     selenium: Selenium
-    self_driving_car: Self-driving car
+    self_driving_car: 自動運転車
     semantic_ui: Semantic UI
-    semrush: Semrush
+    semrush: SEMrush
     sendgrid: SendGrid
-    sensor_fusion: Sensor Fusion
+    sensor_fusion: センサーフュージョン
     seo: SEO
-    seo_tools: SEO Tools
-    serious_gaming: Serious Gaming
-    sewing: Sewing
-    sharepoint: Sharepoint
-    shell: Shell
+    seo_tools: SEO ツール
+    serious_gaming: 本格的なゲーム
+    sewing: ソーイング
+    sharepoint: SharePoint
+    shell: シェル
     shopify: Shopify
-    shuffle_dance: Shuffle Dance
-    sicilian_defense_in_chess: Sicilian Defense in Chess
-    silversmithing: Silversmithing
+    shuffle_dance: シャッフルダンス
+    sicilian_defense_in_chess: チェスのシシリアンディフェンス
+    silversmithing: 銀細工
     sinatra: Sinatra
-    singing: Singing
-    six_sigma: Six Sigma
+    singing: 歌
+    six_sigma: シックスシグマ
     skeleton_css: Skeleton CSS
     sketchapp: Sketch
     sketchup: SketchUp
     slack: Slack
-    slide_guitar: Slide Guitar
+    slide_guitar: スライド ギター
     smashwords: Smashwords
     social_sciences: 社会科学
-    sociology: Sociology
-    software_architecture: Software Architecture
-    software_design_patterns: Software Design Patterns
-    software_development: Software Development
-    software_testing: Software Testing
+    sociology: 社会学
+    software_architecture: ソフトウェアアーキテクチャ
+    software_design_patterns: ソフトウェアデザインパターン
+    software_development: ソフトウェア開発
+    software_testing: ソフトウェアテスト
     solidworks: SolidWorks
     sony_vegas: Sony Vegas
-    sourcetree: Sourcetree
-    spanish: Spanish
-    speedgrade: Speedgrade
+    sourcetree: SourceTree
+    spanish: スペイン語
+    speedgrade: SpeedGrade
     speedtree: SpeedTree
     splunk: Splunk
-    sports: Sports
+    sports: スポーツ
     spss: SPSS
     sql: SQL
     sqlite: SQLite
-    sscp_certification: SSCP Certification
+    sscp_certification: SSCP 認定資格
     stata: Stata
-    statistical_modeling: Statistical Modeling
-    statistical_thermodynamics: Statistical Thermodynamics
-    statistics_and_probability: Statistics and Probability
+    statistical_modeling: 統計モデリング
+    statistical_thermodynamics: 統計熱力学
+    statistics_and_probability: 確率・統計
     stem: STEM
-    stochastic_process: Stochastic Process
-    stock_trading: Stock Trading
-    storytelling: Storytelling
-    strategic_management: Strategic Management
-    stress_management: Stress Management
+    stochastic_process: 確率過程
+    stock_trading: 株取引
+    storytelling: ストーリーテリング
+    strategic_management: 戦略マネジメント
+    stress_management: ストレスマネジメント
     studio_one: Studio One
     substance_painter: Substance Painter
     sugarcrm: SugarCRM
-    super_learning: Super Learning
-    superhero_drawing: Superhero Drawing
-    supply_chain: Supply Chain
-    survey: Survey
+    super_learning: スーパーラーニング
+    superhero_drawing: スーパーヒーローの絵
+    supply_chain: サプライチェーン
+    survey: 調査
     suse: OpenSUSE
-    sustainability: Sustainability
+    sustainability: サステナビリティ
     sveltejs: Svelte.js
-    swedish: Swedish
+    swedish: スウェーデン語
     swift: Swift
-    swing_tranding: Swing Tranding
+    swing_tranding: スイングトレード
     sylenth: Sylenth
     symfony: Symfony
     synfig: Synfig
     tableau: Tableau
-    taijutsu: Taijutsu
-    teacher_development: Teacher Development
-    teacher_training: Teacher Training
-    teamwork: Teamwork
-    technical_analysis: Technical Analysis
-    technical_writing: Technical Writing
+    taijutsu: 体術
+    teacher_development: 教師の開発
+    teacher_training: 教員養成
+    teamwork: チームワーク
+    technical_analysis: テクニカル分析
+    technical_writing: テクニカルライティング
     tensorflow: TensorFlow
     terraform: Terraform
-    test_prep: Test Prep
-    tex: Tex
+    test_prep: テストの準備
+    tex: TeX
     themeforest: Themeforest
-    thermodynamics: Thermodynamics
-    time_series: Time Series
+    thermodynamics: 熱力学
+    time_series: 時系列
     tinkercad: Tinkercad
     toefl: TOEFL
     tomcat: Tomcat
     toon_boom: Toon Boom
     trello: Trello
-    trigonometry: Trigonometry
-    trumpet: Trumpet
+    trigonometry: 三角法
+    trumpet: トランペット
     typescript: TypeScript
     ubuntu: Ubuntu
-    ui_design: UI Design
+    ui_design: UI デザイン
     uikit: UIKit
     unity: Unity
     unreal: Unreal
     unreal_engine: Unreal Engine
-    urban_planning: Urban Planning
-    urdu: Urdu
-    uv_layout: UV Layout
-    ux_design: UX Design
-    ux_research: UX Research
+    urban_planning: 都市計画
+    urdu: ウルドゥー語
+    uv_layout: UV レイアウト
+    ux_design: UX デザイン
+    ux_research: UX リサーチ
     vagrant: Vagrant
-    valuation: Valuation
-    vector_illustration: Vector Illustration
-    video_editing: Video Editing
-    videography: Videography
+    valuation: 評価
+    vector_illustration: ベクターイラスト
+    video_editing: ビデオ編集
+    videography: ビデオグラフィ
     vim: VIM
-    violin: Violin
-    virtual_reality: Virtual Reality
-    visual_arts: Visual Arts
+    violin: バイオリン
+    virtual_reality: バーチャルリアリティ (VR)
+    visual_arts: ビジュアルアート
     visual_basic: Visual Basic
     visual_studio_team_services: Visual Studio Team Services
     vmware: VMWare
-    vocal_warm_ups: Vocal Warm Ups
-    vr: VR
+    vocal_warm_ups: ボーカルウォームアップ
+    vr: VR (バーチャルリアリティ)
     vtiger_crm: Vtiger CRM
     vue: Vue
-    vuejs: Vuejs
+    vuejs: Vue.js
     vyond: Vyond
-    watercolor_painting: Watercolor Painting
+    watercolor_painting: 水彩画
     web_assembly: Web Assembly
-    web_design: Web Design
-    web_development: Web Development
-    web_scraping: Web Scraping
+    web_design: Web デザイン
+    web_development: Web 開発
+    web_scraping: Web スクレイピング
     webflow: Webflow
     webpack: Webpack
     wechat: WeChat
-    weight_loss: Weight Loss
+    weight_loss: 減量
     whmcs: WHMCS
-    wilderness_survival: Wilderness Survival
+    wilderness_survival: サバイバル術
     wirecast: Wirecast
     wireshark: Wireshark
     wix: Wix
     wordpress: Wordpress
     world_machine: World Machine
-    world_war_1: World War 1
-    world_war_2: World War 2
-    writing: Writing
+    world_war_1: 第1次世界大戦
+    world_war_2: 第2次世界大戦
+    writing: ライティング
     xamarin: Xamarin
     xsplit: XSplit
     yeoman: Yeoman
-    yoga: Yoga
+    yoga: ヨガ
     youtube: YouTube
     zbrush: ZBrush
     zoho_crm: Zoho CRM

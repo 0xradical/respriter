@@ -647,11 +647,7 @@ en:
         previews, read the syllabus, and see reviews before deciding which online course to take.
       about_us_title_2: online courses
       about_us_text_2_html: >-
-        Explore the largest catalog of online courses in one place. Find online courses in
-        <b>computer science</b>, <b>data science</b>, <b>marketing</b>,
-        <b>business</b>, <b>personal development</b> and many more. Looking for college credits?
-        Search for online courses with certificates, some universities accept completion
-        certificates as credits.
+        Find online courses in <b>computer science</b>, <b>data science</b>, <b>marketing</b>, <b>business</b> and <b>personal development</b> taught by experienced <a href='/instructors'><b>instructors</b></a>.
       about_us_title_3: e-learning platforms
       about_us_text_3_html: >-
         Discover the world’s best online course platforms on Classpert. Get all relevant information
@@ -838,8 +834,8 @@ en:
             courses with certificate
     show:
       meta:
-        title: "%{course} Online Course | Classpert"
-        description: "Learn %{course} on this Online Course with certificate. Find information about the course and read reviews left by students who have already taken it."
+        title: "%{course} | Online Course | Classpert"
+        description: "%{course} - Learn valuable skills with this online course from %{provider}"
   course_bundles:
     meta: &meta
       title_html: "%{tag} Courses"
@@ -858,6 +854,10 @@ en:
         blockchain_and_cryptocurrency: "Blockchain and Cryptocurrency"
     index:
       <<: *post_base
+      meta:
+        title: Articles, tutorials and online course tips | Blog | Classpert
+        description: Articles and tutorials on programming, data science, marketing, business, and soft skills for personal development.
+      h1: Recent Articles
     show:
       <<: *post_base
 

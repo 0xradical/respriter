@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def current_url_without_query_params
+    request.base_url + request.path
+  end
+
   def alert_alias(name)
     alert_map = {
       notice: 'primary',

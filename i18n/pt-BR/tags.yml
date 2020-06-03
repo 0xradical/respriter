@@ -205,12 +205,12 @@ pt-BR:
     cplusplus_programming: C++
     creativity: Criatividade
     creature_design: Design de Criaturas
-    credit_analysis: Análise de Crédito
+    credit_analysis: Credit Analysis
     critical_thinking: Pensamento Crítico
     crm: CRM (Customer Relationship Manager)
     crochet: Crochê
     crystal_programming: Crystal
-    csharp_programming: 'C#'
+    csharp_programming: "C#"
     css: CSS
     cucumber_test_framework: Cucumber
     culture: Cultura
@@ -278,7 +278,7 @@ pt-BR:
     electronics: Eletrônica
     elicitation: Elicitação
     elixir_programming: Elixir
-    elliot_waves: Ondas de Elliott
+    elliott_waves: Ondas de Elliott
     emacs: Emacs
     embedded_linux: Desenvolvimento para Linux Embarcado
     embedded_systems: Sistemas Embarcados
@@ -341,7 +341,7 @@ pt-BR:
     front_end: Front End
     front_end_developer: Desenvolvimento Front End
     fruity_loops: Fruity Loops
-    fsharp_programming: 'F#'
+    fsharp_programming: "F#"
     full_stack_developer: Desenvolvimento Full Stack
     game_character_creation: Criação de Personagens para Jogos
     game_development: Desenvolvimento de Jogos
@@ -567,7 +567,7 @@ pt-BR:
     object_oriented_programming: Programação Orientada a Objetos
     objective_c: Objective-C
     ocaml_programming: OCaml
-    office_365_educators: Office 365 para Educadores
+    office_365_educators: Office 365 for Educators
     office_productivity: Produtividade
     omnisphere: Omnisphere
     online_education: Educação Online
