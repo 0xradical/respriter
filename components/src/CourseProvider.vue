@@ -1,12 +1,14 @@
 <template>
-  <div class="clspt:course-provider el:m-label" :class="rootClasses">
-    <icon
-      class="el:m-label__icon el:m-label__icon--circled-border clspt:course-provider__logo"
-      :class="logoClasses"
-      scope="providers"
-      :name="logo"
-    ></icon>
-    <span class="el:m-label__text">
+  <div class="el:m-attribute" :class="rootClasses">
+    <svg
+      :class="[
+        'el:m-attribute__icon el:m-attribute__icon--bordered',
+        ...logoClasses
+      ]"
+    >
+      <use :xlink:href="'#providers-' + logo" />
+    </svg>
+    <span class="el:m-attribute__label" :class="labelClasses">
       <span :class="nameClasses">
         {{ name }}
       </span>
@@ -15,8 +17,6 @@
 </template>
 
 <script>
-  import Icon from "./Icon.vue";
-
   export default {
     props: {
       course: {
@@ -24,6 +24,12 @@
         required: true
       },
       rootClasses: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      labelClasses: {
         type: Array,
         default() {
           return [];
@@ -49,19 +55,6 @@
       logo() {
         return this.course.provider_slug;
       }
-    },
-    components: {
-      icon: Icon
     }
   };
 </script>
-
-<style lang="scss">
-  .clspt\:course-provider {
-    box-sizing: border-box;
-
-    &__logo {
-      padding: 0;
-    }
-  }
-</style>

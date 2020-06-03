@@ -2,7 +2,8 @@
   <div class="el-mb:o-hcard" @click="$emit('clickedCourseCard')">
     <div class="el-mb:o-hcard__slot-0">
       <course-provider
-        :rootClasses="['el:amx-Mb(0.5em)']"
+        :rootClasses="['el:m-attribute--stretch el:amx-Mb(0.5em)']"
+        :logoClasses="['el:amx-Fs(1.25em) el:amx-Mr(0.25em)']"
         :nameClasses="['el:amx-Fs(0.75em)']"
         :course="course"
       >
@@ -16,12 +17,14 @@
       >
       </course-title>
 
-      <div style="margin-top: auto">
+      <div class="el:amx-Mt(a) el:amx-D(f)">
         <course-attribute
           icon="id-badge"
-          :rootClasses="['el:amx-D(ib)']"
-          :iconClasses="['el:amx-Fs(0.75em) el:amx-Fi_fgM']"
-          :valueClasses="['el:amx-Fs(0.75em) el:amx-C_fgM']"
+          :rootClasses="[
+            'el:m-attribute--inline el:m-attribute--stretch el:amx-Of(h)'
+          ]"
+          :iconClasses="['el:amx-Fi_fgM']"
+          :labelClasses="['el:amx-C_fgM']"
           v-if="instructor"
         >
           <a v-if="instructor.profile_path" :href="instructor.profile_path">
@@ -31,9 +34,12 @@
         </course-attribute>
         <course-attribute
           icon="clock"
-          :rootClasses="['el:amx-D(ib)', instructor && 'el:amx-Ml(2em)']"
-          :iconClasses="['el:amx-Fs(0.75em) el:amx-Fi_fgM']"
-          :valueClasses="['el:amx-Fs(0.75em) el:amx-C_fgM']"
+          :rootClasses="[
+            'el:m-attribute--inline el:m-attribute--stretch el:cmx-flex-1',
+            instructor && 'el:amx-Ml(1.5em)'
+          ]"
+          :iconClasses="['el:amx-Fi_fgM']"
+          :labelClasses="['el:amx-C_fgM']"
           v-if="course.effort"
         >
           {{

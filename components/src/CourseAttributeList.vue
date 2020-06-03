@@ -1,5 +1,5 @@
 <template>
-  <div class="clspt:course-attribute-list" :class="rootClasses">
+  <div class="el:amx-minW(0)" :class="rootClasses">
     <course-attribute
       v-if="
         showUnavailable || (course.root_audio && course.root_audio.length > 0)
@@ -7,6 +7,7 @@
       icon="audio"
       :rootClasses="attributeClasses"
       :iconClasses="attributeIconClasses"
+      :valueClasses="attributeValueClasses"
     >
       <template v-if="course.root_audio && course.root_audio.length > 0">
         <span class="el:amx-Tt(u)">{{ course.root_audio.join(",") }}</span>
@@ -19,11 +20,12 @@
     <course-attribute
       v-if="
         showUnavailable ||
-          (course.root_subtitles && course.root_subtitles.length > 0)
+        (course.root_subtitles && course.root_subtitles.length > 0)
       "
       icon="subtitle"
       :rootClasses="attributeClasses"
       :iconClasses="attributeIconClasses"
+      :valueClasses="attributeValueClasses"
     >
       <template
         v-if="course.root_subtitles && course.root_subtitles.length > 0"
@@ -42,6 +44,7 @@
       icon="certificate"
       :rootClasses="attributeClasses"
       :iconClasses="attributeIconClasses"
+      :valueClasses="attributeValueClasses"
     >
       <template v-if="course.certificate && course.certificate.type">
         {{ $t(`dictionary.certificate.${course.certificate.type}`) }}
@@ -58,6 +61,7 @@
       icon="building"
       :rootClasses="attributeClasses"
       :iconClasses="attributeIconClasses"
+      :valueClasses="attributeValueClasses"
     >
       <template v-if="course.offered_by && course.offered_by.length > 0">
         {{ course.offered_by.map(i => i.name).join(",") }}
@@ -74,6 +78,7 @@
       icon="id-badge"
       :rootClasses="attributeClasses"
       :iconClasses="attributeIconClasses"
+      :valueClasses="attributeValueClasses"
     >
       <template v-if="course.instructors && course.instructors.length > 0">
         {{ course.instructors.map(i => i.name).join(",") }}
@@ -88,6 +93,7 @@
       icon="velocimeter"
       :rootClasses="attributeClasses"
       :iconClasses="attributeIconClasses"
+      :valueClasses="attributeValueClasses"
     >
       <template v-if="course.pace">
         {{ $t(`dictionary.pace.${course.pace}`) }}
@@ -102,6 +108,7 @@
       icon="level"
       :rootClasses="attributeClasses"
       :iconClasses="attributeIconClasses"
+      :valueClasses="attributeValueClasses"
     >
       <template v-if="course.level && course.level.length > 0">
         {{ course.level.map(l => $t(`dictionary.levels.${l}`)).join(",") }}
@@ -116,6 +123,7 @@
       icon="clock"
       :rootClasses="attributeClasses"
       :iconClasses="attributeIconClasses"
+      :valueClasses="attributeValueClasses"
     >
       <template v-if="course.effort">
         {{
@@ -164,6 +172,12 @@
         default() {
           return [];
         }
+      },
+      attributeValueClasses: {
+        type: Array,
+        default() {
+          return [];
+        }
       }
     },
     components: {
@@ -171,11 +185,3 @@
     }
   };
 </script>
-
-<style lang="scss">
-  .clspt\:course-attribute-list {
-    // allow truncate of inner
-    // flex-based elements
-    min-width: 0;
-  }
-</style>
