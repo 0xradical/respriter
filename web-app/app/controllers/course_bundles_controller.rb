@@ -5,7 +5,7 @@ class CourseBundlesController < ApplicationController
   prepend_before_action :normalize_params
 
   def index
-    bundles = Course.unnest_curated_tags(Course.by_tags(@tag)).group(:tag).count
+    bundles = Course.unnest_curated_tags(Course.published.by_tags(@tag)).group(:tag).count
     RootTag.all.each{ |rt| bundles.delete rt.id }
 
     @bundles_by_letter = bundles.map { |k,v| [t("tags.#{k}"), { tag: k, count: v } ] }
