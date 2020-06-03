@@ -1,7 +1,7 @@
 <% content_for :meta do %>
   <title><%= truncate(t(".meta.title", course: @course.name), length: 60) %></title>
   <meta name='description' content='<%= truncate(t(".meta.description", course: @course.name, provider: @course.provider.name), length: 155) %>' />
-  <meta property='og:description' content='<%= truncate(t(".meta.description", course: @course.name, name: @course.provider.name), length: 155) %>' />
+  <meta property='og:description' content='<%= truncate(t(".meta.description", course: @course.name, provider: @course.provider.name), length: 155) %>' />
 <% end %>
 
 <script type='text/javascript'>
