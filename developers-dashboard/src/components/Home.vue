@@ -86,7 +86,7 @@
                 <label
                   @click="switchTheme"
                   data-el-theme-toggler
-                  class="el:m-switch el:m-switch--theme-toggler"
+                  class="el:m-switch el:m-switch--theme-toggler el:amx-Va(m) el:amx-Mr(1em)"
                   for="checkbox3"
                 >
                   <input type="checkbox" id="checkbox3" />
