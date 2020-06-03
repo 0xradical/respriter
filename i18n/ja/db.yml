@@ -3,25 +3,25 @@ ja:
     unmapped_constraint: 無効なデータです。
     profiles_username_idx: ユーザー名は既に使用されています。
     used_usernames_username_idx: ユーザー名は既に使用されています。
-    username_format: "Username should only contain alphanumeric chars or any of these: .-_"
+    username_format: "ユーザー名には英数字および次の記号のみが使用できます: . - _"
     username_consecutive_dash: ユーザー名には連続したダッシュ (-) を使用できません。
     username_consecutive_underline: ユーザー名には連続した下線 (_) を使用できません。
     username_boundary_dash: ユーザー名はダッシュ (-) で開始または終了することはできません。
     username_boundary_underline: ユーザー名は下線 (_) で開始または終了することはできません。
-    username_length_upper: 登録できるユーザー名の長さは 15 文字までです。
+    username_length_upper: 登録できるユーザー名の長さは 15 文字以内です。
     username_length_lower: 登録できるユーザー名の長さは 5 文字以上です。
-    username_lowercased: ユーザー名の文字はすべて小文字を使用してください。
+    username_lowercased: ユーザー名にはすべて小文字を使用してください。
     username_change_within_update_threshold: ユーザー名は15日以内に変更できません。
     username_cannot_be_null: ユーザー名は空白にできません。
     username_cannot_be_erased: ユーザー名は空白にできません。
-    username__format: "Username should only contain alphanumeric chars or any of these: .-_"
+    username__format: "ユーザー名には英数字および次の記号のみが使用できます: . - _"
     username__consecutive_dash: ユーザー名には連続したダッシュ (-) を使用できません。
     username__consecutive_underline: ユーザー名には連続した下線 (_) を使用できません。
     username__boundary_dash: ユーザー名はダッシュ (-) で開始または終了することはできません。
     username__boundary_underline: ユーザー名は下線 (_) で開始または終了することはできません。
-    username__length_upper: 登録できるユーザー名の長さは 15 文字までです。
+    username__length_upper: 登録できるユーザー名の長さは 15 文字以内です。
     username__length_lower: 登録できるユーザー名の長さは 5 文字以上です。
-    username__lowercased: ユーザー名の文字はすべて小文字を使用してください。
+    username__lowercased: ユーザー名にはすべて小文字を使用してください。
     username__change_within_update_threshold: ユーザー名は15日以内に変更できません。
     username__cannot_be_null: ユーザー名は空白にできません。
     username__cannot_be_erased: ユーザー名は空白にできません。

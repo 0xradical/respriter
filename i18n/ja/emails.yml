@@ -11,18 +11,18 @@ ja:
         2_html: >-
           あなたは最近 <b>%{provider} の %{course}</b> に登録しました。
         3: >-
-          Will you please take a minute to rate your experience?
+          あなたの体験の評価に少しだけお時間をください。
         4: >-
           Classpert をご利用いただきありがとうございます！
     orphaned_profile:
       build:
-        subject: Confirm instructor profile claim
+        subject: 講師プロフィールの申請を確認する
         body:
           1: >-
             こんにちは
           2_html: >-
-            You're receiving this e-mail because someone is trying to claim %{profile} profile. If you believe someone else is inadvertently trying to claim your profile, please reply to this email to report this incident.
+            誰かが %{profile} のプロフィールを申請しようとしているため、このメールを送信しています。 他の誰かがあなたのプロフィールを申請しようとしていると思われる場合は、このメールに返信して問題を報告してください。
           3_html: >-
-            このアクションを確認するには、下のリンクをクリックしてください
+            このアクションを確認するには、下記のリンクをクリックしてください
           4_html: >-
             このリンクの有効期限は %{date} です

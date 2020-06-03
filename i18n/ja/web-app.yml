@@ -3,7 +3,7 @@ ja:
     messages:
       challenge: "答えが正しくありません"
       is_valid_domain: "ドメインが無効です"
-      sitemap: "Sitemap is not valid"
+      sitemap: "sitemap provided is not valid"
       domain_included_in: "認証済みドメインに含まれていません"
       url: "値はURI (プロトコルを持つホスト) でなければなりません"
       url_path: "{_field_} は {host} のパスでなければなりません"
@@ -15,7 +15,7 @@ ja:
       sitemap: "サイトマップ"
       username: "ユーザー名"
       email: "メールアドレス"
-      email_confirmation: "e-mail confirmation"
+      email_confirmation: "メールアドレスの確認"
       shortbio: "簡単な略歴"
       password: "パスワード"
       subject: "件名"
@@ -23,10 +23,10 @@ ja:
       message: "メッセージ"
       challenge: "チャレンジ"
       price: "価格"
-      course_url: "講義のURL"
+      course_url: "コースのURL"
       sitemap_url: "サイトマップのURL"
       provider_name: "名前"
-      purchase_date: "ご購入日"
+      purchase_date: "購入日"
       order_id: "注文 ID"
       paypal_account: "Paypal アカウント"
       inlined_urls: "URL"
@@ -40,8 +40,8 @@ ja:
     connect: "%{provider} に接続する"
     connected: "%{provider} に接続中"
   dictionary:
-    online_courses: オンライン講義
-    index_tool: インデックス・ツール
+    online_courses: オンラインコース
+    index_tool: インデックス ツール
     terms_and_conditions: "利用規約"
     privacy_policy: "プライバシーポリシー"
     blog: "ブログ"
@@ -50,58 +50,58 @@ ja:
     hi: "こんにちは"
     share: "シェアしよう！"
     levels:
-      beginner: "初心者向け"
-      intermediate: "中級者向け"
-      advanced: "上級者向け"
+      beginner: "初心者"
+      intermediate: "中級者"
+      advanced: "上級者"
       all: "全てのレベル"
     preview_this_course:
       short: "プレビュー表示"
-      long: "この講義のプレビュー"
+      long: "このコースのプレビューを表示"
     preview_not_available:
-      short: "利用できません"
-      long: "プレビューは利用できません"
+      short: "表示できません"
+      long: "プレビューは表示できません"
     certificate:
       included: "修了証が含まれます"
-      free: "修了証無料"
-      paid: "修了証有料(%{price})"
+      free: "無料修了証"
+      paid: "有料修了証 (%{price})"
     details:
-      header: "講義の詳細"
+      header: "コースの詳細"
       see: "詳細を見る"
       show: "詳細を表示"
       hide: "詳細を非表示"
     tags:
       header: "関連タグ"
     similar:
-      header: "関連する講義"
+      header: "関連するコース"
     description:
-      header: "講義の説明"
+      header: "コースの説明"
       view: "説明を見る"
       show: "説明を表示"
       hide: "説明を非表示"
     syllabus:
-      header: "講義のシラバス"
+      header: "コースのシラバス"
       view: "シラバスを見る"
     see_syllabus: "シラバスを見る"
     trial_period: "%{period} トライアル"
     free_trial: "無料トライアル"
     extra_paid_content: "追加の有料コンテンツ"
     pace:
-      instructor_paced: "講師のペースで"
-      self_paced: "自分のペースで"
+      instructor_paced: "講師のペース"
+      self_paced: "自分のペース"
       live_class: "生の授業"
     subscription_period:
       months: "ヶ月間"
       years: "年間"
-    for_this_course: "この講義について"
+    for_this_course: "このコースについて"
     not_available: "該当なし"
     sign_in: "ログイン"
     sign_up: "登録"
     sign_out: "ログアウト"
     price: "価格"
     pricing:
-      all_courses: "全ての講義"
-      this_course_only: "この講義のみ"
-      tooltip: "%{provider} は %{offer} を提供しています。この期間の終了時に、定期購読料金が請求されます。 講義へのアクセスは無制限です。定期購読はいつでもキャンセルできます。"
+      all_courses: "全てのコース"
+      this_course_only: "このコースのみ"
+      tooltip: "%{provider} は %{offer} を提供しています。この期間の終了時に、定期購読料金が請求されます。 コースへのアクセスは無制限です。定期購読はいつでもキャンセルできます。"
     in_currency: "%{currency} で"
     from: "From"
     to: "To"
@@ -113,16 +113,16 @@ ja:
     audios: "言語"
     subtitles: "字幕"
     categories: "カテゴリ"
-    max_price: "最大 $"
+    max_price: "最大 (ドル)"
     providers: "プロバイダ"
     about: "Classpert"
-    length: "受講期間"
+    length: "length"
     previous_page: "前のページ"
     next_page: "次のページ"
     search_results: "%{total} 件の結果を表示"
     only_free: "無料のみ"
     free: "無料"
-    for: "対象"
+    for: "for"
     sort_by: "並び替え"
     sort_by_selected: "選択済み"
     clear_all_filters: "すべてのフィルターをクリア"
@@ -137,11 +137,11 @@ ja:
     no_options_available: "現在のフィルターに該当するオプションはありません"
     top_reviewed: "レビューの評価順"
     favorite: "お気に入り"
-    go_to_course: "講義に進む"
+    go_to_course: "コースに移動"
     go_to_profile: "自分のプロフィール"
   meta:
     icons:
-      user_and_monitor: "講義のペース"
+      user_and_monitor: "コースのペース"
       clock: "期間"
       level: "レベル"
       institution: "提供元"
@@ -335,7 +335,7 @@ ja:
     "CX": "クリスマス島"
     "CC": "ココス（キーリング）諸島"
     "CO": "コロンビア"
-    "KM": "小諸"
+    "KM": "コモロ連合"
     "CG": "コンゴ共和国"
     "CD": "コンゴ民主共和国"
     "CK": "クック諸島"
@@ -539,34 +539,34 @@ ja:
     "SS": "南スーダン"
     "XK": "コソボ"
   components:
-    omniauth_sign_in: "%{provider} にログインする"
-    omniauth_signin_in: "%{provider} にログイン中"
+    omniauth_sign_in: "%{provider} でログインする"
+    omniauth_signin_in: "%{provider} でログイン中"
     omniauth_claim_profile: "Claim with %{provider}"
     omniauth_claiming_profile: "Claiming with %{provider}"
-    searchbar_placeholder: "講義を検索..."
+    searchbar_placeholder: "コースを検索..."
     icons:
-      user_and_monitor: "講義のペース"
+      user_and_monitor: "コースのペース"
       level: "レベル"
       clock: "期間"
       institution: "教育機関"
     card:
       subscription_tip: >-
-        このプロバイダは %{period} の無料トライアルを提供しています。この期間の終了時に、定期購読料金が請求されます。 講義へのアクセスは無制限です。定期購読はいつでもキャンセルできます。
+        このプロバイダは %{period} の無料トライアルを提供しています。この期間の終了時に、定期購読料金が請求されます。コースへのアクセスは無制限です。定期購読はいつでもキャンセルできます。
       free_course_tip: >-
-        この講義は無料で受講できます。修了証、グループディスカッション、エクササイズ、オフラインビューなどは含まれない場合があります。 すべての機能をアンロックし、フルアクセスするには有料プランに加入する必要があります
+        このコースは無料で受講できます。修了証、グループディスカッション、演習、オフラインビューなどは含まれない場合があります。 すべての機能をアンロックし、フルアクセスするには有料プランに加入する必要があります
   promo:
     title: "Classpert で知識を現金に変えましょう"
-    subtitle: "Classpert で講義を見つけ、修了証を送って、Paypal アカウントで %{benefit} を取得しましょう。"
+    subtitle: "Classpert でコースを見つけ、修了証を送って、Paypal アカウントで %{benefit} を取得しましょう。"
     benefit: "10ドルボーナス"
     login: "ログインして参加する"
-    nologin: "ゲストとして続行する"
+    nologin: "ゲストとして続ける"
     read_instructions: "プロモーションの説明を読む"
   shared:
     banner:
       title_html: >-
-        Classpert で<b>知識を現金に</b> 変えましょう！
+        Classpert で<b>知識を現金に</b> 変えよう！
       subtitle_html: >-
-        講義を修了した後、修了証をアップロードして PayPal アカウントで <span class='el:amx-C_se el:amx-Ws(nr)'>10ドルボーナス</span> を受け取りましょう。
+        コースを修了した後、修了証をアップロードして PayPal アカウントで <span class='el:amx-C_se el:amx-Ws(nr)'>10ドルボーナス</span> を受け取りましょう。
       instructions: >-
         説明を読む
       log_in: >-
@@ -575,9 +575,9 @@ ja:
     promo:
       banner:
         title_html: >-
-          Classpert で<b>知識を現金に</b> 変えましょう
+          Classpert で<b>知識を現金に</b> 変えよう
         subtitle_html: >-
-          講義を修了した後、修了証をアップロードして PayPal アカウントに直接 <span class='el:amx-C_se el:amx-Ws(nr)'>10ドルボーナス</span> を受け取りましょう。
+          コースを修了した後、修了証をアップロードして PayPal アカウントに直接 <span class='el:amx-C_se el:amx-Ws(nr)'>10ドルボーナス</span> を受け取りましょう。
       tabs:
         how_it_works: "プロモーションの仕組み"
         promo_terms: "プロモーション利用規約"
@@ -586,13 +586,13 @@ ja:
         body_html: >-
           Classpert にアカウントを作成します。すでに登録されている場合は、ログインして参加していることを確認してください。
       find_course:
-        header: "Classpert.com で講義を見つける"
+        header: "Classpert.com でコースを見つける"
         body_html: >-
-          Classpertのオンライン講義検索エンジンを使用して、受講したい講義を発見。 <b>[コースに移動]</b>ボタンをクリックして、選択した講義に登録しましょう（クリックが登録されます）
+          Classpert のオンラインコース検索エンジンを使用して、受講したいコースを発見。 <b>[コースに移動]</b>ボタンをクリックして、選択したコースに登録しましょう (クリックすると登録されます)
       complete_course:
-        header: "講義を修了する"
+        header: "コースを修了"
         body_html: >-
-          10ドルボーナスを受け取る資格を得るには、選択した講義を修了し、修了証を取得する必要があります。
+          10ドルボーナスを受け取る資格を得るには、選択したコースを修了し、修了証を取得する必要があります。
       upload_certificate:
         header: "修了証をアップロード"
         body_html: >-
@@ -600,7 +600,7 @@ ja:
       payment_processing:
         header: "支払い処理中"
         body_html: >-
-          リクエスト後 3 営業日以内に弊社からお支払いいたします。
+          リクエスト後 3 営業日以内に当サイトからお支払いいたします。
       contact_us:
         body_html: >-
           <b>まだ質問がありますか？</b> ご質問は<a class='el:amx-C_pr el:amx-Fw(b)' href='/contact-us'> こちら</a> までお気軽にお問い合わせください。
@@ -612,32 +612,32 @@ ja:
         item_3: >-
           このプロモーションは、修了証を提出する参加者のうち、先着 100 名様に限られます。
         item_4: >-
-          当社は独自の裁量でこのプロモーションを終了する権利を有します。
+          当サイトは独自の裁量でこのプロモーションを終了する権利を有します。
         item_5: >-
           プロモーション開始日以降に登録された方のみがボーナスを受け取ることができます。
         item_6: >-
-          当社は、詐欺的、悪用、非倫理的、疑わしい、またはこのプロモーションと矛盾する活動があると考えられる場合には、独自の裁量によりボーナスを保留、拒否またはキャンセルする権利を留保します。
+          当サイトは、詐欺的、悪用、非倫理的、疑わしい、またはこのプロモーションと矛盾する活動があると考えられる場合には、独自の裁量によりボーナスを保留、拒否またはキャンセルする権利を留保します。
   home:
     index:
-      hero_html: "複数のeラーニングプラットフォームの中から<b>オンライン講義</b>を検索して比較"
-      new_to_classpert: "Classpert は初めて？"
+      hero_html: "複数の eラーニングプラットフォームの中から<b>オンラインコース</b>を検索して比較"
+      new_to_classpert: "Classpert は初めてですか？"
       watch_the_video: "ぜひビデオをご覧ください！"
       kickstart_your_career: "キャリアを始めよう"
-      kickstart_your_career_sub: "エキスパートがあなたのキャリアのスタートに最高のオンラインコースを選びました"
-      about_us_title_1: Classpertのオンライン講義検索エンジン
+      kickstart_your_career_sub: "当サイトのエキスパートがあなたのキャリアのスタートに最高のオンラインコースを選びました"
+      about_us_title_1: Classpert のオンラインコース検索エンジン
       about_us_text_1_html: >-
-        15か国語以上の%{providers_count}を超える eラーニングプラットフォームからオンラインコースを比較。価格に関する詳細情報を入手、ビデオプレビューを見て、シラバスを読み、レビューを確認して、受講したいオンライン講義を見つけましょう。
-      about_us_title_2: オンライン講義
+        15 か国語以上の %{providers_count} を超える eラーニングプラットフォームからオンラインコースを比較。価格に関する詳細情報を入手、ビデオプレビューを見て、シラバスを読んで、レビューを確認して、受講したいオンラインコースを見つけましょう。
+      about_us_title_2: オンラインコース
       about_us_text_2_html: >-
-        1つのウェブサイトに、オンライン最大規模の講義が集約。<b>コンピュータサイエンス</b>、<b>データサイエンス</b>、<b>マーケティング</b>、<b>ビジネス</b>、<b>自己啓発</b>など、さまざまなカテゴリが勢揃い。大学の単位をお探しですか？修了証が付随するオンライン講義がおすすめです。一部の大学では、修了証を単位として使うこともできます。
+        1 つのウェブサイトに、オンライン最大規模のコースが集約。<b>コンピュータサイエンス</b>、<b>データサイエンス</b>、<b>マーケティング</b>、<b>ビジネス</b>、<b>自己啓発</b>など、さまざまなカテゴリが勢揃い。大学の単位をお探しですか？修了証が取得できるオンラインコースがおすすめです。一部の大学では、修了証を単位として使うこともできます。
       about_us_title_3: eラーニングプラットフォーム
       about_us_text_3_html: >-
-        Classpertの誇る世界最高のオンライン講義プラットフォームをご覧ください。<a href='/blog/review-of-udemy'><b>Udemy</b></a> 、<b>Coursera</b>、<b>edX</b>、<a href='/blog/pluralsight-review'><b>Pluralsight</b></a>、<a href='/blog/treehouse'><b>Treehouse</b></a>、<a href='/blog/skillshare-review'><b>Skillshare</b></a>、<a href='/blog/masterclass-review'><b>MasterClass</b></a>、<a href='/blog/udacity-review'><b>Udacity</b></a>、その他eラーニングプラットフォームのオンライン講義関連情報がここで見つかります。無料のオンライン講義、1回払いの講義、定期購読モデルを検索しましょう。
+        Classpertの誇る世界最高のオンラインコースプラットフォームをご覧ください。<a href='/blog/review-of-udemy'><b>Udemy</b></a> 、<b>Coursera</b>、<b>edX</b>、<a href='/blog/pluralsight-review'><b>Pluralsight</b></a>、<a href='/blog/treehouse'><b>Treehouse</b></a>、<a href='/blog/skillshare-review'><b>Skillshare</b></a>、<a href='/blog/masterclass-review'><b>MasterClass</b></a>、<a href='/blog/udacity-review'><b>Udacity</b></a>、その他 eラーニングプラットフォームのオンラインコース関連情報がここで見つかります。無料のオンラインコース、1 回払いのコース、定期購読モデルを検索しましょう。
       about_us_button_text_3: すべてのプラットフォームを表示
-      about_us_title_4: 大規模公開オンライン講義（MOOC/ムーク）
+      about_us_title_4: MOOC (ムーク) を探そう
       about_us_text_4_html: >-
-        ハーバード、スタンフォード、イェール、カリフォルニア大学バークレー校、マサチューセッツ工科大学、グーグル、マイクロソフトの修了証が獲得できる無料のオンラインコースを検索しましょう。人工知能、ビッグデータ、ブロックチェーン、ビジネス・マネージメント、プログラミング、サイバーセキュリティ、データサイエンス、起業家精神、Excel、ウェブ開発などのさまざまなテーマをカバーする MOOC (ムーク) が勢揃い。
-      about_us_button_text_4: すべてのMOOC (ムーク) を表示
+        ハーバード、スタンフォード、イェール、カリフォルニア大学バークレー校、マサチューセッツ工科大学、グーグル、マイクロソフトの修了証が取得できる無料のオンラインコースを検索しましょう。人工知能、ビッグデータ、ブロックチェーン、ビジネス・マネージメント、プログラミング、サイバーセキュリティ、データサイエンス、起業、Excel、ウェブ開発などのさまざまなテーマをカバーする MOOC (ムーク) が勢揃い。
+      about_us_button_text_4: すべての MOOC (ムーク) を表示
       careers:
         data_scientist: データサイエンティスト
         game_developer: ゲーム開発者
@@ -645,13 +645,13 @@ ja:
         software_developer: ソフトウェア開発者
         web_developer: Web 開発者
       meta:
-        title: "トッププラットフォームからオンライン講義を見つける | Classpert"
+        title: "トッププラットフォームからオンラインコースを見つける | Classpert"
         description: >-
           Udemy、Coursera、Pluralsight、edX、LinkedIn Learning などのプラットフォームと並べてオンラインコースを比較しましょう。Classpert で時間とお金を節約しましょう！
   contact_us:
     new:
       meta:
-        title: "トッププラットフォームからオンライン講義を見つける | Classpert"
+        title: "トッププラットフォームからオンラインコースを見つける | Classpert"
         description: >-
           Udemy、Coursera、Pluralsight、edX、LinkedIn Learning などのプラットフォームと並べてオンラインコースを比較しましょう。Classpert で時間とお金を節約しましょう！
       title: "お問い合わせ"
@@ -689,113 +689,113 @@ ja:
         subtitle: "メッセージは正常に送信されました。担当チームがまもなく返信いたします。"
         action:
           another_message: "別のメッセージを送る"
-          homepage: "講義を見つける"
+          homepage: "コースを見つける"
   course_reviews:
     show:
       form:
         rating:
           title_html: >-
-            あなたの体験を評価してください。 <b>%{provider} の %{course}<b/> を評価して他の生徒を助けましょう。
+            あなたの体験を評価してください。 <b>%{provider} の %{course}<b/> を評価して他の学生を助けましょう。
         completion:
-          title: 講義を修了しましたか？
+          title: コースを修了しましたか？
           values:
             yep: "はい"
             nope: "いいえ"
         feedback:
           title: フィードバックを追加する
-          placeholder: 苦情、提案、苦情など
+          placeholder: 賛辞、提案、苦情など
         send: フィードバックを送信
       submission:
         header: フィードバックをありがとうございます！
         body: >-
-          当社は常にプラットフォームの改善に努めており、利用される皆様のご意見は重要です。
+          当サイトは常にプラットフォームの改善に努めており、利用される皆様のご意見を大切にしています。
         link: ホームに戻る
   courses:
     index:
       meta:
-        title: "%{search_query} 講義 | Classpert"
-        description: "%{search_query} 講義を見つけて比べましょう。時間とお金を節約できます。"
+        title: "%{search_query} のコース | Classpert"
+        description: "%{search_query} のコースを見つけて比べましょう。Classpert で時間とお金を節約できます。"
       arts_and_design:
         meta:
-          title: "芸術・デザインのオンライン講義 | Classpert"
+          title: "芸術・デザインのオンラインコース | Classpert"
           description: >-
-            実践的な芸術的スキルと知識を学びましょう。芸術・デザインの幅広い多様な科目を探索することができます。修了証付きの有料・無料のオンライン講義を見つけましょう
+            実践的な芸術的スキルと知識を学びませんか。芸術・デザインの幅広い多様な科目を探索することができます。修了証付きの有料・無料のオンラインコースを見つけましょう
         html:
           hero_title: >-
-            実践的な芸術的スキルと知識を学びましょう。芸術・デザインの幅広い多様な科目を探索することができます。修了証付きの有料・無料のオンライン講義を見つけましょう
+            実践的な芸術的スキルと知識を学びませんか。芸術・デザインの幅広い多様な科目を探索することができます。修了証付きの有料・無料のオンラインコースを見つけましょう
       business:
         meta:
-          title: "ビジネスのオンライン講義 | Classpert"
+          title: "ビジネスのオンラインコース | Classpert"
           description: >-
-            現代のビジネス環境のあらゆる側面で進歩しましょう。 ファイナンス、運営、管理、戦略における貴重な能力を育成します。修了証付きの有料・無料のオンライン講義を見つけましょう
+            現代のビジネス環境のあらゆる側面で進歩しませんか。 ファイナンス、運営、管理、戦略における貴重な能力を育成します。修了証を取得できる有料・無料のオンラインコースを見つけましょう
         html:
           hero_title: >-
-            現代のビジネス環境のあらゆる側面で進歩しましょう。 ファイナンス、運営、管理、戦略における貴重な能力を育成します。修了証付きの有料・無料のオンライン講義を見つけましょう
+            現代のビジネス環境のあらゆる側面で進歩しませんか。 ファイナンス、運営、管理、戦略における貴重な能力を育成します。修了証を取得できる有料・無料のオンラインコースを見つけましょう
       language_and_communication:
         meta:
-          title: "言語・コミュニケーションのオンライン講義 | Classpert"
+          title: "言語・コミュニケーションのオンラインコース | Classpert"
           description: >-
-            リスニング、リーディング、スピーキング、ライティングのスキルを身につけましょう。言語と非言語のコミュニケーション能力もマスターできます。修了書付きの有料・無料オンライン講義を見つけましょう
+            リスニング、リーディング、スピーキング、ライティングのスキルを身につけませんか。言語と非言語のコミュニケーション能力もマスターできます。修了書付きの有料・無料オンラインコースを見つけましょう
         html:
           hero_title: >-
-            リスニング、リーディング、スピーキング、ライティングのスキルを身につけましょう。言語と非言語のコミュニケーション能力もマスターできます。修了書付きの有料・無料オンライン講義を見つけましょう
+            リスニング、リーディング、スピーキング、ライティングのスキルを身につけませんか。言語と非言語のコミュニケーション能力もマスターできます。修了書付きの有料・無料オンラインコースを見つけましょう
       life_sciences:
         meta:
-          title: "生命科学のオンライン講義 | Classpert"
+          title: "生命科学のオンラインコース| Classpert"
           description: >-
-            生物構造の物理的構造、化学プロセス、分子相互作用を理解しましょう。 世界中のトップ大学のコースで新境地を開拓することも可能です。修了書付きの有料・無料オンライン講義を見つけましょう
+            生物構造の物理的構造、化学プロセス、分子相互作用を理解してみませんか。 世界中のトップ大学のコースで新境地を開拓することも可能です。修了書を取得できる有料・無料オンラインコースを見つけましょう
         html:
           hero_title: >-
-            生物構造の物理的構造、化学プロセス、分子相互作用を理解しましょう。 世界中のトップ大学のコースで新境地を開拓することも可能です。修了書付きの有料・無料オンライン講義を見つけましょう
+            生物構造の物理的構造、化学プロセス、分子相互作用を理解してみませんか。 世界中のトップ大学のコースで新境地を開拓することも可能です。修了書を取得できる有料・無料オンラインコースを見つけましょう
       math_and_logic:
         meta:
-          title: "数学・論理のオンライン講義 | Classpert"
+          title: "数学・論理のオンラインコース | Classpert"
           description: >-
-            代数、幾何学、算術、統計などを学びましょう。あなたの推論や分析思考を発展させることもできます。修了書付きの有料・無料オンライン講義を見つけましょう
+            代数、幾何学、算術、統計などを学びませんか。あなたの推論や分析思考を発展させることもできます。修了書を取得できる有料・無料オンラインコースを見つけましょう
         html:
           hero_title: >-
-            代数、幾何学、算術、統計などを学びましょう。あなたの推論や分析思考を発展させることもできます。修了書付きの有料・無料オンライン講義を見つけましょう
+            代数、幾何学、算術、統計などを学びませんか。あなたの推論や分析思考を発展させることもできます。修了書を取得できる有料・無料オンラインコースを見つけましょう
       personal_development:
         meta:
-          title: "自己啓発のオンライン講義 | Classpert"
+          title: "自己啓発のオンラインコース | Classpert"
           description: >-
-            自己啓発は人生のあらゆる面での成長を決定づけます。あなたの生活や職業における可能性を最大限に高めましょう。修了書付きの有料・無料オンライン講義を見つけましょう
+            自己啓発は人生のあらゆる面での成長を決定づけます。あなたの生活や職業における可能性を最大限に高めましょう。修了書を取得できる有料・無料オンラインコースを見つけましょう
         html:
           hero_title: >-
-            自己啓発は人生のあらゆる面での成長を決定づけます。あなたの生活や職業における可能性を最大限に高めましょう。修了書付きの有料・無料オンライン講義を見つけましょう
+            自己啓発は人生のあらゆる面での成長を決定づけます。あなたの生活や職業における可能性を最大限に高めましょう。修了書を取得できる有料・無料オンラインコースを見つけましょう
       social_sciences:
         meta:
           title: "社会科学 | Classpert"
           description: >-
-            人間社会と社会生活のあらゆる側面について学びましょう。世界で最も大きな問題の数々を理解することもできます。修了書付きの有料・無料オンライン講義を見つけましょう
+            人間社会と社会生活のあらゆる側面について学びませんか。世界で最も大きな問題の数々を理解することもできます。修了書を取得できる有料・無料オンラインコースを見つけましょう
         html:
           hero_title: >-
-            人間社会と社会生活のあらゆる側面について学びましょう。世界で最も大きな問題の数々を理解することもできます。修了書付きの有料・無料オンライン講義を見つけましょう
+            人間社会と社会生活のあらゆる側面について学びませんか。世界で最も大きな問題の数々を理解することもできます。修了書を取得できる有料・無料オンラインコースを見つけましょう
       health_and_fitness:
         meta:
           title: "健康・運動 | Classpert"
           description: >-
-            健康維持、疾患予防、危険な行動の削減に関する知識を増やすことができます。 より長く生き、目標を達成させましょう。修了書付きの有料・無料オンライン講義を見つけましょう
+            健康維持、疾患予防、危険な行動の削減に関する知識を増やすことができます。 より長く生き、目標を達成させましょう。修了書を取得できる有料・無料オンラインコースを見つけましょう
         html:
           hero_title: >-
-            健康維持、疾患予防、危険な行動の削減に関する知識を増やすことができます。 より長く生き、目標を達成させましょう。修了書付きの有料・無料オンライン講義を見つけましょう
+            健康維持、疾患予防、危険な行動の削減に関する知識を増やすことができます。 より長く生き、目標を達成させましょう。修了書を取得できる有料・無料オンラインコースを見つけましょう
     show:
       meta:
-        title: "%{course} オンライン講義 | Classpert"
-        description: "この証明書付きオンライン講義で %{course} を学びましょう。講義に関する情報を見つけ、既に受講した学生が残したレビューを読んでみてください。"
+        title: "%{course} オンラインコース | Classpert"
+        description: "この修了証が取得できるオンラインコースで %{course} を学びましょう。コースに関する情報を見つけ、既に受講した学生が残したレビューを読んでみてください。"
   course_bundles:
     meta:
-      title_html: "%{tag} 講義"
-      description_html: "有料・無料の %{tag} チュートリアルと講義を見つけましょう。 <br/> ご希望のトピックから選択し、最高のインストラクターや教育機関から学びましょう。"
+      title_html: "%{tag} コース"
+      description_html: "有料または無料の %{tag} チュートリアルとコースを見つけましょう。 <br/> ご希望のトピックから選択し、最高の講師や教育機関から学びましょう。"
     social_share:
-      title_html: '%{tag} 講義'
-      description_html: 有料・無料の %{tag} チュートリアルと講義を見つけましょう。 <br/> ご希望のトピックから選択し、最高のインストラクターや教育機関から学びましょう。
+      title_html: '%{tag} コース'
+      description_html: 有料または無料の %{tag} チュートリアルとコースを見つけましょう。 <br/> ご希望のトピックから選択し、最高の講師や教育機関から学びましょう。
     index:
-      title_html: '%{tag} 講義'
-      description_html: 有料・無料の %{tag} チュートリアルと講義を見つけましょう。 <br/> ご希望のトピックから選択し、最高のインストラクターや教育機関から学びましょう。
+      title_html: '%{tag} コース'
+      description_html: 有料または無料の %{tag} チュートリアルとコースを見つけましょう。 <br/> ご希望のトピックから選択し、最高の講師や教育機関から学びましょう。
     show:
-      title_html: '%{tag} 講義'
-      description_html: 有料・無料の %{tag} チュートリアルと講義を見つけましょう。 <br/> ご希望のトピックから選択し、最高のインストラクターや教育機関から学びましょう。
+      title_html: '%{tag} コース'
+      description_html: 有料または無料の %{tag} チュートリアルとコースを見つけましょう。 <br/> ご希望のトピックから選択し、最高の講師や教育機関から学びましょう。
   posts:
     base:
       tags:
@@ -833,24 +833,24 @@ ja:
   user_accounts:
     show:
       meta:
-        title: "%{name} | プロフィール＆講義"
-        description: "%{name} さんのプロフィールを確認してください。 %{name} さんのすべての講義を1か所で見ることができます。"
+        title: "%{name} | プロフィール＆コース"
+        description: "%{name} さんのプロフィールを確認してください。 %{name} さんのすべてのコースを 1 か所で見ることができます。"
       instructor: 講師
       are_you: あなたは %{name} さんですか？
       claim_profile: Claim profile
       about_me: 講師について
-      courses: "講義"
+      courses: "コース"
       disclaimer: このページはウェブ上の公開情報を基に作成されており、講師が作成したものではありません。
   orphaned_profiles:
     show:
       meta:
-        title: '%{name} | プロフィール＆講義'
-        description: '%{name} さんのプロフィールを確認してください。 %{name} さんのすべての講義を1か所で見ることができます。'
+        title: '%{name} | プロフィール＆コース'
+        description: '%{name} さんのプロフィールを確認してください。 %{name} さんのすべてのコースを 1 か所で見ることができます。'
       instructor: 講師
       are_you: あなたは %{name} さんですか？
       claim_profile: Claim profile
       about_me: 講師について
-      courses: 講義
+      courses: コース
       disclaimer: このページはウェブ上の公開情報を基に作成されており、講師が作成したものではありません。
     claim:
       success: このプロフィールの所有権はあなたのアカウントに正常に転送されました。ダッシュボードからページ内の情報を編集できるようになりました。
@@ -858,23 +858,23 @@ ja:
       h2:
         1: Via Social Network
         2: Via Email
-      view_profile: View Profile
+      view_profile: プロフィールを見る
       text:
         1: あなたが %{name} さんであることを証明する必要があります
         2: >-
           利用可能な方法で身元を確認できる場合、このプロフィールの所有権は自動的にあなたのアカウントに転送されます
         3_html: >-
-          残念ながら、このプロフィールを確認する方法がありません
+          残念ながら、このプロフィールを確認する方法がありません。
         4: >-
           このプロフィールに関連するソーシャルネットワークを特定しました。以下のいずれかの方法であなたの身元を証明してください。 会社のプロフィールを申告される場合には、会社のソーシャルネットワークアカウントを使用してください。
         5: >-
-          あなたのものと思われるメールが複数あります
+          あなたのものと思われるメールが複数あります。
         6: >-
           上記のいずれかのメールアドレスを入力すると、一致するメールアドレスにリンクが送信されます。
         7_html: >-
-          利用可能な方法を使用して身元を証明できない場合は、%{link} から手動で承認プロセスを始めることができます。
+          利用可能な方法で身元を証明できない場合は、 %{link} から手動で承認プロセスを開始することができます。
     send_verification_link:
-      success: '%{email} にプロフィール申請のリンクと手順を説明するメールを送信しました。このリンクは、%{time} 後に期限切れになります'
+      success: '%{email} にメールを送信しました。このリンクは %{time} に有効期限が切れます'
       fail: メールアドレス %{email} は、登録されているいずれのアドレスとも一致しません
   claims:
     codes:
@@ -884,7 +884,7 @@ ja:
     social_networks:
       update:
         success: このプロフィールの所有権はあなたのアカウントに正常に転送されました。ダッシュボードからページ内の情報を編集できるようになりました。
-        fail: "申請に失敗しました。セッションデータが空です。クッキーと \n javascript が有効になっていることを確認してください。"
+        fail: 申請に失敗しました。セッションデータが空です。クッキーと javascript が有効になっていることを確認してください。
   instructors:
     index:
       meta:
@@ -897,15 +897,15 @@ ja:
       filter_by_elearning_platform:
         label: eラーニングプラットフォームで選ぶ
         prompt: プラットフォームを選択
-      courses_count: "%{count} 講義"
-      teaching_at: teaching at
+      courses_count: "%{count} コース"
+      teaching_at: 指導拠点
       text:
-        1: "科目 %{subject} の講師はいません"
-        1_none: "No instructors"
+        1: "%{subject} の講師はいません"
+        1_none: "講師なし"
   pages:
     dashboard_index:
       meta:
-        title: "Member Area | Classpert"
+        title: "メンバーエリア | Classpert"
       html:
         account_settings_header: "アカウント設定"
         secure_your_account_header: "アカウントを保護"
@@ -913,13 +913,13 @@ ja:
         account_settings_link: "アカウント設定"
         account_settings_form_button: "保存"
         profile_link: "プロフィール"
-        interests_link: "興味ある分野"
+        interests_link: "興味のある分野"
         language_preferences_header: "言語の設定"
         connected_oauth_accounts_header: "接続済みアカウント"
         add_oauth_accounts_header: "別のアカウントを追加"
-        destroy_account_header: "アカウントの削除"
-        destroy_account_button: "アカウントの削除"
-        upload_image_button: "写真のアップロード"
+        destroy_account_header: "アカウントを削除"
+        destroy_account_button: "アカウントを削除"
+        upload_image_button: "写真をアップロード"
         select_interest_placeholder: "興味のある分野を選択してください"
   profiles:
     new:
@@ -927,4 +927,4 @@ ja:
       title: ユーザー名を作成
       subtitle: アカウントのユーザー名を作成してください
       placeholder: ユーザー名を入力
-      confirm: Confirm
+      confirm: 確認する

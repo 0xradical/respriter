@@ -42,7 +42,7 @@ ja:
     ahrefs: Ahrefs
     ajax: Ajax
     algebra: 代数学
-    algebra_and_geometry: 代数幾何学
+    algebra_and_geometry: 代数・幾何学
     algorithmic_trading: アルゴリズム取引
     algorithms: アルゴリズム
     american_english: 英語 (アメリカ)
@@ -205,15 +205,15 @@ ja:
     cplusplus_programming: C++
     creativity: クリエイティビティ
     creature_design: 生き物のデザイン
-    credit_analysis: Credit Analysis
+    credit_analysis: クレジット分析
     critical_thinking: クリティカルシンキング
     crm: カスタマーリレーションシップマネジメント (CRM)
     crochet: かぎ針編み
     crystal_programming: Crystal
-    csharp_programming: "C#"
+    csharp_programming: 'C#'
     css: CSS
     cucumber_test_framework: Cucumber
-    culture: 文化・カルチャー
+    culture: 文化
     curanderismo: クランデリスモ
     cute_drawings: かわいい絵
     cybersecurity: サイバーセキュリティ
@@ -235,7 +235,7 @@ ja:
     davinci_resolve_14: Davinci Resolve 14
     daz_studio: DAZ Studio
     debian: Debian
-    decision_making: ディシジョンメイキング (意思決定)
+    decision_making: 意思決定
     deep_learning: ディープラーニング
     design: デザイン
     design_and_creativity: デザインとクリエイティビティ
@@ -270,15 +270,15 @@ ja:
     eclipse: Eclipse IDE
     economic_theories: 経済理論
     economics: 経済学
-    economics_finance: 経済学と金融
+    economics_finance: 経済学・ファイナンス
     elasticsearch: Elasticsearch
     electrical_engineering: 電気工学
     electron: Electron JS
     electron_configuration: 電子配置
-    electronics: エレクトロニクス (電子工学)
+    electronics: 電子工学
     elicitation: エリシテーション
     elixir_programming: Elixir
-    elliott_waves: Elliott Waves
+    elliott_waves: エリオット波動
     emacs: Emacs
     embedded_linux: 組み込み Linux
     embedded_systems: 組み込みシステム
@@ -287,12 +287,12 @@ ja:
     emotional_intelligence: 感情的知性 (EI)
     energy: エネルギー
     energy_and_earth_sciences: エネルギーと地球科学
-    engineering: エンジニアリング (工学)
+    engineering: 工学
     english: 英語
     english_composition: 英作文
     english_verb_tenses: 英語 - 動詞時制
     enscape: Enscape
-    entrepreneurship: アントレプレナーシップ (起業家精神)
+    entrepreneurship: 起業
     environmental_science: 環境科学
     environmental_studies: 環境学
     erlang_programming: Erlang
@@ -311,7 +311,7 @@ ja:
     feather_drawing: 羽根の絵
     figma: Figma
     filipino_language: フィリピン語
-    film_and_theatre: 映画と劇場
+    film_and_theatre: 映画と演劇
     film_production: 映画技作
     finance: ファイナンス
     financial_analysis: 財務分析
@@ -335,7 +335,7 @@ ja:
     food_production: 食料生産
     food_systems: フードシステム
     forex: 外国為替
-    fortnite: フォートナイト (Fortnite)
+    fortnite: フォートナイト
     freebsd: FreeBSD
     french: フランス語
     front_end: フロントエンド
@@ -471,7 +471,7 @@ ja:
     kubernetes: Kubernetes
     kyokushin_karate: 極真空手
     language: 言語
-    language_and_communication: 言語とコミュニケーション
+    language_and_communication: 言語・コミュニケーション
     laravel: Laravel
     latex: LaTeX
     law: 法律
@@ -515,11 +515,11 @@ ja:
     math: 数学
     math_and_logic: 数学・論理
     matlab: MATLAB
-    matrix: マトリクス
+    matrix: 行列
     maya: Maya
     mean_stack: MEANスタック
     mechanical_engineering: 機械工学
-    mechanics_for_engineering: エンジニアリング (工学) のための力学
+    mechanics_for_engineering: 工学のための力学
     medicine: 医学
     medieval_spain: 中世スペイン
     meditation: 瞑想
@@ -529,7 +529,7 @@ ja:
     memcached: Memcached
     merch_by_amazon: Merch by Amazon
     microbiology: 微生物学
-    microcontrollers: マイクロコントローラ (マイコン)
+    microcontrollers: マイコン
     microservices: マイクロサービス
     microsoft_access: Microsoft Access
     microsoft_onenote: Microsoft OneNote
@@ -567,7 +567,7 @@ ja:
     object_oriented_programming: オブジェクト指向プログラミング
     objective_c: Objective-C
     ocaml_programming: OCaml
-    office_365_educators: Office 365 for Educators
+    office_365_educators: 教育機関向け Office 365
     office_productivity: オフィスの生産性
     omnisphere: Omnisphere
     online_education: オンライン教育
@@ -611,14 +611,14 @@ ja:
     postgresql: PostgreSQL
     powershell: Powershell
     powtoon: Powtoon
-    precalculus: Precalculus (微積分入門）
+    precalculus: 微積分入門
     primavera_p6: Primavera P6
     principle_app: Principle アプリ
     pro_tools: Pro Tools
     procreate: Procreate
     product_design: プロダクトデザイン
     productivity: 生産性
-    professional_development: Professional Development
+    professional_development: 専門能力開発
     programming_languages: プログラミング言語
     project_management: プロジェクトマネジメント
     prolog: Prolog
@@ -649,16 +649,16 @@ ja:
     resin_art: レジンアート
     rest: REST
     revit: Revit
-    rhino_software: Rhino (ソフトウェア)
+    rhino_software: Rhino
     rigging: リギング
     roblox_studio: Roblox Studio
-    robotics: ロボティクス (ロボット工学)
+    robotics: ロボット工学
     rpg_gamemaker: "GameMaker で ロールプレイングゲーム (RPG)\n"
     ruby_on_rails: Ruby on Rails
     ruby_programming: Ruby
     russian: ロシア語
     rust_programming: Rust
-    sales: 営業 (セールス)
+    sales: 営業
     salesforce: Salesforce
     salsa_dancing: サルサダンス
     sanic: Sanic (サニック)
@@ -733,7 +733,7 @@ ja:
     super_learning: スーパーラーニング
     superhero_drawing: スーパーヒーローの絵
     supply_chain: サプライチェーン
-    survey: アンケート・調査
+    survey: 調査
     suse: OpenSUSE
     sustainability: サステナビリティ
     sveltejs: Svelte.js
@@ -782,7 +782,7 @@ ja:
     video_editing: ビデオ編集
     videography: ビデオグラフィ
     vim: VIM
-    violin: ヴァイオリン (バイオリン)
+    violin: バイオリン
     virtual_reality: バーチャルリアリティ (VR)
     visual_arts: ビジュアルアート
     visual_basic: Visual Basic
@@ -808,7 +808,7 @@ ja:
     wirecast: Wirecast
     wireshark: Wireshark
     wix: Wix
-    wordpress: Wordpress (ワードプレス)
+    wordpress: Wordpress
     world_machine: World Machine
     world_war_1: 第1次世界大戦
     world_war_2: 第2次世界大戦

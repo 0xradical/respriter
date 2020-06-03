@@ -30,13 +30,13 @@ ja:
       account_settings:
         email:
           title: メールアドレスを編集
-          your_current_email_is: "<b>あなたの現在のメールアドレスは </b>: %{email}"
-          awaiting_confirmation: "awaiting confirmation"
+          your_current_email_is: "<b>あなたの現在のメールアドレス </b>: %{email}"
+          awaiting_confirmation: "確認待ちです"
         password:
           title: パスワードを変更
           info: 下のボタンをクリックすると、パスワードをリセットする手順を記載したメールが送信されます
           change_password_button: パスワードを変更
-          success_message: '%{email} にパスワードの変更方法に関するメールが送信されました'
+          success_message: '%{email} にパスワードの変更方法を記載したメールが送信されました'
           error_message: '%{email} へのメール送信中にエラーが発生しました。後でもう一度お試しください'
         profile:
           sections:
@@ -70,12 +70,12 @@ ja:
             rejected: 却下済み
             default: 分析中
           bonus_statuses_additional:
-            pending: "担当チームは既にあなたの情報を確認しています"
+            pending: "担当チームがあなたの情報を確認中です"
             failed: "提供された情報は却下されました"
         certificate:
           title: "あなたの修了証"
           change:
-            call_out: "修了証書の変更が必要ですか？"
+            call_out: "修了証の変更が必要ですか？"
             link: "他のファイルを送信"
         paypal_account:
           title: "あなたの Paypal アカウント"
@@ -83,24 +83,24 @@ ja:
             call_out: "Paypal アカウントを変更しますか？"
             link: "変更する場合はここをクリック"
       interests:
-        info_text: 複数の科目を選択して、Classpert の体験を向上させましょう！
+        info_text: 複数の科目を選択して、Classpert の体験を向上させよう！
         select_a_topic_title: 科目を選択
         interests_title: 興味・関心
-        online_courses_info: "%{courses} オンライン講義"
-        remove_interest: 削除
+        online_courses_info: "%{courses} オンラインコース"
+        remove_interest: 削除する
         placeholder: 科目を選択
         select: 選択する
         deselect: 選択を外す
     components:
       file_uploader:
         file_label: "ファイルを選択"
-        file_size_feedback: "%{file} が最大許容サイズ %{size} を超えています"
+        file_size_feedback: "%{file} は最大許容サイズ %{size} を超えています"
         progress_feedback:
           loading: "ファイルをアップロード中..."
           error: "ファイルのアップロード中にエラーが発生しました..."
-          success: "ファイルがアップロードされました！"
+          success: "ファイルがアップロードが完了しました！"
       social_media_input:
-        placeholder: " 残りのリンク / コピー＆貼り付けリンク"
+        placeholder: "残りのリンク / コピー＆貼り付けリンク"
         placeholder_mobile: "あなたの ID / コピー＆貼り付けリンク"
       help:
         call_out: "サポートが必要ですか？"
@@ -111,18 +111,18 @@ ja:
         body: 修了証を分析します。通常 <b>3日</b> で結果が出ます。
         social:
           callout: "友達と共有する:"
-          text: Classpert で講義を見つけ、10ドルボーナスをもらいました。詳細は %{site}
+          text: Classpert でコースを見つけ、10ドルのボーナスをもらいました。詳細こちらから %{site}
         button: "OK"
     forms:
       email:
         email_field_label: 新しいメールアドレス
-        email_field_placeholder: 新しいメールアドレスを入力
+        email_field_placeholder: 新しいメールアドレスを入力してください
         email_field_feedback_text:
         email_confirmation_field_label: 新しいメールアドレスを確認
-        email_confirmation_field_placeholder: 新しいメールアドレスを入力
+        email_confirmation_field_placeholder: 新しいメールアドレスを入力してください
         email_confirmation_field_feedback_text:
         password_field_label: パスワード
-        password_field_placeholder: 現在のパスワードを入力
+        password_field_placeholder: 現在のパスワードを入力してください
         password_field_feedback_text:
         submit: 送信
       profile:
@@ -130,17 +130,17 @@ ja:
         name_field_placeholder: 名前を入力してください
         name_field_feedback_text:
         username_field_label: ユーザー名
-        username_field_placeholder: ユーザー名を選択
-        username_field_invalid_feedback_text: "有効なユーザー名である必要があります"
+        username_field_placeholder: ユーザー名を選択してください
+        username_field_invalid_feedback_text: "有効なユーザー名を入力してください "
         username_field_uniqueness_feedback_text:
-        shortbio_field_label: 見出し
-        shortbio_field_placeholder: あなたが誰であるかを説明する短い文
-        country_field_label: 国名
-        country_field_select: 国を選択
+        shortbio_field_label: ヘッドライン
+        shortbio_field_placeholder: あなたを説明する短い文を入力してください
+        country_field_label: 国
+        country_field_select: 国を選択してください
         website_field_label: ウェブサイト
-        website_field_placeholder: ウェブサイトを追加
+        website_field_placeholder: あなたのウェブサイトを追加
         website_field_about: >-
-          あなたは既に講義やコースを提供するウェブサイトを持っていますか？%{index_tool} にアクセスして Classpert に掲載しましょう！
+          コースを提供するウェブサイトを既に持っていますか？%{index_tool} にアクセスして Classpert に掲載しましょう！
         instructor_field_label: 私は講師です
         public_field_label: 全体にプロフィールを公開
         social_profiles_field_header: ソーシャルメディアのプロフィールを追加
@@ -150,27 +150,27 @@ ja:
         social_profiles_field_select: プロフィールを追加
         social_profiles_field_select_0: プロフィールを追加
         social_profiles_field_select_1: プロフィールが 1 つ追加されました。もっと追加する
-        social_profiles_field_select_n: "%{n} つのプロフィールが追加されました。もっと追加する"
+        social_profiles_field_select_n: "%{n} のプロフィールが追加されました。もっと追加する"
         elearning_profiles_field_header: eラーニングプラットフォームのプロフィールを追加
         elearning_profiles_field_about: >-
-          ユーザーがあなたの講義を見つけることができるeラーニングのプラットフォーム
+          ユーザーがあなたのコースを見つけることができる eラーニングのプラットフォーム
         elearning_profiles_field_label: eラーニングプラットフォーム
         elearning_profiles_field_select: プロフィールを追加
         elearning_profiles_field_select_0: プロフィールを追加
         elearning_profiles_field_select_1: プロフィールが 1 つ追加されました。もっと追加する
-        elearning_profiles_field_select_n: "%{n} つのプロフィールが追加されました。もっと追加する"
+        elearning_profiles_field_select_n: "%{n} のプロフィールが追加されました。もっと追加する"
         about_field_label: 略歴
         about_field_placeholder: >-
           このスペースを利用して自分自身、趣味、仕事、成果などについて紹介しましょう。
-        submit: 更新する
+        submit: 更新
       certificate:
         certificate_field_label: "修了証をアップロード"
       promo:
-        price_field_label: "講義の料金はいくらでしたか？"
-        purchase_date_field_label: "講義はいつ購入しましたか？"
+        price_field_label: "コースの料金はいくらでしたか？"
+        purchase_date_field_label: "コースはいつ購入しましたか？"
         order_id_field_label: "注文 ID"
         order_id_field_placeholder: "購入に関連する注文 ID"
       paypal_account:
         paypal_email_field_label: "Paypal アカウント"
         paypal_email_field_placeholder: "10ドルを受け取る Paypal アカウント"
-        paypal_email_field_invalid_feedback_text: "有効なメールアドレスである必要があります"
+        paypal_email_field_invalid_feedback_text: "有効なメールアドレスを入力してください"
