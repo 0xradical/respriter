@@ -1,5 +1,5 @@
 <template>
-  <elements class="el:amx-Pos(r)" style="height: 100vh">
+  <elements class="el:amx-Pos(r)" style="height: 100vh;">
     <div class="el:amx-Bc_su" v-if="!$route.meta.hideNavigation">
       <div class="container-fluid">
         <div class="row">
@@ -13,17 +13,17 @@
               :off-canvas-button="false"
             >
               <template #brand>
-                <svg style="width:20px; height: 20px">
+                <svg style="width: 20px; height: 20px;">
                   <use xlink:href="#brand-logo_symbol" />
                 </svg>
-                <sup style="top:-1em" class="el:amx-Ml(0.5em)">beta</sup>
+                <sup style="top: -1em;" class="el:amx-Ml(0.5em)">beta</sup>
               </template>
 
               <template #slot1>
                 <span class="separator"></span>
                 <div v-if="domains.length > 0" class="el:amx-Ml(1em) el:amx-Mr(2em)">
                   <div class="el:amx-Ml(1em) el:amx-D(ib) el:amx-Va(m)">
-                    <div v-if="domains.length === 1" style="position:relative;top:2px;">
+                    <div v-if="domains.length === 1" style="position: relative; top: 2px;">
                       <router-link
                         :to="{
                           name: 'domain-edit',
@@ -84,16 +84,16 @@
                   </span>
                 </router-link>
                 <label
-                  data-el-theme-toggle-switch
-                  class="el:m-theme-toggle-switch el:amx-Mr(1em)"
-                  style="vertical-align:middle"
-                  for="theme-switcher-off-canvas"
+                  @click="switchTheme"
+                  data-el-theme-toggler
+                  class="el:m-switch el:m-switch--theme-toggler"
+                  for="checkbox3"
                 >
-                  <input type="checkbox" id="theme-switcher-off-canvas" />
-                  <div class="el:m-theme-toggle-switch__slider"></div>
+                  <input type="checkbox" id="checkbox3" />
+                  <div class="el:m-switch__slider"></div>
                 </label>
                 <span class="separator"></span>
-                <span style="padding:0 1.5em" v-if="$store.state.profile.loaded">
+                <span style="padding: 0 1.5em;" v-if="$store.state.profile.loaded">
                   <div class="el:m-avatar el:m-avatar--circle el:m-avatar--32x32">
                     <img
                       v-if="$store.state.profile.avatarUrl"
@@ -111,7 +111,7 @@
                     </span>
                   </div>
                 </span>
-                <span style="padding:0 1.5em" v-else>
+                <span style="padding: 0 1.5em;" v-else>
                   <div class="el:m-avatar el:m-avatar--circle el:m-avatar--32x32">
                     <img src="../assets/avatar-default.svg" />
                   </div>
@@ -141,7 +141,7 @@
     <div
       class="el:amx-Bc_su"
       v-if="$route.meta.hideNavigation"
-      style="position: fixed; bottom: 0; width: 100%"
+      style="position: fixed; bottom: 0; width: 100%;"
     >
       <div class="container-fluid">
         <div class="row">
@@ -162,7 +162,7 @@
               </router-link>
             </div>
             <div>
-              <svg style="width:20px; height: 20px">
+              <svg style="width: 20px; height: 20px;">
                 <use xlink:href="#brand-logo_symbol" />
               </svg>
             </div>
@@ -304,6 +304,12 @@ export default {
           params: { domain: selectedOption }
         });
       });
+    },
+    switchTheme() {
+      const currentTheme = document.body.parentElement.dataset.theme;
+      const theme = currentTheme === "light" ? "dark" : "light";
+
+      document.body.parentElement.dataset.theme = theme;
     }
   }
 };
