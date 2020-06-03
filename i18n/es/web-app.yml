@@ -630,10 +630,10 @@ es:
         Compare cursos en línea de más de %{providers_count} plataformas de aprendizaje diferentes en más de 15 idiomas. Obtenga información detallada sobre precios, mire los videos introductorios, lea el programa de estudios y vea las calificaciones antes de elegir un curso en línea.
       about_us_title_2: cursos en línea
       about_us_text_2_html: >-
-        Explore el catálogo más grande de cursos en línea en un solo lugar. Encuentre cursos en línea de <b>informatica</b>, <b>ciencia de datos</b>, <b>marketing</b>, <b>negocios</b>, <b>desarrollo personal</b> y más. ¿Buscas cursos con certificados gratis? Enriquezca su currículum con increíbles cursos en línea sin gastar un centavo.
+        Encuentre cursos en línea de <b>informática</b>, <b>ciencia de datos</b>, <b>marketing</b>, <b>negocios</b> y <b>desarrollo personal</b> impartidos por <a href='/instructors'><b>instructores experimentados</b></a>
       about_us_title_3: plataformas de cursos en línea
       about_us_text_3_html: >-
-        Descubre los mejores sítios de cursos en línea del mundo en Classpert. Obtenga toda la información relevante sobre las clases en línea de <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <a href='/blog/coursera-en-espanol'><b>Coursera</b></a>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>, <b>Platzi</b> entre otros. Encuentre cursos en línea gratuitos, cursos de pago único y modelos de suscripción.
+        Descubre los mejores sítios de cursos en línea del mundo en Classpert. Obtenga toda la información relevante sobre las clases en línea de <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <a href='/blog/coursera-en-espanol'><b>Coursera</b></a>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>, <a href='/blog/miriadax-cursos-informaciones'><b>Miríadax</b></a>, <b>Platzi</b> entre otros. Encuentre cursos en línea gratuitos, cursos de pago único y modelos de suscripción.
       about_us_button_text_3: ver todas las plataformas
       about_us_title_4: Buscador de cursos MOOC
       about_us_text_4_html: >-
@@ -782,8 +782,8 @@ es:
             Aumenta su conocimiento sobre el mantenimiento de la salud, la prevención de enfermedades y la reducción de conductas de riesgo. Vive más tiempo y consigue tus objetivos. Encuentra cursos online pagados y gratuitos con certificado
     show:
       meta:
-        title: "Curso en Línea %{course} | Classpert"
-        description: "Tome el Curso en Línea %{course} con certificado. Consulte la información del curso y las evaluaciones de los estudiantes que han asistido."
+        title: "%{course} | Curso en Línea | Classpert"
+        description: "%{course} - Aprenda habilidades valiosas con este curso en línea de %{provider}%."
   course_bundles:
     meta:
       title_html: "Cursos de %{tag}"
@@ -808,6 +808,10 @@ es:
         computer_science: Computer Science
         e_learning: E-Learning
         blockchain_and_cryptocurrency: Blockchain and Cryptocurrency
+      meta:
+        title: Recent Articles
+        description: Recent Articles
+      h1: Recent Articles
     show:
       tags:
         computer_science: Computer Science
