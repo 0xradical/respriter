@@ -69,7 +69,7 @@ cucumber: $(CUSTOM_ENV_FILES) ## Runs cucumber tests
 LESS_PRIORITY-%:
 	@:
 
-./db/seeds/%/setup.sql: ./providers/%.rb ./providers/%
+./db/seeds/%/setup.sql: ./providers/%.rb ./providers/%/*
 	@mkdir -p `dirname $@`
 	@$(call docker_run_or_plain,base,ruby $<)
 	@echo "Seed file $@ created or updated!"
