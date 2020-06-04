@@ -1,64 +1,109 @@
 -- auto-generated, do not change!
 -- run `make build-seeds` instead
 
+WITH
+
+courses_template AS (
+  INSERT INTO app.pipeline_templates (
+    name,
+    success_script_type,
+    success_script,
+    dataset_id,
+    pipes
+  ) SELECT
+    'Spanish Platzi Courses Pipeline',
+    'sql',
+    '
+    UPDATE app.resources
+    SET content = content || jsonb_build_object(''published'', false)
+    WHERE
+      content->>''provider_name'' = ''Platzi''
+      AND content->>''published'' = ''true''
+      AND last_execution_id      != $1.pipeline_execution_id;
+    ',
+    '<%= dataset_id %>',
+    '[
+      {
+        "type": "Fetcher",
+        "http": {
+          "headers":          { "user_agent": "<%= user_agent %>" },
+          "follow_redirects": false
+        },
+        "status_map": [
+          [ [ 200, 299 ], "pending" ],
+          [ 301,          "skipped" ],
+          [ 404,          "skipped" ]
+        ]
+      },
+      {
+        "type":"ResourceCreator",
+        "script": {
+          "type": "ruby",
+          "source_code": <%= course_builder %>
+        }
+      }
+    ]'
+  RETURNING *
+)
+
 INSERT INTO app.pipeline_templates (
   name,
   data,
   bootstrap_script_type,
   bootstrap_script,
+  success_script_type,
+  success_script,
   dataset_id,
   pipes
-) VALUES (
-  'Platzi Brute Page Crawler',
-  jsonb_build_object('home_url', '<%= home_url %>'),
+) SELECT
+  'Spanish Platzi Sitemap Pipeline',
+  jsonb_build_object(
+    'next_pipeline_template_id', courses_template.id::varchar,
+    'sitemap_url',               '<%= sitemap_url %>'
+  ),
   'sql',
   '
-    INSERT INTO app.pipe_processes (pipeline_id, initial_accumulator) VALUES ($1.id, jsonb_build_object(''url'', $1.data->>''home_url''));
-    SELECT pipeline_call($1.id);
+    WITH next_pipeline AS (
+      INSERT INTO app.pipelines (
+        pipeline_execution_id,
+        pipeline_template_id
+      ) VALUES (
+        $1.pipeline_execution_id,
+        ($1.data->>''next_pipeline_template_id'')::uuid
+      )
+      RETURNING *
+    )
+
+    UPDATE app.pipelines
+    SET data = jsonb_set(pipelines.data, ''{next_pipeline_id}'', (''"'' || next_pipeline.id || ''"'')::jsonb)
+    FROM next_pipeline
+    WHERE pipelines.id = $1.id;
+
+    INSERT INTO app.pipe_processes (
+      pipeline_id,
+      initial_accumulator
+    ) VALUES (
+      $1.id,
+      jsonb_build_object(''url'', $1.data->>''sitemap_url'')
+    );
+    SELECT app.pipeline_call($1.id);
   ',
+  'sql',
+  'SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);',
   '<%= dataset_id %>',
   '[
     {
       "type": "Fetcher",
       "http": {
-        "headers": {
-          "user_agent":      "<%= user_agent %>",
-          "accept":          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-          "accept_language": "en-US,en;q=0.8,q=0.5,*;q=0.3"
-        },
-        "follow_redirects": {
-          "limit": 100
-        }
-      },
-      "status_map": [
-        [ [ 200, 299 ], "pending" ],
-        [ [ 403, 404 ], "skipped" ]
-      ]
-    },
-    {
-      "type": "Spider",
-      "url_blacklist": [
-        "platzi.com/@",
-        "platzi.com/clases/",
-        "platzi.com/comentario/",
-        "platzi.com/comprar/",
-        "platzi.com/adquirir",
-        "platzi.com/blog",
-        "platzi.com/discusiones",
-        "http://www.platzi.com/",
-        "http://platzi.com/"
-      ],
-      "script": {
-        "type":        "ruby",
-        "source_code": <%= brute_crawler_spider %>
+        "headers": { "user_agent": "<%= user_agent %>" }
       }
     },
     {
-      "type": "ResourceCreator",
+      "type": "Demux",
       "script": {
-        "type": "ruby",
-        "source_code": <%= brute_crawler_course %>
+        "type":        "ruby",
+        "source_code": <%= sitemap_demux %>
       }
     }
   ]'
-);
+FROM courses_template;

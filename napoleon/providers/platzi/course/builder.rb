@@ -1,7 +1,7 @@
 payload        = pipe_process.accumulator[:payload]
 headers        = pipe_process.accumulator[:response_headers]
-json_ld        = pipe_process.accumulator[:json_ld].group_by{ |value| value[:@type].downcase.to_sym }.map{ |type, jsons| [type, jsons.first] }.to_h
-course_json_ld = json_ld[:course]
+json_ld        = pipe_process.accumulator[:json_ld]
+course_json_ld = json_ld.group_by{ |value| value[:@type].downcase.to_sym }.map{ |type, jsons| [type, jsons.first] }.to_h[:course]
 document       = Nokogiri::HTML.fragment payload
 language       = [ 'es', 'es-ES' ]
 
@@ -31,7 +31,7 @@ instructors = document.css('.Teacher-name').map do |doc|
   { name: doc.text.strip, distinguished: false, main: true }
 end
 
-name = document.css('.BannerTop-courseInfo h1').text
+name = document.css('div.Hero-course-info h1').text
 
 syllabus = document.css('.ConceptList-syllabus').map do |doc|
   doc.css('section.MaterialList').map do |doc|
@@ -53,12 +53,15 @@ if video_iframe.present?
   }
 end
 
+rating = course_json_ld&.[](:aggregateRating)&.[](:aggregateValue).to_s
+
 content = {
   provider_name:     'Platzi',
+  provider_id:       28807,
   course_name:       name,
   version:           '1.1.0',
   status:            'available',
-  level:             nil,
+  id:                canonical_url,
   url:               canonical_url,
   instructors:       instructors,
   offered_by:        [],
@@ -76,18 +79,20 @@ content = {
   # workload:          nil,
   # effort:            nil,
   aggregator_url:    nil,
-  rating:            { type: 'stars', value: course_json_ld&.[](:aggregateRating)&.[](:aggregateValue), range: 5 },
   language:          language,
   audio:             language,
   subtitles:         language,
   published:         true,
   # reviewed:          false,
   stale:             false,
-  video:             video,
   alternate_course:  nil,
   last_fecthed_at:   last_fecthed_at,
   json_ld:           json_ld
 }
+
+content[:rating] = { type: 'stars', value: rating, range: 5 } if rating.present?
+
+content[:video] = video if video.present?
 
 content[:slug] = [
   I18n.transliterate(content[:course_name]).downcase,
@@ -98,10 +103,11 @@ content[:slug] = [
   .gsub(/(^\-)|(\-$)/, '')
 
 pipe_process.accumulator = {
-  kind:      :course,
-  unique_id: Digest::SHA1.hexdigest(content[:url]),
-  content:   content,
-  relations: Hash.new
+  kind:           :course,
+  schema_version: '1.0.0',
+  unique_id:      Digest::SHA1.hexdigest(content[:url]),
+  content:        content,
+  relations:      Hash.new
 }
 
 call
