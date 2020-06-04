@@ -63,8 +63,8 @@ sh-ports-%: $(LOCAL_ENV_FILES) ## Runs sh for a given container with service por
 	@$(call docker_run_with_ports_or_plain,$*,/bin/sh)
 
 detached-make-%: ## On `make detached-make-REMOTE_APP-ENV-REMOTE_TASK` Executes `make REMOTE_TASK` detached at a given REMOTE_APP with given ENV
-	@$(eval REMOTE := $(shell echo $* | cut -d- -f1))
-	@$(eval TASK   := $(shell echo $* | cut -d- -f2-))
+	@$(eval REMOTE := $(shell echo $* | cut -d- -f1-2))
+	@$(eval TASK   := $(shell echo $* | cut -d- -f3-))
 	@heroku run:detached make $(TASK) --app `$(MAKE_BIN)/remote_alias $(REMOTE)`
 
 attached-make-%: ## ## On `make detached-make-REMOTE_APP-ENV-REMOTE_TASK` Executes `make REMOTE_TASK` attached at a given REMOTE_APP with given ENV

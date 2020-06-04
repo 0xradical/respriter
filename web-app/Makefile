@@ -47,7 +47,7 @@ course-reindex-dev: ## Reindex courses for dev
 	@make -s course-reindex
 
 course-reindex-%: LESS_PRIORITY-% ## Reindex courses for a given env
-	@make -s detached-$*-course-reindex
+	@make -s detached-make-web_app-$*-course-reindex
 
 sync: sync-crawling_events wait-for-elastic-search sync-courses ## Sync web-app with napoleon
 
