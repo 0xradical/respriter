@@ -45,7 +45,7 @@
             <div class='el:m-sticker el:amx-Mb(1em)'>
               <%= svg_use('tags', data[:tag], { class: 'el:m-sticker__media el:amx-Fi_fg' }) %><span class='el:m-sticker__text'>
                 <span class='el:m-sticker__primary-label'><%= name %></span>
-                <span class='el:m-sticker__secondary-label'><%= data[:count] %> online courses </span>
+                <span class='el:m-sticker__secondary-label'><%= data[:count] %> <%= t('dictionary.online_courses')&.downcase %> </span>
               </span>
             </div>
           <% end %>
