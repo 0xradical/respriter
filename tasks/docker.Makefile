@@ -22,6 +22,15 @@ docker-pull: $(LOCAL_ENV_FILES) ## Pulls all required images
 docker-push: $(LOCAL_ENV_FILES) ## Pushes the docker image to Dockerhub
 	@$(DOCKER_COMPOSE) push
 
+docker-build-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Builds all required images
+	@$(DOCKER_COMPOSE) build `$(DOCKER_CONTAINER_ALIAS) $*`
+
+docker-pull-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Pulls all required images
+	@$(DOCKER_COMPOSE) pull `$(DOCKER_CONTAINER_ALIAS) $*`
+
+docker-push-%: $(LOCAL_ENV_FILES) LESS_PRIORITY-% ## Pushes the docker image to Dockerhub
+	@$(DOCKER_COMPOSE) push `$(DOCKER_CONTAINER_ALIAS) $*`
+
 docker-make-%: $(LOCAL_ENV_FILES) ## Executes `make SOMETHING` inside base service
 	@$(call docker_run_or_plain,`echo $* | cut -d- -f1`,make -s `echo $* | cut -d- -f2-`)
 
@@ -31,4 +40,4 @@ docker-build-base: ## Builds the base docker image
 docker-push-base: ## Pushes the docker base image to Dockerhub
 	@$(DOCKER) push $(DOCKER_BASE_IMAGE)
 
-.PHONY: docker-build docker-pull docker-push docker-make-% docker-build-base docker-push-base
+.PHONY: docker-build docker-pull docker-push docker-build-% docker-pull-% docker-push-% docker-make-% docker-build-base docker-push-base
