@@ -1,4 +1,0 @@
-COPY (
-  SELECT posts.*
-  FROM app.posts
-) TO STDOUT WITH CSV HEADER DELIMITER ',';

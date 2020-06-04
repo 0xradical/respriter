@@ -1,0 +1,934 @@
+pt-BR:
+  validations:
+    messages:
+      challenge: "A resposta está errada"
+      is_valid_domain: "domínio não é válido"
+      sitemap: "sitemap fornecido não é válido"
+      domain_included_in: "domínio não incluído em seus domínios verificados"
+      url: "O valor deve ser um URI (host com protocolo)"
+      url_path: "{_field_} deve ser um caminho de {host}"
+      url_path_excluded_root: '{_field_} deve ser um caminho de {host} ("/" não permitido)'
+      mismatch: "O campo {_field_} deve ser igual a {_target_}"
+    attributes:
+      name: "nome"
+      domain: "domínio"
+      sitemap: "sitemap"
+      username: "usuário"
+      email: "e-mail"
+      email_confirmation: "confirmação de e-mail"
+      shortbio: "frase de perfil"
+      password: "senha"
+      subject: "assunto"
+      reason: "motivo de contato"
+      message: "mensagem"
+      challenge: "de segurança"
+      price: "preço"
+      course_url: "url do curso"
+      sitemap_url: "sitemap url"
+      provider_name: "nome"
+      purchase_date: "data de compra"
+      order_id: "número do pedido"
+      paypal_account: "conta do Paypal"
+      inlined_urls: "URLs"
+  careers:
+    data_scientist: Cientista de Dados
+    game_developer: Desenvolvedor de Jogos
+    mobile_app_developer: Desenvolvedor de Aplicativos
+    software_developer: Desenvolvedor de Software
+    web_developer: Desenvolvedor Web
+  oauth:
+    connect: "Conectar com %{provider}"
+    connected: "Conectado com %{provider}"
+  dictionary:
+    online_courses: Cursos online
+    index_tool: Index Tool
+    terms_and_conditions: "Termos e Condições"
+    privacy_policy: "Política de Privacidade"
+    blog: "Blog"
+    contact_us: "Contato"
+    home: "Home"
+    hi: "Olá"
+    share: "Compartilhe !"
+    levels:
+      beginner: "Iniciante"
+      intermediate: "Intermediário"
+      advanced: "Avançado"
+      all: "Todos os níveis"
+    preview_this_course:
+      short: "Visualizar"
+      long: "Visualizar este curso"
+    preview_not_available:
+      short: "Indisponível"
+      long: "Vídeo não disponível"
+    certificate:
+      included: "Certificado incluso"
+      free: "Certificado gratuito"
+      paid: "Certificado pago (%{price})"
+    details:
+      header: "Detalhes do Curso"
+      see: "Ver Detalhes"
+      show: "Exibir Detalhes"
+      hide: "Esconder Detalhes"
+    tags:
+      header: "Tags Relacionadas"
+    similar:
+      header: "Cursos Relacionados"
+    description:
+      header: "Descrição do Curso"
+      view: "Ver descrição"
+      show: "Ver Descrição"
+      hide: "Esconder Descrição"
+    syllabus:
+      header: "Plano de estudos"
+      view: "Ver plano de estudos"
+    see_syllabus: "Ver plano de estudos"
+    trial_period: "%{period} grátis"
+    free_trial: "trial grátis"
+    extra_paid_content: "Conteúdo extra pago"
+    pace:
+      instructor_paced: "Rítmo fixo"
+      self_paced: "Rítmo flexível"
+      live_class: "Aulas ao vivo"
+    subscription_period:
+      months: "mês"
+      years: "ano"
+    for_this_course: "Por este curso"
+    not_available: "N/D"
+    sign_in: "Entrar"
+    sign_up: "Cadastre-se"
+    sign_out: "Sair"
+    price: "Preço"
+    pricing:
+      all_courses: "todos os cursos"
+      this_course_only: "apenas este curso"
+      tooltip: "%{provider} oferece %{offer}. No fim desse período, será cobrado o valor da inscrição. Você terá acesso ilimitado aos cursos, podendo cancelar a qualquer momento."
+    in_currency: "em %{currency}"
+    from: "De"
+    to: "Até"
+    min: "Mín"
+    max: "Máx"
+    search: "Pesquisar"
+    cancel_search: "Sair da pesquisa"
+    filters: "Filtros"
+    audios: "Idioma do áudio"
+    subtitles: "Legendas"
+    categories: "Categorias"
+    max_price: "Até R$"
+    providers: "Plataformas"
+    about: "Classpert"
+    length: "Tempo de duração"
+    previous_page: "Página anterior"
+    next_page: "Próxima página"
+    search_results: "Exibindo %{total} resultados"
+    only_free: "Somente grátis"
+    free: "Grátis"
+    for: "para"
+    sort_by: "Ordenar por"
+    sort_by_selected: "Selecionado"
+    clear_all_filters: "Limpar filtros"
+    clear_filter: "Limpar filtro"
+    filter_results: "Filtrar resultados"
+    show_results: "Resultados"
+    display_filter: "Mostrar filtro"
+    lowest_price: "Menor preço"
+    highest_price: "Maior preço"
+    relevance: "Relevância"
+    no_suggestions_message: "Desculpe, não foi possível encontrar <b>%{term}</b>"
+    no_options_available: "Nenhuma opção disponível para o filtro atual"
+    top_reviewed: "Melhor avaliados"
+    favorite: "Favoritar"
+    go_to_course: "Ir para o curso"
+    go_to_profile: "Meu Perfil"
+  meta:
+    icons:
+      user_and_monitor: "Ritmo do curso"
+      clock: "Duração"
+      level: "Nível"
+      institution: "Oferecido por"
+  iso639_codes:
+    ar-EG: "Árabe (Egito)"
+    ar-JO: "Árabe (Jordânia)"
+    ar-LB: "Árabe (Líbano)"
+    ar-SY: "Árabe (Síria)"
+    de-DE: "Alemão (Alemanha)"
+    en-AU: "Inglês (Austrália)"
+    en-BZ: "Inglês (Belize)"
+    en-CA: "Inglês (Canadá)"
+    en-GB: "Inglês (Reino Unido)"
+    en-IN: "Inglês (Índia)"
+    en-NZ: "Inglês (Nova Zelândia)"
+    en-US: "Inglês (EUA)"
+    en-ZA: "Inglês (África do Sul)"
+    es-AR: "Espanhol (Argentina)"
+    es-BO: "Espanhol (Bolívia)"
+    es-CL: "Espanhol (Chile)"
+    es-CO: "Espanhol (Colômbia)"
+    es-EC: "Espanhol (Equador)"
+    es-ES: "Espanhol (Espanha)"
+    es-GT: "Espanhol (Guatemala)"
+    es-MX: "Espanhol (México)"
+    es-PE: "Espanhol (Peru)"
+    es-VE: "Espanhol (Venezuela)"
+    fr-BE: "Francês (Bélgica)"
+    fr-CH: "Francês (Suíça)"
+    fr-FR: "Francês (França)"
+    it-IT: "Italiano (Itália)"
+    jp-JP: "Japonês (Japão)"
+    nl-BE: "Dutch (Bélgica)"
+    nl-NL: "Dutch (Holanda)"
+    pl-PL: "Polonês (Polônia)"
+    pt-BR: "Português (Brasil)"
+    pt-PT: "Português (Portugal)"
+    sv-SV: "Sueco (Suiça)"
+    zh-CN: "Chinês (China)"
+    zh-CMN: "Chinês"
+    zh-HANS: "Chinês (tradicional)"
+    zh-HANT: "Chinês (simplificado)"
+    zh-TW: "Chinês (Taiwan)"
+    af: "Africâner"
+    am: "Amárico"
+    ar: "Árabe"
+    az: "Azerbaijanês"
+    be: "Bielorrusso"
+    bg: "Búlgaro"
+    bn: "Bengali"
+    bo: "Tibetano"
+    bs: "Bósnio"
+    ca: "Catalão"
+    co: "Corso"
+    cs: "Tcheco"
+    cy: "Galês"
+    da: "Dinamarquês"
+    de: "Alemão"
+    el: "Grego (moderno)"
+    en: "Inglês"
+    eo: "Esperanto"
+    es: "Espanhol"
+    et: "Estoniano"
+    eu: "Euskera"
+    fa: "Persa"
+    fi: "Finlandês"
+    fil: "Filipino"
+    fr: "Francês"
+    fy: "Frísio"
+    ga: "Irlandês"
+    gd: "Gaélico (Escocês)"
+    gl: "Galego"
+    gu: "Gujaratí"
+    ha: "Hausa"
+    he: "Hebraico"
+    hi: "Hindu"
+    hr: "Croata"
+    ht: "Haitiano"
+    hu: "Húngaro"
+    hy: "Armênio"
+    id: "Indonésio"
+    ig: "Igbo"
+    is: "Islandês"
+    it: "Italiano"
+    iw: "Hebreu"
+    ja: "Japonês"
+    jp: "Japonês"
+    ka: "Georgiano"
+    kk: "Cazaque"
+    km: "Cambojano"
+    kn: "Canará"
+    ko: "Coreano"
+    ku: "Curdo"
+    ky: "Quirguiz"
+    lb: "Luxemburguês"
+    lo: "Lao"
+    lt: "Lituano"
+    lv: "Letão"
+    mg: "Malgaxe"
+    mi: "Maori"
+    mk: "Macedônio"
+    ml: "Malayalam"
+    mn: "Mongol"
+    mr: "Marathi"
+    ms: "Malaio"
+    mt: "Maltês"
+    my: "Birmanês"
+    nb: "Norueguês"
+    ne: "Nepalês"
+    nl: "Dutch"
+    no: "Norueguês"
+    pa: "Panjabi"
+    pl: "Polonês"
+    ps: "Pastu"
+    pt: "Português"
+    ro: "Romeno"
+    ru: "Russo"
+    rw: "Ruanda"
+    sd: "Sindi"
+    si: "Cingalês"
+    sk: "Eslovaco"
+    sl: "Esloveno"
+    sn: "Shona"
+    so: "Somali"
+    sq: "Albanês"
+    sr: "Sérvio"
+    st: "Sesotho"
+    sv: "Sueco"
+    sw: "Suaíli"
+    ta: "Tâmil"
+    te: "Télugu"
+    tg: "Tayiko"
+    th: "Thai"
+    tl: "Tagalo"
+    tr: "Turco"
+    tt: "Tártaro"
+    uk: "Ucraniano"
+    ur: "Urdu"
+    uz: "Uzbeque"
+    vi: "Vietnamita"
+    xh: "Xhosa"
+    yi: "Iídiche"
+    yo: "Ioruba"
+    zh: "Chinês"
+    zu: "Zulu"
+  iso3166_1_alpha2_codes:
+    "AF": "Afeganistão"
+    "AL": "Albânia"
+    "DZ": "Argélia"
+    "AS": "Samoa Americana"
+    "AD": "Andorra"
+    "AO": "Angola"
+    "AI": "Anguilla"
+    "AQ": "Antártida"
+    "AG": "Antígua e Barbuda"
+    "AR": "Argentina"
+    "AM": "Armênia"
+    "AW": "Aruba"
+    "AU": "Austrália"
+    "AT": "Áustria"
+    "AZ": "Azerbaijão"
+    "BS": "Bahamas"
+    "BH": "Bahrein"
+    "BD": "Bangladesh"
+    "BB": "Barbados"
+    "BY": "Bielorrússia"
+    "BE": "Bélgica"
+    "BZ": "Belize"
+    "BJ": "Benin"
+    "BM": "Bermudas"
+    "BT": "Butão"
+    "BO": "Bolívia"
+    "BA": "Bósnia e Herzegovina"
+    "BW": "Botsuana"
+    "BV": "Ilhas Bouvet"
+    "BR": "Brasil"
+    "IO": "Território Britânico do Oceano Índico"
+    "BN": "Brunei"
+    "BG": "Bulgária"
+    "BF": "Burquina Faso"
+    "BI": "Burundi"
+    "KH": "Camboja"
+    "CM": "República dos Camarões"
+    "CA": "Canadá"
+    "CV": "Cabo Verde"
+    "KY": "Ilhas Caiman"
+    "CF": "República Centro-Africana"
+    "TD": "Chade"
+    "CL": "Chile"
+    "CN": "China"
+    "CX": "Ilha Christmas"
+    "CC": "Ilhas Cocos (Keeling)"
+    "CO": "Colômbia"
+    "KM": "Comores"
+    "CG": "Congo - Brazzaville"
+    "CD": "Congo - Kinshasa"
+    "CK": "Ilhas Cook"
+    "CR": "Costa Rica"
+    "CI": "Costa do Marfim"
+    "HR": "Croácia"
+    "CU": "Cuba"
+    "CY": "Chipre"
+    "CZ": "República Tcheca"
+    "DK": "Dinamarca"
+    "DJ": "Djibuti"
+    "DM": "Dominica"
+    "DO": "República Dominicana"
+    "EC": "Equador"
+    "EG": "Egito"
+    "SV": "El Salvador"
+    "GQ": "Guiné Equatorial"
+    "ER": "Eritreia"
+    "EE": "Estônia"
+    "ET": "Etiópia"
+    "FK": "Ilhas Malvinas"
+    "FO": "Ilhas Faroe"
+    "FJ": "Fiji"
+    "FI": "Finlândia"
+    "FR": "França"
+    "GF": "Guiana Francesa"
+    "PF": "Polinésia Francesa"
+    "TF": "Territórios Franceses do Sul"
+    "GA": "Gabão"
+    "GM": "Gâmbia"
+    "GE": "Geórgia"
+    "DE": "Alemanha"
+    "GH": "Gana"
+    "GI": "Gibraltar"
+    "GR": "Grécia"
+    "GL": "Groenlândia"
+    "GD": "Granada"
+    "GP": "Guadalupe"
+    "GU": "Guam"
+    "GT": "Guatemala"
+    "GN": "Guiné"
+    "GW": "Guiné Bissau"
+    "GY": "Guiana"
+    "HT": "Haiti"
+    "HM": "Ilha Heard e Ilha McDonald"
+    "VA": "Cidade do Vaticano"
+    "HN": "Honduras"
+    "HK": "Hong Kong, RAE da China"
+    "HU": "Hungria"
+    "IS": "Islândia"
+    "IN": "Índia"
+    "ID": "Indonésia"
+    "IR": "Irã"
+    "IQ": "Iraque"
+    "IE": "Irlanda"
+    "IL": "Israel"
+    "IT": "Itália"
+    "JM": "Jamaica"
+    "JP": "Japão"
+    "JO": "Jordânia"
+    "KZ": "Cazaquistão"
+    "KE": "Quênia"
+    "KI": "Quiribati"
+    "KP": "Coreia do Norte"
+    "KR": "Coreia do Sul"
+    "KW": "Kuwait"
+    "KG": "Quirguistão"
+    "LA": "Laos"
+    "LV": "Letônia"
+    "LB": "Líbano"
+    "LS": "Lesoto"
+    "LR": "Libéria"
+    "LY": "Líbia"
+    "LI": "Liechtenstein"
+    "LT": "Lituânia"
+    "LU": "Luxemburgo"
+    "MO": "Macau, RAE da China"
+    "MG": "Madagascar"
+    "MW": "Malawi"
+    "MY": "Malásia"
+    "MV": "Maldivas"
+    "ML": "Mali"
+    "MT": "Malta"
+    "MH": "Ilhas Marshall"
+    "MQ": "Martinica"
+    "MR": "Mauritânia"
+    "MU": "Maurício"
+    "YT": "Mayotte"
+    "MX": "México"
+    "FM": "Micronésia"
+    "MD": "Moldávia"
+    "MC": "Mônaco"
+    "MN": "Mongólia"
+    "MS": "Montserrat"
+    "MA": "Marrocos"
+    "MZ": "Moçambique"
+    "MM": "Mianmar (Birmânia)"
+    "NA": "Namíbia"
+    "NR": "Nauru"
+    "NP": "Nepal"
+    "NL": "Holanda"
+    "NC": "Nova Caledônia"
+    "NZ": "Nova Zelândia"
+    "NI": "Nicarágua"
+    "NE": "Níger"
+    "NG": "Nigéria"
+    "NU": "Niue"
+    "NF": "Ilha Norfolk"
+    "MK": "Macedônia do Norte"
+    "MP": "Ilhas Marianas do Norte"
+    "NO": "Noruega"
+    "OM": "Omã"
+    "PK": "Paquistão"
+    "PW": "Palau"
+    "PS": "Territórios palestinos"
+    "PA": "Panamá"
+    "PG": "Papua-Nova Guiné"
+    "PY": "Paraguai"
+    "PE": "Peru"
+    "PH": "Filipinas"
+    "PN": "Ilhas Pitcairn"
+    "PL": "Polônia"
+    "PT": "Portugal"
+    "PR": "Porto Rico"
+    "QA": "Catar"
+    "RE": "Reunião"
+    "RO": "Romênia"
+    "RU": "Rússia"
+    "RW": "Ruanda"
+    "SH": "Santa Helena"
+    "KN": "São Cristóvão e Nevis"
+    "LC": "Santa Lúcia"
+    "PM": "Saint Pierre e Miquelon"
+    "VC": "São Vicente e Granadinas"
+    "WS": "Samoa"
+    "SM": "San Marino"
+    "ST": "São Tomé e Príncipe"
+    "SA": "Arábia Saudita"
+    "SN": "Senegal"
+    "SC": "Seychelles"
+    "SL": "Serra Leoa"
+    "SG": "Cingapura"
+    "SK": "Eslováquia"
+    "SI": "Eslovênia"
+    "SB": "Ilhas Salomão"
+    "SO": "Somália"
+    "ZA": "África do Sul"
+    "GS": "Geórgia do Sul e Ilhas Sandwich do Sul"
+    "ES": "Espanha"
+    "LK": "Sri Lanka"
+    "SD": "Sudão"
+    "SR": "Suriname"
+    "SJ": "Svalbard e Jan Mayen"
+    "SZ": "Suazilândia"
+    "SE": "Suécia"
+    "CH": "Suíça"
+    "SY": "Síria"
+    "TW": "Taiwan"
+    "TJ": "Tajiquistão"
+    "TZ": "Tanzânia"
+    "TH": "Tailândia"
+    "TL": "Timor-Leste"
+    "TG": "Togo"
+    "TK": "Tokelau"
+    "TO": "Tonga"
+    "TT": "Trinidad e Tobago"
+    "TN": "Tunísia"
+    "TR": "Turquia"
+    "TM": "Turcomenistão"
+    "TC": "Ilhas Turks e Caicos"
+    "TV": "Tuvalu"
+    "UG": "Uganda"
+    "UA": "Ucrânia"
+    "AE": "Emirados Árabes Unidos"
+    "GB": "Reino Unido"
+    "US": "Estados Unidos"
+    "UM": "Ilhas Distantes dos EUA"
+    "UY": "Uruguai"
+    "UZ": "Uzbequistão"
+    "VU": "Vanuatu"
+    "VE": "Venezuela"
+    "VN": "Vietnã"
+    "VG": "Ilhas Virgens Britânicas"
+    "VI": "Ilhas Virgens dos EUA"
+    "WF": "Wallis e Futuna"
+    "EH": "Saara Ocidental"
+    "YE": "Iêmen"
+    "ZM": "Zâmbia"
+    "ZW": "Zimbábue"
+    "AX": "Ilhas Åland"
+    "BQ": "Países Baixos Caribenhos"
+    "CW": "Curaçao"
+    "GG": "Guernsey"
+    "IM": "Ilha de Man"
+    "JE": "Jersey"
+    "ME": "Montenegro"
+    "BL": "São Bartolomeu"
+    "MF": "São Martinho"
+    "RS": "Sérvia"
+    "SX": "Sint Maarten"
+    "SS": "Sudão do Sul"
+    "XK": "Kosovo"
+  components:
+    omniauth_sign_in: "Conectar com %{provider}"
+    omniauth_signin_in: "Conectando com %{provider}"
+    omniauth_claim_profile: "Reivindicar usando o %{provider}"
+    omniauth_claiming_profile: "Reivindicar usando o %{provider}"
+    searchbar_placeholder: "Buscar cursos..."
+    icons:
+      user_and_monitor: "Instrutor"
+      level: "Nível"
+      clock: "Duração"
+      institution: "Instituição"
+    card:
+      subscription_tip: >-
+        Essa plataforma oferece %{period} grátis. Ao final deste período, será cobrada a taxa de assinatura.  Você terá acesso ilimitado a todos os cursos. A assinatura pode ser cancelada a qualquer momento
+      free_course_tip: >-
+        Você pode assistir este curso gratuitamente. Certificados, discussões em grupo, exercícios, visualização off-line, entre outras funcionalidades podem não estar disponíveis na versão gratuita. Para ter acesso completo, é preciso adquirir a versão paga
+  promo:
+    title: "Transforme seu conhecimento em dinheiro na Classpert"
+    subtitle: "Encontre um curso na Classpert, envie-nos seu certificado e receba %{benefit} na sua conta PayPal."
+    benefit: "um bônus de $10"
+    login: "Faça o login para participar"
+    nologin: "Continue como convidado"
+    read_instructions: "Ler instruções da Promoção"
+  shared:
+    banner:
+      title_html: >-
+        Transforme seu <b>conhecimento em dinheiro</b> na Classpert!
+      subtitle_html: >-
+        Encontre um curso na Classpert, envie-nos seu certificado de conclusão e ganhe um <span class='el:amx-C_se el:amx-Ws(nr)'>bônus de $10</span> em sua conta do PayPal.
+      instructions: >-
+        Ler Instruções
+      log_in: >-
+        Faça o login para participar
+  static_pages:
+    promo:
+      banner:
+        title_html: >-
+          Transforme seu <b>conhecimento em dinheiro</b> na Classpert!
+        subtitle_html: >-
+          Encontre um curso na Classpert, envie-nos seu certificado de conclusão e ganhe um <span class='el:amx-C_se el:amx-Ws(nr)'>bônus de $10</span> em sua conta do PayPal.
+      tabs:
+        how_it_works: "Como funciona"
+        promo_terms: "Termos da promoção"
+      sign_up:
+        header: "Cadastre-se na Classpert"
+        body_html: >-
+          Crie uma conta na Classpert. Se você já é cadastrado, faça o login para participar.
+      find_course:
+        header: "Encontre um curso via Classpert.com"
+        body_html: >-
+          Use o buscador da Classpert para encontrar o curso que você deseja fazer. Clique em <b>"Ir para o curso"</b> e inscreva-se no curso escolhido (seu clique ficará registrado)
+      complete_course:
+        header: "Complete o curso"
+        body_html: >-
+          Para que possa receber o seu bônus de $10, você deve completar o curso escolhido e obter o seu certificado.
+      upload_certificate:
+        header: "Envie o seu certificado"
+        body_html: >-
+          Faça o login no Classpert, faça o upload do seu certificado e adicione sua conta do PayPal.
+      payment_processing:
+        header: "Receba o pagamento"
+        body_html: >-
+          Isso é por nossa conta! Nossa equipe enviará seu pagamento no prazo de 3 dias úteis após sua solicitação.
+      contact_us:
+        body_html: >-
+          <b>Ainda tem alguma dúvida?</b> Entre em <a class='el:amx-C_pr el:amx-Fw(b)' href='/contact-us'>contato</a> conosco.
+      promo_terms:
+        item_1: >-
+          Os pagamentos só serão feitos através do PayPal;
+        item_2: >-
+          O bônus da promoção é limitado a um por conta do PayPal;
+        item_3: >-
+          Essa promoção é restrita aos 100 (cem) primeiros participantes a enviar o certificado;
+        item_4: >-
+          Nós nos reservamos o direito de encerrar esta promoção a nosso exclusivo critério;
+        item_5: >-
+          Apenas os cliques registrados após a data de início da promoção estarão qualificados para receber o bônus;
+        item_6: >-
+          Reservamo-nos o direito de reter, negar ou cancelar qualquer bônus a nosso exclusivo critério devido a atividades que consideremos fraudulentas, abusivas, antiéticas, suspeitas ou inconsistentes com esta promoção.
+  home:
+    index:
+      hero_html: "Encontre e compare <b>cursos online</b> de diversas plataformas de ensino"
+      new_to_classpert: "Novo na Classpert?"
+      watch_the_video: "Assista ao nosso video!"
+      kickstart_your_career: "Inicie sua carreira"
+      kickstart_your_career_sub: "Nossos especialistas escolheram os melhores cursos para que você inicie sua carreira"
+      about_us_title_1: Buscador de cursos online da Classpert
+      about_us_text_1_html: >-
+        Compare cursos online lado a lado de mais de %{providers_count} plataformas de ensino em mais de 15 línguas. Obtenha informações detalhadas sobre preços, assista às prévias das aulas, leia o plano de estudos e veja  a pontuação de cada curso online antes de decidir qual escolher.
+      about_us_title_2: cursos online
+      about_us_text_2_html: >-
+        Encontre cursos on-line em <b>ciência da computação</b>, <b>ciência dos dados</b>, <b>marketing</b>, <b>negócios</b> e <b>desenvolvimento pessoal</b> ensinados por <a href='/instructors'><b>instrutores</b></a>.
+      about_us_title_3: plataformas de cursos online
+      about_us_text_3_html: >-
+        Descubra as melhores plataformas de curso online do mundo na Classpert. Obtenha todas as informações relevantes sobre cursos online da <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <b>Coursera</b>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/skillshare-review'><b>Skillshare</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>, <b>FutureLearn</b>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <b>Alura</b>, <b>Eduk</b> entre outros sites de cursos online. Encontre e compare cursos online gratuitos, de pagamento único  ou no modelo de mensalidade. Economize tempo e dinheiro!
+      about_us_button_text_3: ver todas as plataformas
+      about_us_title_4: Buscador de MOOCs gratuitos
+      about_us_text_4_html: >-
+        Procure cursos online gratuitos com certificados em plataforms como Edx e Coursera ou em instituições como Harvard, Stanford, Yale, Berkeley, MIT, USP, Insper, Unicamp, Google, Microsoft e muitos mais. Encontre MOOCs cobrindo diferentes assuntos como <b>inteligência artificial</b>, <b>big data</b>, <b>blockchain</b>, <b>negócios e gestão</b>, <b>programação</b>, <b>segurança e criptografia de dados</b>, <b>data science</b>, <b>empreendedorismo</b>, <b>Excel</b>, <b>desenvolvimento web</b> entre outros.
+      about_us_button_text_4: ver todos os MOOCs
+      careers:
+        data_scientist: Cientista de Dados
+        game_developer: Desenvolvedor de Jogos
+        mobile_app_developer: Desenvolvedor de Aplicativos
+        software_developer: Desenvolvedor de Software
+        web_developer: Desenvolvedor Web
+      meta:
+        title: "Cursos Online das Melhores Plataformas | Classpert"
+        description: >-
+          Busque e compare cursos online de plataformas como: Udemy, Coursera, Pluralsight, Edx, Linkedin Learning e muitos outros. Economize tempo e dinheiro com a Classpert!
+  contact_us:
+    new:
+      meta:
+        title: "Cursos Online das Melhores Plataformas | Classpert"
+        description: >-
+          Busque e compare cursos online de plataformas como: Udemy, Coursera, Pluralsight, Edx, Linkedin Learning e muitos outros. Economize tempo e dinheiro com a Classpert!
+      title: "Fale conosco"
+      subtitle: "Nosso time está aqui para ajudar"
+      form:
+        name:
+          header: "Nome"
+          placeholder: "Digite seu nome"
+        email:
+          header: "E-mail"
+          placeholder: "Digite seu e-mail"
+        subject:
+          header: "Assunto"
+          placeholder: "Dúvidas, sugestões, críticas ..."
+        reason:
+          header: "Motivo de Contato"
+          options:
+            select_option: "Selecione uma Opção"
+            customer_support: "Suporte ao Cliente"
+            bug_report: "Reportar Erro"
+            feature_suggestion: "Sugerir Funcionalidade"
+            commercial_and_partnerships: "Comercial e Parcerias"
+            manual_profile_claim: "Reivindicação de Perfil — Verificação Manual"
+            other: "Outros"
+        message:
+          header: "Mensagem"
+          placeholder: "Digite sua mensagem ..."
+        challenge:
+          header: "Qual é a resposta de %{question} ?"
+          placeholder: "Resposta"
+        action:
+          submit: "Enviar"
+      successful:
+        title: "Obrigado!"
+        subtitle: "Sua mensagem foi enviada com sucesso. Nosso time responderá em breve."
+        action:
+          another_message: "Enviar novamente"
+          homepage: "Buscar um curso"
+  course_reviews:
+    show:
+      form:
+        rating:
+          title_html: >-
+            Avalie sua experiência. Ajude outros alunos avaliando <b>%{course} da %{provider}<b/>
+        completion:
+          title: Você completou o curso?
+          values:
+            yep: "Sim"
+            nope: "Não"
+        feedback:
+          title: Gostaria de fornecer informações adicionais?
+          placeholder: Elogios, sugestões ou críticas
+        send: Enviar Avaliação
+      submission:
+        header: Obrigado pela avaliação!
+        body: >-
+          Estamos sempre buscando melhorar nossa plataforma e sua opinião é essencial.
+        link: Ir para página inicial
+  courses:
+    index:
+      meta:
+        title: "%{search_query} Cursos | Classpert"
+        description: "Encontre e compare cursos de %{search_query}. Economize tempo e dinheiro com a Classpert"
+      arts_and_design:
+        meta:
+          title: "Cursos Online de Artes e Design | Classpert"
+          description: >-
+            Aprenda habilidades e conhecimentos artísticos práticos. Explore uma ampla variedade de assuntos em Artes e Design. Encontre cursos online gratuitos e pagos com certificado
+        html:
+          hero_title: >-
+            Aprenda habilidades e conhecimentos artísticos práticos. Explore uma ampla variedade de assuntos em Artes e Design. Encontre cursos online gratuitos e pagos com certificado
+      business:
+        meta:
+          title: "Cursos Online de Negócios | Classpert"
+          description: >-
+            Melhore suas habilidades em todos os aspectos do ambiente empresarial moderno. Cultive competências valiosas em finanças, operações, gerenciamento e estratégia. Encontre cursos online gratuitos e pagos com certificado
+        html:
+          hero_title: >-
+            Melhore suas habilidades em todos os aspectos do ambiente empresarial moderno. Cultive competências valiosas em finanças, operações, gerenciamento e estratégia. Encontre cursos online gratuitos e pagos com certificado
+      language_and_communication:
+        meta:
+          title: "Cursos Online de Idiomas e Comunicação | Classpert"
+          description: >-
+            Desenvolva habilidades de ouvir, ler, falar e escrever em outras línguas. Domine técnicas de comunicação verbal e não verbal. Encontre cursos online gratuitos e pagos com certificado.
+        html:
+          hero_title: >-
+            Desenvolva habilidades de ouvir, ler, falar e escrever em outras línguas. Domine técnicas de comunicação verbal e não verbal. Encontre cursos online gratuitos e pagos com certificado.
+      life_sciences:
+        meta:
+          title: "Cursos Online de Ciências da Vida | Classpert"
+          description: >-
+            Compreenda estruturas físicas, processos químicos e interações moleculares de estruturas vivas. Expanda suas fronteiras com cursos das melhores universidades do mundo. Encontre cursos online gratuitos e pagos com certificado
+        html:
+          hero_title: >-
+            Compreenda estruturas físicas, processos químicos e interações moleculares de estruturas vivas. Expanda suas fronteiras com cursos das melhores universidades do mundo. Encontre cursos online gratuitos e pagos com certificado
+      math_and_logic:
+        meta:
+          title: "Cursos Online de Matemática e Lógica | Classpert"
+          description: >-
+            Estude álgebra, geometria, aritmética, estatística e muito mais. Desenvolva seu raciocínio e pensamento analítico. Encontre cursos online gratuitos e pagos com certificado.
+        html:
+          hero_title: >-
+            Estude álgebra, geometria, aritmética, estatística e muito mais. Desenvolva seu raciocínio e pensamento analítico. Encontre cursos online gratuitos e pagos com certificado.
+      personal_development:
+        meta:
+          title: "Cursos Online de Desenvolvimento Pessoal | Classpert"
+          description: >-
+            O desenvolvimento pessoal é crucial para a evolução em todos os aspectos da vida. Atinja o seu potencial máximo na vida pessoal e na carreira profissional. Encontre cursos online gratuitos e pagos com certificado.
+        html:
+          hero_title: >-
+            O desenvolvimento pessoal é crucial para a evolução em todos os aspectos da vida. Atinja o seu potencial máximo na vida pessoal e na carreira profissional. Encontre cursos online gratuitos e pagos com certificado.
+      social_sciences:
+        meta:
+          title: "Cursos Online de Ciências Sociais | Classpert"
+          description: >-
+            Estude todas as particularidades da sociedade humana e da vida social. Entenda muitos dos maiores problemas do mundo. Encontre cursos online gratuitos e pagos com certificado.
+        html:
+          hero_title: >-
+            Estude todas as particularidades da sociedade humana e da vida social. Entenda muitos dos maiores problemas do mundo. Encontre cursos online gratuitos e pagos com certificado.
+      health_and_fitness:
+        meta:
+          title: "Cursos Online de Saúde e Bem-estar | Classpert"
+          description: >-
+            Aumente seu conhecimento sobre manutenção da saúde, prevenção de doenças e redução de comportamentos de risco. Viva mais e atinja seus objetivos. Encontre cursos online gratuitos e pagos com certificado.
+        html:
+          hero_title: >-
+            Aumente seu conhecimento sobre manutenção da saúde, prevenção de doenças e redução de comportamentos de risco. Viva mais e atinja seus objetivos. Encontre cursos online gratuitos e pagos com certificado.
+    show:
+      meta:
+        title: "%{course} | Curso Online | Classpert"
+        description: "%{course} - Aprenda habilidades valiosas com este curso on-line de %{provider}"
+  course_bundles:
+    meta:
+      title_html: "Cursos de %{tag}"
+      description_html: "Encontre cursos online gratuitos e pagos de %{tag}. <br /> Escolha entre tópicos selecionados e aprenda com os melhores instrutores e instituições."
+    social_share:
+      title_html: Cursos de %{tag}
+      description_html: Encontre cursos online gratuitos e pagos de %{tag}. <br /> Escolha entre tópicos selecionados e aprenda com os melhores instrutores e instituições.
+    index:
+      title_html: Cursos de %{tag}
+      description_html: Encontre cursos online gratuitos e pagos de %{tag}. <br /> Escolha entre tópicos selecionados e aprenda com os melhores instrutores e instituições.
+    show:
+      title_html: Cursos de %{tag}
+      description_html: Encontre cursos online gratuitos e pagos de %{tag}. <br /> Escolha entre tópicos selecionados e aprenda com os melhores instrutores e instituições.
+  posts:
+    base:
+      tags:
+        computer_science: "Ciência da Computação"
+        e_learning: "E-Learning"
+        blockchain_and_cryptocurrency: "Blockchain e Criptomoeda"
+    index:
+      tags:
+        computer_science: Ciência da Computação
+        e_learning: E-Learning
+        blockchain_and_cryptocurrency: Blockchain e Criptomoeda
+      meta:
+        title: Artigos, tutoriais e dicas de cursos on-line | Blog | Classpert
+        description: Artigos e tutoriais sobre programação, ciência de dados, marketing, negócios e habilidades gerais para desenvolvimento pessoal.
+      h1: Artigos Recentes
+    show:
+      tags:
+        computer_science: Ciência da Computação
+        e_learning: E-Learning
+        blockchain_and_cryptocurrency: Blockchain e Criptomoeda
+  unsubscriptions:
+    show:
+      title: "A inscrição do email %{email} foi removida com sucesso"
+      subtitle: "Você não receberá mais newsletters e comunicação de marketing da Classpert"
+      option_request_intro: "A fim de melhorar nossos serviços, por favor nos informe por que você gostaria de parar de receber nossos e-mails."
+      options:
+        too_often: "Estou recebendo e-mails com muita frequência"
+        not_relevant: "O conteúdo não é relevante para mim"
+        doesnt_like_mail_marketing: "Não é um problema específico com a Classpert, eu simplesmente não gosto de e-mail marketing em geral"
+        other: "Outro"
+        up_to_200_characters: "Até 200 caracteres"
+        please_detail: "Por favor, explique o motivo do cancelamento de sua inscrição"
+      submit: "Enviar"
+      go_to_classpert: "Ir para Classpert.com"
+      alerts:
+        success: "Sucesso: Suas configurações de notificação por e-mail foram atualizadas!"
+        no_option: "Por favor, escolha uma opção"
+        no_details: Se você escolher "Outro", por favor detalhe o motivo do cancelamento
+  user_accounts:
+    show:
+      meta:
+        title: "%{name} | Perfil e Cursos"
+        description: "Veja o perfil de %{name} na Classpert. Encontre todos os cursos de %{name} em um só lugar!"
+      instructor: Instrutor
+      are_you: Você é %{name}?
+      claim_profile: Reivindicar perfil
+      about_me: Sobre o instrutor
+      courses: "Cursos"
+      disclaimer: Esta página foi criada com informações públicas disponíveis na internet e não é de autoria do instrutor.
+  orphaned_profiles:
+    show:
+      meta:
+        title: '%{name} | Perfil e Cursos'
+        description: Veja o perfil de %{name} na Classpert. Encontre todos os cursos de %{name} em um só lugar!
+      instructor: Instrutor
+      are_you: Você é %{name}?
+      claim_profile: Reivindicar perfil
+      about_me: Sobre o instrutor
+      courses: Cursos
+      disclaimer: Esta página foi criada com informações públicas disponíveis na internet e não é de autoria do instrutor.
+    claim:
+      success: A propriedade deste perfil foi associada com sucesso a sua conta. Você pode editar as informações contidas nesta página diretamente através do seu dashboard
+      h1: Reivindicar Perfil
+      h2:
+        1: Via Rede Social
+        2: Via Email
+      view_profile: Ver Perfil
+      text:
+        1: Nós precisamos que você prover ser %{name}
+        2: >-
+          Se conseguirmos validar sua identidade usando os métodos disponíveis, a propriedade dessa página será automaticamente transferida para a sua conta.
+        3_html: >-
+          Infelizmente não há métodos de verificação disponíveis para o seu perfil.
+        4: >-
+          Nós identificamos contas de redes sociais associadas a este perfil. Use qualquer método abaixo para provar sua identidade. Se você desejar reivindicar o perfil de uma empresa, use uma rede social associada ao perfil da mesma.
+        5: >-
+          Aqui estão alguns e-mail que nós acreditamos pertencerem a você
+        6: >-
+          Digite qualquer um dos e-mails acima para que um link de verificação seja enviado para o e-mail correspondente.
+        7_html: >-
+          Caso não consiga provar sua identidade através dos métodos disponíveis, entre em %{link} para começar um processo de verificação manual
+    send_verification_link:
+      success: Nós enviamos um email para %{email} com um link e instruções sobre como reivindicar este perfil. Esse link expira em %{time}
+      fail: Email %{email} não é igual a nenhum dos registrados na base
+  claims:
+    codes:
+      verify:
+        success: A propriedade deste perfil foi associada com sucesso a sua conta. Você pode editar as informações contidas nesta página diretamente através do seu dashboard
+        fail: Falha na reivindicação! Link inválido ou expirado.
+    social_networks:
+      update:
+        success: A propriedade deste perfil foi associada com sucesso a sua conta. Você pode editar as informações contidas nesta página diretamente através do seu dashboard
+        fail: Falha na reivindicação! Os dados da sessão estão vazios. Verifique se cookies e javascript estão ativados no seu navegador.
+  instructors:
+    index:
+      meta:
+        title: "Instructors | Classpert"
+        description: Instructors
+      h1: Instructors
+      filter_by_subject:
+        label: by subject
+        prompt: Selecione um assunto
+      filter_by_elearning_platform:
+        label: por plataforma de cursos
+        prompt: Selecione uma plataforma
+      courses_count: "%{count} cursos"
+      teaching_at: teaching at
+      text:
+        1: "Nenhum instrutor para o assunto %{subject}"
+        1_none: "Nenhum instrutor"
+  pages:
+    dashboard_index:
+      meta:
+        title: "Área do Usuário | Classpert"
+      html:
+        account_settings_header: "Configurações da Conta"
+        secure_your_account_header: "Proteja sua conta"
+        secure_your_account_button: "Criar senha"
+        account_settings_link: "Configurações da Conta"
+        account_settings_form_button: "Salvar"
+        profile_link: "Perfil"
+        interests_link: "Áreas de Interesse"
+        language_preferences_header: "Preferências de Idioma"
+        connected_oauth_accounts_header: "Contas Conectadas"
+        add_oauth_accounts_header: "Adicione outras contas"
+        destroy_account_header: "Deletar Conta"
+        destroy_account_button: "Deletar Conta"
+        upload_image_button: "Escolher foto"
+        select_interest_placeholder: "Escolha as áreas de seu interesse"
+  profiles:
+    new:
+      notice: Você deve preencher usuário antes de prosseguir.
+      title: Criar um usuário
+      subtitle: Por favor, crie um usuário para sua conta
+      placeholder: Digite o usuário
+      confirm: Confirmar

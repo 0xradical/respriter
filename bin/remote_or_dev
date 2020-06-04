@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-env=`echo $1 | rev | cut -d- -f 1 | rev`
-
-if [[ "$env" = "prd" || "$env" = "stg" ]]; then
-  exec $2
-else
-  exec $3
-fi
