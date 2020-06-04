@@ -541,8 +541,8 @@ ja:
   components:
     omniauth_sign_in: "%{provider} でログインする"
     omniauth_signin_in: "%{provider} でログイン中"
-    omniauth_claim_profile: "Claim with %{provider}"
-    omniauth_claiming_profile: "Claiming with %{provider}"
+    omniauth_claim_profile: "%{provider} から復元する"
+    omniauth_claiming_profile: "%{provider} から復元中"
     searchbar_placeholder: "コースを検索..."
     icons:
       user_and_monitor: "コースのペース"
@@ -636,7 +636,7 @@ ja:
       about_us_button_text_3: すべてのプラットフォームを表示
       about_us_title_4: MOOC (ムーク) を探そう
       about_us_text_4_html: >-
-        ハーバード、スタンフォード、イェール、カリフォルニア大学バークレー校、マサチューセッツ工科大学、グーグル、マイクロソフトの修了証が取得できる無料のオンラインコースを検索しましょう。人工知能、ビッグデータ、ブロックチェーン、ビジネス・マネージメント、プログラミング、サイバーセキュリティ、データサイエンス、起業、Excel、ウェブ開発などのさまざまなテーマをカバーする MOOC (ムーク) が勢揃い。
+        ハーバード、スタンフォード、イェール、カリフォルニア大学バークレー校、マサチューセッツ工科大学、グーグル、マイクロソフトの修了証が取得できる無料のオンラインコースを検索しましょう。人工知能、ビッグデータ、ブロックチェーン、ビジネスマネジメント、プログラミング、サイバーセキュリティ、データサイエンス、起業、Excel、ウェブ開発などのさまざまなテーマをカバーする MOOC (ムーク) が勢揃い。
       about_us_button_text_4: すべての MOOC (ムーク) を表示
       careers:
         data_scientist: データサイエンティスト
@@ -674,7 +674,7 @@ ja:
             bug_report: "不具合の報告"
             feature_suggestion: "機能を提案する"
             commercial_and_partnerships: "商用・パートナーシップ"
-            manual_profile_claim: "プロフィールを申請 — 手動承認プロセス"
+            manual_profile_claim: "プロフィールを復元 : 手動復元プロセス"
             other: "その他"
         message:
           header: "メッセージ"
@@ -841,7 +841,7 @@ ja:
         description: "%{name} さんのプロフィールを確認してください。 %{name} さんのすべてのコースを 1 か所で見ることができます。"
       instructor: 講師
       are_you: あなたは %{name} さんですか？
-      claim_profile: プロフィールを復活
+      claim_profile: プロフィールを復元
       about_me: 講師について
       courses: "コース"
       disclaimer: このページはウェブ上の公開情報を基に作成されており、講師が作成したものではありません。
@@ -852,16 +852,16 @@ ja:
         description: '%{name} さんのプロフィールを確認してください。 %{name} さんのすべてのコースを 1 か所で見ることができます。'
       instructor: 講師
       are_you: あなたは %{name} さんですか？
-      claim_profile: プロフィールを復活
+      claim_profile: プロフィールを復元
       about_me: 講師について
       courses: コース
       disclaimer: このページはウェブ上の公開情報を基に作成されており、講師が作成したものではありません。
     claim:
       success: このプロフィールの所有権はあなたのアカウントに正常に転送されました。ダッシュボードからページ内の情報を編集できるようになりました。
-      h1: プロフィールを復活
+      h1: プロフィールを復元
       h2:
-        1: ソーシャルネットワーク経由で申請
-        2: メールで申請
+        1: ソーシャルネットワーク経由で復元
+        2: メールで復元
       view_profile: プロフィールを見る
       text:
         1: あなたが %{name} さんであることを証明する必要があります
