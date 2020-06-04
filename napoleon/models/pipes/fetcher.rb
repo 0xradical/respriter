@@ -68,7 +68,8 @@ module Pipes
     def default_cache_version(pipe_process)
       [
         pipe_process.pipeline.dataset_id,
-        pipe_process.pipeline.pipeline_execution_id
+        pipe_process.pipeline.pipeline_execution.name,
+        pipe_process.pipeline.pipeline_execution.counter,
       ].compact.join '-'
     end
 
