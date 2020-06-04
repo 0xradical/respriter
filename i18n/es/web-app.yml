@@ -588,8 +588,7 @@ es:
       find_course:
         header: "Encuentra un curso a través de Classpert.com"
         body_html: >-
-          Use el buscador de Classpert para encontrar el curso que desea tomar.
-          Haga clic en <b>"Ir al curso"</b> e inscríbase en el curso elegido (su clic se registrará).
+          Use el buscador de Classpert para encontrar el curso que desea tomar. Haga clic en <b>"Ir al curso"</b> e inscríbase en el curso elegido (su clic se registrará).
       complete_course:
         header: "Completa el curso"
         body_html: >-
@@ -630,10 +629,10 @@ es:
         Compare cursos en línea de más de %{providers_count} plataformas de aprendizaje diferentes en más de 15 idiomas. Obtenga información detallada sobre precios, mire los videos introductorios, lea el programa de estudios y vea las calificaciones antes de elegir un curso en línea.
       about_us_title_2: cursos en línea
       about_us_text_2_html: >-
-        Encuentre cursos en línea de <b>informática</b>, <b>ciencia de datos</b>, <b>marketing</b>, <b>negocios</b> y <b>desarrollo personal</b> impartidos por <a href='/instructors'><b>instructores experimentados</b></a>
+        Encuentre cursos en línea de <b>informática</b>, <b>ciencia de datos</b>, <b>marketing</b>, <b>negocios</b> y <b>desarrollo personal</b> impartidos por <a href='/instructors'><b>instructores</b></a> experimentados.
       about_us_title_3: plataformas de cursos en línea
       about_us_text_3_html: >-
-        Descubre los mejores sítios de cursos en línea del mundo en Classpert. Obtenga toda la información relevante sobre las clases en línea de <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <a href='/blog/coursera-en-espanol'><b>Coursera</b></a>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>, <a href='/blog/miriadax-cursos-informaciones'><b>Miríadax</b></a>, <b>Platzi</b> entre otros. Encuentre cursos en línea gratuitos, cursos de pago único y modelos de suscripción.
+        Descubre los mejores sítios de cursos en línea del mundo en Classpert. Obtenga toda la información relevante sobre las clases en línea de <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <a href='/blog/coursera-en-espanol'><b>Coursera</b></a>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>, <b>Platzi</b> entre otros. Encuentre cursos en línea gratuitos, cursos de pago único y modelos de suscripción.
       about_us_button_text_3: ver todas las plataformas
       about_us_title_4: Buscador de cursos MOOC
       about_us_text_4_html: >-
@@ -698,16 +697,16 @@ es:
           title_html: >-
             Califica tu experiencia. Ayuda a otros estudiantes al calificar <b>%{course} por %{provider}<b/>
         completion:
-          title: "¿Completaste el curso?"
+          title: '¿Completaste el curso?'
           values:
             yep: "Si"
             nope: "No"
         feedback:
-          title: "¿Desea agregar informaciones adicionales?"
+          title: '¿Desea agregar informaciones adicionales?'
           placeholder: Felicitaciones, sugerencias o críticas
         send: Enviar calificacion
       submission:
-        header: "¡Gracias por la calificación!"
+        header: '¡Gracias por la calificación!'
         body: >-
           Siempre estamos buscando mejorar nuestra plataforma y Tu opinión es esencial.
         link: Ir a la página de inicio
@@ -782,8 +781,8 @@ es:
             Aumenta su conocimiento sobre el mantenimiento de la salud, la prevención de enfermedades y la reducción de conductas de riesgo. Vive más tiempo y consigue tus objetivos. Encuentra cursos online pagados y gratuitos con certificado
     show:
       meta:
-        title: "%{course} | Curso en Línea | Classpert"
-        description: "%{course} - Aprenda habilidades valiosas con este curso en línea de %{provider}%."
+        title: "%{course} | Curso Online | Classpert"
+        description: "%{course} - Aprende habilidades valiosas con este curso en línea de %{provider}"
   course_bundles:
     meta:
       title_html: "Cursos de %{tag}"
@@ -809,9 +808,9 @@ es:
         e_learning: E-Learning
         blockchain_and_cryptocurrency: Blockchain and Cryptocurrency
       meta:
-        title: Recent Articles
-        description: Recent Articles
-      h1: Recent Articles
+        title: Artículos, tutoriales e dicas de cursos online | Blog | Classpert
+        description: Artículos y tutoriales sobre temas como programación, ciencia de datos, marketing, negocios y habilidades sociales para el desarrollo personal.
+      h1: Artículos Recientes
     show:
       tags:
         computer_science: Computer Science
@@ -841,7 +840,7 @@ es:
         title: "%{name} | Perfil y Cursos"
         description: "Mira el perfil de %{name} en Classpert. Encuentra todos los cursos de %{name} en un solo lugar!"
       instructor: Instructor
-      are_you: "¿Eres %{name}?"
+      are_you: '¿Eres %{name}?'
       claim_profile: Reclamar este perfil
       about_me: Sobre el instructor
       courses: "Cursos"
@@ -849,10 +848,10 @@ es:
   orphaned_profiles:
     show:
       meta:
-        title: "%{name} | Perfil y Cursos"
+        title: '%{name} | Perfil y Cursos'
         description: Mira el perfil de %{name} en Classpert. Encuentra todos los cursos de %{name} en un solo lugar!
       instructor: Instructor
-      are_you: "¿Eres %{name}?"
+      are_you: '¿Eres %{name}?'
       claim_profile: Reclamar este perfil
       about_me: Sobre el instructor
       courses: Cursos

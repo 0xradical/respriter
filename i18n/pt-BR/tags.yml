@@ -210,7 +210,7 @@ pt-BR:
     crm: CRM (Customer Relationship Manager)
     crochet: Crochê
     crystal_programming: Crystal
-    csharp_programming: "C#"
+    csharp_programming: 'C#'
     css: CSS
     cucumber_test_framework: Cucumber
     culture: Cultura
@@ -278,7 +278,7 @@ pt-BR:
     electronics: Eletrônica
     elicitation: Elicitação
     elixir_programming: Elixir
-    elliott_waves: Ondas de Elliott
+    elliott_waves: Elliott Waves
     emacs: Emacs
     embedded_linux: Desenvolvimento para Linux Embarcado
     embedded_systems: Sistemas Embarcados
@@ -341,7 +341,7 @@ pt-BR:
     front_end: Front End
     front_end_developer: Desenvolvimento Front End
     fruity_loops: Fruity Loops
-    fsharp_programming: "F#"
+    fsharp_programming: 'F#'
     full_stack_developer: Desenvolvimento Full Stack
     game_character_creation: Criação de Personagens para Jogos
     game_development: Desenvolvimento de Jogos

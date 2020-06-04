@@ -629,7 +629,7 @@ de:
         Compare online courses side-by-side from over %{providers_count} different e-learning platforms in more than 15 languages. Get detailed information on pricing, watch video previews, read the syllabus, and see reviews before deciding which online course to take.
       about_us_title_2: online courses
       about_us_text_2_html: >-
-        Explore the largest catalog of online courses in one place. Find online courses in <b>computer science</b>, <b>data science</b>, <b>marketing</b>, <b>business</b>, <b>personal development</b> and many more. Looking for college credits? Search for online courses with certificates, some universities accept completion certificates as credits.
+        Find online courses in <b>computer science</b>, <b>data science</b>, <b>marketing</b>, <b>business</b> and <b>personal development</b> taught by experienced <a href='/instructors'><b>instructors</b></a>.
       about_us_title_3: e-learning platforms
       about_us_text_3_html: >-
         Discover the world’s best online course platforms on Classpert. Get all relevant information on online courses from <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <b>Coursera</b>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/skillshare-review'><b>Skillshare</b></a>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a> among other e-learning platforms.  Find free online courses, single payment courses, and subscription models.
@@ -781,20 +781,20 @@ de:
             Increase your knowledge about health maintenance, disease prevention, and risky behaviors reduction. Live longer and achieve your goals. Find paid and free online courses with certificate
     show:
       meta:
-        title: "%{course} Online Course | Classpert"
-        description: "Learn %{course} on this Online Course with certificate. Find information about the course and read reviews left by students who have already taken it."
+        title: "%{course} | Online Course | Classpert"
+        description: "%{course} - Learn valuable skills with this online course from %{provider}"
   course_bundles:
     meta:
       title_html: "%{tag} Courses"
       description_html: "Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions."
     social_share:
-      title_html: "%{tag} Courses"
+      title_html: '%{tag} Courses'
       description_html: Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions.
     index:
-      title_html: "%{tag} Courses"
+      title_html: '%{tag} Courses'
       description_html: Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions.
     show:
-      title_html: "%{tag} Courses"
+      title_html: '%{tag} Courses'
       description_html: Find paid and free %{tag} tutorials and courses. <br/> Choose from select topics and learn from the best instructors and institutions.
   posts:
     base:
@@ -807,6 +807,10 @@ de:
         computer_science: Computer Science
         e_learning: E-Learning
         blockchain_and_cryptocurrency: Blockchain and Cryptocurrency
+      meta:
+        title: Articles, tutorials and online course tips | Blog | Classpert
+        description: Articles and tutorials on programming, data science, marketing, business, and soft skills for personal development.
+      h1: Recent Articles
     show:
       tags:
         computer_science: Computer Science
@@ -844,7 +848,7 @@ de:
   orphaned_profiles:
     show:
       meta:
-        title: "%{name} | Profile & Courses"
+        title: '%{name} | Profile & Courses'
         description: Check out %{name}'s profile on Classpert. Find all %{name}'s courses in only one place!
       instructor: Instructor
       are_you: Are you %{name}?

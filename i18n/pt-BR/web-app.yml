@@ -16,7 +16,7 @@ pt-BR:
       username: "usuário"
       email: "e-mail"
       email_confirmation: "confirmação de e-mail"
-      shortbio: "short bio"
+      shortbio: "frase de perfil"
       password: "senha"
       subject: "assunto"
       reason: "motivo de contato"
@@ -629,10 +629,10 @@ pt-BR:
         Compare cursos online lado a lado de mais de %{providers_count} plataformas de ensino em mais de 15 línguas. Obtenha informações detalhadas sobre preços, assista às prévias das aulas, leia o plano de estudos e veja  a pontuação de cada curso online antes de decidir qual escolher.
       about_us_title_2: cursos online
       about_us_text_2_html: >-
-        Explore o maior catálogo de cursos online em um único lugar. Encontre cursos online de <b>ciência da computação</b>, <b>ciência de dados</b>, <b>marketing</b>, <b>negócios</b>, desenvolvimento pessoal ensinados por <b><a href='/instructors'>instrutores</a></b> experientes. Procurando por <a class='el:m-link el:m-link--primary' href='https://pt-br.classpert.com/blog/cursos-para-atividades-complementares-gratis-e-com-certificado'> atividades complementares</a> para a faculdade? Pesquise por cursos online com certificado, algumas faculdades aceitam certificados online como créditos.
+        Encontre cursos on-line em <b>ciência da computação</b>, <b>ciência dos dados</b>, <b>marketing</b>, <b>negócios</b> e <b>desenvolvimento pessoal</b> ensinados por <a href='/instructors'><b>instrutores</b></a>.
       about_us_title_3: plataformas de cursos online
       about_us_text_3_html: >-
-        Descubra as melhores plataformas de curso online do mundo na Classpert. Obtenha todas as informações relevantes sobre cursos online da <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <b>Coursera</b>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/skillshare-review'><b>Skillshare</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>, <b>FutureLearn</b>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <a href='/blog/estrategia-concursos-e-bom'><b>Estratégia Concursos</b></a>, <b>Eduk</b> entre outros sites de cursos online. Encontre e compare cursos online gratuitos, de pagamento único  ou no modelo de mensalidade. Economize tempo e dinheiro!
+        Descubra as melhores plataformas de curso online do mundo na Classpert. Obtenha todas as informações relevantes sobre cursos online da <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <b>Coursera</b>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/skillshare-review'><b>Skillshare</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>, <b>FutureLearn</b>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <b>Alura</b>, <b>Eduk</b> entre outros sites de cursos online. Encontre e compare cursos online gratuitos, de pagamento único  ou no modelo de mensalidade. Economize tempo e dinheiro!
       about_us_button_text_3: ver todas as plataformas
       about_us_title_4: Buscador de MOOCs gratuitos
       about_us_text_4_html: >-
@@ -782,7 +782,7 @@ pt-BR:
     show:
       meta:
         title: "%{course} | Curso Online | Classpert"
-        description: "%{course} - Aprenda habilidades valiosas com este curso on-line da %{provider}%."
+        description: "%{course} - Aprenda habilidades valiosas com este curso on-line de %{provider}"
   course_bundles:
     meta:
       title_html: "Cursos de %{tag}"
@@ -808,8 +808,8 @@ pt-BR:
         e_learning: E-Learning
         blockchain_and_cryptocurrency: Blockchain e Criptomoeda
       meta:
-        title: Artigos Recentes | Blog | Classpert
-        description: Artigos recentes
+        title: Artigos, tutoriais e dicas de cursos on-line | Blog | Classpert
+        description: Artigos e tutoriais sobre programação, ciência de dados, marketing, negócios e habilidades gerais para desenvolvimento pessoal.
       h1: Artigos Recentes
     show:
       tags:
@@ -897,15 +897,15 @@ pt-BR:
       h1: Instructors
       filter_by_subject:
         label: by subject
-        prompt: Select a subject
+        prompt: Selecione um assunto
       filter_by_elearning_platform:
         label: por plataforma de cursos
         prompt: Selecione uma plataforma
-      courses_count: "%{count} courses"
+      courses_count: "%{count} cursos"
       teaching_at: teaching at
       text:
-        1: "No instructors for subject %{subject}"
-        1_none: "No instructors"
+        1: "Nenhum instrutor para o assunto %{subject}"
+        1_none: "Nenhum instrutor"
   pages:
     dashboard_index:
       meta:

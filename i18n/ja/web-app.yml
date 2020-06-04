@@ -3,7 +3,7 @@ ja:
     messages:
       challenge: "答えが正しくありません"
       is_valid_domain: "ドメインが無効です"
-      sitemap: "sitemap provided is not valid"
+      sitemap: "入力されたサイトマップは無効です"
       domain_included_in: "認証済みドメインに含まれていません"
       url: "値はURI (プロトコルを持つホスト) でなければなりません"
       url_path: "{_field_} は {host} のパスでなければなりません"
@@ -116,7 +116,7 @@ ja:
     max_price: "最大 (ドル)"
     providers: "プロバイダ"
     about: "Classpert"
-    length: "length"
+    length: "受講期間"
     previous_page: "前のページ"
     next_page: "次のページ"
     search_results: "%{total} 件の結果を表示"
@@ -629,10 +629,10 @@ ja:
         15 か国語以上の %{providers_count} を超える eラーニングプラットフォームからオンラインコースを比較。価格に関する詳細情報を入手、ビデオプレビューを見て、シラバスを読んで、レビューを確認して、受講したいオンラインコースを見つけましょう。
       about_us_title_2: オンラインコース
       about_us_text_2_html: >-
-        1 つのウェブサイトに、オンライン最大規模のコースが集約。<b>コンピュータサイエンス</b>、<b>データサイエンス</b>、<b>マーケティング</b>、<b>ビジネス</b>、<b>自己啓発</b>など、さまざまなカテゴリが勢揃い。大学の単位をお探しですか？修了証が取得できるオンラインコースがおすすめです。一部の大学では、修了証を単位として使うこともできます。
+        経験豊富な<a href='/instructors'><b>講師</b></a>が教える<b>コンピュータサイエンス</b>、<b>データサイエンス</b>、<b>マーケティング/b>、<b>ビジネス</b> 、<b>自己啓発</b>のオンラインコースを探しましょう。
       about_us_title_3: eラーニングプラットフォーム
       about_us_text_3_html: >-
-        Classpertの誇る世界最高のオンラインコースプラットフォームをご覧ください。<a href='/blog/review-of-udemy'><b>Udemy</b></a> 、<b>Coursera</b>、<b>edX</b>、<a href='/blog/pluralsight-review'><b>Pluralsight</b></a>、<a href='/blog/treehouse'><b>Treehouse</b></a>、<a href='/blog/skillshare-review'><b>Skillshare</b></a>、<a href='/blog/masterclass-review'><b>MasterClass</b></a>、<a href='/blog/udacity-review'><b>Udacity</b></a>、その他 eラーニングプラットフォームのオンラインコース関連情報がここで見つかります。無料のオンラインコース、1 回払いのコース、定期購読モデルを検索しましょう。
+        Classpert が誇る、世界最高のオンラインコースのプラットフォームをご覧ください。<a href='/blog/review-of-udemy'><b>Udemy</b></a> 、<b>Coursera</b>、<b>edX</b>、<a href='/blog/pluralsight-review'><b>Pluralsight</b></a>、<a href='/blog/treehouse'><b>Treehouse</b></a>、<a href='/blog/skillshare-review'><b>Skillshare</b></a>、<a href='/blog/masterclass-review'><b>MasterClass</b></a>、<a href='/blog/udacity-review'><b>Udacity</b></a>、その他 eラーニングプラットフォームのオンラインコース関連情報がここで見つかります。無料のオンラインコースや定期購読できるプラットフォームを検索しましょう。
       about_us_button_text_3: すべてのプラットフォームを表示
       about_us_title_4: MOOC (ムーク) を探そう
       about_us_text_4_html: >-
@@ -674,7 +674,7 @@ ja:
             bug_report: "不具合の報告"
             feature_suggestion: "機能を提案する"
             commercial_and_partnerships: "商用・パートナーシップ"
-            manual_profile_claim: "Claim Profile — Manual Verification Process"
+            manual_profile_claim: "プロフィールを申請 — 手動承認プロセス"
             other: "その他"
         message:
           header: "メッセージ"
@@ -781,8 +781,8 @@ ja:
             健康維持、疾患予防、危険な行動の削減に関する知識を増やすことができます。 より長く生き、目標を達成させましょう。修了書を取得できる有料・無料オンラインコースを見つけましょう
     show:
       meta:
-        title: "%{course} オンラインコース | Classpert"
-        description: "この修了証が取得できるオンラインコースで %{course} を学びましょう。コースに関する情報を見つけ、既に受講した学生が残したレビューを読んでみてください。"
+        title: "%{course} | オンラインコース | Classpert"
+        description: "%{course} - このオンラインコースで %{provider} から貴重なスキルを学びましょう"
   course_bundles:
     meta:
       title_html: "%{tag} コース"
@@ -807,6 +807,10 @@ ja:
         computer_science: コンピュータサイエンス
         e_learning: eラーニング
         blockchain_and_cryptocurrency: ブロックチェーンと暗号通貨
+      meta:
+        title: 記事、チュートリアル、オンラインコースのヒント | Classpert
+        description: プログラミング、データサイエンス、マーケティング、ビジネス、自己啓発のためのソフトスキルに関する記事やチュートリアル。
+      h1: 最近の記事
     show:
       tags:
         computer_science: コンピュータサイエンス
@@ -837,7 +841,7 @@ ja:
         description: "%{name} さんのプロフィールを確認してください。 %{name} さんのすべてのコースを 1 か所で見ることができます。"
       instructor: 講師
       are_you: あなたは %{name} さんですか？
-      claim_profile: Claim profile
+      claim_profile: プロフィールを申請
       about_me: 講師について
       courses: "コース"
       disclaimer: このページはウェブ上の公開情報を基に作成されており、講師が作成したものではありません。
@@ -848,16 +852,16 @@ ja:
         description: '%{name} さんのプロフィールを確認してください。 %{name} さんのすべてのコースを 1 か所で見ることができます。'
       instructor: 講師
       are_you: あなたは %{name} さんですか？
-      claim_profile: Claim profile
+      claim_profile: プロフィールを申請
       about_me: 講師について
       courses: コース
       disclaimer: このページはウェブ上の公開情報を基に作成されており、講師が作成したものではありません。
     claim:
       success: このプロフィールの所有権はあなたのアカウントに正常に転送されました。ダッシュボードからページ内の情報を編集できるようになりました。
-      h1: Claim Profile
+      h1: プロフィールを申請
       h2:
-        1: Via Social Network
-        2: Via Email
+        1: ソーシャルネットワーク経由で申請
+        2: メールで申請
       view_profile: プロフィールを見る
       text:
         1: あなたが %{name} さんであることを証明する必要があります
