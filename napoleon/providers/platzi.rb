@@ -15,11 +15,12 @@ def sql_safe_parsed_unparsed_code(path)
 end
 
 dataset_id = '0e9cdf2c-44e7-11e9-8c55-22000aef2c9b'
-user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:65.0) Gecko/20100101 Firefox/65.0'
+user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:67.0) Gecko/20100101 Firefox/67.0'
 
-home_url             = 'https://www.platzi.com'
-brute_crawler_spider = sql_safe_parsed_unparsed_code 'brute_crawler/spider.rb'
-brute_crawler_course = sql_safe_parsed_unparsed_code 'brute_crawler/course.rb'
+sitemap_url = 'https://platzi.com/sitemap.xml'
+
+sitemap_demux  = sql_safe_parsed_unparsed_code 'sitemap/demux.rb'
+course_builder = sql_safe_parsed_unparsed_code 'course/builder.rb'
 
 setup_sql = ERB.new(template).result(binding)
 

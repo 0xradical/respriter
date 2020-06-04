@@ -11,7 +11,6 @@ else
   include ../tasks/images.Makefile
   include ../tasks/docker.Makefile
   include ../tasks/launcher.Makefile
-  include ./tasks/launcher_override.Makefile
 
   GITHUB_ACCESS_TOKEN ?= $(shell heroku config:get GITHUB_ACCESS_TOKEN --app $(HEROKU_WEB_APP_NAME)-prd)
   LOCAL_NODE_MODULES  ?= $(shell [ -f "$(MONOREPO_PATH)/.local_node_modules" ] && echo "./node_modules:" || echo "")
@@ -37,7 +36,7 @@ build-seeds: $(SEEDS_FILES) ## Creates or updates seeds for each provider (only 
 build-seeds-%: ## Creates or updates for a given provider
 	@make -s $(SEEDS_DIR)/$*/setup.sql
 
-setup-provider-%: LESS_PRIORITY-% ## Alias to setup-provider-dev-%
+setup-provider-%: LESS_PRIORITY-% ## Set ups provider by name
 	@cd $(MONOREPO_PATH) && ./bin/psql napoleon-`echo $* | rev | cut -d- -f1 | rev` -f ./napoleon/$(SEEDS_DIR)/`echo $* | rev | cut -d- -f2- | rev`/setup.sql
 
 clean-pipelines: $(CUSTOM_ENV_FILES) ## Deletes all que_jobs, pipeline_templates, pipelines and pipe_processes in development
@@ -70,7 +69,7 @@ cucumber: $(CUSTOM_ENV_FILES) ## Runs cucumber tests
 LESS_PRIORITY-%:
 	@:
 
-./db/seeds/%/setup.sql: ./providers/%.rb ./providers/%
+./db/seeds/%/setup.sql: ./providers/%.rb ./providers/%/*
 	@mkdir -p `dirname $@`
 	@$(call docker_run_or_plain,base,ruby $<)
 	@echo "Seed file $@ created or updated!"

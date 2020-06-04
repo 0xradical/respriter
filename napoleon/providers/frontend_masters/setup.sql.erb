@@ -6,41 +6,26 @@ WITH
 courses_template AS (
   INSERT INTO app.pipeline_templates (
     name,
-    success_script_type,
-    success_script,
     dataset_id,
     pipes
   ) SELECT
-    'Spanish Platzi Courses Pipeline',
-    'sql',
-    '
-    UPDATE app.resources
-    SET content = content || jsonb_build_object(''published'', false)
-    WHERE
-      content->>''provider_name'' = ''Platzi''
-      AND content->>''published'' = ''true''
-      AND last_execution_id      != $1.pipeline_execution_id;
-    ',
+    'Frontend Masters Courses Pipeline',
     '<%= dataset_id %>',
     '[
       {
-        "type": "Fetcher",
         "http": {
-          "headers":          { "user_agent": "<%= user_agent %>" },
-          "follow_redirects": false
+          "headers": {
+            "user_agent": "<%= user_agent %>"
+          }
         },
-        "status_map": [
-          [ [ 200, 299 ], "pending" ],
-          [ 301,          "skipped" ],
-          [ 404,          "skipped" ]
-        ]
-      },
-      {
-        "type":"ResourceCreator",
+        "type": "Fetcher",
         "script": {
           "type": "ruby",
-          "source_code": <%= course_builder %>
+          "source_code": <%= course_fetcher %>
         }
+      },
+      {
+        "type":"ResourceCreator"
       }
     ]'
   RETURNING *
@@ -56,7 +41,7 @@ INSERT INTO app.pipeline_templates (
   dataset_id,
   pipes
 ) SELECT
-  'Spanish Platzi Sitemap Pipeline',
+  'Frontend Masters Sitemap Pipeline',
   jsonb_build_object(
     'next_pipeline_template_id', courses_template.id::varchar,
     'sitemap_url',               '<%= sitemap_url %>'
@@ -89,7 +74,7 @@ INSERT INTO app.pipeline_templates (
     SELECT app.pipeline_call($1.id);
   ',
   'sql',
-  'SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);',
+  '    SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);  ',
   '<%= dataset_id %>',
   '[
     {
