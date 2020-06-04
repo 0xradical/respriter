@@ -77,4 +77,7 @@ LESS_PRIORITY-%:
 ../envs/local/%:
 	@cd $(MONOREPO_PATH) && make -s `echo $@ | sed 's/\.\.\//\.\//g'`
 
+../envs/%/database-napoleon.env: LESS_PRIORITY-%
+	@cd $(MONOREPO_PATH) && make -s $@
+
 .PHONY: help build-seeds build-seeds-% setup-provider-% clean-pipelines worker console psql psql-% test rspec spec cucumber LESS_PRIORITY-%
