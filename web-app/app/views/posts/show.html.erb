@@ -1,18 +1,21 @@
 <% content_for :meta do %>
-  <title><%= @post.meta['title'] %> | Blog - Classpert </title>
+  <title><%= @post.meta['title'] %> | Blog | Classpert </title>
   <link rel='canonical' href="<%= @post.meta['canonical'] %>" />
-  <% if @post.versions.published.any? %>
-    <% content_for :meta_hreflang do %>
-      <% @all_versions.each do |locale, slug| %>
-        <link rel="alternate" hreflang="<%= locale %>" href="<%= post_url(slug, host: I18nHost.new(request.host_with_port).members[locale.downcase]) %>" >
-      <% end %>
-    <% end %>
-  <% end %>
+  <meta name="description" content="<%= @post.meta['description'] %>">
   <meta name='twitter:title' content="<%= @post.meta['title'] %>" />
   <meta name='twitter:description' content="<%= @post.meta['description'] %>" />
-  <meta name="description" content="<%= @post.meta['description'] %>">
-  <meta property="og:title" content="<%= @post.meta['title'] %> | Blog - Classpert">
+  <meta property="og:title" content="<%= @post.meta['title'] %> | Blog | Classpert">
   <meta property="og:description" content="<%= @post.meta['description'] %>">
+<% end %>
+
+<% content_for :meta_hreflang do %>
+  <% if @post.versions.published.any? %>
+    <% @all_versions.each do |locale, slug| %>
+      <link rel="alternate" hreflang="<%= locale %>" href="<%= post_url(slug, host: I18nHost.new(request.host_with_port).members[locale.downcase]) %>" >
+    <% end %>
+  <% else %>
+    <link rel="alternate" hreflang="<%= @post.locale %>" href="<%= post_url(@post.slug, host: I18nHost.new(request.host_with_port).members[@post.locale.downcase]) %>" >
+  <% end %>
 <% end %>
 
 <%= content_for :javascript do %>
