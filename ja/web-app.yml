@@ -103,10 +103,10 @@ ja:
       this_course_only: "このコースのみ"
       tooltip: "%{provider} は %{offer} を提供しています。この期間の終了時に、定期購読料金が請求されます。 コースへのアクセスは無制限です。定期購読はいつでもキャンセルできます。"
     in_currency: "%{currency} で"
-    from: "From"
-    to: "To"
-    min: "Min"
-    max: "Max"
+    from: "から"
+    to: "へ"
+    min: "最小"
+    max: "最大"
     search: "検索する"
     cancel_search: "検索をキャンセル"
     filters: "検索条件"
@@ -122,7 +122,7 @@ ja:
     search_results: "%{total} 件の結果を表示"
     only_free: "無料のみ"
     free: "無料"
-    for: "for"
+    for: "に"
     sort_by: "並び替え"
     sort_by_selected: "選択済み"
     clear_all_filters: "すべてのフィルターをクリア"
@@ -841,7 +841,7 @@ ja:
         description: "%{name} さんのプロフィールを確認してください。 %{name} さんのすべてのコースを 1 か所で見ることができます。"
       instructor: 講師
       are_you: あなたは %{name} さんですか？
-      claim_profile: プロフィールを申請
+      claim_profile: プロフィールを復活
       about_me: 講師について
       courses: "コース"
       disclaimer: このページはウェブ上の公開情報を基に作成されており、講師が作成したものではありません。
@@ -852,13 +852,13 @@ ja:
         description: '%{name} さんのプロフィールを確認してください。 %{name} さんのすべてのコースを 1 か所で見ることができます。'
       instructor: 講師
       are_you: あなたは %{name} さんですか？
-      claim_profile: プロフィールを申請
+      claim_profile: プロフィールを復活
       about_me: 講師について
       courses: コース
       disclaimer: このページはウェブ上の公開情報を基に作成されており、講師が作成したものではありません。
     claim:
       success: このプロフィールの所有権はあなたのアカウントに正常に転送されました。ダッシュボードからページ内の情報を編集できるようになりました。
-      h1: プロフィールを申請
+      h1: プロフィールを復活
       h2:
         1: ソーシャルネットワーク経由で申請
         2: メールで申請
