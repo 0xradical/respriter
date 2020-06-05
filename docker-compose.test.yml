@@ -27,7 +27,7 @@ services:
       - 3000
     depends_on:
       - api.test
-      - webpacker.test
+      - webpack.test
       - ssr.test
       - database.test
       - search.test
@@ -50,9 +50,9 @@ services:
     ports:
       - 7777
 
-  webpacker.test:
+  webpack.test:
     <<: *base
-    command: bin/webpack-dev-server
+    command: npm run dev
     environment:
       - LOGSPOUT=ignore
     ports:

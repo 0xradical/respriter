@@ -12,10 +12,14 @@
   }
 </script>
 
+<%= content_for :stylesheets do %>
+  <%= stylesheet_bundles_with_chunks_tag 'search-page' %>
+<% end %>
+
 <%= content_for :javascript do %>
   <%= elements_javascript_include_tag 'vars' %>
-  <%= javascript_packs_with_chunks_tag 'sharing', 'search-page' %>
-  <%= stylesheet_pack_tag 'search-page' %>
+  <%= javascript_bundles_with_chunks_tag 'sharing' %>
+  <%= javascript_bundles_with_chunks_tag 'search-page' %>
 <% end %>
 
 <%= render 'hero',

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   # Devise
   devise_for :admin_accounts,
              controllers: { sessions: 'admin_accounts/sessions' },
@@ -28,13 +28,12 @@ Rails.application.routes.draw do
         as: :new_developer_session_path
   end
 
-  mount Vueonrails::Engine, at: 'vue'
   root to: 'home#index', subdomain: ENV.fetch('ROOT_SUBDOMAIN') { '' }
 
-  get '/unsubscriptions/:id',       to: 'unsubscriptions#show' 
+  get '/unsubscriptions/:id',       to: 'unsubscriptions#show'
   post '/unsubscriptions/:id',      to: 'unsubscriptions#update'
 
-  
+
   get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
   get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
   get '/get-listed',            to: 'static_pages#index', page: 'get_listed'

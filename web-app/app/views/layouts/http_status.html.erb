@@ -8,7 +8,7 @@
     <%= elements_stylesheet_link_tag 'icon-font', 'bundle.default' %>
 
     <!-- App css -->
-    <%= stylesheet_pack_tag 'vendor', 'application' %>
+    <%= stylesheet_bundles_with_chunks_tag 'vendor', 'application' %>
 
     <script type='text/javascript'>
       window.I18n = { locale: "<%= I18n.locale %>" }
@@ -29,7 +29,7 @@
       <svg width='180px' height='29px' class='el:amx-Fi_fgV' style='position:absolute;left:0;top:1.5em'>
         <use xlink:href='#brand-logo' />
       </svg>
-      <%= image_pack_tag("media/svg/asteroids.svg", width: '100%', style: 'position:absolute;top:6em;left:0;right:0;margin:auto') %>
+      <%= image_bundle_tag("media/svg/asteroids.svg", width: '100%', style: 'position:absolute;top:6em;left:0;right:0;margin:auto') %>
       <div class='el:cmx-vcenter el:amx-Ta(c)' style='max-width:540px;margin:auto'>
         <%= yield :art %>
 

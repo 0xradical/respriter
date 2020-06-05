@@ -28,10 +28,13 @@
   <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/providers.svg') %>"></div>
 <% end %>
 
+<%= content_for :stylesheets do %>
+  <%= stylesheet_bundles_with_chunks_tag 'course-page' %>
+<% end %>
+
 <%= content_for :javascript do %>
   <%= elements_javascript_include_tag 'vars' %>
-  <%= javascript_packs_with_chunks_tag 'course-page' %>
-  <%= stylesheet_pack_tag 'course-page' %>
+  <%= javascript_bundles_with_chunks_tag 'course-page' %>
 <% end %>
 
 <%= render_vue_component "CoursePage", {

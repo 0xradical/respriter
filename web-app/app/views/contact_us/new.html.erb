@@ -8,11 +8,13 @@
   class="el:amx-Bc_bg"
 <% end %>
 
+<%= content_for :stylesheets do %>
+  <%= stylesheet_bundles_with_chunks_tag 'contact-us' %>
+<% end %>
 
 <%= content_for :javascript do %>
   <%= elements_javascript_include_tag 'vars' %>
-  <%= javascript_packs_with_chunks_tag 'contact-us' %>
-  <%= stylesheet_pack_tag 'contact-us' %>
+  <%= javascript_bundles_with_chunks_tag 'contact-us' %>
 <% end %>
 
 <%= render_vue_component "ContactUs", {

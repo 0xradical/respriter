@@ -1,6 +1,7 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   target: "node",
@@ -68,17 +69,20 @@ module.exports = {
         test: /\.vue$/,
         use: [
           {
-            loader: "vue-loader"
+            loader: "vue-loader",
+            options: {
+              extractCSS: true
+            }
           }
         ]
       },
       {
         test: /\.css$/,
-        use: ["vue-style-loader", "css-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"]
       },
       {
         test: /\.scss$/,
-        use: ["vue-style-loader", "css-loader", "sass-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
       },
       {
         test: /\.yml$/,
@@ -86,5 +90,10 @@ module.exports = {
       }
     ]
   },
-  plugins: [new VueLoaderPlugin()]
+  plugins: [
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "style.css"
+    })
+  ]
 };

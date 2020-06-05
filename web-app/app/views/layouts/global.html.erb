@@ -80,7 +80,8 @@
     <%= elements_stylesheet_link_tag('icon-font', 'bundle') %>
 
     <!-- App css -->
-    <%= stylesheet_pack_tag 'vendor', 'application' %>
+    <%= stylesheet_bundles_with_chunks_tag 'vendor'  %>
+    <%= stylesheet_bundles_with_chunks_tag 'application'  %>
 
     <script type='text/javascript'>
       window.I18n = { locale: "<%= I18n.locale %>" }
@@ -224,7 +225,7 @@
             <ul class='el:m-list el:amx-Fs(0.875em)'>
               <li class='el:amx-Mb(1em)'>
                 <%= link_to get_listed_path, class: 'el:amx-C_fgV c-link c-link--white' do %>
-                  <%= image_pack_tag('media/svg/flask.svg', class: 'el:amx-Mr(0.125em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %> Get Listed <sup>beta</sup>
+                  <%= image_bundle_tag('media/svg/flask.svg', class: 'el:amx-Mr(0.125em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %> Get Listed <sup>beta</sup>
                 <% end %>
               </li>
               <li>
@@ -247,7 +248,7 @@
               </li>
               <li>
                 <%= link_to "https://aws.amazon.com/education/edstart/", rel: 'nofollow', target: '_blank', class: 'c-link c-link--white' do %>
-                  <%= image_pack_tag('media/svg/aws-rocket.svg', class: 'el:amx-Mr(0.125em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %> AWS EdStart Member
+                  <%= image_bundle_tag('media/svg/aws-rocket.svg', class: 'el:amx-Mr(0.125em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %> AWS EdStart Member
                 <% end %>
               </li>
             </ul>
@@ -308,7 +309,8 @@
     <% end %>
 
     <%= render 'offcanvas_menu' %>
-    <%= javascript_pack_tag 'vendor', 'application',   async: true %>
+    <%= javascript_bundles_with_chunks_tag 'vendor',   async: true %>
+    <%= javascript_bundles_with_chunks_tag 'application',   async: true %>
     <%= elements_javascript_include_tag 'bundle',      async: true %>
 
     <% if content_for?(:chat_snippet) %>

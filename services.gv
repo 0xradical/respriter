@@ -29,13 +29,13 @@ digraph G {
     label = "Web App";
 
     app       [ label="app"       ];
-    webpacker [ label="webpacker" ];
+    webpack   [ label="webpack" ];
     que       [ label="que"       ];
     database  [ label="database"  ];
     hypernova [ label="hypernova" ];
     video     [ label="video"     ];
 
-    app -> webpacker;
+    app -> webpack;
     app -> que       [ color="gray" ];
     app -> hypernova [ color="gray" ];
 
@@ -53,7 +53,7 @@ digraph G {
 
     /*
     app       -> proxy [ color="gray" ];
-    webpacker -> proxy [ color="gray" ];
+    webpack   -> proxy [ color="gray" ];
     hypernova -> proxy [ color="gray" ];
     */
   }

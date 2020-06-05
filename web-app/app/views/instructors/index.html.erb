@@ -54,9 +54,9 @@
             <%= link_to orphaned_profile_path(instructor.slug) do %>
               <% subject = (instructor.teaching_subjects & RootTag.all.map(&:id))&.first %>
               <div class="el:o-profile-vcard el:amx-Mt(1.25em)">
-                <div 
-                  class="el:o-profile-vcard__cover-slot" 
-                  style='<%= "background-image:url(#{asset_pack_path('media/images/' + subject + '.jpg')})" if subject %>'></div>
+                <div
+                  class="el:o-profile-vcard__cover-slot"
+                  style='<%= "background-image:url(#{asset_bundle_path('media/images/' + subject + '.jpg')})" if subject %>'></div>
                 <div class="el:o-profile-vcard__avatar-slot">
                   <%= image_tag instructor.avatar_url, style: 'border-radius:50%;width:100%;height:100%', alt: instructor.name %>
                 </div>

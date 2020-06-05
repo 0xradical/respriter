@@ -41,7 +41,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~@classpert/elements/src/scss/config/variables/breakpoints";
+  @import "@classpert/elements/src/scss/config/variables/_breakpoints.scss";
 
   .clspt\:contact-us__successful {
     margin-top: 7.5em;

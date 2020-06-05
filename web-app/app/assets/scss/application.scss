@@ -29,12 +29,7 @@ html {
 @import "~bootstrap/scss/nav";
 
 @import "~vue-loading-overlay/dist/vue-loading";
-@import "~vue-slider-component/dist-css/vue-slider-component";
-
-@import "theming/vuebar.scss";
-@import "theming/multiselect.scss";
-@import "theming/vue-modal.scss";
-@import "theming/classpert.scss";
+@import "@classpert/vendor-styling/dist/tippy/5.2.css";
 
 .l-blog-container {
   width: 100%;
@@ -88,40 +83,4 @@ html {
       }
     }
   }
-}
-
-// tippy
-
-.tippy-tooltip.classpert-theme {
-  background-color: var(--foreground);
-  color: var(--background);
-  font-size: 0.75em;
-}
-
-.tippy-tooltip.classpert-theme[data-animatefill] {
-  background-color: transparent;
-}
-
-.tippy-tooltip.classpert-theme .tippy-backdrop {
-  background-color: var(--foreground);
-}
-
-.tippy-popper[x-placement^="top"] .tippy-tooltip.classpert-theme .tippy-arrow {
-  border-top-color: var(--foreground);
-}
-
-.tippy-popper[x-placement^="bottom"]
-  .tippy-tooltip.classpert-theme
-  .tippy-arrow {
-  border-bottom-color: var(--foreground);
-}
-
-.tippy-popper[x-placement^="left"] .tippy-tooltip.classpert-theme .tippy-arrow {
-  border-left-color: var(--foreground);
-}
-
-.tippy-popper[x-placement^="right"]
-  .tippy-tooltip.classpert-theme
-  .tippy-arrow {
-  border-right-color: var(--foreground);
 }

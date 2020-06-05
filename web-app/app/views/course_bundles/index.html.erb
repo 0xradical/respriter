@@ -7,14 +7,14 @@
 <% end %>
 
 <%= content_for :javascript do %>
-  <%= javascript_packs_with_chunks_tag 'sharing' %>
+  <%= javascript_bundles_with_chunks_tag 'sharing' %>
 <% end %>
 
 <%= render 'hero',
   title: t(".title_html", tag: t("tags.#{@tag}")),
   description: t(".description_html", tag: t("tags.#{@tag}")),
   share_it: t("dictionary.share", tag: t("tags.#{@tag}")),
-  art_html: image_pack_tag("media/svg/#{@tag}.svg", style: 'width:80%;display:block;margin:auto')
+  art_html: image_bundle_tag("media/svg/#{@tag}.svg", style: 'width:80%;display:block;margin:auto')
 %>
 
 <div class='el:amx-Bc_su el:amx-Bot el:amx-Mb(2em)'>

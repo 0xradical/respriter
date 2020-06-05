@@ -102,7 +102,7 @@ The possible services are:
 - **app**: Main Rails Web App
 - **que**: Backgroud Processing Service for Web App
 - **ssr**: Hyprnova Service for Server Side Rendering
-- **webpacker**: Webpack Dev Server for Web App Assets
+- **webpack**: Webpack Dev Server for Web App Assets
 - **database**: Postgres Database for Web App
 - **api**: PostgREST API for Web App's Database
 - **video**: Video Service that redirects to videos to provider's signed URLs
@@ -248,6 +248,59 @@ to replace production data from your dump with `make db-load-prd` if you are a c
 
 Another useful task is `make db-migrate` that apply migrations over database. This tasks is another alias as console task, so
 if you run `make db-migrate-prd` you can migrate production database.
+
+## Assets
+
+Our web-app application does not use Webpacker or Sprockets to handle assets.
+The webpack configuration has been ejected and lives under config/webpack. For
+the URL helpers formerly provided by Webpacker, they are now provided by [Minipack](https://github.com/nikushi/minipack), which uses the manifest.json created by Webpack under public/assets to look for the assets. They have a slightly different syntax, so take a look at the docs for further information.
+
+### Webpack config files
+
+There is one webpack.base.js config file that provides universal configuration
+for all environments. Based on the type of environment, additional configuration
+settings will be merged:
+
+1. webpack.development.js: If mode is set to development
+2. webpack.production.js: If mode is set to production
+3. presets/webpack.client.js: If client (target: web) preset is added
+4. presets/webpack.server.js: If server (target: node) preset is added
+
+Modes and presets are passed on during execution of webpack / webpack-dev-server.
+For examples, refer to the scripts section in the package.json file.
+
+There is also a generic config file under webpack/config.js where we expose common variables used in all webpack config files.
+
+For convenience, some variables are exposed as environment variables. This is
+because our development middleware (webpack/middleware.rb) needs to be aware of
+those values as well.
+
+### Asset precompilation
+
+In development mode, you should be running the webpack-dev-server (webpack.clspt). This server will serve the client, web bundles via the ruby middleware (webpack/middleware.rb) automatically. Just be sure to config the following environment variables:
+
+1. WEBPACK_DEV_SERVER_HOST (example: webpack.clspt)
+2. WEBPACK_DEV_SERVER_PORT (example: 3035)
+3. WEBPACK_DEV_SERVER_PUBLIC (example: webpack.clspt:3035)
+4. WEBPACK_DEV_SERVER_PROTOCOL (example: http)
+
+This server can be autonomously run by invoking `npm run dev` but it is automatically invoked during webpack.clspt container creation.
+
+In production mode, you should be compiling the asset bundles manually.
+You can compile the assets manually by invoking `npm run build:client`.
+
+For either mode, unfortunately for the server, ssr bundle we have to compile
+manually. There's no hot reload or HMR support for it yet. In development mode
+in particular, everytime you change an asset and wants the SSR server to pick
+up the change, you have to recompile the bundle using `npm run build:server`
+and restart the SSR server (`make down-ssr; make up-ssr`).
+
+In Heroku, both compilations are invoked automatically because the package.json
+script `build` is set to `npm run build` which is in turn just `npm run build:client && npm run build:server`.
+
+### CSS Extraction
+
+By default, CSS Extraction is turned on in webpack/config.js. This makes it possible to use stylesheet bundles in development mode but disables hot reload / HMR. If you want to use hot reload / HMR for CSS as well, set extractCSS to false but don't use `stylesheet` URL helpers (because manifest.json won't have them extracted)
 
 ## Debugging
 

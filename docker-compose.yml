@@ -32,7 +32,7 @@ services:
       - 3000
     depends_on:
       - api.clspt
-      - webpacker.clspt
+      - webpack.clspt
       - ssr.clspt
       - database.clspt
       - search.clspt
@@ -60,11 +60,11 @@ services:
     depends_on:
       - proxy.clspt
 
-  webpacker.clspt:
+  webpack.clspt:
     <<: *base
-    command: bin/webpack-dev-server
+    command: npm run dev
     environment:
-      - VIRTUAL_HOST=webpacker.clspt
+      - VIRTUAL_HOST=webpack.clspt
       - LOGSPOUT=ignore
     ports:
       - 3035:3035
