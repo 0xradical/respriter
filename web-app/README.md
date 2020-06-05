@@ -15,7 +15,7 @@ All configuration should be done by env files located at [envs/](envs/). But hol
 At [envs/dev/](envs/dev/) files are public, not "gitignored" and are supposed to be enough to run properly each service.
 If you edit any of those, you must commit your changes or something really awful will happen to you.
 
-But if you just want to debug something or if some service requires some credentials to work, you should use env files
+If you just want to debug something or if some service requires some credentials to work, you should use env files
 located at [envs/local/](envs/local/). Those files are pre-generated and sometimes holds some production credentials and some options
 that may be interesting to you.
 
