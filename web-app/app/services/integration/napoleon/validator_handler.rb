@@ -100,7 +100,7 @@ module Integration::Napoleon
 
   class FormatError < BaseError
     def params
-      super.merge( format: raw['schema']['format'] )
+      super.merge( _format_: raw['schema']['format'] )
     end
   end
 
