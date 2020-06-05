@@ -5,7 +5,7 @@ pt-BR:
       type: "O campo %{field} deve ser do tipo %{type}"
       multiple_type: "O campo %{field} deve ser um desses tipos: %{types}"
       enum: "O campo %{field} deve ter um dos valores %{values}"
-      format: "Campo %{field} deve corresponder ao formato %{format}"
+      format: "O campo %{field} deve corresponder ao formato %{_format_}"
       minimum: "O campo %{field} deve ser pelo menos %{value}"
       maximum: "O campo %{field} deve ser no máximo %{value}"
       exclusive_minimum: "O campo %{field} deve ser maior que %{value}"

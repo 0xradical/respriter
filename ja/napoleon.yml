@@ -5,7 +5,7 @@ ja:
       type: "%{field} フィールドは %{type} 型でなければなりません"
       multiple_type: "%{field} フィールドは、次の型のいずれかでなければなりません: %{types}"
       enum: "%{field} フィールドは、次の値のいずれかでなければなりません: %{values}"
-      format: "%{field} フィールドは %{format} 形式に一致する必要があります"
+      format: "%{field} フィールドは %{_format_} 形式に一致する必要があります"
       minimum: "%{field} フィールドは %{value} 以上でなければなりません"
       maximum: "%{field} フィールドは %{value} 以下でなければなりません"
       exclusive_minimum: "%{field} フィールドは、%{value} より大きくなければなりません"

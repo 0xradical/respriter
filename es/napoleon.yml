@@ -5,7 +5,7 @@ es:
       type: "El campo %{field} debe ser de tipo %{type}"
       multiple_type: "El campo %{field} debe ser uno de esos tipos: %{types}"
       enum: "El campo %{field} debe tener uno de esos valores %{values}"
-      format: "El %{field} debe coincidir con el formato %{format}"
+      format: "El campo %{field} debe coincidir con el formato %{_format_}"
       minimum: "El campo %{field} debe ser al menos %{value}"
       maximum: "El campo %{field} debe ser como máximo %{value}"
       exclusive_minimum: "El campo %{field} debe ser mayor que %{value}"
