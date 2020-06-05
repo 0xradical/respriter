@@ -53,10 +53,12 @@ module Developers
 
       data =
         begin
-          JSON.parse(json).merge('url' => preview_course.url)
+          JSON.parse(json)
         rescue StandardError
           raise "#120004: Course page's vnd.classpert+json could not be parsed"
         end
+
+      data = data.merge('url' => preview_course.url) if data['url'].blank?
 
       schema_version = data.delete('version') || DEFAULT_VERSION
       log("Using #{schema_version} schema version")
