@@ -5,7 +5,7 @@ fr:
       type: "Field %{field} should be of type %{type}"
       multiple_type: "Field %{field} should be one of those types: %{types}"
       enum: "Field %{field} should have one of those values %{values}"
-      format: "Filed %{field} should match %{format} format"
+      format: "Field %{field} should match %{_format_} format"
       minimum: "Field %{field} should be at least %{value}"
       maximum: "Field %{field} should be at most %{value}"
       exclusive_minimum: "Field %{field} should be greater than %{value}"
