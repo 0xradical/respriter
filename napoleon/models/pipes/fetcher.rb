@@ -95,7 +95,8 @@ module Pipes
     end
 
     def fetch_response(pipe_process)
-      http_client.public_send *options.values_at(:method, :url, :params)
+      method, url, params = options.values_at :method, :url, :params
+      http_client.public_send method, URI.escape(url), params
     rescue
       if options[:retry][:enabled]
         pipe_process.retry! $!
