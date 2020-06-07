@@ -4,6 +4,13 @@
   <meta property='og:description' content='<%= truncate(t(".meta.description", course: @course.name, provider: @course.provider.name), length: 155) %>' />
 <% end %>
 
+<% if @course.video['thumbnail_url'] %>
+  <% content_for :meta_og_image do %>
+    <meta property='og:image' content='<%= @course.video['thumbnail_url'] %>'>
+    <meta name='twitter:image' content='<%= @course.video['thumbnail_url'] %>'>
+  <% end %>
+<% end %>
+
 <script type='text/javascript'>
   window.env_context = {
     devise: {
