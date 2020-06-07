@@ -6,6 +6,13 @@
   <meta property='og:description'   content='<%= t(".meta.description", name: @orphaned_profile.name )%>' />
 <% end %>
 
+<% if @orphaned_profile.avatar_url.present? %>
+  <% content_for :meta_og_image do %>
+    <meta property='og:image' content='<%= @orphaned_profile.avatar_url %>'>
+    <meta name='twitter:image' content='<%= @orphaned_profile.avatar_url %>'>
+  <% end %>
+<% end %>
+
 <%= content_for :javascript do %>
   <%= elements_javascript_include_tag 'vars' %>
   <%= javascript_packs_with_chunks_tag 'vcard' %>

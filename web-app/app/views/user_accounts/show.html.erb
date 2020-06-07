@@ -6,6 +6,13 @@
   <meta property='og:description'   content='<%= t(".meta.description", name: @user.name )%>' />
 <% end %>
 
+<% if @user.avatar_url.present? %>
+  <% content_for :meta_og_image do %>
+    <meta property='og:image' content='<%= @user.avatar_url %>'>
+    <meta name='twitter:image' content='<%= @user.avatar_url %>'>
+  <% end %>
+<% end %>
+
 <%= content_for :javascript do %>
   <%= elements_javascript_include_tag 'vars' %>
   <%= javascript_packs_with_chunks_tag 'vcard' %>

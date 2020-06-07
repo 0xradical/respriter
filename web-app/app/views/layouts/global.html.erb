@@ -18,7 +18,7 @@
     <!-- Render favicons of different formats -->
     <%= render 'favicons' %>
 
-    <!-- Universal SEO Meta -->
+    <!-- Global SEO Meta -->
     <meta name="author" content="Classpert">
     <meta name="copyright" content="Classpert">
     <meta name="designer" content="Classpert">
@@ -33,8 +33,14 @@
     <meta name="twitter:site" content="@classpert" />
     <meta name="twitter:creator" content="@classpert" />
 
-    <!-- Custom SEO Meta -->
+    <!-- Custom SEO Meta and Description -->
     <%= yield :meta %>
+
+    <% if content_for?(:meta_canonical) %>
+      <%= yield :meta_canonical %>
+    <% else %>
+      <link rel='canonical' href="<%= current_url_without_query_params %>" />
+    <% end %>
 
     <!-- Custom hreflang Meta  -->
     <% if content_for?(:meta_hreflang) %>

@@ -1,11 +1,14 @@
 <% content_for :meta do %>
   <title><%= @post.meta['title'] %> | Blog | Classpert </title>
-  <link rel='canonical' href="<%= @post.meta['canonical'] %>" />
   <meta name="description" content="<%= @post.meta['description'] %>">
   <meta name='twitter:title' content="<%= @post.meta['title'] %>" />
   <meta name='twitter:description' content="<%= @post.meta['description'] %>" />
   <meta property="og:title" content="<%= @post.meta['title'] %> | Blog | Classpert">
   <meta property="og:description" content="<%= @post.meta['description'] %>">
+<% end %>
+
+<% content_for :meta_canonical do %>
+  <link rel='canonical' href="<%= @post.meta['canonical'] %>" />
 <% end %>
 
 <% content_for :meta_hreflang do %>
@@ -18,15 +21,15 @@
   <% end %>
 <% end %>
 
-<%= content_for :javascript do %>
-  <%= javascript_packs_with_chunks_tag 'sharing' %>
-<% end %>
-
-<% unless @post.images.empty? %>
+<% if @post.images.any? %>
   <% content_for :meta_og_image do %>
     <meta property='og:image' content='<%= @post.images.first.file_url %>'>
     <meta name='twitter:image' content='<%= @post.images.first.file_url %>'>
   <% end %>
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_packs_with_chunks_tag 'sharing' %>
 <% end %>
 
 <div class='el:amx-Bc_su el:amx-Pt(2em) el:amx-Pb(3.5em)'>
