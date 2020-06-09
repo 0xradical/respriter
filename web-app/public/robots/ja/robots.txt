@@ -1,4 +1,4 @@
-Sitemap: https://classpert.com/sitemap.xml.gz
+Sitemap: https://ja.classpert.com/sitemap.xml.gz
 
 # https://www.semrush.com/bot/
 User-agent: SemrushBot
