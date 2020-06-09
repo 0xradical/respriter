@@ -90,9 +90,9 @@ module App
     config.lograge.custom_payload do |controller|
       if controller.is_a? ApplicationController
         env = controller.instance_variable_get('@session_tracker') || {}
-
         qs = env['query_string']
         ua = env['user_agent']&.map { |_k, v| v }&.join('|')
+        ua_raw = env['raw']['user_agent']
         ip = env['ip']
         cf_country = env['country']
         session_count = env['session_count']
@@ -103,6 +103,7 @@ module App
         custom_payload['qs'] = qs if qs.present?
         custom_payload['ip'] = ip&.ansi(:yellow) if ip.present?
         custom_payload['ua'] = ua&.ansi(:blue) if ua.present?
+        custom_payload['ua_raw'] = ua_raw&.ansi(:blue) if ua_raw.present?
         custom_payload['cf_country'] = cf_country if cf_country.present?
         custom_payload['session_count'] = session_count if session_count.present?
         custom_payload['accept_lang'] = accept_lang if accept_lang.present?
