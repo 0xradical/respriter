@@ -7,9 +7,8 @@
     "dev": "npm run webpack-dev-server -- --config=config/webpack/webpack.base.js --env.mode development --env.presets client",
     "build:client": "npm run webpack -- --config=config/webpack/webpack.base.js --env.mode production --env.presets client",
     "build:server": "npm run webpack -- --config=config/webpack/webpack.base.js --env.mode production --env.presets server",
-    "build": "npm run clean && npm run build:client && npm run build:server",
-    "serve": "node public/${WEBPACK_PUBLIC_OUTPUT_PATH:-assets}/hypernova.js",
-    "clean": "rm -rf public/${WEBPACK_PUBLIC_OUTPUT_PATH:-assets}"
+    "build": "npm run build:client && npm run build:server",
+    "serve": "node public/${WEBPACK_PUBLIC_OUTPUT_PATH:-assets}/hypernova.js"
   },
   "dependencies": {
     "@babel/core": "^7.7.2",
