@@ -35,7 +35,7 @@ docker-make-%: $(LOCAL_ENV_FILES) ## Executes `make SOMETHING` inside base servi
 	@$(call docker_run_or_plain,`echo $* | cut -d- -f1`,make -s `echo $* | cut -d- -f2-`)
 
 docker-build-base: ## Builds the base docker image
-	@$(DOCKER) build -f $(DOCKER_BASE_FILE) -t $(DOCKER_BASE_IMAGE) -t $(DOCKER_BASE_LATEST) .
+	@$(DOCKER) build -f $(DOCKER_BASE_FILE) -t $(DOCKER_BASE_IMAGE) .
 
 docker-push-base: ## Pushes the docker base image to Dockerhub
 	@$(DOCKER) push $(DOCKER_BASE_IMAGE)
