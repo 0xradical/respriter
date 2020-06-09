@@ -54,98 +54,99 @@
 </template>
 
 <script>
-import videoService from "~~video-service";
-import Icon from "./Icon.vue";
-import EmbeddedVideo from "./EmbeddedVideo.vue";
+  import videoService from "~~video-service";
+  import Icon from "./Icon.vue";
+  import EmbeddedVideo from "./EmbeddedVideo.vue";
 
-export default {
-  data() {
-    return {
-      videoComponent: null,
-      videoClicked: false,
-      videoUrl: "",
-      videoEmbed: "",
-      videoMobileUx: false,
-      videoLoaded: false
-    };
-  },
-  props: {
-    course: {
-      type: Object,
-      required: true
+  export default {
+    data() {
+      return {
+        videoComponent: null,
+        videoClicked: false,
+        videoUrl: "",
+        videoEmbed: "",
+        videoMobileUx: false,
+        videoLoaded: false
+      };
     },
-    rootClasses: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  },
-  components: {
-    icon: Icon,
-    embeddedVideo: EmbeddedVideo
-  },
-  computed: {
-    video() {
-      return this.course.video;
-    },
-    courseType() {
-      return this.course.type || "Course";
-    },
-    videoExists() {
-      return (
-        this.video &&
-        (this.video.url ||
-          ((this.video.type === "youtube" || this.video.type === "vimeo") &&
-            this.video.id))
-      );
-    },
-    style() {
-      const backgroundImage = this.video && this.video.thumbnail_url;
-
-      if (backgroundImage) {
-        return {
-          "background-image": `url(${backgroundImage})`
-        };
-      } else {
-        return {};
+    props: {
+      course: {
+        type: Object,
+        required: true
+      },
+      rootClasses: {
+        type: Array,
+        default() {
+          return [];
+        }
       }
     },
-    rootClassesBase() {
-      let base = [];
+    components: {
+      icon: Icon,
+      embeddedVideo: EmbeddedVideo
+    },
+    computed: {
+      video() {
+        return this.course.video;
+      },
+      courseType() {
+        return this.course.type || "Course";
+      },
+      videoExists() {
+        return (
+          this.video &&
+          (this.video.url ||
+            ((this.video.type === "youtube" || this.video.type === "vimeo") &&
+              this.video.id) ||
+            (this.video.type === "video_service" && this.video.path))
+        );
+      },
+      style() {
+        const backgroundImage = this.video && this.video.thumbnail_url;
 
-      if (this.video) {
-        base.push("clspt:m-video-preview--available");
-      } else {
-        base.push("clspt:m-video-preview--unavailable el:amx-Bc_bg");
+        if (backgroundImage) {
+          return {
+            "background-image": `url(${backgroundImage})`
+          };
+        } else {
+          return {};
+        }
+      },
+      rootClassesBase() {
+        let base = [];
+
+        if (this.video) {
+          base.push("clspt:m-video-preview--available");
+        } else {
+          base.push("clspt:m-video-preview--unavailable el:amx-Bc_bg");
+        }
+
+        return base;
       }
+    },
+    methods: {
+      fetchVideo: function () {
+        this.videoClicked = true;
 
-      return base;
-    }
-  },
-  methods: {
-    fetchVideo: function() {
-      this.videoClicked = true;
-
-      if (!this.videoLoaded) {
-        videoService(this.course.id, this.courseType).then(response => {
-          response.json().then(json => {
-            this.videoUrl = json.url;
-            this.videoEmbed = json.embed;
-            this.videoComponent = "embedded-video";
-            this.videoLoaded = true;
+        if (!this.videoLoaded) {
+          videoService(this.course.id, this.courseType).then(response => {
+            response.json().then(json => {
+              this.videoUrl = json.url;
+              this.videoEmbed = json.embed;
+              this.videoComponent = "embedded-video";
+              this.videoLoaded = true;
+            });
           });
-        });
+        }
       }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.clspt\:m-video-preview {
-  &--available {
-    cursor: pointer;
+  .clspt\:m-video-preview {
+    &--available {
+      cursor: pointer;
+    }
   }
-}
 </style>
