@@ -92,7 +92,7 @@ module App
         env = controller.instance_variable_get('@session_tracker') || {}
         qs = env['query_string']
         ua = env['user_agent']&.map { |_k, v| v }&.join('|')
-        ua_raw = env['raw']['user_agent']
+        ua_raw = env['raw']&.send(:[], 'user_agent')
         ip = env['ip']
         cf_country = env['country']
         session_count = env['session_count']
