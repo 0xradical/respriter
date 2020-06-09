@@ -49,25 +49,25 @@
       };
     },
     watch: {
-      initialMin: function(nVal, oVal) {
+      initialMin: function (nVal, oVal) {
         this.currentMin = nVal;
       },
-      initialMax: function(nVal, oVal) {
+      initialMax: function (nVal, oVal) {
         this.currentMax = nVal;
       }
     },
     methods: {
-      updateCurrentValues: function(params) {
+      updateCurrentValues: function (params) {
         [this.currentMin, this.currentMax] = params.map(parseFloat);
       },
-      dragStart: function() {
+      dragStart: function () {
         this.isDragging = true;
       },
-      dragEnd: function() {
+      dragEnd: function () {
         this.isDragging = false;
         this.emitChanges();
       },
-      onChange: function(params) {
+      onChange: function (params) {
         let [nMin, nMax] = params.map(parseFloat);
 
         if (nMin !== this.currentMin || nMax !== this.currentMax) {
@@ -75,7 +75,7 @@
           this.emitChanges();
         }
       },
-      emitChanges: function() {
+      emitChanges: function () {
         this.$emit("priceValueChanged", [this.currentMin, this.currentMax]);
       }
     },
@@ -88,14 +88,6 @@
 </script>
 
 <style lang="scss">
-  @import "@classpert/elements/src/scss/config/functions.scss";
-
-  @import "~vue-slider-component/lib/theme/default.scss";
-
-  .vue-slider-dot-handle {
-    background-color: var(--primary);
-  }
-
   .facet-price-filter {
     .vue-slider {
       .vue-slider-rail {

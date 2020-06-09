@@ -4,29 +4,30 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 //
-// To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
+// To reference this file, add <%= javascript_bundle_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-require('../scss/application.scss')
-require('vueonrails')
+require("../scss/application.scss");
 
-import { CountUp } from 'countup.js'
+import { CountUp } from "countup.js";
 
-document.querySelectorAll('[data-countup]').forEach(function (cpt) {
-
+document.querySelectorAll("[data-countup]").forEach(function (cpt) {
   let countUp = new CountUp(cpt, cpt.dataset.countupCount, {
     duration: parseFloat(cpt.dataset.countupDuration),
     startVal: parseInt(cpt.dataset.countupStartVal || 0)
   });
 
-  window.addEventListener('scroll', function(e) {
+  window.addEventListener("scroll", function (e) {
     let pos = cpt.getBoundingClientRect();
 
     // checking whether fully visible
-    if(pos.top >= 0 && pos.bottom <= window.innerHeight && parseInt(cpt.dataset.countupRun) == 0) {
-      cpt.dataset.countupRun += 1
-      countUp.start()
+    if (
+      pos.top >= 0 &&
+      pos.bottom <= window.innerHeight &&
+      parseInt(cpt.dataset.countupRun) == 0
+    ) {
+      cpt.dataset.countupRun += 1;
+      countUp.start();
     }
-  })
-
+  });
 });

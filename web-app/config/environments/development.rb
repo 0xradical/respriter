@@ -12,15 +12,12 @@ Rails.application.configure do
               /.*\.classpert-staging\.com/
 
       resource '*',
-               headers: :any,
+               headers:     :any,
                credentials: true,
-               expose: %w[Authorization],
-               methods: %i[get put patch post delete options]
+               expose:      %w[Authorization],
+               methods:     %i[get put patch post delete options]
     end
   end
-
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  # config.webpacker.check_yarn_integrity = false
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -51,7 +48,7 @@ Rails.application.configure do
   config.serve_static_assets = true
 
   config.action_mailer.asset_host =
-    "http://#{ENV.fetch('WEBPACKER_DEV_SERVER_PUBLIC')}"
+    "http://#{ENV.fetch('WEBPACK_DEV_SERVER_PUBLIC')}"
 
   config.active_job.queue_adapter = :que
   config.action_mailer.perform_caching = false
@@ -64,7 +61,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV.fetch('MAILCATCHER_HOST', 'mailcatcher'),
-    port: ENV.fetch('MAILCATCHER_PORT', 1_025)
+    port:    ENV.fetch('MAILCATCHER_PORT', 1_025)
   }
 
   # Print deprecation notices to the Rails logger.

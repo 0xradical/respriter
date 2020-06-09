@@ -3,10 +3,11 @@ source 'http://rubygems.org'
 ruby '2.6.5'
 
 gem 'rails',     '~> 6.0.0'
-gem 'webpacker', '~> 4.x'
 gem 'pg',        '~> 1.1'
 gem 'puma',      '~> 4.2'
 gem 'semantic',  '~> 1.6.1'
+gem 'minipack',  '~> 0.3.5'
+gem 'rack-proxy','~> 0.6.1'
 
 # ActiveRecord
 gem 'activerecord-import',  '~> 1.0.4'
@@ -21,8 +22,8 @@ gem 'ejs',    '~> 1.1.1'
 gem 'execjs', '~> 2.7.0'
 
 # SSR
-gem 'vueonrails', '~> 1.x'
 gem 'hypernova',  '~> 1.4.0'
+gem 'vueonrails', '~> 1.x'
 
 # Pagination
 gem 'kaminari', '~> 1.1.1'

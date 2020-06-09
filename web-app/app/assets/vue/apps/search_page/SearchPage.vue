@@ -195,10 +195,10 @@
   import CourseList from "./CourseList.vue";
   import Pagination from "./Pagination.vue";
   import SearchFilter from "./SearchFilter.vue";
+  import Multiselect from "./Multiselect.vue";
   import Icon from "components/Icon.vue";
   import qs from "qs";
   import Loading from "vue-loading-overlay";
-  import Multiselect from "vue-multiselect";
 
   export default {
     props: {
@@ -223,7 +223,7 @@
       pagination: Pagination,
       icon: Icon,
       loading: Loading,
-      multiselect: Multiselect
+      Multiselect
     },
     data() {
       return {

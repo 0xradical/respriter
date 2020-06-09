@@ -11,7 +11,7 @@ contains() {
 
 name=`echo $1 | sed -E "s/-(dev|stg|prd|test)$//g" | sed "s/[-_]/./g"`
 
-res=`contains "base web.app app worker que ssr webpacker database api user.app user developer.app developer indextool" $name`
+res=`contains "base web.app app worker que ssr webpack database api user.app user developer.app developer indextool" $name`
 if [ $res = "yes" ] ; then
   echo "envs/$env/database.env"
   exit 0

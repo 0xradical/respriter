@@ -13,6 +13,9 @@
 !/log/.keep
 !/tmp/.keep
 
+.DS_Store
+**/.DS_Store
+
 database/db/dumps
 database/db/seeds
 

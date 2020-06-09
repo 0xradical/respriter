@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Course < ApplicationRecord
   include CSVImport
   include Elasticsearch::Model
-  #include Elasticsearch::Model::Callbacks
+  # include Elasticsearch::Model::Callbacks
 
-  SUPPORTED_LANGUAGES = %w[pt en es ru it de fr]
-  SITE_LOCALES = { br: 'pt-BR', en: 'en' }
+  SUPPORTED_LANGUAGES = %w[pt en es ru it de fr].freeze
+  SITE_LOCALES = { br: 'pt-BR', en: 'en' }.freeze
   SIMILAR_COURSES = 15
 
   paginates_per 50
@@ -20,13 +22,13 @@ class Course < ApplicationRecord
   index_name "courses_#{Rails.env}" unless Rails.env.production?
 
   index_config = {
-    number_of_shards: 1,
+    number_of_shards:   1,
     number_of_replicas: 0,
-    analysis: {
-      filter: {
+    analysis:           {
+      filter:   {
         programming_synonyms: {
-          type: 'synonym',
-          lenient: false,
+          type:     'synonym',
+          lenient:  false,
           synonyms: [
             '@formula, at formula, atformula',
             'a# => asharp',
@@ -83,20 +85,20 @@ class Course < ApplicationRecord
             'vue.js, vue js, vuejs, vue'
           ]
         },
-        english_stemmer: { type: 'stemmer', language: 'english' },
-        brazilian_stemmer: { type: 'stemmer', language: 'brazilian' },
-        spanish_stemmer: { type: 'stemmer', language: 'spanish' },
-        all_stopwords: {
+        english_stemmer:      { type: 'stemmer', language: 'english' },
+        brazilian_stemmer:    { type: 'stemmer', language: 'brazilian' },
+        spanish_stemmer:      { type: 'stemmer', language: 'spanish' },
+        all_stopwords:        {
           type: 'stop', stopwords: %w[_english_ _portuguese_ _spanish_]
         },
-        english_stopwords: { type: 'stop', stopwords: '_english_' },
+        english_stopwords:    { type: 'stop', stopwords: '_english_' },
         portuguese_stopwords: { type: 'stop', stopwords: '_portuguese_' },
-        spanish_stopwords: { type: 'stop', stopwords: '_spanish_' }
+        spanish_stopwords:    { type: 'stop', stopwords: '_spanish_' }
       },
       analyzer: {
-        english_programmer: {
-          tokenizer: 'whitespace',
-          filter: %w[
+        english_programmer:   {
+          tokenizer:   'whitespace',
+          filter:      %w[
             lowercase
             programming_synonyms
             all_stopwords
@@ -105,8 +107,8 @@ class Course < ApplicationRecord
           char_filter: %w[html_strip]
         },
         brazilian_programmer: {
-          tokenizer: 'whitespace',
-          filter: %w[
+          tokenizer:   'whitespace',
+          filter:      %w[
             lowercase
             programming_synonyms
             all_stopwords
@@ -114,9 +116,9 @@ class Course < ApplicationRecord
           ],
           char_filter: %w[html_strip]
         },
-        spanish_programmer: {
-          tokenizer: 'whitespace',
-          filter: %w[
+        spanish_programmer:   {
+          tokenizer:   'whitespace',
+          filter:      %w[
             lowercase
             programming_synonyms
             all_stopwords
@@ -124,9 +126,9 @@ class Course < ApplicationRecord
           ],
           char_filter: %w[html_strip]
         },
-        proper_names: {
-          tokenizer: 'whitespace',
-          filter: %w[
+        proper_names:         {
+          tokenizer:   'whitespace',
+          filter:      %w[
             lowercase
             programming_synonyms
             all_stopwords
@@ -260,22 +262,22 @@ class Course < ApplicationRecord
   def similar
     result = []
 
-    if self.audio && self.audio.length > 0
+    if audio && !audio.empty?
       result +=
-        self.class.published.by_tags(self.curated_tags).locales(self.audio.uniq)
-          .order('enrollments_count DESC')
-          .limit(SIMILAR_COURSES)
-          .to_a
+        self.class.published.by_tags(curated_tags).locales(audio.uniq)
+            .order('enrollments_count DESC')
+            .limit(SIMILAR_COURSES)
+            .to_a
     end
 
     if result.size < SIMILAR_COURSES
       result +=
         self.class.published.where.not(id: result.map(&:id)).by_tags(
-          self.curated_tags
+          curated_tags
         )
-          .order('enrollments_count DESC')
-          .limit(SIMILAR_COURSES - result.size)
-          .to_a
+            .order('enrollments_count DESC')
+            .limit(SIMILAR_COURSES - result.size)
+            .to_a
     end
 
     result
@@ -293,7 +295,15 @@ class Course < ApplicationRecord
     []
   end
 
-  def video_thumbnail
+  # indexable_video
+  # should not contain dynamic urls
+  # if type is either youtube or vimeo (by id) OR
+  # if type is video_service (by path)
+  def indexable_video
+    return nil unless video.present?
+
+    video = self.video.clone
+
     parameterized_video = EmbeddedVideoParametizer.new(video).parametize
     return nil unless parameterized_video[:thumbnail_url]
 
@@ -302,7 +312,12 @@ class Course < ApplicationRecord
       width: 240,
       image: CGI.escape(parameterized_video[:thumbnail_url])
     )
-    ENV.fetch('THUMBOR_HOST').chomp('/') + path
+
+    video['thumbnail_url'] = ENV.fetch('THUMBOR_HOST').chomp('/') + path
+
+    video = video.reject { |k, _| k == 'url' } if video['type'].in?(%w[youtube vimeo video_service])
+
+    video
   end
 
   def subscription_type?
@@ -333,13 +348,13 @@ class Course < ApplicationRecord
       if pricing['type'] == 'single_course'
         [
           0,
-          currencies[ pricing['currency'] ],
+          currencies[pricing['currency']],
           pricing['price'].to_f
         ]
       else
         [
           1,
-          currencies[ pricing['currency'] ],
+          currencies[pricing['currency']],
           pricing['total_price'].to_f
         ]
       end
@@ -359,12 +374,8 @@ class Course < ApplicationRecord
   end
 
   def forwarding_url(click_id)
-    (provider.afn_url_template&.chomp('/') || url) %
-      {
-        click_id: click_id,
-        course_url:
-          provider.encoded_deep_linking? ? ERB::Util.url_encode(url) : url
-      }
+    format((provider.afn_url_template&.chomp('/') || url), click_id:   click_id, course_url:
+                    provider.encoded_deep_linking? ? ERB::Util.url_encode(url) : url)
   end
 
   def gateway_path
@@ -389,12 +400,10 @@ class Course < ApplicationRecord
   def details_path
     if slug.present? && provider.slug.present?
       Rails.application.routes.url_helpers.course_path(provider.slug, slug)
-    else
-      nil
     end
   end
 
-  def as_indexed_json(options = {})
+  def as_indexed_json(_options = {})
     indexed_json = {
       id:                  id,
       name:                name,
@@ -414,9 +423,8 @@ class Course < ApplicationRecord
       has_free_trial:      has_free_trial?,
       url_id:              url_md5,
       level:               level,
-      video_url:           nil,
       details_path:        details_path,
-      video:               (video && video.merge(thumbnail_url: video_thumbnail)),
+      video:               indexable_video,
       tags:                tags,
       audio:               audio,
       root_audio:          root_languages_for_audio,
@@ -433,48 +441,42 @@ class Course < ApplicationRecord
       type:                self.class.name
     }
 
-    indexed_json[:provider_name_text] = SITE_LOCALES.map do |key, locale|
-      [ key, provider_name ]
-    end.to_h
+    indexed_json[:provider_name_text] = SITE_LOCALES.transform_values do |_locale|
+      provider_name
+    end
 
     if instructors.present?
-      indexed_json[:instructors_text] = SITE_LOCALES.map do |key, locale|
-        [
-          key,
-          instructors.map{ |i| i['name'] }.compact
-        ]
-      end.to_h
+      indexed_json[:instructors_text] = SITE_LOCALES.transform_values do |_locale|
+        instructors.map { |i| i['name'] }.compact
+      end
     end
 
     if category.present?
       indexed_json[:category_text] =
-        SITE_LOCALES.map do |key, locale|
-          [key, I18n.t("tags.#{category}", locale: locale)]
-        end.to_h
+        SITE_LOCALES.transform_values do |locale|
+          I18n.t("tags.#{category}", locale: locale)
+        end
     end
 
     if tags.present?
       indexed_json[:tags_text] =
-        SITE_LOCALES.map do |key, locale|
-          [
-            key,
-            tags.map do |tag|
-              I18n.t("tags.#{tag}", locale: locale, default: tag)
-            end
-          ]
-        end.to_h
+        SITE_LOCALES.transform_values do |locale|
+          tags.map do |tag|
+            I18n.t("tags.#{tag}", locale: locale, default: tag)
+          end
+        end
     end
 
-    if free_content?
-      indexed_json[:price] = 0
-    else
-      indexed_json[:price] = price
-    end
+    indexed_json[:price] = if free_content?
+                             0
+                           else
+                             price
+                           end
 
     if certificate.present?
       indexed_json[:certificate] = {
-        type: certificate[:type],
-        price: certificate[:price],
+        type:     certificate[:type],
+        price:    certificate[:price],
         currency: certificate[:currency]
       }
     end
@@ -486,10 +488,10 @@ class Course < ApplicationRecord
     def bulk_upsert(values)
       result =
         import values,
-               validate: false,
+               validate:                false,
                on_duplicate_key_update: {
                  conflict_target: %i[global_id],
-                 columns: %i[duration_in_hours name]
+                 columns:         %i[duration_in_hours name]
                }
       bulk_index_async(result.ids)
     end
@@ -513,18 +515,18 @@ class Course < ApplicationRecord
     end
 
     def index_by_dataset_sequence(sequence)
-      __elasticsearch__.import query: -> do
+      __elasticsearch__.import query: lambda {
         where(published: true, source: 'api')
-        .where('dataset_sequence >= ?', sequence)
-        .includes(:provider)
-      end
+          .where('dataset_sequence >= ?', sequence)
+          .includes(:provider)
+      }
     end
 
     def remove_from_index_by_dataset_sequence(sequence)
       self.select(:id)
-      .where(published: false)
-      .where('dataset_sequence >= ?', sequence)
-      .find_in_batches(batch_size: 100) do |courses|
+          .where(published: false)
+          .where('dataset_sequence >= ?', sequence)
+          .find_in_batches(batch_size: 100) do |courses|
         body = courses.map do |course|
           {
             delete: {
@@ -543,7 +545,7 @@ class Course < ApplicationRecord
     end
 
     def bulk_index_async(records)
-      ElasticSearchIndexJob.perform_later(self.to_s, records)
+      ElasticSearchIndexJob.perform_later(to_s, records)
     end
 
     private

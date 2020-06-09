@@ -25,8 +25,8 @@ ssr)
   echo "ssr.clspt"
   exit 0
   ;;
-webpacker)
-  echo "webpacker.clspt"
+webpack)
+  echo "webpack.clspt"
   exit 0
   ;;
 database)

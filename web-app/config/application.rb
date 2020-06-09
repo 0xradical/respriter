@@ -19,6 +19,9 @@ require_relative '../lib/middlewares/locale_router'
 require_relative '../lib/middlewares/robots_txt_interceptor'
 require_relative '../lib/middlewares/sitemap_xml_interceptor'
 
+# Webpack Dev Server middleware
+require_relative '../config/webpack/middleware'
+
 # Extensions
 require_relative '../lib/elements/elements'
 
@@ -39,6 +42,10 @@ module App
         "#{Rails.root}/app/models/reports",
         "#{Rails.root}/app/services"
       ]
+
+    if ENV['WEBPACK_DEV_SERVER_HOST'].present?
+      config.middleware.insert_before 0, Webpack::Middleware, ssl_verify_none: true
+    end
 
     config.middleware.insert_before(
       ActionDispatch::Static,

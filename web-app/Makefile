@@ -54,16 +54,16 @@ sync: sync-crawling_events wait-for-elastic-search sync-courses ## Sync web-app 
 sync-%: ## Sync web-app with napoleon given resources (courses or crawling_events)
 	@$(call docker_run_or_plain,base,bundle exec rake system:scheduler:$*_service,-T)
 
-hypernova: ./ssr/hypernova.js ## Compiles (if needed) and runs hypernova server side rendering server
-	node ssr/hypernova.js
+hypernova: public/${WEBPACK_PUBLIC_OUTPUT_PATH}/hypernova.js ## Compiles (if needed) and runs hypernova server side rendering server
+	npm run serve
 
 build-ssr:
-	@$(call docker_run_or_plain,base,npm run ssr)
+	@$(call docker_run_or_plain,base,npm run build:server)
 
 wait-for-elastic-search:
 	@$(call docker_run_or_plain,base,./bin/wait_for_elastic_search)
 
-./ssr/hypernova.js: package-lock.json ./app/assets ./config/locales
+public/${WEBPACK_PUBLIC_OUTPUT_PATH}/hypernova.js: package-lock.json ./app/assets ./config/locales
 	@make -s build-ssr
 
 LESS_PRIORITY-%:
