@@ -1,6 +1,0 @@
-files:
-  - source: /en/*.yml
-    ignore:
-      - /en/devise.yml
-      - /en/rails.yml
-    translation: /%language%/%original_file_name%
