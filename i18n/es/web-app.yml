@@ -632,7 +632,7 @@ es:
         Encuentre cursos en línea de <b>informática</b>, <b>ciencia de datos</b>, <b>marketing</b>, <b>negocios</b> y <b>desarrollo personal</b> impartidos por <a href='/instructors'><b>instructores</b></a> experimentados.
       about_us_title_3: plataformas de cursos en línea
       about_us_text_3_html: >-
-        Descubre los mejores sítios de cursos en línea del mundo en Classpert. Obtenga toda la información relevante sobre las clases en línea de <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <a href='/blog/coursera-en-espanol'><b>Coursera</b></a>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>, <b>Platzi</b> entre otros. Encuentre cursos en línea gratuitos, cursos de pago único y modelos de suscripción.
+        Descubre los mejores sítios de cursos en línea del mundo en Classpert. Obtenga toda la información relevante sobre las clases en línea de <a href='/blog/udemy-opiniones'><b>Udemy</b></a>, <a href='/blog/coursera-en-espanol'><b>Coursera</b></a>, <b>edX</b>, <b>Pluralsight</b>, <b>Udacity</b>, <b>Treehouse</b>, <b>MasterClass</b>, <b>Platzi</b>, <a href='/blog/miriadax-cursos-informaciones'><b>Miríadax</b></a> entre otros. Encuentre cursos en línea gratuitos, cursos de pago único y modelos de suscripción.
       about_us_button_text_3: ver todas las plataformas
       about_us_title_4: Buscador de cursos MOOC
       about_us_text_4_html: >-
@@ -808,7 +808,7 @@ es:
         e_learning: E-Learning
         blockchain_and_cryptocurrency: Blockchain and Cryptocurrency
       meta:
-        title: Artículos, tutoriales e dicas de cursos online | Blog | Classpert
+        title: Artículos, tutoriales y consejos de cursos online | Blog | Classpert
         description: Artículos y tutoriales sobre temas como programación, ciencia de datos, marketing, negocios y habilidades sociales para el desarrollo personal.
       h1: Artículos Recientes
     show:
@@ -835,6 +835,18 @@ es:
         no_option: "Por favor, elija una opción"
         no_details: Si elige "Otro", por favor detalla la razón de darse de baja
   user_accounts:
+    sessions:
+      new:
+        meta:
+          title: Iniciar sesión | Classpert
+    registrations:
+      new:
+        meta:
+          title: Registrate | Classpert
+    passwords:
+      new:
+        meta:
+          title: '¿Olvidaste tu contraseña? | Classpert'
     show:
       meta:
         title: "%{name} | Perfil y Cursos"
@@ -848,14 +860,14 @@ es:
   orphaned_profiles:
     show:
       meta:
-        title: '%{name} | Perfil y Cursos'
-        description: Mira el perfil de %{name} en Classpert. Encuentra todos los cursos de %{name} en un solo lugar!
+        title: '%{name} | Profile & Courses'
+        description: Check out %{name}'s profile on Classpert. Find all %{name}'s courses in only one place!
       instructor: Instructor
-      are_you: '¿Eres %{name}?'
-      claim_profile: Reclamar este perfil
-      about_me: Sobre el instructor
-      courses: Cursos
-      disclaimer: Esta página fue creada con información pública y no está escrita por el instructor.
+      are_you: Are you %{name}?
+      claim_profile: Claim profile
+      about_me: About the instructor
+      courses: Courses
+      disclaimer: This page was created with public information available on the web and is not authored by the instructor.
     claim:
       success: La propiedad de este perfil se transfirió con éxito a su cuenta. Ahora puede editar la información de esta página en su panel de control.
       h1: Reclamar Perfil

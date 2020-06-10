@@ -835,6 +835,18 @@ de:
         no_option: "Please choose an option"
         no_details: If you choose "Other", please detail the unsubscription reason
   user_accounts:
+    sessions:
+      new:
+        meta:
+          title: Sign in | Classpert
+    registrations:
+      new:
+        meta:
+          title: Sign up | Classpert
+    passwords:
+      new:
+        meta:
+          title: Forgot your password? | Classpert
     show:
       meta:
         title: "%{name} | Profile & Courses"
@@ -846,16 +858,15 @@ de:
       courses: "Courses"
       disclaimer: This page was created with public information available on the web and is not authored by the instructor.
   orphaned_profiles:
-    show:
-      meta:
-        title: '%{name} | Profile & Courses'
-        description: Check out %{name}'s profile on Classpert. Find all %{name}'s courses in only one place!
-      instructor: Instructor
-      are_you: Are you %{name}?
-      claim_profile: Claim profile
-      about_me: About the instructor
-      courses: Courses
-      disclaimer: This page was created with public information available on the web and is not authored by the instructor.
+    meta:
+      title: '%{name} | Profile & Courses'
+      description: Check out %{name}'s profile on Classpert. Find all %{name}'s courses in only one place!
+    instructor: Instructor
+    are_you: Are you %{name}?
+    claim_profile: Claim profile
+    about_me: About the instructor
+    courses: Courses
+    disclaimer: This page was created with public information available on the web and is not authored by the instructor.
     claim:
       success: The ownership of this profile was successfully transferred to your account. You can now edit the information on this page through your dashboard
       h1: Claim Profile

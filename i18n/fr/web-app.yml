@@ -835,6 +835,18 @@ fr:
         no_option: "Please choose an option"
         no_details: If you choose "Other", please detail the unsubscription reason
   user_accounts:
+    sessions:
+      new:
+        meta:
+          title: Sign in | Classpert
+    registrations:
+      new:
+        meta:
+          title: Sign up | Classpert
+    passwords:
+      new:
+        meta:
+          title: Forgot your password? | Classpert
     show:
       meta:
         title: "%{name} | Profile & Courses"

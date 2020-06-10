@@ -629,10 +629,10 @@ pt-BR:
         Compare cursos online lado a lado de mais de %{providers_count} plataformas de ensino em mais de 15 línguas. Obtenha informações detalhadas sobre preços, assista às prévias das aulas, leia o plano de estudos e veja  a pontuação de cada curso online antes de decidir qual escolher.
       about_us_title_2: cursos online
       about_us_text_2_html: >-
-        Encontre cursos on-line em <b>ciência da computação</b>, <b>ciência dos dados</b>, <b>marketing</b>, <b>negócios</b> e <b>desenvolvimento pessoal</b> ensinados por <a href='/instructors'><b>instrutores</b></a>.
+        Encontre cursos on-line em <b>ciência da computação</b>, <b>ciência dos dados</b>, <b>marketing</b>, <b>negócios</b> e <b>desenvolvimento pessoal</b> ensinados por <a href='/instructors'><b>instrutores</b></a> experientes.
       about_us_title_3: plataformas de cursos online
       about_us_text_3_html: >-
-        Descubra as melhores plataformas de curso online do mundo na Classpert. Obtenha todas as informações relevantes sobre cursos online da <a href='/blog/review-of-udemy'><b>Udemy</b></a>, <b>Coursera</b>, <b>edX</b>, <a href='/blog/pluralsight-review'><b>Pluralsight</b></a>, <a href='/blog/treehouse-review'><b>Treehouse</b></a>, <a href='/blog/skillshare-review'><b>Skillshare</b></a>, <a href='/blog/masterclass-review'><b>MasterClass</b></a>, <b>FutureLearn</b>, <a href='/blog/udacity-review'><b>Udacity</b></a>, <b>Alura</b>, <b>Eduk</b> entre outros sites de cursos online. Encontre e compare cursos online gratuitos, de pagamento único  ou no modelo de mensalidade. Economize tempo e dinheiro!
+        Descubra as melhores plataformas de curso online do mundo na Classpert. Obtenha todas as informações relevantes sobre cursos online da <a href='/blog/udemy-e-bom-saiba-tudo-sobre-esta-plataforma'><b>Udemy</b></a>, <b>Coursera</b>, <b>edX</b>, <b>Pluralsight</b>, <b>Treehouse</b>, <b>Skillshare</b>, <b>MasterClass</b>, <b>FutureLearn</b>, <b>Udacity</b>, <b>Alura</b>, <a href='/blog/estrategia-concursos-e-bom'><b>Estratégia Concursos</b></a>, <a href='/blog/eduk-e-bom'><b>Eduk</b></a> entre outros sites de cursos online. Encontre e compare cursos online gratuitos, de pagamento único  ou no modelo de mensalidade. Economize tempo e dinheiro!
       about_us_button_text_3: ver todas as plataformas
       about_us_title_4: Buscador de MOOCs gratuitos
       about_us_text_4_html: >-
@@ -835,6 +835,18 @@ pt-BR:
         no_option: "Por favor, escolha uma opção"
         no_details: Se você escolher "Outro", por favor detalhe o motivo do cancelamento
   user_accounts:
+    sessions:
+      new:
+        meta:
+          title: Entrar | Classpert
+    registrations:
+      new:
+        meta:
+          title: Cadastre-se | Classpert
+    passwords:
+      new:
+        meta:
+          title: Esqueceu sua senha? | Classpert
     show:
       meta:
         title: "%{name} | Perfil e Cursos"
@@ -848,14 +860,14 @@ pt-BR:
   orphaned_profiles:
     show:
       meta:
-        title: '%{name} | Perfil e Cursos'
-        description: Veja o perfil de %{name} na Classpert. Encontre todos os cursos de %{name} em um só lugar!
-      instructor: Instrutor
-      are_you: Você é %{name}?
-      claim_profile: Reivindicar perfil
-      about_me: Sobre o instrutor
-      courses: Cursos
-      disclaimer: Esta página foi criada com informações públicas disponíveis na internet e não é de autoria do instrutor.
+        title: '%{name} | Profile & Courses'
+        description: Check out %{name}'s profile on Classpert. Find all %{name}'s courses in only one place!
+      instructor: Instructor
+      are_you: Are you %{name}?
+      claim_profile: Claim profile
+      about_me: About the instructor
+      courses: Courses
+      disclaimer: This page was created with public information available on the web and is not authored by the instructor.
     claim:
       success: A propriedade deste perfil foi associada com sucesso a sua conta. Você pode editar as informações contidas nesta página diretamente através do seu dashboard
       h1: Reivindicar Perfil

@@ -835,6 +835,18 @@ ja:
         no_option: "オプションを選択してください"
         no_details: '「その他」を選択された場合は、購読解除の理由を詳述してください'
   user_accounts:
+    sessions:
+      new:
+        meta:
+          title: Sign in | Classpert
+    registrations:
+      new:
+        meta:
+          title: Sign up | Classpert
+    passwords:
+      new:
+        meta:
+          title: Forgot your password? | Classpert
     show:
       meta:
         title: "%{name} | プロフィール＆コース"
@@ -848,14 +860,14 @@ ja:
   orphaned_profiles:
     show:
       meta:
-        title: '%{name} | プロフィール＆コース'
-        description: '%{name} さんのプロフィールを確認してください。 %{name} さんのすべてのコースを 1 か所で見ることができます。'
-      instructor: 講師
-      are_you: あなたは %{name} さんですか？
-      claim_profile: プロフィールを復元
-      about_me: 講師について
-      courses: コース
-      disclaimer: このページはウェブ上の公開情報を基に作成されており、講師が作成したものではありません。
+        title: '%{name} | Profile & Courses'
+        description: Check out %{name}'s profile on Classpert. Find all %{name}'s courses in only one place!
+      instructor: Instructor
+      are_you: Are you %{name}?
+      claim_profile: Claim profile
+      about_me: About the instructor
+      courses: Courses
+      disclaimer: This page was created with public information available on the web and is not authored by the instructor.
     claim:
       success: このプロフィールの所有権はあなたのアカウントに正常に転送されました。ダッシュボードからページ内の情報を編集できるようになりました。
       h1: プロフィールを復元
