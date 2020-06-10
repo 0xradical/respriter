@@ -164,6 +164,7 @@ views/subsets/courses.sql
 views/subsets/enrollments.sql
 views/subsets/tracked_actions.sql
 auth/anonymous.sql
+auth/marketing.sql
 auth/user.sql
 auth/admin.sql
 auth/authenticator.sql
