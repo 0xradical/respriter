@@ -37,7 +37,11 @@ configure: $(LOCAL_ENV_FILES) $(DATABASE_ENVS) ## Generates gitignored env files
 etc_hosts: $(LOCAL_ENV_FILES) ## Show domains that should be on /etc/hosts
 	@$(call docker_ruby_run_or_plain,./bin/etc_hosts)
 
-setup: setup-database setup-napoleon ## Sets all apps
+setup: setup-i18n setup-database setup-napoleon ## Sets all apps
+
+setup-i18n:
+	@git submodule init
+	@git submodule update
 
 setup-database: ./database/db/seeds/prd_seed.sql up-persistence app-course-reindex  ## Sets up Persistence Containers and indexes Search
 
@@ -103,4 +107,4 @@ volumes-hide: ## Close sharing of mounted volumes
 LESS_PRIORITY-%:
 	@:
 
-.PHONY: help check-network configure etc_hosts setup setup-database setup-napoleon db-% napoleon_db-% app-% web-app-% reload-app wipe-db wipe-unnamed-volumes wipe-data volumes-show volumes-hide
+.PHONY: help check-network configure etc_hosts setup setup-i18n setup-database setup-napoleon db-% napoleon_db-% app-% web-app-% reload-app wipe-db wipe-unnamed-volumes wipe-data volumes-show volumes-hide
