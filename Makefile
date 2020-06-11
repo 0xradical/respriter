@@ -30,7 +30,7 @@ help: ## Get help
 	@grep -hE '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
 
 check-network: $(LOCAL_ENV_FILES)
-	@[[ `$(DOCKER) network ls --format "{{.Name}}" | grep -w classpert` = "" ]] && $(DOCKER) network create classpert > /dev/null && echo 'Network classpert created'; exit 0
+	@test "`$(DOCKER) network ls --format '{{.Name}}' | grep -w classpert`" || ( $(DOCKER) network create classpert > /dev/null && echo 'Network classpert created'; exit 0 )
 
 configure: $(LOCAL_ENV_FILES) $(DATABASE_ENVS) ## Generates gitignored env files
 
