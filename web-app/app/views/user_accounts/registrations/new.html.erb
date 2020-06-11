@@ -56,22 +56,23 @@
           </div>
         </div>
 
+        <!--
         <div class='el:m-form-field el:amx-Mt(0.75em)'>
           <div class='el:m-form-field__label el:m-form-field__label--over'>
-            <%= f.label 'Type the word in the image below' %>
+            <%#= f.label 'Type the word in the image below' %>
           </div>
           <%# do not add space between inline-block divs %>
           <div class='el:amx-D(f)'>
             <div style='flex: 0 0 33%'>
-              <%= rucaptcha_image_tag(alt: 'Captcha') %>
+              <%#= rucaptcha_image_tag(alt: 'Captcha') %>
             </div>
             <div class='el:amx-Ml(1em)' style='flex: 1'>
               <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
-                <%= rucaptcha_input_tag %>
+                <%#= rucaptcha_input_tag %>
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <%= f.submit t('devise.registrations.new.section'), class: 'btn btn--primary-flat btn--block el:amx-Mt(1.25em)' %>
       <% end %>

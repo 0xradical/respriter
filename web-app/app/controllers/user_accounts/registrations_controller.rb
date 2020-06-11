@@ -16,7 +16,7 @@ class UserAccounts::RegistrationsController < Devise::RegistrationsController
     captcha_verified = verify_rucaptcha?(resource)
     resource_saved = false
 
-    if captcha_verified
+    #if captcha_verified
       ActiveRecord::Base.transaction do
         begin
           resource_saved = resource.save
@@ -56,11 +56,11 @@ class UserAccounts::RegistrationsController < Devise::RegistrationsController
         set_minimum_password_length
         respond_with_navigational(resource) { render :new }
       end
-    else
-      clean_up_passwords resource
-      set_minimum_password_length
-      respond_with_navigational(resource) { render :new }
-    end
+   # else
+   #   clean_up_passwords resource
+   #   set_minimum_password_length
+   #   respond_with_navigational(resource) { render :new }
+   # end
   end
 
   # GET /resource/edit
