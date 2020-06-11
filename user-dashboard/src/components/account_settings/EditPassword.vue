@@ -6,9 +6,11 @@
     <p class="el:amx-Fs(0.875em) el:amx-Mb(1.5em)">
       {{ $t("user.sections.account_settings.password.info") }}
     </p>
+
     <a
       @click="submit"
       class="btn btn--primary-flat btn--medium btn--block"
+      :disabled='$store.state.user_account.autogen_email_for_oauth'
       value="change password"
     >
       {{ $t("user.sections.account_settings.password.change_password_button") }}
@@ -35,7 +37,8 @@ export default {
 
   methods: {
     submit() {
-      this.$crossOriginXHR
+      if (!this.$store.state.user_account.autogen_email_for_oauth) {
+        this.$crossOriginXHR
         .post(env.forgotPasswordPath, {
           user_account: {
             email: this.$store.state.user_account.email
@@ -55,6 +58,7 @@ export default {
           );
           this.alert.type = "danger";
         });
+      }
     }
   }
 };

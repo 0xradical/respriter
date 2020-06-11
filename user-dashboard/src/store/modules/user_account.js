@@ -21,7 +21,7 @@ const actions = {
   [operations.GET]({ commit }, { userAccountId }) {
     return new Promise((resolve, reject) => {
       api
-        .get(`/user_accounts?id=eq.${userAccountId}&select=email,profiles(*)`)
+        .get(`/user_accounts?id=eq.${userAccountId}&select=email,autogen_email_for_oauth,profiles(*)`)
         .then(
           response => {
             const payload = response.data[0];

@@ -1,15 +1,17 @@
-<%= link_to t('components.omniauth_sign_in', { provider: 'Twitter' }),
-  user_account_twitter_omniauth_authorize_path,
-  { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Twitter' }) }, class: 'btn btn--twitter btn--sm el:amx-Mb(0.75em)' } %>
-
 <%= link_to t('components.omniauth_sign_in', { provider: 'LinkedIn' }),
   user_account_linkedin_omniauth_authorize_path,
   { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'LinkedIn' }) }, class: 'btn btn--linkedin btn--sm el:amx-Mb(0.75em)' } %>
+
+<%= link_to t('components.omniauth_sign_in', { provider: 'Twitter' }),
+  user_account_twitter_omniauth_authorize_path,
+  { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Twitter' }) }, class: 'btn btn--twitter btn--sm el:amx-Mb(0.75em)' } %>
 
 <%= link_to t('components.omniauth_sign_in', { provider: 'Facebook' }),
   user_account_facebook_omniauth_authorize_path,
   { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Facebook' }) }, class: 'btn btn--facebook btn--sm el:amx-Mb(0.75em)' } %>
 
 <%= link_to t('components.omniauth_sign_in', { provider: 'Github' }),  user_account_github_omniauth_authorize_path,
-  { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Github' }) }, class: 'btn btn--github btn--sm' } %>
+  { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Github' }) }, class: 'btn btn--github btn--sm el:amx-Mb(0.75em)' } %>
 
+<%= link_to t('components.omniauth_sign_in', { provider: 'Reddit' }),  user_account_reddit_omniauth_authorize_path,
+  { data: { button: '', :"button-text" => t('components.omniauth_signin_in', { provider: 'Reddit' }) }, class: 'btn btn--reddit btn--sm' } %>

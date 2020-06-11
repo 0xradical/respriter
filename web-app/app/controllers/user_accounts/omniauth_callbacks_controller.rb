@@ -2,9 +2,9 @@
 
 class UserAccounts::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
-  before_action :add_oauth_account_or_sign_in, only: [:github, :twitter, :linkedin, :facebook]
+  before_action :add_oauth_account_or_sign_in, only: [:github, :reddit, :twitter, :linkedin, :facebook]
 
-  %i[github twitter linkedin facebook].each do |provider| 
+  %i[github reddit twitter linkedin facebook].each do |provider| 
     define_method provider do
       sign_in_and_redirect @user_account, scope: :user_account
     end

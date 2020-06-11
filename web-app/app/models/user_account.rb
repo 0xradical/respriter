@@ -47,7 +47,7 @@ class UserAccount < ApplicationRecord
     :instructor,
     to: :profile, allow_nil: true, prefix: false
 
-  validates :email, 'valid_email_2/email': { mx: true, disposable: true, disallow_subaddressing: true}
+  validates :email, 'valid_email_2/email': { mx: true, disposable: true, disallow_subaddressing: true}, unless: :bypass_email_validation?
 
   scope :is_public,         -> { joins(:profile).where('profiles.public = ?', true) }
   scope :publicly_listable, -> { is_public.where('profiles.username IS NOT NULL AND profiles.name IS NOT NULL') }
@@ -60,6 +60,10 @@ class UserAccount < ApplicationRecord
 
   def jwt_payload
     { role: 'user' }
+  end
+
+  def bypass_email_validation?
+    autogen_email_for_oauth
   end
 
   def password_required?
