@@ -10,6 +10,7 @@ require 'rspec/collection_matchers'
 require 'webmock/rspec'
 
 WebMock.disable_net_connect! allow_localhost: true, allow: ['s3.clspt', 'heavyload.service.test']
+DatabaseCleaner.allow_remote_database_url = true
 
 require 'shoulda/matchers'
 
