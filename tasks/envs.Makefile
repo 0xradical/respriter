@@ -7,11 +7,11 @@ configure: $(LOCAL_ENV_FILES) ## Builds envs files
 	@mkdir -p ./envs/local
 	@$(MAKE_BIN)/create_default_local_env $* $@
 
-./envs/%/database-napoleon.env: LESS_PRIORITY-%
+./envs/%/database-napoleon.env: $(MAKE_BIN)/create_remote_napoleon_database_env LESS_PRIORITY-%
 	@mkdir -p ./envs/$*
 	@$(MAKE_BIN)/create_remote_napoleon_database_env $* $@
 
-./envs/%/database.env: LESS_PRIORITY-%
+./envs/%/database.env: $(MAKE_BIN)/create_remote_database_env LESS_PRIORITY-%
 	@mkdir -p ./envs/$*
 	@$(MAKE_BIN)/create_remote_database_env $* $@
 
