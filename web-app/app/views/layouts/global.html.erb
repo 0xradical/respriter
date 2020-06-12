@@ -309,19 +309,9 @@
     <% end %>
 
     <%= render 'offcanvas_menu' %>
-    <%= javascript_bundles_with_chunks_tag 'vendor',   async: true %>
-    <%= javascript_bundles_with_chunks_tag 'application',   async: true %>
-    <%= elements_javascript_include_tag 'bundle',      async: true %>
-
-    <% if content_for?(:chat_snippet) %>
-      <%= yield :chat_snippet %>
-    <% else %>
-      <% if session[:live_support_enabled] %>
-        <!-- Start of LiveChat (www.livechatinc.com) code -->
-        <%= render 'live_chat' %>
-        <!-- End of LiveChat code -->
-      <% end %>
-    <% end %>
+    <%= javascript_bundles_with_chunks_tag 'vendor',      async: true %>
+    <%= javascript_bundles_with_chunks_tag 'application', async: true %>
+    <%= elements_javascript_include_tag 'bundle',         async: true %>
 
     <%= yield :javascript  %>
   </body>
