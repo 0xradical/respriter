@@ -7,13 +7,13 @@
 <% end %>
 
 <div class='row justify-content-center'>
-  <div class='col-12 col-sm-8 col-md-6 col-lg-4'>
+  <div class='col-12 col-md-6 col-lg-4 el:amx-Mb(2em)@sm'>
     <%= render 'oauth_buttons' %>
   </div>
 
   <div class='col-12 el:amx-Mt(1em) el:amx-D(n)@>lg'></div>
 
-  <div class='col-12 col-sm-8 col-md-6 col-lg-4'>
+  <div class='col-12 col-md-6 col-lg-4'>
     <div class='el:amx-Bol@>lg el:amx-Pl(2em)@>lg'>
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), method: :post, html: { autocomplete: 'off' }) do |f| %>
         <%= devise_error_messages! %>
