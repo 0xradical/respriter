@@ -22,7 +22,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       api
         .get(
-          `/crawler_domains?authority_confirmation_status=eq.confirmed&select=${properties},provider_crawler:provider_crawlers(${providerCrawlerProperties},provider(${providerProperties}))`,
+          `/crawler_domains?id=not.is.null&authority_confirmation_status=eq.confirmed&select=${properties},provider_crawler:provider_crawlers(${providerCrawlerProperties},provider(${providerProperties}))`,
           {
             headers: { Prefer: "return=representation" }
           }
