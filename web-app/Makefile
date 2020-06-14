@@ -37,6 +37,9 @@ npm-ci: ## Run npm ci
 bundle-install: ## Run bundle install
 	@$(call docker_run_or_plain,base,bundle install)
 
+bundle-update: ## Run bundle update
+	@$(call docker_run_or_plain,base,bundle update)
+
 rails-migrate: ## Run rake db:migrate (probably not necessary and not advised)
 	@$(call docker_run_or_plain,base,bundle exec rake db:migrate)
 
