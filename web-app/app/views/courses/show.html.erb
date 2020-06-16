@@ -2,6 +2,9 @@
   <title><%= truncate(t(".meta.title", course: @course.name), length: 60) %></title>
   <meta name='description' content='<%= truncate(t(".meta.description", course: @course.name, provider: @course.provider.name), length: 155) %>' />
   <meta property='og:description' content='<%= truncate(t(".meta.description", course: @course.name, provider: @course.provider.name), length: 155) %>' />
+  <% unless @course.indexable_by_robots_for_locale? %>
+    <meta name="robots" content="noindex" />
+  <% end %>
 <% end %>
 
 <% if @course.video&.dig('thumbnail_url') %>
