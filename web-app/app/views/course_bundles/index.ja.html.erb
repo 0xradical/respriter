@@ -1,0 +1,65 @@
+<% content_for :meta do %>
+  <%= render 'meta' %>
+<% end %>
+
+<%= content_for :body_html_attributes do %>
+  id='results'
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_bundles_with_chunks_tag 'sharing' %>
+<% end %>
+
+<%= render 'hero',
+  title: t(".title_html", tag: t("tags.#{@tag}")),
+  description: t(".description_html", tag: t("tags.#{@tag}")),
+  share_it: t("dictionary.share", tag: t("tags.#{@tag}")),
+  art_html: image_bundle_tag("media/svg/#{@tag}.svg", style: 'width:80%;display:block;margin:auto')
+%>
+
+<div class='el:amx-Bc_su el:amx-Bot el:amx-Mb(2em)'>
+  <div class='container'>
+    <div class='el:amx-D(n)@sm row'>
+      <div class='col-12'>
+        <ul class='el:m-list el:m-list--unstyled el:m-list--hrz el:amx-P(1em|0) el:amx-Fs(1em)@>lg'>
+          <% ('A'..'Z').each do |letter| %>
+            <li class='el:amx-Mr(0.875em)'>
+              <a href='#<%= letter%>'>
+                <%= letter %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+        <ul class='el:m-list el:m-list--unstyled el:m-list--hrz el:amx-Pb(1em) el:amx-Fs(1em)@>lg'>
+          <% %w[あ行 か行 さ行 た行 な行 は行 ま行 や行 ら行 わ行].each do |letter| %>
+            <li class='el:amx-Mr(0.875em)'>
+              <a href='#<%= letter%>'>
+                <%= letter %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='container'>
+  <% @bundles_by_letter.each do |bundles| %>
+    <h4 class='el:amx-Pb(0.5em) el:amx-Fs(1.25em)' id='<%= bundles.values.first[:index] %>'><%= bundles.values.first[:index] %></h4>
+    <div class='row el:amx-Mb(1em)'>
+      <% bundles.each do |name,data| %>
+        <div class='col-lg-4'>
+          <%= link_to course_bundle_path(data[:tag].dasherize) do %>
+            <div class='el:m-sticker el:amx-Mb(1em)'>
+              <%= svg_use('tags', data[:tag], { class: 'el:m-sticker__media el:amx-Fi_fg' }) %><span class='el:m-sticker__text'>
+                <span class='el:m-sticker__primary-label'><%= name %></span>
+                <span class='el:m-sticker__secondary-label'><%= data[:count] %> <%= t('dictionary.online_courses')&.downcase %> </span>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

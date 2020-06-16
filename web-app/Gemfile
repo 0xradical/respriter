@@ -108,6 +108,9 @@ gem 'unparser', '~> 0.4.7'
 # JSON Schema
 gem 'json_schemer', '~> 0.2.8'
 
+# Mecab 
+gem 'mecab_standalone', git: "https://github.com/wyugue/mecab_standalone"
+
 group :production do
   # Exceptions
   gem 'sentry-raven', '~> 2.12.2'

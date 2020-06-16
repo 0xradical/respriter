@@ -56,6 +56,12 @@ GIT
   specs:
     que (1.0.0.beta3)
 
+GIT
+  remote: https://github.com/wyugue/mecab_standalone
+  revision: da46675275263d38c9c80c622b91209816940e90
+  specs:
+    mecab_standalone (0.1.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -629,6 +635,7 @@ DEPENDENCIES
   json_schemer (~> 0.2.8)
   kaminari (~> 1.1.1)
   lograge (~> 0.11.2)
+  mecab_standalone!
   mini_magick (~> 4.9.5)
   minipack (~> 0.3.5)
   omniauth-facebook (~> 5.0.0)
