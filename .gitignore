@@ -1,0 +1,9 @@
+.env
+.env.sh
+.env.production
+docker-compose.yml
+/node_modules/
+yarn-error.log
+/build/
+/scratchpad/
+.DS_Store

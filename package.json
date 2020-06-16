@@ -1,0 +1,22 @@
+{
+  "name": "spriter",
+  "version": "1.0.0",
+  "description": "Generate sprites on demand",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/classpert/spriter.git"
+  },
+  "author": "Classpert",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/classpert/spriter/issues"
+  },
+  "homepage": "https://github.com/classpert/spriter#readme"
+}
