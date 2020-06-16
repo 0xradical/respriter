@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/classpert/spriter/issues"
   },
-  "homepage": "https://github.com/classpert/spriter#readme"
+  "homepage": "https://github.com/classpert/spriter#readme",
+  "dependencies": {
+    "@classpert/elements": "^8.2.1"
+  }
 }
