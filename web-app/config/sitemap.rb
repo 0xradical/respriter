@@ -29,7 +29,7 @@ I18nHost.new('classpert.com').each do |locale, host|
 
     # Course - Show
     Course.joins(:provider).published.where("courses.slug IS NOT NULL").find_each do |course|
-      if course.indexable_by_search_engines?(locale)
+      if course.indexable_by_robots_for_locale?(locale)
         add(course_path(provider: course.provider.slug, course: course.slug), {
           changefreq: 'weekly',
           priority: 0.8
