@@ -26,8 +26,9 @@ module Respriter
   end
 end
 
-require_relative './respriter/builder'
 require_relative './respriter/version'
+require_relative './respriter/dependency_resolver'
+require_relative './respriter/builder'
 
 # frozen_string_literal: true
 

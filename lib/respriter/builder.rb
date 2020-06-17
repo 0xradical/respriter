@@ -8,7 +8,7 @@ module Respriter
   class Builder
     def initialize(namespaces)
       @namespaces = namespaces
-      @definitions_tree = {}
+      @dependencies_tree = {}
       @definitions = {}
       @symbols = {}
     end
@@ -55,35 +55,25 @@ module Respriter
 
     def extract_dependencies
       @namespaces.each do |namespace|
-        @definitions_tree[namespace] ||= {}
+        resolver = Respriter::DependencyResolver.new(
+          @definitions[namespace],
+          proc { |entity| entity.to_xml.scan(/url\(#(?<id>[^)]+)\)/) }
+        )
+        @dependencies_tree[namespace] ||= {}
 
         @symbols[namespace].each do |symbol_id, symbol|
-          symbol.xpath(".//*[@*[starts-with(.,'url(#')]]").each do |property|
-            @definitions_tree[namespace][symbol_id] = definition_dependencies(@definitions, property, [])
+          symbol_dependencies = resolver.resolve(symbol)
+
+          unless symbol_dependencies.empty?
+            @dependencies_tree[namespace][symbol_id] = symbol_dependencies
           end
         end
       end
     end
 
-    def definition_dependencies(definitions, definition, result = [])
-      definition.attributes.each do |_, attribute|
-        match = attribute&.value&.match(/url\(#(?<id>[^)]+)\)/)
-
-        next unless match && match['id']
-
-        result << match['id']
-
-        if definitions[match['id']]
-          result.concat(definition_dependencies(definitions, definitions[match['id']], result))
-        end
-      end
-
-      result
-    end
-
     def dump_dependencies
       File.open(Respriter.dependencies_file, 'w+') do |f|
-        f.write(JSON.dump(@definitions_tree))
+        f.write(JSON.dump(@dependencies_tree))
       end
     end
 

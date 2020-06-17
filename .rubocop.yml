@@ -3,7 +3,7 @@ AllCops:
     - '**/*.rb'
 
 Metrics/LineLength:
-  Max: 100
+  Max: 80
 
 Metrics/MethodLength:
   Max: 100
