@@ -1,18 +1,18 @@
 version: '3'
 services:
   base: &base
-    image: classpert/spriter:1.0.0
+    image: classpert/respriter:1.0.0
     ports:
       - '8080:8080'
     volumes:
       - .:/app
 
-  npm_development:
+  respriter_development:
     <<: *base
     env_file:
       - .env
 
-  npm_production:
+  respriter_production:
     <<: *base
     env_file:
       - .env.production

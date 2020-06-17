@@ -1,5 +1,5 @@
 {
-  "name": "spriter",
+  "name": "respriter",
   "version": "1.0.0",
   "description": "Generate sprites on demand",
   "main": "server.js",
@@ -7,19 +7,20 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/classpert/spriter.git"
+    "url": "git+https://github.com/classpert/respriter.git"
   },
   "author": "Classpert",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/classpert/spriter/issues"
+    "url": "https://github.com/classpert/respriter/issues"
   },
-  "homepage": "https://github.com/classpert/spriter#readme",
+  "homepage": "https://github.com/classpert/respriter#readme",
   "dependencies": {
-    "@classpert/elements": "^8.2.1"
+    "express": "^4.17.1",
+    "ramda": "^0.27.0"
   }
 }

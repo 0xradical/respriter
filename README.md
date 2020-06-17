@@ -1,4 +1,4 @@
-# spriter
+# Respriter
 
 Generate sprites on demand
 
