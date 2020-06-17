@@ -12,7 +12,7 @@ module Respriter
     def resolve(entity)
       @resolver.call(entity).flatten.compact.map do |id|
         dependencies(id, [id])
-      end.flatten.compact
+      end.flatten.compact.uniq
     end
 
     def dependencies(id, result = [])
@@ -20,7 +20,7 @@ module Respriter
         @resolver.call(@entries[id]).flatten.compact.each do |inner_id|
           result << inner_id
 
-          if @entries[inner_id]
+          if @entries[inner_id] && inner_id != id
             result = result.concat(dependencies(inner_id, result))
           end
         end
