@@ -29,10 +29,12 @@ I18nHost.new('classpert.com').each do |locale, host|
 
     # Course - Show
     Course.joins(:provider).published.where("courses.slug IS NOT NULL").find_each do |course|
-      add(course_path(provider: course.provider.slug, course: course.slug), {
-        changefreq: 'weekly',
-        priority: 0.8
-      })
+      if course.indexable_by_robots_for_locale?(locale)
+        add(course_path(provider: course.provider.slug, course: course.slug), {
+          changefreq: 'weekly',
+          priority: 0.8
+        })
+      end
     end
 
     # Orphaned Profile - Index

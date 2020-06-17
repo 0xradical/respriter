@@ -226,6 +226,24 @@ class Course < ApplicationRecord
         ->(tags) { where('curated_tags @> ARRAY[?]::varchar[]', tags) }
   scope :published, -> { where(published: true) }
 
+  def indexable_by_robots_for_locale?(locale=I18n.locale)
+    indexable_for_locale?(locale) || ignore_robots_noindex_rule || ENV.fetch('COURSES.IGNORE_ROBOTS_NOINDEX_RULE') { false }
+  end
+
+  def indexable_for_locale?(locale)
+    ignore_robots_noindex_rule_for.map { |locale| locale.join('-') }.flatten.include?(locale.to_s)
+  end
+
+  def set_ignore_robots_noindex_rule_for!(locales)
+    literal = locales.map { |l| '"(' + (l.map.each_with_index { |p, i| '\"' + p + '\"' + (l.length == 1 ? ',' : '')  }.join(',')) + ')"' }.join(',')
+    self.class.connection.execute("UPDATE app.courses SET ignore_robots_noindex_rule_for = '{#{literal}}' WHERE id = '{#{id}}'")
+    self.reload
+  end
+
+  def ignore_robots_noindex_rule_for
+    super.scan(/\([a-z]{2},(?:[A-Z]{2})?\)/).map { |tuple| tuple[1..tuple.length-2].split(',') }
+  end
+
   def self.unnest_curated_tags(sub_query = 'courses')
     select('*').from(
       select('unnest(curated_tags) as tag').from(sub_query),
