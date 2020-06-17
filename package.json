@@ -2,7 +2,7 @@
   "name": "spriter",
   "version": "1.0.0",
   "description": "Generate sprites on demand",
-  "main": "index.js",
+  "main": "server.js",
   "directories": {
     "example": "examples"
   },

@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/respriter"
+
+Respriter::Builder.new(%w[brand i18n icons providers tags]).run
