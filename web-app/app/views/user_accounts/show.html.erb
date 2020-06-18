@@ -22,8 +22,8 @@
   <%= javascript_bundles_with_chunks_tag 'vcard' %>
 <% end %>
 
-<%= content_for :svg_sprites do %>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/country-flags.svg') %>"></div>
+<%= content_for :sprites do %>
+  <%= sprites({ brand: "*", i18n: "*", icons: "*", "country-flags": "*" }) %>
 <% end %>
 
 <div>

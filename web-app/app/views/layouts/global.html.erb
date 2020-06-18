@@ -109,12 +109,10 @@
       https://stackoverflow.com/questions/23966452/svg-icon-changes-when-svg-sprite-set-to-displaynone
     %>
     <div style='width:0;height:0'>
-      <% unless content_for?(:elements_sprites) %>
-        <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg',     version: (yield :elements_version) ) %>"></div>
-        <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/i18n.svg',      version: (yield :elements_version) ) %>"></div>
-        <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/icons.svg',     version: (yield :elements_version) ) %>"></div>
-        <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/providers.svg', version: (yield :elements_version) ) %>"></div>
-        <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/tags.svg',      version: (yield :elements_version) ) %>"></div>
+      <% if content_for(:sprites) %>
+        <%= yield :sprites %>
+      <% else %>
+        <%= sprites({icons: "*", brand: '*', i18n: '*', providers: '*'}, version: (yield :elements_version)) %>
       <% end %>
     </div>
 

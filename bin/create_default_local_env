@@ -53,6 +53,9 @@ URL_BOX_API_KEY=$URL_BOX_API_KEY
 
 # Github Personal Access Token
 GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN
+
+# Respriter Service
+# RESPRITER_URL=http://respriter.clspt:8080
 EOF
   echo "Created local env file $2 with envs from production"
   exit 0

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'hypernova'
 
 class ApplicationController < ActionController::Base
@@ -10,7 +12,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, prepend: true
   prepend_before_action :track_session
   before_action :set_locale
-  before_action :rendertron?
   before_action :set_sentry_raven_context if Rails.env.production?
   before_action :store_user_account_location, if: :devise_controller?
   before_action :load_live_support
@@ -32,9 +33,7 @@ class ApplicationController < ActionController::Base
     end
 
     # for simple signin
-    if params['redirect_to'].present?
-      store_location_for(:user_account, params['redirect_to'])
-    end
+    store_location_for(:user_account, params['redirect_to']) if params['redirect_to'].present?
   end
 
   def after_sign_in_path_for(resource)
@@ -49,7 +48,7 @@ class ApplicationController < ActionController::Base
     token = request.env['warden-jwt_auth.token'] || session[:current_user_jwt]
     return unless token.present?
 
-    payload, _ = JWT.decode token, nil, false
+    payload, = JWT.decode token, nil, false
 
     if Time.at(payload['exp']) < Time.now
       sign_out :user_account
@@ -64,6 +63,7 @@ class ApplicationController < ActionController::Base
 
   def user_logged_default_path
     return new_user_account_session_path unless session[:current_user_jwt]
+
     redirect_params = { locale: I18n.locale }
     redirect_location = session[:login_redirect_location] || '/'
 
@@ -72,9 +72,9 @@ class ApplicationController < ActionController::Base
 
   def set_jwt_cookie
     cookies[:_jwt] = {
-      value: session[:current_user_jwt],
-      secure: Rails.env.production?,
-      domain: :all,
+      value:    session[:current_user_jwt],
+      secure:   Rails.env.production?,
+      domain:   :all,
       httponly: false
     }
   end
@@ -83,20 +83,20 @@ class ApplicationController < ActionController::Base
   # https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token
   def set_csrf_cookie
     cookies[:_csrf_token] = {
-      value: form_authenticity_token,
-      secure: Rails.env.production?,
-      domain: :all,
+      value:    form_authenticity_token,
+      secure:   Rails.env.production?,
+      domain:   :all,
       httponly: false
     }
   end
 
   def request_ip
-    ((request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).to_s).scan(
+    (request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).to_s.scan(
       /(.*),|\A(.*)\z/
     )
-      .flatten
-      .compact
-      .first
+                                                              .flatten
+                                                              .compact
+                                                              .first
   end
 
   def set_locale
@@ -112,11 +112,6 @@ class ApplicationController < ActionController::Base
   end
   alias track_session session_tracker
 
-  def rendertron?
-    request.headers['HTTP_X_RENDERTRON_USER_AGENT'] == 'true'
-  end
-  helper_method :rendertron?
-
   def fetch_layout
     devise_controller? ? 'devise' : 'application'
   end
@@ -128,13 +123,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_404(exception)
-    render file: Rails.root.join('public', '404.html'),
+  def render_404(_exception)
+    render file:   Rails.root.join('public', '404.html'),
            status: 404,
            layout: false
   end
 
-  def render_406(exception)
+  def render_406(_exception)
     render plain: '406 - not acceptable', status: 406
   end
 

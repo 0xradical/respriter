@@ -1,5 +1,5 @@
-<% content_for(:base_svg_sprites) do %>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/lib/icons.svg') %>"></div>
+<% content_for(:sprites) do %>
+  <%= sprites({ i18n: "*", brand: "*", icons: "*" }) %>
 <% end %>
 
 <% content_for(:banner) do %>

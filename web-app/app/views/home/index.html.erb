@@ -7,6 +7,21 @@
   <meta property='og:description' content="<%= t('.meta.description') %>" />
 <% end %>
 
+<%= content_for :sprites do %>
+  <%= sprites({
+    tags: RootTag.all.map(&:id),
+    icons: [
+      "facebook-circle",
+      "linkedin-circle",
+      "instagram-circle",
+      "twitter-circle",
+      "arrow-down"
+    ],
+    brand: "*",
+    i18n: ["en", "es", "pt-br", "ja"]
+  }) %>
+<% end %>
+
 <div class='el:amx-Bc_su'>
   <div class='container'>
     <div class='row'>

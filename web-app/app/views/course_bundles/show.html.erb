@@ -2,6 +2,22 @@
   <%= render 'meta' %>
 <% end %>
 
+<%= content_for :sprites do %>
+  <%= sprites({
+    icons: [
+      "facebook-circle",
+      "linkedin-circle",
+      "instagram-circle",
+      "twitter-circle",
+      "reddit-circle",
+      "arrow-down"
+    ],
+    brand: "*",
+    i18n: ["en", "es", "pt-br", "ja"],
+    providers: "*"
+  }) %>
+<% end %>
+
 <script type='text/javascript'>
   window.env_context = {
     devise: {

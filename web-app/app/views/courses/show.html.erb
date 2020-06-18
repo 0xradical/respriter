@@ -36,11 +36,20 @@
   }
 </script>
 
-<%= content_for :base_svg_sprites do %>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg') %>"></div>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/country-flags.svg') %>"></div>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/icons.svg') %>"></div>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/providers.svg') %>"></div>
+<%= content_for :sprites do %>
+  <%= sprites({
+    brand: "*",
+    i18n: ["en", "es", "pt-br", "ja"],
+    icons: [
+      "facebook-circle",
+      "linkedin-circle",
+      "instagram-circle",
+      "twitter-circle",
+      "reddit-circle",
+      "arrow-down"
+    ],
+    providers: [@course.provider.slug, @course.similar.map(&:provider).map(&:slug)].join(",")
+  }) %>
 <% end %>
 
 <%= content_for :stylesheets do %>
