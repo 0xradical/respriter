@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
+const cors = require("cors");
 const { compose, toPairs, map, reduce, join, split } = require("ramda");
 const rootDir = path.resolve();
 const distDir = path.resolve(rootDir, "dist");
@@ -9,6 +10,11 @@ const symbolsDir = scope => path.resolve(distDir, scope, "symbols");
 const defsResolve = scope => def => path.resolve(defsDir(scope), def);
 const symbolsResolve = scope => symbol =>
   path.resolve(symbolsDir(scope), symbol);
+
+const corsOptions = {};
+if (process.env.SPRITE_CORS_ORIGIN) {
+  corsOptions.origin = process.env.SPRITE_CORS_ORIGIN;
+}
 
 const dependencies = fs
   .readdirSync(path.resolve(distDir))
@@ -120,7 +126,7 @@ app.get("/test/:version", function (req, res) {
   `);
 });
 
-app.get("/:version", function (req, res) {
+app.get("/:version", cors(corsOptions), function (req, res) {
   const version = req.params.version;
 
   spritePromise(version)(req.query).then(svgPayload => {

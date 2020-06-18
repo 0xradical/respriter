@@ -46,6 +46,9 @@ serve: ## Run server
 
 build-and-serve: build serve ## Run a build once then serve
 
+test: ## Run tests
+	@$(call docker_run_or_plain,bundle exec rspec)
+
 bump-semver: ENV = production
 bump-semver:
 	@$(call docker_run_or_plain,npm version $(v))

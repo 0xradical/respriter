@@ -28,5 +28,6 @@ module Respriter
 end
 
 require_relative './respriter/version'
+require_relative './respriter/utils'
 require_relative './respriter/dependency_resolver'
 require_relative './respriter/builder'
