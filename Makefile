@@ -29,11 +29,9 @@ setup: .env .env.production docker-compose.yml ## Setup project
 	@make docker-pull
 	@make docker-build
 
-build: SPRITE_VERSION ?= 8.2.1
-build: SPRITE_URL ?= https://elements-prd.classpert.com/8.2.1/svgs/sprites/tags.svg
 build: ## Build assets
 	@rm -rf dist/**
-	@$(call docker_run_or_plain,./bin/build --sprite-version=${SPRITE_VERSION} --sprite-url=${SPRITE_URL})
+	@$(call docker_run_or_plain,sh -c './bin/build --sprite-version=$$SPRITE_VERSION --sprite-url=$$SPRITE_URL')
 
 release: ENV = production
 release: build bump-semver git-commit git-push git-push-tags publish ## Bump elements to version identified by [v] | e.g make release v={minor,major,patch,$version}
@@ -70,6 +68,9 @@ tty: ## Attach a tty to the app container. Usage e.g: make tty
 	@$(call docker_run_or_plain,/bin/sh,--entrypoint '' $2)
 
 bash: tty
+
+console: ## Open a Pry console with Respriter loaded
+	@$(call docker_run_or_plain,bundle exec pry -r ./lib/respriter.rb,--entrypoint '' $2)
 
 down: ## Run docker-compose down
 	@docker-compose down
