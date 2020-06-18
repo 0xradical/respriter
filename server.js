@@ -62,30 +62,57 @@ const log = payload => {
   return payload;
 };
 
-const spritePromise = scope =>
-  compose(
-    ({ symbols, defs }) => symbols.then(s => defs.then(d => svg(s, d))),
-    ({ symbols, defs }) => ({
-      symbols: Promise.all(
-        map(compose(nodePromise, symbolsResolve(scope)), symbols)
-      ),
-      defs: Promise.all(map(compose(nodePromise, defsResolve(scope)), defs))
-    }),
-    // log,
-    reduce(
-      (acc, s) => ({
-        symbols: [...acc.symbols, s],
-        defs: [...acc.defs, ...symbolDeps(scope)(s)]
+const spritePromise = scope => params => {
+  try {
+    return compose(
+      // collect promises
+      ({ symbols, defs }) => symbols.then(s => defs.then(d => svg(s, d))),
+      // construct promises of symbols and defs
+      ({ symbols, defs }) => ({
+        symbols: Promise.all(
+          map(compose(nodePromise, symbolsResolve(scope)), symbols)
+        ),
+        defs: Promise.all(map(compose(nodePromise, defsResolve(scope)), defs))
       }),
-      { symbols: [], defs: [] }
-    ),
-    // log,
-    reduce((acc, [_, o]) => [...acc, ...o], []),
-    // log,
-    map(([k, o]) => [k, map(o => join("-", [k, o]), split(",", o))]),
-    // log,
-    toPairs
-  );
+      // log,
+      // add dependencies of symbols
+      reduce(
+        (acc, s) => ({
+          symbols: [...acc.symbols, s],
+          defs: [...acc.defs, ...symbolDeps(scope)(s)]
+        }),
+        { symbols: [], defs: [] }
+      ),
+      // log,
+      // discard keys
+      reduce((acc, [_, o]) => [...acc, ...o], []),
+      // log,
+      // flattenize everyone into sprite format
+      map(([k, o]) => [k, map(o => join("-", [k, o]), split(",", o))]),
+      // transform globbed scopes
+      map(([k, o]) =>
+        o === "*"
+          ? [
+              k,
+              fs
+                .readdirSync(symbolsDir(scope))
+                .reduce((a, s) => {
+                  var m = new RegExp(`^${k}-(.*)`).exec(s);
+                  return m ? [...a, m[1]] : a;
+                }, [])
+                .join(",")
+            ]
+          : [k, o]
+      ),
+      // log,
+      // transform query into object
+      toPairs
+    )(params);
+  } catch (error) {
+    console.log(error);
+    return Promise.reject("");
+  }
+};
 
 app.get("/test/:version", function (req, res) {
   const version = req.params.version;
@@ -129,10 +156,12 @@ app.get("/test/:version", function (req, res) {
 app.get("/:version", cors(corsOptions), function (req, res) {
   const version = req.params.version;
 
-  spritePromise(version)(req.query).then(svgPayload => {
-    res.contentType("image/svg");
-    res.send(svgPayload);
-  });
+  spritePromise(version)(req.query)
+    .then(svgPayload => {
+      res.contentType("image/svg");
+      res.send(svgPayload);
+    })
+    .catch(() => res.status(500));
 });
 
 const server = app.listen(8080, function () {});
