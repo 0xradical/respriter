@@ -17,8 +17,8 @@ OptionParser.new do |opts|
     options[:sprite_version] = v
   end
 
-  opts.on('-sv', '--sprite-url', 'Sprite URL (may be more than one, separated by comma)') do |v|
-    options[:sprite_url] = [v.split(',').compact].flatten rescue []
+  opts.on('-sv', '--sprite-url', 'Sprite URL (may be more than 1, use braces to denote multiple urls ex.: google{.com,.com.br})') do |v|
+    options[:sprite_url] = Respriter::Utils.unglob(v) rescue []
   end
 end.parse!
 
