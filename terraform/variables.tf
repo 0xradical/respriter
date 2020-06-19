@@ -6,6 +6,14 @@ variable "region" {
   default = "us-east-1"
 }
 
+variable "base_cidr_block" {
+  default = "10.0.0.0/20"
+}
+
+variable "instance_type" {
+  default = "t3a.small"
+}
+
 # # Ubuntu Precise 12.04 LTS (x64)
 # get region from data sources ?
 variable "amis" {
