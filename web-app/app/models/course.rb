@@ -231,17 +231,28 @@ class Course < ApplicationRecord
   end
 
   def indexable_for_locale?(locale)
-    ignore_robots_noindex_rule_for.map { |locale| locale.join('-') }.flatten.include?(locale.to_s)
+    ignore_robots_noindex_rule_for.include? Locale.from_string(locale.to_s)
   end
 
-  def set_ignore_robots_noindex_rule_for!(locales)
-    literal = locales.map { |l| '"(' + (l.map.each_with_index { |p, i| '\"' + p + '\"' + (l.length == 1 ? ',' : '')  }.join(',')) + ')"' }.join(',')
-    self.class.connection.execute("UPDATE app.courses SET ignore_robots_noindex_rule_for = '{#{literal}}' WHERE id = '{#{id}}'")
-    self.reload
+  def add_robots_index_rule_from_language!
+    course_locale = Locale.from_pg self.locale
+    add_ignore_robots_noindex_rule_for! course_locale
+  end
+
+  def add_ignore_robots_noindex_rule_for!(locale)
+    locales = ignore_robots_noindex_rule_for.map(&:to_s).to_set
+    locales << locale.to_s
+    set_ignore_robots_noindex_rule_for!(locales)
+  end
+
+  def set_ignore_robots_noindex_rule_for!(locale_strings)
+    locales = locale_strings.map { |str| Locale.from_string(str) }
+    update(ignore_robots_noindex_rule_for: Locale.to_pg_array(locales))
+    reload
   end
 
   def ignore_robots_noindex_rule_for
-    super.scan(/\([a-z]{2},(?:[A-Z]{2})?\)/).map { |tuple| tuple[1..tuple.length-2].split(',') }
+    Locale.from_pg_array(super)
   end
 
   def self.unnest_curated_tags(sub_query = 'courses')
