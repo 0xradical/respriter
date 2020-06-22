@@ -11,14 +11,14 @@ terraform {
   }
 }
 
-# All available AZ to create subnets
-data "aws_availability_zones" "available" {}
-
 # Specify the provider and access details
 provider "aws" {
   version = var.version
   region  = var.region
 }
+
+# All available AZ to create subnets
+data "aws_availability_zones" "available" {}
 
 # Create a VPC to launch our instances into
 resource "aws_vpc" "default" {
