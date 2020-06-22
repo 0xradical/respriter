@@ -6,7 +6,7 @@ terraform {
     organization  = "classpert"
 
     workspaces {
-      name = "respriter-staging"
+      name = "respriter-production"
     }
   }
 }
@@ -17,6 +17,10 @@ provider "aws" {
   region  = var.aws_region
 }
 
+provider "github" {
+  version = "~> 2.8"
+}
+
 # All available AZ to create subnets
 data "aws_availability_zones" "available" {
   filter {
@@ -24,6 +28,29 @@ data "aws_availability_zones" "available" {
     values = ["us-east-1a", "us-east-1b"]
   }
 }
+
+# Fetch elements project from GH
+data "github_repository" "elements" {
+  full_name = "classpert/elements"
+}
+
+resource "github_repository_webhook" "elements_webhook" {
+  repository = data.github_repository.elements.name
+
+  configuration {
+    # endpoint for aws code deploy
+    url          = "https://google.de/"
+    content_type = "json"
+    insecure_ssl = false
+  }
+
+  active = true
+
+  events = ["create"]
+
+  # depends_on = ["aws_code_deploy"]
+}
+
 
 # Create a VPC to launch our instances into
 resource "aws_vpc" "default" {
@@ -127,10 +154,11 @@ resource "aws_elb" "web" {
 
   # HTTPS is ELB terminated
   listener {
-    instance_port     = 80
-    instance_protocol = "http"
-    lb_port           = 443
-    lb_protocol       = "https"
+    instance_port      = 80
+    instance_protocol  = "http"
+    lb_port            = 443
+    lb_protocol        = "https"
+    ssl_certificate_id = var.classpert_certificate_arn
   }
 
   health_check {
@@ -154,6 +182,18 @@ resource "aws_launch_configuration" "default" {
   instance_type   = var.aws_instance_type
   security_groups = [aws_security_group.default.id]
   # key_name        = aws_key_pair.auth.id
+
+  user_data         = <<-eof
+    !#/bin/bash
+    sudo apt-get update
+    sudo apt-get install ruby wget
+    cd /home/ubuntu
+    wget https://${lookup(var.aws_code_deploy_resource_kits, var.aws_region)}.s3.${var.aws_region}.amazonaws.com/latest/install
+    chmod +x ./install
+    sudo ./install auto
+    cd /home/ubuntu
+    git clone https://${var.github_personal_access_token}@github.com/classpert/respriter.git
+  eof
 
   lifecycle {
     create_before_destroy = true
@@ -190,12 +230,74 @@ resource "aws_autoscaling_policy" "default" {
   autoscaling_group_name = aws_autoscaling_group.default.name
 }
 
-# Attach an elastic ip to the ELB
-# resource "aws_eip" "respriter_ip" {
-#   vpc = true
-#   instance = aws_elb.web.id
-#   tags = {
-#     App = "respriter"
-#     Env = "staging"
-#   }
-# }
+data "aws_s3_bucket" "elements" {
+  bucket = "clspt-elements-dist-prd"
+}
+
+resource "aws_cloudfront_distribution" "default" {
+  enabled = true
+  aliases = ["respriter.classpert.com"]
+  comment = "Created via Terraform"
+  tags = {
+    Environment = "production"
+  }
+  viewer_certificate {
+    acm_certificate_arn = var.classpert_certificate_arn
+  }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  origin_group {
+    origin_id = "cloudfront-group-respriter"
+
+    failover_criteria {
+      status_codes = [403, 404, 500, 502]
+    }
+
+    member {
+      origin_id = "cloudfront-group-member-primary"
+    }
+
+    member {
+      origin_id = "cloudfront-group-member-failover"
+    }
+  }
+
+  origin {
+    domain_name = aws_elb.web.dns_name
+    origin_id   = "cloudfront-group-member-primary"
+  }
+
+  origin {
+    domain_name = data.aws_s3_bucket.elements.bucket_regional_domain_name
+    origin_id   = "cloudfront-group-member-failover"
+    origin_path = "/svgs/tags.svg"
+  }
+
+  default_cache_behavior {
+    target_origin_id = "cloudfront-group-respriter"
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD"]
+    viewer_protocol_policy = "redirect-to-https"
+    compress               = true
+
+    forwarded_values {
+      query_string = true
+      query_string_cache_keys = [
+        "providers",
+        "tags",
+        "country-flags",
+        "i18n",
+        "brand"
+      ]
+
+      cookies {
+        forward = "none"
+      }
+    }
+  }
+}

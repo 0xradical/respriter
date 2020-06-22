@@ -1,5 +1,7 @@
 variable "classpert_certificate_arn" {}
 
+variable "github_personal_access_token" {}
+
 variable "aws_region" {
   default = "us-east-1"
 }
@@ -37,6 +39,29 @@ variable "aws_amis" {
     eu-central-1 	  = "ami-01f009950b026d11f"
   }
 }
+
+variable "aws_code_deploy_resource_kits" {
+  type = map(string)
+  default = {
+    us-east-2      = "aws-codedeploy-us-east-2"
+    us-east-1      = "aws-codedeploy-us-east-1"
+    us-west-1      = "aws-codedeploy-us-west-1"
+    us-west-2      = "aws-codedeploy-us-west-2"
+    ca-central-1   = "aws-codedeploy-ca-central-1"
+    eu-west-1      = "aws-codedeploy-eu-west-1"
+    eu-west-2      = "aws-codedeploy-eu-west-2"
+    eu-west-3      = "aws-codedeploy-eu-west-3"
+    eu-central-1   = "aws-codedeploy-eu-central-1"
+    ap-east-1      = "aws-codedeploy-ap-east-1"
+    ap-northeast-1 = "aws-codedeploy-ap-northeast-1"
+    ap-northeast-2 = "aws-codedeploy-ap-northeast-2"
+    ap-southeast-1 = "aws-codedeploy-ap-southeast-1"
+    ap-southeast-2 = "aws-codedeploy-ap-southeast-2"
+    ap-south-1     = "aws-codedeploy-ap-south-1"
+    sa-east-1      = "aws-codedeploy-sa-east-1"
+  }
+}
+
 
 
 
