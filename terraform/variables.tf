@@ -1,24 +1,22 @@
-variable "version" {
-  default = "~> 2.66"
-}
+variable "classpert_certificate_arn" {}
 
-variable "region" {
+variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "base_cidr_block" {
+variable "aws_base_cidr_block" {
   default = "10.0.0.0/20"
 }
 
-variable "instance_type" {
+variable "aws_instance_type" {
   default = "t3a.small"
 }
 
 # # Ubuntu Bionic 18.04 LTS (x64)
 # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/virtualization_types.html
 # HVM Instance Store
-variable "amis" {
-  type = "map"
+variable "aws_amis" {
+  type = map(string)
   default = {
     us-east-1 	    = "ami-0938f2289b3fa3f5b"
     us-east-2 	    = "ami-07dfef221b460a96d"

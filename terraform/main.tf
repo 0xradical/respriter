@@ -13,36 +13,41 @@ terraform {
 
 # Specify the provider and access details
 provider "aws" {
-  version = var.version
-  region  = var.region
+  version = "~> 2.66"
+  region  = var.aws_region
 }
 
 # All available AZ to create subnets
-data "aws_availability_zones" "available" {}
+data "aws_availability_zones" "available" {
+  filter {
+    name   = "zone-name"
+    values = ["us-east-1a", "us-east-1b"]
+  }
+}
 
 # Create a VPC to launch our instances into
 resource "aws_vpc" "default" {
-  cidr_block = var.base_cidr_block
+  cidr_block = var.aws_base_cidr_block
 }
 
 # Create an internet gateway to give our subnets
 # access to the outside world
 resource "aws_internet_gateway" "default" {
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = aws_vpc.default.id
 }
 
 # Grant the VPC internet access on its main route table
 resource "aws_route" "internet_access" {
-  route_table_id         = "${aws_vpc.default.main_route_table_id}"
+  route_table_id         = aws_vpc.default.main_route_table_id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.default.id}"
+  gateway_id             = aws_internet_gateway.default.id
 }
 
 # Create subnets to launch our instances into
 # in each AZ (10.0.1.0/24, 10.0.2.0/24, etc)
 resource "aws_subnet" "default" {
-  count                   = "${length(data.aws_availability_zones.available.names)}"
-  vpc_id                  = "${aws_vpc.default.id}"
+  count                   = length(data.aws_availability_zones.available.names)
+  vpc_id                  = aws_vpc.default.id
   cidr_block              = "10.0.${1+count.index}.0/24"
   map_public_ip_on_launch = true
 }
@@ -52,7 +57,7 @@ resource "aws_subnet" "default" {
 resource "aws_security_group" "elb" {
   name        = "respriter-elb-sg"
   description = "ELB SG to allow http connections"
-  vpc_id      = "${aws_vpc.default.id}"
+  vpc_id      = aws_vpc.default.id
 
   # HTTP access from anywhere
   # Route to HTTPS
@@ -85,7 +90,7 @@ resource "aws_security_group" "elb" {
 resource "aws_security_group" "default" {
   name        = "respriter-sg"
   description = "Used in the terraform"
-  vpc_id      = "${aws_vpc.default.id}"
+  vpc_id      = aws_vpc.default.id
 
   # SSH access from anywhere
   # Remove this
@@ -102,7 +107,7 @@ resource "aws_security_group" "default" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["${var.base_cidr_block}"]
+    cidr_blocks = [var.aws_base_cidr_block]
   }
 
   # outbound internet access
@@ -116,10 +121,9 @@ resource "aws_security_group" "default" {
 
 resource "aws_elb" "web" {
   name               = "respriter-elb"
-  availability_zones = ["${aws_instance.web.*.availability_zone}"]
-  subnets            = ["${aws_subnet.default.*.id}"]
-  security_groups    = ["${aws_security_group.elb.id}"]
-  instances          = ["${aws_instance.web.*.id}"]
+  availability_zones = data.aws_availability_zones.available.names
+  subnets            = aws_subnet.default.*.id
+  security_groups    = [aws_security_group.elb.id]
 
   # HTTPS is ELB terminated
   listener {
@@ -146,10 +150,10 @@ resource "aws_elb" "web" {
 
 resource "aws_launch_configuration" "default" {
   name_prefix     = "respriter-instance-"
-  image_id        = "${lookup(var.aws_amis, var.aws_region)}"
-  instance_type   = var.instance_type
-  security_groups = ["${aws_security_group.default.id}"]
-  # key_name        = "${aws_key_pair.auth.id}"
+  image_id        = lookup(var.aws_amis, var.aws_region)
+  instance_type   = var.aws_instance_type
+  security_groups = [aws_security_group.default.id]
+  # key_name        = aws_key_pair.auth.id
 
   lifecycle {
     create_before_destroy = true
@@ -162,9 +166,9 @@ resource "aws_autoscaling_group" "default" {
   max_size                  = 5
   health_check_type         = "ELB"
   health_check_grace_period = 300
-  launch_configuration      = "${aws_launch_configuration.default.name}"
-  vpc_zone_identifier       =  ["${aws_subnet.default.*.id}"]
-  load_balancers             = ["${aws_elb.default.name}"]
+  launch_configuration      = aws_launch_configuration.default.name
+  vpc_zone_identifier       = aws_subnet.default.*.id
+  load_balancers            = [aws_elb.web.name]
 
   lifecycle {
     create_before_destroy = true
@@ -183,7 +187,7 @@ resource "aws_autoscaling_policy" "default" {
 
     target_value = 60.0
   }
-  autoscaling_group_name = "${aws_autoscaling_group.default.name}"
+  autoscaling_group_name = aws_autoscaling_group.default.name
 }
 
 # Attach an elastic ip to the ELB
