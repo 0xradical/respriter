@@ -220,4 +220,84 @@ namespace :system do
       end
     end
   end
+
+  namespace :courses do
+    desc 'Identify language and set locale and locale_status'
+    task :identify_language, %i[condition batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, 'locale_status IS NULL')
+      batch_size = args.fetch(:batch_size, 1000).to_i
+
+      count = 0
+      identifier = CourseLanguageIdentifier.new
+      Course.where(condition).find_each(batch_size: batch_size) do |course|
+        identifier.identify! course
+        count += 1
+      end
+      puts "Updated #{count} courses"
+    end
+
+    desc 'Execute :identify_language for all courses with null locale_status'
+    task :identify_language_missing, %i[batch_size] => %i[environment] do |t, args|
+      batch_size = args.fetch(:batch_size, 1000).to_i
+      Rake::Task['system:courses:identify_language'].invoke('locale_status IS NULL', batch_size)
+    end
+
+    desc 'Manually override language'
+    task :override_locale, %i[condition locale batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, '')
+      batch_size = args.fetch(:batch_size, 1000).to_i
+      locale_str = args.fetch(:locale, '')
+      abort "ERROR: No locale given" if locale_str.empty?
+      abort "ERROR: No condition given" if condition.empty?
+
+      locale = Locale.from_string(locale_str)
+      abort "ERROR: Invalid locale #{args[:locale]}" if locale.empty?
+
+      count = 0
+      identifier = CourseLanguageIdentifier.new
+      Course.where(condition).find_each(batch_size: batch_size) do |course|
+        identifier.override!(course, locale)
+        count += 1
+      end
+      puts "Updated #{count} courses"
+    end
+
+    desc 'Manually add a locale to the robots indexing rules'
+    task :add_locale_to_robots_index_rules, %i[condition locale batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, '')
+      batch_size = args.fetch(:batch_size, 1000).to_i
+      locale = Locale.from_string(args.fetch(:locale))
+      abort "ERROR: Invalid locale #{args[:locale]}" if locale.empty?
+      abort "ERROR: No condition given" if condition.empty?
+
+      count = 0
+      Course.where(condition).find_each(batch_size: batch_size) do |course|
+        course.add_ignore_robots_noindex_rule_for! locale
+        count += 1
+      end
+      puts "Updated #{count} courses"
+    end
+
+    desc 'Copy the locale attribute to ignore_robots_noindex_rules_for'
+    task :add_locale_to_robots_index_rules_from_language, %i[condition batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, "ignore_robots_noindex_rules_for = '{}'")
+      batch_size = args.fetch(:batch_size, 1000).to_i
+
+      count = 0
+      Course.where.not(locale: nil).where(condition).find_each(batch_size: batch_size) do |course|
+        course.add_robots_index_rule_from_language!
+        count += 1
+      end
+      puts "Updated #{count} courses"
+    end
+
+    desc 'Force a set of courses to be indexed in all locales'
+    task :force_robots_index, %i[condition] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, '')
+      abort "ERROR: No condition given" if condition.empty?
+
+      count = Course.where(condition).update_all(ignore_robots_noindex_rule: true)
+      puts "Updated #{count} courses"
+    end
+  end
 end

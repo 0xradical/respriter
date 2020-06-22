@@ -20,8 +20,11 @@ module Integration
 
       def run(dataset_sequence = nil)
         dataset_sequence = Course.current_dataset_sequence if dataset_sequence.blank? || dataset_sequence == 0
+        language_identifier = CourseLanguageIdentifier.new
         ::Napoleon::ResourceStreamer.new(STREAMER_PARAMS).resources(dataset_sequence) do |resource|
-          Course.upsert resource.to_course
+          course = Course.upsert resource.to_course
+          language_identifier.identify!(course)
+          course.add_robots_index_rule_from_language! if course.reload.locale_status == 'ok'
         end
         update_index dataset_sequence
       end
