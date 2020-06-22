@@ -177,6 +177,8 @@ GEM
       aws-sdk-s3 (~> 1.0)
       carrierwave (>= 0.7, < 2.1)
     childprocess (3.0.0)
+    cld (0.8.0)
+      ffi
     coderay (1.1.2)
     concord (0.1.5)
       adamantium (~> 0.2.0)
@@ -610,6 +612,7 @@ DEPENDENCIES
   capybara-email
   carrierwave (~> 2.0.2)
   carrierwave-aws (~> 1.4.0)
+  cld
   crack
   cucumber-rails
   damerau-levenshtein (~> 1.3.2)

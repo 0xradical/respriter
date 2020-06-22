@@ -139,4 +139,5 @@ group :development, :test do
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'rubocop', '~> 0.80.1', require: false
+  gem 'cld'
 end
