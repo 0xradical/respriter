@@ -7,6 +7,7 @@ class Course < ApplicationRecord
 
   SUPPORTED_LANGUAGES = %w[pt en es ru it de fr].freeze
   SITE_LOCALES = { br: 'pt-BR', en: 'en' }.freeze
+  DEFAULT_LOCALE = Locale.new('en').freeze
   SIMILAR_COURSES = 15
 
   paginates_per 50
@@ -236,12 +237,17 @@ class Course < ApplicationRecord
 
   def add_robots_index_rule_from_language!
     course_locale = Locale.from_pg self.locale
-    add_ignore_robots_noindex_rule_for! course_locale
+    generic_locale = course_locale.language_only
+    indexable = [course_locale, generic_locale]
+
+    site_supported = I18n.available_locales.map { |loc| Locale.from_string(loc.to_s).language_only }
+    indexable << DEFAULT_LOCALE unless site_supported.include? generic_locale
+    indexable.each { |loc| add_ignore_robots_noindex_rule_for! loc }
   end
 
   def add_ignore_robots_noindex_rule_for!(locale)
     locales = ignore_robots_noindex_rule_for.map(&:to_s).to_set
-    locales |= [locale.to_s, locale.language_only.to_s]
+    locales << locale.to_s
     set_ignore_robots_noindex_rule_for!(locales)
   end
 
