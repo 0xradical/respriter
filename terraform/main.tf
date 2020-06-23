@@ -1,167 +1,6 @@
-# create entry for cloudfront on cloudflare
-resource "cloudflare_record" "default" {
-  zone_id = data.cloudflare_zones.default.id
-  name    = var.cloudflare_subdomain
-  value   = aws_cloudfront_distribution.default.domain_name
-  type    = "CNAME"
-  proxied = true
-}
-
-# bucket to store code pipeline artifacts (github clone)
-resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket_prefix = var.app
-  acl           = "private"
-
-  tags = {
-    App         = var.app
-    Environment = var.environment
-    Origin      = var.origin
-  }
-}
-
-# role that allows code pipeline service to run
-resource "aws_iam_role" "codepipeline_role" {
-  name_prefix = var.prefix
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codepipeline.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-EOF
-
-  tags = {
-    App         = var.app
-    Environment = var.environment
-    Origin      = var.origin
-  }
-}
-
-# allow code pipeline role to store artifacts in bucket
-resource "aws_iam_role_policy" "codepipeline_policy" {
-  name_prefix = var.prefix
-  role        = aws_iam_role.codepipeline_role.id
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect":"Allow",
-      "Action": [
-        "s3:GetObject",
-        "s3:GetObjectVersion",
-        "s3:GetBucketVersioning",
-        "s3:PutObject"
-      ],
-      "Resource": [
-        "${aws_s3_bucket.codepipeline_bucket.arn}",
-        "${aws_s3_bucket.codepipeline_bucket.arn}/*"
-      ]
-    }
-  ]
-}
-EOF
-}
-
-# code pipeline that will trigger code deploy
-resource "aws_codepipeline" "codepipeline" {
-  name     = "${var.app}-${var.environment}-codepipeline"
-  role_arn = aws_iam_role.codepipeline_role.arn
-
-  artifact_store {
-    location = aws_s3_bucket.codepipeline_bucket.bucket
-    type     = "S3"
-  }
-
-  stage {
-    name = "Source"
-
-    # GITHUB_TOKEN in env var
-    action {
-      name             = "Source"
-      category         = "Source"
-      owner            = "ThirdParty"
-      provider         = "GitHub"
-      version          = "1"
-      output_artifacts = [var.github_repository]
-
-      configuration = {
-        Owner  = var.github_organization
-        Repo   = var.github_repository
-        Branch = var.aws_codepipeline_github_branch
-      }
-    }
-  }
-
-  stage {
-    name = "Deploy"
-
-    action {
-      name            = "Deploy"
-      category        = "Deploy"
-      owner           = "AWS"
-      provider        = "CodeDeploy"
-      input_artifacts = [var.github_repository]
-      version         = "1"
-
-      configuration = {
-        ApplicationName     = aws_codedeploy_app.default.name,
-        DeploymentGroupName = aws_codedeploy_deployment_group.deployment_group.deployment_group_name
-      }
-    }
-  }
-
-  tags = {
-    App         = var.app
-    Environment = var.environment
-    Origin      = var.origin
-  }
-}
-
-resource "aws_codepipeline_webhook" "respriter" {
-  name            = "${var.app}-${var.environment}-webhook-from-github"
-  authentication  = "GITHUB_HMAC"
-  target_action   = "Source"
-  target_pipeline = aws_codepipeline.codepipeline.name
-
-  authentication_configuration {
-    secret_token = var.github_repository_webhook_secret
-  }
-
-  filter {
-    json_path    = "$.ref"
-    match_equals = "refs/heads/${var.aws_codepipeline_github_branch}"
-  }
-
-  tags = {
-    App         = var.app
-    Environment = var.environment
-    Origin      = var.origin
-  }
-}
-
-resource "github_repository_webhook" "default" {
-  repository = data.github_repository.default.name
-
-  configuration {
-    url          = aws_codepipeline_webhook.respriter.url
-    content_type = "json"
-    insecure_ssl = false
-    secret       = var.github_repository_webhook_secret
-  }
-
-  active = true
-  events = ["create"]
-}
+#############
+#### EC2 ####
+#############
 
 # Create a VPC to launch our instances into
 resource "aws_vpc" "default" {
@@ -319,89 +158,6 @@ resource "aws_elb" "web" {
   }
 }
 
-# code deploy app
-resource "aws_codedeploy_app" "default" {
-  name = var.app
-}
-
-# sns topic that will be used
-# to send deployment events
-resource "aws_sns_topic" "deploy" {
-  name_prefix = var.prefix
-}
-
-# code deploy deployment group
-# containing ec2 asg
-resource "aws_codedeploy_deployment_group" "deployment_group" {
-  app_name               = aws_codedeploy_app.default.name
-  autoscaling_groups     = [aws_autoscaling_group.default.name]
-  deployment_config_name = "CodeDeployDefault.OneAtATime"
-  deployment_group_name  = "${var.app}-${var.environment}-deployment-group"
-  service_role_arn       = aws_iam_role.deploy.arn
-
-  deployment_style {
-    deployment_option = "WITH_TRAFFIC_CONTROL"
-    deployment_type   = "IN_PLACE"
-  }
-
-  load_balancer_info {
-    elb_info {
-      name = aws_elb.web.name
-    }
-  }
-
-  trigger_configuration {
-    trigger_events     = [
-      "DeploymentStart",
-      "DeploymentSuccess",
-      "DeploymentFailure",
-      "DeploymentStop",
-      "DeploymentRollback",
-      "InstanceStart",
-      "InstanceSuccess",
-      "InstanceFailure"
-    ]
-    trigger_name       = "${var.app}-${var.environment}-deployment-event"
-    trigger_target_arn = aws_sns_topic.deploy.arn
-  }
-}
-
-# role that allows code deploy to run
-resource "aws_iam_role" "deploy" {
-  name = "${var.app}-${var.environment}-code-deploy-role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": [
-          "codedeploy.us-east-2.amazonaws.com",
-          "codedeploy.us-east-1.amazonaws.com"
-        ]
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-EOF
-
-  tags = {
-    App         = var.app
-    Environment = var.environment
-    Origin      = var.origin
-  }
-}
-
-# minimal service role policies for code deploy role
-resource "aws_iam_role_policy_attachment" "AWSCodeDeployRole" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
-  role       = aws_iam_role.deploy.name
-}
-
 # role that allows instance itself to run aws code
 resource "aws_iam_role" "instance" {
   name = "${var.app}-${var.environment}-instance-role"
@@ -494,6 +250,10 @@ resource "aws_autoscaling_policy" "default" {
   autoscaling_group_name = aws_autoscaling_group.default.name
 }
 
+####################
+#### Cloudfront ####
+####################
+
 # Cloudfront distribution with failover
 resource "aws_cloudfront_distribution" "default" {
   enabled = true
@@ -561,3 +321,266 @@ resource "aws_cloudfront_distribution" "default" {
   }
 }
 
+#####################
+#### Code Deploy ####
+#####################
+
+# code deploy app
+resource "aws_codedeploy_app" "default" {
+  name = var.app
+}
+
+# sns topic that will be used
+# to send deployment events
+resource "aws_sns_topic" "deploy" {
+  name_prefix = var.prefix
+}
+
+# role that allows code deploy to run
+resource "aws_iam_role" "deploy" {
+  name = "${var.app}-${var.environment}-code-deploy-role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": [
+          "codedeploy.us-east-2.amazonaws.com",
+          "codedeploy.us-east-1.amazonaws.com"
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
+}
+
+# minimal service role policies for code deploy role
+resource "aws_iam_role_policy_attachment" "AWSCodeDeployRole" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
+  role       = aws_iam_role.deploy.name
+}
+
+# code deploy deployment group
+# containing ec2 asg
+resource "aws_codedeploy_deployment_group" "deployment_group" {
+  app_name               = aws_codedeploy_app.default.name
+  autoscaling_groups     = [aws_autoscaling_group.default.name]
+  deployment_config_name = "CodeDeployDefault.OneAtATime"
+  deployment_group_name  = "${var.app}-${var.environment}-deployment-group"
+  service_role_arn       = aws_iam_role.deploy.arn
+
+  deployment_style {
+    deployment_option = "WITH_TRAFFIC_CONTROL"
+    deployment_type   = "IN_PLACE"
+  }
+
+  load_balancer_info {
+    elb_info {
+      name = aws_elb.web.name
+    }
+  }
+
+  trigger_configuration {
+    trigger_events     = [
+      "DeploymentStart",
+      "DeploymentSuccess",
+      "DeploymentFailure",
+      "DeploymentStop",
+      "DeploymentRollback",
+      "InstanceStart",
+      "InstanceSuccess",
+      "InstanceFailure"
+    ]
+    trigger_name       = "${var.app}-${var.environment}-deployment-event"
+    trigger_target_arn = aws_sns_topic.deploy.arn
+  }
+}
+
+# bucket to store code pipeline artifacts (github clone)
+resource "aws_s3_bucket" "codepipeline_bucket" {
+  bucket_prefix = var.app
+  acl           = "private"
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
+}
+
+# role that allows code pipeline service to run
+resource "aws_iam_role" "codepipeline_role" {
+  name_prefix = var.prefix
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codepipeline.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
+}
+
+#######################
+#### Code Pipeline ####
+#######################
+
+# allow code pipeline role to store artifacts in bucket
+resource "aws_iam_role_policy" "codepipeline_policy" {
+  name_prefix = var.prefix
+  role        = aws_iam_role.codepipeline_role.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect":"Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:GetBucketVersioning",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.codepipeline_bucket.arn}",
+        "${aws_s3_bucket.codepipeline_bucket.arn}/*"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+# code pipeline that will trigger code deploy
+resource "aws_codepipeline" "codepipeline" {
+  name     = "${var.app}-${var.environment}-codepipeline"
+  role_arn = aws_iam_role.codepipeline_role.arn
+
+  artifact_store {
+    location = aws_s3_bucket.codepipeline_bucket.bucket
+    type     = "S3"
+  }
+
+  stage {
+    name = "Source"
+
+    # GITHUB_TOKEN in env var
+    action {
+      name             = "Source"
+      category         = "Source"
+      owner            = "ThirdParty"
+      provider         = "GitHub"
+      version          = "1"
+      output_artifacts = [var.github_repository]
+
+      configuration = {
+        Owner  = var.github_organization
+        Repo   = var.github_repository
+        Branch = var.aws_codepipeline_github_branch
+      }
+    }
+  }
+
+  stage {
+    name = "Deploy"
+
+    action {
+      name            = "Deploy"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "CodeDeploy"
+      input_artifacts = [var.github_repository]
+      version         = "1"
+
+      configuration = {
+        ApplicationName     = aws_codedeploy_app.default.name,
+        DeploymentGroupName = aws_codedeploy_deployment_group.deployment_group.deployment_group_name
+      }
+    }
+  }
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
+}
+
+resource "aws_codepipeline_webhook" "respriter" {
+  name            = "${var.app}-${var.environment}-webhook-from-github"
+  authentication  = "GITHUB_HMAC"
+  target_action   = "Source"
+  target_pipeline = aws_codepipeline.codepipeline.name
+
+  authentication_configuration {
+    secret_token = var.github_repository_webhook_secret
+  }
+
+  filter {
+    json_path    = "$.ref"
+    match_equals = "refs/heads/${var.aws_codepipeline_github_branch}"
+  }
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
+}
+
+################
+#### Github ####
+################
+
+resource "github_repository_webhook" "default" {
+  repository = data.github_repository.default.name
+
+  configuration {
+    url          = aws_codepipeline_webhook.respriter.url
+    content_type = "json"
+    insecure_ssl = false
+    secret       = var.github_repository_webhook_secret
+  }
+
+  active = true
+  events = ["create"]
+}
+
+####################
+#### Cloudflare ####
+####################
+
+# create entry for cloudfront on cloudflare
+resource "cloudflare_record" "default" {
+  zone_id = data.cloudflare_zones.default.id
+  name    = var.cloudflare_subdomain
+  value   = aws_cloudfront_distribution.default.domain_name
+  type    = "CNAME"
+  proxied = true
+}
