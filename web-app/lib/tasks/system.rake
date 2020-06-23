@@ -291,6 +291,19 @@ namespace :system do
       puts "Updated #{count} courses"
     end
 
+    desc 'Determine the canonical subdomain based on the locale'
+    task :set_canonical_subdomain_from_language, %i[condition batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, '')
+      batch_size = args.fetch(:batch_size, 1000).to_i
+
+      count = 0
+      Course.where(condition).find_each(batch_size: batch_size) do |course|
+        course.set_canonical_subdomain_from_language!
+        count += 1
+      end
+      puts "Updated #{count} courses"
+    end
+
     desc 'Force a set of courses to be indexed in all locales'
     task :force_robots_index, %i[condition] => %i[environment] do |t, args|
       condition = args.fetch(:condition, '')

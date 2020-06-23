@@ -31,6 +31,7 @@ module Integration
       def upsert_hooks(course)
         CourseLanguageIdentifier.new.identify!(course)
         course.add_robots_index_rule_from_language! if course.reload.locale_status == 'ok'
+        course.set_canonical_subdomain_from_language!
       end
 
       def update_index(dataset_sequence)

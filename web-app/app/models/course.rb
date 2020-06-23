@@ -235,6 +235,16 @@ class Course < ApplicationRecord
     ignore_robots_noindex_rule_for.include? Locale.from_string(locale.to_s)
   end
 
+  def set_canonical_subdomain_from_language!
+    return update(canonical_subdomain: '') unless self.locale.present?
+    locale_subdomains = I18n.available_locales.map do |locale_sym|
+      Locale.from_string(locale_sym.to_s).then { |loc| [loc.language_only.to_s, loc.to_s] }
+    end.to_h
+    locale_subdomains['en'] = ''
+    course_language = Locale.from_pg(self.locale).language_only.to_s
+    update(canonical_subdomain: locale_subdomains.fetch(course_language, ''))
+  end
+
   def add_robots_index_rule_from_language!
     course_locale = Locale.from_pg self.locale
     generic_locale = course_locale.language_only
