@@ -194,7 +194,7 @@ resource "aws_iam_instance_profile" "respriter_profile" {
 # launch configuration for the asg
 resource "aws_launch_configuration" "default" {
   name_prefix          = var.prefix
-  image_id             = var.aws_ami
+  image_id             = data.aws_ami.default.id
   instance_type        = var.aws_instance_type
   security_groups      = [aws_security_group.default.id]
   iam_instance_profile = aws_iam_instance_profile.respriter_profile.name

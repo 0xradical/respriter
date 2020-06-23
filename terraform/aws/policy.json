@@ -57,17 +57,6 @@
       }
     },
     {
-      "Sid": "VisualEditor5",
-      "Effect": "Allow",
-      "Action": "elasticloadbalancing:*",
-      "Resource": "*",
-      "Condition": {
-        "StringEqualsIfExists": {
-          "aws:RequestedRegion": ["us-east-1", "us-east-2"]
-        }
-      }
-    },
-    {
       "Sid": "VisualEditor6",
       "Effect": "Allow",
       "Action": [
@@ -80,10 +69,12 @@
         "iam:ListRoles",
         "iam:CreateRole",
         "iam:DeleteRole",
+        "iam:AttachRolePolicy",
         "iam:PutRolePolicy",
         "iam:AddRoleToInstanceProfile",
         "iam:ListInstanceProfilesForRole",
         "iam:PassRole",
+        "iam:CreateServiceLinkedRole",
         "iam:DeleteRolePolicy",
         "iam:ListRolePolicies",
         "iam:GetRolePolicy"
@@ -202,7 +193,11 @@
     {
       "Sid": "VisualEditor8",
       "Effect": "Allow",
-      "Action": "sns:CreateTopic",
+      "Action": [
+        "sns:ListTagsForResource",
+        "sns:GetTopicAttributes",
+        "sns:CreateTopic"
+      ],
       "Resource": "*",
       "Condition": {
         "StringEqualsIfExists": {

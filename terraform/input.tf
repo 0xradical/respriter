@@ -6,6 +6,27 @@ data "aws_availability_zones" "available" {
   }
 }
 
+data "aws_ami" "default" {
+  most_recent = true
+  name_regex  = "^${var.aws_ami}"
+  owners      = ["self"]
+
+  filter {
+    name   = "name"
+    values = [var.aws_ami]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
 # Bucket used in cloudfront failover
 data "aws_s3_bucket" "cloudfront_failover" {
   bucket = var.aws_cloudfront_distribution_failover_bucket
