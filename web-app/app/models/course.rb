@@ -241,7 +241,7 @@ class Course < ApplicationRecord
 
   def add_ignore_robots_noindex_rule_for!(locale)
     locales = ignore_robots_noindex_rule_for.map(&:to_s).to_set
-    locales << locale.to_s
+    locales |= [locale.to_s, locale.language_only.to_s]
     set_ignore_robots_noindex_rule_for!(locales)
   end
 

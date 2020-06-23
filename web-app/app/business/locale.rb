@@ -38,6 +38,10 @@
       @country = country if @lang.present? and ISO_3166.include? country
     end
 
+    def language_only
+      Locale.new(@lang)
+    end
+
     def empty?
       @lang.nil?
     end
