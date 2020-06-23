@@ -36,6 +36,7 @@ resource "aws_route" "internet_access" {
 # in each AZ (10.0.1.0/24, 10.0.2.0/24, etc)
 resource "aws_subnet" "default" {
   count                   = length(data.aws_availability_zones.available.names)
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
   vpc_id                  = aws_vpc.default.id
   cidr_block              = "10.0.${1+count.index}.0/24"
   map_public_ip_on_launch = true
@@ -236,6 +237,7 @@ resource "aws_autoscaling_group" "default" {
 # asg policy
 resource "aws_autoscaling_policy" "default" {
   name                   = "${var.app}-${var.environment}-autoscaling-policy"
+  policy_type            = "TargetTrackingScaling"
   scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
@@ -257,10 +259,12 @@ resource "aws_autoscaling_policy" "default" {
 resource "aws_cloudfront_distribution" "default" {
   enabled = true
   aliases = ["${var.cloudflare_subdomain}.${var.cloudflare_zone}"]
-  comment = "Origin: ${var.origin}"
+  comment = "@${var.origin} @${var.app} @${var.environment}"
 
   viewer_certificate {
     acm_certificate_arn = var.classpert_certificate_arn
+    ssl_support_method = "sni-only"
+    minimum_protocol_version = "TLSv1.1_2016"
   }
 
   restrictions {

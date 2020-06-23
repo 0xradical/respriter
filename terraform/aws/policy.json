@@ -37,10 +37,10 @@
     {
       "Sid": "VisualEditor3",
       "Effect": "Allow",
-      "Action": "ec2:*",
+      "Action": "codepipeline:*",
       "Resource": "*",
       "Condition": {
-        "StringEqualsIfExists": {
+        "StringEquals": {
           "aws:RequestedRegion": ["us-east-1", "us-east-2"]
         }
       }
@@ -48,7 +48,7 @@
     {
       "Sid": "VisualEditor4",
       "Effect": "Allow",
-      "Action": "elasticloadbalancing:*",
+      "Action": "ec2:*",
       "Resource": "*",
       "Condition": {
         "StringEqualsIfExists": {
@@ -70,6 +70,17 @@
     {
       "Sid": "VisualEditor6",
       "Effect": "Allow",
+      "Action": "elasticloadbalancing:*",
+      "Resource": "*",
+      "Condition": {
+        "StringEqualsIfExists": {
+          "aws:RequestedRegion": ["us-east-1", "us-east-2"]
+        }
+      }
+    },
+    {
+      "Sid": "VisualEditor7",
+      "Effect": "Allow",
       "Action": [
         "iam:CreateInstanceProfile",
         "iam:DeleteInstanceProfile",
@@ -86,6 +97,8 @@
         "iam:ListInstanceProfilesForRole",
         "iam:PassRole",
         "iam:CreateServiceLinkedRole",
+        "iam:DetachRolePolicy",
+        "iam:ListAttachedRolePolicies",
         "iam:DeleteRolePolicy",
         "iam:ListRolePolicies",
         "iam:GetRolePolicy"
@@ -98,7 +111,7 @@
       }
     },
     {
-      "Sid": "VisualEditor7",
+      "Sid": "VisualEditor8",
       "Effect": "Allow",
       "Action": [
         "s3:PutAnalyticsConfiguration",
@@ -202,7 +215,7 @@
       }
     },
     {
-      "Sid": "VisualEditor8",
+      "Sid": "VisualEditor9",
       "Effect": "Allow",
       "Action": [
         "sns:ListTagsForResource",
