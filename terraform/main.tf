@@ -29,28 +29,142 @@ data "aws_availability_zones" "available" {
   }
 }
 
-# Fetch elements project from GH
-data "github_repository" "elements" {
-  full_name = "classpert/elements"
+
+# bucket to store pipeline artifacts
+resource "aws_s3_bucket" "codepipeline_bucket" {
+  bucket = "respriter-codepipeline-artifacts"
+  acl    = "private"
 }
 
-resource "github_repository_webhook" "elements_webhook" {
-  repository = data.github_repository.elements.name
+resource "aws_iam_role_policy" "codepipeline_policy" {
+  name = "codepipeline_policy"
+  role = aws_iam_role.codepipeline_role.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect":"Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:GetBucketVersioning",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.codepipeline_bucket.arn}",
+        "${aws_s3_bucket.codepipeline_bucket.arn}/*"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+
+resource "aws_iam_role" "codepipeline_role" {
+  name = "respriter-codepipeline-role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codepipeline.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_codepipeline" "codepipeline" {
+  name     = "respriter-pipeline"
+  role_arn = aws_iam_role.codepipeline_role.arn
+
+  artifact_store {
+    location = aws_s3_bucket.codepipeline_bucket.bucket
+    type     = "S3"
+  }
+
+  stage {
+    name = "Source"
+
+    # GITHUB_TOKEN in env var
+    action {
+      name             = "Source"
+      category         = "Source"
+      owner            = "ThirdParty"
+      provider         = "GitHub"
+      version          = "1"
+      output_artifacts = ["respriter"]
+
+      configuration = {
+        Owner  = "classpert"
+        Repo   = "respriter"
+        Branch = "production"
+      }
+    }
+  }
+
+  stage {
+    name = "Deploy"
+
+    action {
+      name            = "Deploy"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "CodeDeploy"
+      input_artifacts = ["respriter"]
+      version         = "1"
+
+      configuration = {
+        ApplicationName = aws_codedeploy_app.respriter.name,
+        DeploymentGroupName = aws_codedeploy_deployment_group.deployment_group.deployment_group_name
+      }
+    }
+  }
+}
+
+resource "aws_codepipeline_webhook" "respriter" {
+  name            = "respriter-webhook-from-github"
+  authentication  = "GITHUB_HMAC"
+  target_action   = "Source"
+  target_pipeline = aws_codepipeline.codepipeline.name
+
+  authentication_configuration {
+    secret_token = var.webhook_secret
+  }
+
+  filter {
+    json_path    = "$.ref"
+    match_equals = "refs/heads/production"
+  }
+}
+
+# Fetch resprtier project from GH
+data "github_repository" "respriter" {
+  full_name = "classpert/respriter"
+}
+
+resource "github_repository_webhook" "respriter_webhook" {
+  repository = data.github_repository.respriter.name
 
   configuration {
     # endpoint for aws code deploy
-    url          = "https://google.de/"
+    url          = aws_codepipeline_webhook.respriter.url
     content_type = "json"
     insecure_ssl = false
+    secret       = var.webhook_secret
   }
 
   active = true
-
   events = ["create"]
-
-  # depends_on = ["aws_code_deploy"]
 }
-
 
 # Create a VPC to launch our instances into
 resource "aws_vpc" "default" {
@@ -170,14 +284,27 @@ resource "aws_elb" "web" {
   }
 }
 
-# Inject these via TF_ vars
-# resource "aws_key_pair" "auth" {
-#   key_name   = "${var.key_name}"
-#   public_key = "${file(var.public_key_path)}"
-# }
-
 resource "aws_codedeploy_app" "respriter" {
   name = "respriter"
+}
+
+resource "aws_codedeploy_deployment_group" "deployment_group" {
+  app_name               = "respriter"
+  autoscaling_groups     = [aws_autoscaling_group.default.name]
+  deployment_config_name = "CodeDeployDefault.OneAtATime"
+  deployment_group_name  = "respriter-deployment-group"
+  service_role_arn       = aws_iam_role.deploy.arn
+
+  deployment_style {
+    deployment_option = "WITH_TRAFFIC_CONTROL"
+    deployment_type   = "IN_PLACE"
+  }
+
+  load_balancer_info {
+    elb_info {
+      name = aws_elb.web.name
+    }
+  }
 }
 
 resource "aws_iam_role" "deploy" {
@@ -193,7 +320,7 @@ resource "aws_iam_role" "deploy" {
       "Principal": {
         "Service": [
           "codedeploy.us-east-2.amazonaws.com",
-          "codedeploy.us-east-1.amazonaws.com",
+          "codedeploy.us-east-1.amazonaws.com"
         ]
       },
       "Action": "sts:AssumeRole"
@@ -234,17 +361,16 @@ resource "aws_iam_instance_profile" "respriter_profile" {
 }
 
 resource "aws_launch_configuration" "default" {
-  name_prefix     = "respriter-instance-"
-  image_id        = lookup(var.aws_amis, var.aws_region)
-  instance_type   = var.aws_instance_type
-  security_groups = [aws_security_group.default.id]
+  name_prefix          = "respriter-instance-"
+  image_id             = var.respriter_ami
+  instance_type        = var.aws_instance_type
+  security_groups      = [aws_security_group.default.id]
   iam_instance_profile = aws_iam_instance_profile.respriter_profile.name
-  # key_name        = aws_key_pair.auth.id
+  key_name             = var.key_name
 
   user_data         = <<EOF
 !#/bin/bash
-echo "export AWS_CODE_DEPLOY_RESOURCE_KIT=https://${lookup(var.aws_code_deploy_resource_kits, var.aws_region)}.s3.${var.aws_region}.amazonaws.com/latest/install" >> config.sh
-echo "export GITHUB_PERSONAL_ACCESS_TOKEN=${var.github_personal_access_token}" >> config.sh
+ln -s /home/ubuntu/respriter.service /lib/systemd/system/respriter.service
 EOF
 
   lifecycle {

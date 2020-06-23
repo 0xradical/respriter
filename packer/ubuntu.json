@@ -1,0 +1,46 @@
+{
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "profile": "mfa",
+      "region": "us-east-1",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": ["099720109477"],
+        "most_recent": true
+      },
+      "instance_type": "t3a.small",
+      "ssh_username": "ubuntu",
+      "ami_name": "respriter-{{timestamp}}",
+      "tags": {
+        "name": "respriter"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "respriter.service",
+      "destination": "/home/ubuntu/respriter.service"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 30",
+        "sudo apt-get update",
+        "sudo apt-get -y install build-essential patch ruby-dev zlib1g-dev liblzma-dev ruby-dev ruby wget nodejs npm",
+        "wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install",
+        "chmod +x ./install",
+        "sudo ./install auto",
+        "mkdir /home/ubuntu/.ruby",
+        "mkdir /home/ubuntu/.bundle",
+        "echo 'export GEM_HOME=/home/ubuntu/.ruby' >> /home/ubuntu/.bashrc",
+        "echo 'export PATH=\"$PATH:/home/ubuntu/.ruby/bin\"' >> /home/ubuntu/.bashrc"
+      ]
+    }
+  ]
+}
