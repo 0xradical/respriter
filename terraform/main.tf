@@ -176,24 +176,76 @@ resource "aws_elb" "web" {
 #   public_key = "${file(var.public_key_path)}"
 # }
 
+resource "aws_codedeploy_app" "respriter" {
+  name = "respriter"
+}
+
+resource "aws_iam_role" "deploy" {
+  name = "respriter-code-deploy-role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": [
+          "codedeploy.us-east-2.amazonaws.com",
+          "codedeploy.us-east-1.amazonaws.com",
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "AWSCodeDeployRole" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
+  role       = aws_iam_role.deploy.name
+}
+
+resource "aws_iam_role" "instance" {
+  name = "respriter-instance-role"
+
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "ec2.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_instance_profile" "respriter_profile" {
+  name = "respriter-profile"
+  role = aws_iam_role.instance.name
+}
+
 resource "aws_launch_configuration" "default" {
   name_prefix     = "respriter-instance-"
   image_id        = lookup(var.aws_amis, var.aws_region)
   instance_type   = var.aws_instance_type
   security_groups = [aws_security_group.default.id]
+  iam_instance_profile = aws_iam_instance_profile.respriter_profile.name
   # key_name        = aws_key_pair.auth.id
 
-  user_data         = <<-eof
-    !#/bin/bash
-    sudo apt-get update
-    sudo apt-get install ruby wget
-    cd /home/ubuntu
-    wget https://${lookup(var.aws_code_deploy_resource_kits, var.aws_region)}.s3.${var.aws_region}.amazonaws.com/latest/install
-    chmod +x ./install
-    sudo ./install auto
-    cd /home/ubuntu
-    git clone https://${var.github_personal_access_token}@github.com/classpert/respriter.git
-  eof
+  user_data         = <<EOF
+!#/bin/bash
+echo "export AWS_CODE_DEPLOY_RESOURCE_KIT=https://${lookup(var.aws_code_deploy_resource_kits, var.aws_region)}.s3.${var.aws_region}.amazonaws.com/latest/install" >> config.sh
+echo "export GITHUB_PERSONAL_ACCESS_TOKEN=${var.github_personal_access_token}" >> config.sh
+EOF
 
   lifecycle {
     create_before_destroy = true
@@ -301,3 +353,4 @@ resource "aws_cloudfront_distribution" "default" {
     }
   }
 }
+
