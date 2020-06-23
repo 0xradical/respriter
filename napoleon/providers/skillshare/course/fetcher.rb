@@ -7,10 +7,20 @@ if pipe_process.accumulator[:status_code] == 400
 end
 
 if pipe_process.accumulator[:redirected] || json_ld.blank?
-  resource = Resource.where("content->>'url' = ?", pipe_process.accumulator[:original_url]).first
-  if resource.present?
-    resource.content[:stale] = true
-    resource.save!
+  if pipe_process.accumulator[:original_url].strip.present?
+    query = ApplicationRecord.sanitize_sql [
+      %{
+        UPDATE app.resources
+        SET content = jsonb_set(content, '{stale}', 'true'::jsonb)
+        WHERE
+          content->>'url'   = ?       AND
+          content->>'stale' = 'false' AND
+          kind              = 'course';
+      },
+      pipe_process.accumulator[:original_url].strip
+    ]
+
+    ApplicationRecord.connection.execute query
   end
   raise Pipe::Error.new(:skipped, 'Outdated Course')
 else
