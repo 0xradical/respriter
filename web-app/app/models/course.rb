@@ -238,7 +238,7 @@ class Course < ApplicationRecord
   def set_canonical_subdomain_from_language!
     return update(canonical_subdomain: '') unless self.locale.present?
     locale_subdomains = I18n.available_locales.map do |locale_sym|
-      Locale.from_string(locale_sym.to_s).then { |loc| [loc.language_only.to_s, loc.to_s] }
+      Locale.from_string(locale_sym.to_s).then { |loc| [loc.language_only.to_s, loc.to_s.downcase] }
     end.to_h
     locale_subdomains['en'] = ''
     course_language = Locale.from_pg(self.locale).language_only.to_s
