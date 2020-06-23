@@ -237,7 +237,7 @@ namespace :system do
     end
 
     desc 'Execute :identify_language for all courses with null locale_status'
-    task :identify_language_missing, %i[batch_size] => %i[environment] do |t, args|
+    task :identify_missing_language, %i[batch_size] => %i[environment] do |t, args|
       batch_size = args.fetch(:batch_size, 1000).to_i
       Rake::Task['system:courses:identify_language'].invoke('locale_status IS NULL', batch_size)
     end
