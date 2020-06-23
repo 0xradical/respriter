@@ -21,6 +21,10 @@ provider "github" {
   version = "~> 2.8"
 }
 
+provider "cloudflare" {
+  version = "~> 2.0"
+}
+
 # All available AZ to create subnets
 data "aws_availability_zones" "available" {
   filter {
@@ -29,6 +33,22 @@ data "aws_availability_zones" "available" {
   }
 }
 
+# Add cloudflare entry to cloudfront
+data "cloudflare_zones" "classpert" {
+  filter {
+    name   = "classpert-staging.com"
+    status = "active"
+    paused = false
+  }
+}
+
+resource "cloudflare_record" "respriter" {
+  zone_id = data.cloudflare_zones.classpert.id
+  name    = "respriter"
+  value   = aws_cloudfront_distribution.default.domain_name
+  type    = "CNAME"
+  proxied = true
+}
 
 # bucket to store pipeline artifacts
 resource "aws_s3_bucket" "codepipeline_bucket" {

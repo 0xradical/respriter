@@ -8,7 +8,7 @@ run `make setup`
 
 ## infrastructure
 
-run `cd terraform && terraform plan`
+run `cd terraform && terraform init && terraform plan`
 
 ## image
 

@@ -1,6 +1,5 @@
+# fill on Terraform Cloud
 variable "classpert_certificate_arn" {}
-
-variable "github_personal_access_token" {}
 
 variable "aws_region" {
   default = "us-east-1"
