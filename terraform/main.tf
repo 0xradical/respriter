@@ -130,7 +130,6 @@ resource "aws_security_group" "default" {
 # ELB
 resource "aws_elb" "web" {
   name_prefix        = var.prefix
-  availability_zones = data.aws_availability_zones.available.names
   subnets            = aws_subnet.default.*.id
   security_groups    = [aws_security_group.elb.id]
 

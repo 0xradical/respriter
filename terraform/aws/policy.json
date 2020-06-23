@@ -57,6 +57,17 @@
       }
     },
     {
+      "Sid": "VisualEditor5",
+      "Effect": "Allow",
+      "Action": "elasticloadbalancing:*",
+      "Resource": "*",
+      "Condition": {
+        "StringEqualsIfExists": {
+          "aws:RequestedRegion": ["us-east-1", "us-east-2"]
+        }
+      }
+    },
+    {
       "Sid": "VisualEditor6",
       "Effect": "Allow",
       "Action": [
@@ -196,6 +207,7 @@
       "Action": [
         "sns:ListTagsForResource",
         "sns:GetTopicAttributes",
+        "sns:DeleteTopic",
         "sns:CreateTopic"
       ],
       "Resource": "*",
