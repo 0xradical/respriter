@@ -1,6 +1,6 @@
-#############
-#### EC2 ####
-#############
+############
+### EC2 ####
+############
 
 # Create a VPC to launch our instances into
 resource "aws_vpc" "default" {
@@ -240,7 +240,6 @@ resource "aws_autoscaling_policy" "default" {
   policy_type            = "TargetTrackingScaling"
   scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
   target_tracking_configuration {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"
@@ -295,7 +294,7 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   origin {
-    domain_name = data.aws_s3_bucket.cloudfront_failover.bucket_regional_domain_name
+    domain_name = data.aws_s3_bucket.cloudfront_failover.bucket_domain_name
     origin_id   = "${var.app}-${var.environment}-cloudfront-group-member-failover"
     origin_path = var.aws_cloudfront_distribution_failover_path
   }
@@ -561,6 +560,8 @@ resource "aws_codepipeline_webhook" "respriter" {
 #### Github ####
 ################
 
+# user associated with GITHUB_TOKEN should also
+# be added as an ADMIN at the project
 resource "github_repository_webhook" "default" {
   repository = data.github_repository.default.name
 
