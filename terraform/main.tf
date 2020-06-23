@@ -1,64 +1,54 @@
-# specify backend for this configuration
-# this is Terraform Cloud based
-terraform {
-  backend "remote" {
-    hostname      = "app.terraform.io"
-    organization  = "classpert"
-
-    workspaces {
-      name = "respriter-production"
-    }
-  }
-}
-
-# Specify the provider and access details
-provider "aws" {
-  version = "~> 2.66"
-  region  = var.aws_region
-}
-
-provider "github" {
-  version = "~> 2.8"
-}
-
-provider "cloudflare" {
-  version = "~> 2.0"
-}
-
-# All available AZ to create subnets
-data "aws_availability_zones" "available" {
-  filter {
-    name   = "zone-name"
-    values = ["us-east-1a", "us-east-1b"]
-  }
-}
-
-# Add cloudflare entry to cloudfront
-data "cloudflare_zones" "classpert" {
-  filter {
-    name   = "classpert-staging.com"
-    status = "active"
-    paused = false
-  }
-}
-
-resource "cloudflare_record" "respriter" {
-  zone_id = data.cloudflare_zones.classpert.id
-  name    = "respriter"
+# create entry for cloudfront on cloudflare
+resource "cloudflare_record" "default" {
+  zone_id = data.cloudflare_zones.default.id
+  name    = var.cloudflare_subdomain
   value   = aws_cloudfront_distribution.default.domain_name
   type    = "CNAME"
   proxied = true
 }
 
-# bucket to store pipeline artifacts
+# bucket to store code pipeline artifacts (github clone)
 resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket = "respriter-codepipeline-artifacts"
-  acl    = "private"
+  bucket_prefix = var.app
+  acl           = "private"
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
+# role that allows code pipeline service to run
+resource "aws_iam_role" "codepipeline_role" {
+  name_prefix = var.prefix
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codepipeline.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
+}
+
+# allow code pipeline role to store artifacts in bucket
 resource "aws_iam_role_policy" "codepipeline_policy" {
-  name = "codepipeline_policy"
-  role = aws_iam_role.codepipeline_role.id
+  name_prefix = var.prefix
+  role        = aws_iam_role.codepipeline_role.id
 
   policy = <<EOF
 {
@@ -82,28 +72,9 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 EOF
 }
 
-
-resource "aws_iam_role" "codepipeline_role" {
-  name = "respriter-codepipeline-role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codepipeline.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-EOF
-}
-
+# code pipeline that will trigger code deploy
 resource "aws_codepipeline" "codepipeline" {
-  name     = "respriter-pipeline"
+  name     = "${var.app}-${var.environment}-codepipeline"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
@@ -121,12 +92,12 @@ resource "aws_codepipeline" "codepipeline" {
       owner            = "ThirdParty"
       provider         = "GitHub"
       version          = "1"
-      output_artifacts = ["respriter"]
+      output_artifacts = [var.github_repository]
 
       configuration = {
-        Owner  = "classpert"
-        Repo   = "respriter"
-        Branch = "production"
+        Owner  = var.github_organization
+        Repo   = var.github_repository
+        Branch = var.aws_codepipeline_github_branch
       }
     }
   }
@@ -139,47 +110,53 @@ resource "aws_codepipeline" "codepipeline" {
       category        = "Deploy"
       owner           = "AWS"
       provider        = "CodeDeploy"
-      input_artifacts = ["respriter"]
+      input_artifacts = [var.github_repository]
       version         = "1"
 
       configuration = {
-        ApplicationName = aws_codedeploy_app.respriter.name,
+        ApplicationName     = aws_codedeploy_app.default.name,
         DeploymentGroupName = aws_codedeploy_deployment_group.deployment_group.deployment_group_name
       }
     }
   }
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
 resource "aws_codepipeline_webhook" "respriter" {
-  name            = "respriter-webhook-from-github"
+  name            = "${var.app}-${var.environment}-webhook-from-github"
   authentication  = "GITHUB_HMAC"
   target_action   = "Source"
   target_pipeline = aws_codepipeline.codepipeline.name
 
   authentication_configuration {
-    secret_token = var.webhook_secret
+    secret_token = var.github_repository_webhook_secret
   }
 
   filter {
     json_path    = "$.ref"
-    match_equals = "refs/heads/production"
+    match_equals = "refs/heads/${var.aws_codepipeline_github_branch}"
+  }
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
   }
 }
 
-# Fetch resprtier project from GH
-data "github_repository" "respriter" {
-  full_name = "classpert/respriter"
-}
-
-resource "github_repository_webhook" "respriter_webhook" {
-  repository = data.github_repository.respriter.name
+resource "github_repository_webhook" "default" {
+  repository = data.github_repository.default.name
 
   configuration {
-    # endpoint for aws code deploy
     url          = aws_codepipeline_webhook.respriter.url
     content_type = "json"
     insecure_ssl = false
-    secret       = var.webhook_secret
+    secret       = var.github_repository_webhook_secret
   }
 
   active = true
@@ -189,12 +166,24 @@ resource "github_repository_webhook" "respriter_webhook" {
 # Create a VPC to launch our instances into
 resource "aws_vpc" "default" {
   cidr_block = var.aws_base_cidr_block
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
 # Create an internet gateway to give our subnets
 # access to the outside world
 resource "aws_internet_gateway" "default" {
   vpc_id = aws_vpc.default.id
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
 # Grant the VPC internet access on its main route table
@@ -211,13 +200,20 @@ resource "aws_subnet" "default" {
   vpc_id                  = aws_vpc.default.id
   cidr_block              = "10.0.${1+count.index}.0/24"
   map_public_ip_on_launch = true
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+    CIDR        = "10.0.${1+count.index}.0/24"
+  }
 }
 
 # A security group for the ELB
 # so it is accessible via the web
 resource "aws_security_group" "elb" {
-  name        = "respriter-elb-sg"
-  description = "ELB SG to allow http connections"
+  name_prefix = var.prefix
+  description = "ELB SG to allow http(s) connections"
   vpc_id      = aws_vpc.default.id
 
   # HTTP access from anywhere
@@ -244,13 +240,19 @@ resource "aws_security_group" "elb" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
 # Our default security group to access
 # the instances over SSH and HTTP
 resource "aws_security_group" "default" {
-  name        = "respriter-sg"
-  description = "Used in the terraform"
+  name_prefix = var.prefix
+  description = "Default SG to allow http(s)/ssh connections"
   vpc_id      = aws_vpc.default.id
 
   # SSH access from anywhere
@@ -278,10 +280,17 @@ resource "aws_security_group" "default" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
+# ELB
 resource "aws_elb" "web" {
-  name               = "respriter-elb"
+  name_prefix        = var.prefix
   availability_zones = data.aws_availability_zones.available.names
   subnets            = aws_subnet.default.*.id
   security_groups    = [aws_security_group.elb.id]
@@ -302,17 +311,32 @@ resource "aws_elb" "web" {
     target              = "HTTP:80/"
     interval            = 30
   }
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
-resource "aws_codedeploy_app" "respriter" {
-  name = "respriter"
+# code deploy app
+resource "aws_codedeploy_app" "default" {
+  name = var.app
 }
 
+# sns topic that will be used
+# to send deployment events
+resource "aws_sns_topic" "deploy" {
+  name_prefix = var.prefix
+}
+
+# code deploy deployment group
+# containing ec2 asg
 resource "aws_codedeploy_deployment_group" "deployment_group" {
-  app_name               = "respriter"
+  app_name               = aws_codedeploy_app.default.name
   autoscaling_groups     = [aws_autoscaling_group.default.name]
   deployment_config_name = "CodeDeployDefault.OneAtATime"
-  deployment_group_name  = "respriter-deployment-group"
+  deployment_group_name  = "${var.app}-${var.environment}-deployment-group"
   service_role_arn       = aws_iam_role.deploy.arn
 
   deployment_style {
@@ -325,10 +349,26 @@ resource "aws_codedeploy_deployment_group" "deployment_group" {
       name = aws_elb.web.name
     }
   }
+
+  trigger_configuration {
+    trigger_events     = [
+      "DeploymentStart",
+      "DeploymentSuccess",
+      "DeploymentFailure",
+      "DeploymentStop",
+      "DeploymentRollback",
+      "InstanceStart",
+      "InstanceSuccess",
+      "InstanceFailure"
+    ]
+    trigger_name       = "${var.app}-${var.environment}-deployment-event"
+    trigger_target_arn = aws_sns_topic.deploy.arn
+  }
 }
 
+# role that allows code deploy to run
 resource "aws_iam_role" "deploy" {
-  name = "respriter-code-deploy-role"
+  name = "${var.app}-${var.environment}-code-deploy-role"
 
   assume_role_policy = <<EOF
 {
@@ -348,15 +388,23 @@ resource "aws_iam_role" "deploy" {
   ]
 }
 EOF
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
+# minimal service role policies for code deploy role
 resource "aws_iam_role_policy_attachment" "AWSCodeDeployRole" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
   role       = aws_iam_role.deploy.name
 }
 
+# role that allows instance itself to run aws code
 resource "aws_iam_role" "instance" {
-  name = "respriter-instance-role"
+  name = "${var.app}-${var.environment}-instance-role"
 
   assume_role_policy = <<EOF
 {
@@ -373,33 +421,38 @@ resource "aws_iam_role" "instance" {
     ]
 }
 EOF
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
+# an instance profile for the autoscaled instance
 resource "aws_iam_instance_profile" "respriter_profile" {
-  name = "respriter-profile"
-  role = aws_iam_role.instance.name
+  name_prefix = var.prefix
+  role        = aws_iam_role.instance.name
 }
 
+# launch configuration for the asg
 resource "aws_launch_configuration" "default" {
-  name_prefix          = "respriter-instance-"
-  image_id             = var.respriter_ami
+  name_prefix          = var.prefix
+  image_id             = var.aws_ami
   instance_type        = var.aws_instance_type
   security_groups      = [aws_security_group.default.id]
   iam_instance_profile = aws_iam_instance_profile.respriter_profile.name
-  key_name             = var.key_name
-
-  user_data         = <<EOF
-!#/bin/bash
-ln -s /home/ubuntu/respriter.service /lib/systemd/system/respriter.service
-EOF
+  key_name             = var.aws_key_name
+  user_data            = var.aws_launch_configuration_user_data
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
+# ELB-based asg
 resource "aws_autoscaling_group" "default" {
-  name                      = "respriter-autoscaling-group"
+  name_prefix               = var.prefix
   min_size                  = 2
   max_size                  = 5
   health_check_type         = "ELB"
@@ -411,10 +464,23 @@ resource "aws_autoscaling_group" "default" {
   lifecycle {
     create_before_destroy = true
   }
+
+  tags = [
+    {
+      key = "App", value = var.app, propagate_at_launch = true
+    },
+    {
+      key = "Environment", value = var.environment, propagate_at_launch = true
+    },
+    {
+      key = "Origin", value = var.origin, propagate_at_launch = true
+    }
+  ]
 }
 
+# asg policy
 resource "aws_autoscaling_policy" "default" {
-  name                   = "respriter-autoscaling-policy"
+  name                   = "${var.app}-${var.environment}-autoscaling-policy"
   scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
@@ -428,17 +494,12 @@ resource "aws_autoscaling_policy" "default" {
   autoscaling_group_name = aws_autoscaling_group.default.name
 }
 
-data "aws_s3_bucket" "elements" {
-  bucket = "clspt-elements-dist-prd"
-}
-
+# Cloudfront distribution with failover
 resource "aws_cloudfront_distribution" "default" {
   enabled = true
-  aliases = ["respriter.classpert.com"]
-  comment = "Created via Terraform"
-  tags = {
-    Environment = "production"
-  }
+  aliases = ["${var.cloudflare_subdomain}.${var.cloudflare_zone}"]
+  comment = "Origin: ${var.origin}"
+
   viewer_certificate {
     acm_certificate_arn = var.classpert_certificate_arn
   }
@@ -450,34 +511,34 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   origin_group {
-    origin_id = "cloudfront-group-respriter"
+    origin_id = "${var.app}-${var.environment}-cloudfront-group"
 
     failover_criteria {
       status_codes = [403, 404, 500, 502]
     }
 
     member {
-      origin_id = "cloudfront-group-member-primary"
+      origin_id = "${var.app}-${var.environment}-cloudfront-group-member-primary"
     }
 
     member {
-      origin_id = "cloudfront-group-member-failover"
+      origin_id = "${var.app}-${var.environment}-cloudfront-group-member-failover"
     }
   }
 
   origin {
     domain_name = aws_elb.web.dns_name
-    origin_id   = "cloudfront-group-member-primary"
+    origin_id   = "${var.app}-${var.environment}-cloudfront-group-member-primary"
   }
 
   origin {
-    domain_name = data.aws_s3_bucket.elements.bucket_regional_domain_name
-    origin_id   = "cloudfront-group-member-failover"
-    origin_path = "/svgs/tags.svg"
+    domain_name = data.aws_s3_bucket.cloudfront_failover.bucket_regional_domain_name
+    origin_id   = "${var.app}-${var.environment}-cloudfront-group-member-failover"
+    origin_path = var.aws_cloudfront_distribution_failover_path
   }
 
   default_cache_behavior {
-    target_origin_id = "cloudfront-group-respriter"
+    target_origin_id = "${var.app}-${var.environment}-cloudfront-group"
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
     viewer_protocol_policy = "redirect-to-https"
@@ -485,18 +546,18 @@ resource "aws_cloudfront_distribution" "default" {
 
     forwarded_values {
       query_string = true
-      query_string_cache_keys = [
-        "providers",
-        "tags",
-        "country-flags",
-        "i18n",
-        "brand"
-      ]
+      query_string_cache_keys = var.aws_cloudfront_distribution_query_cache_keys
 
       cookies {
         forward = "none"
       }
     }
+  }
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
   }
 }
 
