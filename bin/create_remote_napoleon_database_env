@@ -18,6 +18,9 @@ DB_ENV=$1
 # Postgres Docker
 POSTGRES_DB=`$parse_uri $DB_URI path`
 
+# User Passwords
+GRAFANA_PASSWORD=$GRAFANA_PASSWORD
+
 # Config
 API_SCHEMA=$DB_SCHEMA
 API_ANONYMOUS_ROLE=$DB_ANON_ROLE

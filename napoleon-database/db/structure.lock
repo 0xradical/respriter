@@ -85,5 +85,6 @@ views/api/users.sql
 auth/anonymous.sql
 auth/user.sql
 auth/authenticator.sql
+auth/grafana.sql
 data/public/schema_migrations.sql
 data/settings/secrets.sql

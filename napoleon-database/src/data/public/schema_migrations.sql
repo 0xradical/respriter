@@ -1,5 +1,6 @@
-INSERT INTO public.schema_migrations (version) VALUES
+INSERT INTO public.schema_migrations(version) VALUES
   ('20200120153357'),
   ('20200123173113'),
   ('20200211161612'),
-  ('20200212123905');
+  ('20200212123905'),
+  ('20200623130306');
