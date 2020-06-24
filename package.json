@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Generate sprites on demand",
   "main": "server.js",
+  "elements": {
+    "version": "8.2.1"
+  },
   "directories": {
     "example": "examples"
   },
