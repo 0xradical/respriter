@@ -3,7 +3,7 @@ variable "app" {
 }
 
 variable "prefix" {
-  default = "rpst"
+  default = "rpst-"
 }
 
 variable "origin" {
@@ -43,7 +43,7 @@ variable "aws_codepipeline_github_branch" {
 # this service file is created during image build
 variable "aws_launch_configuration_user_data" {
   default = <<EOF
-!#/bin/bash
+#!/bin/bash
 ln -s /home/ubuntu/respriter.service /lib/systemd/system/respriter.service
 EOF
 }
