@@ -1,6 +1,6 @@
 #!/bin/bash
-source /home/ubuntu/.bashrc
-chown -R ubuntu:ubuntu /home/ubuntu/respriter
+. /home/ubuntu/.profile
+sudo chown -R ubuntu:ubuntu /home/ubuntu/respriter
 cd /home/ubuntu/respriter
 bundle install
 npm install
