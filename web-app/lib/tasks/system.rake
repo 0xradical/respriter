@@ -278,9 +278,9 @@ namespace :system do
       puts "Updated #{count} courses"
     end
 
-    desc 'Copy the locale attribute to ignore_robots_noindex_rules_for'
+    desc 'Copy the locale attribute to ignore_robots_noindex_rule_for'
     task :add_locale_to_robots_index_rules_from_language, %i[condition batch_size] => %i[environment] do |t, args|
-      condition = args.fetch(:condition, "ignore_robots_noindex_rules_for = '{}'")
+      condition = args.fetch(:condition, "ignore_robots_noindex_rule_for = '{}'")
       batch_size = args.fetch(:batch_size, 1000).to_i
 
       count = 0
