@@ -312,5 +312,23 @@ namespace :system do
       count = Course.where(condition).update_all(ignore_robots_noindex_rule: true)
       puts "Updated #{count} courses"
     end
+
+    desc 'Force a set of courses to be indexed in all locales from a CSV file with slugs'
+    task :force_robots_index_from_csv, %i[file_url] => %i[environment] do |t, args|
+      count = 0
+      CSV.new(open(args[:file_url]), encoding: 'utf-8').each do |row|
+        slug = row.first
+        course = Course.find_by(slug: slug)
+        course ||= Course.joins(:slug_histories).where('slug_histories.slug = ?', slug).first
+
+        if course.present?
+          course.update(ignore_robots_noindex_rule: true)
+          count += 1
+        else
+          puts "Slug not found: #{slug}"
+        end
+      end
+      puts "Updated #{count} courses"
+    end
   end
 end
