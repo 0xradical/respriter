@@ -4,7 +4,7 @@ files:
   - source: /
     destination: /home/ubuntu/respriter
 hooks:
-  BeforeInstall:
+  AfterInstall:
     - location: deploy/install_dependencies
       timeout: 300
       runas: ubuntu
