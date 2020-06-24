@@ -474,15 +474,19 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
     {
       "Effect":"Allow",
       "Action": [
-        "s3:GetObject",
-        "s3:GetObjectVersion",
-        "s3:GetBucketVersioning",
-        "s3:PutObject"
+        "s3:*"
       ],
       "Resource": [
         "${aws_s3_bucket.codepipeline_bucket.arn}",
         "${aws_s3_bucket.codepipeline_bucket.arn}/*"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "codedeploy:*"
+      ],
+      "Resource": "*"
     }
   ]
 }
