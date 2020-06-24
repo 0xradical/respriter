@@ -1,4 +1,5 @@
 sudo apt-get dist-upgrade
+sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe"
 sudo apt-get update
 apt-cache policy build-essential
 ls /etc/apt/sources.list.d

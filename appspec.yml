@@ -8,6 +8,7 @@ hooks:
     - location: deploy/install_dependencies
       timeout: 300
       runas: ubuntu
+  ApplicationStart:
     - location: deploy/start_server
       timeout: 300
       runas: ubuntu

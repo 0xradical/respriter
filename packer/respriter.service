@@ -7,6 +7,7 @@ Environment=NODE_PORT=8080
 Type=simple
 User=ubuntu
 ExecStart=/home/ubuntu/.nvm/versions/node/v12.18.1/bin/node /home/ubuntu/respriter/server.js
+WorkingDirectory=/home/ubuntu/respriter
 Restart=on-failure
 
 [Install]

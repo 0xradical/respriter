@@ -168,4 +168,8 @@ app.get("/healthcheck", function (req, res) {
   res.status(200);
 });
 
-const server = app.listen(8080, function () {});
+const server = app.listen(
+  process.env.NODE_PORT || 8080,
+  "0.0.0.0",
+  function () {}
+);
