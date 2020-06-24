@@ -37,7 +37,7 @@ build-seeds-%: ## Creates or updates for a given provider
 	@make -s $(SEEDS_DIR)/$*/setup.sql
 
 setup-provider-%: LESS_PRIORITY-% ## Set ups provider by name
-	@cd $(MONOREPO_PATH) && ./bin/psql napoleon-`echo $* | rev | cut -d- -f1 | rev` -f ./napoleon/$(SEEDS_DIR)/`echo $* | rev | cut -d- -f2- | rev`/setup.sql
+	@cd $(MONOREPO_PATH) && ./bin/psql napoleon -f ./napoleon/$(SEEDS_DIR)/`echo $* | rev | cut -d- -f2- | rev`/setup.sql
 
 clean-pipelines: $(CUSTOM_ENV_FILES) ## Deletes all que_jobs, pipeline_templates, pipelines and pipe_processes in development
 	@echo "Cleaning Pipelines..."

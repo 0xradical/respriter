@@ -20,9 +20,12 @@ dataset_id = '0e9cdf2c-44e7-11e9-8c55-22000aef2c9b'
 user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:67.0) Gecko/20100101 Firefox/67.0'
 
 sitemap_url = 'https://frontendmasters.com/sitemap.xml'
+pricing_url = 'https://frontendmasters.com/join/'
 
+sitemap_price_fetcher = sql_safe_parsed_unparsed_code 'sitemap/price_fetcher.rb'
 sitemap_demux = sql_safe_parsed_unparsed_code 'sitemap/demux.rb'
 course_fetcher = sql_safe_parsed_unparsed_code 'course/fetcher.rb'
+
 
 setup_sql = ERB.new(template).result(binding)
 
