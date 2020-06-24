@@ -1,5 +1,7 @@
 sudo apt-get dist-upgrade
 sudo apt-get update
+apt-cache policy build-essential
+ls /etc/apt/sources.list.d
 sudo apt-get -y install build-essential patch ruby-dev zlib1g-dev liblzma-dev ruby wget
 mkdir /home/ubuntu/.ruby
 mkdir /home/ubuntu/.bundle

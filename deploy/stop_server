@@ -1,3 +1,3 @@
 #!/bin/bash
-sudo systemctl respriter stop
+sudo systemctl stop respriter
 
