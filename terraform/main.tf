@@ -185,6 +185,64 @@ EOF
   }
 }
 
+# allow instance role to access artifacts in code pipeline bucket
+resource "aws_iam_role_policy" "instance_profile_policy" {
+  name_prefix = var.prefix
+  role        = aws_iam_role.instance.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect":"Allow",
+      "Action": [
+        "s3:GetLifecycleConfiguration",
+        "s3:GetBucketTagging",
+        "s3:GetInventoryConfiguration",
+        "s3:GetObjectVersionTagging",
+        "s3:ListBucketVersions",
+        "s3:GetBucketLogging",
+        "s3:ListBucket",
+        "s3:GetAccelerateConfiguration",
+        "s3:GetBucketPolicy",
+        "s3:GetObjectVersionTorrent",
+        "s3:GetObjectAcl",
+        "s3:GetEncryptionConfiguration",
+        "s3:GetBucketObjectLockConfiguration",
+        "s3:GetBucketRequestPayment",
+        "s3:GetObjectVersionAcl",
+        "s3:GetObjectTagging",
+        "s3:GetMetricsConfiguration",
+        "s3:GetBucketPublicAccessBlock",
+        "s3:GetBucketPolicyStatus",
+        "s3:ListBucketMultipartUploads",
+        "s3:GetObjectRetention",
+        "s3:GetBucketWebsite",
+        "s3:GetBucketVersioning",
+        "s3:GetBucketAcl",
+        "s3:GetObjectLegalHold",
+        "s3:GetBucketNotification",
+        "s3:GetReplicationConfiguration",
+        "s3:ListMultipartUploadParts",
+        "s3:GetObject",
+        "s3:GetObjectTorrent",
+        "s3:GetBucketCORS",
+        "s3:GetAnalyticsConfiguration",
+        "s3:GetObjectVersionForReplication",
+        "s3:GetBucketLocation",
+        "s3:GetObjectVersion"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.codepipeline_bucket.arn}",
+        "${aws_s3_bucket.codepipeline_bucket.arn}/*"
+      ]
+    }
+  ]
+}
+EOF
+}
+
 # an instance profile for the autoscaled instance
 resource "aws_iam_instance_profile" "respriter_profile" {
   name_prefix = var.prefix
@@ -420,6 +478,11 @@ resource "aws_codedeploy_deployment_group" "deployment_group" {
   }
 }
 
+
+#######################
+#### Code Pipeline ####
+#######################
+
 # bucket to store code pipeline artifacts (github clone)
 resource "aws_s3_bucket" "codepipeline_bucket" {
   bucket_prefix = var.app
@@ -458,9 +521,6 @@ EOF
   }
 }
 
-#######################
-#### Code Pipeline ####
-#######################
 
 # allow code pipeline role to store artifacts in bucket
 resource "aws_iam_role_policy" "codepipeline_policy" {
