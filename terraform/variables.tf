@@ -80,7 +80,13 @@ variable "cloudflare_subdomain" {
   default = "respriter"
 }
 
-variable "classpert_certificate_arn" {}
+variable "classpert_certificate_arn" {
+  type = map(string)
+  default = {
+    "classpert-staging.com" = "arn:aws:acm:us-east-1:452887582654:certificate/5e34a122-9960-4902-baab-8ba26c7f3bd6"
+    "classpert.com" = "arn:aws:acm:us-east-1:452887582654:certificate/d5c5b123-8617-4dd8-85e4-006cfcc20ee6"
+  }
+}
 
 
 

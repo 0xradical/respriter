@@ -140,7 +140,7 @@ resource "aws_elb" "web" {
     instance_protocol  = "http"
     lb_port            = 443
     lb_protocol        = "https"
-    ssl_certificate_id = var.classpert_certificate_arn
+    ssl_certificate_id = var.classpert_certificate_arn[var.cloudflare_zone]
   }
 
   health_check {
@@ -260,7 +260,7 @@ resource "aws_cloudfront_distribution" "default" {
   comment = "@${var.origin} @${var.app} @${var.environment}"
 
   viewer_certificate {
-    acm_certificate_arn = var.classpert_certificate_arn
+    acm_certificate_arn = var.classpert_certificate_arn[var.cloudflare_zone]
     ssl_support_method = "sni-only"
     minimum_protocol_version = "TLSv1.1_2016"
   }
@@ -592,7 +592,7 @@ resource "github_repository_webhook" "default" {
 
 # create entry for cloudfront on cloudflare
 resource "cloudflare_record" "default" {
-  zone_id = data.cloudflare_zones.default.id
+  zone_id = data.cloudflare_zones.default.zones[0].id
   name    = var.cloudflare_subdomain
   value   = aws_cloudfront_distribution.default.domain_name
   type    = "CNAME"
