@@ -238,7 +238,6 @@ resource "aws_autoscaling_group" "default" {
 resource "aws_autoscaling_policy" "default" {
   name                   = "${var.app}-${var.environment}-autoscaling-policy"
   policy_type            = "TargetTrackingScaling"
-  scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
   target_tracking_configuration {
     predefined_metric_specification {
@@ -291,12 +290,23 @@ resource "aws_cloudfront_distribution" "default" {
   origin {
     domain_name = aws_elb.web.dns_name
     origin_id   = "${var.app}-${var.environment}-cloudfront-group-member-primary"
+
+    custom_origin_config {
+      http_port = 80
+      https_port = 443
+      origin_protocol_policy = "https-only"
+      origin_ssl_protocols = ["TLSv1.1_2016"]
+    }
   }
 
   origin {
     domain_name = data.aws_s3_bucket.cloudfront_failover.bucket_domain_name
     origin_id   = "${var.app}-${var.environment}-cloudfront-group-member-failover"
     origin_path = var.aws_cloudfront_distribution_failover_path
+
+    s3_origin_config {
+      origin_access_identity = ""
+    }
   }
 
   default_cache_behavior {
