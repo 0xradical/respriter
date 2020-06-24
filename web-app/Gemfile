@@ -111,6 +111,9 @@ gem 'json_schemer', '~> 0.2.8'
 # Mecab 
 gem 'mecab_standalone', git: "https://github.com/wyugue/mecab_standalone"
 
+# Compact Language Identification
+gem 'cld'
+
 group :production do
   # Exceptions
   gem 'sentry-raven', '~> 2.12.2'
@@ -139,5 +142,4 @@ group :development, :test do
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'rubocop', '~> 0.80.1', require: false
-  gem 'cld'
 end
