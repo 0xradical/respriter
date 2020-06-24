@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo systemctl start
+sudo systemctl respriter start
