@@ -136,7 +136,7 @@ resource "aws_elb" "web" {
 
   # HTTPS is ELB terminated
   listener {
-    instance_port      = 80
+    instance_port      = 8080
     instance_protocol  = "http"
     lb_port            = 443
     lb_protocol        = "https"
@@ -147,7 +147,7 @@ resource "aws_elb" "web" {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 3
-    target              = "HTTP:80/"
+    target              = "HTTP:8080/healthcheck"
     interval            = 30
   }
 

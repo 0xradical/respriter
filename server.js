@@ -164,4 +164,8 @@ app.get("/:version", cors(corsOptions), function (req, res) {
     .catch(() => res.status(500));
 });
 
+app.get("/healthcheck", function (req, res) {
+  res.status(200);
+});
+
 const server = app.listen(8080, function () {});
