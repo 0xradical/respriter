@@ -315,19 +315,19 @@ namespace :system do
 
     desc 'Force a set of courses to be indexed in all locales from a CSV file with slugs'
     task :force_robots_index_from_csv, %i[file_url] => %i[environment] do |t, args|
-      count = 0
-      CSV.new(open(args[:file_url]), encoding: 'utf-8').each do |row|
-        slug = row.first
-        course = Course.find_by(slug: slug)
-        course ||= Course.joins(:slug_histories).where('slug_histories.slug = ?', slug).first
-
-        if course.present?
-          course.update(ignore_robots_noindex_rule: true)
-          count += 1
-        else
-          puts "Slug not found: #{slug}"
-        end
+      csv_slugs = CSV.new(open(args[:file_url]), encoding: 'utf-8').map(&:first).to_set
+      found_ids_slugs = []
+      csv_slugs.each_slice(200) do |slugs_slice|
+        found_ids_slugs += Course.where(slug: slugs_slice).pluck(:id, :slug)
+        found_ids_slugs += SlugHistory.where(slug: slugs_slice).pluck(:course_id, :slug)
       end
+
+      count = 0
+      found_ids, found_slugs = found_ids_slugs.then { |fis| [fis.map(&:first).to_set, fis.map(&:last).to_set] }
+      found_ids.each_slice(200) do |ids_slice|
+        count += Course.where(id: ids_slice).update_all(ignore_robots_noindex_rule: true)
+      end
+      (csv_slugs - found_slugs).each { |slug| puts "Slug not found: #{slug}" }
       puts "Updated #{count} courses"
     end
   end
