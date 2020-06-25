@@ -1,4 +1,4 @@
-Sitemap: https://pt-br.classpert.com/sitemap.xml.gz
+Sitemap: https://cdn.classpert.com/sitemaps/pt-br/sitemap.xml
 
 # https://www.semrush.com/bot/
 User-agent: SemrushBot
