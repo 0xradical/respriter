@@ -33,6 +33,11 @@
       "destination": "/tmp/codedeploy_install_instruction.patch"
     },
     {
+      "type": "file",
+      "source": "dummy_server.js",
+      "destination": "/home/ubuntu/respriter/server.js"
+    },
+    {
       "type": "shell",
       "scripts": ["./configure.sh"]
     }

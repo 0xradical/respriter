@@ -19,3 +19,4 @@ wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
 chmod +x ./install
 sudo ./install auto
 sudo patch /opt/codedeploy-agent/lib/instance_agent/plugins/codedeploy/install_instruction.rb /tmp/codedeploy_install_instruction.patch
+sudo chown -R ubuntu:ubuntu /home/ubuntu/respriter

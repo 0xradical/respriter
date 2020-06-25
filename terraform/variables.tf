@@ -28,7 +28,7 @@ variable "aws_instance_type" {
 
 # grab from packer output
 variable "aws_ami" {
-  default = "respriter-1593050311"
+  default = "respriter-1593095781"
 }
 
 # created on the console
