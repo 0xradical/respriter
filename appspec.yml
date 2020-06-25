@@ -15,12 +15,12 @@ hooks:
   ApplicationStart:
     - location: deploy/start_server
       timeout: 300
-      runas: ubuntu
+      runas: root
   ApplicationStop:
     - location: deploy/stop_server
       timeout: 300
-      runas: ubuntu
+      runas: root
   BeforeAllowTraffic:
     - location: deploy/check_instance_health
       timeout: 10
-      runas: ubuntu
+      runas: root
