@@ -116,6 +116,7 @@ const spritePromise = scope => params => {
 
 app.get("/healthcheck", function (req, res) {
   res.status(200);
+  res.end();
 });
 
 app.get("/test/:version", function (req, res) {
