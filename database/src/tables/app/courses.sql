@@ -43,6 +43,8 @@ CREATE TABLE app.courses (
   last_execution_id                       uuid,
   schema_version                          varchar,
   locale                                  app.locale,
+  locale_status                           app.locale_status,
   ignore_robots_noindex_rule_for          app.locale[]           DEFAULT '{}'::app.locale[],
-  ignore_robots_noindex_rule              boolean                DEFAULT false
+  ignore_robots_noindex_rule              boolean                DEFAULT false,
+  canonical_subdomain                     varchar
 );

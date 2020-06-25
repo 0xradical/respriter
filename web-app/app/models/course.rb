@@ -7,6 +7,7 @@ class Course < ApplicationRecord
 
   SUPPORTED_LANGUAGES = %w[pt en es ru it de fr].freeze
   SITE_LOCALES = { br: 'pt-BR', en: 'en' }.freeze
+  DEFAULT_LOCALE = Locale.new('en').freeze
   SIMILAR_COURSES = 15
 
   paginates_per 50
@@ -231,17 +232,43 @@ class Course < ApplicationRecord
   end
 
   def indexable_for_locale?(locale)
-    ignore_robots_noindex_rule_for.map { |locale| locale.join('-') }.flatten.include?(locale.to_s)
+    ignore_robots_noindex_rule_for.include? Locale.from_string(locale.to_s)
   end
 
-  def set_ignore_robots_noindex_rule_for!(locales)
-    literal = locales.map { |l| '"(' + (l.map.each_with_index { |p, i| '\"' + p + '\"' + (l.length == 1 ? ',' : '')  }.join(',')) + ')"' }.join(',')
-    self.class.connection.execute("UPDATE app.courses SET ignore_robots_noindex_rule_for = '{#{literal}}' WHERE id = '{#{id}}'")
-    self.reload
+  def set_canonical_subdomain_from_language!
+    return update(canonical_subdomain: '') unless self.locale.present?
+    locale_subdomains = I18n.available_locales.map do |locale_sym|
+      Locale.from_string(locale_sym.to_s).then { |loc| [loc.language_only.to_s, loc.to_s.downcase] }
+    end.to_h
+    locale_subdomains['en'] = ''
+    course_language = Locale.from_pg(self.locale).language_only.to_s
+    update(canonical_subdomain: locale_subdomains.fetch(course_language, ''))
+  end
+
+  def add_robots_index_rule_from_language!
+    course_locale = Locale.from_pg self.locale
+    generic_locale = course_locale.language_only
+    indexable = [course_locale, generic_locale]
+
+    site_supported = I18n.available_locales.map { |loc| Locale.from_string(loc.to_s).language_only }
+    indexable << DEFAULT_LOCALE unless site_supported.include? generic_locale
+    indexable.each { |loc| add_ignore_robots_noindex_rule_for! loc }
+  end
+
+  def add_ignore_robots_noindex_rule_for!(locale)
+    locales = ignore_robots_noindex_rule_for.map(&:to_s).to_set
+    locales << locale.to_s
+    set_ignore_robots_noindex_rule_for!(locales)
+  end
+
+  def set_ignore_robots_noindex_rule_for!(locale_strings)
+    locales = locale_strings.map { |str| Locale.from_string(str) }
+    update(ignore_robots_noindex_rule_for: Locale.to_pg_array(locales))
+    reload
   end
 
   def ignore_robots_noindex_rule_for
-    super.scan(/\([a-z]{2},(?:[A-Z]{2})?\)/).map { |tuple| tuple[1..tuple.length-2].split(',') }
+    Locale.from_pg_array(super)
   end
 
   def self.unnest_curated_tags(sub_query = 'courses')

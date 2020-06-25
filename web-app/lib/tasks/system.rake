@@ -220,4 +220,115 @@ namespace :system do
       end
     end
   end
+
+  namespace :courses do
+    desc 'Identify language and set locale and locale_status'
+    task :identify_language, %i[condition batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, 'locale_status IS NULL')
+      batch_size = args.fetch(:batch_size, 1000).to_i
+
+      count = 0
+      identifier = CourseLanguageIdentifier.new
+      Course.where(condition).find_each(batch_size: batch_size) do |course|
+        identifier.identify! course
+        count += 1
+      end
+      puts "Updated #{count} courses"
+    end
+
+    desc 'Execute :identify_language for all courses with null locale_status'
+    task :identify_missing_language, %i[batch_size] => %i[environment] do |t, args|
+      batch_size = args.fetch(:batch_size, 1000).to_i
+      Rake::Task['system:courses:identify_language'].invoke('locale_status IS NULL', batch_size)
+    end
+
+    desc 'Manually override language'
+    task :override_locale, %i[condition locale batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, '')
+      batch_size = args.fetch(:batch_size, 1000).to_i
+      locale_str = args.fetch(:locale, '')
+      abort "ERROR: No locale given" if locale_str.empty?
+      abort "ERROR: No condition given" if condition.empty?
+
+      locale = Locale.from_string(locale_str)
+      abort "ERROR: Invalid locale #{args[:locale]}" if locale.empty?
+
+      count = 0
+      identifier = CourseLanguageIdentifier.new
+      Course.where(condition).find_each(batch_size: batch_size) do |course|
+        identifier.override!(course, locale)
+        count += 1
+      end
+      puts "Updated #{count} courses"
+    end
+
+    desc 'Manually add a locale to the robots indexing rules'
+    task :add_locale_to_robots_index_rules, %i[condition locale batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, '')
+      batch_size = args.fetch(:batch_size, 1000).to_i
+      locale = Locale.from_string(args.fetch(:locale))
+      abort "ERROR: Invalid locale #{args[:locale]}" if locale.empty?
+      abort "ERROR: No condition given" if condition.empty?
+
+      count = 0
+      Course.where(condition).find_each(batch_size: batch_size) do |course|
+        course.add_ignore_robots_noindex_rule_for! locale
+        count += 1
+      end
+      puts "Updated #{count} courses"
+    end
+
+    desc 'Copy the locale attribute to ignore_robots_noindex_rule_for'
+    task :add_locale_to_robots_index_rules_from_language, %i[condition batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, "ignore_robots_noindex_rule_for = '{}'")
+      batch_size = args.fetch(:batch_size, 1000).to_i
+
+      count = 0
+      Course.where.not(locale: nil).where(condition).find_each(batch_size: batch_size) do |course|
+        course.add_robots_index_rule_from_language!
+        count += 1
+      end
+      puts "Updated #{count} courses"
+    end
+
+    desc 'Determine the canonical subdomain based on the locale'
+    task :set_canonical_subdomain_from_language, %i[condition batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, '')
+      batch_size = args.fetch(:batch_size, 1000).to_i
+
+      count = 0
+      Course.where(condition).find_each(batch_size: batch_size) do |course|
+        course.set_canonical_subdomain_from_language!
+        count += 1
+      end
+      puts "Updated #{count} courses"
+    end
+
+    desc 'Force a set of courses to be indexed in all locales'
+    task :force_robots_index, %i[condition] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, '')
+      abort "ERROR: No condition given" if condition.empty?
+
+      count = Course.where(condition).update_all(ignore_robots_noindex_rule: true)
+      puts "Updated #{count} courses"
+    end
+
+    desc 'Force a set of courses to be indexed in all locales from a CSV file with slugs'
+    task :force_robots_index_from_csv, %i[file_url] => %i[environment] do |t, args|
+      csv_slugs = CSV.new(open(args[:file_url]), encoding: 'utf-8').map(&:first).to_set
+      found_ids_slugs = []
+      csv_slugs.each_slice(200) do |slugs_slice|
+        found_ids_slugs += Course.where(slug: slugs_slice).pluck(:id, :slug)
+        found_ids_slugs += SlugHistory.where(slug: slugs_slice).pluck(:course_id, :slug)
+      end
+
+      count = 0
+      found_ids, found_slugs = found_ids_slugs.then { |fis| [fis.map(&:first).to_set, fis.map(&:last).to_set] }
+      found_ids.each_slice(200) do |ids_slice|
+        count += Course.where(id: ids_slice).update_all(ignore_robots_noindex_rule: true)
+      end
+      (csv_slugs - found_slugs).each { |slug| puts "Slug not found: #{slug}" }
+      puts "Updated #{count} courses"
+    end
+  end
 end

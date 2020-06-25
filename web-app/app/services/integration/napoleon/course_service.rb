@@ -21,12 +21,19 @@ module Integration
       def run(dataset_sequence = nil)
         dataset_sequence = Course.current_dataset_sequence if dataset_sequence.blank? || dataset_sequence == 0
         ::Napoleon::ResourceStreamer.new(STREAMER_PARAMS).resources(dataset_sequence) do |resource|
-          Course.upsert resource.to_course
+          course = Course.upsert resource.to_course
+          upsert_hooks course
         end
         update_index dataset_sequence
       end
 
       protected
+      def upsert_hooks(course)
+        CourseLanguageIdentifier.new.identify!(course)
+        course.add_robots_index_rule_from_language! if course.reload.locale_status == 'ok'
+        course.set_canonical_subdomain_from_language!
+      end
+
       def update_index(dataset_sequence)
         if dataset_sequence < Course.current_dataset_sequence
           log :info, 'Indexing Recently Synced Courses'

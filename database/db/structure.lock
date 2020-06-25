@@ -10,6 +10,7 @@ types/app/iso3166_1_alpha2_code.sql
 types/app/iso639_1_alpha2_code.sql
 types/app/level.sql
 types/app/locale.sql
+types/app/locale_status.sql
 types/app/pace.sql
 types/app/payment_source.sql
 types/app/payment_status.sql

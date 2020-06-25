@@ -7,6 +7,18 @@
   <% end %>
 <% end %>
 
+<% content_for :meta_canonical do %>
+  <% if @course.canonical_subdomain.present? %>
+    <link rel='canonical' href="https://<%= @course.canonical_subdomain %>.classpert.com<%= request.path %>" />
+  <% else %>
+    <link rel='canonical' href="https://classpert.com<%= request.path %>" />
+  <% end %>
+<% end %>
+
+<% content_for :meta_hreflang do %>
+  <!-- None -->
+<% end %>
+
 <% if @course.video&.dig('thumbnail_url') %>
   <% content_for :meta_og_image do %>
     <meta property='og:image' content='<%= @course.video&.dig('thumbnail_url') %>'>
