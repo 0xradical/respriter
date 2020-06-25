@@ -28,6 +28,11 @@
       "destination": "/home/ubuntu/respriter.service"
     },
     {
+      "type": "file",
+      "source": "code_deploy.patch",
+      "destination": "/tmp/codedeploy_install_instruction.patch"
+    },
+    {
       "type": "shell",
       "scripts": ["./configure.sh"]
     }
