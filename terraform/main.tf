@@ -381,6 +381,8 @@ resource "aws_cloudfront_distribution" "default" {
       cookies {
         forward = "none"
       }
+
+      headers = ["Host"]
     }
   }
 

@@ -114,6 +114,10 @@ const spritePromise = scope => params => {
   }
 };
 
+app.get("/healthcheck", function (req, res) {
+  res.status(200);
+});
+
 app.get("/test/:version", function (req, res) {
   const version = req.params.version;
 
@@ -162,10 +166,6 @@ app.get("/:version", cors(corsOptions), function (req, res) {
       res.send(svgPayload);
     })
     .catch(() => res.status(500));
-});
-
-app.get("/healthcheck", function (req, res) {
-  res.status(200);
 });
 
 const server = app.listen(
