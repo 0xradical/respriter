@@ -20,7 +20,7 @@ define docker_run_with_ports_or_plain
 	@$(call docker_run_or_plain,$1,--service-ports $2)
 endef
 
-.PHONY: help setup prepare clean bump-semver dev build tty bash down docker-build docker-push git-push
+.PHONY: help setup prepare clean bump-semver dev force-deploy-stg build tty bash down docker-build docker-push git-push
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
