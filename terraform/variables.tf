@@ -28,7 +28,7 @@ variable "aws_instance_type" {
 
 # grab from packer output
 variable "aws_ami" {
-  default = "respriter-1593095781"
+  default = "respriter-1593098520"
 }
 
 # created on the console
@@ -45,6 +45,8 @@ variable "aws_launch_configuration_user_data" {
   default = <<EOF
 #!/bin/bash
 ln -s /home/ubuntu/respriter.service /lib/systemd/system/respriter.service
+sudo systemctl enable respriter
+sudo systemctl start respriter
 EOF
 }
 

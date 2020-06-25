@@ -33,6 +33,10 @@
       "destination": "/tmp/codedeploy_install_instruction.patch"
     },
     {
+      "type": "shell",
+      "inline": ["mkdir -p /home/ubuntu/respriter"]
+    },
+    {
       "type": "file",
       "source": "dummy_server.js",
       "destination": "/home/ubuntu/respriter/server.js"
