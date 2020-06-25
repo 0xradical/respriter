@@ -2,14 +2,24 @@
 -- run `make build-seeds` instead
 
 WITH
-
 courses_template AS (
   INSERT INTO app.pipeline_templates (
     name,
+    success_script_type,
+    success_script,
     dataset_id,
     pipes
   ) SELECT
     'Frontend Masters Courses Pipeline',
+    'sql',
+    '
+      UPDATE app.resources
+      SET content = content || jsonb_build_object(''published'', false)
+      WHERE
+        content->>''provider_id''   = ''28856''
+        AND content->>''published'' = ''true''
+        AND last_execution_id      != $1.pipeline_execution_id;
+    ',
     '<%= dataset_id %>',
     '[
       {
@@ -76,7 +86,17 @@ INSERT INTO app.pipeline_templates (
   'sql',
   '    SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);  ',
   '<%= dataset_id %>',
-  '[
+  '[    
+    {
+      "type": "Fetcher",
+      "http": {
+        "headers": { "user_agent": "<%= user_agent %>" }
+      },
+      "script": {
+        "type":        "ruby",
+        "source_code": <%= sitemap_price_fetcher %>
+      }
+    },
     {
       "type": "Fetcher",
       "http": {
