@@ -18,4 +18,5 @@ hooks:
       runas: ubuntu
   BeforeAllowTraffic:
     - location: deploy/check_instance_health
-    - timeout: 10
+      timeout: 10
+      runas: ubuntu
