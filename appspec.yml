@@ -16,6 +16,6 @@ hooks:
     - location: deploy/stop_server
       timeout: 300
       runas: ubuntu
-  AllowTraffic:
-    - timeout: 300
-
+  BeforeAllowTraffic:
+    - location: deploy/check_instance_health
+    - timeout: 10
