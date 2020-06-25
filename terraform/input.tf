@@ -45,3 +45,15 @@ data "cloudflare_zones" "default" {
 data "github_repository" "default" {
   full_name = "${var.github_organization}/${var.github_repository}"
 }
+
+data "archive_file" "origin_request_lambda_zip" {
+  type          = "zip"
+  source_file   = "aws/lambda/origin_request.js"
+  output_path   = "aws/lambda/origin_request.zip"
+}
+
+data "archive_file" "origin_response_lambda_zip" {
+  type          = "zip"
+  source_file   = "aws/lambda/origin_response.js"
+  output_path   = "aws/lambda/origin_response.zip"
+}

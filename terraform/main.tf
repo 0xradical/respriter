@@ -311,6 +311,45 @@ resource "aws_autoscaling_policy" "default" {
 #### Cloudfront ####
 ####################
 
+resource "aws_iam_role" "cloudfront_lambda" {
+  name = "${var.app}-${var.environment}-cf-lambda-role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_lambda_function" "s3_origin_request" {
+  filename         = data.archive_file.origin_request_lambda_zip.output_path
+  function_name    = "s3_origin_request"
+  role             = aws_iam_role.cloudfront_lambda.arn
+  handler          = "exports.handler"
+  source_code_hash = data.archive_file.origin_request_lambda_zip.output_base64sha256
+  runtime          = "nodejs12.x"
+}
+
+resource "aws_lambda_function" "s3_origin_response" {
+  filename         = data.archive_file.origin_response_lambda_zip.output_path
+  function_name    = "s3_origin_response"
+  role             = aws_iam_role.cloudfront_lambda.arn
+  handler          = "exports.handler"
+  source_code_hash = data.archive_file.origin_response_lambda_zip.output_base64sha256
+  runtime          = "nodejs12.x"
+}
+
+
 # Cloudfront distribution with failover
 resource "aws_cloudfront_distribution" "default" {
   enabled = true
@@ -383,6 +422,18 @@ resource "aws_cloudfront_distribution" "default" {
       }
 
       headers = ["Host"]
+    }
+
+    lambda_function_association {
+      event_type   = "origin-request"
+      lambda_arn   = aws_lambda_function.s3_origin_request.qualified_arn
+      include_body = false
+    }
+
+    lambda_function_association {
+      event_type   = "origin-response"
+      lambda_arn   = aws_lambda_function.s3_origin_response.qualified_arn
+      include_body = false
     }
   }
 
@@ -489,6 +540,15 @@ resource "aws_codedeploy_deployment_group" "deployment_group" {
 resource "aws_s3_bucket" "codepipeline_bucket" {
   bucket_prefix = var.app
   acl           = "private"
+
+  lifecycle_rule {
+    id      = "code"
+    enabled = true
+
+    expiration {
+      days = 1
+    }
+  }
 
   tags = {
     App         = var.app
