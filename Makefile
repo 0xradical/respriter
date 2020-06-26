@@ -62,7 +62,7 @@ git-push-tags:
 	@git push origin --tags
 
 force-deploy-stg:
-	@git commit -a --allow-empty-message -m ''
+	@git commit --allow-empty-message -m ''
 	@git push origin master:staging
 
 clean: ## Clean build
