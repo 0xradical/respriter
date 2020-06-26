@@ -6,8 +6,11 @@
 exports.handler = (event, context, callback) => {
   const request = event.Records[0].cf.request; // extract the request object
 
-  if (request.origin.s3) {
+  if (request.origin.s3 && request.origin.s3.domainName) {
     request.uri = request.uri + "/svgs/sprites/all.svg"; // modify the URI
+    request.headers["host"] = [
+      { key: "Host", value: request.origin.s3.domainName }
+    ];
   }
 
   return callback(null, request); // return control to CloudFront

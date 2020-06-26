@@ -55,7 +55,7 @@ variable "aws_cloudfront_distribution_failover_bucket" {
 }
 
 variable "aws_cloudfront_distribution_failover_path" {
-  default = "/svgs/tags.svg"
+  default = ""
 }
 
 variable "aws_cloudfront_distribution_query_cache_keys" {
