@@ -16,4 +16,5 @@ Disallow: /
 
 User-agent: *
 Disallow: /forward/
+Disallow: /user_accounts/auth/
 Disallow: /claim
