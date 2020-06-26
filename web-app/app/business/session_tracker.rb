@@ -1,11 +1,13 @@
 class SessionTracker
   TRACKED_PROPERTIES = [
     :id, :cookie_id,
-    :ip, :utm, :cf_ipcountry, :http_accept_language,
+    :ip, :utm, :gclid, :cf_ipcountry, :http_accept_language,
     :referer, :query_string, :user_agent,
     :first_access_at, :last_access_at, :session_count, :session_started_at
   ]
-  UTM_REGEX = /(utm_campaign|utm_source|utm_medium|utm_content|utm_term)=([a-zA-Z0-9\-._~:\/?#\[\]@!$'\(\)*+,\;=]*)&?/
+
+  UTM_REGEX   = /(utm_campaign|utm_source|utm_medium|utm_content|utm_term)=([a-zA-Z0-9\-._~:\/?#\[\]@!$'\(\)*+,\;=]*)&?/
+  GCLID_REGEX = /(gclid)=([\w-]*)/
 
   delegate :request, :session, :cookies, to: :action
   attr_reader :action
@@ -125,6 +127,10 @@ class SessionTracker
 
   def parse_utm
     Hash[request.query_string.scan(UTM_REGEX)]
+  end
+
+  def parse_gclid
+    Hash[request.query_string.scan(GCLID_REGEX)]
   end
 
   def parse_referer
