@@ -113,6 +113,17 @@
     {
       "Sid": "VisualEditor8",
       "Effect": "Allow",
+      "Action": "lambda:*",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": ["us-east-1", "us-east-2"]
+        }
+      }
+    },
+    {
+      "Sid": "VisualEditor9",
+      "Effect": "Allow",
       "Action": [
         "s3:PutAnalyticsConfiguration",
         "s3:GetObjectVersionTagging",
@@ -215,7 +226,7 @@
       }
     },
     {
-      "Sid": "VisualEditor9",
+      "Sid": "VisualEditor10",
       "Effect": "Allow",
       "Action": [
         "sns:ListTagsForResource",

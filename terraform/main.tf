@@ -321,7 +321,10 @@ resource "aws_iam_role" "cloudfront_lambda" {
     {
       "Action": "sts:AssumeRole",
       "Principal": {
-        "Service": "lambda.amazonaws.com"
+        "Service": [
+            "lambda.amazonaws.com",
+            "edgelambda.amazonaws.com"
+          ]
       },
       "Effect": "Allow",
       "Sid": ""
@@ -331,24 +334,80 @@ resource "aws_iam_role" "cloudfront_lambda" {
 EOF
 }
 
+resource "aws_iam_role_policy" "cloudfront_lambda" {
+  name_prefix = var.app
+  role        = aws_iam_role.cloudfront_lambda.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "lambda:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:CreateLogGroup"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_lambda_function" "s3_origin_request" {
   filename         = data.archive_file.origin_request_lambda_zip.output_path
-  function_name    = "s3_origin_request"
+  function_name    = "origin_request"
   role             = aws_iam_role.cloudfront_lambda.arn
-  handler          = "exports.handler"
+  handler          = "origin_request.handler"
   source_code_hash = data.archive_file.origin_request_lambda_zip.output_base64sha256
   runtime          = "nodejs12.x"
+  publish          = true
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
 resource "aws_lambda_function" "s3_origin_response" {
   filename         = data.archive_file.origin_response_lambda_zip.output_path
-  function_name    = "s3_origin_response"
+  function_name    = "origin_response"
   role             = aws_iam_role.cloudfront_lambda.arn
-  handler          = "exports.handler"
+  handler          = "origin_response.handler"
   source_code_hash = data.archive_file.origin_response_lambda_zip.output_base64sha256
   runtime          = "nodejs12.x"
+  publish          = true
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+  }
 }
 
+resource "aws_lambda_permission" "allow_cloudfront_request_lambda_call" {
+  statement_id_prefix = var.app
+  action              = "lambda:GetFunction"
+  function_name       = aws_lambda_function.s3_origin_request.function_name
+  principal           = "cloudfront.amazonaws.com"
+}
+
+resource "aws_lambda_permission" "allow_cloudfront_response_lambda_call" {
+  statement_id_prefix = var.app
+  action              = "lambda:GetFunction"
+  function_name       = aws_lambda_function.s3_origin_response.function_name
+  principal           = "cloudfront.amazonaws.com"
+}
 
 # Cloudfront distribution with failover
 resource "aws_cloudfront_distribution" "default" {
@@ -442,6 +501,11 @@ resource "aws_cloudfront_distribution" "default" {
     Environment = var.environment
     Origin      = var.origin
   }
+
+  depends_on = [
+    aws_lambda_permission.allow_cloudfront_request_lambda_call,
+    aws_lambda_permission.allow_cloudfront_response_lambda_call
+  ]
 }
 
 #####################
