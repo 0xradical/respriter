@@ -18,7 +18,7 @@ const manifest = fs.readdirSync(resolveDist()).reduce((acc, scope) => {
 
 manifest.fetch = scope => symbol => {
   try {
-    return this[scope][symbol] || [];
+    return manifest[scope][symbol] || [];
   } catch (error) {
     return [];
   }
