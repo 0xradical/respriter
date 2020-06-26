@@ -1,10 +1,22 @@
 const fs = require("fs");
 const { compose, toPairs, map, reduce, join, split } = require("ramda");
 const { svg, log, dataReadAsync } = require("./utils");
-const { resolveEntry, resolveFamily } = require("./resolvers");
+const { resolveEntry, resolveFamily, resolveScope } = require("./resolvers");
+
+function assertScope(scope) {
+  if (fs.existsSync(resolveScope(scope)())) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 const builder = manifest => scope => params => {
   try {
+    if (!assertScope(scope)) {
+      throw "Scope does not exist";
+    }
+
     return compose(
       // collect promises
       ({ symbols, defs }) => symbols.then(s => defs.then(d => svg(s, d))),

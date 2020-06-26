@@ -71,7 +71,7 @@ app.get("/:version", cors, function (req, res) {
     .catch(error => {
       console.log(error);
       noCache(res);
-      res.status(500);
+      res.status(404);
       res.end();
     });
 });

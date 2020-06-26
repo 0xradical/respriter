@@ -5,9 +5,9 @@ function noCache(res) {
 }
 
 function svg(symbols, defs) {
-  return `<svg xmlns="http://www.w3.org/2000/svg"><defs>${
-    defs && defs.join("")
-  }</defs>${symbols && symbols.join("")}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg">${
+    defs && defs.length ? ["<defs>", ...defs, "</defs>"].join("") : ""
+  }${symbols && symbols.join("")}</svg>`;
 }
 
 function log(...payload) {
