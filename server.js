@@ -61,6 +61,8 @@ app.get("/test/:version", function (req, res) {
 });
 
 app.get("/:version", cors, function (req, res) {
+  const version = req.params.version;
+
   processor(version)(req.query)
     .then(svgPayload => {
       res.contentType("image/svg");
