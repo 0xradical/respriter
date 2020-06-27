@@ -76,8 +76,9 @@
       }
     </script>
 
+
     <!-- Elements css-->
-    <%= elements_stylesheet_link_tag('icon-font', 'bundle') %>
+    <%= content_for?(:elements_css) ? (yield :elements_css) : elements_stylesheet_link_tag('icon-font', 'bundle', version: (yield :elements_version), skip_pipeline: true) %>
 
     <!-- App css -->
     <%= stylesheet_bundles_with_chunks_tag 'vendor'  %>
@@ -107,23 +108,15 @@
       display:none won't work here as it breaks gradients. Check
       https://stackoverflow.com/questions/23966452/svg-icon-changes-when-svg-sprite-set-to-displaynone
     %>
-
-    <% unless rendertron? %>
-      <div style='width:0;height:0'>
-        <% if content_for(:base_svg_sprites) %>
-          <%= yield :base_svg_sprites %>
-          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/i18n.svg') %>"></div>
-          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg') %>"></div>
-        <% else %>
-          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg') %>"></div>
-          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/i18n.svg') %>"></div>
-          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/icons.svg') %>"></div>
-          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/providers.svg') %>"></div>
-          <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/tags.svg') %>"></div>
-        <% end %>
-        <%= yield :svg_sprites %>
-      </div>
-    <% end %>
+    <div style='width:0;height:0'>
+      <% unless content_for?(:elements_sprites) %>
+        <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg',     version: (yield :elements_version) ) %>"></div>
+        <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/i18n.svg',      version: (yield :elements_version) ) %>"></div>
+        <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/icons.svg',     version: (yield :elements_version) ) %>"></div>
+        <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/providers.svg', version: (yield :elements_version) ) %>"></div>
+        <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/tags.svg',      version: (yield :elements_version) ) %>"></div>
+      <% end %>
+    </div>
 
     <% if Rails.env.production? %>
       <!-- Google Tag Manager (noscript) -->
@@ -307,12 +300,10 @@
     </div>
     </footer>
     <% end %>
-
     <%= render 'offcanvas_menu' %>
     <%= javascript_bundles_with_chunks_tag 'vendor',      async: true %>
     <%= javascript_bundles_with_chunks_tag 'application', async: true %>
-    <%= elements_javascript_include_tag 'bundle',         async: true %>
-
+    <%= content_for?(:elements_js) ? (yield :elements_js) : elements_javascript_include_tag('bundle', version: (yield :elements_version), async: false, skip_pipeline: true) %>
     <%= yield :javascript  %>
   </body>
 
