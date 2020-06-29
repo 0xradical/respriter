@@ -3,7 +3,7 @@ variable "app" {
 }
 
 variable "prefix" {
-  default = "rpst-"
+  default = "rspt-"
 }
 
 variable "origin" {

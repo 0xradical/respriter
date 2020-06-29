@@ -15,22 +15,24 @@ exports.handler = (event, context, callback) => {
   if (
     request.origin.custom &&
     response.statusDescription === "OK" &&
-    request.origin.custom.customHeaders["X-Cache-Bucket-Name"][0].value
+    request.origin.custom.customHeaders["x-cache-bucket-name"] &&
+    request.origin.custom.customHeaders["x-cache-bucket-name"][0].value
   ) {
-    const orderedQs = request.uri.querystring
+    const orderedQs = request.querystring
       .split("&")
+      .filter(s => s.match(/=/))
       .map(s => s.split("="))
       .sort()
       .map(p => p[0] + "=" + p[1].split(",").sort().join(","))
       .join("&");
     const key = crypto
       .createHash("md5")
-      .update(`${request.uri.path}/${orderedQs}`)
+      .update(`${request.uri}/${orderedQs}`)
       .digest("hex");
 
     s3.putObject({
       Bucket:
-        request.origin.custom.customHeaders["X-Cache-Bucket-Name"][0].value,
+        request.origin.custom.customHeaders["x-cache-bucket-name"][0].value,
       Key: key,
       Body: response.body,
       ContentType: "image/svg"

@@ -10,15 +10,16 @@ exports.handler = (event, context, callback) => {
   // s3 -> get object based on query string and path
   // on fail will request to service (failover)
   if (request.origin.s3 && request.origin.s3.domainName) {
-    const orderedQs = request.uri.querystring
+    const orderedQs = request.querystring
       .split("&")
+      .filter(s => s.match(/=/))
       .map(s => s.split("="))
       .sort()
       .map(p => p[0] + "=" + p[1].split(",").sort().join(","))
       .join("&");
     const key = crypto
       .createHash("md5")
-      .update(`${request.uri.path}/${orderedQs}`)
+      .update(`${request.uri}/${orderedQs}`)
       .digest("hex");
 
     request.uri = `/${key}`;

@@ -386,6 +386,22 @@ resource "aws_iam_role_policy" "cloudfront_lambda" {
 EOF
 }
 
+# This is to optionally manage the CloudWatch Log Group for the Lambda Function.
+# If skipping this resource configuration, also add "logs:CreateLogGroup" to the IAM policy below.
+resource "aws_cloudwatch_log_group" "s3_origin_request" {
+  name              = "/aws/lambda/${var.aws_region}.${aws_lambda_function.s3_origin_request.function_name}"
+  retention_in_days = 5
+
+  depends_on = [aws_iam_role_policy.cloudfront_lambda]
+}
+
+resource "aws_cloudwatch_log_group" "s3_origin_response" {
+  name              = "/aws/lambda/${var.aws_region}.${aws_lambda_function.s3_origin_response.function_name}"
+  retention_in_days = 5
+
+  depends_on = [aws_iam_role_policy.cloudfront_lambda]
+}
+
 resource "aws_lambda_function" "s3_origin_request" {
   filename         = data.archive_file.origin_request_lambda_zip.output_path
   function_name    = "origin_request"
@@ -400,6 +416,10 @@ resource "aws_lambda_function" "s3_origin_request" {
     Environment = var.environment
     Origin      = var.origin
   }
+
+  depends_on = [
+    aws_cloudwatch_log_group.s3_origin_request
+  ]
 }
 
 resource "aws_lambda_function" "s3_origin_response" {
@@ -416,6 +436,10 @@ resource "aws_lambda_function" "s3_origin_response" {
     Environment = var.environment
     Origin      = var.origin
   }
+
+  depends_on = [
+    aws_cloudwatch_log_group.s3_origin_response
+  ]
 }
 
 resource "aws_lambda_permission" "allow_cloudfront_request_lambda_call" {
@@ -630,7 +654,7 @@ resource "aws_codedeploy_deployment_group" "deployment_group" {
 
 # bucket to store code pipeline artifacts (github clone)
 resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket_prefix = var.app
+  bucket_prefix = var.prefix
   acl           = "private"
 
   lifecycle_rule {
