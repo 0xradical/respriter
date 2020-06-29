@@ -80,6 +80,12 @@ namespace :system do
       Integration::TrackedActions::ShareASaleService.new(run_id).run
     end
 
+    desc 'Refreshes the materialized view bi.sales'
+    task refresh_sales_view: %i[environment] do
+      ActiveRecord::Base.connection.exec_query("REFRESH MATERIALIZED VIEW bi.sales");
+
+    end
+
     namespace :rakuten_marketing do
       desc 'Pull tracked actions from Rakuten Marketing'
       task tracked_actions_service: %i[environment] do |t, args|
