@@ -416,10 +416,6 @@ resource "aws_lambda_function" "s3_origin_request" {
     Environment = var.environment
     Origin      = var.origin
   }
-
-  depends_on = [
-    aws_cloudwatch_log_group.s3_origin_request
-  ]
 }
 
 resource "aws_lambda_function" "s3_origin_response" {
@@ -436,10 +432,6 @@ resource "aws_lambda_function" "s3_origin_response" {
     Environment = var.environment
     Origin      = var.origin
   }
-
-  depends_on = [
-    aws_cloudwatch_log_group.s3_origin_response
-  ]
 }
 
 resource "aws_lambda_permission" "allow_cloudfront_request_lambda_call" {
