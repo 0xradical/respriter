@@ -85,6 +85,7 @@
         "iam:CreateInstanceProfile",
         "iam:DeleteInstanceProfile",
         "iam:GetRole",
+        "iam:UpdateAssumeRolePolicy",
         "iam:GetInstanceProfile",
         "iam:TagRole",
         "iam:RemoveRoleFromInstanceProfile",
@@ -123,6 +124,17 @@
     },
     {
       "Sid": "VisualEditor9",
+      "Effect": "Allow",
+      "Action": "logs:*",
+      "Resource": "*",
+      "Condition": {
+        "StringEqualsIfExists": {
+          "aws:RequestedRegion": ["us-east-1", "us-east-2"]
+        }
+      }
+    },
+    {
+      "Sid": "VisualEditor10",
       "Effect": "Allow",
       "Action": [
         "s3:PutAnalyticsConfiguration",
@@ -226,7 +238,7 @@
       }
     },
     {
-      "Sid": "VisualEditor10",
+      "Sid": "VisualEditor11",
       "Effect": "Allow",
       "Action": [
         "sns:ListTagsForResource",
