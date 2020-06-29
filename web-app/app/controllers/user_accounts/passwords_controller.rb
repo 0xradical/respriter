@@ -12,7 +12,7 @@ class UserAccounts::PasswordsController < Devise::PasswordsController
 
   # POST /resource/password
   def create
-    super unless current_user_account.autogen_email_for_oauth
+    super unless (current_user_account & current_user_account&.autogen_email_for_oauth)
   end
 
   # GET /resource/password/edit?reset_password_token=abcdef
