@@ -53,6 +53,14 @@ s3)
   echo "s3.clspt"
   exit 0
   ;;
+fakes3)
+  echo "s3.clspt"
+  exit 0
+  ;;
+minio)
+  echo "s3.clspt"
+  exit 0
+  ;;
 user.app)
   echo "user.app.clspt"
   exit 0
