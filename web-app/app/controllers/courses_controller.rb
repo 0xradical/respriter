@@ -20,7 +20,7 @@ class CoursesController < ApplicationController
     @course   = @provider.courses.published.find_by(slug: params[:course])
 
     if @course
-      response.set_header('X-Robots-Tag', 'noindex') unless @course.indexable_by_robots_for_locale?
+      response.set_header('X-Robots-Tag', 'noindex') unless @course.indexable_by_robots?
     end
 
     unless @course

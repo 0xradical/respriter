@@ -8,6 +8,7 @@ class OrphanedProfilesController < ApplicationController
   def show
     redirect_to user_account_path(@orphaned_profile.claimed_by) and return if
     @orphaned_profile.has_been_successfully_claimed?
+    response.set_header('X-Robots-Tag', 'noindex') unless @orphaned_profile.indexable_by_robots?
   end
 
   def claim

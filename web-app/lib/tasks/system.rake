@@ -331,4 +331,21 @@ namespace :system do
       puts "Updated #{count} courses"
     end
   end
+
+  namespace :orphaned_profiles do
+    desc "Set ignore_robots_noindex_rule_for based on the instructor's courses"
+    task set_ignore_robots_noindex_rule: %i[environment] do |t, args|
+      OrphanedProfile.enabled.with_courses.find_each do |op|
+        locales = []; op.courses.each do |course|
+          break unless course.locale
+          locale = Locale.from_pg(course.locale)
+          locales << locale.language_only.to_s
+          locales << locale.to_s
+        end
+        locales.uniq.each do |locale|
+          op.add_ignore_robots_noindex_rule_for!(locale)
+        end
+      end
+    end
+  end
 end

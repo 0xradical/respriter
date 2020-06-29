@@ -44,10 +44,11 @@ I18nHost.new('classpert.com').each do |locale, host|
 
     # Course - Show
     Course.joins(:provider).published.where("courses.slug IS NOT NULL").find_each do |course|
-      if course.indexable_by_robots_for_locale?(locale)
+      if course.indexable_by_robots?(locale)
         add(course_path(provider: course.provider.slug, course: course.slug), {
           changefreq: 'weekly',
-          priority: 0.8
+          lastmod: (ENV.fetch('FORCE_LASTMOD_FOR_COURSES') { false } ? Time.now : course.updated_at).strftime('%Y-%m-%d'),
+          priority: 0.9
         })
       end
     end
@@ -55,24 +56,30 @@ I18nHost.new('classpert.com').each do |locale, host|
     # Orphaned Profile - Index
     add(instructors_path, {
       changefreq: 'monthly',
-      priority: 0.9,
+      priority: 0.8,
       lastmod: OrphanedProfile.enabled.order(updated_at: :desc).first.updated_at.strftime('%Y-%m-%d')
     })
 
     # Orphaned Profile - Show
-    OrphanedProfile.vacant.find_each do |orphaned_profile|
-      add(orphaned_profile_path(orphaned_profile.slug), {
-        changefreq: 'weekly',
-        priority: 0.8
-      })
+    OrphanedProfile.vacant.with_courses.find_each do |orphaned_profile|
+      if orphaned_profile.indexable_by_robots?(locale)
+        add(orphaned_profile_path(orphaned_profile.slug), {
+          changefreq: 'weekly',
+          lastmod: (ENV.fetch('FORCE_LASTMOD_FOR_ORPHANED_PROFILES') { false } ? Time.now : orphaned_profile.updated_at).strftime('%Y-%m-%d'),
+          priority: 0.8
+        })
+      end
     end
 
     Profile.instructor.publicly_listable.find_each do |profile|
       add(user_account_path(profile.username), {
-        changefreq: 'monthly',
-        priority: 0.7
+        changefreq: 'weekly',
+        lastmod: (ENV.fetch('FORCE_LASTMOD_FOR_PROFILES') { false } ? Time.now : profile.updated_at).strftime('%Y-%m-%d'),
+        priority: 0.8
       })
     end
+
+    SitemapGenerator::Sitemap.ping_search_engines if ENV.fetch('SITEMAP.PING_SEARCH_ENGINES') { false }
 
   end
 end

@@ -7,15 +7,18 @@ class OrphanedProfile < ApplicationRecord
     end
   end
 
+  include IndexableByRobots
   include Slugifyable
+
   slugify run_on:           :before_save,
           callback_options: { unless: -> { slug.present? } }
 
   scope :enabled,           -> { where(state: 'enabled') }
   scope :vacant,            -> { enabled.where('claimed_by IS NULL') }
   scope :with_slug,         -> { where.not(slug: nil) }
-  scope :teaching_subjects, ->  (subjects)  { where('teaching_subjects @> ARRAY[?]::varchar[]', subjects) }
-  scope :teaching_at,       ->  (providers) { where('teaching_at @> ARRAY[?]::varchar[]', providers)      }
+  scope :with_courses,      -> { where("course_ids != '{}'") }
+  scope :teaching_subjects, -> (subjects)  { where('teaching_subjects @> ARRAY[?]::varchar[]', subjects) }
+  scope :teaching_at,       -> (providers) { where('teaching_at @> ARRAY[?]::varchar[]', providers)      }
 
   after_initialize :reset_code_claim_process!, if: :claim_has_expired?
 
@@ -185,4 +188,17 @@ class OrphanedProfile < ApplicationRecord
                                       })
     end
   end
+
+  def add_ignore_robots_noindex_rule_for!(locale)
+    locales = ignore_robots_noindex_rule_for.map(&:to_s).to_set
+    locales << locale.to_s
+    set_ignore_robots_noindex_rule_for!(locales)
+  end
+
+  def set_ignore_robots_noindex_rule_for!(locale_strings)
+    locales = locale_strings.map { |str| Locale.from_string(str) }
+    update(ignore_robots_noindex_rule_for: Locale.to_pg_array(locales))
+    reload
+  end
+
 end

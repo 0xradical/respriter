@@ -2,6 +2,7 @@
 
 class Course < ApplicationRecord
   include CSVImport
+  include IndexableByRobots
   include Elasticsearch::Model
   # include Elasticsearch::Model::Callbacks
 
@@ -227,14 +228,6 @@ class Course < ApplicationRecord
         ->(tags) { where('curated_tags @> ARRAY[?]::varchar[]', tags) }
   scope :published, -> { where(published: true) }
 
-  def indexable_by_robots_for_locale?(locale=I18n.locale)
-    indexable_for_locale?(locale) || ignore_robots_noindex_rule || ENV.fetch('COURSES.IGNORE_ROBOTS_NOINDEX_RULE') { false }
-  end
-
-  def indexable_for_locale?(locale)
-    ignore_robots_noindex_rule_for.include? Locale.from_string(locale.to_s)
-  end
-
   def set_canonical_subdomain_from_language!
     return update(canonical_subdomain: '') unless self.locale.present?
     locale_subdomains = I18n.available_locales.map do |locale_sym|
@@ -265,10 +258,6 @@ class Course < ApplicationRecord
     locales = locale_strings.map { |str| Locale.from_string(str) }
     update(ignore_robots_noindex_rule_for: Locale.to_pg_array(locales))
     reload
-  end
-
-  def ignore_robots_noindex_rule_for
-    Locale.from_pg_array(super)
   end
 
   def self.unnest_curated_tags(sub_query = 'courses')
