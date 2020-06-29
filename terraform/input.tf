@@ -27,11 +27,6 @@ data "aws_ami" "default" {
   }
 }
 
-# Bucket used in cloudfront failover
-data "aws_s3_bucket" "cloudfront_failover" {
-  bucket = var.aws_cloudfront_distribution_failover_bucket
-}
-
 # Add cloudflare entry to cloudfront
 data "cloudflare_zones" "default" {
   filter {

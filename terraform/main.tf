@@ -311,6 +311,19 @@ resource "aws_autoscaling_policy" "default" {
 #### Cloudfront ####
 ####################
 
+
+resource "aws_s3_bucket" "cache" {
+  bucket_prefix = var.prefix
+  acl           = "public-read"
+
+  tags = {
+    App         = var.app
+    Environment = var.environment
+    Origin      = var.origin
+    Purpose     = "Cache"
+  }
+}
+
 resource "aws_iam_role" "cloudfront_lambda" {
   name = "${var.app}-${var.environment}-cf-lambda-role"
 
@@ -357,6 +370,16 @@ resource "aws_iam_role_policy" "cloudfront_lambda" {
       ],
       "Effect": "Allow",
       "Resource": "*"
+    },
+    {
+      "Action": [
+        "s3:*"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "${aws_s3_bucket.cache.arn}",
+        "${aws_s3_bucket.cache.arn}/*"
+      ]
     }
   ]
 }
@@ -444,8 +467,18 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   origin {
-    domain_name = aws_elb.web.dns_name
+    domain_name = aws_s3_bucket.cache.bucket_domain_name
     origin_id   = "${var.app}-${var.environment}-cloudfront-group-member-primary"
+    origin_path = ""
+
+    s3_origin_config {
+      origin_access_identity = ""
+    }
+  }
+
+  origin {
+    domain_name = aws_elb.web.dns_name
+    origin_id   = "${var.app}-${var.environment}-cloudfront-group-member-failover"
 
     custom_origin_config {
       http_port = 80
@@ -453,15 +486,10 @@ resource "aws_cloudfront_distribution" "default" {
       origin_protocol_policy = "https-only"
       origin_ssl_protocols = ["TLSv1.1"]
     }
-  }
 
-  origin {
-    domain_name = data.aws_s3_bucket.cloudfront_failover.bucket_domain_name
-    origin_id   = "${var.app}-${var.environment}-cloudfront-group-member-failover"
-    origin_path = var.aws_cloudfront_distribution_failover_path
-
-    s3_origin_config {
-      origin_access_identity = ""
+    custom_header {
+      name = "X-Cache-Bucket-Name"
+      value = aws_s3_bucket.cache.id
     }
   }
 

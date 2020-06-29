@@ -24,6 +24,8 @@ module Respriter
       @urls.each do |url|
         response = Net::HTTP.get_response(URI(url))
 
+        raise 'Sprite not found' if response.code != '200'
+
         sprite = Nokogiri::XML(response.body)
 
         sprite.css('defs > *').each do |definition|

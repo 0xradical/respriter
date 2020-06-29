@@ -1,12 +1,8 @@
 const express = require("express");
 const cors = require("./server/cors");
-const manifest = require("./server/manifest");
-const { noCache, log } = require("./server/utils");
-const { builder } = require("./server/processor");
-const processor = builder(manifest);
+const { noCache } = require("./server/utils");
+const { processor } = require("./server/processor");
 const app = express();
-
-log(manifest);
 
 app.get("/", function (_req, res) {
   noCache(res);

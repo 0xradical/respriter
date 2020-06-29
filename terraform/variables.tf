@@ -50,16 +50,8 @@ sudo systemctl start respriter
 EOF
 }
 
-variable "aws_cloudfront_distribution_failover_bucket" {
-  default = "clspt-elements-dist-prd"
-}
-
-variable "aws_cloudfront_distribution_failover_path" {
-  default = ""
-}
-
 variable "aws_cloudfront_distribution_query_cache_keys" {
-  default = [ "providers", "tags", "country-flags", "i18n", "brand" ]
+  default = [ "providers", "tags", "country-flags", "i18n", "brand", "all" ]
 }
 
 variable "github_organization" {

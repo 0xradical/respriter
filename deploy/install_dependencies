@@ -5,5 +5,5 @@ cd /home/ubuntu/respriter
 bundle install
 npm install
 export SPRITE_VERSION=$(node -p "require('./package.json').elements.version")
-export SPRITE_URL=https://elements-prd.classpert.com/${SPRITE_VERSION}/svgs/sprites/\{tags,brand,i18n,icons,providers\}.svg
+export SPRITE_URL=https://elements-prd.classpert.com/${SPRITE_VERSION}/svgs/sprites/\{tags,country-flags,brand,i18n,icons,providers\}.svg
 ./bin/build --sprite-version=$SPRITE_VERSION --sprite-url=$SPRITE_URL

@@ -1,7 +1,24 @@
 const fs = require("fs");
-const { compose, toPairs, map, reduce, join, split } = require("ramda");
+const { execSync } = require("child_process");
+const {
+  assoc,
+  __,
+  flatten,
+  compose,
+  toPairs,
+  map,
+  reduce,
+  join,
+  split
+} = require("ramda");
 const { svg, log, dataReadAsync } = require("./utils");
-const { resolveEntry, resolveFamily, resolveScope } = require("./resolvers");
+const {
+  resolveDist,
+  resolveEntry,
+  resolveFamily,
+  resolveScope,
+  resolveScoped
+} = require("./resolvers");
 
 function assertScope(scope) {
   if (fs.existsSync(resolveScope(scope)())) {
@@ -11,11 +28,22 @@ function assertScope(scope) {
   }
 }
 
-const builder = manifest => scope => params => {
+const processor = scope => params => {
   try {
+    var manifest = {};
+
     if (!assertScope(scope)) {
-      throw "Scope does not exist";
+      execSync(
+        `${global.rootDir}/bin/build --SPRITE_VERSION=${scope} --SPRITE_URL="https://elements-prd.classpert.com/${scope}/svgs/sprites/\{tags,country-flags,brand,i18n,icons,providers\}.svg"`
+      );
     }
+
+    manifest = JSON.parse(
+      fs.readFileSync(resolveScoped("dependencies.json")(scope)(), {
+        encoding: "utf8",
+        flag: "r"
+      })
+    );
 
     return compose(
       // collect promises
@@ -34,16 +62,14 @@ const builder = manifest => scope => params => {
       reduce(
         (acc, s) => ({
           symbols: [...acc.symbols, s],
-          defs: [...acc.defs, ...manifest.fetch(scope)(s)]
+          defs: [...acc.defs, ...(manifest[s] || [])]
         }),
         { symbols: [], defs: [] }
       ),
       // log,
-      // discard keys
-      reduce((acc, [_, o]) => [...acc, ...o], []),
-      // log,
+      flatten,
       // flattenize everyone into sprite format
-      map(([k, o]) => [k, map(o => join("-", [k, o]), split(",", o))]),
+      map(([k, o]) => map(o => join("-", [k, o]), split(",", o))),
       // log,
       // transform globbed scopes
       map(([k, o]) =>
@@ -70,4 +96,4 @@ const builder = manifest => scope => params => {
   }
 };
 
-module.exports = { builder };
+module.exports = { processor };
