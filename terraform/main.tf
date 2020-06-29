@@ -536,7 +536,7 @@ resource "aws_cloudfront_distribution" "default" {
     lambda_function_association {
       event_type   = "origin-response"
       lambda_arn   = aws_lambda_function.s3_origin_response.qualified_arn
-      include_body = false
+      include_body = true
     }
   }
 
