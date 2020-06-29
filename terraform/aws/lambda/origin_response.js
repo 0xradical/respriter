@@ -30,13 +30,19 @@ exports.handler = (event, context, callback) => {
       .update(`${request.uri}/${orderedQs}`)
       .digest("hex");
 
-    s3.putObject({
-      Bucket:
-        request.origin.custom.customHeaders["x-cache-bucket-name"][0].value,
-      Key: key,
-      Body: response.body,
-      ContentType: "image/svg"
-    });
+    s3.upload(
+      {
+        Bucket:
+          request.origin.custom.customHeaders["x-cache-bucket-name"][0].value,
+        Key: key,
+        Body: response.body,
+        ContentType: "image/svg"
+      },
+      function (err, res) {
+        if (err) console.log("Error while uploading sprite to s3: " + err);
+        else console.log("Sprite successfully uploaded");
+      }
+    );
   }
 
   return callback(null, response); // return control to CloudFront
