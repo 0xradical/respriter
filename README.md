@@ -4,13 +4,21 @@ Generate sprites on demand
 
 ## How it works
 
+### The basics
+
 Respriter is a simple service that expects SVG sprite URLs (possibly versioned) as inputs
-and outputs on a demand basis a subset of the original sprites as a final reduced sprite using the following API endpoint:
+and outputs a subset of the original sprites on a demand basis, using the following API endpoint:
 
 `/:version?sprite_a=x,y&sprite_b=w,z`
 
 The above means: Get me `<symbols>` x and y from sprite_a and `<symbols>` w and z from sprite_b
 from version `:version` and return me another SVG sprite with all thoses symbols. All `<defs>` that those specific `<symbols>` depend on are also present in the final SVG sprite.
+
+If `:version` is not currently checked out, the server downloads and process the
+
+### Caveats
+
+In its current iteration, there's only one possible generating input URL, hardcoded in the processor code, so basically the above currently means (production elements)[https://github.com/classpert/elements] `:version`. In the future, it will be possible to configure this input.
 
 ## Setup
 
@@ -18,9 +26,13 @@ run `make setup`
 
 ## Infrastructure
 
+### Topology
+
 The infrastructure for the respriter service has the following basic topology:
 
 ![Respriter Topology on AWS](/docs/topology.svg)
+
+### Infrastructure (as a) Code
 
 run `cd terraform && terraform init && terraform plan`
 
@@ -35,10 +47,14 @@ a `$HOME/.aws/credentials` file with a `[mfa]` section. This `[mfa]` section mus
 be populated with your AWS credentials (including the session token) using MFA.
 Refer to [this documentation](https://aws.amazon.com/premiumsupport/knowledge-center/authenticate-mfa-cli/) to read more.
 
-## Deploy
+## Deployment
 
-- Just push to either production or staging branch
-- appspec.yml controls [deployment](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#reference-appspec-file-structure-hooks-list)
+Deployments are triggered using github webhooks on this repository. Just push to the
+`production` branch and it will automatically begin.
+
+Deployments are performed through the AWS CodeSuite where there's orchestration for source downloading, service deployment / restarting and load balancing reattachment.
+
+The appspec.yml file controls the [deployment / restarting phase](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#reference-appspec-file-structure-hooks-list)
 
 ## TODO
 
