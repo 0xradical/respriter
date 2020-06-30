@@ -11,7 +11,7 @@ variable "origin" {
 }
 
 variable "environment" {
-  default = "staging"
+  default = "production"
 }
 
 variable "aws_region" {
@@ -37,7 +37,7 @@ variable "aws_key_name" {
 }
 
 variable "aws_codepipeline_github_branch" {
-  default = "staging"
+  default = "production"
 }
 
 # this service file is created during image build
@@ -67,7 +67,7 @@ variable "github_repository_webhook_secret" {
 }
 
 variable "cloudflare_zone" {
-  default = "classpert-staging.com"
+  default = "classpert.com"
 }
 
 variable "cloudflare_subdomain" {

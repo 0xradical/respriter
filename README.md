@@ -35,11 +35,11 @@ a `$HOME/.aws/credentials` file with a `[mfa]` section. This `[mfa]` section mus
 be populated with your AWS credentials (including the session token) using MFA.
 Refer to [this documentation](https://aws.amazon.com/premiumsupport/knowledge-center/authenticate-mfa-cli/) to read more.
 
-## deploy
+## Deploy
 
 - Just push to either production or staging branch
 - appspec.yml controls [deployment](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#reference-appspec-file-structure-hooks-list)
 
 ## TODO
 
-- We currently call our sprite families statically on the elements server
+- We currently configure specific sprite families statically on the elements server file (processor.js)
