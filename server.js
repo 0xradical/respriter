@@ -58,8 +58,12 @@ app.get("/test/:version", function (req, res) {
 
 app.get("/:version", cors, function (req, res) {
   const version = req.params.version;
+  const cache = req.headers["x-cache-bucket-name"];
 
-  processor(version)(req.query)
+  processor(
+    version,
+    cache
+  )(req.query)
     .then(svgPayload => {
       res.contentType("image/svg");
       res.send(svgPayload);

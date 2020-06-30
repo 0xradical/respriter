@@ -1,8 +1,8 @@
 const fs = require("fs");
+const AWS = require("aws-sdk");
+const crypto = require("crypto");
 const { execSync } = require("child_process");
 const {
-  assoc,
-  __,
   flatten,
   compose,
   toPairs,
@@ -13,7 +13,6 @@ const {
 } = require("ramda");
 const { svg, log, dataReadAsync } = require("./utils");
 const {
-  resolveDist,
   resolveEntry,
   resolveFamily,
   resolveScope,
@@ -28,9 +27,45 @@ function assertScope(scope) {
   }
 }
 
-const processor = scope => params => {
+const s3 = new AWS.S3();
+
+const s3Upload = (scope, params, cache) => {
+  const orderedQs = toPairs(params)
+    .filter(p => p[1] && p[1].length)
+    .sort()
+    .map(p => p[0] + "=" + p[1].split(",").sort().join(","))
+    .join("&");
+
+  const key = crypto
+    .createHash("md5")
+    .update(`${scope}/${orderedQs}`)
+    .digest("hex");
+
+  return body => {
+    s3.upload(
+      {
+        Bucket: cache,
+        Key: key,
+        Body: body,
+        ContentType: "image/svg"
+      },
+      function (err, _res) {
+        if (err) log("Error while uploading sprite to s3: " + err);
+        else log("Sprite successfully uploaded");
+      }
+    );
+
+    return body;
+  };
+};
+
+const processor = (scope, cache) => params => {
   try {
     var manifest = {};
+    const serve =
+      cache && cache.length
+        ? compose(s3Upload(scope, params, cache), svg)
+        : svg;
 
     if (!assertScope(scope)) {
       execSync(
@@ -47,7 +82,7 @@ const processor = scope => params => {
 
     return compose(
       // collect promises
-      ({ symbols, defs }) => symbols.then(s => defs.then(d => svg(s, d))),
+      ({ symbols, defs }) => symbols.then(s => defs.then(d => serve(s, d))),
       // construct promises of symbols and defs
       ({ symbols, defs }) => ({
         symbols: Promise.all(

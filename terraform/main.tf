@@ -237,6 +237,16 @@ resource "aws_iam_role_policy" "instance_profile_policy" {
         "${aws_s3_bucket.codepipeline_bucket.arn}",
         "${aws_s3_bucket.codepipeline_bucket.arn}/*"
       ]
+    },
+    {
+      "Action": [
+        "s3:*"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "${aws_s3_bucket.cache.arn}",
+        "${aws_s3_bucket.cache.arn}/*"
+      ]
     }
   ]
 }
@@ -370,16 +380,6 @@ resource "aws_iam_role_policy" "cloudfront_lambda" {
       ],
       "Effect": "Allow",
       "Resource": "*"
-    },
-    {
-      "Action": [
-        "s3:*"
-      ],
-      "Effect": "Allow",
-      "Resource": [
-        "${aws_s3_bucket.cache.arn}",
-        "${aws_s3_bucket.cache.arn}/*"
-      ]
     }
   ]
 }
@@ -490,6 +490,11 @@ resource "aws_cloudfront_distribution" "default" {
     s3_origin_config {
       origin_access_identity = ""
     }
+
+    custom_header {
+      name = "X-Cache-Bucket-Name"
+      value = aws_s3_bucket.cache.id
+    }
   }
 
   origin {
@@ -501,11 +506,6 @@ resource "aws_cloudfront_distribution" "default" {
       https_port = 443
       origin_protocol_policy = "https-only"
       origin_ssl_protocols = ["TLSv1.1"]
-    }
-
-    custom_header {
-      name = "X-Cache-Bucket-Name"
-      value = aws_s3_bucket.cache.id
     }
   }
 
@@ -536,7 +536,7 @@ resource "aws_cloudfront_distribution" "default" {
     lambda_function_association {
       event_type   = "origin-response"
       lambda_arn   = aws_lambda_function.s3_origin_response.qualified_arn
-      include_body = true
+      include_body = false
     }
   }
 
