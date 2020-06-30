@@ -133,6 +133,10 @@ logplex)
   echo "logplex.clspt"
   exit 0
   ;;
+respriter)
+  echo "respriter.clspt"
+  exit 0
+  ;;
 redis)
   echo "redis.clspt"
   exit 0

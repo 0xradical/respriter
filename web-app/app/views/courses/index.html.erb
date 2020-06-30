@@ -4,11 +4,30 @@
   <meta property='og:description' content='<%= t(".meta.description", search_query: params[:q] ) %>' />
 <% end %>
 
-<%= content_for :base_svg_sprites do %>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg') %>"></div>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/country-flags.svg') %>"></div>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/icons.svg') %>"></div>
-  <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/providers.svg') %>"></div>
+<%= content_for :sprites do %>
+  <%= sprites({
+    icons: [
+      "facebook-circle",
+      "linkedin-circle",
+      "instagram-circle",
+      "twitter-circle",
+      "reddit-circle",
+      "arrow-down",
+      "audio",
+      "subtitle",
+      "certificate",
+      "building",
+      "id-badge",
+      "velocimeter",
+      "level",
+      "clock",
+      "close",
+      "play"
+    ],
+    brand: "*",
+    i18n: ["en", "es", "pt-br", "ja"],
+    providers: "*"
+  }) %>
 <% end %>
 
 <script type='text/javascript'>

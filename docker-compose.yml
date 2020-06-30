@@ -380,6 +380,18 @@ services:
     depends_on:
       - proxy.clspt
 
+  respriter.clspt:
+    image: classpert/respriter:1.0.0
+    command: make serve
+    environment:
+      - LOGSPOUT=ignore
+    volumes:
+      - ../respriter:/app
+    ports:
+      - 8080:8080
+    depends_on:
+      - proxy.clspt
+
   urlbox.clspt:
     image: classpert/screenshooter:1.3.0
     environment:

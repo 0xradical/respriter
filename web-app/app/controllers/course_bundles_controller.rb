@@ -11,6 +11,7 @@ class CourseBundlesController < ApplicationController
   def index
     bundles = Course.unnest_curated_tags(Course.published.by_tags(@tag)).group(:tag).count
     RootTag.all.each { |rt| bundles.delete rt.id }
+    @bundles = bundles
     @bundles_by_letter = (I18n.locale == :ja) ? japanese_collation(bundles) : collate(bundles)
   end
 
@@ -35,12 +36,12 @@ class CourseBundlesController < ApplicationController
   def collate(bundles)
     bundles.map { |k, v| [t("tags.#{k}"), { tag: k, count: v }] }
                 .to_h.sort_by { |k, _v| k.downcase }.group_by { |k, _v| k[0].downcase }.map { |_k, v| Hash[v] }
-  end 
+  end
 
   def japanese_index_hash(k,v)
     reading = convert_to_kana(t("tags.#{k}"))
     { reading: reading, index: gojuon_index(reading), tag: k, count: v }
-  end 
+  end
 
   def japanese_collation(bundles)
     bundles.map { |k, v| [t("tags.#{k}"), japanese_index_hash(k,v)] }
