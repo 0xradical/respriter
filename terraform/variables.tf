@@ -51,7 +51,7 @@ EOF
 }
 
 variable "aws_cloudfront_distribution_query_cache_keys" {
-  default = [ "providers", "tags", "country-flags", "i18n", "brand", "all" ]
+  default = [ "providers", "tags", "country-flags", "i18n", "brand", "all", "icons" ]
 }
 
 variable "github_organization" {
