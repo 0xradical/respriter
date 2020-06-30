@@ -383,8 +383,6 @@ services:
   respriter.clspt:
     image: classpert/respriter:1.0.0
     command: make build-and-serve
-    env_file:
-      - envs/dev/respriter.env
     environment:
       - LOGSPOUT=ignore
     volumes:
