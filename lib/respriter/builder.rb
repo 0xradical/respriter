@@ -49,9 +49,10 @@ module Respriter
     def extract_dependencies
       @dependencies_tree ||= {}
 
+      # <use fill="url(#id-4-i18ne)" xlink:href="#id-3-i18nd"/>
       resolver = Respriter::DependencyResolver.new(
         @definitions,
-        proc { |entity| entity.to_xml.scan(/url\(#(?<id>[^)]+)\)/) }
+        proc { |entity| entity.to_xml.scan(/(url\(|xlink:href=["']{1})#(?<id>[^)"']+)/) }
       )
 
       @symbols.each do |symbol_id, symbol|
