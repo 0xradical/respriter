@@ -18,7 +18,7 @@ run `make setup`
 
 ## Infrastructure
 
-The infrastructure for the respriter service is as follows:
+The infrastructure for the respriter service has the following basic topology:
 
 ![Respriter Topology on AWS](/docs/topology.svg)
 

@@ -395,13 +395,6 @@ resource "aws_cloudwatch_log_group" "s3_origin_request" {
   depends_on = [aws_iam_role_policy.cloudfront_lambda]
 }
 
-resource "aws_cloudwatch_log_group" "s3_origin_response" {
-  name              = "/aws/lambda/${var.aws_region}.${aws_lambda_function.s3_origin_response.function_name}"
-  retention_in_days = 5
-
-  depends_on = [aws_iam_role_policy.cloudfront_lambda]
-}
-
 resource "aws_lambda_function" "s3_origin_request" {
   filename         = data.archive_file.origin_request_lambda_zip.output_path
   function_name    = "origin_request"
@@ -418,33 +411,10 @@ resource "aws_lambda_function" "s3_origin_request" {
   }
 }
 
-resource "aws_lambda_function" "s3_origin_response" {
-  filename         = data.archive_file.origin_response_lambda_zip.output_path
-  function_name    = "origin_response"
-  role             = aws_iam_role.cloudfront_lambda.arn
-  handler          = "origin_response.handler"
-  source_code_hash = data.archive_file.origin_response_lambda_zip.output_base64sha256
-  runtime          = "nodejs12.x"
-  publish          = true
-
-  tags = {
-    App         = var.app
-    Environment = var.environment
-    Origin      = var.origin
-  }
-}
-
 resource "aws_lambda_permission" "allow_cloudfront_request_lambda_call" {
   statement_id_prefix = var.app
   action              = "lambda:GetFunction"
   function_name       = aws_lambda_function.s3_origin_request.function_name
-  principal           = "cloudfront.amazonaws.com"
-}
-
-resource "aws_lambda_permission" "allow_cloudfront_response_lambda_call" {
-  statement_id_prefix = var.app
-  action              = "lambda:GetFunction"
-  function_name       = aws_lambda_function.s3_origin_response.function_name
   principal           = "cloudfront.amazonaws.com"
 }
 
@@ -532,12 +502,6 @@ resource "aws_cloudfront_distribution" "default" {
       lambda_arn   = aws_lambda_function.s3_origin_request.qualified_arn
       include_body = false
     }
-
-    lambda_function_association {
-      event_type   = "origin-response"
-      lambda_arn   = aws_lambda_function.s3_origin_response.qualified_arn
-      include_body = false
-    }
   }
 
   tags = {
@@ -547,8 +511,7 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   depends_on = [
-    aws_lambda_permission.allow_cloudfront_request_lambda_call,
-    aws_lambda_permission.allow_cloudfront_response_lambda_call
+    aws_lambda_permission.allow_cloudfront_request_lambda_call
   ]
 }
 
