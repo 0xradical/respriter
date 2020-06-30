@@ -39,3 +39,7 @@ Refer to [this documentation](https://aws.amazon.com/premiumsupport/knowledge-ce
 
 - Just push to either production or staging branch
 - appspec.yml controls [deployment](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#reference-appspec-file-structure-hooks-list)
+
+## TODO
+
+- We currently call our sprite families statically on the elements server

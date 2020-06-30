@@ -490,11 +490,6 @@ resource "aws_cloudfront_distribution" "default" {
     s3_origin_config {
       origin_access_identity = ""
     }
-
-    custom_header {
-      name = "X-Cache-Bucket-Name"
-      value = aws_s3_bucket.cache.id
-    }
   }
 
   origin {
@@ -506,6 +501,11 @@ resource "aws_cloudfront_distribution" "default" {
       https_port = 443
       origin_protocol_policy = "https-only"
       origin_ssl_protocols = ["TLSv1.1"]
+    }
+
+    custom_header {
+      name = "X-Cache-Bucket-Name"
+      value = aws_s3_bucket.cache.id
     }
   }
 
