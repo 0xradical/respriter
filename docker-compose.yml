@@ -382,7 +382,7 @@ services:
 
   respriter.clspt:
     image: classpert/respriter:1.0.0
-    command: make build-and-serve
+    command: make serve
     environment:
       - LOGSPOUT=ignore
     volumes:

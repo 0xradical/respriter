@@ -23,7 +23,7 @@ module RespriterHelper
     else
       params.keys.map do |key|
         content_tag(:div, nil, "data-svg-sprite": elements_asset_path("svgs/sprites/#{key}.svg"))
-      end
+      end.reduce(&:+)
     end
   end
 
