@@ -34,7 +34,7 @@ namespace :assets do
         end.compact.sort_by(&:last).reverse.drop(count_to_keep).map(&:first)
       end
 
-      files_to_be_removed.each do |f|
+      files_to_be_removed.uniq.each do |f|
         print "Deleting #{f} ... "
         begin
           File.delete(f)
