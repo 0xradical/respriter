@@ -20,7 +20,7 @@ define docker_run_with_ports_or_plain
 	@$(call docker_run_or_plain,$1,--service-ports $2)
 endef
 
-.PHONY: help setup prepare clean bump-semver dev force-deploy-stg build tty bash down docker-build docker-push git-push
+.PHONY: help setup prepare clean dev force-deploy-stg build tty bash down docker-build docker-push
 
 help:
 	@grep -E '^[%a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
@@ -29,37 +29,11 @@ setup: .env .env.production docker-compose.yml ## Setup project
 	@make docker-pull
 	@make docker-build
 
-build: ## Build assets
-	@rm -rf dist/**
-	@$(call docker_run_or_plain,sh -c './bin/build --sprite-version=$$SPRITE_VERSION --sprite-url=$$SPRITE_URL')
-
-release: ENV = production
-release: build bump-semver git-commit git-push git-push-tags publish ## Bump elements to version identified by [v] | e.g make release v={minor,major,patch,$version}
-
-publish: ## Run npm publish
-	@$(call docker_run_or_plain,npm publish)
-
 serve: ## Run server
 	@$(call docker_run_with_ports_or_plain,npm run serve)
 
-build-and-serve: build serve ## Run a build once then serve
-
 test: ## Run tests
 	@$(call docker_run_or_plain,bundle exec rspec)
-
-bump-semver: ENV = production
-bump-semver:
-	@$(call docker_run_or_plain,npm version $(v))
-
-git-commit:
-	@git add .
-	@git commit -m "Adding build for version $(v)"
-
-git-push:
-	@git push origin $$(git branch --show-current)
-
-git-push-tags:
-	@git push origin --tags
 
 force-deploy-stg:
 	@git commit --allow-empty-message -m ''
