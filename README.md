@@ -14,7 +14,7 @@ and outputs a subset of the original sprites on a demand basis, using the follow
 The above means: Get me `<symbols>` x and y from sprite_a and `<symbols>` w and z from sprite_b
 from version `:version` and return me another SVG sprite with all thoses symbols. All `<defs>` that those specific `<symbols>` depend on are also present in the final SVG sprite.
 
-If `:version` is not currently checked out, the server downloads and process the
+If `:version` is not currently checked out, the server (`server.js`) downloads the specific version to disk onto the `dist/:version` folder and process the download on demand. The processing is done by the `bin/build` ruby binary. The entrypoint for the builder is the `lib` folder. Upon building, the server sends the response to a cache in a s3 bucket, whose name was sent in the `X-Cache-Bucket-Name` request header. In the absence of this header, there's no s3 caching.
 
 ### Caveats
 
