@@ -55,7 +55,8 @@
       "velocimeter",
       "level",
       "clock",
-      "close"
+      "close",
+      "play"
     ],
     providers: [@course.provider.slug, @course.similar.map(&:provider).map(&:slug)].join(",")
   }) %>

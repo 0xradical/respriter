@@ -56,6 +56,7 @@ GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN
 
 # Respriter Service
 # RESPRITER_URL=http://respriter.clspt:8080
+# RESPRITER_URL=https://respriter.classpert.com
 EOF
   echo "Created local env file $2 with envs from production"
   exit 0
