@@ -38,7 +38,7 @@ const s3Upload = (scope, params, cache) => {
 
   const key = crypto
     .createHash("md5")
-    .update(`${scope}/${orderedQs}`)
+    .update(`/${scope}/${orderedQs}`)
     .digest("hex");
 
   return body => {
