@@ -9,7 +9,28 @@
 </script>
 
 <%= content_for :sprites do %>
-  <%= sprites({ brand: "*", "country-flags": "*", icons: "*", providers: @preview_course.provider.slug }) %>
+  <%= sprites({
+    brand: "*",
+    "country-flags": "*",
+    icons: [
+      "facebook-circle",
+      "linkedin-circle",
+      "instagram-circle",
+      "twitter-circle",
+      "reddit-circle",
+      "arrow-down",
+      "audio",
+      "subtitle",
+      "certificate",
+      "building",
+      "id-badge",
+      "velocimeter",
+      "level",
+      "clock",
+      "close"
+    ],
+    providers: @preview_course.provider.slug
+  }) %>
 <% end %>
 
 <%= content_for :stylesheets do %>
