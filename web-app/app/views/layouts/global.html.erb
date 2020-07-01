@@ -112,7 +112,7 @@
       <% if content_for(:sprites) %>
         <%= yield :sprites %>
       <% else %>
-        <%= sprites({icons: "*", brand: '*', i18n: '*', providers: '*'}, version: (yield :elements_version)) %>
+        <%= sprites({icons: "*", brand: '*', i18n: '*', providers: '*', tags: RootTag.all.map(&:id)}, version: (yield :elements_version)) %>
       <% end %>
     </div>
 

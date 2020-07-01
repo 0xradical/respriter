@@ -17,7 +17,7 @@ module RespriterHelper
         URI(respriter_url),
         version
       ).tap do |uri|
-        uri.query = params.flat_map { |k, v| "#{k}=#{Array.wrap(v).join(',')}" }.join('&')
+        uri.query = params.flat_map { |k, v| "#{k}=#{Array.wrap(v).uniq.join(',')}" }.join('&')
       end
       content_tag(:div, nil, "data-svg-sprite": sprite_uri.to_s)
     else

@@ -10,8 +10,10 @@
 
 <%= content_for :sprites do %>
   <%= sprites({
+    tags: RootTag.all.map(&:id),
     brand: "*",
     "country-flags": "*",
+    i18n: ["en", "es", "pt-br", "ja"],
     icons: [
       "facebook-circle",
       "linkedin-circle",
@@ -29,7 +31,9 @@
       "clock",
       "close",
       "play",
-      "video-recorder-unavailable"
+      "video-recorder-unavailable",
+      "question",
+      "avatar"
     ],
     providers: @preview_course.provider.slug
   }) %>

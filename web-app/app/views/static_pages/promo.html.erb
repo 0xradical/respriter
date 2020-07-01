@@ -1,5 +1,5 @@
 <% content_for(:sprites) do %>
-  <%= sprites({ i18n: "*", brand: "*", icons: "*" }) %>
+  <%= sprites({ i18n: "*", brand: "*", icons: "*", tags: RootTag.all.map(&:id)}) %>
 <% end %>
 
 <% content_for(:banner) do %>

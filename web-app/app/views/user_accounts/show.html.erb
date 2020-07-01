@@ -23,7 +23,7 @@
 <% end %>
 
 <%= content_for :sprites do %>
-  <%= sprites({ brand: "*", i18n: "*", icons: "*", "country-flags": "*" }) %>
+  <%= sprites({ brand: "*", i18n: "*", icons: "*", "country-flags": "*", tags: RootTag.all.map(&:id) }) %>
 <% end %>
 
 <div>

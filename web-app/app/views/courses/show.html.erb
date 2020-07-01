@@ -38,6 +38,7 @@
 
 <%= content_for :sprites do %>
   <%= sprites({
+    tags: RootTag.all.map(&:id),
     brand: "*",
     i18n: ["en", "es", "pt-br", "ja"],
     icons: [
@@ -57,7 +58,9 @@
       "clock",
       "close",
       "play",
-      "video-recorder-unavailable"
+      "video-recorder-unavailable",
+      "question",
+      "avatar"
     ],
     providers: [@course.provider.slug, @course.similar.map(&:provider).map(&:slug)].flatten.compact.uniq
   }) %>

@@ -12,7 +12,7 @@
 
 <%= content_for :sprites do %>
   <%= sprites({
-    tags: @bundles.keys,
+    tags: [RootTag.all.map(&:id), @bundles.keys].flatten.compact.uniq,
     icons: [
       "facebook-circle",
       "linkedin-circle",
@@ -30,7 +30,9 @@
       "clock",
       "close",
       "play",
-      "video-recorder-unavailable"
+      "video-recorder-unavailable",
+      "question",
+      "avatar"
     ],
     brand: "*",
     i18n: ["en", "es", "pt-br", "ja"]

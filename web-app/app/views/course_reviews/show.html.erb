@@ -3,7 +3,7 @@
 <% end %>
 
 <%= content_for :sprites do %>
-  <%= sprites({icons: "*", brand: '*', i18n: '*'}) %>
+  <%= sprites({icons: "*", brand: '*', i18n: '*', tags: RootTag.all.map(&:id)}) %>
 <% end %>
 
 <div class='container'>

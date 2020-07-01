@@ -73,13 +73,14 @@ html {
     margin-right: 10px;
 
     &--current {
-      background-color: #4c636f;
+      background-color: var(--foreground-medium);
       color: #fff;
       padding: 0px 4px;
       border-radius: 3px;
 
       a {
         display: inline-block;
+        color: #fff;
       }
     }
   }

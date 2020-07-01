@@ -21,12 +21,14 @@
       "clock",
       "close",
       "play",
-      "video-recorder-unavailable"
+      "video-recorder-unavailable",
+      "question",
+      "avatar"
     ],
     brand: "*",
     i18n: ["en", "es", "pt-br", "ja"],
     providers: "*",
-    tags: [@tag].compact
+    tags: [RootTag.all.map(&:id), @tag].flatten.compact.uniq
   }) %>
 <% end %>
 
