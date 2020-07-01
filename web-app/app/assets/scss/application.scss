@@ -61,27 +61,3 @@ html {
     }
   }
 }
-
-.c-pagination {
-  list-style: none;
-  margin: 10px 0px;
-  padding: 0;
-  clear: both;
-
-  &__page {
-    float: left;
-    margin-right: 10px;
-
-    &--current {
-      background-color: var(--foreground-medium);
-      color: #fff;
-      padding: 0px 4px;
-      border-radius: 3px;
-
-      a {
-        display: inline-block;
-        color: #fff;
-      }
-    }
-  }
-}

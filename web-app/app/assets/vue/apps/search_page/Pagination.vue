@@ -42,80 +42,85 @@
       ></a>
     </li>
 
-    <li style="clear:both"></li>
+    <li style="clear: both;"></li>
   </ul>
 </template>
 <script>
-export default {
-  props: {
-    currentPage: {
-      type: Number,
-      default: 1
-    },
+  export default {
+    props: {
+      currentPage: {
+        type: Number,
+        default: 1
+      },
 
-    recordsPerPage: {
-      type: Number,
-      default: 25
-    },
+      recordsPerPage: {
+        type: Number,
+        default: 25
+      },
 
-    paginationAnchor: {
-      type: String,
-      default: ""
-    },
+      paginationAnchor: {
+        type: String,
+        default: ""
+      },
 
-    pace: {
-      type: Number,
-      default: 4
-    },
+      pace: {
+        type: Number,
+        default: 4
+      },
 
-    numOfPages: {
-      type: Number,
-      default: 0
-    }
-  },
-  computed: {
-    pages() {
-      var pages = [];
-      for (
-        var i = Math.max(this.currentPage - this.pace, 1);
-        i <= Math.min(this.currentPage + this.pace, this.numOfPages);
-        i++
-      ) {
-        pages.push(i);
+      numOfPages: {
+        type: Number,
+        default: 0
       }
-      return pages;
-    }
-  },
-
-  methods: {
-    nextPage() {
-      Math.min((this.currentPage += 1), this.numOfPages);
+    },
+    computed: {
+      pages() {
+        var pages = [];
+        for (
+          var i = Math.max(this.currentPage - this.pace, 1);
+          i <= Math.min(this.currentPage + this.pace, this.numOfPages);
+          i++
+        ) {
+          pages.push(i);
+        }
+        return pages;
+      }
     },
 
-    previousPage() {
-      Math.max((this.currentPage -= 1), 1);
+    methods: {
+      nextPage() {
+        Math.min((this.currentPage += 1), this.numOfPages);
+      },
+
+      previousPage() {
+        Math.max((this.currentPage -= 1), 1);
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped lang="scss">
-.c-pagination {
-  list-style: none;
-  margin: 1em 0 0 0;
-  padding: 0;
-  clear: both;
+  .c-pagination {
+    list-style: none;
+    margin: 1em 0 0 0;
+    padding: 0;
+    clear: both;
 
-  &__page {
-    float: left;
-    margin-right: 0.625em;
+    &__page {
+      float: left;
+      margin-right: 0.625em;
 
-    &--current a {
-      background-color: #4c636f;
-      color: #fff;
-      padding: 0px 4px;
-      border-radius: 3px;
+      &--current {
+        background-color: var(--foreground-medium);
+        color: #fff;
+        padding: 0px 4px;
+        border-radius: 3px;
+
+        a {
+          display: inline-block;
+          color: #fff;
+        }
+      }
     }
   }
-}
 </style>
