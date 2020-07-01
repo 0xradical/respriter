@@ -113,7 +113,7 @@
       &--current {
         background-color: var(--foreground-medium);
         color: #fff;
-        padding: 0px 4px;
+        padding: 0px 8px;
         border-radius: 3px;
 
         a {
