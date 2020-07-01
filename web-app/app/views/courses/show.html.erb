@@ -59,7 +59,7 @@
       "play",
       "video-recorder-unavailable"
     ],
-    providers: [@course.provider.slug, @course.similar.map(&:provider).map(&:slug)].join(",")
+    providers: [@course.provider.slug, @course.similar.map(&:provider).map(&:slug)].uniq.join(",")
   }) %>
 <% end %>
 
