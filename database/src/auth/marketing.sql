@@ -2,4 +2,6 @@ CREATE USER marketing WITH PASSWORD '$MARKETING_PASSWORD';
 
 GRANT CONNECT ON DATABASE $POSTGRES_DB    TO "marketing";
 GRANT USAGE   ON SCHEMA app               TO "marketing";
+GRANT USAGE   ON SCHEMA bi                TO "marketing";
 GRANT SELECT  ON ALL TABLES IN SCHEMA app TO "marketing";
+GRANT SELECT  ON ALL TABLES IN SCHEMA bi  TO "marketing";
