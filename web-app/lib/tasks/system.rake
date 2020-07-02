@@ -290,7 +290,7 @@ namespace :system do
       batch_size = args.fetch(:batch_size, 1000).to_i
 
       count = 0
-      Course.where.not(locale: nil).where(condition).find_each(batch_size: batch_size) do |course|
+      Course.where('not(locale is null)').where(condition).find_each(batch_size: batch_size) do |course|
         course.add_robots_index_rule_from_language!
         count += 1
       end
@@ -334,6 +334,19 @@ namespace :system do
         count += Course.where(id: ids_slice).update_all(ignore_robots_noindex_rule: true)
       end
       (csv_slugs - found_slugs).each { |slug| puts "Slug not found: #{slug}" }
+      puts "Updated #{count} courses"
+    end
+
+    desc "Find suitable bundle tags from course's name and add them to curated_tags"
+    task :add_curated_tags_from_name, %i[condition batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, "curated_tags = '{}'")
+      batch_size = args.fetch(:batch_size, 1000).to_i
+
+      count = 0
+      course_tagger = CourseTagger.new
+      Course.where(condition).find_each(batch_size: batch_size) do |course|
+        count += 1 if course_tagger.tag!(course)
+      end
       puts "Updated #{count} courses"
     end
   end

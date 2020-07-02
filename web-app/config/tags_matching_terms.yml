@@ -1,0 +1,20 @@
+# tag names should be written in snake_case
+
+aws:
+  - AWS
+  - Amazon Web Services
+
+go_programming:
+  - Go Programming
+  - Programming with Go
+  - Gopher
+  - Golang
+
+ruby_on_rails:
+  - Ruby on Rails
+
+ruby_programming:
+  - Ruby Programming
+  - Ruby Scripting
+  - Capistrano
+  - Ruby on Rails

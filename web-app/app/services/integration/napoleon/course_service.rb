@@ -18,6 +18,11 @@ module Integration
         ]
       }
 
+      def initialize
+        @language_idr = CourseLanguageIdentifier.new
+        @bundle_tagger = CourseTagger.new
+      end
+
       def run(dataset_sequence = nil)
         dataset_sequence = Course.current_dataset_sequence if dataset_sequence.blank? || dataset_sequence == 0
         ::Napoleon::ResourceStreamer.new(STREAMER_PARAMS).resources(dataset_sequence) do |resource|
@@ -29,9 +34,10 @@ module Integration
 
       protected
       def upsert_hooks(course)
-        CourseLanguageIdentifier.new.identify!(course)
+        @language_idr.identify!(course)
         course.add_robots_index_rule_from_language! if course.reload.locale_status == 'ok'
         course.set_canonical_subdomain_from_language!
+        @bundle_tagger.tag!(course)
       end
 
       def update_index(dataset_sequence)
