@@ -336,6 +336,19 @@ namespace :system do
       (csv_slugs - found_slugs).each { |slug| puts "Slug not found: #{slug}" }
       puts "Updated #{count} courses"
     end
+
+    desc "Find suitable bundle tags from course's name and add them to curated_tags"
+    task :add_curated_tags_from_name, %i[condition batch_size] => %i[environment] do |t, args|
+      condition = args.fetch(:condition, "curated_tags = '{}'")
+      batch_size = args.fetch(:batch_size, 1000).to_i
+
+      count = 0
+      course_tagger = CourseTagger.new
+      Course.where(condition).find_each(batch_size: batch_size) do |course|
+        count += 1 if course_tagger.tag!(course)
+      end
+      puts "Updated #{count} courses"
+    end
   end
 
   namespace :orphaned_profiles do
