@@ -290,7 +290,7 @@ namespace :system do
       batch_size = args.fetch(:batch_size, 1000).to_i
 
       count = 0
-      Course.where.not(locale: nil).where(condition).find_each(batch_size: batch_size) do |course|
+      Course.where('not(locale is null)').where(condition).find_each(batch_size: batch_size) do |course|
         course.add_robots_index_rule_from_language!
         count += 1
       end
