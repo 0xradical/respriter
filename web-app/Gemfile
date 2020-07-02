@@ -59,7 +59,7 @@ gem 'affiliate_hub_cj',                 git: 'https://github.com/codextremist/af
 gem 'affiliate_hub_shareasale',         git: 'https://github.com/codextremist/affiliate_hub_shareasale'
 
 # Browser
-gem 'browser',           '~> 4.0'
+gem 'browser',           '~> 4.2'
 gem 'user_agent_parser', '~> 2.6.0'
 gem 'http-accept',       '~> 2.1.1'
 
