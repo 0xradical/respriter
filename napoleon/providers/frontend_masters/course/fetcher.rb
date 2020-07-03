@@ -23,7 +23,6 @@ duration    = {value: lessons, unit: 'lessons' }
 workload    = {value: (effort*60.0/lessons).round, unit: 'minutes' }
 
 image_url = json_ld[0][:image_url] 
-published = json_ld[0][:datePublished] 
 
 syllabus = document.css('.LessonListItem').map do |lesson|
   title       = lesson.css('h3').text.strip
@@ -31,11 +30,10 @@ syllabus = document.css('.LessonListItem').map do |lesson|
   "# #{title}\n\n#{detail}"
 end.join "\n"
 
-
 content = {
   id:                Digest::SHA1.hexdigest(url),
   image_url:         image_url,
-  published:         published, 
+
   provider_id:       28856,
   provider_name:     'Frontend Masters',
   course_name:       course_name,

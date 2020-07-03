@@ -1,0 +1,105 @@
+-- auto-generated, do not change!
+-- run `make build-seeds` instead
+
+WITH
+
+courses_template AS (
+  INSERT INTO app.pipeline_templates (
+    name,
+    success_script_type,
+    success_script,
+    dataset_id,
+    pipes
+  ) SELECT
+    'Domestika Courses Pipeline',
+    'sql',
+    '
+      UPDATE app.resources
+      SET content = content || jsonb_build_object(''published'', false)
+      WHERE
+        content->>''provider_id''   = ''28857''
+        AND content->>''published'' = ''true''
+        AND last_execution_id      != $1.pipeline_execution_id;
+    ',
+    '<%= dataset_id %>',
+    '[
+      {
+        "http": {
+          "headers": {
+            "user_agent": "<%= user_agent %>"
+          }
+        },
+        "type": "Fetcher",
+        "script": {
+          "type": "ruby",
+          "source_code": <%= course_fetcher %>
+        }
+      },
+      {
+        "type":"ResourceCreator"
+      }
+    ]'
+  RETURNING *
+)
+
+INSERT INTO app.pipeline_templates (
+  name,
+  data,
+  bootstrap_script_type,
+  bootstrap_script,
+  success_script_type,
+  success_script,
+  dataset_id,
+  pipes
+) SELECT
+  'Domestika Sitemap Pipeline',
+  jsonb_build_object(
+    'next_pipeline_template_id', courses_template.id::varchar,
+    'sitemap_url',               '<%= sitemap_url %>'
+  ),
+  'sql',
+  '
+    WITH next_pipeline AS (
+      INSERT INTO app.pipelines (
+        pipeline_execution_id,
+        pipeline_template_id
+      ) VALUES (
+        $1.pipeline_execution_id,
+        ($1.data->>''next_pipeline_template_id'')::uuid
+      )
+      RETURNING *
+    )
+
+    UPDATE app.pipelines
+    SET data = jsonb_set(pipelines.data, ''{next_pipeline_id}'', (''"'' || next_pipeline.id || ''"'')::jsonb)
+    FROM next_pipeline
+    WHERE pipelines.id = $1.id;
+
+    INSERT INTO app.pipe_processes (
+      pipeline_id,
+      initial_accumulator
+    ) VALUES (
+      $1.id,
+      jsonb_build_object(''url'', $1.data->>''sitemap_url'')
+    );
+    SELECT app.pipeline_call($1.id);
+  ',
+  'sql',
+  '    SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);  ',
+  '<%= dataset_id %>',
+  '[
+    {
+      "type": "Fetcher",
+      "http": {
+        "headers": { "user_agent": "<%= user_agent %>" }
+      }
+    },
+    {
+      "type": "Demux",
+      "script": {
+        "type":        "ruby",
+        "source_code": <%= sitemap_demux %>
+      }
+    }
+  ]'
+FROM courses_template;
