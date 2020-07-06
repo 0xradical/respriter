@@ -153,7 +153,7 @@ GEM
       aws-eventstream (~> 1.0, >= 1.0.2)
     backports (3.15.0)
     bcrypt (3.1.13)
-    browser (4.0.0)
+    browser (4.2.0)
     builder (3.2.3)
     capybara (3.29.0)
       addressable
@@ -607,7 +607,7 @@ DEPENDENCIES
   affiliate_hub_rakuten_marketing!
   affiliate_hub_shareasale!
   aws-sdk-cloudfront (~> 1.23.0)
-  browser (~> 4.0)
+  browser (~> 4.2)
   capybara
   capybara-email
   carrierwave (~> 2.0.2)
