@@ -149,7 +149,6 @@ indexes/app/tracked_actions.sql
 indexes/app/tracked_searches.sql
 indexes/app/used_usernames.sql
 indexes/app/user_accounts.sql
-indexes/bi/sales.sql
 indexes/public/que_jobs.sql
 views/api/admin_accounts.sql
 views/api/certificates.sql
@@ -165,6 +164,9 @@ views/api/provider_logos.sql
 views/api/providers.sql
 views/api/user_accounts.sql
 views/bi/sales.sql
+views/bi/exit_clicks.sql
+indexes/bi/sales.sql
+indexes/bi/exit_clicks.sql
 views/subsets/courses.sql
 views/subsets/enrollments.sql
 views/subsets/tracked_actions.sql
