@@ -1,20 +1,1053 @@
-# tag names should be written in snake_case
-
+---
 aws:
-  - AWS
-  - Amazon Web Services
-
+- aws
+- amazon web services
+- solutions architect
+- architect associate
+- sysops administrator
+- developer associate
+- certified cloud
+- administrator associate
+- certified developer
+- architect professional
+- amazon web
+- web services
+- certified sysops
+- cloud practitioner
+- certified solutions architect
+- solutions architect associate
 go_programming:
-  - Go Programming
-  - Programming with Go
-  - Gopher
-  - Golang
-
+- go programming
+- programming with go
+- gopher
+- golang
 ruby_on_rails:
-  - Ruby on Rails
-
+- ruby on rails
+- rails 5
+- rails 6
 ruby_programming:
-  - Ruby Programming
-  - Ruby Scripting
-  - Capistrano
-  - Ruby on Rails
+- ruby programming
+- ruby scripting
+- ruby
+health:
+- healthcare
+- nutrition
+- fitness
+- wellness
+- diet
+- yoga
+- healthier
+- mental health
+- health care
+- global health
+- weight loss
+creativity:
+- creativity
+- creative writing
+- creative thinking
+- writing project
+- writing skills
+math_and_logic:
+- statistics
+- calculus
+- algebra
+- probability
+- math
+- gmat
+- trigonometry
+- geometry
+- functions
+- equations
+- linear algebra
+entrepreneurship:
+- business
+- entrepreneurship
+- income
+- passive income
+- entrepreneur
+productivity:
+- productivity
+- procrastination
+- productive
+- focus
+- time management
+- productivity hacks
+- get things done
+- getting things done
+- get more done
+python_programming:
+- python
+game_development:
+- unity
+- unreal
+- game development
+- unreal engine
+- houdini
+- android game
+adobe_illustrator:
+- illustrator cc
+- adobe illustrator
+java_programming:
+- java
+- javafx
+- in java
+- java programming
+javascript_programming:
+- javascript
+- jquery
+html:
+- html
+- html5
+writing:
+- novel
+- self publishing
+- writing blueprint
+- your novel
+- novel writing
+public_speaking:
+- public speaking
+- speaking skills
+- fear of public
+digital_marketing:
+- facebook
+- adwords
+- marketing digital
+- digital marketing
+- email marketing
+- google adwords
+android_development:
+- kotlin
+- app development
+- android development
+- android apps
+- android studio
+ios_development:
+- swift
+- xcode
+- ios app
+- objective c
+- ios development
+facebook:
+- facebook
+meditation:
+- meditation
+- mindfulness
+- meditate
+cooking:
+- cooking
+- recipes
+- cook
+- vegan
+- cake
+swift:
+- swift
+seo:
+- seo
+- search engine
+- keyword research
+- link building
+yoga:
+- yoga
+coaching:
+- coaching
+- coach
+fitness:
+- fitness
+- workout
+- fit
+- workouts
+- lose weight
+- fat loss
+unity:
+- unity
+- unity3d
+php_programming:
+- php
+- laravel
+- codeigniter
+accounting:
+- accounting
+- bookkeeping
+logo_design:
+- logo design
+video_editing:
+- imovie
+- camtasia
+- premiere
+- final cut
+- cut pro
+- video editing
+- final cut pro
+- cut pro x
+- professional videos
+operating_systems:
+- operating system
+css:
+- css
+- css3
+- flexbox
+3ds_max:
+- 3ds
+- 3ds max
+watercolor_painting:
+- watercolor
+- watercolour
+blender:
+- blender
+chinese:
+- hsk
+- mandarin
+- pinyin
+azure:
+- azure
+oracle_db:
+- oracle
+- 1z0
+- 12c
+sap:
+- sap
+zbrush:
+- zbrush
+cinema_4d:
+- cinema 4d
+law:
+- law
+csharp_programming:
+- c#
+- c sharp
+- csharp
+german:
+- german grammar
+- german language
+- learn german
+- intensive german
+piano:
+- piano
+databases:
+- sql
+- oracle
+- database
+- mysql
+- mongodb
+- sql server
+- microsoft sql
+psychology:
+- psychology
+statistics_and_probability:
+- statistics
+- probability
+cisco:
+- cisco
+- ccna
+- ccnp
+sewing:
+- sewing
+- sew
+data_analysis:
+- data analysis
+reactjs:
+- react js
+- redux
+- reactjs
+- react native
+spanish:
+- spanish language
+- learn spanish
+autocad:
+- autocad
+- civil 3d
+revit:
+- revit
+instagram:
+- instagram
+physics:
+- physics
+- kinematics
+vmware:
+- vmware
+- vsphere
+french:
+- french language
+- learn french
+history:
+- history
+maya:
+- maya
+character_animation:
+- character animation
+ethical_hacking:
+- ethical hacking
+sharepoint:
+- sharepoint
+adobe_premiere_pro:
+- premiere pro
+- adobe premiere
+- adobe premiere pro
+economics:
+- economics
+- microeconomics
+- macroeconomics
+bootstrap:
+- bootstrap
+solidworks:
+- solidworks
+forex:
+- forex
+project_management:
+- pmp
+- pmbok
+- project management
+- management professional
+biology:
+- biology
+dance:
+- dance
+- choreography
+salesforce:
+- salesforce
+ux_design:
+- ux design
+front_end:
+- vue
+- vuejs
+- vue js
+ableton_live:
+- ableton
+- ableton live
+cplusplus_programming:
+- c++ programming
+- c++
+- cplusplus
+weight_loss:
+- weight loss
+- lose fat
+- lose weight
+sketchapp:
+- sketch
+- sketch app
+- sketchapp
+- sketch 3
+vuejs:
+- vue
+- vuejs
+- vuex
+- vue js
+procreate:
+- procreate
+calculus:
+- calculus
+digital_painting:
+- digital painting
+machine_learning:
+- machine learning
+- deep learning
+acrylic_painting:
+- acrylics
+- acrylic painting
+personal_finance:
+- personal finance
+blockchain_and_cryptocurrency:
+- blockchain
+- bitcoin
+- ethereum
+- cryptocurrency
+unreal_engine:
+- unreal
+- ue4
+- unreal engine
+arduino:
+- arduino
+sketchup:
+- sketchup
+adobe_lightroom:
+- lightroom
+- adobe lightroom
+- lightroom cc
+knitting:
+- knitting
+- crochet
+board_games:
+- chess
+martial_arts:
+- martial
+- martial arts
+- kung fu
+- jiu jitsu
+- karate
+docker:
+- docker
+singing:
+- singing
+- sing
+- voice
+git:
+- git
+selenium:
+- selenium
+emotional_intelligence:
+- emotional intelligence
+tableau:
+- tableau
+energy:
+- solar energy
+- renewable energy
+- sustainable energy
+indesign:
+- indesign
+angularjs:
+- angular
+- angular js
+- angularjs
+object_oriented_programming:
+- oop
+- object oriented
+guitar:
+- guitar
+videography:
+- video
+- film
+- videography
+- camera
+japanese:
+- japanese language
+3d_printing:
+- 3d printing
+- fusion 360
+options_trading:
+- options trading
+- stock options
+powershell:
+- powershell
+sql:
+- sql
+environmental_science:
+- environmental
+microsoft_access:
+- microsoft access
+- access 20
+political_science:
+- politics
+microsoft_project:
+- microsoft project
+- project 20
+six_sigma:
+- six sigma
+- sigma green
+- sigma black
+- sigma yellow
+affinity_designer:
+- affinity designer
+artificial_intelligence:
+- artificial intelligence
+stress_management:
+- stress management
+big_data:
+- big data
+business_analysis:
+- business analysis
+- business analyst
+microsoft_powerpoint:
+- powerpoint
+c_programming:
+- c programming
+- learn c
+electronics:
+- electronics
+architecture:
+- architecture
+jquery:
+- jquery
+algebra:
+- algebra
+mysql:
+- mysql
+hadoop:
+- hadoop
+crochet:
+- crochet
+innovation:
+- innovation
+data_structures_and_algorithms:
+- algorithms
+- data structures
+philosophy:
+- philosophy
+jewelry_making:
+- jewelry
+- earrings
+raspberry_pi:
+- raspberry pi
+ui_design:
+- ui design
+kotlin_programming:
+- kotlin
+django:
+- django
+matlab:
+- matlab
+gardening:
+- garden
+ionic:
+- ionic
+embroidery:
+- embroidery
+typescript:
+- typescript
+human_resources:
+- human resources
+chess:
+- chess
+pmp_certification:
+- pmp
+- pmbok
+anatomy:
+- anatomy
+business_intelligence:
+- business intelligence
+harmonica:
+- harmonica
+nodejs:
+- nodejs
+scala_programming:
+- scala
+- spark
+fl_studio:
+- fl studio
+career_development:
+- career
+- your career
+comptia_security:
+- comptia
+- comptia security
+- sy0 501
+laravel:
+- laravel
+sustainability:
+- sustainability
+kubernetes:
+- kubernetes
+github:
+- github
+adobe_xd:
+- adobe xd
+sculpture:
+- sculpture
+firebase:
+- firebase
+cake_decorating:
+- cake decorating
+- buttercream
+geometry:
+- geometry
+kali_linux:
+- kali
+- kali linux
+google_adwords:
+- adwords
+- google adwords
+- google ads
+mongodb:
+- mongodb
+- mongoose
+youtube:
+- youtube
+davinci_resolve:
+- davinci resolve
+tensorflow:
+- tensorflow
+google_analytics:
+- google analytics
+financial_modeling:
+- financial modeling
+postgresql:
+- postgresql
+- postgres
+computer_networks:
+- computer networks
+robotics:
+- robotics
+adobe_animate:
+- adobe animate
+microservices:
+- microservices
+catia:
+- catia
+how_to_hypnotize:
+- hypnosis
+- hypnotic
+cartoon_characters_drawing:
+- cartoon
+es6:
+- es6
+jenkins:
+- jenkins
+xamarin:
+- xamarin
+mobile_development:
+- android
+gimp_photo_editing:
+- gimp
+houdini:
+- houdini
+negotiation:
+- negotiation
+astronomy:
+- astronomy
+drawing_faces:
+- draw faces
+- drawing face
+- drawing the face
+stock_trading:
+- stock marketing
+- stock trading
+- stocks
+ubuntu:
+- ubuntu
+gmat:
+- gmat
+microsoft_sql_server:
+- microsoft sql
+- sql server
+ansible:
+- ansible
+trigonometry:
+- trigonometry
+critical_thinking:
+- critical thinking
+joomla:
+- joomla
+asp_net:
+- asp net
+mailchimp:
+- mailchimp
+supply_chain:
+- supply chain
+ansys:
+- ansys
+devops:
+- devops
+gamemaker_studio:
+- gamemaker
+- game maker studio
+react_native:
+- react native
+substance_painter:
+- substance painter
+sass:
+- sass
+- scss
+toefl:
+- toefl
+ielts:
+- ielts
+how_to_save_a_life:
+- first aid
+sas_programming:
+- sas
+- sas 9
+- sas programming
+- sas base
+- programming for sas
+linear_algebra:
+- linear algebra
+virtual_reality:
+- virtual reality
+herbalism:
+- herbalism
+- herbal
+apache_spark:
+- apache spark
+autodesk_fusion_360:
+- autodesk fusion
+- fusion 360
+bitcoin:
+- bitcoin
+league_of_legends:
+- league of legends
+ethics:
+- ethics
+makeup_artist:
+- makeup artistry
+- makeup look
+- eyebrow makeup
+security_and_cryptography:
+- cryptography
+- cyber security
+- information security
+- systems security
+- network security
+wireshark:
+- wireshark
+real_estate:
+- real estate
+visual_basic:
+- visual basic
+gis:
+- gis
+quickbooks:
+- quickbooks pro
+- quickbooks online
+climate_change:
+- climate change
+mechanics_for_engineering:
+- engineering mechanics
+bartending:
+- cocktails
+- bartending
+ethereum:
+- ethereum
+microsoft_onenote:
+- onenote
+graphql:
+- graphql
+splunk:
+- splunk
+swiftui:
+- swiftui
+korean:
+- korean language
+- learn korean
+spss:
+- spss
+deep_learning:
+- deep learning
+merch_by_amazon:
+- merch by amazon
+software_design_patterns:
+- design patterns
+conversational_english:
+- english conversation
+drupal:
+- drupal
+web_scraping:
+- scraping
+crm:
+- crm
+elasticsearch:
+- elasticsearch
+pro_tools:
+- pro tools
+realflow:
+- realflow
+toon_boom:
+- toon boom
+eye_drawing:
+- draw eyes
+- drawing eyes
+first_aid:
+- first aid
+flutter:
+- flutter
+puppet_forge:
+- puppet
+r_programming:
+- r programming
+violin:
+- violin
+adobe_flash:
+- adobe flash
+affinity_photo:
+- affinity photo
+bash_programming:
+- bash scripting
+- bash shell scripting
+mean_stack:
+- mean stack
+calisthenics:
+- calisthenics
+kids_coding_languages:
+- kids coding
+bing_ads:
+- bing ads
+kafka:
+- kafka
+- apache kafka
+d3_js:
+- d3 js
+- d3.js
+- in d3
+- with d3
+natural_language_processing:
+- natural language processing
+jira:
+- jira
+- jira software
+redis:
+- redis
+computer_vision:
+- computer vision
+- opencv
+linux_system_administration:
+- linux system administration
+terraform:
+- terraform
+gulp_js:
+- gulp js
+- gulp.js
+- with gulp
+centos:
+- centos
+google_ads:
+- google ads
+ember:
+- ember js
+- ember.js
+data_mining:
+- data mining
+symfony:
+- symfony
+google_tag_manager:
+- google tag manager
+flask:
+- flask
+- python flask
+express_js:
+- express.js
+- express js
+cassandra:
+- cassandra
+- apache cassandra
+perl_programming:
+- perl programming
+openstack:
+- openstack
+vagrant:
+- vagrant
+fsharp_programming:
+- f#
+webpack:
+- webpack
+trello:
+- trello
+npm:
+- npm
+godot_game_engine:
+- godot
+- godot game engine
+elixir_programming:
+- elixir programming
+oauth:
+- openid connect
+- oauth
+rust_programming:
+- rust programming
+figma:
+- figma
+nginx:
+- nginx
+sccm:
+- sccm
+adobe_bridge:
+- adobe bridge
+- bridge cc
+adobe_experience_manager:
+- adobe experience manager
+navisworks:
+- navisworks
+computer_architecture:
+- computer architecture
+sscp_certification:
+- sscp certification
+- sscp
+aws_ec2:
+- amazon ec2
+- aws ec2
+heroku:
+- heroku
+backbonejs:
+- backbone js
+- backbone.js
+sqlite:
+- sqlite
+haskell_programming:
+- haskell
+aws_dynamodb:
+- dynamodb
+- aws dynamodb
+rabbitmq:
+- rabbitmq
+aws_rds:
+- aws rds
+software_architecture:
+- software architecture
+intellij_idea:
+- intellij
+studio_one:
+- studio one
+- presonus studio one
+sony_vegas:
+- sony vegas
+- vegas pro
+redhat:
+- redhat
+cpanel:
+- cpanel
+google_analytics_certification:
+- google analytics certification
+aws_s3:
+- aws s3
+chrome_developer_tools:
+- chrome developer tools
+julia_programming:
+- julia programming
+- julia for data
+assembly:
+- assembly language
+- assembly programming
+clojure_programming:
+- clojure
+cordova:
+- cordova
+- apache cordova
+grafana:
+- grafana
+tomcat:
+- tomcat
+- apache tomcat
+hootsuite:
+- hootsuite
+cucumber_test_framework:
+- cucumber bdd
+zurb_foundation:
+- zurb foundation
+cobol_programming:
+- cobol
+objective_c:
+- objective c
+- objective-c
+mariadb:
+- mariadb
+aws_cloudformation:
+- cloudformation
+- aws cloudformation
+sveltejs:
+- svelte
+- svelte js
+- svelte.js
+opengl:
+- opengl
+lua_programming:
+- lua programming
+achology:
+- achology
+adobe_incopy:
+- incopy
+- adobe incopy
+- incopy cc
+babeljs:
+- babel 6
+- babel 7
+- babeljs
+- babel.js
+dropbox:
+- dropbox
+knockout_js:
+- knockout js
+- knockout.js
+google_adsense:
+- google adsense
+emacs:
+- emacs
+coffeescript:
+- coffeescript
+sourcetree:
+- sourcetree
+libgdx:
+- libgdx
+jekyll:
+- jekyll
+hotjar:
+- hotjar
+nuxtjs:
+- nuxt
+- nuxt js
+- nuxt.js
+aws_iam:
+- aws iam
+information_design:
+- information design
+semrush:
+- semrush
+apache_camel:
+- apache camel
+auth0:
+- auth0
+digital_ocean:
+- digital ocean
+aws_cloudfront:
+- cloudfront
+- aws cloudfront
+google_optimize:
+- google optimize
+embedded_linux:
+- embedded linux
+aws_codedeploy:
+- codedeploy
+- aws codedeploy
+erlang_programming:
+- erlang
+competitive_programming:
+- competitive programming
+aws_cognito:
+- aws cognito
+- amazon cognito
+omnisphere:
+- omnisphere
+adobe_story:
+- adobe story
+openid:
+- openid
+- openid connect
+web_design:
+- web design
+self_driving_car:
+- self driving car
+- self-driving car
+bitbucket:
+- bitbucket
+atom_text_editor:
+- atom text editor
+pycharm:
+- pycharm
+aws_glacier:
+- aws glacier
+- amazon glacier
+- s3 and glacier
+- s3 glacier
+prolog:
+- prolog
+core_os:
+- coreos
+computer_networking:
+- computer networking
+- advanced networking
+- networking fundamentals
+stochastic_process:
+- stochastic process
+mixpanel:
+- mixpanel
+debian:
+- debian
+suse:
+- suse linux
+- opensuse
+arch_linux:
+- arch linux
+behance:
+- behance
+arangodb:
+- arangodb
+pytorch:
+- pytorch
+memcached:
+- memcached
+- memcache
+linux_mint:
+- linux mint
+ahrefs:
+- ahrefs
+internet_of_things:
+- iot
+- internet of things
+ocaml_programming:
+- ocaml

@@ -19,14 +19,14 @@ class CourseTagger
 
   protected
   def update_course!(course, tags)
-    joined_tags = (course.curated_tags + tags).to_set
-    course.update(curated_tags: joined_tags.to_a)
+    joined_tags = tags | (course.curated_tags || [])
+    course.update(curated_tags: joined_tags)
   end
 
   def make_tag_map
     {}.tap do |tag_map|
       load_terms_from_file.each_pair do |tag, terms|
-        escaped = terms.map { |t| Regexp.escape t }
+        escaped = terms.map { |t| '\b' + Regexp.escape(t) + '\b' }
         tag_map[tag] = /#{escaped.join('|')}/i
       end
     end
