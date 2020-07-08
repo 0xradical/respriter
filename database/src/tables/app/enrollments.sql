@@ -2,6 +2,7 @@ CREATE TABLE app.enrollments (
   id                uuid        DEFAULT public.uuid_generate_v4() PRIMARY KEY,
   user_account_id   bigint      REFERENCES app.user_accounts(id),
   course_id         uuid        REFERENCES app.courses(id),
+  provider_id       uuid        REFERENCES app.providers(id),
   tracked_url       varchar,
   description       text,
   user_rating       numeric,

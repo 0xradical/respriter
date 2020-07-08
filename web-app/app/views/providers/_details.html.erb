@@ -1,0 +1,48 @@
+<span class="el:amx-Fs(0.75em) el:amx-C_fgM el:amx-Ls(5%) el:amx-Tt(u) el:amx-Fw(b)">
+  <%= t(".title") %>
+</span>
+
+<div class="el:amx-Mt(1em)">
+  <ul class="el:amx-D(b) el:amx-P(0) el:amx-Lh(1.2)" style="list-style: none; margin-bottom: -0.5em;">
+    <% if @details[:areas_of_knowledge] %>
+      <li class="el:amx-Mb(0.5em)">
+        <span class="el:amx-Fs(0.875em) el:amx-C_fgM">
+          <%= t(".areas_of_knowledge") %>:
+        </span>
+        <span class="el:amx-Fs(0.875em) el:amx-C_fg">
+          <%= Array.wrap(@details[:areas_of_knowledge]).map{|an| t("tags.#{an}") }.join(", ") %>
+        </span>
+      </li>
+    <% end %>
+    <% if @details[:membership_types] %>
+      <li class="el:amx-Mb(0.5em)">
+        <span class="el:amx-Fs(0.875em) el:amx-C_fgM">
+          <%= t(".membership_type") %>:
+        </span>
+        <span class="el:amx-Fs(0.875em) el:amx-C_fg">
+          <%= @details[:membership_types].map{|mt| t(".membership_types.#{mt}") }.join(", ") %>
+        </span>
+      </li>
+    <% end %>
+    <% if @details[:price_range] %>
+      <li class="el:amx-Mb(0.5em)">
+        <span class="el:amx-Fs(0.875em) el:amx-C_fgM">
+          <%= t(".price_range") %>:
+        </span>
+        <div style="display: inline-flex" class="el:amx-FxAi(c)">
+          <span class="el:amx-Fs(0.875em) el:amx-C_fg">
+            <%= number_to_currency(@details[:price_range].first, unit: "$") %> - <%= number_to_currency(@details[:price_range].last, unit: "$") %>
+          </span>
+          <% if true || @details[:has_trial] %>
+            <span class="el:amx-Ml(0.5em) el:amx-Tt(u) el:amx-Ta(r)">
+              <span class="el:m-tag el:m-tag--bold el:m-tag--xxs el:m-tag--secondary-variant-border el:amx-D(ib)">
+                <%= t(".has_trial") %>
+              </span>
+            </span>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+

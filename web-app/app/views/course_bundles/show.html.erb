@@ -2,56 +2,6 @@
   <%= render 'meta' %>
 <% end %>
 
-<%= content_for :sprites do %>
-  <%= sprites({
-    icons: [
-      "facebook-circle",
-      "linkedin-circle",
-      "instagram-circle",
-      "twitter-circle",
-      "reddit-circle",
-      "arrow-down",
-      "audio",
-      "subtitle",
-      "certificate",
-      "building",
-      "id-badge",
-      "velocimeter",
-      "level",
-      "clock",
-      "close",
-      "play",
-      "video-recorder-unavailable",
-      "question",
-      "avatar"
-    ],
-    brand: "*",
-    i18n: ["en", "es", "pt-br", "ja"],
-    providers: "*",
-    tags: [RootTag.all.map(&:id), @tag].flatten.compact.uniq
-  }) %>
-<% end %>
-
-<script type='text/javascript'>
-  window.env_context = {
-    devise: {
-      sign_in: "<%= new_user_account_session_path %>",
-      sign_up: "<%= new_user_account_registration_path %>",
-      signed_in: <%= current_user_account.present? %>
-    }
-  }
-</script>
-
-<%= content_for :stylesheets do %>
-  <%= stylesheet_bundles_with_chunks_tag 'search-page' %>
-<% end %>
-
-<%= content_for :javascript do %>
-  <%= elements_javascript_include_tag 'vars' %>
-  <%= javascript_bundles_with_chunks_tag 'sharing' %>
-  <%= javascript_bundles_with_chunks_tag 'search-page' %>
-<% end %>
-
 <%= render 'hero',
   title: t(".title_html", tag: t("tags.#{@tag}")),
   description: t(".description_html", tag: t("tags.#{@tag}")),
@@ -80,14 +30,4 @@
   </div>
 </div>
 
-<%= render_vue_component "SearchPage", {
-  propsData: {
-    locale: I18n.locale,
-    tag: @tag
-  },
-  locale: I18n.locale,
-  state: {
-    data: @courses[:data],
-    meta: @courses[:meta]
-  }
-} %>
+<%= render('shared/search') %>

@@ -18,7 +18,7 @@ CREATE OR REPLACE FUNCTION triggers.api_preview_courses_view_instead_of_insert()
 DECLARE
   preview_course RECORD;
   provider_crawler_id uuid;
-  provider_id bigint;
+  provider_id uuid;
   current_user_id bigint;
 BEGIN
   current_user_id := current_setting('request.jwt.claim.sub', true)::bigint;

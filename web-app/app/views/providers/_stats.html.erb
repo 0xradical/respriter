@@ -1,0 +1,44 @@
+<span class="el:amx-Fs(0.75em) el:amx-C_fgM el:amx-Ls(5%) el:amx-Tt(u) el:amx-Fw(b)">
+  <%= t(".title") %>
+</span>
+
+<div class="el:amx-Mt(1em)">
+  <ul class="el:amx-D(b) el:amx-P(0) el:amx-Lh(1.2)" style="list-style: none; margin-bottom: -0.5em;">
+    <% if @stats[:course_count] %>
+      <li class="el:amx-Mb(0.5em)">
+        <span class="el:amx-Fs(0.875em) el:amx-C_fgM">
+          <%= t(".indexed_courses") %>:
+        </span>
+        <span class="el:amx-Fs(0.875em) el:amx-C_fg">
+          <%= number_with_delimiter(@stats[:course_count] ) %>
+        </span>
+      </li>
+    <% end %>
+    <% if @stats[:instructor_count] %>
+      <li class="el:amx-Mb(0.5em)">
+        <span class="el:amx-Fs(0.875em) el:amx-C_fgM">
+          <%= t(".instructors") %>:
+        </span>
+        <span class="el:amx-Fs(0.875em) el:amx-C_fg">
+          <%= number_with_delimiter(@stats[:instructor_count]) %>
+        </span>
+      </li>
+    <% end %>
+    <% if @stats[:top_countries] %>
+      <li class="el:amx-Mb(0.5em)">
+        <div style="display: inline-flex" class="el:amx-FxAi(c) el:amx-C_fg">
+          <div class="el:amx-Mr(0.25em)">
+            <span class="el:amx-Fs(0.875em) el:amx-C_fgM">
+              <%= t(".main_audiences") %>:
+            </span>
+          </div>
+          <% @stats[:top_countries].each_with_index do |country, index| %>
+            <svg class="el:amx-Ml(<%= index == 0 ? 0 : 0.5 %>em) el:amx-D(ib)" width="1rem" height="1rem">
+              <use xlink:href="#country-flags-<%= country.downcase %>">
+            </svg>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -20,9 +20,12 @@ const webpackConfig = (
       entry: [
         "application",
         "assets",
+        "card-carrousel",
         "contact-us",
         "course-page",
         "locales",
+        "post-card",
+        "providers/show",
         "mailer",
         "search-page",
         "sharing",
@@ -31,7 +34,11 @@ const webpackConfig = (
       ].reduce(
         (entries, key) => ({
           ...entries,
-          [key]: resolve(config.sourcePath, config.sourceEntryPath, key)
+          [key.replace(/\/+/g, "-")]: resolve(
+            config.sourcePath,
+            config.sourceEntryPath,
+            key
+          )
         }),
         {}
       ),
@@ -385,4 +392,13 @@ const webpackConfig = (
   );
 };
 
-module.exports = webpackConfig;
+if (
+  process.env.NODE_ENV === "development" &&
+  process.env.WEBPACK_MEASURE === "true"
+) {
+  const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+  const smp = new SpeedMeasurePlugin();
+  module.exports = smp.wrap(webpackConfig);
+} else {
+  module.exports = webpackConfig;
+}

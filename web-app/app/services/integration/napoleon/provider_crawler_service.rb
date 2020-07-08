@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
 module Integration
   module Napoleon
     class ProviderCrawlerService
+      DEFAULT_CRAWLER_VERSION = '1.1.0'
       attr_reader :provider_crawler
       attr_accessor :error
 
-      def initialize(provider_crawler, version = '1.0.0')
+      def initialize(provider_crawler, version = DEFAULT_CRAWLER_VERSION)
         @provider_crawler = provider_crawler
         @version = @provider_crawler.version || version
       end
@@ -22,15 +25,13 @@ module Integration
         stop if prepared?
 
         @provider_crawler.transaction do
-          begin
-            builder.remove_pipeline_templates
-            builder.create_pipeline_templates!
-            builder.update_provider_crawler!
-          rescue StandardError => error
-            self.error = error
-            builder.rollback!
-            raise ActiveRecord::Rollback
-          end
+          builder.remove_pipeline_templates
+          builder.create_pipeline_templates!
+          builder.update_provider_crawler!
+        rescue StandardError => e
+          self.error = e
+          builder.rollback!
+          raise ActiveRecord::Rollback
         end
 
         start if scheduled
@@ -38,25 +39,26 @@ module Integration
 
       def start!
         raise CrawlerNotReady unless prepared?
+
         self.error = nil
 
         unless builder.active_pipeline_execution.present?
           @provider_crawler.transaction do
-            begin
-              builder.create_pipeline_execution!
-              @provider_crawler.update! scheduled: true
-            rescue StandardError => error
-              self.error = error
-              raise ActiveRecord::Rollback
-            end
+            builder.create_pipeline_execution!
+            @provider_crawler.update! scheduled: true
+          rescue StandardError => e
+            self.error = e
+            raise ActiveRecord::Rollback
           end
         end
 
-        raise self.error if self.error
+        raise error if error
       end
 
       def start
-        start! || true rescue false
+        start! || true
+      rescue StandardError
+        false
       end
 
       def stop!
@@ -66,24 +68,24 @@ module Integration
 
         if builder.active_pipeline_execution.present?
           @provider_crawler.transaction do
-            begin
-              pipeline_execution = builder.active_pipeline_execution
-              if pipeline_execution.present?
-                builder.delete_pipeline_execution pipeline_execution[:id]
-                @provider_crawler.update! scheduled: false
-              end
-            rescue StandardError => error
-              self.error = error
-              raise ActiveRecord::Rollback
+            pipeline_execution = builder.active_pipeline_execution
+            if pipeline_execution.present?
+              builder.delete_pipeline_execution pipeline_execution[:id]
+              @provider_crawler.update! scheduled: false
             end
+          rescue StandardError => e
+            self.error = e
+            raise ActiveRecord::Rollback
           end
         end
 
-        raise self.error if self.error
+        raise error if error
       end
 
       def stop
-        stop! || true rescue false
+        stop! || true
+      rescue StandardError
+        false
       end
 
       def cleanup

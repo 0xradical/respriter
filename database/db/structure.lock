@@ -41,6 +41,7 @@ tables/app/landing_pages.sql
 tables/app/oauth_accounts.sql
 tables/app/orphaned_profiles.sql
 tables/app/posts.sql
+tables/app/post_relations.sql
 tables/app/preview_courses.sql
 tables/app/preview_course_images.sql
 tables/app/profiles.sql
@@ -84,6 +85,7 @@ procedures/public/que_job_notify.sql
 procedures/public/que_state_notify.sql
 procedures/settings/get.sql
 procedures/settings/set.sql
+procedures/triggers/check_course_provider_relationship.sql
 procedures/triggers/course_keep_slug.sql
 procedures/triggers/course_normalize_languages.sql
 procedures/triggers/create_subscription.sql
@@ -97,6 +99,7 @@ procedures/triggers/use_username.sql
 procedures/triggers/validate_profiles.sql
 procedures/triggers/validate_provider_crawler_urls.sql
 procedures/triggers/validate_sitemaps.sql
+procedures/triggers/validate_url.sql
 procedures/triggers/validate_user_account_ids.sql
 procedures/triggers/validate_website.sql
 triggers/app/admin_accounts.sql
@@ -138,6 +141,7 @@ indexes/app/indexes.sql
 indexes/app/landing_pages.sql
 indexes/app/oauth_accounts.sql
 indexes/app/orphaned_profiles.sql
+indexes/app/post_relations.sql
 indexes/app/posts.sql
 indexes/app/profiles.sql
 indexes/app/promo_accounts.sql

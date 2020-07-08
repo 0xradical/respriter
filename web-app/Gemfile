@@ -48,7 +48,8 @@ gem 'elasticsearch-rails', '~> 6.0.0'
 gem 'elasticsearch-dsl',   '~> 0.1.0'
 
 # Parsers
-gem 'crack'
+gem 'crack',    '~> 0.4.3'
+gem 'kramdown', '~> 2.3.0'
 
 # AffiliateHub
 gem 'affiliate_hub',                    git: 'https://github.com/codextremist/affiliate_hub'
@@ -108,11 +109,11 @@ gem 'unparser', '~> 0.4.7'
 # JSON Schema
 gem 'json_schemer', '~> 0.2.8'
 
-# Mecab 
+# Mecab
 gem 'mecab_standalone', git: "https://github.com/wyugue/mecab_standalone"
 
 # Compact Language Identification
-gem 'cld'
+gem 'cld', '~> 0.8.0'
 
 group :production do
   # Exceptions

@@ -8,7 +8,7 @@ CREATE OR REPLACE VIEW api.provider_crawlers AS
 
 CREATE OR REPLACE FUNCTION triggers.api_provider_crawlers_view_instead_of_insert() RETURNS trigger AS $$
 DECLARE
-  _provider_id bigint;
+  _provider_id uuid;
   new_record   RECORD;
 BEGIN
   IF current_user = 'user' THEN

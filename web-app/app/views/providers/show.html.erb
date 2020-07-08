@@ -1,0 +1,266 @@
+<%= content_for :meta do %>
+  <title><%= t('.title', provider: @provider.name) %> | Classpert</title>
+  <meta name='twitter:title' content="<%= t('.title', provider: @provider.name) + ' | Classpert' %>" />
+  <meta name='twitter:description' content='<%= t('.meta', provider: @provider.name, courses: @course_count) %>' />
+  <meta name='description' content='<%= t('.meta', provider: @provider.name, courses: @course_count) %>' />
+  <meta property='og:description' content='<%= t('.meta', provider: @provider.name, courses: @course_count) %>' />
+<% end %>
+
+<%= content_for :stylesheets do %>
+  <%= stylesheet_bundles_with_chunks_tag 'card-carrousel' %>
+  <%= stylesheet_bundles_with_chunks_tag 'post-card' %>
+  <%= stylesheet_bundles_with_chunks_tag 'providers-show' %>
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_bundles_with_chunks_tag "card-carrousel" %>
+  <%= javascript_bundles_with_chunks_tag "post-card" %>
+  <%= javascript_bundles_with_chunks_tag "providers-show" %>
+<% end %>
+
+<%= content_for :sprites do %>
+  <%= sprites({
+    tags: RootTag.all.map(&:id),
+    brand: "*",
+    i18n: ["en", "es", "pt-br", "ja"],
+    "country-flags": Array.wrap(@stats[:top_countries]).map(&:downcase),
+    icons: [
+      "facebook-circle",
+      "linkedin-circle",
+      "instagram-circle",
+      "twitter-circle",
+      "reddit-circle",
+      "arrow-down",
+      "audio",
+      "subtitle",
+      "certificate",
+      "building",
+      "id-badge",
+      "velocimeter",
+      "level",
+      "clock",
+      "close",
+      "play",
+      "video-recorder-unavailable",
+      "question",
+      "avatar",
+      "website",
+      "camera",
+      "monitor-gear",
+      "external-arrow",
+      "mag"
+    ],
+    providers: [
+      @provider.slug,
+      @instructors.map{|i| i.teaching_at.map(&:downcase).map{|s| s.gsub(/\s/, "-")}}
+    ].flatten.compact.uniq
+  }) %>
+<% end %>
+
+<div id="providers-show">
+  <div class="header el:amx-Pt(2em) el:amx-Pb(2.5em)">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="el:amx-D(f) el:amx-FxAi(c)">
+            <div class="el:m-attribute el:cmx-flex-1">
+              <svg class="icon el:m-attribute__icon el:m-attribute__icon--bordered el:amx-Mr(1em)">
+                <use xlink:href="#providers-<%= @provider.slug %>">
+              </svg>
+
+              <h1 class="el:amx-Fw(b) el:amx-Fs(1.5em) el:amx-C_fg">
+                <%= @provider.name %>
+              </h1>
+            </div>
+
+            <% if @provider.url %>
+              <div class="d-none d-md-block">
+                <a class="btn btn--sm btn--primary-flat el:amx-D(f) el:amx-FxJc(c) el:amx-FxAi(c)" href="<%= gateway_path({ pid: @provider.id })  %>" target="_blank">
+                  <span class="el:amx-Mr(0.5em)"><%= t(".visit_provider", provider: @provider.name) %></span>
+                  <svg class="el:amx-Fi_fgV" width="0.625rem" height="0.625rem"><use xlink:href="#icons-external-arrow"/></svg>
+                </a>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame <%= @courses.blank? && @instructors.blank? ? 'el:amx-Mb(3em)' : '' %>">
+    <div class="container">
+      <div class="row">
+        <% if @provider.description.present? %>
+          <div class="d-none d-md-block <%= @details.present? || @stats.present? ? 'pr-0 col-md-6 col-lg-8' : 'col-12' %>">
+            <div class="about-subframe--lg el:amx-Bc_su el:amx-Pt(1.5em) el:amx-Pb(1.5em) el:amx-Pl(2.5em) el:amx-Pr(2.5em) el:amx-Pl(1.5em)@<sm el:amx-Pr(1.5em)@<sm">
+              <%= render 'about' %>
+            </div>
+          </div>
+        <% end %>
+        <% if @details.present? || @stats.present? %>
+          <div class="d-none d-md-block <%= @provider.description.present? ? 'pl-0 col-md-6 col-lg-4' : 'col-12' %>">
+            <div class="details-subframe--lg <%= @provider.description.present? ? 'details-subframe--lg-with-description' : '' %> el:amx-Bc_su el:amx-Pt(1.5em) el:amx-Pb(1.5em) el:amx-Pl(2em) el:amx-Pr(2.5em)">
+              <% if @details.present? %>
+                <div>
+                  <%= render 'details' %>
+                </div>
+              <% end %>
+              <% if @stats.present? %>
+                <div class="<%= @details.present? ? 'el:amx-Mt(2em)' : '' %>">
+                  <%= render 'stats' %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <% if @provider.description.present? %>
+          <div class="d-block d-md-none col-12">
+            <div class="about-subframe--sm el:amx-Bc_su el:amx-Pt(1.5em) el:amx-Pb(1.5em) el:amx-Pl(2.5em) el:amx-Pr(2.5em) el:amx-Pl(1.5em)@<sm el:amx-Pr(1.5em)@<sm">
+              <%= render 'about' %>
+            </div>
+          </div>
+        <% end %>
+        <% if @details.present? || @stats.present? %>
+          <div class="d-block d-md-none col-12">
+            <div class="details-subframe--sm <%= @provider.description.present? ? 'details-subframe--sm-with-description' : '' %> el:amx-Bc_su el:amx-Pt(1.5em) el:amx-Pb(1.5em) el:amx-Pl(2.5em) el:amx-Pr(2.5em) el:amx-Pl(1.5em)@<sm el:amx-Pr(1.5em)@<sm">
+              <% if @details.present? %>
+                <div>
+                  <%= render 'details' %>
+                </div>
+              <% end %>
+              <% if @stats.present? %>
+                <div class="<%= @details.present? ? 'el:amx-Mt(2em)' : '' %>">
+                  <%= render 'stats' %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% if @provider.url %>
+    <div class="container d-block d-md-none el:amx-Mt(1.5em) <%= @courses.any? || @instructors.any? ? '' : 'el:amx-Mb(3em)'%>">
+      <div class="row">
+        <div class="col">
+          <a class="btn btn--sm btn--primary-flat el:amx-D(f) el:amx-FxJc(c) el:amx-FxAi(c)" href="<%= gateway_path({ pid: @provider.id })  %>" target="_blank">
+            <span class="el:amx-Mr(0.5em)"><%= t(".visit_provider", provider: @provider.name) %></span>
+            <svg class="el:amx-Fi_fgV" width="0.625rem" height="0.625rem"><use xlink:href="#icons-external-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% if @courses.any? %>
+    <div class="container el:amx-Mt(3em) el:amx-Mb(3em)">
+      <div class="row">
+        <div class="col">
+          <div class="el:amx-D(f) el:amx-FxJc(sb)">
+            <h2 class="el:amx-Fs(0.75em) el:amx-Tt(u) el:amx-Fw(b) el:amx-C_fg el:amx-Ls(5%)">
+              <%= t(".recommended_courses_on_provider", provider: @provider.name) %>
+            </h2>
+
+            <a class="d-none d-md-inline-block el:amx-Fw(b) el:amx-C_pr el:amx-Fs(0.75em) el:amx-Tt(u)" href='<%= provider_courses_path(provider: @provider.slug)%>'>
+              <%= t(".view_all") %>
+            </a>
+          </div>
+
+          <div class="el:amx-Mt(1em)">
+            <%= render_vue_component "CardCarrousel", {
+              propsData: {
+                component: "CourseCardVertical",
+                list: @courses.map(&:as_indexed_json),
+                property: "course",
+                height: "350px",
+                navigation: {
+                  class: "d-block d-md-none",
+                  component: "ProviderNavCard",
+                  props: {
+                    slug: @provider.slug,
+                    link: provider_courses_path(provider: @provider.slug),
+                    linkText: t(".view_all_courses")
+                  }
+                },
+                locale: I18n.locale,
+              },
+              locale: I18n.locale
+            } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% if @instructors.any? %>
+    <div class="container el:amx-Mt(2.5em) el:amx-Pb(3em)">
+      <div class="row">
+        <div class="col">
+          <div class="el:amx-D(f) el:amx-FxJc(sb)">
+            <h2 class="el:amx-Fs(0.75em) el:amx-Tt(u) el:amx-Fw(b) el:amx-C_fg el:amx-Ls(5%)">
+              <%= t(".instructors_on_provider", provider: @provider.name) %>
+            </h2>
+
+            <a class="d-none d-md-inline-block el:amx-Fw(b) el:amx-C_pr el:amx-Fs(0.75em) el:amx-Tt(u)" href='<%= instructors_path(provider: @provider.slug) %>'>
+              <%= t('.view_all') %>
+            </a>
+          </div>
+
+          <div class="el:amx-Mt(1em)">
+            <%= render_vue_component "CardCarrousel", {
+              propsData: {
+                component: "InstructorCardVertical",
+                list: @instructors.map(&OrphanedProfileSerializer),
+                property: "instructor",
+                height: "259px",
+                navigation: {
+                  class: "d-block d-md-none",
+                  component: "ProviderNavCard",
+                  props: {
+                    slug: @provider.slug,
+                    link: instructors_path(provider: @provider.slug),
+                    linkText: t(".view_all_instructors")
+                  }
+                },
+                locale: I18n.locale
+              },
+              locale: I18n.locale
+            } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% if @posts.any? %>
+    <div class="posts el:amx-Pt(2em) el:amx-Pt(4em)@>lg">
+      <div class="container el:amx-Bc_su">
+        <div class="row">
+          <div class="col">
+            <div class="el:amx-D(f) el:amx-FxJc(sb)">
+              <h2 class="el:amx-Fs(0.75em) el:amx-Tt(u) el:amx-Fw(b) el:amx-C_fg el:amx-Ls(5%)">
+                <%= t(".posts_about_provider", provider: @provider.name) %>
+              </h2>
+
+              <a class="d-none d-md-inline-block el:amx-Fw(b) el:amx-C_pr el:amx-Fs(0.75em) el:amx-Tt(u)" href='<%= posts_path(provider: @provider.slug) %>'><%= t('.view_all') %></a>
+            </div>
+          </div>
+        </div>
+        <div class="row el:amx-Mt(1em)">
+          <% @posts.map(&PostSerializer).each do |post| %>
+            <div class="col-12 mb-5 col-md-4">
+              <%= render_vue_component "PostCard", {
+                propsData: {
+                  post: post,
+                  locale: I18n.locale
+                },
+                locale: I18n.locale
+              } %>
+            </div>
+          <% end %>
+          <div class="d-block d-md-none col-12 mb-5">
+            <a class="btn btn--sm btn--primary-border btn--block el:amx-Fw(b) el:amx-Tt(u)" href='<%= posts_path(provider: @provider.slug) %>'>
+              <span><%= t('.view_more_on_blog') %></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

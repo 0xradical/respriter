@@ -2,7 +2,7 @@ BEGIN;
 
 CREATE TEMP TABLE user_and_provider (
   id                  bigint PRIMARY KEY,
-  provider_id         bigint,
+  provider_id         uuid,
   username            varchar,
   provider_crawler_id uuid
 );

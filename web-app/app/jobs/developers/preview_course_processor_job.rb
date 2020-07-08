@@ -3,7 +3,7 @@
 module Developers
   class PreviewCourseProcessorJob < BaseJob
     SERVICE_NAME = 'debug-tool-service'
-    DEFAULT_VERSION = '1.0.0'
+    DEFAULT_SCHEMA_VERSION = '2.0.0'
 
     def run(provider_crawler_id, preview_course_id, session_id = preview_course_id)
       job = Class.new(self.class).tap do |klass|
@@ -60,7 +60,7 @@ module Developers
 
       data = data.merge('url' => preview_course.url) if data['url'].blank?
 
-      schema_version = data.delete('version') || DEFAULT_VERSION
+      schema_version = data.delete('version') || DEFAULT_SCHEMA_VERSION
       log("Using #{schema_version} schema version")
 
       resource =

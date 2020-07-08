@@ -1,0 +1,128 @@
+<template>
+  <a :href="instructor.profilePath" class="el:amx-D(b)">
+    <div class="el:o-profile-vcard" style="width: 255px;">
+      <div
+        class="el:o-profile-vcard__cover-slot"
+        :style="{
+          backgroundImage:
+            instructor.subject &&
+            instructor.subjectImageUrl &&
+            `url(${instructor.subjectImageUrl})`
+        }"
+      ></div>
+      <div class="el:o-profile-vcard__avatar-slot">
+        <img
+          :src="instructor.avatarUrl"
+          :alt="instructor.name"
+          style="border-radius: 50%; width: 100%; height: 100%;"
+        />
+      </div>
+      <span class="el:o-profile-vcard__title">
+        {{ truncate(instructor.name) }}
+      </span>
+      <div class="el:o-profile-vcard__head-slot">
+        <ul class="el:m-list el:m-list--hrz">
+          <li
+            v-for="provider in instructor.teachingAt"
+            :key="provider"
+            class="el:amx-Mr(0.5em)"
+          >
+            <svg width="1em" height="1em">
+              <use :xlink:href="`#providers-${providerIcon(provider)}`" />
+            </svg>
+          </li>
+          <li v-if="instructor.website">
+            <svg width="1em" height="1em">
+              <use xlink:href="#icons-website" />
+            </svg>
+          </li>
+        </ul>
+      </div>
+      <div class="el:o-profile-vcard__body-slot">
+        <div class="el:amx-D(f)">
+          <svg
+            width="0.75em"
+            height="0.75em"
+            class="el:amx-Mr(0.5em) el:amx-Fi_fgM"
+          >
+            <use xlink:href="#icons-camera" />
+          </svg>
+          <span class="el:amx-Fs(0.75em) el:amx-C_fgM">
+            {{
+              $t("dictionary.instructor.courses_count", {
+                count: instructor.courseCount
+              })
+            }}
+          </span>
+        </div>
+        <div class="el:amx-D(f) el:amx-Mt(0.5em)">
+          <svg
+            width="0.75em"
+            height="0.75em"
+            class="el:amx-Mr(0.5em) el:amx-Fi_fgM"
+          >
+            <use xlink:href="#icons-monitor-gear" />
+          </svg>
+          <span class="el:amx-Fs(0.75em) el:amx-C_fgM">
+            <template v-if="instructor.subject">
+              {{ $t(`tags.${instructor.subject}`) }}
+            </template>
+            <template v-else>
+              {{ $t("dictionary.not_available") }}
+            </template>
+          </span>
+        </div>
+      </div>
+    </div>
+  </a>
+</template>
+
+<script>
+  import { lowerCase } from "lodash";
+  import { compose, replace, slice } from "ramda";
+
+  export default {
+    props: {
+      instructor: {
+        avatarUrl: {
+          type: String,
+          required: false
+        },
+        profilePath: {
+          type: String,
+          required: true
+        },
+        name: {
+          type: String,
+          required: false
+        },
+        website: {
+          type: String,
+          required: false
+        },
+        subject: {
+          type: String,
+          required: false
+        },
+        subjectImageUrl: {
+          type: String,
+          required: false
+        },
+        teachingAt: {
+          type: Array,
+          default() {
+            return [];
+          }
+        },
+        courseCount: {
+          type: Number,
+          default: 0
+        }
+      }
+    },
+    methods: {
+      truncate: slice(0, 26),
+      providerIcon: compose(replace(/\s/g, "-"), lowerCase)
+    }
+  };
+</script>

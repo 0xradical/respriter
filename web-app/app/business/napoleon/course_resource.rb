@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Napoleon
   class CourseResource
     attr_reader :payload, :provider
@@ -102,7 +104,7 @@ module Napoleon
       if provider
         provider.id
       else
-        payload.dig('content', 'provider_id') || Provider.find_by(name: payload.dig('content', 'provider_name'))&.id
+        Provider.find_by(old_id: payload.dig('content', 'provider_id'))&.id || payload.dig('content', 'provider_id') || Provider.find_by(name: payload.dig('content', 'provider_name'))&.id
       end
     end
 

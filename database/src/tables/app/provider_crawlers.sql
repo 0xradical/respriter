@@ -1,7 +1,7 @@
 CREATE TABLE app.provider_crawlers (
   id               uuid               DEFAULT    public.uuid_generate_v1() PRIMARY KEY,
   user_agent_token uuid               DEFAULT    public.uuid_generate_v4() NOT NULL,
-  provider_id      bigint             REFERENCES app.providers(id)         ON DELETE CASCADE,
+  provider_id      uuid               REFERENCES app.providers(id)         ON DELETE CASCADE,
   published        boolean            DEFAULT    false                     NOT NULL,
   scheduled        boolean            DEFAULT    false                     NOT NULL,
   created_at       timestamptz        DEFAULT    NOW()                     NOT NULL,

@@ -76,13 +76,12 @@
       }
     </script>
 
-
-    <!-- Elements css-->
-    <%= content_for?(:elements_css) ? (yield :elements_css) : elements_stylesheet_link_tag('icon-font', 'bundle', version: (yield :elements_version), skip_pipeline: true) %>
-
     <!-- App css -->
     <%= stylesheet_bundles_with_chunks_tag 'vendor'  %>
     <%= stylesheet_bundles_with_chunks_tag 'application'  %>
+
+    <!-- Elements css-->
+    <%= content_for?(:elements_css) ? (yield :elements_css) : elements_stylesheet_link_tag('icon-font', 'bundle', version: (yield :elements_version), skip_pipeline: true) %>
 
     <script type='text/javascript'>
       window.I18n = { locale: "<%= I18n.locale %>" }

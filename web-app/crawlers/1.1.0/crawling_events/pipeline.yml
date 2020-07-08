@@ -1,0 +1,4 @@
+name: 'Crawling Events Pipeline'
+pipes:
+  - type:   ResourceCreator
+    script: creator.rb

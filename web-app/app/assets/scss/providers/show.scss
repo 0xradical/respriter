@@ -1,0 +1,83 @@
+#providers-show {
+  .header {
+    background-repeat: no-repeat;
+    background-image: linear-gradient(var(--surface), var(--surface));
+    background-position: 0 0;
+    background-size: 100% 15em;
+  }
+  .frame {
+    background-repeat: no-repeat;
+    background-image: linear-gradient(var(--surface), var(--surface));
+    background-position: 0 0;
+    background-size: 100% 50%;
+  }
+  .about-subframe {
+    &--lg {
+      border-radius: 3px 0px 0px 3px;
+      border-color: var(--foreground-low);
+      border-style: solid;
+      border-width: 1px;
+      min-height: fit-content;
+      height: 100%;
+    }
+    &--sm {
+      border-radius: 3px 3px 0px 0px;
+      border-color: var(--foreground-low);
+      border-style: solid;
+      border-width: 1px;
+      min-height: fit-content;
+      height: 100%;
+    }
+  }
+  .details-subframe {
+    &--lg {
+      border-radius: 0px 3px 3px 0px;
+      border-color: var(--foreground-low);
+      border-style: solid;
+      border-width: 1px;
+      min-height: fit-content;
+      height: 100%;
+    }
+    &--lg-with-description {
+      border-left-width: 0px;
+    }
+    &--sm {
+      border-radius: 0px 0px 3px 3px;
+      border-color: var(--foreground-low);
+      border-style: solid;
+      border-width: 1px;
+      min-height: fit-content;
+      height: 100%;
+    }
+
+    &--sm-with-description {
+      border-top-width: 0px;
+    }
+  }
+
+  .posts {
+    background-repeat: no-repeat;
+    background-image: linear-gradient(var(--surface), var(--surface));
+    background-position: 0 0;
+    background-size: 100% auto;
+  }
+
+  .icon {
+    flex: 0 0 4em;
+    width: 4em;
+    height: 4em;
+  }
+  .description {
+    > .text {
+      line-height: 1.5;
+    }
+
+    > .text p {
+      margin: 0;
+    }
+
+    > .text p + p {
+      margin-top: 1rem;
+    }
+  }
+}

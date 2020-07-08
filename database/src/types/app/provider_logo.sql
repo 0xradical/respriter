@@ -1,6 +1,6 @@
 CREATE TYPE app.provider_logo AS (
   id uuid,
-  provider_id bigint,
+  provider_id uuid,
   file varchar,
   user_account_id bigint,
   created_at timestamptz,

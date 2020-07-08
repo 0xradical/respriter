@@ -22,6 +22,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.landing_pages         TO
 GRANT SELECT,         UPDATE, DELETE, REFERENCES ON app.oauth_accounts        TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.orphaned_profiles     TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.posts                 TO "admin";
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.post_relations        TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.preview_courses       TO "admin";
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON app.preview_course_images TO "admin";
 GRANT SELECT, INSERT, UPDATE,         REFERENCES ON app.profiles              TO "admin";

@@ -63,30 +63,32 @@
               </search-fieldset>
             </div>
 
-            <hr />
+            <template v-if="!hiddenFields.includes('provider_name')">
+              <hr />
 
-            <div
-              @click="isFiltering.provider_name = true"
-              class="mobile-filter-facets__facet"
-            >
-              <search-fieldset
-                :title="$t('dictionary.providers')"
-                :subtitle="filter.provider_name.map(providerValue).join(', ')"
-                :stand-out="filter.provider_name.length > 0"
+              <div
+                @click="isFiltering.provider_name = true"
+                class="mobile-filter-facets__facet"
               >
-                <template #action>
-                  <a class="el:o-fieldset-frame__action" href="#">
-                    <icon
-                      width="1rem"
-                      height="1rem"
-                      transform="rotate(-90deg)"
-                      name="arrow-down"
-                      class="el:amx-C_pr"
-                    ></icon>
-                  </a>
-                </template>
-              </search-fieldset>
-            </div>
+                <search-fieldset
+                  :title="$t('dictionary.providers')"
+                  :subtitle="filter.provider_name.map(providerValue).join(', ')"
+                  :stand-out="filter.provider_name.length > 0"
+                >
+                  <template #action>
+                    <a class="el:o-fieldset-frame__action" href="#">
+                      <icon
+                        width="1rem"
+                        height="1rem"
+                        transform="rotate(-90deg)"
+                        name="arrow-down"
+                        class="el:amx-C_pr"
+                      ></icon>
+                    </a>
+                  </template>
+                </search-fieldset>
+              </div>
+            </template>
 
             <hr />
 
@@ -330,52 +332,54 @@
         </div>
       </search-fieldset>
 
-      <hr />
+      <template v-if="!hiddenFields.includes('provider_name')">
+        <hr />
 
-      <search-fieldset :title="$t('dictionary.providers')" :stand-out="true">
-        <template #action>
-          <a
-            class="el:o-fieldset-frame__action el:amx-Ws(nw)"
-            href="#"
-            @click.prevent="$emit('clearFilterClicked', 'provider_name')"
-          >
-            {{ $t("dictionary.clear_filter") }}
-          </a>
-        </template>
-        <div class="el:o-fieldset-frame__item">
-          <search-facet-options-filter
-            name="provider_name"
-            :placeholder="`${$t('dictionary.search')} ${$t(
-              'dictionary.providers'
-            )} ...`"
-            :suggestions="suggestions.provider_name.filtered"
-            @changedInputFacetOptionSuggestion="
-              suggestionInputChange('provider_name', ...$event)
-            "
-          >
-          </search-facet-options-filter>
-        </div>
-        <div class="el:o-fieldset-frame__item">
-          <search-facet-options
-            :options="suggestions.provider_name.filtered"
-            :filter="filter.provider_name"
-            :noOptionsMessage="
-              this.suggestions.provider_name.current &&
-              $t('dictionary.no_suggestions_message', {
-                term: this.suggestions.provider_name.current
-              })
-            "
-            :noOptionsClasses="['el:amx-C_er el:amx-Fs(0.75em)']"
-            @includeFacetOption="
-              $emit('optionAddedToFilter', 'provider_name', $event)
-            "
-            @excludeFacetOption="
-              $emit('optionRemovedFromFilter', 'provider_name', $event)
-            "
-          >
-          </search-facet-options>
-        </div>
-      </search-fieldset>
+        <search-fieldset :title="$t('dictionary.providers')" :stand-out="true">
+          <template #action>
+            <a
+              class="el:o-fieldset-frame__action el:amx-Ws(nw)"
+              href="#"
+              @click.prevent="$emit('clearFilterClicked', 'provider_name')"
+            >
+              {{ $t("dictionary.clear_filter") }}
+            </a>
+          </template>
+          <div class="el:o-fieldset-frame__item">
+            <search-facet-options-filter
+              name="provider_name"
+              :placeholder="`${$t('dictionary.search')} ${$t(
+                'dictionary.providers'
+              )} ...`"
+              :suggestions="suggestions.provider_name.filtered"
+              @changedInputFacetOptionSuggestion="
+                suggestionInputChange('provider_name', ...$event)
+              "
+            >
+            </search-facet-options-filter>
+          </div>
+          <div class="el:o-fieldset-frame__item">
+            <search-facet-options
+              :options="suggestions.provider_name.filtered"
+              :filter="filter.provider_name"
+              :noOptionsMessage="
+                this.suggestions.provider_name.current &&
+                $t('dictionary.no_suggestions_message', {
+                  term: this.suggestions.provider_name.current
+                })
+              "
+              :noOptionsClasses="['el:amx-C_er el:amx-Fs(0.75em)']"
+              @includeFacetOption="
+                $emit('optionAddedToFilter', 'provider_name', $event)
+              "
+              @excludeFacetOption="
+                $emit('optionRemovedFromFilter', 'provider_name', $event)
+              "
+            >
+            </search-facet-options>
+          </div>
+        </search-fieldset>
+      </template>
 
       <hr />
 
@@ -510,6 +514,12 @@
       total: {
         type: Number,
         default: 0
+      },
+      hiddenFields: {
+        type: Array,
+        default() {
+          return [];
+        }
       }
     },
 
