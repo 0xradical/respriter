@@ -80,10 +80,10 @@ namespace :system do
       Integration::TrackedActions::ShareASaleService.new(run_id).run
     end
 
-    desc 'Refreshes the materialized view bi.sales'
-    task refresh_sales_view: %i[environment] do
+    desc 'Refreshes all materialized views on schema bi'
+    task refresh_bi_views: %i[environment] do
       ActiveRecord::Base.connection.exec_query("REFRESH MATERIALIZED VIEW bi.sales");
-
+      ActiveRecord::Base.connection.exec_query("REFRESH MATERIALIZED VIEW bi.exit_clicks");
     end
 
     namespace :rakuten_marketing do
