@@ -7,7 +7,7 @@
   <meta property='og:description' content="<%= t('.meta.description') %>" />
 <% end %>
 
-<%= content_for :sprites do %>
+<% content_for :sprites do %>
   <%= sprites({
     tags: RootTag.all.map(&:id),
     icons: [
@@ -32,23 +32,27 @@
       "avatar"
     ],
     brand: "*",
+    'country-flags' => ["en", "es", "pt-br", "de", "jp", "fr"],
     i18n: ["en", "es", "pt-br", "ja"]
-  }) %>
+    },
+    host: Elements.asset_host,
+    version: '8.4.0'
+  ) %>
 <% end %>
 
-<div class='el:amx-Bc_su'>
+<div class='bc-s'>
   <div class='container'>
     <div class='row'>
       <div class='col-12'>
-        <div class='el:amx-C_fg el:amx-Ta(c)' style='margin-top:7em'>
-          <%= svg_use 'brand', 'logo', class: 'el:amx-Fi_fg', width: '246px', height: '40px' %>
-          <h1 style='font-weight:400;' class='el:amx-Mt(1.25em) el:amx-Fs(1.25em) el:amx-Fs(1.25em)@>lg'>
+        <div class='c-fg ta-c pT80 pB56'>
+          <%= image_tag(elements_asset_path('/svgs/brand/logo.svg'), class: 'fi-fg', width: '246px', height: '40px', data: { :'svg-inject' => '' }) %>
+          <h1 class='lh1 fs20 mV24 fw400'>
             <%= t('.hero_html').html_safe %>
           </h1>
-          <div class='el:amx-Mt(2em) el:amx-Mr(auto) el:amx-Ml(auto)' style='max-width:620px;'>
-            <form action='/search' method='get' class='el:m-search-bar'>
+          <div class='mH-a' style='max-width:620px;'>
+            <form action='/search' method='get' class='el:m-search-bar el:m-search-bar--xlg'>
               <input placeholder="<%= t('components.searchbar_placeholder') %>"
-                     class='el:m-search-bar__input'
+                     class='el:m-search-bar__input el:m-search-bar__input--highlight'
                      value='<%= request.query_parameters["q"] %>'
                      type='search'
                      name='q' />
@@ -60,44 +64,40 @@
   </div>
 </div>
 
-<div class='el:amx-Bc_su' style='padding-bottom:8.5em'>
+<div class='bc-s pB128'>
   <div class='container'>
-    <div class='el:amx-Pt(4.5em)'>
-      <div class='row'>
-        <% (RootTag.all).each_with_index do |t, index| %>
-          <div class='col-12 col-lg-3'>
-            <%= link_to t.slugify do %>
-              <div class='el:m-sticker el:m-sticker--borderless el:m-sticker--top el:amx-Mb(1em)'>
-                <%= svg_use('tags', t.id, { class: 'el:m-sticker__media el:amx-Fi_fg' }) %><span class='el:m-sticker__text'>
-                  <span class='el:m-sticker__primary-label'>
-                    <b><%= t("tags.#{t.id}") %></b>
-                  </span>
-                  <span class='el:m-sticker__secondary-label'><%= @count_by_category[t.id] %> <%= t('dictionary.online_courses').downcase %></span>
+    <div class='row'>
+      <% (RootTag.all).each_with_index do |t, index| %>
+        <div class='col-12 col-lg-3'>
+          <%= link_to t.slugify do %>
+            <div class='mT56 el:m-sticker el:m-sticker--unboxed el:m-sticker--top'>
+              <%= svg_use('tags', t.id, { class: 'el:m-sticker__media' }) %><span class='el:m-sticker__text'>
+                <span class='el:m-sticker__primary-label'>
+                  <b><%= t("tags.#{t.id}") %></b>
                 </span>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
+                <span class='el:m-sticker__secondary-label'><%= @count_by_category[t.id] %> <%= t('dictionary.online_courses').downcase %></span>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
  </div>
 
 <section id='about-us'>
-  <div class='container'>
+  <div class='container pT96 pB112'>
 
     <!-- Classpert's Online Search Engine -->
     <div class='row'>
-      <div class='col-12 col-lg-5'>
-        <div class='el:amx-Mt(5em)'>
-          <%= image_bundle_tag("media/svg/characters-seated-planet.svg", width: '100%' ) %>
-        </div>
+      <div class='col-12 col-lg-5 offset-lg-1'>
+        <%= image_tag(elements_asset_path("svgs/illustrations/characters-seated-planet.svg", width: '100%' )) %>
       </div>
 
       <div class='col-12 col-lg-5'>
-        <div class='el:amx-Mt(2.5em) el:amx-Mt(8em)@>lg'>
-          <h2 class='el:amx-C_gray5 el:amx-Fs(2em) el:amx-Fw(b) el:amx-Lh(1.2)'><%= t('.about_us_title_1') %></h2>
-          <p class='el:amx-Lh(1.7) el:amx-Mt(0.5em)'>
+        <div class='mT32'>
+          <h2 class='lh2 fs32 mB16 fw-b'><%= t('.about_us_title_1') %></h2>
+          <p class='lh3 fs16'>
             <%= t('.about_us_text_1_html', providers_count: @providers_count) %>
           </p>
         </div>
@@ -106,36 +106,36 @@
 
     <!-- X online courses -->
     <div class='row'>
-      <div class='col-12 col-md-6 order-md-first order-last'>
+      <div class='col-12 col-lg-6 order-md-first order-last'>
         <div class='row'>
           <div class='col-md-11'>
-            <div class='el:amx-Mt(2.5em) el:amx-Mt(6.5em)@>lg'>
-              <span data-countup
-                  data-countup-duration=2
-                  data-countup-start-val=100000
-                  data-countup-count='<%= @courses_count %>'
-                  data-countup-run=0
-                  class='el:amx-Ta(r)@>lg el:amx-Lh(1) el:amx-Fs(3em) el:amx-D(b) el:amx-Fw(b) el:amx-C_prV'>
-                <%= @courses_count %>
-              </span>
-              <h2 class='el:amx-C_gray5 el:amx-Ta(r)@>lg el:amx-Fs(1.5em) el:amx-Mt(0.5em) el:amx-Mb(0.5em) el:amx-Lh(1)'><%= t('.about_us_title_2') %></h2>
-              <p class='el:amx-Lh(1.7) el:amx-Ta(r)@>lg el:amx-M(0)'>
-                <%= t('.about_us_text_2_html') %>
-              </p>
+            <div class='mT64'>
+              <div class='ta-r@>lg'>
+                <span data-countup
+                    data-countup-duration=2
+                    data-countup-start-val=100000
+                    data-countup-count='<%= @courses_count %>'
+                    data-countup-run=0
+                    class='lh1 fs48 d-b fw-b c1v'>
+                  <%= @courses_count %>
+                </span>
+                <h2 class='fs24 mt8 mb16 lh1'><%= t('.about_us_title_2') %></h2>
+                <p class='lh3 ma0 fs16'>
+                  <%= t('.about_us_text_2_html') %>
+                </p>
+              </div>
             </div>
           </div>
         </div>
         <div class='row'>
-          <div class='offset-md-6 col-8 col-md-6 el:amx-Mt(4.5em) el:amx-Mb(3.5em)'>
-            <%= image_bundle_tag("media/svg/screen-yellow-planet.svg", width: '100%') %>
+          <div class='offset-md-6 col-8 col-md-6 mt64 mb64'>
+            <%= image_tag(elements_asset_path("svgs/illustrations/screen-yellow-planet.svg"), width: '100%' ) %>
           </div>
         </div>
       </div>
 
       <div class='col-12 col-md-6 order-md-last order-first'>
-        <div class='el:amx-Mt(2.5em) el:amx-Mt(2em)@>lg'>
-          <%= image_bundle_tag("media/svg/classpert-online-course-search-engine.svg", width: '100%' ) %>
-        </div>
+        <%= image_tag(elements_asset_path("svgs/illustrations/classpert-online-course-search-engine.svg"), width: '100%' ) %>
       </div>
     </div>
 
@@ -144,19 +144,19 @@
       <div class='col-12 col-md-6'>
         <div class='row'>
           <div class='col-12 col-md-11'>
-            <div class='el:amx-Ta(r)@>lg'>
+            <div class='ta-r@>lg'>
               <span data-countup
                 data-countup-duration=2
                 data-countup-start-val=0
                 data-countup-count='<%= @providers_count %>'
                 data-countup-run=0
-                    class='el:amx-Lh(1) el:amx-Fs(3em) el:amx-D(b) el:amx-Fw(b) el:amx-C_prV'>
+                class='lh1 fs48 d-b fw-b c1v'>
                 <%= @providers_count %>
               </span>
-              <h2 class='el:amx-C_gray5 el:amx-Fs(1.5em) el:amx-Mt(0.5em) el:amx-Mb(0.5em)'>
+              <h2 class='fs24 mt8 mb16 lh1'>
                 <%= t('.about_us_title_3') %>
               </h2>
-              <p class='el:amx-Lh(1.7) el:amx-Mt(0) el:amx-Mb(1.5em)'>
+              <p class='lh3 fs16 ma0'>
                 <%= t('.about_us_text_3_html') %>
               </p>
               <div class='row'>
@@ -171,18 +171,18 @@
         </div>
       </div>
 
-      <div class='col-12 col-md-6 el:amx-Mt(2.5em) el:amx-Mt(-1.5em)@>lg el:amx-Mb(4em) el:amx-Mb(6.5em)@lg el:amx-Ta(l)'>
+      <div class='col-12 col-md-6'>
         <div class='row'>
           <div class='offset-4 col-8 offset-md-0 col-md-6'>
-            <%= image_bundle_tag("media/svg/book-yellow-planet.svg", width: '100%') %>
+            <%= image_tag(elements_asset_path("svgs/illustrations/book-yellow-planet.svg"), width: '100%', class: 'mV64') %>
           </div>
         </div>
         <div class='row'>
           <div class='col-12 col-md-11'>
-            <h2 class='el:amx-C_gray5 el:amx-Ta(l) el:amx-Fs(1.5em) el:amx-Mt(1.375em) el:amx-Mb(0.5em)'>
+            <h2 class='fs24 lh1'>
               <%= t('.about_us_title_4') %>
             </h2>
-            <p class='el:amx-Lh(1.7) el:amx-Ta(l) el:amx-Mt(0) el:amx-Mb(1.5em)'>
+            <p class='lh3 fs16'>
               <%= t('.about_us_text_4_html') %>
             </p>
           </div>
