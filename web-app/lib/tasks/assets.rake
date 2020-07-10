@@ -12,11 +12,16 @@ namespace :assets do
     count_to_keep = 2
     public_output_path = Rails.root.join('public', ENV['WEBPACK_PUBLIC_OUTPUT_PATH'])
     public_manifest_path = public_output_path.join('manifest.json')
+    puts "Public manifest path: #{public_manifest_path}"
 
     if public_output_path.exist? && public_manifest_path.exist?
       manifest = JSON.load(File.read(public_manifest_path))
 
       files_in_manifest = manifest.except('entrypoints').values.map { |f| Rails.root.join('public', f.sub(%r{^/}, '')).to_s }
+      puts 'Files in current manifest: '
+      files_in_manifest.each do |file|
+        puts file
+      end
       files_to_be_removed = files_in_manifest.flat_map do |file_in_manifest|
         file_prefix, file_ext = file_in_manifest.scan(/(.*)[0-9a-f]{20}(.*)/).first
         file_digest_length = 20
