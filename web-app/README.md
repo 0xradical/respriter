@@ -87,8 +87,7 @@ A summary of those with all dependencies are shown below:
 This repository is equipped with a nice [Makefile](/Makefile) that runs all services nicely, orquestrating dependencies when necessary.
 
 In the diagram above you can see those dependencies represented as black and grey arrows.
-The blacks are dependencies that will be automatically started when a given service is requested to start,
-the gray ones are optional dependencies that you may want to run together, but if thats the case, you must invoke them manually.
+The blacks are dependencies that will be automatically started when a given service is requested to start, the gray ones are optional dependencies that you may want to run together, but if thats the case, you must invoke them manually.
 
 ### Running Services
 
