@@ -18,8 +18,15 @@ class Course < ApplicationRecord
   has_many :enrollments
   has_many :slug_histories
   has_many :user_accounts, through: :enrollments
+  has_many :curated_tags_versions
 
   delegate :name, :slug, to: :provider, prefix: true
+  delegate :curated_tags,
+           :excluded_tags,
+           :add_tag,
+           :exclude_tag,
+           :roll_back_tags,
+           to: :course_curated_tags
 
   index_name "courses_#{Rails.env}" unless Rails.env.production?
 
@@ -223,9 +230,9 @@ class Course < ApplicationRecord
   scope :locales, ->(l) { where('audio && ARRAY[?]::text[]', l) }
   scope :by_provider_tags, ->(tags) { where('tags @> ARRAY[?]::text[]', tags) }
   scope :with_tags,
-        -> { where("curated_tags IS NOT NULL AND curated_tags <> '{}'") }
+        -> { joins(:curated_tags_versions).where("curated_tags IS NOT NULL AND curated_tags <> '{}'") }
   scope :by_tags,
-        ->(tags) { where('curated_tags @> ARRAY[?]::varchar[]', tags) }
+        ->(tags) { joins(:curated_tags_versions).where('curated_tags @> ARRAY[?]::varchar[]', tags) }
   scope :published, -> { where(published: true) }
 
   def set_canonical_subdomain_from_language!
@@ -261,37 +268,27 @@ class Course < ApplicationRecord
     reload
   end
 
-  def self.unnest_curated_tags(sub_query = 'courses')
-    select('*').from(
-      select('unnest(curated_tags) as tag').from(sub_query),
-      :unnested_curated_tags
-    )
-  end
-
-  def self.unnest_array_type(field)
-    select('distinct *').from(
-      select("unnest(#{field}) as tag").from('courses'),
-      :"unnested_#{field}"
-    )
-  end
-
   def self.count_by_bundle(tag)
     query = <<-SQL
-      select tag, count(*) FROM (
-        select unnest(curated_tags) as tag FROM (
-          select * from courses where ? = ANY(curated_tags)
-        ) t
-      ) tags GROUP by tag
+      SELECT tag, count(*) FROM (
+        SELECT unnest(curated_tags) AS tag FROM (
+          SELECT curated_tags FROM curated_tags_versions
+          INNER JOIN courses ON curated_tags_versions.course_id = courses.id
+          WHERE curated_tags @> ARRAY[?]::varchar[]
+            AND current = TRUE AND published = TRUE
+        ) current_versions
+      ) all_tags GROUP by tag
     SQL
-    connection.select_all(sanitize_sql_array([query, tag]))
+    connection.select_all(sanitize_sql_array([query, tag])).rows.to_h
   end
 
   def self.distinct_tags
-    unnest_array_type('tags').map { |r| r['tag'] }.compact
-  end
-
-  def self.distinct_curated_tags
-    unnest_array_type('curated_tags').map { |r| r['tag'] }
+    select('distinct tag').from(
+      select('unnest(curated_tags) as tag')
+        .from('curated_tags_versions')
+        .where(curated_tags_versions: { current: true }),
+      :tag
+    )
   end
 
   def similar
@@ -430,6 +427,10 @@ class Course < ApplicationRecord
     if slug.present? && provider.slug.present?
       Rails.application.routes.url_helpers.course_path(provider.slug, slug)
     end
+  end
+
+  def course_curated_tags
+    @course_curated_tags ||= CourseCuratedTags.new(self)
   end
 
   def as_indexed_json(_options = {})

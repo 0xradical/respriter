@@ -339,7 +339,7 @@ namespace :system do
 
     desc "Find suitable bundle tags from course's name and add them to curated_tags"
     task :add_curated_tags_from_name, %i[condition batch_size] => %i[environment] do |t, args|
-      condition = args.fetch(:condition, "curated_tags = '{}'")
+      condition = args.fetch(:condition, "name is not null")
       batch_size = args.fetch(:batch_size, 1000).to_i
 
       count = 0
@@ -348,6 +348,24 @@ namespace :system do
         count += 1 if course_tagger.tag!(course)
       end
       puts "Updated #{count} courses"
+    end
+
+    desc "Manually excludes a tag from a course by slug"
+    task :exclude_tag_from_course, %i[course_slug tag] => %i[environment] do |t, args|
+      course = Course.find_by(slug: args[:course_slug])
+      course.exclude_tag(args[:tag], 'manually_excluded_by_rake_task')
+
+      puts "Curated tags: #{course.curated_tags.to_s}"
+      puts "Excluded tags: #{course.excluded_tags.to_s}"
+    end
+
+    desc "Manually adds a tag to a course by slug"
+    task :add_tag_to_course, %i[course_slug tag] => %i[environment] do |t, args|
+      course = Course.find_by(slug: args[:course_slug])
+      course.add_tag(args[:tag], 'manually_added_by_rake_task')
+
+      puts "Curated tags: #{course.curated_tags.to_s}"
+      puts "Excluded tags: #{course.excluded_tags.to_s}"
     end
   end
 
