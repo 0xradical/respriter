@@ -26,12 +26,12 @@ class ApplicationController < ActionController::Base
   end
 
   def page_version
-    env_var_ns = self.class.name.underscore.upcase
+    env_var_ns = "PAGE_VERSION_#{controller_name.upcase}_#{action_name.upcase}__"
     {
-      version: ENV.fetch("#{env_var_ns}_PAGE_VERSION"){ '' }.to_sym,
+      version: ENV.fetch("#{env_var_ns}VERSION"){ '' }.to_sym,
       elements: {
-        version:  ENV.fetch("#{env_var_ns}_ELEMENTS_VERSION") { Elements.asset_version },
-        host:     ENV.fetch("#{env_var_ns}_ELEMENTS_HOST")    { Elements.asset_host }
+        version:  ENV.fetch("#{env_var_ns}ELEMENTS_VERSION") { Elements.asset_version },
+        host:     ENV.fetch("#{env_var_ns}ELEMENTS_HOST")    { Elements.asset_host }
       } 
     }
   end
