@@ -80,9 +80,9 @@ else
     end.join "\n\n"
   end
 
-  offered_by = []
+  instructors = []
   if instructor = document.css('div.author-detail h4 a.link-main.no-bold.ellipsis').first
-    offered_by << { type: 'instructor', name: instructor.text.strip, distinguished: false, main: true }
+    instructors << { type: 'instructor', name: instructor.text.strip, distinguished: false, main: true }
   end
 
   video_id         = nil
@@ -100,7 +100,7 @@ else
     status:            'available',
     level:             level,
     url:               json_ld[0][0][:@id],
-    offered_by:        offered_by,
+    instructors:       instructors,
     start_date:        nil,
     end_date:          nil,
     enrollment_urls:   nil,
