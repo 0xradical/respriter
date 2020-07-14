@@ -12,10 +12,10 @@ CREATE MATERIALIZED VIEW bi.exit_clicks AS (
     COUNT(DISTINCT enrollments.tracking_cookies->>'id') AS unique_clicks
   FROM
     app.enrollments
-  INNER JOIN
+  LEFT JOIN
     app.courses ON enrollments.course_id = courses.id
   INNER JOIN
-    app.providers ON courses.provider_id = providers.id
+    app.providers ON enrollments.provider_id = providers.id
   GROUP BY 1, 2, 3, 4, 5, 6, 7, 8
   ORDER BY 1
 

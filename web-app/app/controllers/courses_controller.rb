@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CoursesController < ApplicationController
   include CourseSearchHelper
 
@@ -5,7 +7,7 @@ class CoursesController < ApplicationController
 
   # TODO: Refactor interface names and queries
   def index
-    @courses = search()
+    @courses = search
 
     respond_to do |format|
       format.html
@@ -16,7 +18,7 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @provider = Provider.find_by!(slug: params[:provider])
+    @provider = Provider.slugged.find_by!(slug: params[:provider])
     @course   = @provider.courses.published.find_by(slug: params[:course])
 
     if @course
@@ -25,10 +27,10 @@ class CoursesController < ApplicationController
 
     unless @course
       redirected_course = Course
-        .published
-        .joins(:slug_histories)
-        .where('provider_id = ? AND slug_histories.slug = ?', @provider.id, params[:course])
-        .first
+                          .published
+                          .joins(:slug_histories)
+                          .where('provider_id = ? AND slug_histories.slug = ?', @provider.id, params[:course])
+                          .first
 
       if redirected_course.present?
         redirect_to "/#{params[:provider]}/courses/#{redirected_course.slug}", status: 301
@@ -36,9 +38,9 @@ class CoursesController < ApplicationController
       end
 
       outdated_course = @provider
-        .courses
-        .where('up_to_date_id IS NOT NULL')
-        .find_by(slug: params[:course])
+                        .courses
+                        .where('up_to_date_id IS NOT NULL')
+                        .find_by(slug: params[:course])
 
       if outdated_course.present?
         up_to_date_course = Course.find_by id: outdated_course.up_to_date_id
@@ -52,22 +54,30 @@ class CoursesController < ApplicationController
 
   protected
 
+  def enhance_search_query_params(search_query_params)
+    search_query_params[:filter] ||= {}
+    search_query_params[:filter][:curated_tags] = [@tag] if @tag
+    search_query_params[:filter][:provider_name] = [@provider.name] if @provider
+
+    if search_query_params[:order].present?
+      search_query_params[:order] = search_query_params[:order].to_h.to_a
+    end
+
+    search_query_params
+  end
+
   def search
     search_query_params = {
       query:      search_params[:q],
-      filter:     (search_params[:filter] || Hash.new).tap{|f| @tag ? f.merge!(curated_tags: [@tag]) : f },
+      filter:     search_params[:filter],
       page:       search_params[:p],
       session_id: session_tracker.session_payload['id'],
-      boost: {
+      boost:      {
         browser_languages: browser_languages
       }
     }
 
-    if search_params[:order].present?
-      search_query_params[:order] = search_params[:order].to_h.to_a
-    end
-
-    search  = Search::CourseSearch.new search_query_params
+    search  = Search::CourseSearch.new(enhance_search_query_params(search_query_params))
     tracker = SearchTracker.new(session_tracker, search, action: :course_search).store!
 
     format_aggregations(tracker.tracked_results)

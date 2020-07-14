@@ -1,7 +1,7 @@
 CREATE FUNCTION triggers.insert_or_add_to_provider() RETURNS trigger AS $$
 DECLARE
   _provider        app.providers%ROWTYPE;
-  _new_provider_id int;
+  _new_provider_id uuid;
 BEGIN
   SELECT * FROM app.providers INTO _provider where providers.name = NEW.__provider_name__;
   IF (NOT FOUND) THEN

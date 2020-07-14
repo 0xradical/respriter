@@ -116,6 +116,7 @@
     "jest": "^24.8.0",
     "jest-serializer-vue": "^2.0.2",
     "prettier": "^1.19.1",
+    "speed-measure-webpack-plugin": "^1.3.3",
     "vue-jest": "^3.0.4",
     "webpack-dev-server": "^3.10.2"
   }

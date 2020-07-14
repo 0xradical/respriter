@@ -229,17 +229,18 @@ class Course < ApplicationRecord
   scope :published, -> { where(published: true) }
 
   def set_canonical_subdomain_from_language!
-    return update(canonical_subdomain: '') unless self.locale.present?
+    return update(canonical_subdomain: '') unless locale.present?
+
     locale_subdomains = I18n.available_locales.map do |locale_sym|
       Locale.from_string(locale_sym.to_s).then { |loc| [loc.language_only.to_s, loc.to_s.downcase] }
     end.to_h
     locale_subdomains['en'] = ''
-    course_language = Locale.from_pg(self.locale).language_only.to_s
+    course_language = Locale.from_pg(locale).language_only.to_s
     update(canonical_subdomain: locale_subdomains.fetch(course_language, ''))
   end
 
   def add_robots_index_rule_from_language!
-    course_locale = Locale.from_pg self.locale
+    course_locale = Locale.from_pg locale
     generic_locale = course_locale.language_only
     indexable = [course_locale, generic_locale]
 
@@ -298,7 +299,10 @@ class Course < ApplicationRecord
 
     if audio && !audio.empty?
       result +=
-        self.class.published.by_tags(curated_tags).locales(audio.uniq)
+        self.class.published
+            .by_tags(curated_tags)
+            .locales(audio.uniq)
+            .where.not(id: id)
             .order('enrollments_count DESC')
             .limit(SIMILAR_COURSES)
             .to_a
@@ -306,12 +310,12 @@ class Course < ApplicationRecord
 
     if result.size < SIMILAR_COURSES
       result +=
-        self.class.published.where.not(id: result.map(&:id)).by_tags(
-          curated_tags
-        )
-            .order('enrollments_count DESC')
-            .limit(SIMILAR_COURSES - result.size)
-            .to_a
+        self.class.published
+                  .where.not(id: [id, result.map(&:id)].flatten)
+                  .by_tags(curated_tags)
+                  .order('enrollments_count DESC')
+                  .limit(SIMILAR_COURSES - result.size)
+                  .to_a
     end
 
     result
@@ -403,17 +407,8 @@ class Course < ApplicationRecord
     main_pricing_model.try(:[], 'subscription_period')
   end
 
-  def has_afn?
-    !!provider.afn_url_template
-  end
-
-  def forwarding_url(click_id)
-    format((provider.afn_url_template&.chomp('/') || url), click_id:   click_id, course_url:
-                    provider.encoded_deep_linking? ? ERB::Util.url_encode(url) : url)
-  end
-
   def gateway_path
-    Rails.application.routes.url_helpers.gateway_path(id)
+    Rails.application.routes.url_helpers.gateway_path({ to: id })
   end
 
   def instructors

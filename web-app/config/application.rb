@@ -24,6 +24,7 @@ require_relative '../config/webpack/middleware'
 
 # Extensions
 require_relative '../lib/elements/elements'
+require_relative '../lib/uuid'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -38,6 +39,7 @@ module App
     config.autoload_paths +=
       [
         "#{Rails.root}/app/business",
+        "#{Rails.root}/app/constraints",
         "#{Rails.root}/app/uploaders",
         "#{Rails.root}/app/models/reports",
         "#{Rails.root}/app/services"
@@ -72,7 +74,7 @@ module App
         ENV.fetch('ELEMENTS_ASSET_HOST') do
           'https://elements-prd.classpert.com'
         end
-      elements_config.asset_version = '8.4.0'
+      elements_config.asset_version = '8.6.3'
     end
 
     config.action_controller.forgery_protection_origin_check = false

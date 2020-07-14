@@ -1,5 +1,6 @@
-class Post < ApplicationRecord
+# frozen_string_literal: true
 
+class Post < ApplicationRecord
   paginates_per 10
 
   include Imageable::HasMany
@@ -18,15 +19,18 @@ class Post < ApplicationRecord
 
   belongs_to :original_version, class_name: :Post, foreign_key: :original_post_id, optional: true
   has_many :localized_versions, class_name: :Post, foreign_key: :original_post_id
+  has_many :post_relations
+  has_many :providers, through: :post_relations, source: :relation, source_type: 'Provider'
 
-  belongs_to  :admin_account
+  belongs_to :admin_account
 
-  scope :tags,      -> (tags=nil) {  where("tags @> ARRAY[?]::varchar[]", tags) unless tags.nil? }
+  scope :tags,      ->(tags = nil) { where('tags @> ARRAY[?]::varchar[]', tags) unless tags.nil? }
   scope :published, -> { where(status: 'published') }
-  scope :locale,    -> (locale) { where(locale: locale) }
+  scope :locale,    ->(locale) { where(locale: locale) }
   scope :originals, -> { where(original_post_id: nil) }
+  scope :with_provider, ->(provider_slug = nil) { provider_slug ? joins(:providers).where(providers: { slug: provider_slug }) : nil }
 
-  %w(void draft published disabled).each do |s|
+  %w[void draft published disabled].each do |s|
     define_method "#{s}?" do
       status.eql?(s)
     end
@@ -51,7 +55,10 @@ class Post < ApplicationRecord
   def publish!
     now = Time.now
     if may_change_to_published?
-      self.published_at, self.content_changed_at = now, now if draft?
+      if draft?
+        self.published_at = now
+        self.content_changed_at = now
+      end
       self.status = 'published'
       save!
     end
@@ -90,13 +97,10 @@ class Post < ApplicationRecord
 
   def set_content_fingerprint
     new_fingerprint = Digest::MD5.hexdigest(body_content)
-    if content_fingerprint != new_fingerprint
-      self.content_fingerprint = new_fingerprint
-    end
+    self.content_fingerprint = new_fingerprint if content_fingerprint != new_fingerprint
   end
 
   class HTMLMagicCommentProcessor
-
     include ActionView::Helpers::AssetTagHelper
 
     def initialize(post)
@@ -110,8 +114,10 @@ class Post < ApplicationRecord
     # options:  - options as url params. Options will be passed to the render_[tag]_template method
     # i.e: <!-- #img:1:thumbor[width]=10&thumbor[height]=20 -->
     def render
-      @post.body.gsub(/(<!-- #(img):([a-z0-9\-_]*):?(.*)? -->)/) do |match|
-        entity, entity_id, options = $2, $3, Rack::Utils.parse_nested_query(URI.encode($4)).deep_symbolize_keys
+      @post.body.gsub(/(<!-- #(img):([a-z0-9\-_]*):?(.*)? -->)/) do |_match|
+        entity = Regexp.last_match(2)
+        entity_id = Regexp.last_match(3)
+        options = Rack::Utils.parse_nested_query(URI.encode(Regexp.last_match(4))).deep_symbolize_keys
         send(:"render_#{entity}_template", entity_id, options)
       end
     end
@@ -120,10 +126,9 @@ class Post < ApplicationRecord
 
     def render_img_template(entity_id, options)
       image = @post.images.find(entity_id)
-      default_html_opts, default_thumbor_opts = { alt: image.caption }, { width: 728 }
+      default_html_opts = { alt: image.caption }
+      default_thumbor_opts = { width: 728 }
       image_tag(image.thumbor.file_url(default_thumbor_opts.merge(options[:thumbor] || {})), default_html_opts.merge(options[:html] || {}))
     end
-
   end
-
 end

@@ -1,15 +1,16 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
+Rails.application.routes.draw do
   # Devise
   devise_for :admin_accounts,
              controllers: { sessions: 'admin_accounts/sessions' },
-             defaults: { format: :json }
+             defaults:    { format: :json }
 
   devise_for :user_accounts,
-             skip: %i[registrations],
+             skip:        %i[registrations],
              controllers: {
-               sessions: 'user_accounts/sessions',
-               passwords: 'user_accounts/passwords',
+               sessions:           'user_accounts/sessions',
+               passwords:          'user_accounts/passwords',
                omniauth_callbacks: 'user_accounts/omniauth_callbacks'
              }
 
@@ -33,7 +34,6 @@ Rails.application.routes.draw do
   get '/unsubscriptions/:id',       to: 'unsubscriptions#show'
   post '/unsubscriptions/:id',      to: 'unsubscriptions#update'
 
-
   get '/privacy-policy',        to: 'static_pages#index', page: 'privacy_policy'
   get '/terms-and-conditions',  to: 'static_pages#index', page: 'terms_and_conditions'
   get '/get-listed',            to: 'static_pages#index', page: 'get_listed'
@@ -41,17 +41,37 @@ Rails.application.routes.draw do
   post '/contact-us',           to: 'contact_us#create'
 
   get '/search', to: 'courses#index', as: :courses
-  get '/:provider/courses/:course',
-      constraints: lambda { |req|
-        Provider.slugged.pluck(:slug).include?(req.params[:provider])
-      },
-      to: 'courses#show',
-      as: :course
+
+  controller 'providers' do
+    get '/:provider' => :show,
+      constraints: ProviderConstraint.new,
+      as: :provider
+  end
+
+  controller 'courses' do
+    get '/:provider/courses/:course' => :show,
+        constraints: ProviderConstraint.new,
+        to:          'show',
+        as:          :course
+  end
+
+  controller 'provider_courses' do
+    get '/:provider/courses' => :index,
+      constraints: ProviderConstraint.new,
+      as: :provider_courses
+    get '/:provider/search' => :index,
+      constraints: ProviderConstraint.new
+  end
+
+  controller 'instructors' do
+    get '(/:provider)/instructors' => :index,
+      constraints: ProviderConstraint.new(allow_blank: true),
+      as: :instructors
+  end
 
   resources :posts, path: 'blog'
 
-  resources :user_accounts, path: 'users',        only: [:index, :show]
-  resources :instructors,   path: 'instructors',  only: :index
+  resources :user_accounts, path: 'users', only: %i[index show]
 
   direct :user_dashboard do
     "#{ENV.fetch('USER_DASHBOARD_URL') { '//user.classpert.com' }}?locale=#{
@@ -85,15 +105,19 @@ Rails.application.routes.draw do
     get '/social/:id',                to: 'social_networks#update', as: :social_network
   end
 
-  get '/forward/:id', to: 'gateway#index', as: :gateway
+  controller 'gateway' do
+    get '/forward'     => :index, as: :gateway
+    # old interface for compatibility purposes
+    get '/forward/:id' => :index
+  end
 
   get '/reviews/:id', to: 'course_reviews#show', as: :course_review
   post '/reviews/:id', to: 'course_reviews#update'
 
   get '/:tag',
-      to: 'course_bundles#index',
+      to:          'course_bundles#index',
       constraints: { tag: /#{RootTag.all.map(&:slugify).join('|')}/ },
-      as: :course_bundles
+      as:          :course_bundles
 
   concern :imageable do
     resources :images, shallow: true
@@ -154,9 +178,9 @@ Rails.application.routes.draw do
 
   # Redirects
   get '/pt-br/cursos-para-horas-complementares-gratis-com-certificado' =>
-        redirect(
-          '/blog/cursos-para-horas-complementares-gratis-e-com-certificado'
-        )
+                                                                          redirect(
+                                                                            '/blog/cursos-para-horas-complementares-gratis-e-com-certificado'
+                                                                          )
   get 'arduino-for-beginners' => redirect('/arduino')
   get 'the-complete-arduino-courses-catalog' => redirect('/arduino')
   get 'autocad-for-beginners' => redirect('/autocad')
@@ -183,25 +207,25 @@ Rails.application.routes.draw do
   get 'learn-bootstrap' => redirect('/bootstrap')
   get 'learn-csharp' => redirect('/csharp-programming')
   get 'learn-data-structures-and-algorithms' =>
-        redirect('/data-structures-and-algorithms')
+                                                redirect('/data-structures-and-algorithms')
   get 'learn-git' => redirect('/git')
   get 'learn-node-js' => redirect('/nodejs')
   get 'python-for-beginners' => redirect('/python-programming')
   get 'the-complete-python-courses-catalog' => redirect('/python-programming')
   get 'seo-for-beginners' => redirect('/seo')
   get 'the-complete-computer-networking-courses-catalog' =>
-        redirect('/computer-networks')
+                                                            redirect('/computer-networks')
   get 'the-complete-php-courses-catalog' => redirect('/php-programming')
   get 'the-complete-postgresql-courses-catalog' => redirect('/postgresql')
   get 'the-complete-r-programming-language-courses-catalog' =>
-        redirect('/r-programming')
+                                                               redirect('/r-programming')
   get 'the-complete-raspberry-pi-courses-catalog' => redirect('/raspberry-pi')
   get 'the-complete-vuejs-courses-catalog' => redirect('/vuejs')
   get 'the-complete-webpack-courses-catalog' => redirect('/webpack')
   get 'the-complete-matlab-courses-catalog' => redirect('/matlab')
 
   get '/:tag',
-      to: 'course_bundles#show',
-      as: :course_bundle,
+      to:          'course_bundles#show',
+      as:          :course_bundle,
       constraints: { tag: /[a-zA-Z0-9-]*/ }
 end

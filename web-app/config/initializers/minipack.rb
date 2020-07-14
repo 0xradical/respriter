@@ -14,7 +14,7 @@ Minipack.configuration do |c|
                end
 
   # If you are not extracting CSS in your webpack config you should set this flag to false
-  # c.extract_css = !Rails.env.development?
+  c.extract_css = true
 
   # The base directory for the frontend system. By default, it will be
   # `Rails.root`.

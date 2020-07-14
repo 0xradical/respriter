@@ -27,13 +27,10 @@ namespace :assets do
           file_digest_length = 8
         end
 
-        versions_of_file = Dir.glob("#{file_prefix}*#{file_ext}*").grep(/#{file_prefix}[0-9a-f]{#{file_digest_length}}#{file_ext}/)
-        puts "Versions of file for #{file_prefix}*#{file_ext}*"
-        puts versions_of_file.each do |version_of_file|
-          puts version_of_file
-        end
+        versions_of_file = Dir.glob(public_output_path.join("#{file_prefix}*#{file_ext}*")).grep(/#{file_prefix}[0-9a-f]{#{file_digest_length}}#{file_ext}/)
+
         versions_of_file.map do |version_of_file|
-          next if version_of_file =~ /^#{file_in_manifest}/
+          next if version_of_file =~ /#{public_output_path.join(file_in_manifest)}/
 
           [version_of_file, File.mtime(version_of_file).utc.to_i]
         end.compact.sort_by(&:last).reverse.drop(count_to_keep).map(&:first)

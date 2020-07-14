@@ -111,14 +111,13 @@
       margin-right: 0.625em;
 
       &--current {
-        background-color: var(--foreground-medium);
-        color: #fff;
+        background-color: var(--foreground);
         padding: 0px 8px;
         border-radius: 3px;
 
         a {
           display: inline-block;
-          color: #fff;
+          color: var(--foreground-low);
         }
       }
     }

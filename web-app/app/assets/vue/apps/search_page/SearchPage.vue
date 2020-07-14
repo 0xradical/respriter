@@ -19,6 +19,7 @@
               :aggregations="$store.state.meta.aggregations"
               :total="$store.state.meta.total"
               :filter="params.filter"
+              :hiddenFields="hiddenFields"
               :mobileUx="true"
               @showResultsClicked="hideMobileFilter"
               @clearFiltersClicked="clearFilters"
@@ -127,6 +128,7 @@
             <search-filter
               :aggregations="$store.state.meta.aggregations"
               :filter="params.filter"
+              :hiddenFields="hiddenFields"
               @clearFilterClicked="clearFilter"
               @optionAddedToFilter="addOptionToFilter"
               @optionRemovedFromFilter="removeOptionFromFilter"
@@ -209,7 +211,12 @@
 
       tag: {
         type: String,
-        default: null
+        default: undefined
+      },
+
+      provider: {
+        type: String,
+        default: undefined
       },
 
       searchEndpoint: {
@@ -258,6 +265,15 @@
         } else {
           return {};
         }
+      },
+      hiddenFields() {
+        const fields = [];
+
+        if (this.provider) {
+          return [...fields, "provider_name"];
+        }
+
+        return fields;
       }
     },
     beforeCreate() {
@@ -386,6 +402,8 @@
             value: value
           }
         ]);
+
+        return this.params;
       },
       changeFilters(filters) {
         // go back to first page when filtering
@@ -409,7 +427,7 @@
         return {
           order: {},
           filter: {
-            provider_name: [],
+            ...(this.provider ? {} : { provider_name: [] }),
             root_audio: [],
             subtitles: [],
             price: [0, 2500]

@@ -1,8 +1,9 @@
-class PostsController < ApplicationController
+# frozen_string_literal: true
 
+class PostsController < ApplicationController
   def index
     @posts = Post.published.locale(I18n.locale)
-    .tags(params[:tags]).page(params[:page]).order(published_at: :desc)
+                 .tags(params[:tags]).with_provider(params[:provider]).page(params[:page]).order(published_at: :desc)
   end
 
   def show
