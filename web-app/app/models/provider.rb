@@ -10,6 +10,7 @@ class Provider < ApplicationRecord
   scope :slugged, -> { where.not(slug: nil) }
   scope :published, -> { where(published: true) }
 
+  has_one  :provider_price_range
   has_many :courses, dependent: :destroy
   has_many :enrollments
   has_many :post_relations, as: :relation
@@ -33,10 +34,15 @@ class Provider < ApplicationRecord
 
   # queries
   def areas_of_knowledge
-    self.class.select("distinct on (category) count(*) as count_all, tag, (case when tag in (#{RootTag.all.map { |t| "'#{t.id}'" }.join(',')}) then 0 else 1 end) as category").from(
-      courses.select('unnest(curated_tags) as tag'),
+    self.class.select('count(*) as count_all, tag').from(
+      courses.published.select('unnest(curated_tags) as tag'),
       :unnested_curated_tags
-    ).group('tag').order([:category, count_all: :desc]).map(&:tag)
+    ).where('tag in (?)', RootTag.all.map(&:id)).group('tag').order([count_all: :desc]).limit(1).map(&:tag)
+  end
+
+  def recommended_courses(locale = I18n.locale, count = 12)
+    locales = [locale.to_s.gsub(/-.*/, '').presence, locale].compact.map { |l| "'#{l}'" }
+    courses.published.order("(audio && ARRAY[#{locales.join(',')}]::text[])::int DESC NULLS LAST").order('enrollments_count DESC, video NULLS LAST').limit(count)
   end
 
   def top_countries(n = 5)
@@ -44,19 +50,18 @@ class Provider < ApplicationRecord
   end
 
   def membership_types
-    courses.select("distinct jsonb_array_elements(pricing_models)->>'type' as membership_type").map(&:membership_type)
+    courses.published.select("distinct jsonb_array_elements(pricing_models)->>'type' as membership_type").map(&:membership_type)
   end
 
   def price_range
-    self.class.select('min(price) as min_price, max(price) as max_price').from(
-      courses.select("jsonb_array_elements(pricing_models)->>'price' as price"),
-      :unnested_pricing_models
-    ).map { |e| [e.min_price, e.max_price] }.first.sort_by { |a, b| a.to_f - b.to_f }
+    [provider_price_range.min, provider_price_range.max]
+  rescue StandardError
+    []
   end
 
   def has_trial?
     self.class.select('trial_value').from(
-      courses.select("jsonb_array_elements(pricing_models)->'trial_period'->>'value' as trial_value"),
+      courses.published.select("jsonb_array_elements(pricing_models)->'trial_period'->>'value' as trial_value"),
       :unnested_pricing_models
     ).where('trial_value is not null').count > 0
   end

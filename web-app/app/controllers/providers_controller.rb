@@ -3,9 +3,10 @@
 class ProvidersController < ApplicationController
   def show
     @provider = Provider.slugged.find_by(slug: params[:provider])
-    @courses = @provider.courses.published.limit(12)
+    @courses = @provider.recommended_courses(I18n.locale, 12)
     @course_count = @provider.courses.published.count
     @instructors = @provider.instructors.limit(12)
+    @instructor_count = @provider.instructors.count
     @posts = @provider.posts.published.locale(I18n.locale).limit(3)
     @details = {}
     @stats = {}
@@ -21,7 +22,7 @@ class ProvidersController < ApplicationController
     @details[:price_range] = price_range if price_range.compact.any?
     @details[:has_trial] = has_trial if @details[:price_range]
 
-    @stats[:instructor_count] = @instructors.count if @instructors.any?
+    @stats[:instructor_count] = @instructor_count if @instructors.any?
     @stats[:course_count] = @provider.courses.published.count if @provider.courses.published.any?
     @stats[:top_countries] = top_countries if top_countries.compact.any?
   end
