@@ -56,6 +56,17 @@ I18n.available_locales.each do |locale|
       end
     end
 
+    # Provider - Show
+    Provider.published.where(id: Course.published.pluck('distinct(provider_id)')).find_each do |provider|
+      if provider.indexable_by_robots?(locale)
+        add(provider_path(provider: provider.slug), {
+          changefreq: 'weekly',
+          lastmod:    (ENV.fetch('FORCE_LASTMOD_FOR_PROVIDERS') { false } ? Time.now : provider.updated_at).strftime('%Y-%m-%d'),
+          priority:   0.9
+        })
+      end
+    end
+
     # Orphaned Profile - Index
     add(instructors_path, {
           changefreq: 'monthly',

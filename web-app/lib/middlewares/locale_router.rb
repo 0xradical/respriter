@@ -6,7 +6,7 @@ class LocaleRouter
 
   def call(env)
     @status, @headers, @body = @app.call(env)
-    @path, @env = env['REQUEST_PATH'], env
+    @path, @query_string, @env = env['REQUEST_PATH'], env['QUERY_STRING'], env
     @request = Rack::Request.new(env)
     @cookies = Rack::Utils.parse_cookies(env)
     return forward_to(user_locale) if user_selected_different_locale?
@@ -45,7 +45,7 @@ class LocaleRouter
   end
 
   def redirection_url(locale)
-    "//" + domain.route_for(locale) + @path
+    ("//" + domain.route_for(locale) + @path + '?' + @query_string).chomp('?')
   end
 
   def user_locale
