@@ -4,7 +4,7 @@
 WITH
 
 courses_template AS (
-  INSERT INTO pipeline_templates (
+  INSERT INTO app.pipeline_templates (
     name,
     dataset_id,
     pipes
@@ -70,7 +70,7 @@ courses_template AS (
   RETURNING *
 )
 
-INSERT INTO pipeline_templates (
+INSERT INTO app.pipeline_templates (
   name,
   data,
   bootstrap_script_type,
@@ -85,25 +85,26 @@ INSERT INTO pipeline_templates (
   'sql',
   '
     WITH next_pipeline AS (
-      INSERT INTO pipelines (
-        label, pipeline_template_id
+      INSERT INTO app.pipelines (
+        pipeline_execution_id,
+        pipeline_template_id
       ) VALUES (
-        $1.label,
+        $1.pipeline_execution_id,
         ($1.data->>''next_pipeline_template_id'')::uuid
       )
       RETURNING *
     )
 
-    UPDATE pipelines
+    UPDATE app.pipelines
     SET data = jsonb_set(pipelines.data, ''{next_pipeline_id}'', (''"'' || next_pipeline.id || ''"'')::jsonb)
     FROM next_pipeline
     WHERE pipelines.id = $1.id;
 
-    INSERT INTO pipe_processes (pipeline_id, initial_accumulator) VALUES ($1.id, (''{"url":"'' || ($1.data->>''sitemap_url'') || ''"}'')::jsonb);
-    SELECT pipeline_call($1.id);
+    INSERT INTO app.pipe_processes (pipeline_id, initial_accumulator) VALUES ($1.id, (''{"url":"'' || ($1.data->>''sitemap_url'') || ''"}'')::jsonb);
+    SELECT app.pipeline_call($1.id);
   ',
   'sql',
-  'SELECT pipeline_call(($1.data->>''next_pipeline_id'')::uuid);',
+  'SELECT app.pipeline_call(($1.data->>''next_pipeline_id'')::uuid);',
   '<%= dataset_id %>',
   '[
     {
@@ -123,12 +124,3 @@ INSERT INTO pipeline_templates (
     }
   ]'
 FROM courses_template;
-
-UPDATE pipeline_templates AS last_template
-SET
-  schedule_pipeline_template_id = first_template.id,
-  schedule_interval             = '1 weeks'
-FROM pipeline_templates AS first_template
-WHERE
-  first_template.name = 'Coursera Sitemap Pipeline' AND
-  last_template.name  = 'Coursera Courses Pipeline';
