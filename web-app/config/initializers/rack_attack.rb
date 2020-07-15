@@ -28,7 +28,7 @@ class Rack::Attack
         if req.bot?
           begin
             bot_claim = BotClaim.new(req.user_agent, req.remote_ip)
-            self.cache.write("allow-#{bot.ip}", bot_claim.name, Time.now + 3.months) if bot_claim.verified?
+            self.cache.write("allow-#{bot_claim.ip}", bot_claim.name, Time.now + 3.months) if bot_claim.verified?
           rescue BotClaim::UnsupportedUserAgent => e
             Rails.logger.info(e.message)
           end
