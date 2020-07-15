@@ -32,7 +32,18 @@ Bundler.require(*Rails.groups)
 
 module App
   class Application < Rails::Application
+
     config.session_store :cookie_store, key: :_app_session, domain: :all
+
+    config.cache_store = :mem_cache_store, (ENV['MEMCACHED_SERVERS'] || "").split(','),
+    {
+      :username => ENV["MEMCACHED_USERNAME"],
+      :password => ENV["MEMCACHED_PASSWORD"],
+      :failover => true,
+      :socket_timeout => 1.5,
+      :socket_failure_delay => 0.2,
+      :down_retry_delay => 60
+    }
 
     config.load_defaults 5.1
 
@@ -45,18 +56,18 @@ module App
         "#{Rails.root}/app/services"
       ]
 
+    Rack::Attack.enabled = ActiveModel::Type::Boolean.new.cast(
+      ENV.fetch('ENABLE_RACK_ATTACK') { Rails.env.production? }
+    )
+
     if ENV['WEBPACK_DEV_SERVER_HOST'].present?
       config.middleware.insert_before 0, Webpack::Middleware, ssl_verify_none: true
     end
 
-    config.middleware.insert_before(
-      ActionDispatch::Static,
-      RobotsTxtInterceptor
-    )
-    config.middleware.insert_before(
-      ActionDispatch::Static,
-      SitemapXmlInterceptor
-    )
+    config.middleware.insert_before 0, Rack::Attack
+    config.middleware.insert_before ActionDispatch::Static, RobotsTxtInterceptor
+    config.middleware.insert_before ActionDispatch::Static, SitemapXmlInterceptor
+
     config.middleware.use LocaleRouter
     config.middleware.use MaintenanceMode
 
@@ -64,7 +75,7 @@ module App
 
     config.i18n.load_path +=
       Dir[Rails.root.join('config', 'locales', '**', '*.yml')]
-    config.i18n.available_locales = %w[en es pt-BR ja]
+    config.i18n.available_locales = %w[en es pt-BR de ja]
 
     config.action_mailer.default_url_options = { protocol: 'https', host: 'classpert.com' }
     config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"

@@ -9,6 +9,7 @@ class Provider < ApplicationRecord
 
   scope :slugged, -> { where.not(slug: nil) }
   scope :published, -> { where(published: true) }
+  scope :featured_on_footer, -> { where(featured_on_footer: true) }
 
   has_one  :provider_price_range
   has_many :courses, dependent: :destroy

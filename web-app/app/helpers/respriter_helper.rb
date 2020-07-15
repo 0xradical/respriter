@@ -10,7 +10,7 @@ module RespriterHelper
   end
 
   def sprites(params = {}, options = {})
-    version = get_version(options.extract!(:version))
+    host, version = get_options(options.extract!(:host, :version))
 
     if respriter?
       sprite_uri = URI.join(
@@ -22,14 +22,17 @@ module RespriterHelper
       content_tag(:div, nil, "data-svg-sprite": sprite_uri.to_s)
     else
       params.keys.map do |key|
-        content_tag(:div, nil, "data-svg-sprite": elements_asset_path("svgs/sprites/#{key}.svg"))
+        content_tag(:div, nil, "data-svg-sprite": elements_asset_path("svgs/sprites/#{key}.svg", host: host, version: version))
       end.reduce(&:+)
     end
   end
 
   private
 
-  def get_version(opts)
-    opts[:version].blank? ? Elements.asset_version : opts[:version]
+  def get_options(opts)
+    [
+      opts[:host] || controller.page_version[:elements][:host] || Elements.asset_host,
+      opts[:version] || controller.page_version[:elements][:version] || Elements.asset_version
+    ]
   end
 end

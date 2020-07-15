@@ -70,3 +70,4 @@ INSERT INTO public.schema_migrations(version) VALUES
   ('20200708161247'),
   ('20200709184800'),
   ('20200715010430');
+  ('20200715023408');

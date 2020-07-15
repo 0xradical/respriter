@@ -10,11 +10,11 @@ SitemapGenerator::Sitemap.adapter = SitemapGenerator::AwsSdkAdapter.new(
   }
 )
 
-I18nHost.new('classpert.com').each do |locale, host|
-  SitemapGenerator::Sitemap.default_host  = "https://#{host}"
-  SitemapGenerator::Sitemap.sitemaps_host = 'https://cdn.classpert.com'
+I18n.available_locales.each do |locale|
+  SitemapGenerator::Sitemap.default_host  = "https://#{Domain.new.route_for(locale)}"
+  SitemapGenerator::Sitemap.sitemaps_host = "https://cdn.classpert.com"
   SitemapGenerator::Sitemap.public_path   = 'tmp/'
-  SitemapGenerator::Sitemap.sitemaps_path = "sitemaps/#{locale}"
+  SitemapGenerator::Sitemap.sitemaps_path = "sitemaps/#{locale.to_s.downcase}"
   SitemapGenerator::Sitemap.create_index  = true
   SitemapGenerator::Sitemap.compress      = :all_but_first
 
@@ -33,26 +33,16 @@ I18nHost.new('classpert.com').each do |locale, host|
 
     # Blog - Post
     Post.locale(I18nHelper.sanitize_locale(locale)).published.each do |post|
-      add(post_path(post.slug), { changefreq: 'monthly', priority: 0.9, lastmod: post.content_changed_at })
+      add(post_path(post.slug), { changefreq: 'monthly', priority: 0.9,  lastmod: post.content_changed_at&.strftime('%Y-%m-%d') })
     end
 
     # Bundle - Show
     Course.unnest_curated_tags.distinct.map { |c| c.tag.dasherize } .each do |tag|
       add(course_bundle_path(tag), {
-            changefreq: 'weekly',
-            priority:   1
-          })
-    end
-
-    # Provider - Show
-    Provider.published.where(id: Course.published.pluck('distinct(provider_id)')).find_each do |provider|
-      if provider.indexable_by_robots?(locale)
-        add(provider_path(provider: provider.slug), {
-              changefreq: 'weekly',
-              lastmod:    (ENV.fetch('FORCE_LASTMOD_FOR_PROVIDERS') { false } ? Time.now : provider.updated_at).strftime('%Y-%m-%d'),
-              priority:   0.9
-            })
-      end
+        changefreq: 'weekly',
+        lastmod: Time.now.strftime('%Y-%m-%d'),
+        priority: 1
+      })
     end
 
     # Course - Show
@@ -63,6 +53,17 @@ I18nHost.new('classpert.com').each do |locale, host|
               lastmod:    (ENV.fetch('FORCE_LASTMOD_FOR_COURSES') { false } ? Time.now : course.updated_at).strftime('%Y-%m-%d'),
               priority:   0.9
             })
+      end
+    end
+
+    # Provider - Show
+    Provider.published.where(id: Course.published.pluck('distinct(provider_id)')).find_each do |provider|
+      if provider.indexable_by_robots?(locale)
+        add(provider_path(provider: provider.slug), {
+          changefreq: 'weekly',
+          lastmod:    (ENV.fetch('FORCE_LASTMOD_FOR_PROVIDERS') { false } ? Time.now : provider.updated_at).strftime('%Y-%m-%d'),
+          priority:   0.9
+        })
       end
     end
 

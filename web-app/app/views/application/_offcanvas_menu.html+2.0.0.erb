@@ -1,0 +1,115 @@
+<div id='main-menu' class='el:o-off-canvas-menu pT24 pH24 pB0'>
+  <%- if user_account_signed_in? %>
+  <div class='el:o-off-canvas-menu__header-slot bdb pb8'>
+    <div class='el:o-off-canvas-menu__control'></div>
+    <div style='height:32px;' class='pB12'>
+      <% if current_user_account.avatar_url.present? %>
+        <%= image_tag(current_user_account.avatar_url, class: 'h2em w-a va-t d-ib', style: 'border-radius:50%;') %>
+      <% else %>
+        <%= svg_use('icons', 'avatar', { class: 'h2em w-a va-t d-ib', style: 'border-radius:50%;' } ) %>
+      <% end %>
+      <div class='d-ib mL4'>
+        <div class='po-r fw-b fs16' style='top:-2px;'><%= t("dictionary.hi") %><%= current_user_account.profile&.name ? ", #{current_user_account.profile.name.split.first}!" : "!" %></div>
+        <div class='po-r'>
+          <%= link_to user_dashboard_url do %>
+            <span class='fs14'><%= t("dictionary.go_to_profile") %></span>
+            <svg width='10px' height='10px' class='d-ib va-m po-r c1 mR8' style='transform:rotate(-90deg);'>
+              <use xlink:href='#icons-arrow-down' />
+            </svg>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <%- else %>
+  <div class='el:o-off-canvas-menu__header-slot'>
+    <div class='el:o-off-canvas-menu__control'></div>
+  <%- end %>
+  </div>
+  <div class='el:o-off-canvas-menu__body-slot'>
+    <div class='el:m-collapsible el:m-collapsible--fixed' data-elements-collapsible>
+      <div class='el:m-collapsible__visible-content'>
+        <a href='/' class='el:m-link-nav'><%= t("dictionary.home") %></a>
+      </div>
+    </div>
+    <div class='el:m-collapsible' data-elements-collapsible>
+      <div class='el:m-collapsible__visible-content'><%= t("dictionary.categories") %></div>
+      <div class='el:m-collapsible__hidden-content'>
+        <ul class='el:m-list' style='margin-bottom:1em'>
+          <% (RootTag.all).each_with_index do |t, index| %>
+            <%= link_to course_bundles_path(t.slugify), class: 'el:m-link-nav' do %>
+              <li style='padding:4px 0px'>
+                <span class='el:m-label' style='height:60px;text-align:left'>
+                  <%= svg_use('tags', t.id, { class: 'el:m-label__icon' }) %>
+                  <span class='el:m-label__text el:amx-Ml(0.5em)' class='c1' style='word-break:break-word;max-width:160px'>
+                    <%= t("tags.#{t.id}") %>
+                  </span>
+                </span>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class='el:m-collapsible el:m-collapsible--fixed' data-elements-collapsible>
+      <div class='el:m-collapsible__visible-content'>
+        <%= link_to t("dictionary.blog"), posts_path, class: 'el:m-link-nav' %>
+      </div>
+    </div>
+    <div class='el:m-collapsible el:m-collapsible--fixed' data-elements-collapsible>
+      <div class='el:m-collapsible__visible-content'>
+        <%= link_to t("dictionary.contact_us"), contact_us_path, class: 'el:m-link-nav' %>
+      </div>
+    </div>
+    <div class='el:m-collapsible el:m-collapsible' data-elements-collapsible>
+      <div class='el:m-collapsible__visible-content'>
+        <div>
+        <%= link_to_locale(I18n.locale, class: 'el:m-link-nav') do %>
+          <svg class='mR4 w1.5em h1.5em d-ib va-m'>
+            <use xlink:href='<%= "#country-flags-#{I18n.locale.to_s.downcase.split('-')[-1]}" %>' />
+          </svg>
+          <span style='vertical-align: middle;'><%= t("iso639_codes.#{I18n.locale}") %></span>
+        <% end %>
+        </div>
+      </div>
+      <div class='el:m-collapsible__hidden-content'>
+        <div class='mB16'>
+          <% counter = 0 %>
+          <% I18n.available_locales.each do |locale| %>
+            <% next if locale.to_s == I18n.locale.to_s %>
+            <div class="<%= counter == 0 ? '' : 'mT16' %>">
+              <%= link_to_locale(locale, class: 'el:m-link-nav') do %>
+                <svg class='d-ib va-m mR4 h1.5em w1.5em'>
+                  <use xlink:href='<%= "#country-flags-#{locale.to_s.downcase.split('-')[-1]}" %>' />
+                </svg>
+                <span class='va-m'><%= t("iso639_codes.#{locale}", locale: locale) %></span>
+              <% end %>
+            </div>
+            <% counter += 1 %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class='el:m-collapsible el:m-collapsible--fixed' data-elements-collapsible>
+      <div class='el:m-collapsible__visible-content'>
+        <label data-el-theme-toggler class="el:m-switch el:m-switch--theme-toggler el:amx-Va(m)" for="theme-toggler-offcanvas">
+          <input type="checkbox" id="theme-toggler-offcanvas" />
+          <div class="el:m-switch__slider"></div>
+        </label>
+      </div>
+    </div>
+
+    <div style='margin-top:auto;margin-bottom:2rem;'>
+      <%- if user_account_signed_in? %>
+        <%= link_to t('dictionary.sign_out'), destroy_user_account_session_path,
+          class: 'el:m-button el:m-button--primary-border el:m-button--block', data: { method: 'delete' } %>
+      <%- else %>
+        <%= link_to t('dictionary.sign_in'), new_user_account_session_path,
+          class: 'el:m-button el:m-button--primary-border el:m-button--block' %>
+
+        <%= link_to t('dictionary.sign_up'), new_user_account_registration_path,
+          class: 'mT16 el:m-button el:m-button--primary-flat el:m-button--block' %>
+      <% end %>
+    </div>
+  </div>
+</div>

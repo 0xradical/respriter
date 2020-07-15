@@ -34,16 +34,13 @@ Rails.application.configure do
   config.consider_all_requests_local =
     ENV.fetch('CONSIDER_ALL_REQUESTS_LOCAL') { true }
 
-  # Enable/disable caching. By default caching is disabled.
-  if Rails.root.join('tmp/caching-dev.txt').exist?
+  if ActiveModel::Type::Boolean.new.cast(ENV.fetch('ENABLE_CACHING') { false })
     config.action_controller.perform_caching = true
-    config.cache_store = :memory_store
     config.public_file_server.headers = {
       'Cache-Control' => "public, max-age=#{2.days.seconds.to_i}"
     }
   else
     config.action_controller.perform_caching = false
-    config.cache_store = :null_store
   end
 
   config.serve_static_assets = true

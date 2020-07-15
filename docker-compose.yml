@@ -35,6 +35,7 @@ services:
       - webpack.clspt
       - ssr.clspt
       - database.clspt
+      - memcached.clspt
       - search.clspt
       - thumbor.clspt
       - assets-proxy.clspt
@@ -377,6 +378,14 @@ services:
       - LOGSPOUT=ignore
     ports:
       - 6379
+    depends_on:
+      - proxy.clspt
+
+  memcached.clspt:
+    image: memcached:1.6.6-alpine
+    command: memcached -m 128 -vv
+    ports:
+      - 11211
     depends_on:
       - proxy.clspt
 

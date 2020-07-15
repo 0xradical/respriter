@@ -3,6 +3,7 @@
 require 'hypernova'
 
 class ApplicationController < ActionController::Base
+
   if ENV['BASIC_AUTH_REQUIRED']
     http_basic_authenticate_with(
       name: ENV['BASIC_AUTH_USER'], password: ENV['BASIC_AUTH_PASSWORD']
@@ -11,6 +12,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception, prepend: true
   prepend_before_action :track_session
+  before_action :get_page_version
   before_action :set_locale
   before_action :set_sentry_raven_context if Rails.env.production?
   before_action :store_user_account_location, if: :devise_controller?
@@ -23,7 +25,22 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::RoutingError, with: :render_404
   end
 
+  def page_version
+    env_var_ns = "PAGE_VERSION_#{controller_name.upcase}_#{action_name.upcase}__"
+    {
+      version: ENV.fetch("#{env_var_ns}VERSION"){ '' }.to_sym,
+      elements: {
+        version:  ENV.fetch("#{env_var_ns}ELEMENTS_VERSION") { Elements.asset_version },
+        host:     ENV.fetch("#{env_var_ns}ELEMENTS_HOST")    { Elements.asset_host }
+      } 
+    }
+  end
+
   protected
+
+  def get_page_version
+    request.variant = page_version[:version]
+  end
 
   def store_user_account_location
     # for omniauth
@@ -145,4 +162,5 @@ class ApplicationController < ActionController::Base
           )
       )
   end
+
 end

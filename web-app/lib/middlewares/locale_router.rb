@@ -5,54 +5,63 @@ class LocaleRouter
   end
 
   def call(env)
-
-    @path, @env = env['REQUEST_PATH'], env
-    @subdomains, @tld_domain = extract_subdomains, extract_tld_domain
+    @status, @headers, @body = @app.call(env)
+    @path, @query_string, @env = env['REQUEST_PATH'], env['QUERY_STRING'], env
     @request = Rack::Request.new(env)
-    env['rack.session']['intl'] ||= @request.params['intl']
-    if (intl_subdomain? && !whitelisted_routes && preferred_locale != :en)
-      if (preferred_locale.present? && !env['rack.session']['intl'])
-        return [301, { "Location" => redirection_url, "Cache-Control" => "no-cache"}, {}]
-      end
-    end
-
+    @cookies = Rack::Utils.parse_cookies(env)
+    return forward_to(user_locale) if user_selected_different_locale?
+    return forward_to(auto_assigned_locale) if first_access_on_international_domain?
     @app.call(env)
-
   end
 
-  def extract_tld_domain
-    ActionDispatch::Http::URL.extract_domain(@env['HTTP_HOST'],1)
+  private
+
+  def domain
+    Domain.new(@env['HTTP_HOST'])
   end
 
-  def extract_subdomains
-    ActionDispatch::Http::URL.extract_subdomains(@env['HTTP_HOST'],1)
+  def international_domain?
+    domain.locale.eql?(:en)
   end
 
-  def redirection_url
-    "//#{[i18n_subdomains[preferred_locale], @subdomains, @tld_domain].compact.flatten.join('.')}#{@path}"
+  def first_access_on_international_domain?
+    international_domain? &&
+    @cookies['isredir'].blank? &&
+    auto_assigned_locale != :en && 
+    !is_a_non_localized_route?
   end
 
-  def preferred_locale
-    (browser_language & I18n.available_locales).first
+  def user_selected_different_locale?
+    user_locale.present? && user_locale != domain.locale
   end
 
-  def browser_language
+  def forward_to(locale)
+    @headers.merge!({
+      "Set-Cookie"    => "isredir=true; Domain=.#{domain.apex}; Expires=#{(Time.now + 1.year).utc}",
+      "Location"      => redirection_url(locale), 
+      "Cache-Control" => "no-cache"
+    })
+    [301, @headers, @body]
+  end
+
+  def redirection_url(locale)
+    ("//" + domain.route_for(locale) + @path + '?' + @query_string).chomp('?')
+  end
+
+  def user_locale
+    @request.params['locale']&.to_sym
+  end
+
+  def auto_assigned_locale
+    (browser_locales & I18n.available_locales).first || :en
+  end
+
+  def browser_locales
     HttpAcceptLanguageHandler.new(@env['HTTP_ACCEPT_LANGUAGE']).locales.map(&:to_sym)
   end
 
-  def intl_subdomain?
-    subdomain = @subdomains&.first&.downcase
-    subdomain.blank? || subdomain.eql?('www') || subdomain.eql?('staging')
-  end
-
-  def whitelisted_routes
-    @path =~ /^\/admin_accounts\/sign_in/ || @path =~ /^\/api\//
-  end
-
-  def i18n_subdomains
-    locale_subdomain_map = Hash[I18n.available_locales.map { |k| [k, k.to_s] }]
-    locale_subdomain_map[:en] = nil
-    locale_subdomain_map
+  def is_a_non_localized_route?
+    @path =~ /^\/(?:admin_accounts\/sign_in|\/api\/)/
   end
 
 end
