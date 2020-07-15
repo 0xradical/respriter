@@ -10,7 +10,7 @@ class LocaleRouter
     @request = Rack::Request.new(env)
     @cookies = Rack::Utils.parse_cookies(env)
     return forward_to(user_locale) if user_selected_different_locale?
-    return forward_to(auto_assigned_locale) if first_access_on_apex_domain?
+    return forward_to(auto_assigned_locale) if first_access_on_international_domain?
     @app.call(env)
   end
 
@@ -20,12 +20,12 @@ class LocaleRouter
     Domain.new(@env['HTTP_HOST'])
   end
 
-  def apex_domain?
+  def international_domain?
     domain.locale.eql?(:en)
   end
 
-  def first_access_on_apex_domain?
-    apex_domain? &&
+  def first_access_on_international_domain?
+    international_domain? &&
     @cookies['isredir'].blank? &&
     auto_assigned_locale != :en && 
     !is_a_non_localized_route?

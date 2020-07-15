@@ -21,7 +21,7 @@ class Domain
   def route_for(locale)
     localized_subdomain = self.class.locale_to_subdomain(locale.to_sym)
     subdomains = localized? ? @subdomains.drop(1) : @subdomains
-    [[localized_subdomain], subdomains, @naked_domain].compact.flatten.join('.').delete_prefix('.')
+    [[localized_subdomain], subdomains, @apex].compact.flatten.join('.').delete_prefix('.')
   end
 
   def extract_domain
