@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :set_sentry_raven_context if Rails.env.production?
   before_action :store_user_account_location, if: :devise_controller?
-  before_action :load_live_support
   around_action :hypernova_render_support
   layout :fetch_layout
 

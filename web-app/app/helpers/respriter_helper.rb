@@ -31,8 +31,8 @@ module RespriterHelper
 
   def get_options(opts)
     [
-      opts[:host] || controller.page_version[:elements][:host] || Elements.asset_host,
-      opts[:version] || controller.page_version[:elements][:version] || Elements.asset_version
+      opts[:host]     || controller.try(:page_version).try(:[], :elements).try(:[], :host)     || Elements.asset_host,
+      opts[:version]  || controller.try(:page_version).try(:[], :elements).try(:[], :version)  || Elements.asset_version
     ]
   end
 end
