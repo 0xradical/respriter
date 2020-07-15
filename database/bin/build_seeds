@@ -54,7 +54,7 @@ for file in $(ls ./db/seeds/*.csv); do
   echo "COPY app.$table_name (`head -n 1 $file`) FROM '`echo $file | sed 's/\.\//\/database\//g'`' WITH CSV HEADER DELIMITER ',';" >> $seeds_file
 done
 
-for file in ./db/seeds/admin_accounts ./db/seeds/images ./db/seeds/landing_pages ./db/seeds/oauth_accounts ./db/seeds/providers ./db/seeds/user_accounts ; do
+for file in ./db/seeds/admin_accounts ./db/seeds/images ./db/seeds/landing_pages ./db/seeds/oauth_accounts ./db/seeds/user_accounts ; do
   base_filename=`basename $file`
   table_name=${base_filename%.csv}
   echo "SELECT setval('app.${table_name}_id_seq', MAX(id), true) FROM app.${table_name};" >> $seeds_file
