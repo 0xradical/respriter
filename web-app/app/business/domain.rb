@@ -1,6 +1,6 @@
 class Domain
 
-  attr_reader :naked_domain, :subdomains
+  attr_reader :apex, :subdomains
 
   LOCALIZED_SUBDOMAINS = Hash[(I18n.available_locales - [:en]).map { |l| [l,l.to_s.downcase]}]
 
@@ -25,7 +25,7 @@ class Domain
   end
 
   def extract_domain
-    @naked_domain = ActionDispatch::Http::URL.extract_domain(@host,1)
+    @apex = ActionDispatch::Http::URL.extract_domain(@host,1)
   end
 
   def extract_subdomains

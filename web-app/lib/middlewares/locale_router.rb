@@ -28,7 +28,7 @@ class LocaleRouter
     international_domain? &&
     @cookies['isredir'].blank? &&
     auto_assigned_locale != :en && 
-    !is_a_non_forwardable_route?
+    !is_a_non_localized_route?
   end
 
   def user_selected_different_locale?
@@ -37,7 +37,7 @@ class LocaleRouter
 
   def forward_to(locale)
     @headers.merge!({
-      "Set-Cookie"    => "isredir=true; Domain=.#{domain.naked_domain}; Expires=#{(Time.now + 1.year).utc}",
+      "Set-Cookie"    => "isredir=true; Domain=.#{domain.apex}; Expires=#{(Time.now + 1.year).utc}",
       "Location"      => redirection_url(locale), 
       "Cache-Control" => "no-cache"
     })
@@ -53,14 +53,14 @@ class LocaleRouter
   end
 
   def auto_assigned_locale
-    (browser_locales & I18n.available_locales).first
+    (browser_locales & I18n.available_locales).first || :en
   end
 
   def browser_locales
     HttpAcceptLanguageHandler.new(@env['HTTP_ACCEPT_LANGUAGE']).locales.map(&:to_sym)
   end
 
-  def is_a_non_forwardable_route?
+  def is_a_non_localized_route?
     @path =~ /^\/(?:admin_accounts\/sign_in|\/api\/)/
   end
 
