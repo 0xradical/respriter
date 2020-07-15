@@ -27,7 +27,7 @@ class LocaleRouter
   def first_access_on_international_domain?
     international_domain? &&
     @cookies['isredir'].blank? &&
-    auto_assigned_locale != :en && 
+    auto_assigned_locale != :en &&
     !is_a_non_localized_route?
   end
 
@@ -61,7 +61,7 @@ class LocaleRouter
   end
 
   def is_a_non_localized_route?
-    @path =~ /^\/(?:admin_accounts\/sign_in|\/api\/)/
+    @path.match?(/^\/(?:admin_accounts\/|api\/)/)
   end
 
 end
