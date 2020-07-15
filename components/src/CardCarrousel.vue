@@ -133,10 +133,10 @@
   }
 
   .swiper-pagination {
-    .swiper-pagination-bullet + .swiper-pagination-bullet {
+    ::v-deep .swiper-pagination-bullet + .swiper-pagination-bullet {
       margin-left: 1.375rem;
     }
-    .swiper-pagination-bullet:only-child {
+    ::v-deep .swiper-pagination-bullet:only-child {
       display: none;
     }
   }

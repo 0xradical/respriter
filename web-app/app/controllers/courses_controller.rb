@@ -71,6 +71,7 @@ class CoursesController < ApplicationController
       query:      search_params[:q],
       filter:     search_params[:filter],
       page:       search_params[:p],
+      order:      search_params[:order],
       session_id: session_tracker.session_payload['id'],
       boost:      {
         browser_languages: browser_languages

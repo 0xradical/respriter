@@ -34,6 +34,7 @@ module Integration
           upsert_hooks course
         end
         update_index dataset_sequence
+        refresh_views
       end
 
       protected
@@ -53,6 +54,11 @@ module Integration
         else
           log :info, 'No New Synced Courses to index'
         end
+      end
+
+      def refresh_views
+        log :info, 'Refreshing ProviderPriceRange materialized view'
+        ProviderPriceRange.refresh
       end
 
       def logger
