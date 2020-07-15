@@ -13,7 +13,6 @@ class UserAccounts::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     build_resource(sign_up_params)
-    captcha_verified = verify_rucaptcha?(resource)
     resource_saved = false
 
     #if captcha_verified
