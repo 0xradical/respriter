@@ -57,8 +57,10 @@ module Integration
       end
 
       def refresh_views
-        log :info, 'Refreshing ProviderPriceRange materialized view'
-        ProviderPriceRange.refresh
+        log :info, 'Refreshing ProviderPricing materialized view'
+        ProviderPricing.refresh
+        log :info, 'Refreshing ProviderStats materialized view'
+        ProviderStats.refresh
       end
 
       def logger

@@ -10,7 +10,7 @@
           <%= t(".areas_of_knowledge") %>:
         </span>
         <span class="el:amx-Fs(0.875em) el:amx-C_fg">
-          <%= Array.wrap(@details[:areas_of_knowledge]).map{|an| t("tags.#{an}") }.join(", ") %>
+          <%= t("tags.#{@details[:areas_of_knowledge]}") %>
         </span>
       </li>
     <% end %>
@@ -33,7 +33,7 @@
           <span class="el:amx-Fs(0.875em) el:amx-C_fg">
             <%= number_to_currency(@details[:price_range].first, unit: "$") %> - <%= number_to_currency(@details[:price_range].last, unit: "$") %>
           </span>
-          <% if true || @details[:has_trial] %>
+          <% if @details[:has_trial] %>
             <span class="el:amx-Ml(0.5em) el:amx-Tt(u) el:amx-Ta(r)">
               <span class="el:m-tag el:m-tag--bold el:m-tag--xxs el:m-tag--secondary-variant-border el:amx-D(ib)">
                 <%= t(".has_trial") %>
