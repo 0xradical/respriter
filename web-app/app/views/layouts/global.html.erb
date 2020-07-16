@@ -46,10 +46,10 @@
     <% if content_for?(:meta_hreflang) %>
       <%= yield :meta_hreflang %>
     <% else %>
-      <link rel="alternate" hreflang="en"         href="https://classpert.com<%= request.path %>">
-      <link rel="alternate" hreflang="pt-br"      href="https://pt-br.classpert.com<%= request.path %>">
-      <link rel="alternate" hreflang="es"         href="https://es.classpert.com<%= request.path %>">
-      <link rel="alternate" hreflang="x-default"  href="https://classpert.com<%= request.path %>"/>
+      <% I18n.available_locales.each do |locale| %>
+        <link rel="alternate" hreflang="<%= locale %>" href="<%= Domain.new.route_for(locale) + request.path %>">
+      <% end %>
+        <link rel="alternate" hreflang="x-default" href="<%= Domain.new.route_for(:en) + request.path %>"/>
     <% end %>
 
     <% if content_for?(:meta_og_image) %>
