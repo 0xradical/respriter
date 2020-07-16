@@ -88,19 +88,17 @@
   </div>
   <div class="frame <%= @courses.blank? && @instructors.blank? ? 'el:amx-Mb(3em)' : '' %>">
     <div class="container">
-      <div class="row frame-lead">
-        <div class="col">
-        </div>
+      <div class="row">
         <% if @provider.description.present? %>
-          <div class="d-none d-md-block <%= @details.present? || @stats.present? ? 'col-md-6 col-lg-8' : 'col-12' %>">
+          <div class="d-none d-md-block <%= @details.present? || @stats.present? ? 'pr-0 col-md-6 col-lg-8' : 'col-12' %>">
             <div class="about-subframe--lg el:amx-Bc_su el:amx-Pt(1.5em) el:amx-Pb(1.5em) el:amx-Pl(2.5em) el:amx-Pr(2.5em) el:amx-Pl(1.5em)@<sm el:amx-Pr(1.5em)@<sm">
               <%= render 'about' %>
             </div>
           </div>
         <% end %>
         <% if @details.present? || @stats.present? %>
-          <div class="d-none d-md-block <%= @provider.description.present? ? 'col-md-6 col-lg-4' : 'col-12' %>">
-            <div class="details-subframe--lg <%= @provider.description.present? ? 'details-subframe--lg-with-description' : '' %> el:amx-Bc_su el:amx-Pt(1.5em) el:amx-Pb(1.5em) el:amx-Pl(0em) el:amx-Pr(2.5em)">
+          <div class="d-none d-md-block <%= @provider.description.present? ? 'pl-0 col-md-6 col-lg-4' : 'col-12' %>">
+            <div class="details-subframe--lg <%= @provider.description.present? ? 'details-subframe--lg-with-description' : '' %> el:amx-Bc_su el:amx-Pt(1.5em) el:amx-Pb(1.5em) el:amx-Pl(2em) el:amx-Pr(2.5em)">
               <% if @details.present? %>
                 <div>
                   <%= render 'details' %>

@@ -2,28 +2,31 @@
 
 class ProvidersController < ApplicationController
   def show
-    @provider = Provider.slugged.find_by(slug: params[:provider])
-    @courses = @provider.recommended_courses(I18n.locale, 12)
-    @course_count = @provider.courses.published.count
+    @provider    = Provider.slugged.find_by(slug: params[:provider])
+    @courses     = @provider.recommended_courses(I18n.locale, 12)
     @instructors = @provider.instructors.limit(12)
-    @instructor_count = @provider.instructors.count
-    @posts = @provider.posts.published.locale(I18n.locale).limit(3)
-    @details = {}
-    @stats = {}
+    @posts       = @provider.posts.published.locale(I18n.locale).limit(3)
+    @details     = {}
+    @stats       = {}
 
-    areas_of_knowledge = @provider.areas_of_knowledge
-    membership_types = @provider.membership_types
-    price_range = @provider.price_range
-    has_trial = @provider.has_trial?
-    top_countries = @provider.top_countries
+    @provider_stats   = @provider.provider_stats
+    @provider_pricing = @provider.provider_pricing
 
-    @details[:areas_of_knowledge] = areas_of_knowledge.presence if areas_of_knowledge.presence
-    @details[:membership_types] = membership_types if membership_types.compact.any?
-    @details[:price_range] = price_range if price_range.compact.any?
-    @details[:has_trial] = has_trial if @details[:price_range]
+    course_count       = @provider_stats&.indexed_courses
+    instructor_count   = @provider_stats&.instructors
+    areas_of_knowledge = @provider_stats&.areas_of_knowledge
+    top_countries      = @provider_stats&.top_countries
+    membership_types   = @provider_pricing&.membership_types
+    price_range        = @provider_pricing&.price_range
+    has_trial          = @provider_pricing&.has_trial?
 
-    @stats[:instructor_count] = @instructor_count if @instructors.any?
-    @stats[:course_count] = @provider.courses.published.count if @provider.courses.published.any?
-    @stats[:top_countries] = top_countries if top_countries.compact.any?
+    @details[:areas_of_knowledge] = areas_of_knowledge
+    @details[:membership_types]   = membership_types
+    @details[:price_range]        = price_range
+    @details[:has_trial]          = has_trial
+
+    @stats[:instructor_count]     = instructor_count
+    @stats[:course_count]         = course_count
+    @stats[:top_countries]        = top_countries
   end
 end

@@ -14,6 +14,11 @@ CREATE INDEX index_courses_on_provider_id
 ON app.courses
 USING btree (provider_id);
 
+CREATE INDEX index_courses_on_provider_id_published
+ON app.courses
+USING btree (provider_id)
+WHERE published = true;
+
 CREATE INDEX index_courses_on_tags
 ON app.courses
 USING gin (tags);

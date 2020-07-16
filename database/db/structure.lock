@@ -169,7 +169,8 @@ views/api/provider_crawlers.sql
 views/api/provider_logos.sql
 views/api/providers.sql
 views/api/user_accounts.sql
-views/app/provider_price_ranges.sql
+views/app/provider_pricings.sql
+views/app/provider_stats.sql
 views/bi/sales.sql
 views/bi/exit_clicks.sql
 indexes/bi/sales.sql
