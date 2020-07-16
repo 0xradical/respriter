@@ -64,9 +64,6 @@
       <div class='el:m-collapsible__visible-content'>
         <div>
         <%= link_to_locale(I18n.locale, class: 'el:m-link-nav') do %>
-          <svg class='mR4 w1.5em h1.5em d-ib va-m'>
-            <use xlink:href='<%= "#country-flags-#{I18n.locale.to_s.downcase.split('-')[-1]}" %>' />
-          </svg>
           <span style='vertical-align: middle;'><%= t("iso639_codes.#{I18n.locale}") %></span>
         <% end %>
         </div>
@@ -78,9 +75,6 @@
             <% next if locale.to_s == I18n.locale.to_s %>
             <div class="<%= counter == 0 ? '' : 'mT16' %>">
               <%= link_to_locale(locale, class: 'el:m-link-nav') do %>
-                <svg class='d-ib va-m mR4 h1.5em w1.5em'>
-                  <use xlink:href='<%= "#country-flags-#{locale.to_s.downcase.split('-')[-1]}" %>' />
-                </svg>
                 <span class='va-m'><%= t("iso639_codes.#{locale}", locale: locale) %></span>
               <% end %>
             </div>

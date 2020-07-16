@@ -12,7 +12,7 @@ extend("challenge", {
   params: ["first", "second"]
 });
 
-const langs = ["en", "es", "pt-BR", "ja"];
+const langs = ["en", "es", "pt-BR", "ja", "de", "fr"];
 
 import render from "../vue/apps/contact_us";
 

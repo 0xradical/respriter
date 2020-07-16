@@ -100,7 +100,7 @@
             <div class='el:m-select el:m-select--small mT16 fS14'>
               <select name='locale' onchange='submit();'>
                 <% I18n.available_locales.each do |locale| %>
-                  <option value='<%= locale %>'><%= t("iso639_codes.#{locale}", locale: locale) %></option>
+                  <option value='<%= locale %>' <%= I18n.locale == locale ? 'selected' : nil %>><%= t("iso639_codes.#{locale}", locale: locale) %></option>
                 <% end %>
               </select>
             </div>
