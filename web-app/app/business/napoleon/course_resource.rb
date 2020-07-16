@@ -104,7 +104,17 @@ module Napoleon
       if provider
         provider.id
       else
-        Provider.find_by(old_id: payload.dig('content', 'provider_id'))&.id || payload.dig('content', 'provider_id') || Provider.find_by(name: payload.dig('content', 'provider_name'))&.id
+        pid   = payload.dig('content', 'provider_id').presence
+        pname = payload.dig('content', 'provider_name').presence
+
+        if pid
+          return pid if UUID.uuid?(pid)
+
+          prov = Provider.find_by(old_id: pid)
+          return prov.id if prov
+        end
+
+        Provider.find_by(name: pname)&.id if pname
       end
     end
 
