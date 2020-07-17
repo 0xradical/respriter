@@ -93,7 +93,7 @@ I18n.available_locales.each do |locale|
           })
     end
 
-    if ENV.fetch('SITEMAP.PING_SEARCH_ENGINES') { false }
+    if ENV.fetch('SITEMAP__PING_SEARCH_ENGINES') { false }
       SitemapGenerator::Sitemap.ping_search_engines
     end
   end
