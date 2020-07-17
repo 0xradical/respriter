@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 class Rack::Attack
 
-  ALLOW_PERIOD_FOR_TRUSTED_BOTS_IN_DAYS   = ENV.fetch('RACK_ATTACK__ALLOW_PERIOD_FOR_TRUSTED_BOTS_IN_DAYS') { 120 }
-  THROTTLE_LEVELS                         = ENV.fetch('RACK_ATTACK__THROTTLE_LEVELS')                       { 4   }
-  THROTTLE_LIMIT                          = ENV.fetch('RACK_ATTACK__THROTTLE_LIMIT')                        { 150 }
-  THROTTLE_PERIOD                         = ENV.fetch('RACK_ATTACK__THROTTLE_PERIOD_IN_MINUTES')            { 15  }
-  THROTTLE_BAN_PERIOD_FOR_ABUSE_IN_DAYS   = ENV.fetch('RACK_ATTACK__THROTTLE_BAN_PERIOD_FOR_ABUSE_IN_DAYS') { 120 }
+  ALLOW_PERIOD_FOR_TRUSTED_BOTS_IN_DAYS   = (ENV.fetch('RACK_ATTACK__ALLOW_PERIOD_FOR_TRUSTED_BOTS_IN_DAYS') {  120 }).to_i
+  THROTTLE_LEVELS                         = (ENV.fetch('RACK_ATTACK__THROTTLE_LEVELS')                       {  4   }).to_i
+  THROTTLE_LIMIT                          = (ENV.fetch('RACK_ATTACK__THROTTLE_LIMIT')                        {  50  }).to_i
+  THROTTLE_PERIOD                         = (ENV.fetch('RACK_ATTACK__THROTTLE_PERIOD_IN_MINUTES')            {  15  }).to_i
+  THROTTLE_BAN_PERIOD_FOR_ABUSE_IN_DAYS   = (ENV.fetch('RACK_ATTACK__THROTTLE_BAN_PERIOD_FOR_ABUSE_IN_DAYS') {  120 }).to_i
 
   self.cache.prefix = "ra"
   self.cache.store  = ActiveSupport::Cache::RedisCacheStore.new({ url: ENV['REDIS_URL'] })
@@ -78,7 +78,7 @@ class Rack::Attack
     end
 
     def country
-      env['HTTP_CF_COUNTRY']
+      env['HTTP_CF_IPCOUNTRY']
     end
 
   end
