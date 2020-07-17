@@ -35,7 +35,7 @@ language_codes = {
 
 last_fecthed_at = DateTime.parse(headers[:date]).strftime '%Y/%m/%d'
 
-course_name = course_name = document.css('.course-header-new__title').text.delete("\n")
+course_name = document.css('.course-header-new__title').text.delete("\n")
 instructors = [{name: document.css(".js-teacher-popover-link").first.text}]
 description = (document.css(".course-header-new__short-description").first.text + ". " + document.css(".course-landing__description .text-body-bigger-new").first.text).delete("\n")
 
@@ -143,4 +143,3 @@ pipe_process.accumulator = {
   relations: Hash.new
 }
 
-puts pipe_process.accumulator
