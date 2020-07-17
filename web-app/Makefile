@@ -57,6 +57,9 @@ sync: sync-crawling_events wait-for-elastic-search sync-courses ## Sync web-app 
 sync-%: ## Sync web-app with napoleon given resources (courses or crawling_events)
 	@$(call docker_run_or_plain,base,bundle exec rake system:scheduler:$*_service,-T)
 
+test-throttle-%: ## Make % requests to <TARGET>. Example: TARGET=http://app.clspt make test-throttle-50 
+	@for ((i=1;i<=$*;i++)); do curl -v $(TARGET); done
+
 hypernova: public/${WEBPACK_PUBLIC_OUTPUT_PATH}/hypernova.js ## Compiles (if needed) and runs hypernova server side rendering server
 	npm run serve
 
