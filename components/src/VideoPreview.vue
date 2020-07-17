@@ -1,20 +1,26 @@
 <template>
-  <div class="el:m-video-preview" :class="[...rootClassesBase, ...rootClasses]">
+  <div
+    class="el:m-video-preview"
+    :class="[
+      ...rootClasses,
+      videoComponent && 'el:m-video-preview--loaded',
+      videoClicked && 'el:m-video-preview--clicked',
+      videoExists
+        ? 'el:m-video-preview--available'
+        : 'el:m-video-preview--unavailable'
+    ]"
+  >
     <!-- video available -->
     <template v-if="videoExists">
       <div
-        class="el:m-video-preview__wrapper el:amx-Bc_bgV"
-        :class="{ 'el:amx-D(n)': videoComponent }"
+        class="el:m-video-preview__wrapper el:m-video-preview__wrapper--static"
         @click="fetchVideo"
       >
         <div class="el:m-video-preview__background" :style="style"></div>
         <div class="el:m-video-preview__mask"></div>
-        <div
-          class="el:m-video-preview__content"
-          :class="{ 'el:amx-D(n)': videoClicked }"
-        >
+        <div class="el:m-video-preview__content">
           <icon
-            :iconClasses="['el:m-video-preview__icon el:amx-Fi_fgV']"
+            :iconClasses="['el:m-video-preview__icon']"
             name="play"
             width="50%"
             height="50%"
@@ -33,14 +39,12 @@
 
     <!-- video unavailable -->
     <template v-else>
-      <div
-        class="el:m-video-preview__wrapper el:amx-Bc_bgV clspt:m-video-preview--unavailable__wrapper"
-      >
+      <div class="el:m-video-preview__wrapper">
         <div class="el:m-video-preview__background"></div>
-        <div class="el:m-video-preview__mask el:amx-Bc_fgV"></div>
+        <div class="el:m-video-preview__mask"></div>
         <div class="el:m-video-preview__content">
           <icon
-            :iconClasses="['el:m-video-preview__icon el:amx-Fi_fgM']"
+            :iconClasses="['el:m-video-preview__icon']"
             name="video-recorder-unavailable"
             width="25%"
             height="25%"
@@ -111,17 +115,6 @@
         } else {
           return {};
         }
-      },
-      rootClassesBase() {
-        let base = [];
-
-        if (this.video) {
-          base.push("clspt:m-video-preview--available");
-        } else {
-          base.push("clspt:m-video-preview--unavailable el:amx-Bc_bg");
-        }
-
-        return base;
       }
     },
     methods: {
@@ -142,11 +135,3 @@
     }
   };
 </script>
-
-<style lang="scss" scoped>
-  .clspt\:m-video-preview {
-    &--available {
-      cursor: pointer;
-    }
-  }
-</style>
