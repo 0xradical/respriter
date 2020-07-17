@@ -23,6 +23,15 @@ namespace :rack_attack do
         Rack::Attack.cache.delete("block:#{ip}")
       end
     end
+
+    desc 'List all blacklisted IPs'
+    task :list => %i[environment] do |t,args|
+      redis = Redis.new(url: ENV['REDIS_URL'])
+      redis.keys("ra:block*").each do |key|
+        puts "#{key} - #{redis.get(key)}"
+      end
+    end
+
   end
 
   namespace :whitelist do
@@ -46,6 +55,45 @@ namespace :rack_attack do
         Rack::Attack.cache.delete("allow:#{ip}")
       end
     end
+
+    desc 'List all allowed IPs'
+    task :list => %i[environment] do |t,args|
+      redis = Redis.new(url: ENV['REDIS_URL'])
+      redis.keys("ra:allow*").each do |key|
+        puts "#{key} - #{redis.get(key)}"
+      end
+    end
   end
+
+  namespace :throttle do
+    desc 'Reset throttling rules for IPs. Example: reset[<ips>]'
+    task :reset, %i[ips] => %i[environment] do |t,args|
+      redis = Redis.new(url: ENV['REDIS_URL'])
+      args[:ips].split(',').each do |ip|
+        redis.keys("*req/ip/*sec:#{ip}*").each do |key|
+          redis.del(key)
+        end
+      end
+    end
+
+    desc 'Clear all throttling rules'
+    task :clear => %i[environment] do |t,args|
+      redis = Redis.new(url: ENV['REDIS_URL'])
+      redis.keys("*req/ip*").each do |key|
+        redis.del(key)
+      end
+    end
+
+    desc 'List once throttled IPs'
+    task :list => %i[environment] do |t,args|
+      redis = Redis.new(url: ENV['REDIS_URL'])
+      redis.keys("ra:throttled*").each do |key|
+        puts "#{key} - #{redis.get(key)}"
+      end
+    end
+  end
+
+
+
 
 end
