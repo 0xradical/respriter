@@ -1,7 +1,3 @@
-CREATE INDEX index_courses_on_curated_tags
-ON app.courses
-USING gin (curated_tags);
-
 CREATE INDEX index_courses_on_dataset_sequence
 ON app.courses
 USING btree (dataset_sequence);

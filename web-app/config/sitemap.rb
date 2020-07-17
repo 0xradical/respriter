@@ -37,7 +37,7 @@ I18n.available_locales.each do |locale|
     end
 
     # Bundle - Show
-    Course.unnest_curated_tags.distinct.map { |c| c.tag.dasherize } .each do |tag|
+    Course.distinct_tags.map {|c| c.tag.dasherize }.each do |tag|
       add(course_bundle_path(tag), {
         changefreq: 'weekly',
         lastmod: Time.now.strftime('%Y-%m-%d'),

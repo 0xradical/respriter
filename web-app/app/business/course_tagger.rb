@@ -19,8 +19,9 @@ class CourseTagger
 
   protected
   def update_course!(course, tags)
-    joined_tags = tags | (course.curated_tags || [])
-    course.update(curated_tags: joined_tags)
+    tags.each do |tag|
+      course.add_tag(tag, 'course_tagger')
+    end
   end
 
   def make_tag_map

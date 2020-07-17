@@ -9,7 +9,7 @@ class CourseBundlesController < ApplicationController
   prepend_before_action :normalize_params
 
   def index
-    bundles = Course.unnest_curated_tags(Course.published.by_tags(@tag)).group(:tag).count
+    bundles = Course.count_by_bundle(@tag)
     RootTag.all.each { |rt| bundles.delete rt.id }
     @bundles = bundles
     @bundles_by_letter = (I18n.locale == :ja) ? japanese_collation(bundles) : collate(bundles)

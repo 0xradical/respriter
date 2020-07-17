@@ -27,6 +27,7 @@ tables/app/certificates.sql
 tables/app/contacts.sql
 tables/app/providers.sql
 tables/app/courses.sql
+tables/app/curated_tags_versions.sql
 tables/app/tracked_searches.sql
 tables/app/enrollments.sql
 tables/app/tracked_actions.sql
@@ -136,6 +137,7 @@ indexes/app/admin_accounts.sql
 indexes/app/admin_profiles.sql
 indexes/app/course_reviews.sql
 indexes/app/courses.sql
+indexes/app/curated_tags_versions.sql
 indexes/app/crawler_domains.sql
 indexes/app/enrollments.sql
 indexes/app/favorites.sql
