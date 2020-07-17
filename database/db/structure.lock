@@ -88,6 +88,7 @@ procedures/public/que_job_notify.sql
 procedures/public/que_state_notify.sql
 procedures/settings/get.sql
 procedures/settings/set.sql
+procedures/triggers/check_confirmation_status_transition.sql
 procedures/triggers/check_course_provider_relationship.sql
 procedures/triggers/course_keep_slug.sql
 procedures/triggers/course_normalize_languages.sql

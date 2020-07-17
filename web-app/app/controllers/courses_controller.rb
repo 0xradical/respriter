@@ -25,7 +25,9 @@ class CoursesController < ApplicationController
       response.set_header('X-Robots-Tag', 'noindex') unless @course.indexable_by_robots?
     end
 
-    unless @course
+    if @course
+      @root_tags = @course.curated_tags & RootTag.all.map(&:id)
+    else
       redirected_course = Course
                           .published
                           .joins(:slug_histories)
@@ -47,9 +49,9 @@ class CoursesController < ApplicationController
         redirect_to "/#{params[:provider]}/courses/#{up_to_date_course.slug}", status: 301
         return
       end
-    end
 
-    raise ActiveRecord::RecordNotFound unless @course
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   protected

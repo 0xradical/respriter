@@ -1,5 +1,6 @@
 <template>
   <generic-social-sharing
+    :version="version"
     :url="options.url"
     :title="options.title"
     :description="options.description"
@@ -26,6 +27,10 @@
         type: String,
         required: false,
         default: "en"
+      },
+      version: {
+        type: String,
+        default: ""
       }
     },
     components: {

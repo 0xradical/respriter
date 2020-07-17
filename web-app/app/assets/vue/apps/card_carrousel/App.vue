@@ -17,6 +17,10 @@
         type: String,
         required: true
       },
+      locale: {
+        type: String,
+        default: "en"
+      },
       list: {
         type: Array,
         default() {
@@ -38,6 +42,9 @@
           return {};
         }
       }
+    },
+    created() {
+      this.$i18n.locale = this.locale;
     },
     components: {
       CardCarrousel

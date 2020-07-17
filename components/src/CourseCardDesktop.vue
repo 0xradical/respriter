@@ -14,7 +14,6 @@
         :course="course"
       >
       </course-provider>
-
       <course-title :course="course"> </course-title>
 
       <div class="el:amx-Mt(a)">

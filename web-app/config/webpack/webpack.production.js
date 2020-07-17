@@ -5,7 +5,8 @@ const safePostCssParser = require("postcss-safe-parser");
 
 module.exports = (env, argv) => {
   return {
-    devtool: "source-map",
+    mode: "production",
+    devtool: false,
     stats: "normal",
     bail: true,
     plugins: [
@@ -34,7 +35,7 @@ module.exports = (env, argv) => {
         new TerserPlugin({
           parallel: true,
           cache: true,
-          sourceMap: true,
+          sourceMap: false,
           terserOptions: {
             parse: {
               // Let terser parse ecma 8 code but always output

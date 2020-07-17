@@ -4,8 +4,8 @@ import "../js/video_player";
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import Swiper from "swiper";
-import AwesomeSwiper from "awesome-swiper";
-import "swiper/dist/css/swiper.css";
+import AwesomeSwiper from "@cycjimmy/awesome-swiper";
+import "swiper/css/swiper.css";
 
 tippy.setDefaultProps({
   animation: "fade",

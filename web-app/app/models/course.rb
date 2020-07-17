@@ -308,11 +308,11 @@ class Course < ApplicationRecord
     if result.size < SIMILAR_COURSES
       result +=
         self.class.published
-                  .where.not(id: [id, result.map(&:id)].flatten)
-                  .by_tags(curated_tags)
-                  .order('enrollments_count DESC')
-                  .limit(SIMILAR_COURSES - result.size)
-                  .to_a
+            .where.not(id: [id, result.map(&:id)].flatten)
+            .by_tags(curated_tags)
+            .order('enrollments_count DESC')
+            .limit(SIMILAR_COURSES - result.size)
+            .to_a
     end
 
     result
@@ -340,15 +340,16 @@ class Course < ApplicationRecord
     video = self.video.clone
 
     parameterized_video = EmbeddedVideoParametizer.new(video).parametize
-    return nil unless parameterized_video[:thumbnail_url]
 
-    crypto = Thumbor::CryptoURL.new ENV.fetch('THUMBOR_SECURITY_KEY')
-    path = crypto.generate(
-      width: 240,
-      image: CGI.escape(parameterized_video[:thumbnail_url])
-    )
+    if parameterized_video[:thumbnail_url].present?
+      crypto = Thumbor::CryptoURL.new ENV.fetch('THUMBOR_SECURITY_KEY')
+      path = crypto.generate(
+        width: 240,
+        image: CGI.escape(parameterized_video[:thumbnail_url])
+      )
 
-    video['thumbnail_url'] = ENV.fetch('THUMBOR_HOST').chomp('/') + path
+      video['thumbnail_url'] = ENV.fetch('THUMBOR_HOST').chomp('/') + path
+    end
 
     video = video.reject { |k, _| k == 'url' } if video['type'].in?(%w[youtube vimeo video_service])
 
@@ -400,6 +401,20 @@ class Course < ApplicationRecord
     main_pricing_model.try(:[], 'trial_period')
   end
 
+  def trial_locale
+    if trial_period
+      unit = trial_period['unit']
+      value = trial_period['value'].to_i
+      qtt = value == 1 ? 'one' : 'other'
+      {
+        key:   "datetime.adjectives.#{unit}.#{qtt}",
+        count: value
+      }
+    else
+      {}
+    end
+  end
+
   def subscription_period
     main_pricing_model.try(:[], 'subscription_period')
   end
@@ -413,6 +428,9 @@ class Course < ApplicationRecord
       profile =
         OrphanedProfile.enabled.with_slug.where(name: instructor['name']).first
       if profile
+        instructor['profile_slug'] = profile.slug
+        instructor['profiler_avatar_url'] = profile.avatar_url if profile.avatar_url
+        instructor['profile_country'] = profile.country if profile.country
         instructor['profile_path'] =
           Rails.application.routes.url_helpers.orphaned_profile_path(
             profile.slug

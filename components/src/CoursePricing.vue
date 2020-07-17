@@ -15,7 +15,7 @@
       <span :class="priceClasses" class="el:amx-C_seV el:amx-Fw(b)">
         <span class="el:amx-Fs(1em) el:amx-Mr(0.125em)"
           >$ {{ formattedPrice }}</span
-        ><span class="el:amx-Fs(0.625em) e" v-if="course.subscription_type"
+        ><span class="el:amx-Fs(0.625em)" v-if="course.subscription_type"
           >/{{
             $t(
               `dictionary.subscription_period.${course.subscription_period.unit}`
