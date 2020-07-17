@@ -43,7 +43,7 @@ class Rack::Attack
         actual_reqs = self.cache.read(cache_key).to_i
 
         if (actual_reqs >= limit)
-          acc = self.cache.read("throttled:#{req.remote_ip}+#{req.user_agent}+#{req.country}")
+          acc = self.cache.read("throttled:#{req.remote_ip}+#{req.user_agent}+#{req.country}").to_i
           self.cache.write("throttled:#{req.remote_ip}+#{req.user_agent}+#{req.country}", acc + actual_reqs, Time.now + 1.year)
 
           max_limit = THROTTLE_LEVELS * THROTTLE_LIMIT
