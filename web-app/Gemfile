@@ -63,6 +63,8 @@ gem 'rack-attack'
 gem 'rack-cors',                        '~> 1.0.3'
 gem 'rack-proxy',                       '~> 0.6.1'
 gem 'rails',                            '~> 6.0.0'
+gem "hiredis",                          '~> 0.6.0'
+gem "redis",                            '>= 3.2.0', :require => ["redis", "redis/connection/hiredis"]
 gem 'robotstxt',                        '~> 0.5.4'  # A robots.txt file parser
 gem 'ruby-thumbor',                     '~> 3.0.0'
 gem 'semantic',                         '~> 1.6.1'
