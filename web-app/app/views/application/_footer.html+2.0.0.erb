@@ -105,7 +105,7 @@
               <ul class='el:m-fake-select__suggestions'>
                 <% (I18n.available_locales - [I18n.locale]).each do |locale| %>
                   <li class='lh1'>
-                    <a href='//<%= Domain.new.route_for(locale) + request.fullpath %>' rel='nofollow'>
+                    <a href='//<%= Domain.new.route_for(locale) + request.path %>' rel='nofollow'>
                       <%= country_flag(locale, { class: 'w1.5em h1.5em va-m mR8' }) %> 
                       <%= t("iso639_codes.#{locale}", locale: locale) %>
                     </a>
