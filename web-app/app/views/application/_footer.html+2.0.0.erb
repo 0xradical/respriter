@@ -96,8 +96,24 @@
             </li>
           </ul>
           <h2 class='c-fgM fS14 mT48'>Site</h2>
-          <form class='mA0' method='get'>
-            <div class='el:m-select el:m-select--small mT16 fS14'>
+          <form class='mA0 mT16 po-r'>
+            <div data-elements-fake-select class='d-n@sm el:m-fake-select el:m-fake-select--xs'>
+              <span>
+                <%= country_flag(I18n.locale, { class: 'w1.5em h1.5em va-m mR8' }) %> 
+                <%= t("iso639_codes.#{I18n.locale}", locale: I18n.locale) %>
+              </span>
+              <ul class='el:m-fake-select__suggestions'>
+                <% (I18n.available_locales - [I18n.locale]).each do |locale| %>
+                  <li class='lh1'>
+                    <a href='//<%= Domain.new.route_for(locale) + request.fullpath %>' rel='nofollow'>
+                      <%= country_flag(locale, { class: 'w1.5em h1.5em va-m mR8' }) %> 
+                      <%= t("iso639_codes.#{locale}", locale: locale) %>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <div class='d-n@>lg el:m-select el:m-select--small fS14'>
               <select name='locale' onchange='submit();'>
                 <% I18n.available_locales.each do |locale| %>
                   <option value='<%= locale %>' <%= I18n.locale == locale ? 'selected' : nil %>><%= t("iso639_codes.#{locale}", locale: locale) %></option>

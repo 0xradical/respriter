@@ -16,6 +16,20 @@ module ApplicationHelper
     alert_map[name.to_sym]
   end
 
+  # DEPRECATED
+  def country_flag(locale, svg_options={})
+    flags = {
+      'en'    => 'us',
+      'en-US' => 'us',
+      'pt-BR' => 'br',
+      'es'    => 'es',
+      'de'    => 'de',
+      'fr'    => 'fr',
+      'ja'    => 'jp'
+    }
+    svg_use('country-flags', flags[locale.to_s], svg_options)
+  end
+
   def omniauth_button(provider:, label:)
     link_to(
       label,
