@@ -116,10 +116,15 @@ end
 
 offered_by = []
 if course_data[:organisation].present?
+  organisation = course_data[:organisation]
+
   offered_by = [{
-    type: 'university',
-    name: course_data[:name],
-    main: true
+    id:       organisation[:uuid],
+    name:     organisation[:name],
+    url:      organisation[:url],
+    logo_url: organisation[:logo_url],
+    type:     'university',
+    main:     true
   }]
 end
 
