@@ -43,7 +43,7 @@ module Integration
         @language_idr.identify!(course)
         course.add_robots_index_rule_from_language! if course.reload.locale_status == 'ok'
         course.set_canonical_subdomain_from_language!
-        @bundle_tagger.tag!(course)
+        # @bundle_tagger.tag!(course)
       end
 
       def update_index(dataset_sequence)
