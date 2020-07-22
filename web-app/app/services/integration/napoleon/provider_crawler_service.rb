@@ -88,8 +88,33 @@ module Integration
         false
       end
 
+      def cleanup!
+        self.error = nil
+
+        @provider_crawler.transaction do
+          if @provider_crawler.version.present?
+            builder.cleanup
+            @provider_crawler.update! version: nil
+          end
+        rescue StandardError => e
+          self.error = e
+          raise ActiveRecord::Rollback
+        end
+
+        raise error if error
+      end
+
       def cleanup
-        builder.cleanup if @provider_crawler.version.present?
+        cleanup! || true
+      rescue StandardError
+        false
+      end
+
+      def upgrade!(new_version)
+        cleanup!
+        @version = new_version
+        @builder = nil
+        prepare
       end
 
       def builder
