@@ -35,13 +35,6 @@
 </template>
 
 <script>
-  // register dynamic components here if you intend to use
-  // this carrousel with any of them
-  import CourseCardVertical from "./CourseCardVertical.vue";
-  import CourseCardVerticalV2 from "./CourseCardVerticalV2.vue";
-  import InstructorCardVertical from "./InstructorCardVertical.vue";
-  import ProviderNavCard from "./ProviderNavCard.vue";
-
   export default {
     props: {
       component: {
@@ -117,10 +110,18 @@
       };
     },
     components: {
-      CourseCardVertical,
-      CourseCardVerticalV2,
-      InstructorCardVertical,
-      ProviderNavCard
+      CourseCardVertical: () =>
+        import(/* webpackChunkName: "cardtypes" */ "./CourseCardVertical.vue"),
+      CourseCardVerticalV2: () =>
+        import(
+          /* webpackChunkName: "cardtypes" */ "./CourseCardVerticalV2.vue"
+        ),
+      InstructorCardVertical: () =>
+        import(
+          /* webpackChunkName: "cardtypes" */ "./InstructorCardVertical.vue"
+        ),
+      ProviderNavCard: () =>
+        import(/* webpackChunkName: "cardtypes" */ "./ProviderNavCard.vue")
     }
   };
 </script>
