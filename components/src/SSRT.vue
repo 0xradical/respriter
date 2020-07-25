@@ -24,7 +24,7 @@
     },
     components: {
       LazyHydrate,
-      T: () => import(/* webpackChunkName: ssr */ "./T.vue")
+      T: () => import(/* webpackChunkName: "ssr" */ "./T.vue")
     }
   };
 </script>

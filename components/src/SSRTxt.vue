@@ -12,7 +12,7 @@
   export default {
     components: {
       LazyHydrate,
-      Txt: () => import(/* webpackChunkName: ssr */ "./Txt.vue")
+      Txt: () => import(/* webpackChunkName: "ssr" */ "./Txt.vue")
     }
   };
 </script>
