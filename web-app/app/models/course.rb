@@ -429,7 +429,7 @@ class Course < ApplicationRecord
         OrphanedProfile.enabled.with_slug.where(name: instructor['name']).first
       if profile
         instructor['profile_slug'] = profile.slug
-        instructor['profiler_avatar_url'] = profile.avatar_url if profile.avatar_url
+        instructor['profile_avatar_url'] = profile.avatar_url if profile.avatar_url
         instructor['profile_country'] = profile.country if profile.country
         instructor['profile_path'] =
           Rails.application.routes.url_helpers.orphaned_profile_path(
