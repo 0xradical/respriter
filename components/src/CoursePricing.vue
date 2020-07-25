@@ -8,7 +8,8 @@
       <span
         class="el:m-tag el:m-tag--bold el:m-tag--xxs el:m-tag--primary-variant-flat el:amx-D(ib)"
       >
-        {{ trialLocale }} {{ $t("dictionary.free_trial") }}
+        <ssrtxt>{{ locales.trialLocale }}</ssrtxt>
+        <ssrt k="dictionary.free_trial" />
       </span>
     </span>
     <div :class="marginClass" v-if="price > 0">
@@ -16,33 +17,32 @@
         <span class="el:amx-Fs(1em) el:amx-Mr(0.125em)"
           >$ {{ formattedPrice }}</span
         ><span class="el:amx-Fs(0.625em)" v-if="course.subscription_type"
-          >/{{
-            $t(
-              `dictionary.subscription_period.${course.subscription_period.unit}`
-            )
-          }}</span
-        >
+          >/<ssrt
+            :k="`dictionary.subscription_period.${course.subscription_period.unit}`"
+        /></span>
       </span>
     </div>
     <div :class="marginClass" v-else>
       <span class="el:amx-Fs(1em) el:amx-C_seV el:amx-Fw(b) el:amx-Tt(u)">
-        {{ $t("dictionary.free") }}
+        <ssrt k="dictionary.free" />
       </span>
     </div>
     <span
       class="el:amx-Fs(0.625em)"
       v-if="!course.subscription_type && price > 0"
     >
-      {{ $t("dictionary.pricing.this_course_only") }}
+      <ssrt k="dictionary.pricing.this_course_only" />
     </span>
     <span class="el:m-label" v-if="course.subscription_type">
       <div class="el:amx-D(f)">
         <span
           class="el:m-label__text el:amx-Fs(0.625em) el:amx-Fw(b) el:amx-C_fg el:amx-Ta(r) el:amx-Pr(0.25em)"
           style="flex: 1;"
-        >
-          + {{ $t("dictionary.pricing.all_courses") }}
+          >+ <ssrt k="dictionary.pricing.all_courses" />
         </span>
+        <ssrtxt class="el:amx-D(n)" ref="tooltipContent">{{
+          locales.tooltipContent
+        }}</ssrtxt>
         <span ref="tooltip" v-if="hasTrial">
           <icon
             :iconClasses="[
@@ -96,11 +96,38 @@
     components: {
       icon: Icon
     },
+    data() {
+      return {
+        locales: {}
+      };
+    },
+    created() {
+      if (this.$isServer) {
+        this.locales = {
+          ...(this.trialLocale
+            ? {
+                trialLocale: this.$t(
+                  this.trialLocale.key,
+                  this.trialLocale.options
+                )
+              }
+            : {}),
+          freeTrial: this.$t("dictionary.free_trial")
+        };
+
+        if (this.locales.trialLocale) {
+          this.locales.tooltipContent = this.$t("dictionary.pricing.tooltip", {
+            provider: this.course.provider_name,
+            offer: `${this.locales.trialLocale} ${this.locales.freeTrial}`
+          });
+        }
+      }
+    },
     mounted() {
       this.$nextTick(function () {
-        if (this.$refs.tooltip) {
+        if (this.$refs.tooltip && this.$refs.tooltipContent) {
           tippy(this.$refs.tooltip, {
-            content: this.tooltipContent
+            content: this.$refs.tooltipContent.$el.innerHTML
           });
         }
       });
@@ -129,7 +156,10 @@
           const trialPeriodValue = this.course.trial_period.value;
           const trialPeriodQty = trialPeriodValue == 1 ? "one" : "other";
           const localeKey = `datetime.adjectives.${trialPeriodUnit}.${trialPeriodQty}`;
-          return this.$t(localeKey, { count: trialPeriodValue });
+          return {
+            key: localeKey,
+            options: { count: trialPeriodValue }
+          };
         } else {
           return null;
         }
@@ -141,12 +171,6 @@
           "el:amx-FxAi(fe)",
           "el:amx-FxJc(c)"
         ];
-      },
-      tooltipContent() {
-        return this.$t("dictionary.pricing.tooltip", {
-          provider: this.course.provider_name,
-          offer: `${this.trialLocale} ${this.$t("dictionary.free_trial")}`
-        });
       }
     }
   };

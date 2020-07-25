@@ -63,14 +63,12 @@
               <use xlink:href="#icons-clock"></use>
             </svg>
             <span class="el:amx-Fs(0.75em) el:amx-C_fgM el:amx-D(ib)">
-              {{
-                $t(
-                  `datetime.distance_in_words.x_hours.${
-                    course.effort == 1 ? "one" : "other"
-                  }`,
-                  { count: course.effort }
-                )
-              }}
+              <ssrt
+                :k="`datetime.distance_in_words.x_hours.${
+                  course.effort == 1 ? 'one' : 'other'
+                }`"
+                :options="{ count: course.effort }"
+              />
             </span>
           </div>
         </div>
@@ -86,8 +84,8 @@
           rel="nofollow"
           target="_blank"
           :href="course.gateway_path"
-          >{{ $t("dictionary.details.see") }}</a
-        >
+          ><ssrt k="dictionary.details.see"
+        /></a>
       </div>
     </div>
   </div>
