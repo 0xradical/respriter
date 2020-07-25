@@ -523,9 +523,9 @@ class Course < ApplicationRecord
 
     if certificate.present?
       indexed_json[:certificate] = {
-        type:     certificate[:type],
-        price:    certificate[:price],
-        currency: certificate[:currency]
+        type:     certificate.with_indifferent_access[:type],
+        price:    certificate.with_indifferent_access[:price],
+        currency: certificate.with_indifferent_access[:currency]
       }
     end
 
