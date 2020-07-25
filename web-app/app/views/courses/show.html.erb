@@ -26,11 +26,21 @@
   <% end %>
 <% end %>
 
+<script type='text/javascript'>
+  window.env_context = {
+    devise: {
+      sign_in: "<%= new_user_account_session_path %>",
+      sign_up: "<%= new_user_account_registration_path %>",
+      signed_in: <%= current_user_account.present? %>
+    }
+  }
+</script>
+
 <%= content_for :sprites do %>
   <%= sprites({
     tags: RootTag.all.map(&:id),
     brand: "*",
-    "country-flags": ["us", "br", "de", "fr", "jp", "es", Array.wrap(@course.instructors.map{|i| i['profile_country']&.downcase })].flatten.compact.uniq,
+    i18n: ["en", "es", "pt-br", "ja"],
     icons: [
       "facebook-circle",
       "linkedin-circle",
@@ -40,7 +50,6 @@
       "arrow-down",
       "audio",
       "subtitle",
-      "envelope",
       "certificate",
       "building",
       "id-badge",
@@ -51,284 +60,32 @@
       "play",
       "video-recorder-unavailable",
       "question",
-      "clipboard",
-      "share",
       "avatar"
     ],
     providers: [@course.provider.slug, @course.similar.map(&:provider).map(&:slug)].flatten.compact.uniq
-  }, version: "8.8.0") %>
+  }) %>
 <% end %>
 
 <%= content_for :stylesheets do %>
-  <%= stylesheet_bundles_with_chunks_tag 'card-carrousel' %>
+  <%= stylesheet_bundles_with_chunks_tag 'course-page' %>
 <% end %>
 
 <%= content_for :javascript do %>
-  <%= javascript_bundles_with_chunks_tag "card-carrousel" %>
-  <%= javascript_bundles_with_chunks_tag "course-sharing" %>
-  <%= javascript_bundles_with_chunks_tag 'video-preview' %>
+  <%= elements_javascript_include_tag 'vars' %>
+  <%= javascript_bundles_with_chunks_tag 'course-page' %>
 <% end %>
 
-<div class="container">
-  <div class="d-n@<sm row">
-    <div class="col">
-      <div class='mT24'>
-        <ul class='fs10 el:m-breadcrumb'>
-          <li class="el:m-breadcrumb__item">
-            <%= link_to t("dictionary.home"), root_path %>
-          </li>
-          <li class='el:m-breadcrumb__separator'></li>
-          <li class="el:m-breadcrumb__item">
-            <%= link_to @provider.name, provider_path(@provider.slug) %>
-          </li>
-          <li class='el:m-breadcrumb__separator'></li>
-          <% @root_tags.each_with_index do |root_tag, index| %>
-            <li class='el:m-breadcrumb__item'>
-              <%= link_to t("tags.#{root_tag}"), course_bundles_path(tag: root_tag.dasherize) %>
-            </li>
-            <% if (index + 1 ) != @root_tags.length %>
-              <li class='el:m-breadcrumb__item'> | </li>
-            <% end %>
-          <% end %>
-          <li class='el:m-breadcrumb__separator'></li>
-          <li>
-            <%= @course.name %>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 col-lg-9">
-      <div class="mT24">
-        <div class="d-f" style="align-items: center">
-          <%= svg_use('providers', @provider.slug, {class: "fs14 fi-fg", style: 'margin-right: 0.5em', width: '1em', height: '1em'}) %>
-          <span class="fs14"><%= @provider.name %></span>
-        </div>
-      </div>
-      <div class="mT16 d-f ai-c jc-sb">
-        <span class="fs24 fw-b"><%= @course.name %></span>
-        <div class="d-ib d-n@<sm">
-          <%= render_course_sharing(@course) %>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 d-n@<sm col-lg-3">
-      <div class="d-f fld-c h100">
-        <div class="mT-a ta-r">
-          <% if @course.price > 0 %>
-            <span class="c2V fw-b">
-              <span class="fs24"><%= number_to_currency(@course.price, unit: "$") %></span>
-              <% if @course.subscription_type? %>
-                <span class="fs16" v-if="course.subscription_type"> /<%= t("dictionary.subscription_period.#{@course.subscription_period&.[]('unit')}") %></span>
-              <% end %>
-            </span>
-          <% else %>
-            <span class="fs24 c2V fw-b tt-u">
-              <%= t("dictionary.free") %>
-            </span>
-          <% end %>
-        </div>
-
-        <a class="mT16 el:m-button el:m-button--primary-flat el:m-button--xs el:m-button--block" href="<%= @course.gateway_path %>">
-          <%= t(".go_to_course") %>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row mT32 d-b">
-    <% if @course.video.present? %>
-      <div class="col-12 col-lg-9 f-l">
-        <%= render_component "VideoPreview", {
-            locale: I18n.locale,
-            course: @course.as_indexed_json.slice(:id, :type, :video),
-            rootClasses: ['w100']
-          }
-        %>
-      </div>
-    <% end %>
-    <div class="col-12 <%= @course.video.present? ? 'mT40' : '' %> d-n@>lg f-l w100">
-      <div class="mT-a d-f jc-sb ai-c">
-        <div class="d-ib">
-          <%= render_course_sharing(@course, left: true, root_classes: ["fs14"]) %>
-        </div>
-        <% if @course.price > 0 %>
-          <span class="c2V fw-b">
-            <span class="fs20"><%= number_to_currency(@course.price, unit: "$") %></span>
-            <% if @course.subscription_type? %>
-              <span class="fs14"> /<%= t("dictionary.subscription_period.#{@course.subscription_period&.[]('unit')}") %></span>
-            <% end %>
-          </span>
-        <% else %>
-          <span class="fs20 c2V fw-b tt-u">
-            <%= t("dictionary.free") %>
-          </span>
-        <% end %>
-      </div>
-      <a class="mT14 el:m-button el:m-button--primary-flat el:m-button--sm el:m-button--block" href="<%= @course.gateway_path %>">
-        <%= t(".go_to_course") %>
-      </a>
-    </div>
-    <div class="mT40@<sm col-12 col-lg-3 f-r">
-      <div class="row mx-auto el:o-stack">
-        <div class="col-12 pA32">
-          <h2 class="fs12 tt-u fw-b c-fg ls8">
-            <%= t(".pricing.title") %>
-          </h2>
-
-          <div class="mT16">
-            <div class="d-f ai-c fs12">
-              <%= svg_use('icons', 'envelope', {class: "fi-fg", style: 'margin-right: 0.5em', height: '1em', width: '1em'}) %>
-              <% if @course.subscription_type? %>
-                <%= t(".pricing.subscription") %>
-              <% else %>
-                <%= t(".pricing.per_course") %>
-              <% end %>
-            </div>
-          </div>
-
-          <% if @course.has_free_trial? && @course.trial_locale.present? %>
-            <div class="mT16 fs10 tt-u d-ib el:m-tag el:m-tag--secondary-variant-border">
-              <%= t(@course.trial_locale[:key], count: @course.trial_locale[:count]) + " " + t("dictionary.free_trial") %>
-            </div>
-          <% end %>
-        </div>
-        <div class="col-12 pA32">
-          <h2 class="fs12 tt-u fw-b c-fg ls8">
-            <%= t(".details") %>
-          </h2>
-
-          <div class="mT16 el:o-spacer--y16">
-            <% if @course.root_languages_for_audio.length > 0 %>
-              <div class="d-f ai-c fs12">
-                <%= svg_use('icons', 'audio', {class: "fi-fg", style: 'margin-right: 0.5em', height: '1em', width: '1em'}) %>
-                <span class="tt-u"><%= @course.root_languages_for_audio[0..5].join(", ") %></span>
-              </div>
-            <% end %>
-            <% if @course.root_languages_for_subtitles.length > 0 %>
-              <div class="d-f ai-c fs12">
-                <%= svg_use('icons', 'subtitle', {class: "fi-fg", style: 'margin-right: 0.5em', height: '1em', width: '1em'}) %>
-                <span class="tt-u"><%= @course.root_languages_for_subtitles[0..5].join(", ") %></span>
-              </div>
-            <% end %>
-            <% if @course.certificate&.[](:type)&.present? %>
-              <div class="d-f ai-c fs12">
-                <%= svg_use('icons', 'certificate', {class: "fi-fg", style: 'margin-right: 0.5em', height: '1em', width: '1em'}) %>
-                <span class="tt-u"><%= t("dictionary.certificate.#{@course.certificate[:type]}") %></span>
-              </div>
-            <% end %>
-            <% if @course.pace.present? %>
-              <div class="d-f ai-c fs12">
-                <%= svg_use('icons', 'velocimeter', {class: "fi-fg", style: 'margin-right: 0.5em', height: '1em', width: '1em'}) %>
-                <span><%= t("dictionary.pace.#{@course.pace}") %></span>
-              </div>
-            <% end %>
-            <% if @course.level&.length&.>(0) %>
-              <div class="d-f ai-c fs12">
-                <%= svg_use('icons', 'level', {class: "fi-fg", style: 'margin-right: 0.5em', height: '1em', width: '1em'}) %>
-                <span><%= @course.level.map { |l| t("dictionary.levels.#{l}") }.join(", ") %></span>
-              </div>
-            <% end %>
-            <% if @course.effort %>
-              <div class="d-f ai-c fs12">
-                <%= svg_use('icons', 'clock', {class: "fi-fg", style: 'margin-right: 0.5em', height: '1em', width: '1em'}) %>
-                <span><%= t("datetime.distance_in_words.x_hours.#{@course.effort == 1 ? 'one' : 'other'}", count: @course.effort) %></span>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <% if @course.instructors.any? %>
-          <div class="col-12 pA32">
-            <h2 class="fs12 tt-u fw-b c-fg ls8">
-              <%= t(".instructors") %>
-            </h2>
-
-            <div class="mT16 el:o-spacer--y16">
-              <% @course.instructors.each do |instructor|%>
-                <div>
-                  <div class="po-r el:m-avatar el:m-avatar--circle el:m-avatar--2x2em mR8">
-                    <% if instructor['profile_avatar_url'] %>
-                      <img src="<%= instructor['profile_avatar_url'] %>">
-                    <% else %>
-                      <%= image_tag(elements_asset_path("svgs/illustrations/avatar-default.svg")) %>
-                    <% end %>
-                    <% if instructor['profile_country'] %>
-                      <%= svg_use('country-flags', instructor['profile_country'].downcase, {class: "fs14 fi-fg po-a", style: 'right: -.2rem; bottom: .2rem;', width: '1.2rem', height: '1.2rem'}) %>
-                    <% end %>
-                  </div>
-                  <% if instructor['profile_path'] %>
-                    <a class="c1 fs12 lh1 fw-b" href="<%= instructor['profile_path'] %>">
-                      <%= instructor['name'] %>
-                    </a>
-                  <% else %>
-                    <span class="c1 fs12 lh1 fw-b">
-                      <%= instructor['name'] %>
-                    </span>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-        <% if @course.curated_tags.any? %>
-          <div class="col-12 pA32">
-            <h2 class="fs12 tt-u fw-b c-fg ls8">
-              <%= t(".related_tags") %>
-            </h2>
-
-            <div class="mT16">
-              <% @course.curated_tags.each do |tag| %>
-                <a class="el:m-tag el:m-tag--primary-variant-flat d-ib fs10 mR8 mT8" href="/<%= tag.gsub(/_/, '-') %>">
-                  <%= t("tags.#{tag}") %>
-                </a>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <% if @course.description.present? %>
-      <div class="mT40@<sm <%= @course.video.present? ? 'mT40' : '' %> col-12 col-lg-9 f-l">
-        <h2 class="d-n@>lg fs12 tt-u fw-b c-fg ls8">
-          <%= t(".about_this_course") %>
-        </h2>
-        <div class="mT16@<sm row mx-auto el:o-stack">
-          <div class="col pT0 pR32 pB32 pL32">
-            <h2 class="d-n@<sm fs12 tt-u fw-b c-fg ls8 mT32">
-              <%= t(".about_this_course") %>
-            </h2>
-
-            <div class="mT32">
-              <%= @course.description %>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-    <% if @course.similar.any? %>
-      <div class="mT40 col-12 col-lg-9 f-l">
-        <div class="d-f jc-sb">
-          <h2 class="fs12 tt-u fw-b c-fg ls8">
-            <%= t(".related_courses") %>
-          </h2>
-        </div>
-
-        <div class="mT16">
-          <%= render_component "CardCarrousel", {
-            component: "CourseCardVerticalV2",
-            list: @course.similar.map{|c| c.as_indexed_json.slice(
-              :id, :name, :type, :video, :effort, :gateway_path,
-              :instructors, :provider_name, :provider_slug,
-              :price, :trial_period, :subscription_period, :subscription_type
-            ) },
-            property: "course",
-            height: "350px",
-            locale: I18n.locale
-          } %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-  <div class="cl-b"></div>
-  <div class="row mT40"></div>
-</div>
+<%= render_vue_component "CoursePage", {
+  propsData: {
+    locale: I18n.locale,
+    course: @course.as_indexed_json,
+    similar: @course.similar.map(&:as_indexed_json)
+  },
+  locale: I18n.locale,
+  state: {
+    data: @course.as_indexed_json,
+    meta: {
+      single: true
+    }
+  }
+} %>
