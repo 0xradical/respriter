@@ -131,6 +131,10 @@
     box-sizing: content-box;
   }
 
+  .swiper-slide {
+    min-width: 255px;
+  }
+
   .swiper-pagination {
     ::v-deep .swiper-pagination-bullet + .swiper-pagination-bullet {
       margin-left: 1.375rem;
