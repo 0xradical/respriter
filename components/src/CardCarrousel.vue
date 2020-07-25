@@ -79,19 +79,19 @@
               slidesPerView: 1.75,
               spaceBetween: 16
             },
-            992: {
+            768: {
               // container: 690px, space = (690px - 2*255px)/1 = 180
               slidesPerView: 3,
               spaceBetween: 180,
               slidesPerGroup: 2
             },
-            1200: {
+            992: {
               // container: 930px, space = (930px - 3*255px)/2 = 82.5
               slidesPerView: 3,
               spaceBetween: 82.5,
               slidesPerGroup: 3
             },
-            9999: {
+            1200: {
               // container: 1110px, space = (1110px - 4*255px)/3 = 30
               slidesPerView: 4,
               spaceBetween: 30,

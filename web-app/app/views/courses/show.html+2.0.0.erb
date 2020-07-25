@@ -211,7 +211,7 @@
                 <span class="tt-u"><%= @course.root_languages_for_subtitles[0..5].join(", ") %></span>
               </div>
             <% end %>
-            <% if @course.certificate&.[](:type)&.present? %>
+            <% if @course.certificate.present? %>
               <div class="d-f ai-c fs12">
                 <%= svg_use('icons', 'certificate', {class: "fi-fg", style: 'margin-right: 0.5em', height: '1em', width: '1em'}) %>
                 <span class="tt-u"><%= t("dictionary.certificate.#{@course.certificate[:type]}") %></span>

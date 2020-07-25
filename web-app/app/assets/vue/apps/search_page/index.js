@@ -3,6 +3,8 @@
 import { renderVueComponent, vue } from "~~hypernova";
 import { createI18n } from "../../../js/i18n";
 import { createStore } from "../../../js/store";
+import SSRT from "components/SSRT";
+import SSRTxt from "components/SSRTxt";
 import App from "./App.vue";
 
 // external libs
@@ -16,6 +18,8 @@ import ClientOnly from "vue-client-only";
 
 vue.component("client-only", ClientOnly);
 vue.component("vue-slider", VueSlider);
+vue.component("ssrt", SSRT);
+vue.component("ssrtxt", SSRTxt);
 vue.use(VueJsModal);
 
 Object.defineProperty(vue.prototype, "$classpert", { value: {} });

@@ -77,11 +77,11 @@
       },
       linkText: {
         type: String,
-        required: true
+        required: false
       },
       copiedText: {
         type: String,
-        required: true
+        required: false
       }
     },
     computed: {
