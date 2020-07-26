@@ -11,7 +11,7 @@ class LocaleRouter
     @cookies = Rack::Utils.parse_cookies(env)
     return forward_to(user_locale) if user_selected_different_locale?
     return forward_to(auto_assigned_locale) if first_access_on_international_domain?
-    @app.call(env)
+    [@status, @headers, @body]
   end
 
   private
