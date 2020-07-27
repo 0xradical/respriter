@@ -20,9 +20,11 @@ const webpackConfig = (
       entry: [
         "application",
         "assets",
+        "bootstrap",
         "card-carrousel",
         "contact-us",
         "course-page",
+        "course-sharing",
         "locales",
         "post-card",
         "providers/show",
@@ -30,7 +32,8 @@ const webpackConfig = (
         "search-page",
         "sharing",
         "vcard",
-        "vendor"
+        "vendor",
+        "video-preview"
       ].reduce(
         (entries, key) => ({
           ...entries,
@@ -185,7 +188,7 @@ const webpackConfig = (
               {
                 loader: "css-loader",
                 options: {
-                  sourceMap: true,
+                  sourceMap: mode !== "production",
                   importLoaders: 2,
                   modules: false,
                   onlyLocals: config.ssr
@@ -195,7 +198,7 @@ const webpackConfig = (
                 loader: "postcss-loader",
                 options: {
                   config: { path: resolve() },
-                  sourceMap: true
+                  sourceMap: mode !== "production"
                 }
               }
             ]
@@ -216,7 +219,7 @@ const webpackConfig = (
               {
                 loader: "css-loader",
                 options: {
-                  sourceMap: true,
+                  sourceMap: mode !== "production",
                   importLoaders: 2,
                   modules: false,
                   onlyLocals: config.ssr
@@ -226,13 +229,13 @@ const webpackConfig = (
                 loader: "postcss-loader",
                 options: {
                   config: { path: resolve() },
-                  sourceMap: true
+                  sourceMap: mode !== "production"
                 }
               },
               {
                 loader: "sass-loader",
                 options: {
-                  sourceMap: true,
+                  sourceMap: mode !== "production",
                   sassOptions: {
                     includePaths: config.resolvedPaths
                   }
@@ -256,7 +259,7 @@ const webpackConfig = (
               {
                 loader: "css-loader",
                 options: {
-                  sourceMap: true,
+                  sourceMap: mode !== "production",
                   importLoaders: 2,
                   modules: {
                     localIdentName: "[name]__[local]___[hash:base64:5]",
@@ -268,7 +271,7 @@ const webpackConfig = (
                 loader: "postcss-loader",
                 options: {
                   config: { path: resolve() },
-                  sourceMap: true
+                  sourceMap: mode !== "production"
                 }
               }
             ]
@@ -289,7 +292,7 @@ const webpackConfig = (
               {
                 loader: "css-loader",
                 options: {
-                  sourceMap: true,
+                  sourceMap: mode !== "production",
                   importLoaders: 2,
                   modules: {
                     localIdentName: "[name]__[local]___[hash:base64:5]",
@@ -301,12 +304,12 @@ const webpackConfig = (
                 loader: "postcss-loader",
                 options: {
                   config: { path: resolve() },
-                  sourceMap: true
+                  sourceMap: mode !== "production"
                 }
               },
               {
                 loader: "sass-loader",
-                options: { sourceMap: true }
+                options: { sourceMap: mode !== "production" }
               }
             ]
           },
@@ -322,7 +325,7 @@ const webpackConfig = (
               {
                 loader: "css-loader",
                 options: {
-                  sourceMap: true,
+                  sourceMap: mode !== "production",
                   importLoaders: 2,
                   modules: false,
                   onlyLocals: config.ssr
@@ -332,13 +335,13 @@ const webpackConfig = (
                 loader: "postcss-loader",
                 options: {
                   config: { path: resolve() },
-                  sourceMap: true
+                  sourceMap: mode !== "production"
                 }
               },
               {
                 loader: "sass-loader",
                 options: {
-                  sourceMap: true,
+                  sourceMap: mode !== "production",
                   sassOptions: {
                     includePaths: config.resolvedPaths
                   }
@@ -351,7 +354,14 @@ const webpackConfig = (
             test: /\.vue(\.erb)?$/,
             use: [
               {
-                loader: "vue-loader"
+                loader: "vue-loader",
+                options: {
+                  optimizeSSR: false,
+                  compilerOptions: {
+                    optimizeSSR: false,
+                    whitespace: "preserve"
+                  }
+                }
               }
             ]
           },

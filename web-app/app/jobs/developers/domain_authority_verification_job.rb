@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dnsruby'
 
 module Developers
@@ -31,14 +33,10 @@ module Developers
       log('Started domain verification')
 
       crawler_domain = CrawlerDomain.find_by(id: id)
-      if crawler_domain.nil?
-        raise '#100000: Domain structure not found on database'
-      end
+      raise '#100000: Domain structure not found on database' if crawler_domain.nil?
 
       user_account = UserAccount.find_by(id: user_id)
-      if user_account.nil?
-        raise "#100001: Domain's associated user not found on database"
-      end
+      raise "#100001: Domain's associated user not found on database" if user_account.nil?
 
       if crawler_domain.reload.authority_confirmation_status == 'confirmed'
         raise '#100002: Domain already validated'
@@ -49,13 +47,13 @@ module Developers
       end
 
       if crawler_domain.reload.authority_confirmation_status.in?(
-           %w[unconfirmed failed]
-         )
+        %w[unconfirmed failed]
+      )
         crawler_domain.update(authority_confirmation_status: 'confirming')
       end
 
       loop do
-        log('Retrying verification') if (self.retries > 0)
+        log('Retrying verification') if retries > 0
 
         if check_html(crawler_domain, user_account)
           confirm!(user_id, crawler_domain, 'html')
@@ -85,49 +83,52 @@ module Developers
         end
       end
     rescue StandardError => e
-      if crawler_domain
-        CrawlerDomain.transaction do
-          crawler_domain.update(authority_confirmation_status: 'failed')
+      if e.cause&.result&.error_field(PG::Result::PG_DIAG_MESSAGE_DETAIL) == 'crawler_domain__illegal_transition'
+        log('Domain already confirmed by another job, reload your page', :error)
+        expire
+      else
+        if crawler_domain
+          CrawlerDomain.transaction do
+            crawler_domain.update(authority_confirmation_status: 'failed')
+            expire
+          end
+        else
           expire
         end
-      else
-        expire
-      end
 
-      log(e.message, :error)
+        log(e.message, :error)
+      end
     end
 
     def check_html(crawler_domain, user_account)
       log('Verifying HTML page')
 
       crawler_domain.possible_uris.each do |u|
-        begin
-          uri = URI.parse(u.to_s)
-          log("Trying #{uri.scheme.upcase} (#{uri.to_s})")
-          response = get_response(uri)
+        uri = URI.parse(u.to_s)
+        log("Trying #{uri.scheme.upcase} (#{uri})")
+        response = get_response(uri)
 
-          if response.code == '200'
-            document = Nokogiri.HTML(response.body)
+        if response.code == '200'
+          document = Nokogiri.HTML(response.body)
 
-            document.css('meta').each do |meta|
-              if meta.attributes['name']&.value ==
-                   UserAccount::DOMAIN_VERIFICATION_KEY &&
-                   meta.attributes['content']&.value ==
-                     user_account.domain_verification_token
-                return true
-              end
+          document.css('meta').each do |meta|
+            if meta.attributes['name']&.value ==
+               UserAccount::DOMAIN_VERIFICATION_KEY &&
+               meta.attributes['content']&.value ==
+               user_account.domain_verification_token
+              return true
             end
-          else
-            log(
-              "HTML Verification for #{u.to_s} failed (status code: #{
+          end
+        else
+          log(
+            "HTML Verification for #{u} failed (status code: #{
                 response.code
               })"
-            )
-          end
-        rescue StandardError
-          log('Could not verify via HTML')
-          false
+          )
         end
+      rescue StandardError
+        log('Could not verify via HTML')
+        false
       end
 
       false
@@ -177,8 +178,8 @@ module Developers
 
         provider_name =
           [parsed_domain.trd, parsed_domain.sld].compact.flat_map(&:to_s)
-            .select do |domain_part|
-            domain_part != 'www'
+                                                .reject do |domain_part|
+            domain_part == 'www'
           end.flat_map do |domain_part|
             derived =
               domain_part.split(/\./).map do |part|
@@ -219,10 +220,10 @@ module Developers
             {
               authority_confirmation_method: confirmation_method,
               authority_confirmation_token:
-                user_account.domain_verification_token,
+                                             user_account.domain_verification_token,
               authority_confirmation_status: 'confirmed',
-              authority_confirmation_salt: ENV['DOMAIN_VERIFICATION_SALT'],
-              provider_crawler_id: provider_crawler.id
+              authority_confirmation_salt:   ENV['DOMAIN_VERIFICATION_SALT'],
+              provider_crawler_id:           provider_crawler.id
             }
           )
         end
@@ -254,10 +255,10 @@ module Developers
         end
 
       methods = {
-        'robots.txt' => robot_method,
-        'sitemap.xml' => sitemap_xml_method,
-        'sitemap.xml.gz' => sitemap_xml_method,
-        'sitemap_index.xml' => sitemap_xml_method,
+        'robots.txt'           => robot_method,
+        'sitemap.xml'          => sitemap_xml_method,
+        'sitemap.xml.gz'       => sitemap_xml_method,
+        'sitemap_index.xml'    => sitemap_xml_method,
         'sitemap_index.xml.gz' => sitemap_xml_method
       }
 
@@ -267,7 +268,7 @@ module Developers
       crawler_domain.possible_uris.each do |uri|
         methods.each do |method_file, method_processor|
           uri.path = "/#{method_file}"
-          log("Looking for #{uri.to_s}")
+          log("Looking for #{uri}")
 
           sitemap =
             (
@@ -287,7 +288,7 @@ module Developers
             )
             return
           else
-            log("Could not find #{uri.to_s}")
+            log("Could not find #{uri}")
           end
         end
       end
@@ -298,16 +299,16 @@ module Developers
     end
 
     def verify_sitemap(
-      crawler_domain, provider_crawler, sitemap_url, sitemap_id
+      _crawler_domain, provider_crawler, sitemap_url, sitemap_id
     )
       log('Sitemap detected, enqueuing for validation')
 
       provider_crawler.update(
         sitemaps: [
           {
-            id: sitemap_id,
-            url: sitemap_url,
-            type: 'unknown',
+            id:     sitemap_id,
+            url:    sitemap_url,
+            type:   'unknown',
             status: 'unverified'
           }
         ]
@@ -328,18 +329,18 @@ module Developers
       raise job.error if job.error
     end
 
-    def start_heartbeat(crawler_domain)
+    def start_heartbeat(_crawler_domain)
       @exit = false
       @elapsed = 0
       @begin = Time.now
 
       @heartbeat =
         Thread.new do
-          while !@exit
+          until @exit
             sleep(RETRY_WINDOW / RETRY_HEARTBEATS)
             @elapsed = (Time.now - @begin).to_i
 
-            if (@elapsed < RETRY_WINDOW)
+            if @elapsed < RETRY_WINDOW
               log(
                 "Will retry verification in #{
                   (RETRY_WINDOW - @elapsed).abs
@@ -359,7 +360,7 @@ module Developers
     end
 
     def stop_heartbeat
-      @heartbeat.kill if !@exit
+      @heartbeat.kill unless @exit
     end
   end
 end

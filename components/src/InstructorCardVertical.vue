@@ -48,11 +48,10 @@
             <use xlink:href="#icons-camera" />
           </svg>
           <span class="el:amx-Fs(0.75em) el:amx-C_fgM">
-            {{
-              $t("dictionary.instructor.courses_count", {
-                count: instructor.courseCount
-              })
-            }}
+            <ssrt
+              k="dictionary.instructor.courses_count"
+              :options="{ count: instructor.courseCount }"
+            />
           </span>
         </div>
         <div class="el:amx-D(f) el:amx-Mt(0.5em)">
@@ -65,10 +64,10 @@
           </svg>
           <span class="el:amx-Fs(0.75em) el:amx-C_fgM">
             <template v-if="instructor.subject">
-              {{ $t(`tags.${instructor.subject}`) }}
+              <ssrt :k="`tags.${instructor.subject}`" />
             </template>
             <template v-else>
-              {{ $t("dictionary.not_available") }}
+              <ssrt k="dictionary.not_available" />
             </template>
           </span>
         </div>

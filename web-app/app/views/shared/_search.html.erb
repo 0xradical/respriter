@@ -18,6 +18,7 @@
       "clock",
       "close",
       "play",
+      "featured-badge",
       "video-recorder-unavailable",
       "question",
       "avatar"
@@ -45,6 +46,7 @@
 <%= content_for :javascript do %>
   <%= elements_javascript_include_tag 'vars' %>
   <%= javascript_bundles_with_chunks_tag 'search-page' %>
+  <%= javascript_bundles_with_chunks_tag 'sharing' %>
 <% end %>
 
 <%= render_vue_component "SearchPage", {

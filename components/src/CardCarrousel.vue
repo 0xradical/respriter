@@ -1,46 +1,40 @@
 <template>
-  <div>
-    <client-only>
-      <swiper
-        class="pb-0 pb-md-5"
+  <div class="swiper-container" v-swiper:mySwiper="swiperOptions">
+    <div
+      class="swiper-wrapper pb-0 pb-md-5 pB0@<sm pB56"
+      :style="{ height }"
+      ref="mySwiper"
+    >
+      <div
+        class="swiper-slide"
+        v-for="item in list"
+        :key="item.id"
         :style="{ height }"
-        ref="mySwiper"
-        :options="swiperOptions"
       >
-        <swiper-slide v-for="item in list" :key="item.id" :style="{ height }">
-          <component
-            :is="component"
-            :class="componentClasses"
-            v-bind="{ [property]: item }"
-          />
-        </swiper-slide>
-        <swiper-slide
-          v-if="navigation.component"
-          :class="navigation.class"
-          :style="{ height }"
-        >
-          <component :is="navigation.component" v-bind="navigation.props" />
-        </swiper-slide>
-        <swiper-slide class="d-block d-md-none" :style="{ height }">
-          <div></div>
-          <!-- empty slide (guarantee last slide activation) -->
-        </swiper-slide>
-        <div
-          class="d-none d-md-block swiper-pagination"
-          slot="pagination"
-        ></div>
-      </swiper>
-    </client-only>
+        <component
+          :is="component"
+          :class="componentClasses"
+          v-bind="{ [property]: item }"
+        />
+      </div>
+      <div
+        class="swiper-slide"
+        v-if="navigation.component"
+        :class="navigation.class"
+        :style="{ height }"
+      >
+        <component :is="navigation.component" v-bind="navigation.props" />
+      </div>
+      <div class="swiper-slide d-block" :style="{ height }">
+        <div></div>
+        <!-- empty slide (guarantee last slide activation) -->
+      </div>
+    </div>
+    <div class="d-none d-lg-block swiper-pagination" slot="pagination"></div>
   </div>
 </template>
 
 <script>
-  // register dynamic components here if you intend to use
-  // this carrousel with any of them
-  import CourseCardVertical from "./CourseCardVertical.vue";
-  import InstructorCardVertical from "./InstructorCardVertical.vue";
-  import ProviderNavCard from "./ProviderNavCard.vue";
-
   export default {
     props: {
       component: {
@@ -81,23 +75,23 @@
           preventClicksPropagation: false,
           autoHeight: false,
           breakpoints: {
-            767: {
+            0: {
               slidesPerView: 1.75,
               spaceBetween: 16
             },
-            992: {
+            768: {
               // container: 690px, space = (690px - 2*255px)/1 = 180
               slidesPerView: 3,
               spaceBetween: 180,
               slidesPerGroup: 2
             },
-            1200: {
+            992: {
               // container: 930px, space = (930px - 3*255px)/2 = 82.5
               slidesPerView: 3,
               spaceBetween: 82.5,
               slidesPerGroup: 3
             },
-            9999: {
+            1200: {
               // container: 1110px, space = (1110px - 4*255px)/3 = 30
               slidesPerView: 4,
               spaceBetween: 30,
@@ -116,9 +110,18 @@
       };
     },
     components: {
-      CourseCardVertical,
-      InstructorCardVertical,
-      ProviderNavCard
+      CourseCardVertical: () =>
+        import(/* webpackChunkName: "cardtypes" */ "./CourseCardVertical.vue"),
+      CourseCardVerticalV2: () =>
+        import(
+          /* webpackChunkName: "cardtypes" */ "./CourseCardVerticalV2.vue"
+        ),
+      InstructorCardVertical: () =>
+        import(
+          /* webpackChunkName: "cardtypes" */ "./InstructorCardVertical.vue"
+        ),
+      ProviderNavCard: () =>
+        import(/* webpackChunkName: "cardtypes" */ "./ProviderNavCard.vue")
     }
   };
 </script>

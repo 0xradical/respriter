@@ -76,10 +76,11 @@
       }
     </script>
 
+    <%= stylesheet_bundles_with_chunks_tag 'bootstrap' %>
 
     <!-- Elements css-->
     <% if content_for?(:elements_css) %>
-      <%= yield :element_css %>
+      <%= yield :elements_css %>
     <% else %>
       <%= elements_stylesheet_link_tag('icon-font','bundle', skip_pipeline: true) %>
     <% end %>

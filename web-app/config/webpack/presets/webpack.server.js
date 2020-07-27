@@ -6,7 +6,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = (env, argv) => {
   return {
     target: "node",
-    devtool: "source-map",
+    devtool: env.mode === "production" ? false : false,
     entry: path.join(__dirname, "../../../app/assets/js/hypernova.js"),
     output: {
       filename: "hypernova.js",
@@ -22,6 +22,10 @@ module.exports = (env, argv) => {
         "~~dompurify$": path.resolve(
           __dirname,
           "../../../app/assets/js/dompurify/server.js"
+        ),
+        "~~i18n$": path.resolve(
+          __dirname,
+          "../../../app/assets/js/i18n/server.js"
         ),
         "~~marked$": path.resolve(
           __dirname,

@@ -1,13 +1,17 @@
 <template>
   <generic-social-sharing
-    :url="url"
+    :version="version"
+    :url="courseUrl"
     :title="title"
-    :description="description"
     :quote="quote"
     :hashtags="hashtags"
+    :callOut="callOut"
     :callOutClasses="callOutClasses"
     :iconClasses="iconClasses"
     :rootClasses="rootClasses"
+    :left="left"
+    :linkText="linkText"
+    :copiedText="copiedText"
   >
   </generic-social-sharing>
 </template>
@@ -38,20 +42,41 @@
         default() {
           return [];
         }
+      },
+      callOut: {
+        type: String,
+        default: undefined
+      },
+      version: {
+        type: String,
+        version: ""
+      },
+      left: {
+        type: Boolean,
+        default: false
+      },
+      url: {
+        type: String,
+        required: false
+      },
+      linkText: {
+        type: String,
+        required: true
+      },
+      copiedText: {
+        type: String,
+        required: true
       }
     },
     components: {
       GenericSocialSharing
     },
     computed: {
-      url() {
-        return this.course.url;
+      courseUrl() {
+        return this.url || this.course.url;
       },
       title() {
         return this.course.name;
-      },
-      description() {
-        return this.course.description;
       },
       quote() {
         return this.course.name;
@@ -60,10 +85,7 @@
         if (this.course.curated_tags && this.course.curated_tags.length) {
           return this.course.curated_tags.join(", ");
         } else {
-          return this.course.name
-            .split(/\s+/)
-            .slice(0, 2)
-            .join(", ");
+          return this.course.name.split(/\s+/).slice(0, 2).join(", ");
         }
       }
     }

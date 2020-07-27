@@ -3,11 +3,11 @@
     <div class="o-navbar bc-s <%= 'el:o-navbar--sticky' if sticky_navbar? %>" <%= 'data-sticky' if sticky_navbar? %> role='top-navbar'>
 
       <!-- logo -->
-      <div class='o-navbar__brand mR24'>
+      <div class='o-navbar__brand mR24@>lg'>
         <% unless home_controller? %>
           <%= link_to root_path do %>
             <%= image_tag(elements_asset_path('svgs/brand/logo.svg'),
-              class: 'fi_fg hd-n@<sm h1.5em w-a',
+              class: 'fi_fg d-n@<sm h1.5em w-a',
               data: { :'svg-inject' => '' }) %>
             <%= image_tag(elements_asset_path('svgs/brand/logo_symbol.svg'),
               class: 'fi_fg d-n@>lg h1.5em w-a',
@@ -18,8 +18,8 @@
 
       <!-- search bar -->
       <% unless home_controller? %>
-        <div class='o-navbar__search-slot'>
-          <form action='/search' method='get' class='el:m-search-bar el:m-search-bar--xs'>
+        <div class='o-navbar__slot o-navbar__slot--stretch'>
+          <form action='/search' method='get' class='el:m-search-bar el:m-search-bar--xs' style='max-width:470px'>
             <input placeholder="<%= t('components.searchbar_placeholder') %>"
                    onkeyup="this.setAttribute('value', this.value)"
                    class='el:m-search-bar__input el:m-search-bar__input--highlight'
@@ -30,8 +30,8 @@
         </div>
       <% end %>
 
-      <div class='o-navbar__slot o-navbar__slot--stretch tA-r'>
-        <ul class='el:m-list el:m-list--hrz fs14 fw-b tT-u d-n@<sm'>
+      <div class='o-navbar__slot o-navbar__slot--stretch tA-r d-n@<sm'>
+        <ul class='el:m-list el:m-list--hrz fs14 fw-b tT-u'>
 
           <!-- nav link -->
           <li class='mR32 fs16'>

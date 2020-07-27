@@ -19,6 +19,10 @@ module.exports = (env, argv) => {
           __dirname,
           "../../../app/assets/js/dompurify/client.js"
         ),
+        "~~i18n$": path.resolve(
+          __dirname,
+          "../../../app/assets/js/i18n/client.js"
+        ),
         "~~marked$": path.resolve(
           __dirname,
           "../../../app/assets/js/marked.js"
