@@ -19,7 +19,7 @@
       <!-- search bar -->
       <% unless home_controller? %>
         <div class='o-navbar__slot o-navbar__slot--stretch'>
-          <form action='/search' method='get' class='el:m-search-bar el:m-search-bar--xs' style='max-width:470px'>
+          <form id='top-search-bar' action='/search' method='get' class='el:m-search-bar el:m-search-bar--xs'>
             <input placeholder="<%= t('components.searchbar_placeholder') %>"
                    onkeyup="this.setAttribute('value', this.value)"
                    class='el:m-search-bar__input el:m-search-bar__input--highlight'
@@ -28,6 +28,13 @@
                    name='q' />
           </form>
         </div>
+        <style>
+          @media(min-width: 992px) {
+            #top-search-bar {
+              max-width: 470px;
+            }
+          }
+        </style>
       <% end %>
 
       <div class='o-navbar__slot o-navbar__slot--stretch tA-r d-n@<sm'>
@@ -68,7 +75,7 @@
       </div>
 
       <!-- off-canvas menu button -->
-      <div class='o-navbar__slot d-n@>lg'>
+      <div class="o-navbar__slot <%= home_controller? ? 'o-navbar__slot--stretch' : '' %> tA-r d-n@>lg">
         <a data-off-canvas-menu='#main-menu' data-off-canvas-menu-tpl='#main-menu-tpl' class='el:o-navbar__offcanvas-button'></a>
       </div>
 
