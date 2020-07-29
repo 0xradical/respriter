@@ -4,7 +4,7 @@ class Rack::Attack
   ALLOW_PERIOD_FOR_TRUSTED_BOTS_IN_DAYS   = (ENV.fetch('RACK_ATTACK__ALLOW_PERIOD_FOR_TRUSTED_BOTS_IN_DAYS') {  120 }).to_i
   THROTTLE_LEVELS                         = (ENV.fetch('RACK_ATTACK__THROTTLE_LEVELS')                       {  4   }).to_i
   THROTTLE_LIMIT                          = (ENV.fetch('RACK_ATTACK__THROTTLE_LIMIT')                        {  50  }).to_i
-  THROTTLE_PERIOD                         = (ENV.fetch('RACK_ATTACK__THROTTLE_PERIOD_IN_MINUTES')            {  15  }).to_i
+  THROTTLE_PERIOD_IN_MINUTES              = (ENV.fetch('RACK_ATTACK__THROTTLE_PERIOD_IN_MINUTES')            {  15  }).to_i
   THROTTLE_BAN_PERIOD_FOR_ABUSE_IN_DAYS   = (ENV.fetch('RACK_ATTACK__THROTTLE_BAN_PERIOD_FOR_ABUSE_IN_DAYS') {  120 }).to_i
 
   self.cache.prefix = "ra"
@@ -18,49 +18,55 @@ class Rack::Attack
     self.cache.read("block:#{req.remote_ip}")
   end
 
-  (1..THROTTLE_LEVELS).each do |level|
+  def self.on_throttle(req, limit, period)
+    cache_key = "#{Time.now.to_i/period}:#{limit}reqs/ip/#{period.inspect.gsub(' ','')}:#{req.remote_ip}"
 
-    limit   = THROTTLE_LIMIT * level
-    period  = (THROTTLE_PERIOD * level).minutes
-
-    throttle("#{limit}req/ip/#{period}sec", :limit => limit, :period => period) do |req|
-
-      cache_key = "#{Time.now.to_i/period}:#{limit}req/ip/#{period}sec:#{req.remote_ip}"
-
-      unless req.path.start_with?('/assets')
-        if req.browser.bot?
-          inspector = BotInspector.new(req.remote_ip)
-          if inspector.trusted_claim?
-            self.cache.write(
-              "allow:#{req.remote_ip}", 
-              "#{req.browser.name}+#{req.user_agent}+#{req.country}", 
-              Time.now + ALLOW_PERIOD_FOR_TRUSTED_BOTS_IN_DAYS.days
-            )
-            next
-          end
+    unless req.path.start_with?('/assets')
+      if req.browser.bot?
+        inspector = BotInspector.new(req.remote_ip)
+        if inspector.trusted_claim?
+          self.cache.write(
+            "allow:#{req.remote_ip}", 
+            "#{req.browser.name}+#{req.user_agent}+#{req.country}", 
+            Time.now + ALLOW_PERIOD_FOR_TRUSTED_BOTS_IN_DAYS.days
+          )
+          return
         end
-
-        actual_reqs = self.cache.read(cache_key).to_i
-
-        if (actual_reqs >= limit)
-          acc = self.cache.read("throttled:#{req.remote_ip}+#{req.user_agent}+#{req.country}").to_i
-          self.cache.write("throttled:#{req.remote_ip}+#{req.user_agent}+#{req.country}", acc + actual_reqs, Time.now + 1.year)
-
-          max_limit = THROTTLE_LEVELS * THROTTLE_LIMIT
-
-          if actual_reqs >= max_limit
-            self.cache.write(
-              "block:#{req.remote_ip}",
-              "#{actual_reqs}+#{req.browser.name}+#{req.user_agent}+#{req.country}", 
-              (Time.now + THROTTLE_BAN_PERIOD_FOR_ABUSE_IN_DAYS.days)
-            )
-          end
-        end
-
-        req.remote_ip
       end
 
+      actual_reqs = self.cache.read(cache_key).to_i
+
+      if (actual_reqs >= limit)
+        acc = self.cache.read("throttled:#{req.remote_ip}+#{req.user_agent}+#{req.country}").to_i
+        self.cache.write("throttled:#{req.remote_ip}+#{req.user_agent}+#{req.country}", acc + actual_reqs, Time.now + 1.year)
+
+        max_limit = THROTTLE_LEVELS * THROTTLE_LIMIT
+
+        if actual_reqs >= max_limit
+          self.cache.write(
+            "block:#{req.remote_ip}",
+            "#{actual_reqs}+#{req.browser.name}+#{req.user_agent}+#{req.country}", 
+            (Time.now + THROTTLE_BAN_PERIOD_FOR_ABUSE_IN_DAYS.days)
+          )
+        end
+      end
+
+      req.remote_ip
     end
+  end
+
+  (1..THROTTLE_LEVELS).each do |level|
+    limit   = THROTTLE_LIMIT * level
+    period  = (THROTTLE_PERIOD_IN_MINUTES * level).minutes.seconds
+    throttle("#{limit}reqs/ip/#{period.inspect.gsub(' ','')}", :limit => limit, :period => period) do |req|
+      on_throttle(req, limit, period)
+    end
+  end
+
+  # Allow for 450/req/ip for every 36 hours
+  limit, period = 450, 36.hours.seconds
+  throttle("#{limit}reqs/ip/#{period.inspect.gsub(' ','')}", :limit => limit, :period => period) do |req|
+    on_throttle(req, limit, period)
   end
 
   class Request < ::Rack::Request
