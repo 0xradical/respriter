@@ -127,7 +127,7 @@ if time_details.present?
 end
 
 content[:slug] = [
-  I18n.transliterate(content[:id]).downcase,
+  I18n.transliterate(content[:course_name]).downcase,
   Resource.digest(Zlib.crc32(content[:id]))
 ].join('-')
   .gsub(/[\s\_\-]+/, '-')
