@@ -12,11 +12,28 @@ module Serializers
     end
 
     def self.dump(value)
-      if value.respond_to?(:deep_stringify_keys)
-        value.deep_stringify_keys
+      case value
+      when String
+        dump_string(value)
+      when Hash
+        dump_hash(value)
+      when Array
+        dump_array(value)
       else
-        nil
+        value
       end
+    end
+
+    def self.dump_string(value)
+      value.delete("\0").chars.select(&:valid_encoding?).join
+    end
+    
+    def self.dump_hash(value)
+      value.map{|k,v| [dump(k), dump(v)]}.to_h.deep_stringify_keys
+    end
+
+    def self.dump_array(value)
+      value.map{|k| dump(k)}
     end
   end
 end

@@ -72,7 +72,7 @@ rating = document.css('.css-1uy6b6y').first
 content[:rating] = { type: 'stars', value: rating.text.to_f, range: 5 } if rating
 
 content[:slug] = [
-  I18n.transliterate(content[:url]).downcase,
+  I18n.transliterate(content[:course_name]).downcase,
   Resource.digest(Zlib.crc32(content[:url]))
 ].join('-')
   .gsub(/[\s\_\-]+/, '-')

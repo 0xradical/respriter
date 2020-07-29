@@ -19,3 +19,5 @@ database/db/structure.sql
 envs/local/*
 envs/stg/*
 envs/prd/*
+
+napoleon/reset.sh
