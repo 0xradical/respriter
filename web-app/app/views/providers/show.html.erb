@@ -22,7 +22,7 @@
   <%= sprites({
     tags: RootTag.all.map(&:id),
     brand: "*",
-    i18n: ["en", "es", "pt-br", "ja"],
+    i18n: Rails.configuration.i18n.available_locales,
     "country-flags": Array.wrap(@stats[:top_countries]).map(&:downcase),
     icons: [
       "facebook-circle",

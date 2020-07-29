@@ -40,7 +40,7 @@
   <%= sprites({
     tags: RootTag.all.map(&:id),
     brand: "*",
-    i18n: ["en", "es", "pt-br", "ja"],
+    i18n: Rails.configuration.i18n.available_locales,
     icons: [
       "facebook-circle",
       "linkedin-circle",

@@ -24,7 +24,7 @@
       "avatar"
     ],
     brand: "*",
-    i18n: ["en", "es", "pt-br", "ja"],
+    i18n: Rails.configuration.i18n.available_locales,
     providers: "*"
   }) %>
 <% end %>
