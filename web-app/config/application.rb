@@ -32,18 +32,17 @@ Bundler.require(*Rails.groups)
 
 module App
   class Application < Rails::Application
-
     config.session_store :cookie_store, key: :_app_session, domain: :all
 
-    config.cache_store = :mem_cache_store, (ENV['MEMCACHED_SERVERS'] || "").split(','),
-    {
-      :username => ENV["MEMCACHED_USERNAME"],
-      :password => ENV["MEMCACHED_PASSWORD"],
-      :failover => true,
-      :socket_timeout => 1.5,
-      :socket_failure_delay => 0.2,
-      :down_retry_delay => 60
-    }
+    config.cache_store = :mem_cache_store, (ENV['MEMCACHED_SERVERS'] || '').split(','),
+                         {
+                           username:             ENV['MEMCACHED_USERNAME'],
+                           password:             ENV['MEMCACHED_PASSWORD'],
+                           failover:             true,
+                           socket_timeout:       1.5,
+                           socket_failure_delay: 0.2,
+                           down_retry_delay:     60
+                         }
 
     config.load_defaults 5.1
 
@@ -85,7 +84,7 @@ module App
         ENV.fetch('ELEMENTS_ASSET_HOST') do
           'https://elements-prd.classpert.com'
         end
-      elements_config.asset_version = '8.10.0'
+      elements_config.asset_version = '8.10.1'
     end
 
     config.action_controller.forgery_protection_origin_check = false
