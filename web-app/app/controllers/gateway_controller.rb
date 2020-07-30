@@ -15,8 +15,11 @@ class GatewayController < ApplicationController
     # otherwise :to is an url
     else
       # params[:pid] is provider
-      if params[:pid]
-        provider        = Provider.find(params[:pid])
+      if params[:pid].present? && (
+        provider = UUID.uuid?(params[:pid]) ?
+          Provider.find_by(id: params[:pid]) :
+          Provider.find_by(slug: params[:pid])
+      )
         @scope          = provider.enrollments
         @forwarding_url = provider.forwarding_url(params[:to].presence, click_id: @click_id)
       else
@@ -41,13 +44,13 @@ class GatewayController < ApplicationController
 
     if @scope && @forwarding_url
       @scope.create!({
-                      id:                @click_id,
-                      tracked_url:       @forwarding_url,
-                      tracking_data:     session_tracker.session_payload,
-                      tracking_cookies:  session_tracker.cookies_payload,
-                      tracked_search_id: params[:sid],
-                      user_account_id:   current_user_account&.id
-                    })
+                       id:                @click_id,
+                       tracked_url:       @forwarding_url,
+                       tracking_data:     session_tracker.session_payload,
+                       tracking_cookies:  session_tracker.cookies_payload,
+                       tracked_search_id: params[:sid],
+                       user_account_id:   current_user_account&.id
+                     })
 
       redirect_to @forwarding_url
     end
