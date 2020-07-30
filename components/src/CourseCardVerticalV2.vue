@@ -75,7 +75,10 @@
           class="el:m-button el:m-button--primary-border el:m-button--xs el:m-button--block"
           rel="nofollow"
           target="_blank"
-          :href="course.gateway_path"
+          :href="
+            course.details_path ||
+            `/${course.provider_slug}/courses/${course.slug}`
+          "
         >
           <ssrt k="dictionary.details.see" />
         </a>

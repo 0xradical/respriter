@@ -83,7 +83,10 @@
           class="btn btn--primary-border btn--xs btn--block"
           rel="nofollow"
           target="_blank"
-          :href="course.gateway_path"
+          :href="
+            course.details_path ||
+            `/${course.provider_slug}/courses/${course.slug}`
+          "
           ><ssrt k="dictionary.details.see"
         /></a>
       </div>

@@ -317,7 +317,7 @@
           <%= render_component "CardCarrousel", {
             component: "CourseCardVerticalV2",
             list: @course.similar.map{|c| c.as_indexed_json.slice(
-              :id, :name, :type, :video, :effort, :gateway_path,
+              :id, :name, :slug, :details_path, :type, :video, :effort, :gateway_path,
               :instructors, :provider_name, :provider_slug,
               :price, :trial_period, :subscription_period, :subscription_type
             ) },
