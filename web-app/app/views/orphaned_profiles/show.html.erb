@@ -22,6 +22,44 @@
   <%= javascript_bundles_with_chunks_tag 'vcard' %>
 <% end %>
 
+
+<%= content_for :sprites do %>
+  <%= sprites({
+    "country-flags": country_flags.values,
+    icons: [
+      "facebook-circle",
+      "linkedin-circle",
+      "instagram-circle",
+      "twitter-circle",
+      "reddit-circle",
+      "arrow-down",
+      "audio",
+      "subtitle",
+      "certificate",
+      "building",
+      "id-badge",
+      "velocimeter",
+      "level",
+      "clock",
+      "close",
+      "play",
+      "video-recorder-unavailable",
+      "question",
+      "avatar",
+      "website",
+      "camera",
+      "monitor-gear",
+      "external-arrow",
+      "mag",
+      @orphaned_profile.social_profiles.keys
+    ].flatten.compact.uniq,
+    providers: [
+      @orphaned_profile.teaching_at.map(&:downcase).map{|s| s.gsub(/\s/, "-")},
+      @orphaned_profile.elearning_profiles.keys
+    ].flatten.compact.uniq
+  }) %>
+<% end %>
+
 <div>
   <div class='el:amx-Bc_su el:amx-P(2.5em|0)'>
 

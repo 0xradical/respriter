@@ -30,7 +30,7 @@
   <%= sprites({
     tags: RootTag.all.map(&:id),
     brand: "*",
-    "country-flags": ["us", "br", "de", "fr", "jp", "es", Array.wrap(@course.instructors.map{|i| i['profile_country']&.downcase })].flatten.compact.uniq,
+    "country-flags": [country_flags.values, Array.wrap(@course.instructors.map{|i| i['profile_country']&.downcase })].flatten.compact.uniq,
     icons: [
       "facebook-circle",
       "linkedin-circle",

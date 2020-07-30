@@ -1,15 +1,16 @@
-module ApplicationHelper
+# frozen_string_literal: true
 
+module ApplicationHelper
   def current_url_without_query_params
     request.base_url + request.path
   end
 
   def alert_alias(name)
     alert_map = {
-      notice: 'primary',
-      info: 'primary',
-      alert: 'error',
-      danger: 'error',
+      notice:  'primary',
+      info:    'primary',
+      alert:   'error',
+      danger:  'error',
       warning: 'secondary',
       success: 'secondary-variant'
     }
@@ -17,23 +18,26 @@ module ApplicationHelper
   end
 
   # DEPRECATED
-  def country_flag(locale, svg_options={})
-    flags = {
+  def country_flags
+    {
       'en'    => 'us',
-      'en-US' => 'us',
-      'pt-BR' => 'br',
+      'en-us' => 'us',
+      'pt-br' => 'br',
       'es'    => 'es',
       'de'    => 'de',
       'fr'    => 'fr',
       'ja'    => 'jp'
     }
-    svg_use('country-flags', flags[locale.to_s], svg_options)
+  end
+
+  def country_flag(locale, svg_options = {})
+    svg_use('country-flags', country_flags[locale.to_s.downcase], svg_options)
   end
 
   def omniauth_button(provider:, label:)
     link_to(
       label,
-      send("user_account_#{provider.to_s}_omniauth_authorize_path")
+      send("user_account_#{provider}_omniauth_authorize_path")
     )
   end
 
@@ -54,13 +58,13 @@ module ApplicationHelper
     )
   end
 
-  def link_to_locale(locale, opts={}, &block)
+  def link_to_locale(locale, opts = {}, &block)
     en = (locale.to_s == 'en')
     link_to(
       (
         root_url(
           subdomain:
-            (
+                     (
               if en
                 params[:subdomain]
               else
