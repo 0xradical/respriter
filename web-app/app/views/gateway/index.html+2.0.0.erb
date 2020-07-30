@@ -48,9 +48,9 @@
         </svg>
       </div>
       <div class="mT40">
-        <div><%= t(".goodbye") %></div>
-        <h1 class="mT16"><%= t(".redirection", provider: @provider.name) %></h1>
-        <div class="mT16">
+        <div class="fs16"><%= t(".goodbye") %></div>
+        <h1 class="mT16 fs24"><%= t(".redirection", provider: @provider.name) %></h1>
+        <div class="fs16 mT16">
           <%= t(".redirection_alternative_html", href: link_to(t(".redirection_alternative_href"), @forwarding_url, class: "c1")) %>
         </div>
       </div>
