@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Search
   class CourseSearch
     VERSION = '1.1.1'
@@ -16,14 +18,14 @@ module Search
       refinement_tags:   :term,
       price:             :range,
       paid_content:      :paid_content
-    }
-    TERM_AGGREGATIONS = FILTER_BY_FIELD.find_all{ |k,v| v == :term }.map &:first
+    }.freeze
+    TERM_AGGREGATIONS = FILTER_BY_FIELD.find_all { |_k, v| v == :term }.map &:first
 
-    def initialize(query: nil, filter: Hash.new, page: 1, per_page: PER_PAGE, order: nil, boost: nil, session_id: nil)
+    def initialize(query: nil, filter: {}, page: 1, per_page: PER_PAGE, order: nil, boost: nil, session_id: nil)
       @query      = query
       @filter     = normalize_filter filter
-      @page       = ( page     || 1  ).to_i
-      @per_page   = ( per_page || PER_PAGE ).to_i
+      @page       = (page     || 1).to_i
+      @per_page   = (per_page || PER_PAGE).to_i
       @order      = order
       @boost      = boost
       @session_id = session_id
@@ -32,13 +34,13 @@ module Search
     def results
       return @results if @results.present?
 
-      response = Course.__elasticsearch__.search self.to_h
+      response = Course.__elasticsearch__.search to_h
       @results = {
         data: response.results.map(&:_source),
         meta: {
           total:        response.results.total,
           page:         @page,
-          pages:        ([response.results.total, 10000].min / @per_page).ceil, # 10000 is the default max window for Elastic Search
+          pages:        ([response.results.total, 10_000].min / @per_page).ceil, # 10000 is the default max window for Elastic Search
           per_page:     @per_page,
           order:        @order,
           max_score:    response.results.max_score,
@@ -55,40 +57,39 @@ module Search
         aggs:        aggregation_query,
         post_filter: filter_query,
         size:        @per_page,
-        from:        (@page - 1)*@per_page
+        from:        (@page - 1) * @per_page
       }
 
-      if order.present?
-        search_query.merge! sort_query
-      end
+      search_query.merge! sort_query if order.present?
 
       search_query
     end
-    alias :to_hash :to_h
+    alias to_hash to_h
 
     protected
+
     def normalize_filter(filter)
-      return Hash.new if filter.blank?
+      return {} if filter.blank?
 
       FILTER_BY_FIELD.map do |key, type|
-        next unless filter.has_key?(key)
+        next unless filter.key?(key)
 
         value = filter[key]
         case type
         when :term
           [
             key,
-            ( value.is_a?(Array) ? value : [ value ] )
+            (value.is_a?(Array) ? value : [value])
           ]
         when :range
           [
             key,
-            ( value.is_a?(Array) ? value : [ 0, value ] )
+            (value.is_a?(Array) ? value : [0, value])
           ]
         when :paid_content
-          [ key, value ]
+          [key, value]
         else
-          STDERR.puts "Unrecognized key #{key}"
+          warn "Unrecognized key #{key}"
         end
       end.compact.to_h
     end
@@ -100,29 +101,29 @@ module Search
 
       {
         function_score: {
-          query: query,
-          functions: functions.concat([
-            {
-              filter: {
-                match_all: {}
-              },
-              weight: (boost.present? ? 10 : 6)/4.0
-            },
-            {
-              random_score: {
-                seed: @session_id
-              },
-              weight: 1
-            },
-            {
-              filter:{
-                term: {
-                  from_index_tool: true
-                }
-              },
-              weight: 5
-            }
-          ]),
+          query:      query,
+          functions:  functions.concat([
+                                         {
+                                           filter: {
+                                             match_all: {}
+                                           },
+                                           weight: (boost.present? ? 10 : 6) / 4.0
+                                         },
+                                         {
+                                           random_score: {
+                                             seed: @session_id
+                                           },
+                                           weight:       1
+                                         },
+                                         {
+                                           filter: {
+                                             term: {
+                                               provider_featured_on_search: true
+                                             }
+                                           },
+                                           weight: 5
+                                         }
+                                       ]),
           score_mode: 'sum',
           boost_mode: 'multiply'
         }
@@ -134,28 +135,28 @@ module Search
       should_query = []
 
       if @query.blank?
-        text_query = { match_all: Hash.new }
+        text_query = { match_all: {} }
       else
         text_query = {
           multi_match: {
-            query: @query,
-            type: 'cross_fields',
+            query:    @query,
+            type:     'cross_fields',
             operator: 'and',
-            fields: [
+            fields:   [
               'name.en^2', 'description.en', 'tags_text.en^2', 'instructors_text.en', 'provider_name_text.en',
               'name.br^2', 'description.br', 'tags_text.br^2', 'instructors_text.br', 'provider_name_text.br',
-              'name.es^2', 'description.es', 'tags_text.es^2', 'instructors_text.es', 'provider_name_text.es',
+              'name.es^2', 'description.es', 'tags_text.es^2', 'instructors_text.es', 'provider_name_text.es'
             ]
           }
         }
 
         should_query << {
           multi_match: {
-            query: @query,
+            query:  @query,
             fields: [
               'category_text.en',
               'category_text.br',
-              'category_text.es',
+              'category_text.es'
             ]
           }
         }
@@ -224,7 +225,7 @@ module Search
         return {
           unselected: {
             filter: { match_all: {} },
-            aggs: {
+            aggs:   {
               _: { terms: unselected_aggregation_options }
             }
           }
@@ -232,15 +233,15 @@ module Search
       end
 
       {
-        selected: {
+        selected:   {
           filter: filters_by_key[key],
-          aggs: {
+          aggs:   {
             _: { terms: { field: key, size: 100 } }
           }
         },
         unselected: {
           filter: must_not_filter(filters_by_key[key]),
-          aggs: {
+          aggs:   {
             _: { terms: unselected_aggregation_options }
           }
         }
@@ -254,21 +255,21 @@ module Search
       when :provider_name
         { size: 50 }
       else
-        Hash.new
+        {}
       end
     end
 
     def price_aggregation_query
       {
-        max_price: { max: { field: 'price' } },
-        min_price: { min: { field: 'price' } },
+        max_price:    { max: { field: 'price' } },
+        min_price:    { min: { field: 'price' } },
         paid_content: {
           filter: query_filters(except: :paid_content),
-          aggs: {
+          aggs:   {
             _: {
               filters: {
                 filters: {
-                  free: {
+                  free:           {
                     bool: {
                       filter: [
                         { term: { paid_content: false } },
@@ -284,7 +285,7 @@ module Search
                       ]
                     }
                   },
-                  paid: {
+                  paid:           {
                     bool: {
                       filter: [
                         { term: { paid_content: true  } },
@@ -297,9 +298,9 @@ module Search
             }
           }
         },
-        price: {
+        price:        {
           filter: query_filters(except: :price),
-          aggs: {
+          aggs:   {
             _: {
               histogram: {
                 field:    'price',
@@ -312,8 +313,8 @@ module Search
     end
 
     def query_filters(except: nil)
-      filters = filters_by_key.select do |key, value|
-        key != except
+      filters = filters_by_key.reject do |key, _value|
+        key == except
       end.values
       { bool: { filter: filters } }
     end
@@ -323,7 +324,7 @@ module Search
     end
 
     def filters_by_key
-      @filters_by_key ||= @filter.select do |key, value|
+      @filters_by_key ||= @filter.select do |_key, value|
         value.present?
       end.to_h.map do |key, value|
         [
@@ -350,33 +351,33 @@ module Search
 
       selected_keys   = (@filter[key] || []).map(&:to_sym)
       missing_keys    = selected_keys - selected_buckets.map(&:first)
-      unselected_keys = selected_buckets.find_all{ |k, c| !selected_keys.include?(k) }.to_h
+      unselected_keys = selected_buckets.find_all { |k, _c| !selected_keys.include?(k) }.to_h
 
-      selected_buckets = selected_buckets.find_all{ |k, c| selected_keys.include?(k) }
-      selected_buckets.concat( missing_keys.map{ |k| [k, 0] } )
+      selected_buckets = selected_buckets.find_all { |k, _c| selected_keys.include?(k) }
+      selected_buckets.concat(missing_keys.map { |k| [k, 0] })
 
       unselected_buckets = unselected_buckets.map do |key, count|
         if unselected_keys[key]
-          [ key, count + unselected_keys[key] ]
+          [key, count + unselected_keys[key]]
         else
-          [ key, count ]
+          [key, count]
         end
       end
 
       {
-        selected:   selected_buckets.find_all{ |k, c| selected_keys.include?(k) },
+        selected:   selected_buckets.find_all { |k, _c| selected_keys.include?(k) },
         unselected: unselected_buckets.sort_by(&:last).reverse
       }
     end
 
-    def format_aggregation_range(key, aggregation)
+    def format_aggregation_range(_key, aggregation)
       format_buckets aggregation&._&.buckets
     end
 
-    def format_aggregation_paid_content(key, aggregation)
+    def format_aggregation_paid_content(_key, aggregation)
       buckets = format_buckets aggregation._.buckets
       selected_keys = @filter[:paid_content] || []
-      buckets.group_by do |key, count|
+      buckets.group_by do |key, _count|
         if selected_keys.include?(key)
           :selected
         else
@@ -417,7 +418,7 @@ module Search
       when :range
         {
           range: {
-            key => [:gte, :lte].zip(value).to_h
+            key => %i[gte lte].zip(value).to_h
           }
         }
       when :paid_content
@@ -436,7 +437,7 @@ module Search
             paid_content << true
             free_content << true
           else
-            raise InvalidFilterError.new("Invalid query value #{v} at #{key} filter")
+            raise InvalidFilterError, "Invalid query value #{v} at #{key} filter"
           end
         end
 
@@ -457,7 +458,7 @@ module Search
           }
         }
       else
-        raise InvalidFilterError.new("Invalid query filter #{key}")
+        raise InvalidFilterError, "Invalid query filter #{key}"
       end
     end
 

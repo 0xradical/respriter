@@ -1,11 +1,6 @@
 <template>
   <div class="el:m-attribute" :class="rootClasses">
-    <svg
-      :class="[
-        'el:m-attribute__icon el:m-attribute__icon--bordered',
-        ...logoClasses
-      ]"
-    >
+    <svg :class="['el:m-attribute__icon', ...logoClasses]">
       <use :xlink:href="'#providers-' + logo" />
     </svg>
     <span class="el:m-attribute__label" :class="labelClasses">
@@ -15,7 +10,7 @@
     </span>
     <div
       class="el:amx-Pos(r) el:amx-Pl(0.5em)"
-      v-if="course.from_index_tool"
+      v-if="course.provider_featured_on_search"
       style="display: inline-flex; align-items: center; flex: 1; height: 1em;"
     >
       <span

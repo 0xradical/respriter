@@ -5,9 +5,7 @@
   >
     <a class="provider-navcard__frame el:amx-D(f)" :href="link" style="">
       <div class="el:m-attribute">
-        <svg
-          class="provider-navcard__icon el:m-attribute__icon el:m-attribute__icon--bordered el:amx-Mr(1em)"
-        >
+        <svg class="provider-navcard__icon el:m-attribute__icon el:amx-Mr(1em)">
           <use :xlink:href="`#providers-${slug}`" />
         </svg>
       </div>
