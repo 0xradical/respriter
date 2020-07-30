@@ -82,7 +82,6 @@
         <a
           class="btn btn--primary-border btn--xs btn--block"
           rel="nofollow"
-          target="_blank"
           :href="
             course.details_path ||
             `/${course.provider_slug}/courses/${course.slug}`
