@@ -299,15 +299,7 @@ module Search
           }
         },
         price:        {
-          filter: query_filters(except: :price),
-          aggs:   {
-            _: {
-              histogram: {
-                field:    'price',
-                interval: 10
-              }
-            }
-          }
+          filter: query_filters(except: :price)
         }
       }
     end
