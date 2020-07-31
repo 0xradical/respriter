@@ -1,22 +1,19 @@
 <template>
   <div
-    class="provider-navcard el:amx-Bc_su"
+    class="provider-navcard"
+    :class="rootClasses"
     :style="{ width: '255px', height: height }"
   >
-    <a class="provider-navcard__frame el:amx-D(f)" :href="link" style="">
+    <a class="provider-navcard__frame" :href="link" style="">
       <div class="el:m-attribute">
-        <svg class="provider-navcard__icon el:m-attribute__icon el:amx-Mr(1em)">
+        <svg class="provider-navcard__icon el:m-attribute__icon">
           <use :xlink:href="`#providers-${slug}`" />
         </svg>
       </div>
-      <div
-        class="provider-navcard__link el:amx-D(f) el:amx-Mt(2em) el:amx-FxAi(c)"
-      >
-        <span class="provider-navcard__link-text el:amx-Fw(b)">{{
-          linkText
-        }}</span>
+      <div class="provider-navcard__link">
+        <span class="provider-navcard__link-text">{{ linkText }}</span>
         <svg class="provider-navcard__link-icon">
-          <use xlink:href="#icons-arrow-down" class="el:amx-C_pr" />
+          <use xlink:href="#icons-arrow-down" />
         </svg>
       </div>
     </a>
@@ -41,6 +38,12 @@
       linkText: {
         type: String,
         required: true
+      },
+      rootClasses: {
+        type: Array,
+        default() {
+          return [];
+        }
       }
     }
   };
@@ -48,28 +51,39 @@
 
 <style lang="scss">
   .provider-navcard {
+    font-size: 1rem;
+    background-color: var(--surface);
+
     &__frame {
+      display: flex;
       height: 100%;
       flex-direction: column;
-      justify-content: start;
+      justify-content: flex-start;
       align-items: center;
       position: relative;
       top: 25%;
     }
 
     &__icon {
-      flex: 0 0 4rem;
-      width: 4rem;
-      height: 4rem;
+      flex: 0 0 4em;
+      width: 4em;
+      height: 4em;
+      margin-right: 1em;
     }
 
     &__link {
-      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      font-size: 0.875em;
+      margin-top: 2em;
+
       &-text {
-        margin-right: 0.5rem;
+        margin-right: 0.5em;
+        font-weight: bold;
       }
       &-icon {
         transform: rotate(-90deg);
+        color: var(--primary);
         width: 1em;
         height: 1em;
       }
