@@ -20,7 +20,7 @@ class Course < ApplicationRecord
   has_many :user_accounts, through: :enrollments
   has_many :curated_tags_versions
 
-  delegate :name, :slug, to: :provider, prefix: true
+  delegate :name, :slug, :featured_on_search, to: :provider, prefix: true
   delegate :curated_tags,
            :excluded_tags,
            :add_tag,
@@ -193,32 +193,33 @@ class Course < ApplicationRecord
         indexes :es, type: 'text', analyzer: 'spanish_programmer'
       end
 
-      indexes :pace,                type: 'keyword'
-      indexes :price,               type: 'double'
-      indexes :effort,              type: 'integer'
-      indexes :free_content,        type: 'boolean'
-      indexes :paid_content,        type: 'boolean'
-      indexes :subscription_type,   type: 'boolean'
-      indexes :has_free_trial,      type: 'boolean'
-      indexes :audio,               type: 'keyword'
-      indexes :root_audio,          type: 'keyword'
-      indexes :subtitles,           type: 'keyword'
-      indexes :root_subtitles,      type: 'keyword'
-      indexes :offered_by,          type: 'object'
-      indexes :instructors,         type: 'object'
-      indexes :category,            type: 'keyword'
-      indexes :certificate,         type: 'object'
-      indexes :level,               type: 'keyword'
-      indexes :slug,                type: 'keyword'
-      indexes :tags,                type: 'keyword'
-      indexes :curated_tags,        type: 'keyword'
-      indexes :curated_root_tags,   type: 'keyword'
-      indexes :provider_name,       type: 'keyword'
-      indexes :from_index_tool,     type: 'boolean'
-      indexes :provider_slug,       type: 'keyword'
-      indexes :trial_period,        type: 'object'
-      indexes :subscription_period, type: 'object'
-      indexes :video,               type: 'object'
+      indexes :pace,                        type: 'keyword'
+      indexes :price,                       type: 'double'
+      indexes :effort,                      type: 'integer'
+      indexes :free_content,                type: 'boolean'
+      indexes :paid_content,                type: 'boolean'
+      indexes :subscription_type,           type: 'boolean'
+      indexes :has_free_trial,              type: 'boolean'
+      indexes :audio,                       type: 'keyword'
+      indexes :root_audio,                  type: 'keyword'
+      indexes :subtitles,                   type: 'keyword'
+      indexes :root_subtitles,              type: 'keyword'
+      indexes :offered_by,                  type: 'object'
+      indexes :instructors,                 type: 'object'
+      indexes :category,                    type: 'keyword'
+      indexes :certificate,                 type: 'object'
+      indexes :level,                       type: 'keyword'
+      indexes :slug,                        type: 'keyword'
+      indexes :tags,                        type: 'keyword'
+      indexes :curated_tags,                type: 'keyword'
+      indexes :curated_root_tags,           type: 'keyword'
+      indexes :provider_name,               type: 'keyword'
+      indexes :from_index_tool,             type: 'boolean'
+      indexes :provider_slug,               type: 'keyword'
+      indexes :provider_featured_on_search, type: 'boolean'
+      indexes :trial_period,                type: 'object'
+      indexes :subscription_period,         type: 'object'
+      indexes :video,                       type: 'object'
     end
   end
 
@@ -453,40 +454,41 @@ class Course < ApplicationRecord
 
   def as_indexed_json(_options = {})
     indexed_json = {
-      id:                  id,
-      name:                name,
-      description:         description,
-      slug:                slug,
-      url:                 url,
-      pace:                pace,
-      effort:              effort,
-      gateway_path:        gateway_path,
-      offered_by:          offered_by || [],
-      instructors:         instructors,
-      free_content:        free_content?,
-      paid_content:        paid_content?,
-      subscription_type:   subscription_type?,
-      trial_period:        trial_period,
-      subscription_period: subscription_period,
-      has_free_trial:      has_free_trial?,
-      url_id:              url_md5,
-      level:               level,
-      details_path:        details_path,
-      video:               indexable_video,
-      tags:                tags,
-      audio:               audio,
-      root_audio:          root_languages_for_audio,
-      subtitles:           subtitles,
-      root_subtitles:      root_languages_for_subtitles,
-      category:            category,
-      from_index_tool:     ProviderCrawler.where(provider_id: provider_id).exists?,
-      provider_name:       provider_name,
-      curated_tags:        curated_tags,
-      curated_root_tags:   (curated_tags & RootTag.all.map(&:id)),
-      provider_slug:       provider_slug,
-      syllabus_markdown:   syllabus,
-      refinement_tags:     refinement_tags,
-      type:                self.class.name
+      id:                          id,
+      name:                        name,
+      description:                 description,
+      slug:                        slug,
+      url:                         url,
+      pace:                        pace,
+      effort:                      effort,
+      gateway_path:                gateway_path,
+      offered_by:                  offered_by || [],
+      instructors:                 instructors,
+      free_content:                free_content?,
+      paid_content:                paid_content?,
+      subscription_type:           subscription_type?,
+      trial_period:                trial_period,
+      subscription_period:         subscription_period,
+      has_free_trial:              has_free_trial?,
+      url_id:                      url_md5,
+      level:                       level,
+      details_path:                details_path,
+      video:                       indexable_video,
+      tags:                        tags,
+      audio:                       audio,
+      root_audio:                  root_languages_for_audio,
+      subtitles:                   subtitles,
+      root_subtitles:              root_languages_for_subtitles,
+      category:                    category,
+      from_index_tool:             ProviderCrawler.where(provider_id: provider_id).exists?,
+      provider_name:               provider_name,
+      provider_featured_on_search: provider_featured_on_search,
+      curated_tags:                curated_tags,
+      curated_root_tags:           (curated_tags & RootTag.all.map(&:id)),
+      provider_slug:               provider_slug,
+      syllabus_markdown:           syllabus,
+      refinement_tags:             refinement_tags,
+      type:                        self.class.name
     }
 
     indexed_json[:provider_name_text] = SITE_LOCALES.transform_values do |_locale|

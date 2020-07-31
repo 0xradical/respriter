@@ -56,7 +56,7 @@
       "avatar"
     ],
     providers: [@course.provider.slug, @course.similar.map(&:provider).map(&:slug)].flatten.compact.uniq
-  }, version: "8.8.0") %>
+  }) %>
 <% end %>
 
 <%= content_for :stylesheets do %>
@@ -73,7 +73,7 @@
   <div class="d-n@<sm row">
     <div class="col">
       <div class='mT24'>
-        <ul class='fs10 el:m-breadcrumb'>
+        <ul class='fs12 el:m-breadcrumb'>
           <li class="el:m-breadcrumb__item">
             <%= link_to t("dictionary.home"), root_path %>
           </li>
@@ -101,15 +101,15 @@
   <div class="row">
     <div class="col-12 col-lg-9">
       <div class="mT24">
-        <div class="d-f" style="align-items: center">
-          <%= svg_use('providers', @provider.slug, {class: "fs14 fi-fg", style: 'margin-right: 0.5em', width: '1em', height: '1em'}) %>
+        <div class="d-f ai-c">
+          <%= svg_use('providers', @provider.slug, {class: "fs20 fi-fg", style: 'margin-right: 0.5em', width: '1em', height: '1em'}) %>
           <span class="fs14"><%= @provider.name %></span>
         </div>
       </div>
       <div class="mT16 d-f ai-c jc-sb">
         <span class="fs24 fw-b"><%= @course.name %></span>
-        <div class="d-ib d-n@<sm">
-          <%= render_course_sharing(@course) %>
+        <div class="mL10 d-ib d-n@<sm">
+          <%= render_course_sharing(@course, root_classes: ["fs14"]) %>
         </div>
       </div>
     </div>
@@ -317,7 +317,7 @@
           <%= render_component "CardCarrousel", {
             component: "CourseCardVerticalV2",
             list: @course.similar.map{|c| c.as_indexed_json.slice(
-              :id, :name, :type, :video, :effort, :gateway_path,
+              :id, :name, :slug, :details_path, :type, :video, :effort, :gateway_path,
               :instructors, :provider_name, :provider_slug,
               :price, :trial_period, :subscription_period, :subscription_type
             ) },
