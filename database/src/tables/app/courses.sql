@@ -46,5 +46,6 @@ CREATE TABLE app.courses (
   locale_status                           app.locale_status,
   ignore_robots_noindex_rule_for          app.locale[]            DEFAULT '{}',
   ignore_robots_noindex_rule              boolean                 DEFAULT false,
-  canonical_subdomain                     varchar
+  canonical_subdomain                     varchar,
+  course_category_id                      uuid                    REFERENCES app.course_categories(id) ON DELETE SET NULL
 );
