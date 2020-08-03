@@ -23,7 +23,7 @@
   </script>
   <script>
     setTimeout(function(){
-      window.location = "<%= @forwarding_url %>";
+      window.location = "<%= @forwarding_url.html_safe %>";
       }, <%= @waiting_time_in_seconds.to_f * 1000 %>);
   </script>
 <% end %>
