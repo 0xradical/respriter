@@ -3,6 +3,7 @@
 class GatewayController < ApplicationController
   before_action do
     @click_id = SecureRandom.uuid
+    @waiting_time_in_seconds = ENV.fetch('GATEWAY__WAITING_TIME_IN_SECONDS') { 2.2 }
 
     # params[:id] is here to keep compatibility
     # with old /:id interface used only for courses

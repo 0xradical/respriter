@@ -7,7 +7,7 @@
 <% end %>
 
 <% content_for(:meta) do %>
-  <meta http-equiv="refresh" content="4; url=<%= @forwarding_url %>">
+  <meta http-equiv="refresh" content="<%= @waiting_time_in_seconds %>; url=<%= @forwarding_url %>">
 <% end %>
 
 <%= content_for(:javascript) do %>
@@ -24,7 +24,7 @@
   <script>
     setTimeout(function(){
       window.location = "<%= @forwarding_url %>";
-    }, 8000);
+      }, <%= @waiting_time_in_seconds.to_f * 1000 %>);
   </script>
 <% end %>
 
