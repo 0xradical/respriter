@@ -82,6 +82,20 @@ CREATE TYPE app.category AS ENUM (
 
 
 --
+-- Name: contact_reason; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.contact_reason AS ENUM (
+    'customer_support',
+    'bug_report',
+    'feature_suggestion',
+    'commercial_and_partnerships',
+    'manual_profile_claim',
+    'other'
+);
+
+
+--
 -- Name: crawler_status; Type: TYPE; Schema: app; Owner: -
 --
 
@@ -91,6 +105,456 @@ CREATE TYPE app.crawler_status AS ENUM (
     'broken',
     'active',
     'deleted'
+);
+
+
+--
+-- Name: iso3166_1_alpha2_code; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.iso3166_1_alpha2_code AS ENUM (
+    'AD',
+    'AE',
+    'AF',
+    'AG',
+    'AI',
+    'AL',
+    'AM',
+    'AO',
+    'AQ',
+    'AR',
+    'AS',
+    'AT',
+    'AU',
+    'AW',
+    'AX',
+    'AZ',
+    'BA',
+    'BB',
+    'BD',
+    'BE',
+    'BF',
+    'BG',
+    'BH',
+    'BI',
+    'BJ',
+    'BL',
+    'BM',
+    'BN',
+    'BO',
+    'BQ',
+    'BR',
+    'BS',
+    'BT',
+    'BV',
+    'BW',
+    'BY',
+    'BZ',
+    'CA',
+    'CC',
+    'CD',
+    'CF',
+    'CG',
+    'CH',
+    'CI',
+    'CK',
+    'CL',
+    'CM',
+    'CN',
+    'CO',
+    'CR',
+    'CU',
+    'CV',
+    'CW',
+    'CX',
+    'CY',
+    'CZ',
+    'DE',
+    'DJ',
+    'DK',
+    'DM',
+    'DO',
+    'DZ',
+    'EC',
+    'EE',
+    'EG',
+    'EH',
+    'ER',
+    'ES',
+    'ET',
+    'FI',
+    'FJ',
+    'FK',
+    'FM',
+    'FO',
+    'FR',
+    'GA',
+    'GB',
+    'GD',
+    'GE',
+    'GF',
+    'GG',
+    'GH',
+    'GI',
+    'GL',
+    'GM',
+    'GN',
+    'GP',
+    'GQ',
+    'GR',
+    'GS',
+    'GT',
+    'GU',
+    'GW',
+    'GY',
+    'HK',
+    'HM',
+    'HN',
+    'HR',
+    'HT',
+    'HU',
+    'ID',
+    'IE',
+    'IL',
+    'IM',
+    'IN',
+    'IO',
+    'IQ',
+    'IR',
+    'IS',
+    'IT',
+    'JE',
+    'JM',
+    'JO',
+    'JP',
+    'KE',
+    'KG',
+    'KH',
+    'KI',
+    'KM',
+    'KN',
+    'KP',
+    'KR',
+    'KW',
+    'KY',
+    'KZ',
+    'LA',
+    'LB',
+    'LC',
+    'LI',
+    'LK',
+    'LR',
+    'LS',
+    'LT',
+    'LU',
+    'LV',
+    'LY',
+    'MA',
+    'MC',
+    'MD',
+    'ME',
+    'MF',
+    'MG',
+    'MH',
+    'MK',
+    'ML',
+    'MM',
+    'MN',
+    'MO',
+    'MP',
+    'MQ',
+    'MR',
+    'MS',
+    'MT',
+    'MU',
+    'MV',
+    'MW',
+    'MX',
+    'MY',
+    'MZ',
+    'NA',
+    'NC',
+    'NE',
+    'NF',
+    'NG',
+    'NI',
+    'NL',
+    'NO',
+    'NP',
+    'NR',
+    'NU',
+    'NZ',
+    'OM',
+    'PA',
+    'PE',
+    'PF',
+    'PG',
+    'PH',
+    'PK',
+    'PL',
+    'PM',
+    'PN',
+    'PR',
+    'PS',
+    'PT',
+    'PW',
+    'PY',
+    'QA',
+    'RE',
+    'RO',
+    'RS',
+    'RU',
+    'RW',
+    'SA',
+    'SB',
+    'SC',
+    'SD',
+    'SE',
+    'SG',
+    'SH',
+    'SI',
+    'SJ',
+    'SK',
+    'SL',
+    'SM',
+    'SN',
+    'SO',
+    'SR',
+    'SS',
+    'ST',
+    'SV',
+    'SX',
+    'SY',
+    'SZ',
+    'TC',
+    'TD',
+    'TF',
+    'TG',
+    'TH',
+    'TJ',
+    'TK',
+    'TL',
+    'TM',
+    'TN',
+    'TO',
+    'TR',
+    'TT',
+    'TV',
+    'TW',
+    'TZ',
+    'UA',
+    'UG',
+    'UM',
+    'US',
+    'UY',
+    'UZ',
+    'VA',
+    'VC',
+    'VE',
+    'VG',
+    'VI',
+    'VN',
+    'VU',
+    'WF',
+    'WS',
+    'XK',
+    'YE',
+    'YT',
+    'ZA',
+    'ZM',
+    'ZW'
+);
+
+
+--
+-- Name: iso639_1_alpha2_code; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.iso639_1_alpha2_code AS ENUM (
+    'aa',
+    'ab',
+    'ae',
+    'af',
+    'ak',
+    'am',
+    'an',
+    'ar',
+    'as',
+    'av',
+    'ay',
+    'az',
+    'ba',
+    'be',
+    'bg',
+    'bh',
+    'bi',
+    'bm',
+    'bn',
+    'bo',
+    'br',
+    'bs',
+    'ca',
+    'ce',
+    'ch',
+    'co',
+    'cr',
+    'cs',
+    'cu',
+    'cv',
+    'cy',
+    'da',
+    'de',
+    'dv',
+    'dz',
+    'ee',
+    'el',
+    'en',
+    'eo',
+    'es',
+    'et',
+    'eu',
+    'fa',
+    'ff',
+    'fi',
+    'fj',
+    'fo',
+    'fr',
+    'fy',
+    'ga',
+    'gd',
+    'gl',
+    'gn',
+    'gu',
+    'gv',
+    'ha',
+    'he',
+    'hi',
+    'ho',
+    'hr',
+    'ht',
+    'hu',
+    'hy',
+    'hz',
+    'ia',
+    'id',
+    'ie',
+    'ig',
+    'ii',
+    'ik',
+    'io',
+    'is',
+    'it',
+    'iu',
+    'ja',
+    'jv',
+    'ka',
+    'kg',
+    'ki',
+    'kj',
+    'kk',
+    'kl',
+    'km',
+    'kn',
+    'ko',
+    'kr',
+    'ks',
+    'ku',
+    'kv',
+    'kw',
+    'ky',
+    'la',
+    'lb',
+    'lg',
+    'li',
+    'ln',
+    'lo',
+    'lt',
+    'lu',
+    'lv',
+    'mg',
+    'mh',
+    'mi',
+    'mk',
+    'ml',
+    'mn',
+    'mr',
+    'ms',
+    'mt',
+    'my',
+    'na',
+    'nb',
+    'nd',
+    'ne',
+    'ng',
+    'nl',
+    'nn',
+    'no',
+    'nr',
+    'nv',
+    'ny',
+    'oc',
+    'oj',
+    'om',
+    'or',
+    'os',
+    'pa',
+    'pi',
+    'pl',
+    'ps',
+    'pt',
+    'qu',
+    'rm',
+    'rn',
+    'ro',
+    'ru',
+    'rw',
+    'sa',
+    'sc',
+    'sd',
+    'se',
+    'sg',
+    'si',
+    'sk',
+    'sl',
+    'sm',
+    'sn',
+    'so',
+    'sq',
+    'sr',
+    'ss',
+    'st',
+    'su',
+    'sv',
+    'sw',
+    'ta',
+    'te',
+    'tg',
+    'th',
+    'ti',
+    'tk',
+    'tl',
+    'tn',
+    'to',
+    'tr',
+    'ts',
+    'tt',
+    'tw',
+    'ty',
+    'ug',
+    'uk',
+    'ur',
+    'uz',
+    've',
+    'vi',
+    'vo',
+    'wa',
+    'wo',
+    'xh',
+    'yi',
+    'yo',
+    'za',
+    'zh',
+    'zu'
 );
 
 
@@ -255,6 +719,31 @@ CREATE TYPE app.level AS ENUM (
 
 
 --
+-- Name: locale; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.locale AS (
+	language app.iso639_1_alpha2_code,
+	country app.iso3166_1_alpha2_code
+);
+
+
+--
+-- Name: locale_status; Type: TYPE; Schema: app; Owner: -
+--
+
+CREATE TYPE app.locale_status AS ENUM (
+    'empty_audio',
+    'manually_overriden',
+    'mismatch',
+    'multiple_countries',
+    'multiple_languages',
+    'not_identifiable',
+    'ok'
+);
+
+
+--
 -- Name: pace; Type: TYPE; Schema: app; Owner: -
 --
 
@@ -319,7 +808,7 @@ CREATE TYPE app.preview_course_status AS ENUM (
 
 CREATE TYPE app.provider_logo AS (
 	id uuid,
-	provider_id bigint,
+	provider_id uuid,
 	file character varying,
 	user_account_id bigint,
 	created_at timestamp with time zone,
@@ -358,14 +847,14 @@ CREATE TYPE app.source AS ENUM (
 --
 
 CREATE DOMAIN app.username AS public.citext
-	CONSTRAINT username_boundary_dash CHECK ((NOT ((VALUE OPERATOR(public.~*) '^-'::public.citext) OR (VALUE OPERATOR(public.~*) '-$'::public.citext))))
-	CONSTRAINT username_boundary_underline CHECK ((NOT ((VALUE OPERATOR(public.~*) '^_'::public.citext) OR (VALUE OPERATOR(public.~*) '_$'::public.citext))))
-	CONSTRAINT username_consecutive_dash CHECK ((NOT (VALUE OPERATOR(public.~*) '--'::public.citext)))
-	CONSTRAINT username_consecutive_underline CHECK ((NOT (VALUE OPERATOR(public.~*) '__'::public.citext)))
-	CONSTRAINT username_format CHECK ((NOT (VALUE OPERATOR(public.~*) '[^0-9a-zA-Z\.\-\_]'::public.citext)))
-	CONSTRAINT username_length_lower CHECK ((length((VALUE)::text) >= 5))
-	CONSTRAINT username_length_upper CHECK ((length((VALUE)::text) <= 15))
-	CONSTRAINT username_lowercased CHECK (((VALUE)::text = lower((VALUE)::text)));
+	CONSTRAINT username__boundary_dash CHECK ((NOT ((VALUE OPERATOR(public.~*) '^-'::public.citext) OR (VALUE OPERATOR(public.~*) '-$'::public.citext))))
+	CONSTRAINT username__boundary_underline CHECK ((NOT ((VALUE OPERATOR(public.~*) '^_'::public.citext) OR (VALUE OPERATOR(public.~*) '_$'::public.citext))))
+	CONSTRAINT username__consecutive_dash CHECK ((NOT (VALUE OPERATOR(public.~*) '--'::public.citext)))
+	CONSTRAINT username__consecutive_underline CHECK ((NOT (VALUE OPERATOR(public.~*) '__'::public.citext)))
+	CONSTRAINT username__format CHECK ((NOT (VALUE OPERATOR(public.~*) '[^0-9a-zA-Z\.\-\_]'::public.citext)))
+	CONSTRAINT username__length_lower CHECK ((length((VALUE)::text) >= 5))
+	CONSTRAINT username__length_upper CHECK ((length((VALUE)::text) <= 15))
+	CONSTRAINT username__lowercased CHECK (((VALUE)::text = lower((VALUE)::text)));
 
 
 --
@@ -475,6 +964,30 @@ $_$;
 
 
 --
+-- Name: currency_index(character varying); Type: FUNCTION; Schema: app; Owner: -
+--
+
+CREATE FUNCTION app.currency_index(currency character varying) RETURNS bigint
+    LANGUAGE plpgsql IMMUTABLE STRICT
+    AS $$
+BEGIN
+  CASE
+  WHEN currency = 'USD' THEN
+    RETURN 0;
+  WHEN currency = 'EUR' THEN
+    RETURN 1;
+  WHEN currency = 'GPB' THEN
+    RETURN 2;
+  WHEN currency = 'BRL' THEN
+    RETURN 3;
+  ELSE
+    RETURN 4;
+  END CASE;
+END;
+$$;
+
+
+--
 -- Name: fill_sitemaps(app.sitemap[]); Type: FUNCTION; Schema: app; Owner: -
 --
 
@@ -574,6 +1087,27 @@ $$;
 
 
 --
+-- Name: price_in_decimal(text); Type: FUNCTION; Schema: app; Owner: -
+--
+
+CREATE FUNCTION app.price_in_decimal(price text) RETURNS numeric
+    LANGUAGE plpgsql IMMUTABLE
+    AS $_$
+BEGIN
+   IF $1 = '' THEN  -- special case for empty string like requested
+      RETURN 0::DECIMAL(12,2);
+   ELSE
+      RETURN $1::DECIMAL(12,2);
+   END IF;
+
+EXCEPTION WHEN OTHERS THEN
+   RETURN NULL;  -- NULL for other invalid input
+
+END
+$_$;
+
+
+--
 -- Name: sign_certificate_s3_fetch(uuid, character varying, integer); Type: FUNCTION; Schema: app; Owner: -
 --
 
@@ -583,14 +1117,14 @@ CREATE FUNCTION app.sign_certificate_s3_fetch(id uuid, filename character varyin
 BEGIN
   RETURN app.sign_s3_fetch(
     'us-east-1',
-    's3.clspt',
-    'clspt-uploads-dev',
+    's3.us-east-1.amazonaws.com',
+    'clspt-uploads-prd',
     '/signed/certificates',
     id::varchar || '-' || filename,
-    'minion',
-    'bananabanana',
+    'AKIAWS4RUC67BCMWXL4B',
+    'ooymHkbCnOZjP8ySgPHEpY9PnLHuqEGWjfpQdw0S',
     expires_in,
-    'FALSE'::boolean
+    'TRUE'::boolean
   );
 END;
 $$;
@@ -606,15 +1140,15 @@ CREATE FUNCTION app.sign_certificate_s3_upload(id uuid, filename character varyi
 BEGIN
   RETURN app.sign_s3_upload(
     'us-east-1',
-    's3.clspt',
-    'clspt-uploads-dev',
+    's3.us-east-1.amazonaws.com',
+    'clspt-uploads-prd',
     '/signed/certificates',
     id::varchar || '-' || filename,
-    'minion',
-    'bananabanana',
+    'AKIAWS4RUC67BCMWXL4B',
+    'ooymHkbCnOZjP8ySgPHEpY9PnLHuqEGWjfpQdw0S',
     expires_in,
     'FALSE'::boolean,
-    'FALSE'::boolean
+    'TRUE'::boolean
   );
 END;
 $$;
@@ -630,14 +1164,14 @@ CREATE FUNCTION app.sign_direct_s3_fetch(id uuid, filename character varying, fo
 BEGIN
   RETURN app.sign_s3_fetch(
     'us-east-1',
-    's3.clspt',
-    'clspt-uploads-dev',
+    's3.us-east-1.amazonaws.com',
+    'clspt-uploads-prd',
     '/signed' || '/' || folder,
     id::varchar || '-' || filename,
-    'minion',
-    'bananabanana',
+    'AKIAWS4RUC67BCMWXL4B',
+    'ooymHkbCnOZjP8ySgPHEpY9PnLHuqEGWjfpQdw0S',
     expires_in,
-    'FALSE'::boolean
+    'TRUE'::boolean
   );
 END;
 $$;
@@ -653,15 +1187,15 @@ CREATE FUNCTION app.sign_direct_s3_upload(id uuid, filename character varying, f
 BEGIN
   RETURN app.sign_s3_upload(
     'us-east-1',
-    's3.clspt',
-    'clspt-uploads-dev',
+    's3.us-east-1.amazonaws.com',
+    'clspt-uploads-prd',
     '/signed' || '/' || folder,
     id::varchar || '-' || filename,
-    'minion',
-    'bananabanana',
+    'AKIAWS4RUC67BCMWXL4B',
+    'ooymHkbCnOZjP8ySgPHEpY9PnLHuqEGWjfpQdw0S',
     expires_in,
     'FALSE'::boolean,
-    'FALSE'::boolean
+    'TRUE'::boolean
   );
 END;
 $$;
@@ -825,6 +1359,57 @@ $_$;
 
 
 --
+-- Name: if_admin(anyelement); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.if_admin(value anyelement) RETURNS anyelement
+    LANGUAGE plpgsql STABLE
+    AS $$
+BEGIN
+  IF current_user = 'admin' THEN
+    RETURN value;
+  ELSE
+    RETURN NULL;
+  END IF;
+END;
+$$;
+
+
+--
+-- Name: if_user_by_id(bigint, anyelement); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.if_user_by_id(id bigint, value anyelement) RETURNS anyelement
+    LANGUAGE plpgsql STABLE
+    AS $$
+BEGIN
+  IF current_user = 'user' AND current_setting('request.jwt.claim.sub', true)::bigint = id THEN
+    RETURN value;
+  ELSE
+    RETURN NULL;
+  END IF;
+END;
+$$;
+
+
+--
+-- Name: if_user_by_ids(bigint[], anyelement); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.if_user_by_ids(ids bigint[], value anyelement) RETURNS anyelement
+    LANGUAGE plpgsql STABLE
+    AS $$
+BEGIN
+  IF current_user = 'user' AND current_setting('request.jwt.claim.sub', true)::bigint = ANY(ids) THEN
+    RETURN value;
+  ELSE
+    RETURN NULL;
+  END IF;
+END;
+$$;
+
+
+--
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -879,57 +1464,6 @@ WITH (fillfactor='90');
 --
 
 COMMENT ON TABLE public.que_jobs IS '4';
-
-
---
--- Name: if_admin(anyelement); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.if_admin(value anyelement) RETURNS anyelement
-    LANGUAGE plpgsql STABLE
-    AS $$
-BEGIN
-  IF current_user = 'admin' THEN
-    RETURN value;
-  ELSE
-    RETURN NULL;
-  END IF;
-END;
-$$;
-
-
---
--- Name: if_user_by_id(bigint, anyelement); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.if_user_by_id(id bigint, value anyelement) RETURNS anyelement
-    LANGUAGE plpgsql STABLE
-    AS $$
-BEGIN
-  IF current_user = 'user' AND current_setting('request.jwt.claim.sub', true)::bigint = id THEN
-    RETURN value;
-  ELSE
-    RETURN NULL;
-  END IF;
-END;
-$$;
-
-
---
--- Name: if_user_by_ids(bigint[], anyelement); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.if_user_by_ids(ids bigint[], value anyelement) RETURNS anyelement
-    LANGUAGE plpgsql STABLE
-    AS $$
-BEGIN
-  IF current_user = 'user' AND current_setting('request.jwt.claim.sub', true)::bigint = ANY(ids) THEN
-    RETURN value;
-  ELSE
-    RETURN NULL;
-  END IF;
-END;
-$$;
 
 
 --
@@ -1195,7 +1729,7 @@ CREATE TABLE app.crawler_domains (
 CREATE TABLE app.provider_crawlers (
     id uuid DEFAULT public.uuid_generate_v1() NOT NULL,
     user_agent_token uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    provider_id bigint,
+    provider_id uuid,
     published boolean DEFAULT false NOT NULL,
     scheduled boolean DEFAULT false NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
@@ -1205,7 +1739,8 @@ CREATE TABLE app.provider_crawlers (
     sitemaps app.sitemap[] DEFAULT '{}'::app.sitemap[] NOT NULL,
     version character varying,
     settings jsonb,
-    urls character varying[] DEFAULT '{}'::character varying[] NOT NULL
+    urls character varying[] DEFAULT '{}'::character varying[] NOT NULL,
+    old_provider_id bigint
 );
 
 
@@ -1285,7 +1820,7 @@ CREATE TABLE app.courses (
     published boolean DEFAULT true,
     stale boolean DEFAULT false,
     category app.category,
-    provider_id bigint,
+    provider_id uuid,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     dataset_sequence integer,
@@ -1306,11 +1841,17 @@ CREATE TABLE app.courses (
     __provider_name__ character varying,
     __source_schema__ jsonb,
     instructors jsonb DEFAULT '[]'::jsonb,
-    curated_tags character varying[] DEFAULT '{}'::character varying[],
+    old_curated_tags character varying[] DEFAULT '{}'::character varying[],
     refinement_tags character varying[],
     up_to_date_id uuid,
     last_execution_id uuid,
-    schema_version character varying
+    schema_version character varying,
+    ignore_robots_noindex_rule_for app.locale[] DEFAULT '{}'::app.locale[],
+    ignore_robots_noindex_rule boolean DEFAULT false,
+    locale app.locale,
+    locale_status app.locale_status,
+    canonical_subdomain character varying,
+    old_provider_id bigint
 );
 
 
@@ -1329,7 +1870,8 @@ CREATE TABLE app.enrollments (
     tracking_data jsonb DEFAULT '{}'::jsonb,
     tracking_cookies jsonb DEFAULT '{}'::jsonb,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    provider_id uuid
 );
 
 
@@ -1338,10 +1880,8 @@ CREATE TABLE app.enrollments (
 --
 
 CREATE TABLE app.providers (
-    id bigint NOT NULL,
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     name public.citext,
-    name_dirty boolean DEFAULT true NOT NULL,
-    name_changed_at timestamp with time zone,
     description text,
     slug character varying,
     afn_url_template character varying,
@@ -1350,6 +1890,13 @@ CREATE TABLE app.providers (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     encoded_deep_linking boolean DEFAULT false,
+    name_dirty boolean DEFAULT true NOT NULL,
+    name_changed_at timestamp with time zone,
+    url character varying,
+    old_id bigint NOT NULL,
+    ignore_robots_noindex_rule_for app.locale[] DEFAULT '{}'::app.locale[],
+    ignore_robots_noindex_rule boolean DEFAULT false,
+    featured_on_footer boolean DEFAULT false,
     CONSTRAINT providers_check CHECK ((name_dirty OR ((NOT name_dirty) AND (name_changed_at IS NOT NULL))))
 );
 
@@ -1432,9 +1979,9 @@ CREATE TABLE app.preview_courses (
     video jsonb,
     source app.source DEFAULT 'api'::app.source,
     pace app.pace,
-    certificate jsonb DEFAULT '"{}"'::jsonb,
-    pricing_models jsonb DEFAULT '"[]"'::jsonb,
-    offered_by jsonb DEFAULT '"[]"'::jsonb,
+    certificate jsonb DEFAULT '{}'::jsonb,
+    pricing_models jsonb DEFAULT '[]'::jsonb,
+    offered_by jsonb DEFAULT '[]'::jsonb,
     syllabus text,
     effort integer,
     enrollments_count integer DEFAULT 0,
@@ -1447,11 +1994,12 @@ CREATE TABLE app.preview_courses (
     instructors jsonb DEFAULT '[]'::jsonb,
     curated_tags character varying[] DEFAULT '{}'::character varying[],
     refinement_tags character varying[],
-    provider_id bigint,
+    provider_id uuid,
     provider_crawler_id uuid,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    expired_at timestamp with time zone DEFAULT (now() + '00:20:00'::interval) NOT NULL
+    expired_at timestamp with time zone DEFAULT (now() + '00:20:00'::interval) NOT NULL,
+    old_provider_id bigint
 );
 
 
@@ -1500,7 +2048,8 @@ CREATE VIEW api.preview_courses AS
     course.provider_crawler_id,
     course.created_at,
     course.updated_at,
-    course.expired_at
+    course.expired_at,
+    course.old_provider_id
    FROM app.preview_courses course
   WHERE (((CURRENT_USER = 'user'::name) AND (EXISTS ( SELECT 1
            FROM app.provider_crawlers crawler
@@ -1541,26 +2090,33 @@ CREATE VIEW api.preview_course_images AS
 --
 
 CREATE TABLE app.profiles (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     name character varying,
-    username app.username,
-    _username character varying,
-    username_changed_at timestamp with time zone,
     date_of_birth date,
     oauth_avatar_url character varying,
+    user_account_id bigint,
+    interests text[] DEFAULT '{}'::text[],
+    preferences jsonb DEFAULT '{}'::jsonb,
+    _username character varying,
     uploaded_avatar_url character varying,
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    username app.username,
+    username_changed_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
     instructor boolean DEFAULT false,
     long_bio character varying,
     public boolean DEFAULT true,
     short_bio character varying,
     public_profiles jsonb DEFAULT '{}'::jsonb,
     teaching_subjects character varying[] DEFAULT '{}'::character varying[],
-    user_account_id bigint,
-    interests text[] DEFAULT '{}'::text[],
-    preferences jsonb DEFAULT '{}'::jsonb,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    CONSTRAINT username_format CHECK (((_username)::text ~* '^\w{5,15}$'::text))
+    social_profiles jsonb DEFAULT '{}'::jsonb,
+    elearning_profiles jsonb DEFAULT '{}'::jsonb,
+    country app.iso3166_1_alpha2_code,
+    website character varying,
+    course_ids uuid[] DEFAULT '{}'::uuid[],
+    _name character varying,
+    CONSTRAINT short_bio__length CHECK ((length((short_bio)::text) <= 60)),
+    CONSTRAINT username__format CHECK (((_username)::text ~* '^\w{5,15}$'::text))
 );
 
 
@@ -1572,15 +2128,20 @@ CREATE VIEW api.profiles AS
  SELECT profiles.id,
     profiles.name,
     profiles.username,
-    profiles.short_bio,
-    profiles.long_bio,
-    profiles.instructor,
-    profiles.public,
+    COALESCE(public.if_admin(profiles.short_bio), public.if_user_by_id(profiles.user_account_id, profiles.short_bio)) AS short_bio,
+    COALESCE(public.if_admin(profiles.long_bio), public.if_user_by_id(profiles.user_account_id, profiles.long_bio)) AS long_bio,
+    COALESCE(public.if_admin(profiles.instructor), public.if_user_by_id(profiles.user_account_id, profiles.instructor)) AS instructor,
+    COALESCE(public.if_admin(profiles.public), public.if_user_by_id(profiles.user_account_id, profiles.public)) AS public,
+    COALESCE(public.if_admin(profiles.country), public.if_user_by_id(profiles.user_account_id, profiles.country)) AS country,
+    COALESCE(public.if_admin(profiles.website), public.if_user_by_id(profiles.user_account_id, profiles.website)) AS website,
     COALESCE(profiles.uploaded_avatar_url, profiles.oauth_avatar_url) AS avatar_url,
     COALESCE(public.if_admin(profiles.date_of_birth), public.if_user_by_id(profiles.user_account_id, profiles.date_of_birth)) AS date_of_birth,
     profiles.user_account_id,
     COALESCE(public.if_admin(profiles.interests), public.if_user_by_id(profiles.user_account_id, profiles.interests)) AS interests,
-    COALESCE(public.if_admin(profiles.preferences), public.if_user_by_id(profiles.user_account_id, profiles.preferences)) AS preferences
+    COALESCE(public.if_admin(profiles.preferences), public.if_user_by_id(profiles.user_account_id, profiles.preferences)) AS preferences,
+    COALESCE(public.if_admin(profiles.social_profiles), public.if_user_by_id(profiles.user_account_id, profiles.social_profiles)) AS social_profiles,
+    COALESCE(public.if_admin(profiles.elearning_profiles), public.if_user_by_id(profiles.user_account_id, profiles.elearning_profiles)) AS elearning_profiles,
+    COALESCE(public.if_admin(profiles.course_ids), public.if_user_by_id(profiles.user_account_id, profiles.course_ids)) AS course_ids
    FROM app.profiles;
 
 
@@ -1605,7 +2166,7 @@ CREATE TABLE app.promo_accounts (
     CONSTRAINT price__greater_than CHECK ((price >= (0)::numeric)),
     CONSTRAINT price__less_than CHECK ((price <= (5000)::numeric)),
     CONSTRAINT purchase_date__less_than CHECK ((purchase_date < now())),
-    CONSTRAINT state__inclusion CHECK (((state)::text = ANY ((ARRAY['initial'::character varying, 'pending'::character varying, 'locked'::character varying, 'rejected'::character varying, 'approved'::character varying])::text[])))
+    CONSTRAINT state__inclusion CHECK (((state)::text = ANY (ARRAY[('initial'::character varying)::text, ('pending'::character varying)::text, ('locked'::character varying)::text, ('rejected'::character varying)::text, ('approved'::character varying)::text])))
 );
 
 
@@ -1647,7 +2208,8 @@ CREATE VIEW api.provider_crawlers AS
     provider_crawlers.sitemaps,
     provider_crawlers.version,
     provider_crawlers.settings,
-    provider_crawlers.urls
+    provider_crawlers.urls,
+    provider_crawlers.old_provider_id
    FROM app.provider_crawlers
   WHERE (((provider_crawlers.status <> 'deleted'::app.crawler_status) AND public.if_user_by_ids(provider_crawlers.user_account_ids, true)) OR (CURRENT_USER = 'admin'::name));
 
@@ -1673,7 +2235,8 @@ CREATE TABLE app.direct_uploads (
 CREATE TABLE app.provider_logos (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     direct_upload_id uuid NOT NULL,
-    provider_id bigint NOT NULL
+    provider_id uuid NOT NULL,
+    old_provider_id bigint
 );
 
 
@@ -1703,8 +2266,6 @@ CREATE VIEW api.provider_logos AS
 CREATE VIEW api.providers AS
  SELECT provider.id,
     provider.name,
-    provider.name_dirty,
-    provider.name_changed_at,
     provider.description,
     provider.slug,
     provider.afn_url_template,
@@ -1712,7 +2273,13 @@ CREATE VIEW api.providers AS
     provider.published_at,
     provider.created_at,
     provider.updated_at,
-    provider.encoded_deep_linking
+    provider.encoded_deep_linking,
+    provider.name_dirty,
+    provider.name_changed_at,
+    provider.url,
+    provider.old_id,
+    provider.ignore_robots_noindex_rule_for,
+    provider.ignore_robots_noindex_rule
    FROM app.providers provider
   WHERE (((CURRENT_USER = 'user'::name) AND (EXISTS ( SELECT 1
            FROM app.provider_crawlers crawler
@@ -1745,7 +2312,8 @@ CREATE TABLE app.user_accounts (
     locked_at timestamp with time zone,
     destroyed_at timestamp with time zone,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    autogen_email_for_oauth boolean DEFAULT false NOT NULL
 );
 
 
@@ -1774,6 +2342,7 @@ CREATE VIEW api.user_accounts AS
     COALESCE(public.if_admin(user_accounts.unlock_token), public.if_user_by_id(user_accounts.id, user_accounts.unlock_token)) AS unlock_token,
     COALESCE(public.if_admin(user_accounts.locked_at), public.if_user_by_id(user_accounts.id, user_accounts.locked_at)) AS locked_at,
     COALESCE(public.if_admin(user_accounts.destroyed_at), public.if_user_by_id(user_accounts.id, user_accounts.destroyed_at)) AS destroyed_at,
+    COALESCE(public.if_admin(user_accounts.autogen_email_for_oauth), public.if_user_by_id(user_accounts.id, user_accounts.autogen_email_for_oauth)) AS autogen_email_for_oauth,
     user_accounts.created_at,
     user_accounts.updated_at
    FROM app.user_accounts;
@@ -1803,13 +2372,13 @@ ALTER SEQUENCE app.admin_accounts_id_seq OWNED BY app.admin_accounts.id;
 --
 
 CREATE TABLE app.admin_profiles (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     name character varying,
     bio text,
     preferences jsonb,
     admin_account_id bigint,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL
 );
 
 
@@ -1824,7 +2393,8 @@ CREATE TABLE app.contacts (
     subject character varying,
     message text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    reason app.contact_reason
 );
 
 
@@ -1863,7 +2433,23 @@ CREATE TABLE app.course_reviews (
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     CONSTRAINT rating__greater_than CHECK ((rating >= (1)::numeric)),
     CONSTRAINT rating__less_than CHECK ((rating <= (5)::numeric)),
-    CONSTRAINT state__inclusion CHECK (((state)::text = ANY ((ARRAY['pending'::character varying, 'accessed'::character varying, 'submitted'::character varying])::text[])))
+    CONSTRAINT state__inclusion CHECK (((state)::text = ANY (ARRAY[('pending'::character varying)::text, ('accessed'::character varying)::text, ('submitted'::character varying)::text])))
+);
+
+
+--
+-- Name: curated_tags_versions; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.curated_tags_versions (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    course_id uuid,
+    curated_tags character varying[] DEFAULT '{}'::character varying[],
+    excluded_tags character varying[] DEFAULT '{}'::character varying[],
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    current boolean DEFAULT false,
+    author character varying
 );
 
 
@@ -1909,9 +2495,9 @@ CREATE TABLE app.images (
     file character varying,
     pos integer DEFAULT 0,
     imageable_type character varying,
-    imageable_id uuid,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    imageable_id uuid
 );
 
 
@@ -1973,6 +2559,16 @@ ALTER SEQUENCE app.landing_pages_id_seq OWNED BY app.landing_pages.id;
 
 
 --
+-- Name: napoleon_course_mapping; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.napoleon_course_mapping (
+    old_resource_id uuid NOT NULL,
+    resource_id uuid
+);
+
+
+--
 -- Name: oauth_accounts; Type: TABLE; Schema: app; Owner: -
 --
 
@@ -2028,14 +2624,29 @@ CREATE TABLE app.orphaned_profiles (
     claimable_emails character varying[] DEFAULT '{}'::character varying[],
     claimable_public_profiles jsonb DEFAULT '{}'::jsonb,
     claim_code character varying(64),
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
     claim_code_expires_at timestamp with time zone,
     claimed_at timestamp with time zone,
     claimed_by character varying,
-    teaching_subjects character varying[] DEFAULT '{}'::character varying[],
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
     marked_as_destroyed_at timestamp with time zone,
-    CONSTRAINT state__inclusion CHECK (((state)::text = ANY ((ARRAY['disabled'::character varying, 'enabled'::character varying])::text[])))
+    teaching_subjects character varying[] DEFAULT '{}'::character varying[],
+    teaching_at character varying[] DEFAULT '{}'::character varying[],
+    ignore_robots_noindex_rule_for app.locale[] DEFAULT '{}'::app.locale[],
+    ignore_robots_noindex_rule boolean DEFAULT false,
+    CONSTRAINT state__inclusion CHECK (((state)::text = ANY (ARRAY[('disabled'::character varying)::text, ('enabled'::character varying)::text])))
+);
+
+
+--
+-- Name: post_relations; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.post_relations (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    relation_type character varying NOT NULL,
+    relation_id uuid NOT NULL,
+    post_id uuid
 );
 
 
@@ -2044,7 +2655,6 @@ CREATE TABLE app.orphaned_profiles (
 --
 
 CREATE TABLE app.posts (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     slug character varying,
     title character varying,
     body text,
@@ -2058,8 +2668,9 @@ CREATE TABLE app.posts (
     admin_account_id bigint,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    original_post_id uuid,
-    use_cover_image boolean DEFAULT false
+    use_cover_image boolean DEFAULT false,
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    original_post_id uuid
 );
 
 
@@ -2074,6 +2685,100 @@ CREATE TABLE app.promo_account_logs (
     new jsonb DEFAULT '{}'::jsonb,
     role character varying NOT NULL
 );
+
+
+--
+-- Name: provider_pricings; Type: MATERIALIZED VIEW; Schema: app; Owner: -
+--
+
+CREATE MATERIALIZED VIEW app.provider_pricings AS
+ SELECT sq2.provider_id,
+    array_agg(DISTINCT sq2.type) AS membership_types,
+    min(app.price_in_decimal(sq2.price)) AS min_price,
+    max(app.price_in_decimal(sq2.price)) AS max_price,
+    min(app.price_in_decimal(sq2.trial_price)) AS min_trial_price,
+    max(app.price_in_decimal(sq2.trial_price)) AS max_trial_price
+   FROM ( SELECT DISTINCT ON (sq.id) sq.provider_id,
+            unnest(array_agg(DISTINCT sq.type)) AS type,
+            min(
+                CASE
+                    WHEN (sq.type = 'single_course'::text) THEN sq.price
+                    ELSE sq.total_price
+                END) AS price,
+            min(sq.trial_price) AS trial_price
+           FROM ( SELECT courses.id,
+                    courses.provider_id,
+                    (jsonb_array_elements(courses.pricing_models) ->> 'type'::text) AS type,
+                    (jsonb_array_elements(courses.pricing_models) ->> 'price'::text) AS price,
+                    (jsonb_array_elements(courses.pricing_models) ->> 'total_price'::text) AS total_price,
+                    ((jsonb_array_elements(courses.pricing_models) -> 'trial_period'::text) ->> 'value'::text) AS trial_price,
+                    app.currency_index(((jsonb_array_elements(courses.pricing_models) ->> ('currency'::character varying)::text))::character varying) AS currency
+                   FROM app.courses
+                  WHERE (courses.published = true)) sq
+          GROUP BY sq.id, sq.provider_id, sq.currency) sq2
+  GROUP BY sq2.provider_id
+  WITH NO DATA;
+
+
+--
+-- Name: provider_stats; Type: MATERIALIZED VIEW; Schema: app; Owner: -
+--
+
+CREATE MATERIALIZED VIEW app.provider_stats AS
+ WITH top_countries AS (
+         SELECT sq.provider_id,
+            (array_agg(sq.country))[1:5] AS countries
+           FROM ( SELECT enrollments.provider_id,
+                    (enrollments.tracking_data ->> 'country'::text) AS country,
+                    count(*) AS count_all
+                   FROM app.enrollments
+                  WHERE ((enrollments.tracking_data ->> 'country'::text) IS NOT NULL)
+                  GROUP BY enrollments.provider_id, (enrollments.tracking_data ->> 'country'::text)
+                  ORDER BY (count(*)) DESC) sq
+          GROUP BY sq.provider_id
+        ), areas_of_knowledge AS (
+         SELECT DISTINCT ON (sq.provider_id) sq.provider_id,
+            sq.tag,
+            count(*) AS count_all
+           FROM ( SELECT courses.provider_id,
+                    unnest(curated_tags_versions.curated_tags) AS tag
+                   FROM (app.courses
+                     JOIN app.curated_tags_versions ON ((curated_tags_versions.course_id = courses.id)))
+                  WHERE ((courses.published = true) AND (curated_tags_versions.current = true))) sq
+          WHERE ((sq.tag)::text = ANY ((ARRAY['computer_science'::character varying, 'arts_and_design'::character varying, 'business'::character varying, 'personal_development'::character varying, 'data_science'::character varying, 'physical_science_and_engineering'::character varying, 'marketing'::character varying, 'language_and_communication'::character varying, 'life_sciences'::character varying, 'math_and_logic'::character varying, 'social_sciences'::character varying, 'health_and_fitness'::character varying])::text[]))
+          GROUP BY sq.provider_id, sq.tag
+          ORDER BY sq.provider_id, (count(*)) DESC
+        ), indexed_courses AS (
+         SELECT courses.provider_id,
+            count(*) AS count_all
+           FROM app.courses
+          WHERE (courses.published = true)
+          GROUP BY courses.provider_id
+        ), instructors AS (
+         SELECT ( SELECT providers_1.id
+                   FROM app.providers providers_1
+                  WHERE ((providers_1.name)::text = (sq.teaching_at)::text)) AS provider_id,
+            count(*) AS count_all
+           FROM ( SELECT orphaned_profiles.id,
+                    unnest(orphaned_profiles.teaching_at) AS teaching_at
+                   FROM app.orphaned_profiles
+                  WHERE ((orphaned_profiles.state)::text = 'enabled'::text)) sq
+          GROUP BY ( SELECT providers_1.id
+                   FROM app.providers providers_1
+                  WHERE ((providers_1.name)::text = (sq.teaching_at)::text))
+        )
+ SELECT providers.id AS provider_id,
+    top_countries.countries AS top_countries,
+    areas_of_knowledge.tag AS areas_of_knowledge,
+    indexed_courses.count_all AS indexed_courses,
+    instructors.count_all AS instructors
+   FROM ((((app.providers
+     LEFT JOIN top_countries ON ((top_countries.provider_id = providers.id)))
+     LEFT JOIN areas_of_knowledge ON ((areas_of_knowledge.provider_id = providers.id)))
+     LEFT JOIN indexed_courses ON ((indexed_courses.provider_id = providers.id)))
+     LEFT JOIN instructors ON ((instructors.provider_id = providers.id)))
+  WHERE ((top_countries.* IS NOT NULL) OR (areas_of_knowledge.* IS NOT NULL) OR (indexed_courses.* IS NOT NULL) OR (instructors.* IS NOT NULL))
+  WITH NO DATA;
 
 
 --
@@ -2105,6 +2810,23 @@ CREATE TABLE app.slug_histories (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     slug character varying NOT NULL
+);
+
+
+--
+-- Name: subscriptions; Type: TABLE; Schema: app; Owner: -
+--
+
+CREATE TABLE app.subscriptions (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    digest boolean DEFAULT true NOT NULL,
+    newsletter boolean DEFAULT true NOT NULL,
+    promotions boolean DEFAULT true NOT NULL,
+    recommendations boolean DEFAULT true NOT NULL,
+    reports boolean DEFAULT true NOT NULL,
+    unsubscribe_reasons jsonb DEFAULT '{}'::jsonb,
+    unsubscribed_at timestamp with time zone,
+    profile_id uuid
 );
 
 
@@ -2266,13 +2988,6 @@ ALTER TABLE ONLY app.oauth_accounts ALTER COLUMN id SET DEFAULT nextval('app.oau
 
 
 --
--- Name: providers id; Type: DEFAULT; Schema: app; Owner: -
---
-
-ALTER TABLE ONLY app.providers ALTER COLUMN id SET DEFAULT nextval('app.providers_id_seq'::regclass);
-
-
---
 -- Name: user_accounts id; Type: DEFAULT; Schema: app; Owner: -
 --
 
@@ -2359,6 +3074,14 @@ ALTER TABLE ONLY app.crawling_events
 
 
 --
+-- Name: curated_tags_versions curated_tags_versions_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.curated_tags_versions
+    ADD CONSTRAINT curated_tags_versions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: direct_uploads direct_uploads_pkey; Type: CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -2399,6 +3122,14 @@ ALTER TABLE ONLY app.landing_pages
 
 
 --
+-- Name: napoleon_course_mapping napoleon_course_mapping_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.napoleon_course_mapping
+    ADD CONSTRAINT napoleon_course_mapping_pkey PRIMARY KEY (old_resource_id);
+
+
+--
 -- Name: oauth_accounts oauth_accounts_pkey; Type: CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -2412,6 +3143,14 @@ ALTER TABLE ONLY app.oauth_accounts
 
 ALTER TABLE ONLY app.orphaned_profiles
     ADD CONSTRAINT orphaned_profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: post_relations post_relations_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.post_relations
+    ADD CONSTRAINT post_relations_pkey PRIMARY KEY (id);
 
 
 --
@@ -2492,6 +3231,14 @@ ALTER TABLE ONLY app.providers
 
 ALTER TABLE ONLY app.slug_histories
     ADD CONSTRAINT slug_histories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: subscriptions subscriptions_pkey; Type: CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.subscriptions
+    ADD CONSTRAINT subscriptions_pkey PRIMARY KEY (id);
 
 
 --
@@ -2616,13 +3363,6 @@ CREATE UNIQUE INDEX index_course_reviews_on_user_account_id_and_tracked_action_i
 
 
 --
--- Name: index_courses_on_curated_tags; Type: INDEX; Schema: app; Owner: -
---
-
-CREATE INDEX index_courses_on_curated_tags ON app.courses USING gin (curated_tags);
-
-
---
 -- Name: index_courses_on_dataset_sequence; Type: INDEX; Schema: app; Owner: -
 --
 
@@ -2641,6 +3381,13 @@ CREATE UNIQUE INDEX index_courses_on_global_sequence ON app.courses USING btree 
 --
 
 CREATE INDEX index_courses_on_provider_id ON app.courses USING btree (provider_id);
+
+
+--
+-- Name: index_courses_on_provider_id_published; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE INDEX index_courses_on_provider_id_published ON app.courses USING btree (provider_id) WHERE (published = true);
 
 
 --
@@ -2672,10 +3419,31 @@ CREATE UNIQUE INDEX index_courses_on_url ON app.courses USING btree (url) WHERE 
 
 
 --
+-- Name: index_curated_tags_versions_on_course_id; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE INDEX index_curated_tags_versions_on_course_id ON app.curated_tags_versions USING btree (course_id);
+
+
+--
+-- Name: index_curated_tags_versions_on_curated_tags; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE INDEX index_curated_tags_versions_on_curated_tags ON app.curated_tags_versions USING gin (curated_tags);
+
+
+--
 -- Name: index_enrollments_on_course_id; Type: INDEX; Schema: app; Owner: -
 --
 
 CREATE INDEX index_enrollments_on_course_id ON app.enrollments USING btree (course_id);
+
+
+--
+-- Name: index_enrollments_on_provider_id; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE INDEX index_enrollments_on_provider_id ON app.enrollments USING btree (provider_id);
 
 
 --
@@ -2746,6 +3514,27 @@ CREATE INDEX index_orphaned_profiles_on_name ON app.orphaned_profiles USING btre
 --
 
 CREATE UNIQUE INDEX index_orphaned_profiles_on_user_account_id ON app.orphaned_profiles USING btree (user_account_id);
+
+
+--
+-- Name: index_post_relations_on_post_id; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE INDEX index_post_relations_on_post_id ON app.post_relations USING btree (post_id);
+
+
+--
+-- Name: index_post_relations_on_relation_fields; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE INDEX index_post_relations_on_relation_fields ON app.post_relations USING btree (relation_id, relation_type);
+
+
+--
+-- Name: index_post_relations_unique; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE UNIQUE INDEX index_post_relations_unique ON app.post_relations USING btree (relation_id, relation_type, post_id);
 
 
 --
@@ -2830,6 +3619,13 @@ CREATE UNIQUE INDEX index_providers_on_slug ON app.providers USING btree (slug);
 --
 
 CREATE UNIQUE INDEX index_slug_histories_on_course_id_and_slug ON app.slug_histories USING btree (course_id, slug);
+
+
+--
+-- Name: index_subscriptions_on_profiles_id; Type: INDEX; Schema: app; Owner: -
+--
+
+CREATE INDEX index_subscriptions_on_profiles_id ON app.subscriptions USING btree (profile_id);
 
 
 --
@@ -3036,6 +3832,13 @@ CREATE TRIGGER api_user_accounts_view_instead INSTEAD OF UPDATE ON api.user_acco
 
 
 --
+-- Name: enrollments check_course_provider_relationship; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER check_course_provider_relationship BEFORE INSERT OR UPDATE ON app.enrollments FOR EACH ROW EXECUTE PROCEDURE triggers.check_course_provider_relationship();
+
+
+--
 -- Name: courses course_keep_slug; Type: TRIGGER; Schema: app; Owner: -
 --
 
@@ -3054,6 +3857,13 @@ CREATE TRIGGER course_normalize_languages BEFORE INSERT OR UPDATE ON app.courses
 --
 
 CREATE TRIGGER course_normalize_languages BEFORE INSERT OR UPDATE ON app.preview_courses FOR EACH ROW EXECUTE PROCEDURE triggers.course_normalize_languages();
+
+
+--
+-- Name: profiles create_profiles_subscription; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER create_profiles_subscription AFTER INSERT ON app.profiles FOR EACH ROW EXECUTE PROCEDURE triggers.create_subscription();
 
 
 --
@@ -3281,6 +4091,13 @@ CREATE TRIGGER use_username AFTER INSERT OR UPDATE ON app.profiles FOR EACH ROW 
 
 
 --
+-- Name: profiles validate_profiles; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER validate_profiles BEFORE INSERT OR UPDATE ON app.profiles FOR EACH ROW EXECUTE PROCEDURE triggers.validate_profiles();
+
+
+--
 -- Name: provider_crawlers validate_provider_crawler_urls; Type: TRIGGER; Schema: app; Owner: -
 --
 
@@ -3295,10 +4112,24 @@ CREATE CONSTRAINT TRIGGER validate_sitemaps AFTER INSERT OR UPDATE ON app.provid
 
 
 --
+-- Name: profiles validate_url; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER validate_url BEFORE INSERT OR UPDATE ON app.profiles FOR EACH ROW EXECUTE PROCEDURE triggers.validate_url();
+
+
+--
 -- Name: provider_crawlers validate_user_account_ids; Type: TRIGGER; Schema: app; Owner: -
 --
 
 CREATE CONSTRAINT TRIGGER validate_user_account_ids AFTER INSERT OR UPDATE ON app.provider_crawlers NOT DEFERRABLE INITIALLY IMMEDIATE FOR EACH ROW EXECUTE PROCEDURE triggers.validate_user_account_ids();
+
+
+--
+-- Name: profiles validate_website; Type: TRIGGER; Schema: app; Owner: -
+--
+
+CREATE TRIGGER validate_website BEFORE INSERT OR UPDATE ON app.profiles FOR EACH ROW EXECUTE PROCEDURE triggers.validate_website();
 
 
 --
@@ -3387,6 +4218,14 @@ ALTER TABLE ONLY app.crawling_events
 
 
 --
+-- Name: curated_tags_versions curated_tags_versions_course_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.curated_tags_versions
+    ADD CONSTRAINT curated_tags_versions_course_id_fkey FOREIGN KEY (course_id) REFERENCES app.courses(id);
+
+
+--
 -- Name: direct_uploads direct_uploads_user_account_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -3400,6 +4239,14 @@ ALTER TABLE ONLY app.direct_uploads
 
 ALTER TABLE ONLY app.enrollments
     ADD CONSTRAINT enrollments_course_id_fkey FOREIGN KEY (course_id) REFERENCES app.courses(id);
+
+
+--
+-- Name: enrollments enrollments_provider_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.enrollments
+    ADD CONSTRAINT enrollments_provider_id_fkey FOREIGN KEY (provider_id) REFERENCES app.providers(id);
 
 
 --
@@ -3448,6 +4295,14 @@ ALTER TABLE ONLY app.oauth_accounts
 
 ALTER TABLE ONLY app.orphaned_profiles
     ADD CONSTRAINT orphaned_profiles_user_account_id_fkey FOREIGN KEY (user_account_id) REFERENCES app.user_accounts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: post_relations post_relations_post_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.post_relations
+    ADD CONSTRAINT post_relations_post_id_fkey FOREIGN KEY (post_id) REFERENCES app.posts(id);
 
 
 --
@@ -3555,6 +4410,14 @@ ALTER TABLE ONLY app.slug_histories
 
 
 --
+-- Name: subscriptions subscriptions_profile_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
+--
+
+ALTER TABLE ONLY app.subscriptions
+    ADD CONSTRAINT subscriptions_profile_id_fkey FOREIGN KEY (profile_id) REFERENCES app.profiles(id);
+
+
+--
 -- Name: tracked_actions tracked_actions_enrollment_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: -
 --
 
@@ -3577,6 +4440,80 @@ ALTER TABLE ONLY app.used_usernames
 SET search_path TO app,public,api;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20180101010101'),
+('20180101010102'),
+('20180101010103'),
+('20180101010104'),
+('20180101010105'),
+('20180101010106'),
+('20180101010107'),
+('20180101010108'),
+('20180101010109'),
+('20180405131603'),
+('20180405131604'),
+('20180523201233'),
+('20180523201244'),
+('20180525023807'),
+('20180607040455'),
+('20180607042446'),
+('20181015193451'),
+('20181015193452'),
+('20181017123839'),
+('20181018075955'),
+('20181030111522'),
+('20181102111502'),
+('20181113000000'),
+('20181115164155'),
+('20181115164156'),
+('20181127193928'),
+('20181128123550'),
+('20181129103819'),
+('20181205214627'),
+('20181206020722'),
+('20181213172406'),
+('20181214163153'),
+('20181217193900'),
+('20181219141415'),
+('20181220182109'),
+('20181226142754'),
+('20190122215523'),
+('20190208194421'),
+('20190216154846'),
+('20190217234501'),
+('20190218212408'),
+('20190220000225'),
+('20190222125654'),
+('20190226205725'),
+('20190226205726'),
+('20190226223828'),
+('20190228203835'),
+('20190228220559'),
+('20190306194201'),
+('20190310005126'),
+('20190310024220'),
+('20190310031745'),
+('20190310032740'),
+('20190310062807'),
+('20190313223626'),
+('20190313223627'),
+('20190328144400'),
+('20190408141738'),
+('20190408173350'),
+('20190416123653'),
+('20190503093752'),
+('20190506184046'),
+('20190515101502'),
+('20190515104037'),
+('20190521153938'),
+('20190529190629'),
+('20190606133958'),
+('20190607133958'),
+('20190610174143'),
+('20190611223206'),
+('20190615220137'),
+('20190616024703'),
+('20190705153206'),
+('20190805181853'),
 ('20190819000000'),
 ('20190819214900'),
 ('20190826172519'),
@@ -3619,6 +4556,39 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200322074600'),
 ('20200327164000'),
 ('20200401180601'),
-('20200417184601');
+('20200417184601'),
+('20200511124730'),
+('20200513185742'),
+('20200514221948'),
+('20200521195121'),
+('20200522194450'),
+('20200525145059'),
+('20200526201913'),
+('20200528231134'),
+('20200530022039'),
+('20200602150635'),
+('20200610204428'),
+('20200611152646'),
+('20200611173112'),
+('20200616020721'),
+('20200619152842'),
+('20200623184524'),
+('20200626162146'),
+('20200628233835'),
+('20200629194941'),
+('20200701142918'),
+('20200701200531'),
+('20200703150025'),
+('20200706172252'),
+('20200707144858'),
+('20200707202743'),
+('20200708161246'),
+('20200708161247'),
+('20200709184800'),
+('20200715010430'),
+('20200715023408'),
+('20200715184252'),
+('20200716012222'),
+('20200716185848');
 
 

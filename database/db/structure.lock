@@ -25,6 +25,7 @@ tables/app/admin_profiles.sql
 tables/app/user_accounts.sql
 tables/app/certificates.sql
 tables/app/contacts.sql
+tables/app/course_categories.sql
 tables/app/providers.sql
 tables/app/courses.sql
 tables/app/curated_tags_versions.sql
@@ -137,6 +138,7 @@ triggers/public/que_jobs.sql
 indexes/app/admin_accounts.sql
 indexes/app/admin_profiles.sql
 indexes/app/course_reviews.sql
+indexes/app/course_categories.sql
 indexes/app/courses.sql
 indexes/app/curated_tags_versions.sql
 indexes/app/crawler_domains.sql
@@ -187,5 +189,6 @@ auth/user.sql
 auth/admin.sql
 auth/authenticator.sql
 auth/stitch.sql
+data/app/course_categories.sql
 data/public/schema_migrations.sql
 data/settings/secrets.sql

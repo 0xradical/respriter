@@ -32,3 +32,7 @@ WHERE published = true;
 CREATE INDEX index_courses_on_up_to_date_id
 ON app.courses
 USING btree (up_to_date_id);
+
+CREATE INDEX index_courses_on_course_category_id
+ON app.courses
+USING btree (course_category_id);

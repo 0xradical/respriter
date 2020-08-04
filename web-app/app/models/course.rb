@@ -14,6 +14,7 @@ class Course < ApplicationRecord
   paginates_per 50
 
   belongs_to :provider, optional: true
+  belongs_to :course_category, optional: true
 
   has_many :enrollments
   has_many :slug_histories
