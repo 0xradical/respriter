@@ -2,7 +2,7 @@
 
 module Search
   class CourseSearch
-    VERSION = '1.1.1'
+    VERSION = '1.2.0'
     PER_PAGE = 20
 
     attr_reader :query, :filter, :page, :per_page, :order, :boost, :session_id
