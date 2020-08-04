@@ -1,0 +1,9 @@
+<span class="fs12 c-fgM ls8 tt-u fw-b">
+  <%= t(".title", provider: @provider.name) %>
+</span>
+
+<div class="description mT16">
+  <div class="text fs14 c-fg">
+    <%= Kramdown::Document.new(@provider.description).to_html.html_safe %>
+  </div>
+</div>

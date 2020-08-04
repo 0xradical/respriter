@@ -1,0 +1,44 @@
+<span class="fs12 c-fgM ls8 tt-u fw-b">
+  <%= t(".title") %>
+</span>
+
+<div class="mT16">
+  <ul class="d-b pA0 lh2" style="list-style: none; margin-bottom: -0.5em;">
+    <% if @stats[:course_count] %>
+      <li class="mB8">
+        <span class="fs14 c-fgM">
+          <%= t(".indexed_courses") %>:
+        </span>
+        <span class="fs14 c-fg">
+          <%= number_with_delimiter(@stats[:course_count] ) %>
+        </span>
+      </li>
+    <% end %>
+    <% if @stats[:instructor_count] %>
+      <li class="mB8">
+        <span class="fs14 c-fgM">
+          <%= t(".instructors") %>:
+        </span>
+        <span class="fs14 c-fg">
+          <%= number_with_delimiter(@stats[:instructor_count]) %>
+        </span>
+      </li>
+    <% end %>
+    <% if @stats[:top_countries] %>
+      <li class="mB8">
+        <div style="display: inline-flex" class="ai-c c-fg">
+          <div class="mR4">
+            <span class="fs14 c-fgM">
+              <%= t(".main_audiences") %>:
+            </span>
+          </div>
+          <% @stats[:top_countries].each_with_index do |country, index| %>
+            <svg class="mL<%= index == 0 ? 0 : 8 %> d-ib" width="1.6rem" height="1.6rem">
+              <use xlink:href="#country-flags-<%= country.downcase %>">
+            </svg>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

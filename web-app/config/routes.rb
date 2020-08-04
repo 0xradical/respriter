@@ -48,6 +48,10 @@ Rails.application.routes.draw do
       as: :provider
   end
 
+  controller 'institutions' do
+    get '/google-academy' => :show
+  end
+
   controller 'courses' do
     get '/:provider/courses/:course' => :show,
         constraints: ProviderConstraint.new,

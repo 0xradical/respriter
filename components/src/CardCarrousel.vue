@@ -120,6 +120,10 @@
         import(
           /* webpackChunkName: "cardtypes" */ "./InstructorCardVertical.vue"
         ),
+      InstructorCardVerticalV2: () =>
+        import(
+          /* webpackChunkName: "cardtypes" */ "./InstructorCardVerticalV2.vue"
+        ),
       ProviderNavCard: () =>
         import(/* webpackChunkName: "cardtypes" */ "./ProviderNavCard.vue")
     }
