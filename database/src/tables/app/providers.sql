@@ -15,6 +15,7 @@ CREATE TABLE app.providers (
   encoded_deep_linking           boolean      DEFAULT false,
   featured_on_footer             boolean      DEFAULT false,
   featured_on_search             boolean      DEFAULT false,
+  search_boost                   integer      DEFAULT 1,
   ignore_robots_noindex_rule_for app.locale[] DEFAULT '{}'::app.locale[],
   ignore_robots_noindex_rule     boolean      DEFAULT false
 );

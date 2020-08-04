@@ -122,6 +122,12 @@ module Search
                                              }
                                            },
                                            weight: 5
+                                         },
+                                         {
+                                           field_value_factor: {
+                                             field:   :provider_search_boost,
+                                             missing: 1
+                                           }
                                          }
                                        ]),
           score_mode: 'sum',
