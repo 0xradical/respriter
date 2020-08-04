@@ -5,19 +5,36 @@ level_types        = { 'BEGINNER' => 'beginner', 'INTERMEDIATE' => 'intermediate
 date_rgx           = Regexp.new(["285c647b347d292d285c647b327d292d285c647b327d29"].pack("H*"))
 js_prop_rgx        = Regexp.new(["77696e646f775c2e4170703d282e2a29"].pack("H*"))
 apollo_pro_rgx     = proc { |course_id| Regexp.new(["2e2a257b636f757273655f69647d5c2e282e2a29"].pack('H*') % {course_id: course_id}) }
+
 payload            = pipe_process.accumulator[:payload]
 json_ld            = pipe_process.accumulator[:json_ld]&.first
+
+raise Pipe::Error.new(:skipped, 'Course missing json data') if !json_ld
+
 document           = Nokogiri::HTML(payload)
 graph              = json_ld&.[](:@graph)
 product            = graph&.select{|node| node[:@type] == 'Product' }&.first
 course             = graph&.select{|node| node[:@type] == 'Course' }&.first
+
 courseInstance     = course&.[](:hasCourseInstance)
 url                = course&.[](:url) || pipe_process.initial_accumulator[:url]
 course_name        = course&.[](:name)
-offered_by         = course&.[](:provider)&.each_with_index&.map{|provider, index| { type: provider_types[provider[:@type]], name:  provider[:name], main: (index == 0) } }
+
+provider_data = course&.[](:provider)
+raise Pipe::Error.new(:skipped, 'No provider_data in page') if !provider_data
+
+provider_data  = provider_data.kind_of?(Array) ? provider_data : [provider_data]
+offered_by         = provider_data&.each_with_index&.map{|provider, index| { type: provider_types[provider[:@type]], name:  provider[:name], main: (index == 0) } }
+
 start_date         = courseInstance&.[](:startDate)&.gsub(date_rgx){ [$1,$2,$3].join('/') }
 end_date           = courseInstance&.[](:endDate)&.gsub(date_rgx){ [$1,$2,$3].join('/') }
-instructors        = courseInstance&.[](:instructor)&.each_with_index&.map{|instructor, index| { name: instructor[:name], distinguished: false, main: (index == 0) } }
+
+instructor_data = courseInstance&.[](:instructor)
+instructor_data = provider_data if !instructor_data && provider_data.first[:@type] == 'Person'
+
+instructor_data  = instructor_data.kind_of?(Array) ? instructor_data : [instructor_data]
+instructors        = instructor_data&.each_with_index&.map{|instructor, index| { name: instructor[:name], distinguished: false, main: (index == 0) } }
+
 description        = course&.[](:description)
 pace               = 'self_paced' # session-based approximation
 version            = '1.0.0'
@@ -70,40 +87,42 @@ if jsPropertiesNode
   skills                      = Array.wrap(apollo_metadata&.dig('root','skills','json')&.keys).compact
   subtitle_languages          = Array.wrap(apollo_metadata&.dig('root','subtitleLanguages','json')&.keys).compact
   first_lecture_item          = nil
-  material                    = {
-    'weeks' => (apollo[apollo_metadata&.dig('root','material')['id']]['weeks'].keys.map do |wk,wv|
-      week = apollo[wk['id']]
-      {
-        'modules' => (week['modules'].keys.map do |mk,mv|
-          mod       = apollo[mk['id']]
-          m_id      = mod['id']
-          m_name    = mod['name']
-          m_desc    = mod['description']
-          m_t_vid   = mod['totalVideos']
-          m_t_qui   = mod['totalQuizzes']
-          m_t_dur   = mod['totalDuration']
-          m_t_lec   = mod['totalLectureDuration']
-          m_t_rea   = mod['totalReadings']
-          m_items   = (mod['items'].keys.map do |ik,iv|
-            item       = apollo[ik['id']]
-            i_id       = item['id']
-            i_duration = item['duration']
-            i_name     = item['name']
-            i_type     = item['typeName']
-            i_slug     = item['slug']
+  
+  # material                    = {
+  #   'weeks' => (apollo[apollo_metadata&.dig('root','material')['id']]['weeks'].keys.map do |wk,wv|
+  #     week = apollo[wk['id']]
+  #     {
+  #       'modules' => (week['modules'].keys.map do |mk,mv|
+  #         mod       = apollo[mk['id']]
+  #         m_id      = mod['id']
+  #         m_name    = mod['name']
+  #         m_desc    = mod['description']
+  #         m_t_vid   = mod['totalVideos']
+  #         m_t_qui   = mod['totalQuizzes']
+  #         m_t_dur   = mod['totalDuration']
+  #         m_t_lec   = mod['totalLectureDuration']
+  #         m_t_rea   = mod['totalReadings']
+  #         m_items   = (mod['items'].keys.map do |ik,iv|
+  #           item       = apollo[ik['id']]
+  #           i_id       = item['id']
+  #           i_duration = item['duration']
+  #           i_name     = item['name']
+  #           i_type     = item['typeName']
+  #           i_slug     = item['slug']
 
-            if i_type == 'lecture'
-              first_lecture_item ||= item
-            end
+  #           if i_type == 'lecture'
+  #             first_lecture_item ||= item
+  #           end
 
-            { 'id' => i_id, 'duration' => i_duration, 'name' => i_name, 'type' => i_type, 'slug' => i_slug }
-          end)
+  #           { 'id' => i_id, 'duration' => i_duration, 'name' => i_name, 'type' => i_type, 'slug' => i_slug }
+  #         end)
 
-          { 'id' => m_id, 'name' => m_name, 'description' => m_desc, 'total_videos' => m_t_vid, 'total_duration' => m_t_dur, 'total_lecture_duration' => m_t_lec, 'total_readings' => m_t_rea, 'items' => m_items}
-        end)
-      }
-    end)
-  }
+  #         { 'id' => m_id, 'name' => m_name, 'description' => m_desc, 'total_videos' => m_t_vid, 'total_duration' => m_t_dur, 'total_lecture_duration' => m_t_lec, 'total_readings' => m_t_rea, 'items' => m_items}
+  #       end)
+  #     }
+  #   end)
+  # }
+
   first_lecture_url  = if first_lecture_item
     ["https://www.coursera.org/lecture", coursera_slug, [first_lecture_item['slug'], first_lecture_item['id']].join('-') ].join('/')
   end
