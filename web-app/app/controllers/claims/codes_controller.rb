@@ -1,5 +1,7 @@
 module Claims
   class CodesController < BaseController
+  
+    before_action :authenticate_user_account!
 
     def verify
       @orphaned_profile = OrphanedProfile.find_by!(claim_code: params[:claim_code])
