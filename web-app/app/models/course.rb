@@ -21,7 +21,7 @@ class Course < ApplicationRecord
   has_many :user_accounts, through: :enrollments
   has_many :curated_tags_versions
 
-  delegate :name, :slug, :featured_on_search, to: :provider, prefix: true
+  delegate :name, :slug, :featured_on_search, :search_boost, to: :provider, prefix: true
   delegate :curated_tags,
            :excluded_tags,
            :add_tag,
@@ -218,6 +218,7 @@ class Course < ApplicationRecord
       indexes :from_index_tool,             type: 'boolean'
       indexes :provider_slug,               type: 'keyword'
       indexes :provider_featured_on_search, type: 'boolean'
+      indexes :provider_search_boost,       type: 'integer'
       indexes :trial_period,                type: 'object'
       indexes :subscription_period,         type: 'object'
       indexes :video,                       type: 'object'
@@ -484,6 +485,7 @@ class Course < ApplicationRecord
       from_index_tool:             ProviderCrawler.where(provider_id: provider_id).exists?,
       provider_name:               provider_name,
       provider_featured_on_search: provider_featured_on_search,
+      provider_search_boost:       provider_search_boost,
       curated_tags:                curated_tags,
       curated_root_tags:           (curated_tags & RootTag.all.map(&:id)),
       provider_slug:               provider_slug,
