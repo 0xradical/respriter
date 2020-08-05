@@ -20,6 +20,7 @@ class Course < ApplicationRecord
   has_many :slug_histories
   has_many :user_accounts, through: :enrollments
   has_many :curated_tags_versions
+  has_many :pricings, class_name: 'CoursePricing', foreign_key: 'course_id'
 
   delegate :name, :slug, :featured_on_search, :search_boost, to: :provider, prefix: true
   delegate :curated_tags,

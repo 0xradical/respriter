@@ -5,17 +5,22 @@ types/app/authority_confirmation_status.sql
 types/app/category.sql
 types/app/contact_reason.sql
 types/app/crawler_status.sql
+types/app/iso639_1_alpha2_code.sql
 types/app/iso639_code.sql
 types/app/iso3166_1_alpha2_code.sql
-types/app/iso639_1_alpha2_code.sql
+types/app/iso4217_code.sql
 types/app/level.sql
 types/app/locale.sql
 types/app/locale_status.sql
 types/app/pace.sql
 types/app/payment_source.sql
 types/app/payment_status.sql
+types/app/period_unit.sql
 types/app/post_status.sql
 types/app/preview_course_status.sql
+types/app/pricing.sql
+types/app/pricing_customer.sql
+types/app/pricing_plan.sql
 types/app/provider_logo.sql
 types/app/sitemap.sql
 types/app/source.sql
@@ -28,6 +33,7 @@ tables/app/contacts.sql
 tables/app/course_categories.sql
 tables/app/providers.sql
 tables/app/courses.sql
+tables/app/course_pricings.sql
 tables/app/curated_tags_versions.sql
 tables/app/tracked_searches.sql
 tables/app/enrollments.sql
@@ -46,6 +52,7 @@ tables/app/posts.sql
 tables/app/post_relations.sql
 tables/app/preview_courses.sql
 tables/app/preview_course_images.sql
+tables/app/preview_course_pricings.sql
 tables/app/profiles.sql
 tables/app/used_usernames.sql
 tables/app/promo_accounts.sql
@@ -65,6 +72,8 @@ procedures/api/user_login.sql
 procedures/app/content_type_by_extension.sql
 procedures/app/currency_index.sql
 procedures/app/fill_sitemaps.sql
+procedures/app/insert_into_preview_course_pricings.sql
+procedures/app/insert_into_course_pricings.sql
 procedures/app/merge_sitemaps.sql
 procedures/app/new_sitemaps.sql
 procedures/app/normalize_languages.sql
@@ -91,6 +100,7 @@ procedures/settings/get.sql
 procedures/settings/set.sql
 procedures/triggers/check_confirmation_status_transition.sql
 procedures/triggers/check_course_provider_relationship.sql
+procedures/triggers/course_flatten_pricing_models.sql
 procedures/triggers/course_keep_slug.sql
 procedures/triggers/course_normalize_languages.sql
 procedures/triggers/create_subscription.sql
@@ -98,6 +108,7 @@ procedures/triggers/encrypt_password.sql
 procedures/triggers/gen_compound_ext_id.sql
 procedures/triggers/insert_or_add_to_provider.sql
 procedures/triggers/md5_url.sql
+procedures/triggers/preview_course_flatten_pricing_models.sql
 procedures/triggers/sort_prices.sql
 procedures/triggers/track_updated_at.sql
 procedures/triggers/use_username.sql
@@ -139,6 +150,7 @@ indexes/app/admin_accounts.sql
 indexes/app/admin_profiles.sql
 indexes/app/course_reviews.sql
 indexes/app/course_categories.sql
+indexes/app/course_pricings.sql
 indexes/app/courses.sql
 indexes/app/curated_tags_versions.sql
 indexes/app/crawler_domains.sql
@@ -150,6 +162,7 @@ indexes/app/oauth_accounts.sql
 indexes/app/orphaned_profiles.sql
 indexes/app/post_relations.sql
 indexes/app/posts.sql
+indexes/app/preview_course_pricings.sql
 indexes/app/profiles.sql
 indexes/app/promo_accounts.sql
 indexes/app/provider_logos.sql

@@ -22,7 +22,6 @@ BEGIN
   IF array_length(results,1) > 0 THEN
     NEW.pricing_models = to_jsonb(results);
   END IF;
-  NEW.__source_schema__ = NULL;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

@@ -1,0 +1,3 @@
+CREATE INDEX index_preview_course_pricings_on_preview_course_id
+ON app.preview_course_pricings
+USING btree (preview_course_id);

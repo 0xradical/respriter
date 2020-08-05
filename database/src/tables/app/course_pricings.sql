@@ -1,0 +1,30 @@
+CREATE TABLE app.course_pricings (
+  id                         uuid        DEFAULT public.uuid_generate_v4() PRIMARY KEY,
+  course_id                  uuid        REFERENCES app.courses(id),
+  pricing_type               app.pricing NOT NULL,
+  plan_type                  app.pricing_plan NOT NULL,
+  customer_type              app.pricing_customer,
+  price                      decimal(8,2) NOT NULL,
+  total_price                decimal(8,2),
+  original_price             decimal(8,2),
+  discount                   decimal(8,2),
+  currency                   app.iso4217_code NOT NULL,
+  payment_period_unit        app.period_unit,
+  payment_period_value       integer,
+  trial_period_unit          app.period_unit,
+  trial_period_value         integer,
+  subscription_period_unit   app.period_unit,
+  subscription_period_value  integer,
+  created_at                 timestamptz DEFAULT NOW() NOT NULL,
+  updated_at                 timestamptz DEFAULT NOW() NOT NULL,
+  CONSTRAINT                 course_pricing_uniqueness unique(
+                              course_id,
+                              pricing_type,
+                              plan_type,
+                              customer_type,
+                              currency,
+                              payment_period_unit,
+                              subscription_period_unit,
+                              trial_period_unit
+                            )
+);
