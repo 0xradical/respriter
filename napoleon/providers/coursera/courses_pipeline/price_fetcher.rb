@@ -83,8 +83,8 @@ call
 
 course_price_payload = pipe_process.accumulator[:payload]
 
-raise "This course has more than one coursera price model" if course_price_payload[:elements].size > 1
-raise "This course has no coursera price model" if course_price_payload[:elements].size < 1
+raise Pipe::Error.new(:skipped,"This course has more than one coursera price model") if course_price_payload[:elements].size > 1
+raise  Pipe::Error.new(:skipped,"This course has no coursera price model") if course_price_payload[:elements].size < 1
 
 course_price_model  = course_price_payload[:elements][0]
 course_type         = course_price_model[:courseType]
