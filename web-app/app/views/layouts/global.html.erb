@@ -1,5 +1,6 @@
 <!DOCTYPE>
-<html data-theme='<%= cookies[:theme] %>'>
+<%# this position:relative fixes issues with tippy %>
+<html data-theme='<%= cookies[:theme] %>' style="position:relative">
   <head>
 
     <!-- Performance tags -->
@@ -84,6 +85,10 @@
     <%= preload_link_tag elements_asset_path('icon-font.css'),    as: 'style'    %>
     <%= preload_link_tag elements_asset_path('bundle.js'),        as: 'script'  %>
 
+    <!-- Bootstrap css -->
+    <%# should come first to avoid winning over elements css with equal specificity %>
+    <%= stylesheet_bundles_with_chunks_tag 'bootstrap' %>
+
     <!-- Elements css-->
     <% if content_for?(:elements_css) %>
       <%= yield :elements_css %>
@@ -92,7 +97,6 @@
     <% end %>
 
     <!-- App css -->
-    <%= stylesheet_bundles_with_chunks_tag 'bootstrap' %>
     <%= stylesheet_bundles_with_chunks_tag 'vendor' %>
     <%= stylesheet_bundles_with_chunks_tag 'application' %>
 

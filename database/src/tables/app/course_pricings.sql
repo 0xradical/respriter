@@ -16,15 +16,5 @@ CREATE TABLE app.course_pricings (
   subscription_period_unit   app.period_unit,
   subscription_period_value  integer,
   created_at                 timestamptz DEFAULT NOW() NOT NULL,
-  updated_at                 timestamptz DEFAULT NOW() NOT NULL,
-  CONSTRAINT                 course_pricing_uniqueness unique(
-                              course_id,
-                              pricing_type,
-                              plan_type,
-                              customer_type,
-                              currency,
-                              payment_period_unit,
-                              subscription_period_unit,
-                              trial_period_unit
-                            )
+  updated_at                 timestamptz DEFAULT NOW() NOT NULL
 );

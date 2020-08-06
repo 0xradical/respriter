@@ -119,7 +119,8 @@
       this.$nextTick(function () {
         if (this.$refs.tooltip && this.$refs.tooltipContent) {
           tippy(this.$refs.tooltip, {
-            content: this.$refs.tooltipContent.$el.innerHTML
+            content: this.$refs.tooltipContent.$el.innerHTML,
+            placement: "bottom"
           });
         }
       });

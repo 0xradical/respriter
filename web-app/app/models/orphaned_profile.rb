@@ -17,8 +17,8 @@ class OrphanedProfile < ApplicationRecord
   scope :vacant,            -> { enabled.where('claimed_by IS NULL') }
   scope :with_slug,         -> { where.not(slug: nil) }
   scope :with_courses,      -> { where("course_ids != '{}'") }
-  scope :teaching_subjects, -> (subjects)  { where('teaching_subjects @> ARRAY[?]::varchar[]', subjects) }
-  scope :teaching_at,       -> (providers) { where('teaching_at @> ARRAY[?]::varchar[]', providers)      }
+  scope :teaching_subjects, ->(subjects)  { where('teaching_subjects @> ARRAY[?]::varchar[]', subjects) }
+  scope :teaching_at,       ->(providers) { where('teaching_at @> ARRAY[?]::varchar[]', providers)      }
 
   after_initialize :reset_code_claim_process!, if: :claim_has_expired?
 
@@ -89,8 +89,9 @@ class OrphanedProfile < ApplicationRecord
     end
   end
 
-  def courses
-    Course.where(id: course_ids).published.limit(50)
+  def courses(limit = 50)
+    result = Course.where(id: course_ids).published
+    limit ? result.limit(limit) : result
   end
 
   def self.courses_by_instructor_name(name)
@@ -200,5 +201,4 @@ class OrphanedProfile < ApplicationRecord
     update(ignore_robots_noindex_rule_for: Locale.to_pg_array(locales))
     reload
   end
-
 end

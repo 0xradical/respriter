@@ -25,6 +25,7 @@ const webpackConfig = (
         "contact-us",
         "course-page",
         "course-sharing",
+        "courses/show",
         "locales",
         "post-card",
         "providers/show",

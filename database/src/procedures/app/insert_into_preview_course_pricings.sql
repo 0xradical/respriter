@@ -1,4 +1,4 @@
-CREATE FUNCTION app.insert_into_preview_course_pricings(preview_course_id uuid, pricing jsonb)
+CREATE FUNCTION app.insert_into_preview_course_pricings(pcid uuid, pricing jsonb)
 RETURNS void AS $$
 BEGIN
   INSERT INTO app.preview_course_pricings (
@@ -17,7 +17,7 @@ BEGIN
           subscription_period_unit,
           subscription_period_value
         ) VALUES (
-          preview_course_id,
+          pcid,
           (pricing->>'type')::app.pricing,
           (pricing->>'plan_type')::app.pricing_plan,
           (pricing->>'customer_type')::app.pricing_customer,
@@ -31,7 +31,16 @@ BEGIN
           (pricing->'trial_period'->>'value')::integer,
           (pricing->'subscription_period'->>'unit')::app.period_unit,
           (pricing->'subscription_period'->>'value')::integer
-        ) ON CONFLICT ON CONSTRAINT preview_course_pricing_uniqueness
+        ) ON CONFLICT (
+                       preview_course_id,
+                       pricing_type,
+                       plan_type,
+                       COALESCE(customer_type, 'unknown'),
+                       currency,
+                       COALESCE(payment_period_unit, 'unknown'),
+                       COALESCE(subscription_period_unit, 'unknown'),
+                       COALESCE(trial_period_unit, 'unknown')
+                      )
           DO UPDATE SET pricing_type = (pricing->>'type')::app.pricing,
                         plan_type = (pricing->>'plan_type')::app.pricing_plan,
                         customer_type = (pricing->>'customer_type')::app.pricing_customer,
