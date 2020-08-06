@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  caches_action :show
+
   def index
     @posts = Post.published.locale(I18n.locale)
                  .tags(params[:tags]).with_provider(params[:provider]).page(params[:page]).order(published_at: :desc)

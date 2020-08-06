@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
+
+  caches_action :show
+
   include CourseSearchHelper
 
   prepend_before_action :normalize_params
