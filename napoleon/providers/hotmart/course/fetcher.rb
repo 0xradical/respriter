@@ -52,7 +52,8 @@ instructor = {
 instructor[:email] = hotmarter['email'] if hotmarter['email']
 instructors = [ instructor ]
 
-scraped_language = product_data['language'].downcase
+scraped_language = product_data['language']&.downcase
+raise Pipe::Error.new(:skipped, 'No course language') if !scraped_language
 
 # 'pt_br' -> 'pt-BR'
 lang = scraped_language.split('_').first
@@ -99,14 +100,21 @@ content[:rating] = { type: 'stars', value: rating, range: 5 } if rating
 video_link = product_data['videoLink']
 if video_link && video_link != ''  
   if video_link.include?('youtu.be') || video_link.include?('youtube.com/watch')
-  content[:video] = {
-    type:          'youtube',
-    id:            video_link[/(?<=youtu.be\/)([-\w]+)/] || video_link[/(?<=youtube.com\/watch\?v=)([-\w]+)/] || video_link[/(?<=&v=)([-\w])+/]
-  } 
+    id = video_link[/(?<=youtu.be\/)([-\w]+)/] || 
+         video_link[/(?<=youtube.com\/watch\?v=)([-\w]+)/] ||
+         video_link[/(?<=&v=)([-\w])+/] || 
+         video_link[/(?<=youtube.com\/embed\/)([-\w]+)/]
+    raise Pipe::Error.new(:skipped, 'No video id') if !id
+    content[:video] = {
+      type:          'youtube',
+      id:            id
+    } 
   elsif video_link.include?('vimeo.com')
+    id = video_link[/(?<=vimeo.com\/)(\w+)/]
+    raise Pipe::Error.new(:skipped, 'No video id') if !id
     content[:video] = {
       type:          'vimeo',
-      id:            video_link[/(?<=vimeo.com\/)(\w+)/] 
+      id:            id
     }   
   end
 end
