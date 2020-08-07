@@ -129,6 +129,7 @@ content[:slug] = [
 
 pipe_process.data = {
   content: content,
+  product_id: product_id
 }
 
 price_api_url = "https://api-display.hotmart.com/back/rest/v3/product/#{product_id}/offer"

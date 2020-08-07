@@ -36,6 +36,10 @@ courses_template AS (
         }
       },
       {
+        "status_map": [
+          [ 204, "skipped" ],
+          [ 200, "pending" ]
+        ],
         "http": {
           "headers": {
             "user_agent": "<%= user_agent %>"

@@ -1,8 +1,11 @@
 call
 
 content = pipe_process.data[:content]
+product_id = pipe_process.data[:product_id]
 
 price_json = JSON.load(pipe_process.accumulator[:payload])
+
+if !price_json
 
 payment_data = price_json['products'].first['offer']['paymentInfoResponse']['installmentList']&.select{|k| k['installmentNumber'] == 1}&.first&.[]('offerInstallmentTotalPrice') || price_json['products'].first['offer']['paymentInfoResponse']['offerPriceWithoutVAT']
 prices = [{
