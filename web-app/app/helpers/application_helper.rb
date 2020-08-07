@@ -1,8 +1,16 @@
 # frozen_string_literal: true
 
+require_relative '../../lib/hypernova_batch_builder'
+
 module ApplicationHelper
   def current_url_without_query_params
     request.base_url + request.path
+  end
+
+  def hypernova_batch_replace(&block)
+    builder = HypernovaBatchBuilder.new(@_hypernova_service)
+    str = capture(builder, &block)
+    builder.replace(str)
   end
 
   def alert_alias(name)

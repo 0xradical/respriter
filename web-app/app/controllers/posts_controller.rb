@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  caches_action :show
 
   def index
     @posts = Post.published.locale(I18n.locale)
