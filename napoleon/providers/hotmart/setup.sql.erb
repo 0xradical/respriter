@@ -36,19 +36,23 @@ courses_template AS (
         }
       },
       {
+        "status_map": [
+          [ 204, "skipped" ],
+          [ 200, "pending" ]
+        ],
         "http": {
           "headers": {
             "user_agent": "<%= user_agent %>"
           }
         },
-        "type": "Fetcher",
-        "script": {
-          "type": "ruby",
-          "source_code": <%= price_fetcher %>
-        }
+        "type": "Fetcher"
       },
       {
-        "type":"ResourceCreator"
+        "type":"ResourceCreator",
+        "script": {
+          "type": "ruby",
+          "source_code": <%= course_creator %>
+        }
       }
     ]'
   RETURNING *
