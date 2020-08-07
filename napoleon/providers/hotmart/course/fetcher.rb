@@ -127,6 +127,10 @@ content[:slug] = [
   .gsub(/[^0-9a-z\-]/i, '')
   .gsub(/(^\-)|(\-$)/, '')
 
+pipe_process.data = {
+  content: content,
+}
+
 price_api_url = "https://api-display.hotmart.com/back/rest/v3/product/#{product_id}/offer"
 price_api_url += "?off=#{offer_id}" if offer_id
 pipe_process.accumulator ={
