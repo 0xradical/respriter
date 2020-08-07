@@ -1,5 +1,3 @@
-call
-
 content = pipe_process.data[:content]
 product_id = pipe_process.data[:product_id]
 
@@ -24,3 +22,5 @@ pipe_process.accumulator = {
   content: content,
   relations: Hash.new
 }
+
+call
