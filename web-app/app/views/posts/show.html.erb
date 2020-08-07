@@ -68,8 +68,8 @@
           <% end %>
 
           <div class='post__meta-slot1'>
-              <%= hypernova_batch_replace do |batch_builder| %>
-                <%= batch_builder.render_vue_component "Sharing", {
+              <%= hypernova_cache_handler do |handler| %>
+                <%= handler.render_vue_component "Sharing", {
                     propsData: {
                       options: {
                         title: @post.meta['title'],

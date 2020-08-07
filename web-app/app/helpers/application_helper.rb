@@ -7,10 +7,14 @@ module ApplicationHelper
     request.base_url + request.path
   end
 
-  def hypernova_batch_replace(&block)
+  def hypernova_cache_handler(&block)
     builder = HypernovaBatchBuilder.new(@_hypernova_service)
     str = capture(builder, &block)
     builder.replace(str)
+  end
+
+  def cache_key_for(objects)
+    Digest::MD5.hexdigest(objects.map(&:inspect).join)
   end
 
   def alert_alias(name)
