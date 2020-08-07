@@ -23,7 +23,7 @@ sitemap_url = 'https://www.hotmart.com/product/sitemap_index.xml'
 
 sitemap_demux = sql_safe_parsed_unparsed_code 'sitemap/demux.rb'
 course_fetcher = sql_safe_parsed_unparsed_code 'course/fetcher.rb'
-course_creator = sql_safe_parsed_unparsed_code 'course/price_fetcher.rb'
+course_creator = sql_safe_parsed_unparsed_code 'course/creator.rb'
 
 setup_sql = ERB.new(template).result(binding)
 
