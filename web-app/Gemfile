@@ -9,7 +9,6 @@ ruby '2.6.5'
 
 gem 'active_record_upsert',             '~> 0.9.5'
 gem 'activerecord-import',              '~> 1.0.4'  # Bulk insert for ActiveRecord
-gem 'actionpack-action_caching'
 gem 'affiliate_hub',                    github: 'codextremist/affiliate_hub'
 gem 'affiliate_hub_awin',               github: 'codextremist/affiliate_hub_awin'
 gem 'affiliate_hub_cj',                 github: 'codextremist/affiliate_hub_cj'
