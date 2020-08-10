@@ -14,6 +14,10 @@ class Rack::Attack
     self.cache.read("allow:#{req.remote_ip}")
   end
 
+  safelist("throttling bypass") do |req|
+    req.env['X-THROTTLING-BYPASS-TOKEN'] == ENV['THROTTLING_BYPASS_TOKEN']
+  end
+
   blocklist("blocked IPs") do |req|
     self.cache.read("block:#{req.remote_ip}")
   end
