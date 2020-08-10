@@ -10,6 +10,12 @@ CREATE TRIGGER sort_prices
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.sort_prices();
 
+CREATE TRIGGER course_flatten_pricing_models
+  BEFORE INSERT OR UPDATE
+  ON app.courses
+  FOR EACH ROW
+    EXECUTE PROCEDURE trigger.course_flatten_pricing_models();
+
 CREATE TRIGGER course_keep_slug
   AFTER INSERT OR UPDATE
   ON app.courses

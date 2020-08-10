@@ -20,6 +20,7 @@ class Course < ApplicationRecord
   has_many :slug_histories
   has_many :user_accounts, through: :enrollments
   has_many :curated_tags_versions
+  has_many :pricings, class_name: 'CoursePricing', foreign_key: 'course_id'
 
   delegate :name, :slug, :featured_on_search, :search_boost, to: :provider, prefix: true
   delegate :curated_tags,
@@ -431,13 +432,24 @@ class Course < ApplicationRecord
       profile =
         OrphanedProfile.enabled.with_slug.where(name: instructor['name']).first
       if profile
-        instructor['profile_slug'] = profile.slug
-        instructor['profile_avatar_url'] = profile.avatar_url if profile.avatar_url
-        instructor['profile_country'] = profile.country if profile.country
+        claimed = profile.claimed_by ? Profile.find_by(username: profile.claimed_by) : nil
+        instructor['profile_slug'] = claimed&.username || profile.slug
+        instructor['profile_subject'] = claimed&.teaching_subjects&.first || profile.teaching_subjects.first
+        instructor['profile_bio'] = claimed&.long_bio || claimed&.short_bio || profile.long_bio || profile.short_bio
+        instructor['profile_course_count'] = [profile.courses(nil).count, claimed ? claimed.courses(nil).count : 0].max
+        instructor['profile_avatar_url'] = claimed&.avatar_url || profile.avatar_url
+        instructor['profile_teaching_at'] = profile.teaching_at
+        instructor['profile_elearning_profiles'] = claimed&.elearning_profiles || profile.elearning_profiles || {}
+        instructor['profile_social_profiles'] = claimed&.social_profiles || profile.social_profiles || {}
+        instructor['profile_website'] = claimed&.website || profile.website
+        instructor['profile_country'] = claimed&.country || profile.country
         instructor['profile_path'] =
-          Rails.application.routes.url_helpers.orphaned_profile_path(
-            profile.slug
-          )
+          claimed ? Rails.application.routes.url_helpers.user_account_path(
+            claimed.username
+          ) :
+            Rails.application.routes.url_helpers.orphaned_profile_path(
+              profile.slug
+            )
       end
 
       instructor

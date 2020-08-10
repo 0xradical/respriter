@@ -15,3 +15,9 @@ CREATE TRIGGER sort_prices
   ON app.preview_courses
   FOR EACH ROW
     EXECUTE PROCEDURE triggers.sort_prices();
+
+CREATE TRIGGER preview_course_flatten_pricing_models
+  BEFORE INSERT OR UPDATE
+  ON app.preview_courses
+  FOR EACH ROW
+    EXECUTE PROCEDURE triggers.preview_course_flatten_pricing_models();

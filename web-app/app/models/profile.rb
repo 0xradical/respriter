@@ -13,6 +13,11 @@ class Profile < ApplicationRecord
   scope :is_public,         -> { where(public: true) }
   scope :publicly_listable, -> { is_public.where.not(username: nil) }
 
+  def courses(limit = 50)
+    result = Course.where(id: course_ids).published
+    limit ? result.limit(limit) : result
+  end
+
   def avatar_url
     uploaded_avatar_url || oauth_avatar_url
   end

@@ -26,6 +26,7 @@ require_relative '../config/webpack/middleware'
 require_relative '../lib/elements/elements'
 require_relative '../lib/uuid'
 require_relative '../lib/hypernova_batch_builder'
+require_relative '../lib/html_heading_demoter'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
