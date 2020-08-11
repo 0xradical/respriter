@@ -15,7 +15,7 @@ class Rack::Attack
   end
 
   safelist("throttling bypass") do |req|
-    req.env['HTTP_X-THROTTLING-BYPASS-TOKEN'] == ENV['THROTTLING_BYPASS_TOKEN']
+    req.env['HTTP_APIKEY'] == ENV['THROTTLING_BYPASS_TOKEN']
   end
 
   blocklist("blocked IPs") do |req|
