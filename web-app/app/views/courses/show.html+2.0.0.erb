@@ -1,4 +1,4 @@
-<% cache [I18n.locale.to_s, Time.now.to_i, @course] do %>
+<% cache [I18n.locale.to_s, @course] do %>
   <% content_for :meta do %>
     <title><%= truncate(t(".meta.title", course: @course.name), length: 60) %></title>
     <meta name='description' content='<%= truncate(t(".meta.description", course: @course.name, provider: @course.provider.name), length: 155) %>' />
