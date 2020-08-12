@@ -1,4 +1,4 @@
-<% cache cache_key_for([@root_tags,@count_by_category,@providers_count,@courses_count]) do %>
+<% cache cache_key_for([I18n.locale.to_s,@root_tags,@count_by_category,@providers_count,@courses_count]) do %>
   <%= content_for :meta do %>
     <title><%= t('.meta.title') %></title>
     <meta name='twitter:title' content="<%= t('.meta.title') %>" />
