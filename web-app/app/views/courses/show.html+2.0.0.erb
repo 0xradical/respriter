@@ -27,41 +27,48 @@
 <% end %>
 
 <%= content_for :sprites do %>
-  <%= URI.open(sprites_url({
-    tags: RootTag.all.map(&:id),
-    brand: "*",
-    "country-flags": [country_flags.values, Array.wrap(@course.instructors.map{|i| i['profile_country']&.downcase })].flatten.compact.uniq,
-    icons: [
-      "facebook-circle",
-      "linkedin-circle",
-      "instagram-circle",
-      "twitter-circle",
-      "reddit-circle",
-      "arrow-down",
-      "audio",
-      "subtitle",
-      "envelope",
-      "certificate",
-      "building",
-      "id-badge",
-      "velocimeter",
-      "level",
-      "clock",
-      "close",
-      "play",
-      "video-recorder-unavailable",
-      "question",
-      "clipboard",
-      "share",
-      "avatar",
-      "website",
-      "monitor-gear",
-      "camera",
-      @course.instructors.flat_map{|i| i['profile_elearning_profiles']&.keys},
-      @course.instructors.flat_map{|i| i['profile_social_profiles']&.keys},
-    ].flatten.compact.uniq,
-    providers: [@course.instructors.flat_map{|i| Array.wrap(i['profile_teaching_at']).flat_map{|ta| ta.gsub(/\s/,"-").downcase} }, @course.provider.slug, @course.similar.map(&:provider).map(&:slug)].flatten.compact.uniq
-  })).read&.html_safe %>
+  <% cache 'sprites' do %>
+    <%= URI.open(sprites_url({
+      tags: RootTag.all.map(&:id),
+      brand: "*",
+      "country-flags": [country_flags.values, Array.wrap(@course.instructors.map{|i| i['profile_country']&.downcase })].flatten.compact.uniq,
+      icons: [
+        "facebook-circle",
+        "linkedin-circle",
+        "instagram-circle",
+        "twitter-circle",
+        "reddit-circle",
+        "arrow-down",
+        "audio",
+        "subtitle",
+        "envelope",
+        "certificate",
+        "building",
+        "id-badge",
+        "velocimeter",
+        "level",
+        "clock",
+        "close",
+        "play",
+        "video-recorder-unavailable",
+        "question",
+        "clipboard",
+        "share",
+        "avatar",
+        "website",
+        "monitor-gear",
+        "camera",
+        @course.instructors.flat_map{|i| i['profile_elearning_profiles']&.keys},
+        @course.instructors.flat_map{|i| i['profile_social_profiles']&.keys},
+      ].flatten.compact.uniq,
+      providers: [@course.instructors.flat_map{|i| Array.wrap(i['profile_teaching_at']).flat_map{|ta| ta.gsub(/\s/,"-").downcase} }, @course.provider.slug, @course.similar.map(&:provider).map(&:slug)].flatten.compact.uniq
+    })).read&.html_safe %>
+  <% end %>
+<% end %>
+
+<%# Check https://web.dev/preload-responsive-images/  %>
+<%= content_for :preload do %>
+  <%= preload_link_tag @course.as_indexed_json.dig(:video, "thumbnail_url"), as: 'image' %>
 <% end %>
 
 <%= content_for :stylesheets do %>

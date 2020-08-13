@@ -84,6 +84,7 @@
     <%= preload_link_tag elements_asset_path('bundle.css'),       as: 'style'   %>
     <%= preload_link_tag elements_asset_path('icon-font.css'),    as: 'style'    %>
     <%= preload_link_tag elements_asset_path('bundle.js'),        as: 'script'  %>
+    <%= yield :preload %>
 
     <!-- Bootstrap css -->
     <%# should come first to avoid winning over elements css with equal specificity %>
