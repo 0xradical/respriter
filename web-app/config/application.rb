@@ -28,6 +28,8 @@ require_relative '../lib/uuid'
 require_relative '../lib/hypernova_batch_builder'
 require_relative '../lib/html_heading_demoter'
 
+require_relative '../monkey_patches/content_for_inside_cache'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
