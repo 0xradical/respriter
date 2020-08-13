@@ -66,12 +66,14 @@
   <% end %>
 <% end %>
 
-<%# Check https://web.dev/preload-responsive-images/  %>
 <%= content_for :preload do %>
+  <%# Check https://web.dev/preload-responsive-images/  %>
   <% thumbnail_url = @course.as_indexed_json.dig(:video, "thumbnail_url") %>
   <% if thumbnail_url.present? %>
     <%= preload_link_tag thumbnail_url, as: 'image' %>
   <% end %>
+  <%= stylesheet_bundles_with_chunks_tag 'courses-show',    rel: 'preload', as: 'style', media: nil %>
+  <%= stylesheet_bundles_with_chunks_tag 'card-carrousel',  rel: 'preload', as: 'style', media: nil %>
 <% end %>
 
 <%= content_for :stylesheets do %>
