@@ -70,10 +70,10 @@
 <% end %>
 
 <%= content_for :javascript do %>
-  <%= javascript_bundles_with_chunks_tag "courses-show" %>
-  <%= javascript_bundles_with_chunks_tag "card-carrousel" %>
-  <%= javascript_bundles_with_chunks_tag "course-sharing" %>
-  <%= javascript_bundles_with_chunks_tag 'video-preview' %>
+  <%= javascript_bundles_with_chunks_tag "courses-show" ,   defer: true %>
+  <%= javascript_bundles_with_chunks_tag "card-carrousel",  defer: true %>
+  <%= javascript_bundles_with_chunks_tag "course-sharing",  defer: true %>
+  <%= javascript_bundles_with_chunks_tag 'video-preview',   defer: true %>
 <% end %>
 
 <% cache [I18n.locale.to_s, @course] do %>

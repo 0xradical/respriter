@@ -184,13 +184,13 @@
     <% end %>
 
     <%= render 'offcanvas_menu' %>
-    <%= javascript_bundles_with_chunks_tag 'vendor',      async: true %>
-    <%= javascript_bundles_with_chunks_tag 'application', async: true %>
+    <%= javascript_bundles_with_chunks_tag 'vendor',      defer: true %>
+    <%= javascript_bundles_with_chunks_tag 'application', defer: true %>
 
     <% if content_for?(:elements_js) %>
       <%= yield :elements_js %>
     <% else %>
-      <%= elements_javascript_include_tag('bundle', async: false,  skip_pipeline: true) %>
+      <%= elements_javascript_include_tag('bundle', defer: true,  skip_pipeline: true) %>
     <% end %>
 
     <%= yield :javascript  %>
