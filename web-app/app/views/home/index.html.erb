@@ -9,7 +9,7 @@
   <% end %>
 
   <% content_for :sprites do %>
-    <%= sprites({
+    <%= URI.open(sprites_url({
       tags: @root_tags.map(&:id),
       icons: [
         "facebook-circle",
@@ -37,7 +37,7 @@
       },
       host: Elements.asset_host,
       version: '8.4.0'
-    ) %>
+    )).read.html_safe %>
   <% end %>
 
   <div class='bc-s'>

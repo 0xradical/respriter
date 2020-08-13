@@ -9,6 +9,13 @@ module RespriterHelper
     respriter_url.present?
   end
 
+  def sprites_url(params = {}, options = {})
+    host, version = get_options(options.extract!(:host, :version))
+    URI.join(URI(respriter_url),version).tap do |uri|
+      uri.query = params.flat_map { |k, v| "#{k}=#{Array.wrap(v).compact.uniq.join(',')}" }.join('&')
+    end
+  end
+
   def sprites(params = {}, options = {})
     host, version = get_options(options.extract!(:host, :version))
 

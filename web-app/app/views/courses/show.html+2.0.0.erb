@@ -27,7 +27,7 @@
 <% end %>
 
 <%= content_for :sprites do %>
-  <%= sprites({
+  <%= URI.open(sprites_url({
     tags: RootTag.all.map(&:id),
     brand: "*",
     "country-flags": [country_flags.values, Array.wrap(@course.instructors.map{|i| i['profile_country']&.downcase })].flatten.compact.uniq,
@@ -61,7 +61,7 @@
       @course.instructors.flat_map{|i| i['profile_social_profiles']&.keys},
     ].flatten.compact.uniq,
     providers: [@course.instructors.flat_map{|i| Array.wrap(i['profile_teaching_at']).flat_map{|ta| ta.gsub(/\s/,"-").downcase} }, @course.provider.slug, @course.similar.map(&:provider).map(&:slug)].flatten.compact.uniq
-  }) %>
+  })).read&.html_safe %>
 <% end %>
 
 <%= content_for :stylesheets do %>
