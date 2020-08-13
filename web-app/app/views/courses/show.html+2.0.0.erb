@@ -21,8 +21,8 @@
 
 <% if @course.video&.dig('thumbnail_url') %>
   <% content_for :meta_og_image do %>
-    <meta property='og:image' content='<%= @course.video&.dig('thumbnail_url') %>'>
-    <meta name='twitter:image' content='<%= @course.video&.dig('thumbnail_url') %>'>
+    <meta property='og:image' content='<%= @course.as_indexed_json.dig(:video, "thumbnail_url")  %>' />
+    <meta name='twitter:image' content='<%= @course.as_indexed_json.dig(:video, "thumbnail_url") %>' />
   <% end %>
 <% end %>
 
