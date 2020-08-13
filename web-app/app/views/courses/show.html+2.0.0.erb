@@ -1,82 +1,82 @@
+<% content_for :meta do %>
+  <title><%= truncate(t(".meta.title", course: @course.name), length: 60) %></title>
+  <meta name='description' content='<%= truncate(t(".meta.description", course: @course.name, provider: @course.provider.name), length: 155) %>' />
+  <meta property='og:description' content='<%= truncate(t(".meta.description", course: @course.name, provider: @course.provider.name), length: 155) %>' />
+  <% unless @course.indexable_by_robots? %>
+    <meta name="robots" content="noindex" />
+  <% end %>
+<% end %>
+
+<% content_for :meta_canonical do %>
+  <% if @course.canonical_subdomain.present? %>
+    <link rel='canonical' href="https://<%= @course.canonical_subdomain %>.classpert.com<%= request.path %>" />
+  <% else %>
+    <link rel='canonical' href="https://classpert.com<%= request.path %>" />
+  <% end %>
+<% end %>
+
+<% content_for :meta_hreflang do %>
+  <!-- None -->
+<% end %>
+
+<% if @course.video&.dig('thumbnail_url') %>
+  <% content_for :meta_og_image do %>
+    <meta property='og:image' content='<%= @course.video&.dig('thumbnail_url') %>'>
+    <meta name='twitter:image' content='<%= @course.video&.dig('thumbnail_url') %>'>
+  <% end %>
+<% end %>
+
+<%= content_for :sprites do %>
+  <%= sprites({
+    tags: RootTag.all.map(&:id),
+    brand: "*",
+    "country-flags": [country_flags.values, Array.wrap(@course.instructors.map{|i| i['profile_country']&.downcase })].flatten.compact.uniq,
+    icons: [
+      "facebook-circle",
+      "linkedin-circle",
+      "instagram-circle",
+      "twitter-circle",
+      "reddit-circle",
+      "arrow-down",
+      "audio",
+      "subtitle",
+      "envelope",
+      "certificate",
+      "building",
+      "id-badge",
+      "velocimeter",
+      "level",
+      "clock",
+      "close",
+      "play",
+      "video-recorder-unavailable",
+      "question",
+      "clipboard",
+      "share",
+      "avatar",
+      "website",
+      "monitor-gear",
+      "camera",
+      @course.instructors.flat_map{|i| i['profile_elearning_profiles']&.keys},
+      @course.instructors.flat_map{|i| i['profile_social_profiles']&.keys},
+    ].flatten.compact.uniq,
+    providers: [@course.instructors.flat_map{|i| Array.wrap(i['profile_teaching_at']).flat_map{|ta| ta.gsub(/\s/,"-").downcase} }, @course.provider.slug, @course.similar.map(&:provider).map(&:slug)].flatten.compact.uniq
+  }) %>
+<% end %>
+
+<%= content_for :stylesheets do %>
+  <%= stylesheet_bundles_with_chunks_tag 'courses-show' %>
+  <%= stylesheet_bundles_with_chunks_tag 'card-carrousel' %>
+<% end %>
+
+<%= content_for :javascript do %>
+  <%= javascript_bundles_with_chunks_tag "courses-show" %>
+  <%= javascript_bundles_with_chunks_tag "card-carrousel" %>
+  <%= javascript_bundles_with_chunks_tag "course-sharing" %>
+  <%= javascript_bundles_with_chunks_tag 'video-preview' %>
+<% end %>
+
 <% cache [I18n.locale.to_s, @course] do %>
-  <% content_for :meta do %>
-    <title><%= truncate(t(".meta.title", course: @course.name), length: 60) %></title>
-    <meta name='description' content='<%= truncate(t(".meta.description", course: @course.name, provider: @course.provider.name), length: 155) %>' />
-    <meta property='og:description' content='<%= truncate(t(".meta.description", course: @course.name, provider: @course.provider.name), length: 155) %>' />
-    <% unless @course.indexable_by_robots? %>
-      <meta name="robots" content="noindex" />
-    <% end %>
-  <% end %>
-
-  <% content_for :meta_canonical do %>
-    <% if @course.canonical_subdomain.present? %>
-      <link rel='canonical' href="https://<%= @course.canonical_subdomain %>.classpert.com<%= request.path %>" />
-    <% else %>
-      <link rel='canonical' href="https://classpert.com<%= request.path %>" />
-    <% end %>
-  <% end %>
-
-  <% content_for :meta_hreflang do %>
-    <!-- None -->
-  <% end %>
-
-  <% if @course.video&.dig('thumbnail_url') %>
-    <% content_for :meta_og_image do %>
-      <meta property='og:image' content='<%= @course.video&.dig('thumbnail_url') %>'>
-      <meta name='twitter:image' content='<%= @course.video&.dig('thumbnail_url') %>'>
-    <% end %>
-  <% end %>
-
-  <%= content_for :sprites do %>
-    <%= sprites({
-      tags: RootTag.all.map(&:id),
-      brand: "*",
-      "country-flags": [country_flags.values, Array.wrap(@course.instructors.map{|i| i['profile_country']&.downcase })].flatten.compact.uniq,
-      icons: [
-        "facebook-circle",
-        "linkedin-circle",
-        "instagram-circle",
-        "twitter-circle",
-        "reddit-circle",
-        "arrow-down",
-        "audio",
-        "subtitle",
-        "envelope",
-        "certificate",
-        "building",
-        "id-badge",
-        "velocimeter",
-        "level",
-        "clock",
-        "close",
-        "play",
-        "video-recorder-unavailable",
-        "question",
-        "clipboard",
-        "share",
-        "avatar",
-        "website",
-        "monitor-gear",
-        "camera",
-        @course.instructors.flat_map{|i| i['profile_elearning_profiles']&.keys},
-        @course.instructors.flat_map{|i| i['profile_social_profiles']&.keys},
-      ].flatten.compact.uniq,
-      providers: [@course.instructors.flat_map{|i| Array.wrap(i['profile_teaching_at']).flat_map{|ta| ta.gsub(/\s/,"-").downcase} }, @course.provider.slug, @course.similar.map(&:provider).map(&:slug)].flatten.compact.uniq
-    }) %>
-  <% end %>
-
-  <%= content_for :stylesheets do %>
-    <%= stylesheet_bundles_with_chunks_tag 'courses-show' %>
-    <%= stylesheet_bundles_with_chunks_tag 'card-carrousel' %>
-  <% end %>
-
-  <%= content_for :javascript do %>
-    <%= javascript_bundles_with_chunks_tag "courses-show" %>
-    <%= javascript_bundles_with_chunks_tag "card-carrousel" %>
-    <%= javascript_bundles_with_chunks_tag "course-sharing" %>
-    <%= javascript_bundles_with_chunks_tag 'video-preview' %>
-  <% end %>
-
   <div id="courses-show">
     <div class="header">
       <div class="container">
