@@ -78,9 +78,6 @@
     </script>
 
     <!-- Preloads -->
-    <%= stylesheet_bundles_with_chunks_tag 'bootstrap',           rel: 'preload', as: 'style', media: nil %>
-    <%= stylesheet_bundles_with_chunks_tag 'vendor',              rel: 'preload', as: 'style', media: nil %>
-    <%= stylesheet_bundles_with_chunks_tag 'application',         rel: 'preload', as: 'style', media: nil %>
     <%= preload_link_tag elements_asset_path('bundle.css'),       as: 'style'   %>
     <%= preload_link_tag elements_asset_path('icon-font.css'),    as: 'style'    %>
     <%= preload_link_tag elements_asset_path('bundle.js'),        as: 'script'  %>
