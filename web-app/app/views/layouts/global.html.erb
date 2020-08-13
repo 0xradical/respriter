@@ -146,7 +146,7 @@
       <% if content_for?(:sprites) %>
         <%= yield :sprites %>
       <% else %>
-        <%= sprites({icons: "*", brand: '*', i18n: '*', providers: '*', tags: RootTag.all.map(&:id)}) %>
+        <%= URI.open(sprites_url({icons: "*", brand: '*', i18n: '*', providers: '*', tags: RootTag.all.map(&:id)})).read.html_safe %>
       <% end %>
     </div>
 
