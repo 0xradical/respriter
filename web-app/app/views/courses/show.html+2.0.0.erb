@@ -68,7 +68,10 @@
 
 <%# Check https://web.dev/preload-responsive-images/  %>
 <%= content_for :preload do %>
-  <%= preload_link_tag @course.as_indexed_json.dig(:video, "thumbnail_url"), as: 'image' %>
+  <% thumbnail_url = @course.as_indexed_json.dig(:video, "thumbnail_url") %>
+  <% if thumbnail_url.present? %>
+    <%= preload_link_tag thumbnail_url, as: 'image' %>
+  <% end %>
 <% end %>
 
 <%= content_for :stylesheets do %>
