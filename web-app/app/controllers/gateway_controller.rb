@@ -31,18 +31,17 @@ class GatewayController < ApplicationController
   end
 
   def index
-    if Browser.new(request.env['HTTP_USER_AGENT']).bot?
-      render 'block_bots', status: 400, layout: false
-      if Rails.env.production?
-        Raven.send_event(
-          level:       'error',
-          message:     "Blocked Bot at Gateway by user agent: #{request.env['HTTP_USER_AGENT']}",
-          environment: 'production'
-        )
-      end
-      return
-    end
-
+    # if Browser.new(request.env['HTTP_USER_AGENT']).bot?
+      # render 'block_bots', status: 400, layout: false
+      # if Rails.env.production?
+        # Raven.send_event(
+          # level:       'error',
+          # message:     "Blocked Bot at Gateway by user agent: #{request.env['HTTP_USER_AGENT']}",
+          # environment: 'production'
+        # )
+      # end
+      # return
+    # end
     if @scope && @forwarding_url
       @scope.create!({
                        id:                @click_id,
