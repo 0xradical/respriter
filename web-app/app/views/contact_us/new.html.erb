@@ -42,8 +42,8 @@
 <% end %>
 
 <%= content_for :javascript do %>
-  <%= elements_javascript_include_tag 'vars' %>
-  <%= javascript_bundles_with_chunks_tag 'contact-us' %>
+  <%= elements_javascript_include_tag 'vars',          defer: true %>
+  <%= javascript_bundles_with_chunks_tag 'contact-us', defer: true %>
 <% end %>
 
 <%= render_vue_component "ContactUs", {

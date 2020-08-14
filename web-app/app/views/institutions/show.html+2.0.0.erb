@@ -13,9 +13,9 @@
 <% end %>
 
 <%= content_for :javascript do %>
-  <%= javascript_bundles_with_chunks_tag "card-carrousel" %>
-  <%= javascript_bundles_with_chunks_tag "post-card" %>
-  <%= javascript_bundles_with_chunks_tag "providers-show" %>
+  <%= javascript_bundles_with_chunks_tag "card-carrousel",  defer: true %>
+  <%= javascript_bundles_with_chunks_tag "post-card",       defer: true %>
+  <%= javascript_bundles_with_chunks_tag "providers-show",  defer: true %>
 <% end %>
 
 <%= content_for :sprites do %>

@@ -30,7 +30,7 @@
   <% end %>
 
   <%= content_for :javascript do %>
-    <%= javascript_bundles_with_chunks_tag 'sharing' %>
+    <%= javascript_bundles_with_chunks_tag 'sharing', defer: true %>
   <% end %>
 
   <div class='el:amx-Bc_su el:amx-Pt(2em) el:amx-Pb(3.5em)'>
