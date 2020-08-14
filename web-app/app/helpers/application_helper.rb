@@ -17,6 +17,12 @@ module ApplicationHelper
     Digest::MD5.hexdigest(objects.map(&:inspect).join)
   end
 
+  def ftc_asa_course_provider_disclosure(course, options={})
+    if ['Udemy', 'Coursera'].include?(course.provider.name)
+      tag.p(options) { "This course contains affiliates links, meaning when you click the links and make a purchase, we receive a commission" }
+    end
+  end
+
   def alert_alias(name)
     alert_map = {
       notice:  'primary',
