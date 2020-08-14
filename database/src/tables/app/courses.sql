@@ -37,7 +37,7 @@ CREATE TABLE app.courses (
   __provider_name__                       varchar,
   __source_schema__                       jsonb,
   instructors                             jsonb                   DEFAULT '[]',
-  curated_tags                            varchar[]               DEFAULT '{}',
+  old_curated_tags                        varchar[]               DEFAULT '{}',
   refinement_tags                         varchar[],
   up_to_date_id                           uuid                    REFERENCES app.courses(id) ON DELETE SET NULL,
   last_execution_id                       uuid,
