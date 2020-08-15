@@ -45,7 +45,7 @@
       <div class='row'>
         <div class='col-12'>
           <div class='c-fg ta-c pT80 pB56'>
-            <%= image_tag(elements_asset_path('/svgs/brand/logo.svg'), class: 'fi-fg', width: '246px', height: '40px', data: { :'svg-inject' => '' }) %>
+            <img data-src="<%= elements_asset_path('/svgs/brand/logo.svg') %>" class="fi-fg lazyload" width='246px' height='40px' />
             <h1 class='lh1 fs20 mV24 fw400'>
               <%= t('.hero_html').html_safe %>
             </h1>
@@ -93,7 +93,7 @@
       <!-- Classpert's Online Search Engine -->
       <div class='row'>
         <div class='col-12 col-lg-5 offset-lg-1'>
-          <%= image_tag(elements_asset_path("svgs/illustrations/characters-seated-planet.svg", width: '100%' )) %>
+          <img data-src="<%= elements_asset_path("svgs/illustrations/characters-seated-planet.svg") %>" class="lazyload" width='100%' />
         </div>
 
         <div class='col-12 col-lg-5'>
@@ -131,13 +131,13 @@
           </div>
           <div class='row'>
             <div class='offset-lg-6 col-8 col-lg-6 mt64 mb64'>
-              <%= image_tag(elements_asset_path("svgs/illustrations/screen-yellow-planet.svg"), width: '100%' ) %>
+              <img data-src="<%= elements_asset_path("svgs/illustrations/screen-yellow-planet.svg") %>" class="lazyload" width="100%" />
             </div>
           </div>
         </div>
 
         <div class='col-12 col-lg-6 order-lg-last order-first'>
-          <%= image_tag(elements_asset_path("svgs/illustrations/classpert-online-course-search-engine.svg"), width: '100%' ) %>
+          <img data-src="<%= elements_asset_path("svgs/illustrations/classpert-online-course-search-engine.svg") %>" class="lazyload" width="100%" />
         </div>
       </div>
 
@@ -176,7 +176,7 @@
         <div class='col-12 col-lg-6'>
           <div class='row'>
             <div class='offset-4 col-8 offset-lg-0 col-lg-6'>
-              <%= image_tag(elements_asset_path("svgs/illustrations/book-yellow-planet.svg"), width: '100%', class: 'mV64') %>
+              <img data-src="<%= elements_asset_path("svgs/illustrations/book-yellow-planet.svg") %>" class="mV64 lazyload" width="100%" />
             </div>
           </div>
           <div class='row'>

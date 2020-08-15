@@ -4,7 +4,7 @@
       <% if instructor['profile_avatar_url'] %>
         <img src="<%= instructor['profile_avatar_url'] %>" style="width: 4rem; height: 4rem">
       <% else %>
-        <%= image_tag(elements_asset_path("svgs/illustrations/avatar-default.svg"), { style: "width: 4rem; height: 4rem"}) %>
+        <img data-src="<%= elements_asset_path("svgs/illustrations/avatar-default.svg") %>" style="width: 4rem; height: 4rem" class="lazyload"/>
       <% end %>
       <% if instructor['profile_country'] %>
         <%= svg_use('country-flags', instructor['profile_country'].downcase, {class: "fs14 fi-fg po-a", style: 'right: -.2rem; bottom: .2rem;', width: '1.2rem', height: '1.2rem'}) %>

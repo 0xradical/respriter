@@ -17,6 +17,7 @@
 
 <% content_for :meta_hreflang do %>
   <!-- None -->
+
 <% end %>
 
 <% if @course.video&.dig('thumbnail_url') %>
@@ -27,43 +28,41 @@
 <% end %>
 
 <%= content_for :sprites do %>
-  <% cache 'sprites' do %>
-    <%= URI.open(sprites_url({
-      tags: RootTag.all.map(&:id),
-      brand: "*",
-      "country-flags": [country_flags.values, Array.wrap(@course.instructors.map{|i| i['profile_country']&.downcase })].flatten.compact.uniq,
-      icons: [
-        "facebook-circle",
-        "linkedin-circle",
-        "instagram-circle",
-        "twitter-circle",
-        "reddit-circle",
-        "arrow-down",
-        "audio",
-        "subtitle",
-        "envelope",
-        "certificate",
-        "building",
-        "id-badge",
-        "velocimeter",
-        "level",
-        "clock",
-        "close",
-        "play",
-        "video-recorder-unavailable",
-        "question",
-        "clipboard",
-        "share",
-        "avatar",
-        "website",
-        "monitor-gear",
-        "camera",
-        @course.instructors.flat_map{|i| i['profile_elearning_profiles']&.keys},
-        @course.instructors.flat_map{|i| i['profile_social_profiles']&.keys},
-      ].flatten.compact.uniq,
-      providers: [@course.instructors.flat_map{|i| Array.wrap(i['profile_teaching_at']).flat_map{|ta| ta.gsub(/\s/,"-").downcase} }, @course.provider.slug, @course.similar.map(&:provider).map(&:slug)].flatten.compact.uniq
-    })).read&.html_safe %>
-  <% end %>
+  <%= URI.open(sprites_url({
+    tags: RootTag.all.map(&:id),
+    brand: "*",
+    "country-flags": [country_flags.values, Array.wrap(@course.instructors.map{|i| i['profile_country']&.downcase })].flatten.compact.uniq,
+    icons: [
+      "facebook-circle",
+      "linkedin-circle",
+      "instagram-circle",
+      "twitter-circle",
+      "reddit-circle",
+      "arrow-down",
+      "audio",
+      "subtitle",
+      "envelope",
+      "certificate",
+      "building",
+      "id-badge",
+      "velocimeter",
+      "level",
+      "clock",
+      "close",
+      "play",
+      "video-recorder-unavailable",
+      "question",
+      "clipboard",
+      "share",
+      "avatar",
+      "website",
+      "monitor-gear",
+      "camera",
+      @course.instructors.flat_map{|i| i['profile_elearning_profiles']&.keys},
+      @course.instructors.flat_map{|i| i['profile_social_profiles']&.keys},
+    ].flatten.compact.uniq,
+    providers: [@course.instructors.flat_map{|i| Array.wrap(i['profile_teaching_at']).flat_map{|ta| ta.gsub(/\s/,"-").downcase} }, @course.provider.slug, @course.similar.map(&:provider).map(&:slug)].flatten.compact.uniq
+  })).read&.html_safe %>
 <% end %>
 
 <%= content_for :preload do %>
@@ -279,9 +278,9 @@
                         </div>
                         <div class="po-r el:m-avatar el:m-avatar--circle el:m-avatar--2x2em mR8">
                           <% if instructor['profile_avatar_url'] %>
-                            <img src="<%= instructor['profile_avatar_url'] %>">
+                            <img data-src="<%= instructor['profile_avatar_url'] %>" class="lazyload"/>
                           <% else %>
-                            <%= image_tag(elements_asset_path("svgs/illustrations/avatar-default.svg")) %>
+                            <img data-src="<%= elements_asset_path("svgs/illustrations/avatar-default.svg") %>" class="lazyload"/>
                           <% end %>
                           <% if instructor['profile_country'] %>
                             <%= svg_use('country-flags', instructor['profile_country'].downcase, {class: "fs14 fi-fg po-a", style: 'right: -.2rem; bottom: .2rem;', width: '1.2rem', height: '1.2rem'}) %>

@@ -95,10 +95,12 @@
     <% end %>
 
     <!-- App css -->
+    <style>.lazyloading{opacity:0}.lazyloaded{opacity:1;transition:opacity .3s}</style>
     <%= stylesheet_bundles_with_chunks_tag 'vendor' %>
     <%= stylesheet_bundles_with_chunks_tag 'application' %>
 
     <!-- Javascript -->
+    <%= javascript_bundles_with_chunks_tag 'lazysizes',   async: "" %>
     <%# Best performance is using defer defined on the head %>
     <%= javascript_bundles_with_chunks_tag 'vendor',      defer: true %>
     <%= javascript_bundles_with_chunks_tag 'application', defer: true %>
@@ -131,11 +133,11 @@
         !function(w, d, t, u) {
             if (w.__ls) return; var f = w.__ls = function() { f.push ? f.push.apply(f, arguments) : f.store.push(arguments)};
             if (!w.__ls) w.__ls = f; f.store = []; f.v = "1.0";
-    
+
             var ls = d.createElement(t); ls.async = true; ls.src = u;
             var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(ls, s);
         }(window, document, 'script', ('https:' == window.location.protocol ? 'https://' : 'http://') + 'cdn.livesession.io/track.js');
-    
+
         __ls("init", "11d1fef8.4d332003");
         __ls("newPageView");
       </script>
