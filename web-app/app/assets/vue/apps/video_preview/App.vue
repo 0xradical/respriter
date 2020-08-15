@@ -1,5 +1,10 @@
 <template>
-  <video-preview :course="course" :root-classes="rootClasses"> </video-preview>
+  <video-preview
+    :course="course"
+    :root-classes="rootClasses"
+    :lazyLoaded="lazyLoaded"
+  >
+  </video-preview>
 </template>
 
 <script>
@@ -16,6 +21,10 @@
         default() {
           return [];
         }
+      },
+      lazyLoaded: {
+        type: Boolean,
+        default: true
       }
     },
     components: {

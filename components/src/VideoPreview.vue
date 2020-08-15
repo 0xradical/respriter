@@ -17,9 +17,11 @@
         @click="fetchVideo"
       >
         <div
+          v-if="lazyLoaded"
           class="el:m-video-preview__background lazyload"
           :data-bg="this.video && this.video.thumbnail_url"
         ></div>
+        <div v-else class="el:m-video-preview__background" :style="style"></div>
         <div class="el:m-video-preview__mask"></div>
         <div class="el:m-video-preview__content">
           <icon
@@ -86,6 +88,10 @@
         default() {
           return [];
         }
+      },
+      lazyLoaded: {
+        type: Boolean,
+        default: true
       }
     },
     components: {

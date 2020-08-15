@@ -177,6 +177,7 @@
               <%= hypernova_cache_handler do |handler| %>
                 <%= render_component "VideoPreview", {
                     locale: I18n.locale,
+                    lazyLoaded: false,
                     course: @course.as_indexed_json.slice(:id, :type, :video),
                     rootClasses: ['w100']
                 }, run_context: handler %>
