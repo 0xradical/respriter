@@ -13,8 +13,8 @@ module ApplicationHelper
     builder.replace(str)
   end
 
-  def cache_key_for(objects)
-    Digest::MD5.hexdigest(objects.map(&:inspect).join)
+  def cache_key_for(object)
+    Digest::MD5.hexdigest(object.inspect)
   end
 
   def ftc_asa_course_provider_disclosure(course, options={})
