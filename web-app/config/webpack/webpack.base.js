@@ -29,6 +29,7 @@ const webpackConfig = (
         "locales",
         "post-card",
         "providers/show",
+        "lazysizes",
         "mailer",
         "search-page",
         "sharing",

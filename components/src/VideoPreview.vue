@@ -16,7 +16,10 @@
         class="el:m-video-preview__wrapper el:m-video-preview__wrapper--static"
         @click="fetchVideo"
       >
-        <div class="el:m-video-preview__background" :style="style"></div>
+        <div
+          class="el:m-video-preview__background lazyload"
+          :data-bg="this.video && this.video.thumbnail_url"
+        ></div>
         <div class="el:m-video-preview__mask"></div>
         <div class="el:m-video-preview__content">
           <icon
