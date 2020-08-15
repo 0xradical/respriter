@@ -6,16 +6,12 @@
   <meta property='og:description' content='<%= t('.meta', provider: @provider.name, courses: @course_count) %>' />
 <% end %>
 
-<%= content_for :stylesheets do %>
-  <%= stylesheet_bundles_with_chunks_tag 'card-carrousel' %>
-  <%= stylesheet_bundles_with_chunks_tag 'post-card' %>
-  <%= stylesheet_bundles_with_chunks_tag 'providers-show' %>
+<%= content_for :stylesheet_bundles do %>
+  [ 'card-carrousel', 'post-card', 'providers-show' ]
 <% end %>
 
-<%= content_for :javascript do %>
-  <%= javascript_bundles_with_chunks_tag "card-carrousel" %>
-  <%= javascript_bundles_with_chunks_tag "post-card" %>
-  <%= javascript_bundles_with_chunks_tag "providers-show" %>
+<%= content_for :javascript_bundles do %>
+  [ 'card-carrousel', 'post-card', 'providers-show' ]
 <% end %>
 
 <%= content_for :sprites do %>
@@ -158,7 +154,7 @@
               <%= t(".recommended_courses_on_provider", provider: @provider.name) %>
             </h2>
 
-            <a class="d-none d-md-inline-block el:amx-Fw(b) el:amx-C_pr el:amx-Fs(0.75em) el:amx-Tt(u)" href='<%= provider_courses_path(provider: @provider.slug)%>'>
+            <a class="d-none d-md-inline-block el:amx-Fw(b) el:amx-C_pr el:amx-Fs(0.75em) el:amx-Tt(u)" href='<%= courses_path("filter[provider_name][]": @provider.name) %>'>
               <%= t(".view_all") %>
             </a>
           </div>
@@ -175,7 +171,7 @@
                   component: "ProviderNavCard",
                   props: {
                     slug: @provider.slug,
-                    link: provider_courses_path(provider: @provider.slug),
+                    link: courses_path("filter[provider_name][]": @provider.name) ,
                     linkText: t(".view_all_courses")
                   }
                 },

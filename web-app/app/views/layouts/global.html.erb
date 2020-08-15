@@ -81,11 +81,14 @@
     <%= preload_link_tag elements_asset_path('bundle.css'),       as: 'style'   %>
     <%= preload_link_tag elements_asset_path('icon-font.css'),    as: 'style'    %>
     <%= preload_link_tag elements_asset_path('bundle.js'),        as: 'script'  %>
+
     <%= yield :preload %>
+
+    <style>[data-skeleton] *{visibility:hidden!important}[data-skeleton] .bone{visibility:initial!important;background-color:var(--foreground-medium)}</style>
 
     <!-- Bootstrap css -->
     <%# should come first to avoid winning over elements css with equal specificity %>
-    <%= stylesheet_bundles_with_chunks_tag 'bootstrap' %>
+    <%= stylesheet_bundle_tag 'bootstrap' %>
 
     <!-- Elements css-->
     <% if content_for?(:elements_css) %>
@@ -96,22 +99,17 @@
 
     <!-- App css -->
     <style>.lazyloading{opacity:0}.lazyloaded{opacity:1;transition:opacity .3s}</style>
-    <%= stylesheet_bundles_with_chunks_tag 'vendor' %>
-    <%= stylesheet_bundles_with_chunks_tag 'application' %>
+    <%= stylesheet_bundles_with_chunks_tag *['application', 'vendor',  content_for?(:stylesheet_bundles) ? eval(content_for(:stylesheet_bundles)) : nil].flatten.compact %>
 
     <!-- Javascript -->
-    <%= javascript_bundles_with_chunks_tag 'lazysizes',   async: "" %>
     <%# Best performance is using defer defined on the head %>
-    <%= javascript_bundles_with_chunks_tag 'vendor',      defer: true %>
-    <%= javascript_bundles_with_chunks_tag 'application', defer: true %>
+    <%= javascript_bundles_with_chunks_tag *['application', 'vendor', 'lazysizes', content_for?(:javascript_bundles) ? eval(content_for(:javascript_bundles)) : nil].flatten.compact, defer: true %>
 
     <% if content_for?(:elements_js) %>
       <%= yield :elements_js %>
     <% else %>
       <%= elements_javascript_include_tag('bundle', defer: true,  skip_pipeline: true) %>
     <% end %>
-
-    <%= yield :javascript  %>
 
     <script type='text/javascript'>
       window.I18n = { locale: "<%= I18n.locale %>" }

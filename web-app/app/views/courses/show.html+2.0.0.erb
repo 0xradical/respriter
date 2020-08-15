@@ -78,25 +78,16 @@
     <% if thumbnail_url.present? %>
       <%= preload_link_tag thumbnail_url, as: 'image' %>
     <% end %>
-    <%= stylesheet_bundles_with_chunks_tag 'courses-show',    rel: 'preload', as: 'style', media: nil %>
-    <%= stylesheet_bundles_with_chunks_tag 'card-carrousel',  rel: 'preload', as: 'style', media: nil %>
+    <%= stylesheet_bundles_with_chunks_tag 'courses-show', 'card-carrousel',   rel: 'preload', as: 'style', media: nil %>
   <% end %>
 <% end %>
 
-<%= content_for :stylesheets do %>
-  <% cache 'css' do %>
-    <%= stylesheet_bundles_with_chunks_tag 'courses-show' %>
-    <%= stylesheet_bundles_with_chunks_tag 'card-carrousel' %>
-  <% end %>
+<%= content_for :stylesheet_bundles do %>
+  [ 'courses-show', 'card-carrousel' ]
 <% end %>
 
-<%= content_for :javascript do %>
-  <% cache 'js' do %>
-    <%= javascript_bundles_with_chunks_tag "courses-show" ,   defer: true %>
-    <%= javascript_bundles_with_chunks_tag "card-carrousel",  defer: true %>
-    <%= javascript_bundles_with_chunks_tag "course-sharing",  defer: true %>
-    <%= javascript_bundles_with_chunks_tag 'video-preview',   defer: true %>
-  <% end %>
+<%= content_for :javascript_bundles do %>
+  [ 'courses-show', 'card-carrousel', 'course-sharing', 'video-preview' ]
 <% end %>
 
 <% cache [I18n.locale.to_s, @course] do %>

@@ -335,7 +335,7 @@
             document.documentElement.clientWidth,
             window.innerWidth || 0
           );
-          return w < parseInt(window.Elements.breakpoints.lg);
+          return w < 992;
         }
       },
       showMobileFilter() {

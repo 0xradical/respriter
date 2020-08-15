@@ -33,25 +33,25 @@
   <% end %>
 <% end %>
 
-<script type='text/javascript'>
-  window.env_context = {
-    devise: {
-      sign_in: "<%= new_user_account_session_path %>",
-      sign_up: "<%= new_user_account_registration_path %>",
-      signed_in: <%= current_user_account.present? %>
+<%= content_for :stylesheet_bundles do %>
+  [ 'search-page' ]
+<% end %>
+
+<%= content_for :javascript_bundles do %>
+   [ 'search-page', 'sharing' ]
+<% end %>
+
+<%# gambi temporaria %>
+<script async>
+  window.CoursePricing = {
+    i18n: {
+      messages: {
+        "dictionary": <%= t("dictionary").slice(:free_trial, :pricing, :subscription_period).to_json.html_safe %>,
+        "datetime": <%= t("datetime").slice(:adjectives).to_json.html_safe %>
+      }
     }
   }
 </script>
-
-<%= content_for :stylesheets do %>
-  <%= stylesheet_bundles_with_chunks_tag 'search-page' %>
-<% end %>
-
-<%= content_for :javascript do %>
-  <%= elements_javascript_include_tag 'vars',           defer: true %>
-  <%= javascript_bundles_with_chunks_tag 'search-page', defer: true %>
-  <%= javascript_bundles_with_chunks_tag 'sharing',     defer: true %>
-<% end %>
 
 <%= render_vue_component "SearchPage", {
   propsData: {

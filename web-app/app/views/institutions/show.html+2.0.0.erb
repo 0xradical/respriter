@@ -6,16 +6,12 @@
   <meta property='og:description' content='<%= t('.meta', institution: @institution.name, courses: @course_count) %>' />
 <% end %>
 
-<%= content_for :stylesheets do %>
-  <%= stylesheet_bundles_with_chunks_tag 'card-carrousel' %>
-  <%= stylesheet_bundles_with_chunks_tag 'post-card' %>
-  <%= stylesheet_bundles_with_chunks_tag 'providers-show' %>
+<%= content_for :stylesheet_bundles do %>
+  [ 'card-carrousel', 'post-card', 'providers-show' ]
 <% end %>
 
-<%= content_for :javascript do %>
-  <%= javascript_bundles_with_chunks_tag "card-carrousel",  defer: true %>
-  <%= javascript_bundles_with_chunks_tag "post-card",       defer: true %>
-  <%= javascript_bundles_with_chunks_tag "providers-show",  defer: true %>
+<%= content_for :javascript_bundles do %>
+  [ 'card-carrousel', 'post-card', 'providers-show' ]
 <% end %>
 
 <%= content_for :sprites do %>

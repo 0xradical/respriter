@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/classpert/minipack.git
+  revision: ce36683ae4b18890eb7121949466fb2c279bfc79
+  ref: ce36683ae4b18890eb7121949466fb2c279bfc79
+  specs:
+    minipack (0.3.5)
+      actionview
+      railties (>= 4.2)
+
+GIT
   remote: https://github.com/codextremist/affiliate_hub.git
   revision: c12d7bf167b1192d695746b5953ccd50ecc78b6e
   specs:
@@ -373,9 +382,6 @@ GEM
     mini_magick (4.9.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minipack (0.3.5)
-      actionview
-      railties (>= 4.2)
     minitest (5.12.2)
     multi_json (1.14.1)
     multi_test (0.1.2)
@@ -445,6 +451,8 @@ GEM
     rack-attack (6.3.1)
       rack (>= 1.0, < 3)
     rack-cors (1.0.3)
+    rack-mini-profiler (2.0.4)
+      rack (>= 1.2.0)
     rack-protection (2.0.7)
       rack
     rack-proxy (0.6.5)
@@ -650,7 +658,7 @@ DEPENDENCIES
   lograge (~> 0.11.2)
   mecab_standalone!
   mini_magick (~> 4.9.5)
-  minipack (~> 0.3.5)
+  minipack!
   omniauth-facebook (~> 5.0.0)
   omniauth-github (~> 1.3.0)
   omniauth-linkedin-oauth2 (~> 1.0.0)
@@ -669,6 +677,7 @@ DEPENDENCIES
   que-web
   rack-attack
   rack-cors (~> 1.0.3)
+  rack-mini-profiler (~> 2.0.4)
   rack-proxy (~> 0.6.1)
   rails (~> 6.0.0)
   redis (>= 3.2.0)
