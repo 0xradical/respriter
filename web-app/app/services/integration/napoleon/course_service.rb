@@ -27,8 +27,9 @@ module Integration
 
       def run(dataset_sequence = nil)
         if dataset_sequence.blank? || dataset_sequence == 0
-          dataset_sequence = Course.current_dataset_sequence
+          dataset_sequence = Course.current_dataset_sequence || 0
         end
+        dataset_sequence = dataset_sequence.to_i
         ::Napoleon::ResourceStreamer.new(STREAMER_PARAMS).resources(dataset_sequence) do |resource|
           course = Course.upsert resource.to_course
           upsert_hooks course
