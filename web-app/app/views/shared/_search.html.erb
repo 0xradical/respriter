@@ -1,33 +1,35 @@
+<% @sprites_url = sprites_url({
+  tags: RootTag.all.map(&:id),
+  icons: [
+    "facebook-circle",
+    "linkedin-circle",
+    "instagram-circle",
+    "twitter-circle",
+    "reddit-circle",
+    "arrow-down",
+    "audio",
+    "subtitle",
+    "certificate",
+    "building",
+    "id-badge",
+    "velocimeter",
+    "level",
+    "clock",
+    "close",
+    "play",
+    "featured-badge",
+    "video-recorder-unavailable",
+    "question",
+    "avatar"
+  ],
+  brand: "*",
+  "country-flags": country_flags.values,
+  providers: "*"
+}) %>
+
 <%= content_for :sprites do %>
-  <% cache 'sprites' do %>
-    <%= URI.open(sprites_url({
-      tags: RootTag.all.map(&:id),
-      icons: [
-        "facebook-circle",
-        "linkedin-circle",
-        "instagram-circle",
-        "twitter-circle",
-        "reddit-circle",
-        "arrow-down",
-        "audio",
-        "subtitle",
-        "certificate",
-        "building",
-        "id-badge",
-        "velocimeter",
-        "level",
-        "clock",
-        "close",
-        "play",
-        "featured-badge",
-        "video-recorder-unavailable",
-        "question",
-        "avatar"
-      ],
-      brand: "*",
-      "country-flags": country_flags.values,
-      providers: "*"
-    })).read.html_safe %>
+  <% cache cache_key_for(@sprites_url) do %>
+    <%= URI.open(@sprites_url).read.html_safe %>
   <% end %>
 <% end %>
 
