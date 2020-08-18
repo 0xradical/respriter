@@ -19,8 +19,8 @@ BEGIN
         ) VALUES (
           pcid,
           (pricing->>'type')::app.pricing,
-          (pricing->>'plan_type')::app.pricing_plan,
-          (pricing->>'customer_type')::app.pricing_customer,
+          COALESCE(pricing->>'plan_type', 'regular')::app.pricing_plan,
+          COALESCE(pricing->>'customer_type', 'individual')::app.pricing_customer,
           (pricing->>'price')::numeric(8,2),
           (pricing->>'total_price')::numeric(8,2),
           (pricing->>'discount')::numeric(8,2),
