@@ -12,7 +12,7 @@ CREATE MATERIALIZED VIEW app.provider_stats AS (
   areas_of_knowledge AS (
     SELECT DISTINCT ON (provider_id) provider_id, tag, count(*) AS count_all
     FROM (
-      SELECT provider_id, UNNEST(curated_tags) AS tag
+      SELECT provider_id, UNNEST(old_curated_tags) AS tag
       FROM app.courses
       WHERE app.courses.published = true
     ) sq
