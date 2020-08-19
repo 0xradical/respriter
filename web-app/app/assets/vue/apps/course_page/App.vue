@@ -8,7 +8,7 @@
               <div class="col">
                 <similar
                   :courses="similar"
-                  class="el:amx-Mt(1em) el:amx-Mb(3em)"
+                  class="mT16 mB48"
                 ></similar>
               </div>
             </div>
@@ -25,7 +25,7 @@
               <div class="col">
                 <similar
                   :courses="similar"
-                  class="el:amx-Mt(1em) el:amx-Mb(3em)"
+                  class="mT16 mB48"
                 ></similar>
               </div>
             </div>

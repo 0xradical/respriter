@@ -26,18 +26,18 @@
       <div data-svg-sprite="<%= elements_asset_path('svgs/sprites/brand.svg') %>"></div>
     </div>
     <div style='position:relative;height:100%;left:5%;right:5%;width:90%'>
-      <svg width='180px' height='29px' class='el:amx-Fi_fgV' style='position:absolute;left:0;top:1.5em'>
+      <svg width='180px' height='29px' class='fi-fgV' style='position:absolute;left:0;top:1.5em'>
         <use xlink:href='#brand-logo' />
       </svg>
       <%= image_bundle_tag("media/svg/asteroids.svg", width: '100%', style: 'position:absolute;top:6em;left:0;right:0;margin:auto') %>
-      <div class='el:cmx-vcenter el:amx-Ta(c)' style='max-width:540px;margin:auto'>
+      <div class='mx-vertical-center ta-c' style='max-width:540px;margin:auto'>
         <%= yield :art %>
 
-        <h1 class='el:amx-Fs(2em) el:amx-C_fgV el:amx-Mt(0.75em)'>
+        <h1 class='fs32 c-fgV mT12'>
           <b><%= yield :title %></b>
         </h1>
 
-        <p class='el:amx-Fs(1.25em) el:amx-C_fgV el:amx-Mt(0.75em) el:amx-Mb(1.5em)'>
+        <p class='fs20 c-fgV mT12 mB20'>
           <%= yield :sub_title %>
         </p>
 

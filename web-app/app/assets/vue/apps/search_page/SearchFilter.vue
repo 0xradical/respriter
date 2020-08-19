@@ -31,7 +31,7 @@
                       height="1rem"
                       transform="rotate(-90deg)"
                       name="arrow-down"
-                      class="el:amx-C_pr"
+                      class="c1"
                     ></icon>
                   </a>
                 </template>
@@ -56,7 +56,7 @@
                       height="1rem"
                       transform="rotate(-90deg)"
                       name="arrow-down"
-                      class="el:amx-C_pr"
+                      class="c1"
                     ></icon>
                   </a>
                 </template>
@@ -82,7 +82,7 @@
                         height="1rem"
                         transform="rotate(-90deg)"
                         name="arrow-down"
-                        class="el:amx-C_pr"
+                        class="c1"
                       ></icon>
                     </a>
                   </template>
@@ -108,7 +108,7 @@
                       height="1rem"
                       transform="rotate(-90deg)"
                       name="arrow-down"
-                      class="el:amx-C_pr"
+                      class="c1"
                     ></icon>
                   </a>
                 </template>
@@ -117,12 +117,10 @@
 
             <hr />
 
-            <div
-              class="el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(sb) el:amx-FxAi(c) el:amx-W(100%)"
-            >
+            <div class="po-a b0 d-f jc-sb ai-c w100">
               <a
                 href="#"
-                class="el:amx-C_er el:amx-Fw(b)"
+                class="c-err fw-b"
                 @click="$emit('clearFiltersClicked')"
               >
                 {{ $t("dictionary.clear_all_filters") }}
@@ -130,7 +128,7 @@
 
               <a
                 href="#"
-                class="btn btn--primary-flat"
+                class="el:m-button el:m-button--primary-flat"
                 @click="$emit('showResultsClicked')"
               >
                 {{ $t("dictionary.show_results") }} ({{
@@ -150,7 +148,7 @@
               :filter="filter.root_audio"
               :rootClasses="['scrollable-ul--mobile']"
               :noOptionsMessage="$t('dictionary.no_options_available')"
-              :checkboxClasses="['el:amx-Fs(1.25em)@sm']"
+              :checkboxClasses="['fs20@sm']"
               @includeFacetOption="
                 $emit('optionAddedToFilter', 'root_audio', $event)
               "
@@ -159,12 +157,10 @@
               "
             >
             </search-facet-options>
-            <div
-              class="el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)"
-            >
+            <div class="po-a b0 d-f jc-c w100">
               <a
                 href="#"
-                class="btn btn--primary-flat btn--block el:amx-Ta(c)"
+                class="el:m-button el:m-button--primary-flat el:m-button--block ta-c"
                 style="width: 30%;"
                 @click="isFiltering.root_audio = false"
               >
@@ -183,7 +179,7 @@
               :filter="filter.subtitles"
               :rootClasses="['scrollable-ul--mobile']"
               :noOptionsMessage="$t('dictionary.no_options_available')"
-              :checkboxClasses="['el:amx-Fs(1.25em)@sm']"
+              :checkboxClasses="['fs20@sm']"
               @includeFacetOption="
                 $emit('optionAddedToFilter', 'subtitles', $event)
               "
@@ -192,12 +188,10 @@
               "
             >
             </search-facet-options>
-            <div
-              class="el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)"
-            >
+            <div class="po-a b0 d-f jc-c w100">
               <a
                 href="#"
-                class="btn btn--primary-flat btn--block el:amx-Ta(c)"
+                class="el:m-button el:m-button--primary-flat el:m-button--block ta-c"
                 style="width: 30%;"
                 @click="isFiltering.subtitles = false"
               >
@@ -216,7 +210,7 @@
               :filter="filter.provider_name"
               :rootClasses="['scrollable-ul--mobile']"
               :noOptionsMessage="$t('dictionary.no_options_available')"
-              :checkboxClasses="['el:amx-Fs(1.25em)@sm']"
+              :checkboxClasses="['fs20@sm']"
               @includeFacetOption="
                 $emit('optionAddedToFilter', 'provider_name', $event)
               "
@@ -225,12 +219,10 @@
               "
             >
             </search-facet-options>
-            <div
-              class="el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)"
-            >
+            <div class="po-a b0 d-f jc-c w100">
               <a
                 href="#"
-                class="btn btn--primary-flat btn--block el:amx-Ta(c)"
+                class="el:m-button el:m-button--primary-flat el:m-button--block ta-c"
                 style="width: 30%;"
                 @click="isFiltering.provider_name = false"
               >
@@ -262,12 +254,10 @@
               >
               </search-facet-price-filter>
             </div>
-            <div
-              class="el:amx-Pos(a) el:amx-Pos-b(0) el:amx-D(f) el:amx-FxJc(c) el:amx-W(100%)"
-            >
+            <div class="po-a b0 d-f jc-c w100">
               <a
                 href="#"
-                class="btn btn--primary-flat btn--block el:amx-Ta(c)"
+                class="el:m-button el:m-button--primary-flat el:m-button--block ta-c"
                 style="width: 30%;"
                 @click="isFiltering.price = false"
               >
@@ -284,7 +274,7 @@
       <search-fieldset :title="$t('dictionary.price')" :stand-out="true">
         <template #action>
           <a
-            class="el:o-fieldset-frame__action el:amx-Ws(nw)"
+            class="el:o-fieldset-frame__action ws-n"
             href="#"
             @click.prevent="$emit('clearFilterClicked', 'price')"
           >
@@ -302,6 +292,7 @@
 
           <div style="margin-top: 2em; display: flex;">
             <number-input
+              class="fs16"
               :value="filter.price[0]"
               size="small"
               inline
@@ -310,7 +301,7 @@
               @change="$emit('priceValueChanged', [$event, filter.price[1]])"
             ></number-input>
             <span
-              class="el:amx-D(ib)"
+              class="d-ib"
               style="
                 margin: auto 0.5em;
                 font-size: 0.875em;
@@ -321,6 +312,7 @@
               {{ $t("dictionary.in_currency", { currency: "USD" }) }}
             </span>
             <number-input
+              class="fs16"
               :value="filter.price[1]"
               size="small"
               inline
@@ -338,7 +330,7 @@
         <search-fieldset :title="$t('dictionary.providers')" :stand-out="true">
           <template #action>
             <a
-              class="el:o-fieldset-frame__action el:amx-Ws(nw)"
+              class="el:o-fieldset-frame__action ws-n"
               href="#"
               @click.prevent="$emit('clearFilterClicked', 'provider_name')"
             >
@@ -368,7 +360,7 @@
                   term: this.suggestions.provider_name.current
                 })
               "
-              :noOptionsClasses="['el:amx-C_er el:amx-Fs(0.75em)']"
+              :noOptionsClasses="['c-err fs12']"
               @includeFacetOption="
                 $emit('optionAddedToFilter', 'provider_name', $event)
               "
@@ -386,7 +378,7 @@
       <search-fieldset :title="$t('dictionary.audios')" :stand-out="true">
         <template #action>
           <a
-            class="el:o-fieldset-frame__action el:amx-Ws(nw)"
+            class="el:o-fieldset-frame__action ws-n"
             href="#"
             @click.prevent="$emit('clearFilterClicked', 'root_audio')"
           >
@@ -417,7 +409,7 @@
                 term: this.suggestions.root_audio.current
               })
             "
-            :noOptionsClasses="['el:amx-C_er el:amx-Fs(0.75em)']"
+            :noOptionsClasses="['c-err fs12']"
             @includeFacetOption="
               $emit('optionAddedToFilter', 'root_audio', $event)
             "
@@ -434,7 +426,7 @@
       <search-fieldset :title="$t('dictionary.subtitles')" :stand-out="true">
         <template #action>
           <a
-            class="el:o-fieldset-frame__action el:amx-Ws(nw)"
+            class="el:o-fieldset-frame__action ws-n"
             href="#"
             @click.prevent="$emit('clearFilterClicked', 'subtitles')"
           >
@@ -465,7 +457,7 @@
                 term: this.suggestions.subtitles.current
               })
             "
-            :noOptionsClasses="['el:amx-C_er el:amx-Fs(0.75em)']"
+            :noOptionsClasses="['c-err fs12']"
             @includeFacetOption="
               $emit('optionAddedToFilter', 'subtitles', $event)
             "

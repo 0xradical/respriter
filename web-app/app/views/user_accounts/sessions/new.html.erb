@@ -7,12 +7,12 @@
 <% end %>
 
   <div class='row justify-content-center'>
-    <div class='col-12 col-md-6 col-lg-4 el:amx-Mb(2em)@sm'>
+    <div class='col-12 col-md-6 col-lg-4 mB32@sm'>
       <%= render 'oauth_buttons' %>
     </div>
 
     <div class='col-12 col-md-6 col-lg-4'>
-      <div class='el:amx-Bol@>lg el:amx-Pl(2em)@>lg'>
+      <div class='bdL@>lg pL32@>lg'>
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class='el:m-form-field'>
             <div class='el:m-form-field__label el:m-form-field__label--over'>
@@ -23,7 +23,7 @@
             </div>
           </div>
 
-          <div class='el:m-form-field el:amx-Mt(0.75em)'>
+          <div class='el:m-form-field mT12'>
             <div class='el:m-form-field__label el:m-form-field__label--over'>
               <%= f.label :password %>
             </div>
@@ -33,13 +33,13 @@
           </div>
 
           <% if devise_mapping.rememberable? -%>
-            <div class="field el:amx-Mt(0.5em)">
+            <div class="field mT8">
               <%= f.check_box :remember_me %>
               <%= f.label :remember_me %>
             </div>
           <% end -%>
 
-          <%= f.submit "Log in", class: 'btn btn--primary-flat btn--block el:amx-Mt(1.25em)' %>
+          <%= f.submit "Log in", class: 'el:m-button el:m-button--primary-flat el:m-button--block mT16' %>
 
         <% end %>
         <%= render "user_accounts/shared/links" %>

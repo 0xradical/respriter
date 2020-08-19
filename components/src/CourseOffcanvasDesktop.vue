@@ -1,11 +1,11 @@
 <template>
   <div class="el:o-hcard-offcanvas">
     <div class="el:o-hcard-offcanvas__content-slot">
-      <div class="el:o-hcard-offcanvas__header-slot el:amx-Mb(1.5em)">
+      <div class="el:o-hcard-offcanvas__header-slot mB24">
         <course-provider
-          :rootClasses="['el:amx-Mb(0.5em)']"
-          :logoClasses="['el:amx-Fs(1.75em) el:amx-Mr(0.25em)']"
-          :nameClasses="['el:amx-Fs(0.75em)']"
+          :rootClasses="['mB8']"
+          :logoClasses="['fs24 mR8']"
+          :nameClasses="['fs12']"
           :course="course"
         >
         </course-provider>
@@ -16,7 +16,7 @@
             width="1rem"
             height="1rem"
             cursor="pointer"
-            class="el:amx-C_pr"
+            class="c1"
           ></icon>
         </div>
       </div>
@@ -24,26 +24,26 @@
       <div class="el:o-hcard-offcanvas__body-slot">
         <course-title
           :course="course"
-          :rootClasses="['el:amx-Mb(1.75em)', 'el:amx-C_fg']"
-          :titleClasses="['el:amx-Fs(1.25em)']"
+          :rootClasses="['mB32', 'c-fg']"
+          :titleClasses="['fs20']"
         >
         </course-title>
 
-        <div class="el:amx-D(f)">
+        <div class="d-f">
           <div style="flex: 50%;">
             <video-preview
               style="width: auto;"
               :course="course"
-              :rootClasses="['el:amx-Mr(1.75em)']"
+              :rootClasses="['mR24']"
             >
             </video-preview>
           </div>
 
           <course-attribute-list
             :course="course"
-            :attributeClasses="['el:amx-Mb(1.125em)']"
-            :attributeIconClasses="['el:amx-Fs(1.5em) el:amx-Mr(0.5em)']"
-            :attributeValueClasses="['el:amx-Fs(0.875em)']"
+            :attributeClasses="['mB18']"
+            :attributeIconClasses="['fs24 mR8']"
+            :attributeValueClasses="['fs14']"
             style="flex: 50%;"
           >
           </course-attribute-list>
@@ -51,26 +51,21 @@
 
         <course-description-toggler
           :course="course"
-          :rootClasses="[
-            'el:amx-Mt(1.75em)',
-            'el:amx-Pt(0.5em)',
-            'el:amx-Pb(0.5em)',
-            'el:amx-Cur(p)'
-          ]"
+          :rootClasses="['mT24', 'pT8', 'pB8', 'cr-p']"
         >
         </course-description-toggler>
 
-        <div class="el:amx-D(f) el:amx-Mt(1.75em)">
+        <div class="d-f mT24">
           <course-pricing
             :course="course"
-            :rootClasses="['el:amx-Mr(1.75em)']"
+            :rootClasses="['mR24']"
             style="flex: 50%;"
           >
           </course-pricing>
           <course-button
             :course="course"
-            :rootClasses="['el:amx-Mt(a)', 'el:amx-Mb(a)', 'el:amx-Ta(c)']"
-            :buttonClasses="['el:amx-Fs(0.75em)', 'btn--block']"
+            :rootClasses="['mT-a', 'mB-a', 'ta-c']"
+            :buttonClasses="['fs12', 'el:m-button--block']"
             style="flex: 50%;"
           >
           </course-button>

@@ -3,14 +3,14 @@
     <client-only>
       <modal :adaptive="true" width="100%" height="100%" name="mobileFilter">
         <div class="filter-nav--mobile">
-          <div class="el:amx-D(F) el:amx-FxJc(sb)" style="height: 15%;">
+          <div class="d-f jc-sb" style="height: 15%;">
             <h5>{{ $t("dictionary.filters") }}</h5>
             <a href="#" @click="hideMobileFilter">
               <icon
-                width="1.05rem"
-                height="1.05rem"
+                width="1em"
+                height="1em"
                 name="close"
-                class="el:amx-C_pr"
+                class="c1 fs16"
               ></icon>
             </a>
           </div>
@@ -33,17 +33,13 @@
       </modal>
     </client-only>
 
-    <div class="container el:amx-Pb(3.75em)">
+    <div class="container pB64">
       <div class="row">
-        <div class="el:amx-D(n)@<sm col-lg-3">
-          <span
-            class="el:amx-D(ib) el:amx-Fs(0.875em) el:amx-Lh(1) el:amx-P(1.25em)"
-          ></span>
+        <div class="d-n@<sm col-lg-3">
+          <span class="d-ib fs14 lh1 pA20"></span>
         </div>
         <div class="col-12 col-lg-9">
-          <span
-            class="el:amx-D(ib) el:amx-W(100%) el:amx-Fs(0.875em) el:amx-Lh(1) el:amx-P(1.25em|0)"
-          >
+          <span class="d-ib w100 fs14 lh1 pV20">
             {{
               $t("dictionary.search_results", {
                 total: $store.state.meta.total
@@ -52,11 +48,11 @@
 
             <template v-if="params.q">
               {{ $t("dictionary.for") }}
-              <span class="el:amx-Fw(b) el:amx-C_fg">{{ this.params.q }}</span>
+              <span class="fw-b c-fg">{{ this.params.q }}</span>
             </template>
           </span>
 
-          <div class="el:amx-D(F) el:amx-FxJc(sb) el:amx-FxAi(c)">
+          <div class="d-f jc-sb ai-c">
             <div>
               <pagination
                 @paginate="paginate"
@@ -66,11 +62,10 @@
                 :num-of-pages="$store.state.meta.pages"
               ></pagination>
             </div>
-            <div class="el:amx-D(n)@<sm el:amx-D(F) el:amx-FxAi(c) sort">
-              <span
-                class="el:amx-D(b) el:amx-Fw(b) el:amx-C_gray5 el:amx-Mr(1em) sort__label"
-                >{{ $t("dictionary.sort_by") }}</span
-              >
+            <div class="d-n@<sm d-f ai-c sort">
+              <span class="d-b fw-b mR16 sort__label">{{
+                $t("dictionary.sort_by")
+              }}</span>
               <multiselect
                 :value="orderCurrentOption"
                 @select="sortByChanged"
@@ -97,11 +92,11 @@
                     class="sort__caret"
                   >
                     <icon
-                      width="1rem"
-                      height="1rem"
+                      width="1em"
+                      height="1em"
                       :transform="`rotate(${orderOptionsToggled ? 180 : 0}deg)`"
                       name="arrow-down"
-                      class="el:amx-C_pr"
+                      class="c1 fs16"
                     ></icon>
                   </div>
                 </template>
@@ -111,14 +106,14 @@
         </div>
       </div>
 
-      <div class="row el:amx-Mt(1em)@>lg el:amx-Mb(2em)">
-        <div class="el:amx-D(n)@<sm col-lg-3">
+      <div class="row mT16@>lg mB32">
+        <div class="d-n@<sm col-lg-3">
           <div class="filter-nav">
-            <div class="el:amx-D(F) el:amx-FxJc(sb)">
+            <div class="d-f jc-sb">
               <h4>{{ $t("dictionary.filters") }}</h4>
               <a
                 href="#"
-                class="el:amx-C_er el:amx-Fw(b) el:amx-Fs(0.625em)"
+                class="c-err fw-b fs10"
                 @click.prevent="clearFilters"
                 style="margin: auto 0; text-align: right;"
               >
@@ -138,17 +133,15 @@
           </div>
         </div>
 
-        <div class="col-12 el:amx-D(n)@>lg el:amx-Mb(1em)">
+        <div class="col-12 d-n@>lg mB16">
           <hr />
-          <div class="el:amx-D(F) el:amx-FxJc(sb) el:amx-FxAi(c)">
-            <span class="el:amx-C_gray5 el:amx-Fw(b)">
-              <span class="el:amx-D(ib) el:amx-Mr(0.25em)">{{
-                $t("dictionary.sort_by")
-              }}</span>
-              <div class="el:m-select el:amx-D(ib)">
+          <div class="d-f jc-sb ai-c">
+            <span class="fw-b">
+              <span class="d-ib mR4">{{ $t("dictionary.sort_by") }}</span>
+              <div class="el:m-select d-ib">
                 <select
                   :value="orderCurrentOption.key"
-                  class="el:amx-Fs(0.75em)"
+                  class="fs12"
                   style="width: 130px;"
                   @change="sortByChanged({ key: $event.target.value })"
                 >
@@ -162,11 +155,7 @@
                 </select>
               </div>
             </span>
-            <a
-              class="el:amx-C_pr el:amx-Fw(b) el:amx-Ws(nw)"
-              href="#"
-              @click="showMobileFilter"
-            >
+            <a class="c1 fw-b ws-n" href="#" @click="showMobileFilter">
               {{ $t("dictionary.filter_results") }}
             </a>
           </div>

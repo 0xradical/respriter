@@ -156,7 +156,7 @@
       <% if content_for?(:sprites) %>
         <%= yield :sprites %>
       <% else %>
-        <%= URI.open(sprites_url({icons: "*", brand: '*', i18n: '*', providers: '*', tags: RootTag.all.map(&:id)})).read.html_safe %>
+        <%= URI.open(sprites_url({icons: "*", brand: '*', i18n: '*', "country-flags": country_flags.values, providers: '*', tags: RootTag.all.map(&:id)})).read.html_safe %>
       <% end %>
     </div>
 
@@ -178,7 +178,7 @@
     <% end %>
 
     <% flash.each do |key, value| %>
-      <div class='el:amx-Fs(0.875em) el:m-alert el:m-alert--<%= alert_alias(key) %>'>
+      <div class='fs14 el:m-alert el:m-alert--<%= alert_alias(key) %>'>
         <div class='container'>
           <%= value %>
         </div>

@@ -7,32 +7,32 @@
   <meta property="og:description" content="<%= t('.meta.description') %>">
 <% end %>
 
-<div class='el:amx-Bc_su el:amx-P(2em|0)'>
+<div class='bc-s pV32'>
   <div class='l-blog-container'>
     <div class='row'>
       <div class='col-12'>
-        <h1 class='el:amx-Mb(1em)'><%= t('.h1') %></h1>
+        <h1 class='mB16'><%= t('.h1') %></h1>
       </div>
     </div>
     <div class='row'>
       <div class='col-12'>
         <% @posts.each do |post| %>
           <div style='margin-bottom:64px'>
-            <div class='el:amx-Fs(0.625em) el:amx-Mb(0.5em) el:amx-Tt(u)'>
+            <div class='fs10 mB8 tt-u'>
               <%= post.admin_account.name %> /
               <span> <%= l(post.published_at.to_date, format: :long) %> </span> /
               <% post.tags.each do |tag| %>
-                <%= link_to t(".tags.#{tag}"), posts_path(tags: tag), class: 'el:amx-C_pr' %>
+                <%= link_to t(".tags.#{tag}"), posts_path(tags: tag), class: 'c1' %>
               <% end %>
             </div>
 
             <%= link_to post_path(post.slug) do %>
-              <h2 class='el:amx-Fs(1.5em) el:amx-C_fg' style='line-height:1em'><%= post.title %></h2>
+              <h2 class='fs24 c-fg' style='line-height:1em'><%= post.title %></h2>
             <% end %>
 
-            <%= image_tag(post.images&.first&.thumbor&.file_url(width: 728), style: 'max-width:100%', class: 'el:amx-Mt(1em)') if post.use_cover_image? %>
-            <p class='el:amx-C_fg el:amx-Mt(0.5em)' style='line-height:1.5em'>
-              <%= truncate(strip_tags(post.body.html_safe), length: 350) { "&nbsp".html_safe + link_to("Read more", post_path(post.slug), class: 'el:amx-C_pr') } %>
+            <%= image_tag(post.images&.first&.thumbor&.file_url(width: 728), style: 'max-width:100%', class: 'mT16') if post.use_cover_image? %>
+            <p class='c-fg mT8' style='line-height:1.5em'>
+              <%= truncate(strip_tags(post.body.html_safe), length: 350) { "&nbsp".html_safe + link_to("Read more", post_path(post.slug), class: 'c1') } %>
             </p>
           </div>
         <% end %>

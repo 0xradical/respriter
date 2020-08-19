@@ -10,9 +10,7 @@
         :scrollable="true"
         :name="desktopOffCanvasId"
       >
-        <div
-          class="el:amx-Pt(1.875em) el:amx-Pr(1.875em) el:amx-Pb(1.875em) el:amx-Pl(1.875em)"
-        >
+        <div class="pT32 pR32 pb32 pL32">
           <course-offcanvas-desktop
             :course="course"
             @clickedCourseOffcanvas="$modal.hide(desktopOffCanvasId)"
@@ -23,7 +21,7 @@
 
     <!-- desktop card -->
     <course-card-desktop
-      class="el:amx-Pr(0.75em) el:amx-Pl(0.75em) el:amx-Pb(0.75em) el:amx-Pt(0.75em) el:amx-Bc_white el:amx-D(n)@<sm el:amx-Fs(0.875em) el:amx-Fs(1em)@>lg"
+      class="pR12 pL12 pB12 pT12 d-n@<sm fs14 fs16@>lg"
       :class="{ 'js-expanded': expanded }"
       data-chrome-ext="clsp-tagger"
       :data-chrome-ext-data="chromeExtData"
@@ -34,7 +32,7 @@
 
     <!-- mobile card -->
     <course-card-mobile
-      class="el:amx-Pr(0.875em) el:amx-Pb(0.875em) el:amx-Pt(0.875em) el:amx-Pl(0.875em) el:amx-Cur(p) el:amx-D(n)@>lg"
+      class="pR14 pB14 pT14 pL14 cr-p d-n@>lg"
       :id="`mobile-${course.id}`"
       :course="course"
       @click="mobileClick"

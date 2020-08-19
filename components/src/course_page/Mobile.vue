@@ -1,32 +1,32 @@
 <template>
-  <div class="el:amx-D(n)@>lg">
+  <div class="d-n@>lg">
     <!-- video + title + pricing/cta -->
-    <div class="el:amx-Bc_su el:amx-Pt(1em) el:amx-Pb(2em)">
+    <div class="bc-s pT16 pB32">
       <div class="container">
         <div class="row">
           <div class="col">
-            <video-preview :course="course" :rootClasses="['el:amx-W(100%)']">
+            <video-preview :course="course" :rootClasses="['w100']">
             </video-preview>
           </div>
         </div>
-        <div class="row el:amx-Mt(1em)">
+        <div class="row mT16">
           <div class="col">
-            <div class="el:amx-D(f) el:amx-FxFd(c)">
+            <div class="d-f fld-c">
               <course-provider
                 :rootClasses="['el:m-attribute--stretch']"
-                :logoClasses="['el:amx-Fs(1.25em) el:amx-Mr(0.25em)']"
-                :nameClasses="['el:amx-Fs(0.75em)']"
+                :logoClasses="['fs20 mR4']"
+                :nameClasses="['fs12']"
                 :course="course"
               >
               </course-provider>
             </div>
           </div>
         </div>
-        <div class="row el:amx-Mt(1em)">
+        <div class="row mT16">
           <div class="col">
             <course-title
               :course="course"
-              :titleClasses="['el:amx-Fs(1.5em)']"
+              :titleClasses="['fs24']"
               :lines="5"
               :hyperlink="false"
               tag="h1"
@@ -34,33 +34,28 @@
             </course-title>
           </div>
         </div>
-        <div class="row el:amx-Mt(1.5em)">
-          <div class="col-4 el:amx-D(f) el:amx-FxDi(c)">
+        <div class="row mT24">
+          <div class="col-4 d-f fld-c">
             <course-pricing
               :course="course"
-              :rootClasses="[
-                'el:amx-D(f)',
-                'el:amx-FxDi(c)',
-                'el:amx-FxAi(fe)',
-                'el:amx-FxJc(c)'
-              ]"
+              :rootClasses="['d-f', 'fld-c', 'ai-fe', 'jc-c']"
               style="flex: 1;"
             >
             </course-pricing>
           </div>
-          <div class="col-8 el:amx-D(f) el:amx-FxDi(c) el:amx-FxJc(c)">
+          <div class="col-8 d-f fld-c jc-c">
             <course-button
               :course="course"
-              :buttonClasses="['btn--lg', 'btn--block']"
+              :buttonClasses="['el:m-button--lg', 'el:m-button--block']"
             >
             </course-button>
           </div>
         </div>
-        <div class="row el:amx-Mt(2em)">
+        <div class="row mT32">
           <div class="col">
             <course-social-sharing
               :course="course"
-              :iconClasses="['el:amx-Fs(1.6em)']"
+              :iconClasses="['fs24']"
               :rootClasses="['el:cmx-aright']"
             >
             </course-social-sharing>
@@ -69,23 +64,21 @@
       </div>
     </div>
     <!-- description + details -->
-    <div class="el:amx-Pt(2em) el:amx-Pb(2em)">
+    <div class="pT32 pB32">
       <div class="container">
         <div class="row">
           <div class="col">
-            <div
-              class="el:amx-Bc_su el:amx-Pt(1.5em) el:amx-Pr(1.5em) el:amx-Pb(0.375em) el:amx-Pl(1.5em)"
-            >
-              <span class="el:amx-Fs(1.25em) el:amx-Fw(b)">{{
+            <div class="bc-s pT24 pR24 pB4 pL24">
+              <span class="fs20 fw-b">{{
                 $t("dictionary.details.header")
               }}</span>
               <lazy-hydrate ssr-only>
                 <course-attribute-list
                   :course="course"
-                  :rootClasses="['el:amx-Mt(1.5em)']"
-                  :attributeClasses="['el:amx-Mb(1.125em)']"
-                  :attributeIconClasses="['el:amx-Fs(1.25em) el:amx-Mr(0.5em)']"
-                  :attributeValueClasses="['el:amx-Fs(0.875em)']"
+                  :rootClasses="['mT24']"
+                  :attributeClasses="['mB18']"
+                  :attributeIconClasses="['fs20 mR8']"
+                  :attributeValueClasses="['fs14']"
                   :showUnavailable="false"
                 >
                 </course-attribute-list>
@@ -94,40 +87,30 @@
           </div>
         </div>
         <div
-          class="row el:amx-Mt(2em)"
+          class="row mT32"
           v-if="course.description && course.description.length > 0"
         >
           <div class="col">
-            <span class="el:amx-Fs(1.5em) el:amx-Fw(b)">{{
+            <span class="fs24 fw-b">{{
               $t("dictionary.description.header")
             }}</span>
             <lazy-hydrate ssr-only>
-              <course-description
-                :rootClasses="['el:amx-Pt(0.5em)']"
-                :course="course"
-              >
+              <course-description :rootClasses="['pT8']" :course="course">
               </course-description>
             </lazy-hydrate>
           </div>
         </div>
         <div
-          class="row el:amx-Mt(2em)"
+          class="row mT32"
           v-if="course.curated_tags && course.curated_tags.length > 0"
         >
           <div class="col">
-            <span class="el:amx-Fs(1.5em) el:amx-Fw(b)">{{
-              $t("dictionary.tags.header")
-            }}</span>
+            <span class="fs24 fw-b">{{ $t("dictionary.tags.header") }}</span>
             <lazy-hydrate ssr-only>
               <course-tags
                 :course="course"
-                :rootClasses="['el:amx-Mt(0.5em)']"
-                :tagClasses="[
-                  'el:amx-D(ib)',
-                  'el:amx-Fs(0.75em)',
-                  'el:amx-Mr(0.5em)',
-                  'el:amx-Mt(0.5em)'
-                ]"
+                :rootClasses="['mT8']"
+                :tagClasses="['d-ib', 'fs12', 'mR8', 'mT8']"
               >
               </course-tags>
             </lazy-hydrate>

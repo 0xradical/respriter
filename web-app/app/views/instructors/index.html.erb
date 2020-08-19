@@ -6,25 +6,25 @@
 
 
 <div class='container'>
-  <div class='el:amx-Mt(2em) el:amx-Mb(4em)'>
+  <div class='mT32 mB64'>
     <div class='row'>
       <div class='col-12'>
-        <div class='el:amx-Bob el:amx-Pb(0.75em)'>
+        <div class='bdB pB12'>
           <div class='row'>
             <div class='col-12 col-sm-6'>
-              <h1 class='el:amx-Fs(1.5em) el:amx-P(0.5em|0)'>
+              <h1 class='fs24 pV8'>
                 <%= t('.h1') %>
               </h1>
             </div>
-            <div class='col-12 col-sm-6 offset-md-2 col-md-4 el:amx-Ta(r)@>lg'>
+            <div class='col-12 col-sm-6 offset-md-2 col-md-4 ta-r@>lg'>
               <% if (params[:provider].blank? && params[:teaching_at]) || params[:teaching_subjects] %>
-                <%= link_to "clear filter", instructors_path(provider: params[:provider]), class: "el:amx-Fs(0.75em) el:amx-C_er" %>
+                <%= link_to "clear filter", instructors_path(provider: params[:provider]), class: "fs12 c-err" %>
               <% end %>
-              <div class='el:amx-D(f) el:amx-FxJc(fe) el:amx-Ta(l) el:amx-Fs(0.875em)'>
+              <div class='d-f jc-fe ta-l fs14'>
                 <% if params[:provider].blank? %>
-                  <div class='el:amx-D(ib) el:amx-Pr(0.75em)' style='width:50%'>
-                    <span class='el:amx-Mb(0.5em)'><%= t('.filter_by_elearning_platform.label') %></span>
-                    <%= form_tag instructors_path(provider: params[:provider]), class: 'el:amx-Mb(0) el:amx-Mt(0.5em)', method: 'get' do %>
+                  <div class='d-ib pR12' style='width:50%'>
+                    <span class='mB8'><%= t('.filter_by_elearning_platform.label') %></span>
+                    <%= form_tag instructors_path(provider: params[:provider]), class: 'mB0 mT8', method: 'get' do %>
                       <%= select_tag 'teaching_at',
                         options_for_select(["Pluralsight", "Coursera", "SkillShare", "Linkedin Learning", "Udemy", "Udacity", "Edx", "Treehouse", "Platzi"], params[:teaching_at]),
                         prompt: t('.filter_by_elearning_platform.prompt'),
@@ -33,9 +33,9 @@
                     <% end %>
                   </div>
                 <% end %>
-                <div class='el:amx-D(ib)' style='width:50%;'>
-                <span class='el:amx-Mb(0.5em)'><%= t('.filter_by_subject.label') %></span>
-                <%= form_tag instructors_path(provider: params[:provider]), class: 'el:amx-Mb(0) el:amx-Mt(0.5em)', method: 'get' do %>
+                <div class='d-ib' style='width:50%;'>
+                <span class='mB8'><%= t('.filter_by_subject.label') %></span>
+                <%= form_tag instructors_path(provider: params[:provider]), class: 'mB0 mT8', method: 'get' do %>
                   <%= select_tag 'teaching_subjects',
                     options_for_select(I18n.backend.send(:translations)[:en][:tags].map { |k,v|  [v,k]},params[:teaching_subjects]),
                     prompt: t('.filter_by_subject.prompt'),
@@ -50,13 +50,13 @@
       </div>
     </div>
 
-    <div class='row el:amx-Mt(1em)'>
+    <div class='row mT16'>
       <% if @instructors.any? %>
         <% @instructors.each do |instructor| %>
           <div class='col-12 col-sm-6 col-md-4 col-lg-3'>
             <%= link_to orphaned_profile_path(instructor.slug) do %>
               <% subject = (instructor.teaching_subjects & RootTag.all.map(&:id))&.first %>
-              <div class="el:o-profile-vcard el:amx-Mt(1.25em)">
+              <div class="el:o-profile-vcard mT16">
                 <div
                   class="el:o-profile-vcard__cover-slot"
                   style='<%= "background-image:url(#{asset_bundle_path('media/images/' + subject + '.jpg')})" if subject %>'></div>
@@ -69,7 +69,7 @@
                 <div class="el:o-profile-vcard__head-slot">
                   <ul class='el:m-list el:m-list--hrz'>
                     <% instructor.teaching_at.each do |key| %>
-                      <li class='el:amx-Mr(0.5em)'>
+                      <li class='mR8'>
                         <%= svg_use('providers', key.downcase.gsub(' ','-'), {width: '1em', height: '1em'}) %>
                       </li>
                     <% end %>
@@ -81,25 +81,25 @@
                   </ul>
                 </div>
                 <div class="el:o-profile-vcard__body-slot">
-                  <div class="el:amx-D(f)">
+                  <div class="d-f">
                     <svg
                       width="0.75em"
                       height="0.75em"
-                      class="el:amx-Mr(0.5em) el:amx-Fi_fgM"
+                      class="mR8 fi-fgM"
                     >
                       <use xlink:href="#icons-camera" />
                     </svg>
-                      <span class="el:amx-Fs(0.75em) el:amx-C_fgM"><%= t('.courses_count', count: instructor.courses.count )%></span>
+                      <span class="fs12 c-fgM"><%= t('.courses_count', count: instructor.courses.count )%></span>
                   </div>
-                  <div class="el:amx-D(f) el:amx-Mt(0.5em)">
+                  <div class="d-f mT8">
                     <svg
                       width="0.75em"
                       height="0.75em"
-                      class="el:amx-Mr(0.5em) el:amx-Fi_fgM"
+                      class="mR8 fi-fgM"
                     >
                     <use xlink:href="#icons-monitor-gear" />
                     </svg>
-                    <span class="el:amx-Fs(0.75em) el:amx-C_fgM">
+                    <span class="fs12 c-fgM">
                       <% if subject %>
                         <%= t("tags.#{subject}")%>
                       <% else %>

@@ -11,12 +11,12 @@
     <div class='offset-lg-3 col-12 col-lg-6'>
       <% if !@course_review.submitted? %>
         <%= form_tag(course_review_path(@course_review)) do %>
-          <div class='el:amx-Mt(2.5em)@<sm el:amx-Mt(3em) el:amx-Mb(2em)@<sm el:amx-Mb(1.5em)'>
+          <div class='mT40@<sm mT48 mB32@<sm mB20'>
             <%= t('.form.rating.title_html', provider: @course_review.provider.name, course: @course_review.course_name) %>
           </div>
 
-          <div class='el:amx-Ta(l)'>
-            <div class='el:m-rating-input el:amx-Fs(2em)'>
+          <div class='ta-l'>
+            <div class='el:m-rating-input fs32'>
               <%= radio_button_tag 'course_review[rating]', 5, @rating == 5 %>
               <label for='course_review_rating_5'></label>
 
@@ -34,7 +34,7 @@
             </div>
           </div>
 
-          <div class='el:amx-Mt(2.5em)@<sm el:amx-Mt(2em)'></div>
+          <div class='mT40@<sm mT32'></div>
 
           <div class='el:m-form-field__label el:m-form-field__label--side'>
             <label for="completed">
@@ -42,16 +42,16 @@
             </label>
           </div>
 
-          <div class='el:amx-Mt(0.5em)'>
-            <span class='el:amx-D(ib) el:amx-Mr(2em)'>
-              <%= radio_button_tag 'course_review[completed]', false, @course_review.completed == false, { class: 'el:amx-Mr(0.5em)@<sm el:amx-Mr(0.25em)' } %><label class='el:amx-Va(m)'><%= t('.form.completion.values.yep') %></label>
+          <div class='mT8'>
+            <span class='d-ib mR32'>
+              <%= radio_button_tag 'course_review[completed]', false, @course_review.completed == false, { class: 'mR8@<sm mR4' } %><label class='va-m'><%= t('.form.completion.values.yep') %></label>
             </span>
-            <span class='el:amx-D(ib)'>
-              <%= radio_button_tag 'course_review[completed]', true, @course_review.completed == true, { class: 'el:amx-Mr(0.5em)@<sm el:amx-Mr(0.25em)' } %><label class='el:amx-Va(m)'><%= t('.form.completion.values.nope') %></label>
+            <span class='d-ib'>
+              <%= radio_button_tag 'course_review[completed]', true, @course_review.completed == true, { class: 'mR8@<sm mR4' } %><label class='va-m'><%= t('.form.completion.values.nope') %></label>
             </span>
           </div>
 
-          <div class='el:amx-Mt(2em)'></div>
+          <div class='mT32'></div>
 
           <div class='el:m-form-field__label el:m-form-field__label--side'>
             <label for="feedback">
@@ -59,34 +59,34 @@
             </label>
           </div>
 
-          <div class='el:m-form-field__textarea el:amx-Mt(0.5em)'>
+          <div class='el:m-form-field__textarea mT8'>
             <%= text_area_tag('course_review[feedback]', @course_review.feedback, { placeholder: t('.form.feedback.placeholder'), style: 'height: 9em; width: 100%', rows: 5 }) %>
           </div>
 
-          <div class='el:amx-Ta(r) el:amx-D(n)@<sm el:amx-Mt(1em) el:amx-Mb(4em)'>
-            <input type='submit' class='btn btn--primary-flat' value='<%= t('.form.send') %>'>
+          <div class='ta-r d-n@<sm mT16 mB64'>
+            <input type='submit' class='el:m-button el:m-button--primary-flat' value='<%= t('.form.send') %>'>
           </div>
-          <div class='el:amx-Ta(r) el:amx-D(n)@>lg el:amx-Mt(1.5em) el:amx-Mb(2.5em)'>
-            <input type='submit' class='btn btn--primary-flat btn--block' value='<%= t('.form.send') %>'>
+          <div class='ta-r d-n@>lg mT24 mB40'>
+            <input type='submit' class='el:m-button el:m-button--primary-flat el:m-button--block' value='<%= t('.form.send') %>'>
           </div>
         <% end %>
       <% else %>
-        <div class='el:amx-Ta(c)' style='margin-top: 10em; margin-bottom: 10em'>
-          <div class='el:amx-C_gray5 el:amx-Fw(b)'>
-            <span class='el:amx-Fs(1.5em)@<sm el:amx-Fs(2em)'>
+        <div class='ta-c' style='margin-top: 10em; margin-bottom: 10em'>
+          <div class='c-fg fw-b'>
+            <span class='fs24@<sm fs32'>
               <%= t('.submission.header') %>
             </span>
           </div>
-          <div class='el:amx-C_gray3 el:amx-Mt(0.5em)'>
-            <span class='el:amx-Fs(1em)@<sm el:amx-Fs(1.25em)'>
+          <div class='c-fgM mT8'>
+            <span class='fs16@<sm fs20'>
               <%= t('.submission.body') %>
             </span>
           </div>
 
-          <a class='el:amx-D(n)@<sm el:amx-Mt(2em) btn btn--primary-flat' href='/' style='min-width:2.5em'>
+          <a class='d-n@<sm mT32 el:m-button el:m-button--primary-flat' href='/' style='min-width:2.5em'>
             <%= t('.submission.link') %>
           </a>
-          <a class='el:amx-D(n)@>lg el:amx-Mt(1.5em) btn btn--medium btn--primary-flat btn--block' href='/'>
+          <a class='d-n@>lg mT24 el:m-button el:m-button--medium el:m-button--primary-flat el:m-button--block' href='/'>
             <%= t('.submission.link') %>
           </a>
         </div>

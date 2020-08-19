@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="el:o-fieldset-frame">
+  <fieldset class="fs16 el:o-fieldset-frame">
     <div class="el:o-fieldset-frame__header">
       <slot name="title">
         <legend
@@ -43,7 +43,7 @@
 <style lang="scss" scoped>
   .subtitle__separator--begin {
     margin-left: 0.5em;
-    font-size: 0.75rem;
+    font-size: 1.2rem;
     padding-top: 3px;
   }
   .subtitle__body {
@@ -51,12 +51,12 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    font-size: 0.75rem;
+    font-size: 1.2rem;
     padding-top: 3px;
   }
   .subtitle__separator--end {
     margin-right: 0.5em;
-    font-size: 0.75rem;
+    font-size: 1.2rem;
     padding-top: 3px;
   }
 </style>

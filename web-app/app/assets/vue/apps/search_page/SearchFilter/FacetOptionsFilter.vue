@@ -13,7 +13,7 @@
         aria-expanded="false"
         :placeholder="placeholder"
         name="q"
-        class="el:m-search-suggest__input"
+        class="el:m-search-suggest__input fs14"
       />
       <vue-autosuggest
         :ref="id"
@@ -25,7 +25,7 @@
           id: inputId,
           onInputChange: inputChanged,
           placeholder: placeholder,
-          class: 'el:m-search-suggest__input'
+          class: 'el:m-search-suggest__input fs14'
         }"
         @selected="selectedSuggestion"
         @click="clickedSuggestion"
@@ -57,15 +57,15 @@
       }
     },
     methods: {
-      clickedSuggestion: function(suggestion) {
+      clickedSuggestion: function (suggestion) {
         this.$emit("clickedFacetOptionSuggestion", suggestion);
         this.$refs[this.id].searchInput = "";
       },
-      selectedSuggestion: function(suggestion) {
+      selectedSuggestion: function (suggestion) {
         this.$emit("selectedFacetOptionSuggestion", suggestion);
         this.$refs[this.id].searchInput = "";
       },
-      inputChanged: function(...params) {
+      inputChanged: function (...params) {
         this.$emit("changedInputFacetOptionSuggestion", ...params);
       }
     },
