@@ -6,8 +6,8 @@
   id='results'
 <% end %>
 
-<%= content_for :javascript do %>
-  <%= javascript_bundles_with_chunks_tag 'sharing', defer: true %>
+<%= content_for :javascript_bundles do %>
+  [ 'sharing' ]
 <% end %>
 
 <%= content_for :sprites do %>

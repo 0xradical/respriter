@@ -61,11 +61,28 @@ module.exports = (env, argv) => {
       // https://twitter.com/wSokra/status/969633336732905474
       splitChunks: {
         chunks: "all",
-        name: true
+        maxInitialRequests: Infinity,
+        minSize: 0,
+        cacheGroups: {
+          external: {
+            test: /[\\/]node_modules[\\/]/,
+            // name: "external"
+            name(module) {
+              // get the name. E.g. node_modules/packageName/not/this/part.js
+              // or node_modules/packageName
+              const packageName = module.context.match(
+                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+              )[1];
+
+              // npm package names are URL-safe, but some servers don't like @ symbols
+              return `npm.${packageName.replace("@", "")}`;
+            }
+          }
+        }
       },
       // Separate runtime chunk to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: true
+      runtimeChunk: "single"
     },
     node: {
       dgram: "empty",

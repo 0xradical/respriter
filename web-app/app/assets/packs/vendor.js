@@ -3,10 +3,10 @@ import "../js/video_player";
 // Import Tippy
 import tippy from "tippy.js";
 
-import "tippy.js/dist/tippy.css";
 import Swiper from "swiper";
 import AwesomeSwiper from "@cycjimmy/awesome-swiper";
 import "swiper/css/swiper.css";
+import "tippy.js/dist/tippy.css";
 
 tippy.setDefaultProps({
   arrow: true

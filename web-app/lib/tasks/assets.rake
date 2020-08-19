@@ -2,12 +2,14 @@
 
 def file_versions(public_output_path, file, globbed_suffix: false, exact_version: false)
   file_prefix, file_digest, file_ext = file.scan(/(.*)([0-9a-f]{20})(.*)/).first
+  file_digest_pattern = '[0-9a-f]{20}'
   if !file_prefix || !file_digest
     file_prefix, file_digest, file_ext = file.scan(/(.*)([0-9a-f]{8})(.*)/).first
+    file_digest_pattern = '[0-9a-f]{8}'
   end
 
   if file_prefix && file_ext
-    Dir.glob(public_output_path.join("#{file_prefix}#{exact_version ? file_digest : '*'}#{file_ext}#{globbed_suffix ? '*' : ''}"))
+    Dir.glob(public_output_path.join("#{file_prefix}*")).grep(/#{public_output_path.join("#{file_prefix}#{exact_version ? file_digest : file_digest_pattern}#{file_ext}#{globbed_suffix ? '.*' : ''}")}/)
   else
     []
   end
@@ -15,7 +17,7 @@ end
 
 def current_file_versions(public_output_path, file, count_to_keep: 2)
   file_versions(public_output_path, file).map do |version_of_file|
-    if version_of_file == public_output_path.join(file)
+    if version_of_file == public_output_path.join(file).to_s
       [version_of_file, Float::INFINITY]
     else
       [version_of_file, File.mtime(version_of_file).utc.to_i]

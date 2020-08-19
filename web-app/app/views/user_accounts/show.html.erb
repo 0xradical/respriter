@@ -13,13 +13,12 @@
   <% end %>
 <% end %>
 
-<%= content_for :stylesheets do %>
-  <%= stylesheet_bundles_with_chunks_tag 'vcard' %>
+<%= content_for :stylesheet_bundles do %>
+  [ 'vcard' ]
 <% end %>
 
-<%= content_for :javascript do %>
-  <%= elements_javascript_include_tag 'vars' %>
-  <%= javascript_bundles_with_chunks_tag 'vcard' %>
+<%= content_for :javascript_bundles do %>
+  [ 'vcard' ]
 <% end %>
 
 <%= content_for :sprites do %>

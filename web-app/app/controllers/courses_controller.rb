@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
-
   include CourseSearchHelper
+
+  before_action do
+    Rack::MiniProfiler.authorize_request if current_user_account&.id&.in?([351])
+  end
 
   prepend_before_action :normalize_params
 

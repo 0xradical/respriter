@@ -59,14 +59,6 @@ Rails.application.routes.draw do
         as:          :course
   end
 
-  controller 'provider_courses' do
-    get '/:provider/courses' => :index,
-      constraints: ProviderConstraint.new,
-      as: :provider_courses
-    get '/:provider/search' => :index,
-      constraints: ProviderConstraint.new
-  end
-
   controller 'instructors' do
     get '(/:provider)/instructors' => :index,
       constraints: ProviderConstraint.new(allow_blank: true),
