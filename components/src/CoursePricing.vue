@@ -156,19 +156,20 @@
 
       this.$nextTick(function () {
         let tooltipContent = undefined;
+
+        if (this.locales.client.tooltipContent) {
+          tooltipContent = this.locales.client.tooltipContent;
+        }
+
         if (
-          this.$refs.tooltip &&
+          !tooltipContent &&
           this.$refs.tooltipContent &&
           this.$refs.tooltipContent.$el
         ) {
           tooltipContent = this.$refs.tooltipContent.$el.innerHTML;
         }
 
-        if (!tooltipContent && this.locales.client.tooltipContent) {
-          tooltipContent = this.locales.client.tooltipContent;
-        }
-
-        if (tooltipContent) {
+        if (tooltipContent && this.$refs.tooltip) {
           tippy(this.$refs.tooltip, {
             content: tooltipContent,
             placement: "bottom"
