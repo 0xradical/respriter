@@ -1,6 +1,6 @@
 <template>
   <div v-if="size">
-    <div class='el:amx-Mb(0.625em)' v-for='course in courses' :key="course.id">
+    <div class='mB10' v-for='course in courses' :key="course.id">
       <course :course='course'></course>
     </div>
   </div>

@@ -6,43 +6,43 @@
     <li v-if="callOut" class="callout" :class="callOutClasses">
       {{ callOut }}
     </li>
-    <li class="el:amx-Cur(p)" :class="iconClasses">
+    <li class="cr-p" :class="iconClasses">
       <network network="linkedin">
         <icon
           name="linkedin-circle"
           width="1.25em"
           height="1.25em"
-          class="el:amx-Fi_linkedin"
+          class="fi-linkedin"
         ></icon>
       </network>
     </li>
-    <li class="el:amx-Ml(0.5em) el:amx-Cur(p)" :class="iconClasses">
+    <li class="mL8 cr-p" :class="iconClasses">
       <network network="twitter">
         <icon
           name="twitter-circle"
           width="1.25em"
           height="1.25em"
-          class="el:amx-Fi_twitter"
+          class="fi-twitter"
         ></icon>
       </network>
     </li>
-    <li class="el:amx-Ml(0.5em) el:amx-Cur(p)" :class="iconClasses">
+    <li class="mL8 cr-p" :class="iconClasses">
       <network network="facebook">
         <icon
           name="facebook-circle"
           width="1.25em"
           height="1.25em"
-          class="el:amx-Fi_facebook"
+          class="fi-facebook"
         ></icon>
       </network>
     </li>
-    <li class="el:amx-Ml(0.5em) el:amx-Cur(p)" :class="iconClasses">
+    <li class="mL8 cr-p" :class="iconClasses">
       <network network="reddit">
         <icon
           name="reddit-circle"
           width="1.25em"
           height="1.25em"
-          class="el:amx-Fi_reddit"
+          class="fi-reddit"
         ></icon>
       </network>
     </li>

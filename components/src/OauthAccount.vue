@@ -1,15 +1,15 @@
 <template>
   <div>
-    <a v-if='!connected' :href='authorizeUrl' :class='btnClass'>
-      {{ $t('oauth.connect', {provider: providers[provider] || provider }) }}
+    <a v-if="!connected" :href="authorizeUrl" :class="btnClass">
+      {{ $t("oauth.connect", { provider: providers[provider] || provider }) }}
     </a>
-    <a v-else @click="$emit('destroyOauth', provider)" :class='btnClass'>
-      {{ $t('oauth.connected', {provider: providers[provider] || provider }) }}
+    <a v-else @click="$emit('destroyOauth', provider)" :class="btnClass">
+      {{ $t("oauth.connected", { provider: providers[provider] || provider }) }}
     </a>
   </div>
 </template>
 <script>
-import { switchCase, switchStatement } from '@babel/types';
+  import { switchCase, switchStatement } from "@babel/types";
   export default {
     data() {
       return {
@@ -18,7 +18,7 @@ import { switchCase, switchStatement } from '@babel/types';
           github: "Github",
           facebook: "Facebook"
         }
-      }
+      };
     },
     props: {
       provider: {
@@ -36,19 +36,18 @@ import { switchCase, switchStatement } from '@babel/types';
       size: {
         type: String,
         required: false,
-        default: 'medium'
+        default: "medium"
       }
     },
 
     computed: {
-      btnClass () {
-        return `btn btn--${this.size} btn--${this.provider}`
+      btnClass() {
+        return `el:m-button el:m-button--${this.size} el:m-button--${this.provider}`;
       }
     }
-
-  }
+  };
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
   .provider {
     fill: #243f52;
     &--github {
@@ -61,7 +60,7 @@ import { switchCase, switchStatement } from '@babel/types';
       fill: #cd4637;
     }
     &--linkedin {
-      fill: #0077B5;
+      fill: #0077b5;
     }
   }
 </style>

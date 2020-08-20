@@ -1,14 +1,14 @@
 <div class='el:o-dropdown'>
   <a href='javascript:void(0)' class='el:o-dropdown__action'>
-    <%= country_flag(I18n.locale.downcase, width: "1.5em", height: "1.5em", class: "el:amx-Mr(0.375em) el:amx-Va(m) el:amx-D(ib)") %>
+    <%= country_flag(I18n.locale.downcase, width: "1.5em", height: "1.5em", class: "mR8 va-m d-ib") %>
   </a>
-  <ul class='el:o-dropdown__menu el:amx-Pb(-1.25em) el:o-dropdown__menu--right'>
+  <ul class='el:o-dropdown__menu el:o-dropdown__menu--right'>
     <% I18nHost.new(ENV.fetch('HOST') { 'classpert.com' } ).each do |locale, url| %>
-      <li class='el:amx-Mb(1.25em) el:amx-Fs(0.75em)'>
+      <li class='mB16 fs12'>
         <%# Setting english with rel=nofollow prevents search engines from indexing a duplicate version with query intl=true %>
         <%= link_to "//" + url + request.path + (locale == 'en' ? '?intl=true' : ''), rel: (locale == 'en' ? "nofollow" : "follow") do %>
-          <%= country_flag(locale, width: "1.5em", height: "1.5em", class: "el:amx-Mr(0.25em) el:amx-Va(m) el:amx-D(ib)") %>
-          <span style='vertical-align: middle;' class='el:amx-C_fgV'><%= t("iso639_codes.#{I18nHelper.sanitize_locale(locale)}", locale: I18nHelper.sanitize_locale(locale) || 'en')%></span>
+          <%= country_flag(locale, width: "1.5em", height: "1.5em", class: "mR4 va-m d-ib") %>
+          <span style='vertical-align: middle;' class='c-fgV'><%= t("iso639_codes.#{I18nHelper.sanitize_locale(locale)}", locale: I18nHelper.sanitize_locale(locale) || 'en')%></span>
         <% end %>
       </li>
     <% end %>

@@ -7,14 +7,14 @@
 <% end %>
 
 <div class='row justify-content-center'>
-  <div class='col-12 col-md-6 col-lg-4 el:amx-Mb(2em)@sm'>
+  <div class='col-12 col-md-6 col-lg-4 mB32@sm'>
     <%= render 'oauth_buttons' %>
   </div>
 
-  <div class='col-12 el:amx-Mt(1em) el:amx-D(n)@>lg'></div>
+  <div class='col-12 mT16 d-n@>lg'></div>
 
   <div class='col-12 col-md-6 col-lg-4'>
-    <div class='el:amx-Bol@>lg el:amx-Pl(2em)@>lg'>
+    <div class='bdL@>lg pL32@>lg'>
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), method: :post, html: { autocomplete: 'off' }) do |f| %>
         <%= devise_error_messages! %>
 
@@ -28,7 +28,7 @@
         </div>
 
         <%= f.fields_for :profile, (resource.profile || resource.build_profile) do |profile_fields| %>
-          <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.details[:base]&.select{|error| error[:field] == :username }&.size > 0 %>'>
+          <div class='el:m-form-field mT12 <%= "el:m-form-field--error" if resource.errors.details[:base]&.select{|error| error[:field] == :username }&.size > 0 %>'>
             <div class='el:m-form-field__label el:m-form-field__label--over'>
               <%= profile_fields.label :username %>
             </div>
@@ -38,7 +38,7 @@
           </div>
         <% end %>
 
-        <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.has_key?(:password) %>'>
+        <div class='el:m-form-field mT12 <%= "el:m-form-field--error" if resource.errors.has_key?(:password) %>'>
           <div class='el:m-form-field__label el:m-form-field__label--over'>
             <%= f.label :password %>
           </div>
@@ -47,7 +47,7 @@
           </div>
         </div>
 
-        <div class='el:m-form-field el:amx-Mt(0.75em) <%= "el:m-form-field--error" if resource.errors.has_key?(:password_confirmation) %>'>
+        <div class='el:m-form-field mT12 <%= "el:m-form-field--error" if resource.errors.has_key?(:password_confirmation) %>'>
           <div class='el:m-form-field__label el:m-form-field__label--over'>
             <%= f.label :password_confirmation %>
           </div>
@@ -57,16 +57,16 @@
         </div>
 
         <!--
-        <div class='el:m-form-field el:amx-Mt(0.75em)'>
+        <div class='el:m-form-field mT12'>
           <div class='el:m-form-field__label el:m-form-field__label--over'>
             <%#= f.label 'Type the word in the image below' %>
           </div>
           <%# do not add space between inline-block divs %>
-          <div class='el:amx-D(f)'>
+          <div class='d-f'>
             <div style='flex: 0 0 33%'>
               <%#= rucaptcha_image_tag(alt: 'Captcha') %>
             </div>
-            <div class='el:amx-Ml(1em)' style='flex: 1'>
+            <div class='mL16' style='flex: 1'>
               <div class='el:m-form-field__input el:m-form-field__input--medium el:m-form-field__input--block'>
                 <%#= rucaptcha_input_tag %>
               </div>
@@ -74,7 +74,7 @@
           </div>
         </div> -->
 
-        <%= f.submit t('devise.registrations.new.section'), class: 'btn btn--primary-flat btn--block el:amx-Mt(1.25em)' %>
+        <%= f.submit t('devise.registrations.new.section'), class: 'el:m-button el:m-button--primary-flat el:m-button--block mT16' %>
       <% end %>
       <%= render "user_accounts/shared/links" %>
     </div>

@@ -33,14 +33,14 @@
 <% end %>
 
 <% cache @post do %>
-  <div class='el:amx-Bc_su el:amx-Pt(2em) el:amx-Pb(3.5em)'>
+  <div class='bc-s pT32 pB56'>
     <div class='l-blog-container'>
       <div class='row'>
         <div class='col-12'>
-          <article class='el:o-article'>
+          <article class='fs16 el:o-article'>
 
-            <div class='el:amx-Fs(0.75em) el:amx-Mb(0.5em)'>
-              <%= link_to 'Blog', posts_path %> / <span class='el:amx-C_pr'>
+            <div class='fs12 mB8'>
+              <%= link_to 'Blog', posts_path %> / <span class='c1'>
                 <%= @post.tags.map { |t| link_to(t(".tags.#{t}"), posts_path(tags: t)) }.join(',').html_safe %>
               </span>
             </div>
@@ -48,20 +48,20 @@
             <h1 class='post__title'><%= @post.title %></h1>
 
             <div class='el:o-article__meta-slot el:o-article__meta-slot[width:70%]'>
-              <span class='el:amx-C(dark-gray)'>
+              <span class='c-fg'>
                 <%= @post.admin_account.name %>
               </span> -
-              <time class='el:amx-C_dark-gray' datetime='<%= @post.content_changed_at.utc %>' itemprop='dateModified'>
+              <time class='c-fg' datetime='<%= @post.content_changed_at.utc %>' itemprop='dateModified'>
                 <%= l(@post.published_at.to_date, format: :long) %>
                 <% if content_changed_after?(@post) %>
-                  <span class='el:amx-Fs(0.75em) el:amx-P(0|0.75em)'>updated on</span>
+                  <span class='fs12 pH12'>updated on</span>
                   <%= l(@post.content_changed_at.to_date, format: :long) %>
                 <% end %>
               </time>
-            </div><% if @post.versions.published.any? %><div class='el:o-article__meta-slot el:o-article__meta-slot[width:30%] el:o-article__meta-slot[right] el:amx-Fs(0.875em)'>
-              <span class='el:amx-Fs(0.875em)'>
+            </div><% if @post.versions.published.any? %><div class='el:o-article__meta-slot el:o-article__meta-slot[width:30%] el:o-article__meta-slot[right] fs14'>
+              <span class='fs14'>
                 versions:&nbsp;
-              </span><span class='el:amx-Fs(0.75em) el:amx-Tt(u)'>
+              </span><span class='fs12 tt-u'>
                 <%= @post.versions.published.map { |post| link_to(post.locale, post_path(post.slug)) }.join(' | ').html_safe %>
               </span>
             </div>
@@ -84,7 +84,7 @@
               <% end %>
             </div>
 
-            <p class='el:amx-Fs(0.875em) el:amx-C_prV'>
+            <p class='fs14 c1V'>
               This page contains affiliates links, meaning when you click the links and make a purchase, we receive a commission
             </p>
 
@@ -92,11 +92,11 @@
               <%= @post.render_body.html_safe %>
             </div>
 
-            <div class='el:amx-Mt(2.5em)'>
+            <div class='mT40'>
               <div class='el:m-media-object'>
                 <%= image_tag @post.admin_account.avatar.thumbor.file_url(width: 64), class: 'el:m-media-object__image' %><div class='el:m-media-object__body el:m-media-object__body--W(80%)'>
-                  <div class='el:amx-Fw(b) el:amx-Mb(0.5em)'><%= @post.admin_account.name %></div>
-                  <span class='el:amx-Fs(0.75em)'><%= @post.admin_account.bio %></span>
+                  <div class='fw-b mB8'><%= @post.admin_account.name %></div>
+                  <span class='fs12'><%= @post.admin_account.bio %></span>
                 </div>
               </div>
             </div>

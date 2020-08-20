@@ -1,39 +1,39 @@
-<span class="el:amx-Fs(0.75em) el:amx-C_fgM el:amx-Ls(5%) el:amx-Tt(u) el:amx-Fw(b)">
+<span class="fs12 c-fgM ls8 tt-u fw-b">
   <%= t(".title") %>
 </span>
 
-<div class="el:amx-Mt(1em)">
-  <ul class="el:amx-D(b) el:amx-P(0) el:amx-Lh(1.2)" style="list-style: none; margin-bottom: -0.5em;">
+<div class="mT16">
+  <ul class="d-b pA0 lh2" style="list-style: none; margin-bottom: -0.5em;">
     <% if @stats[:course_count] %>
-      <li class="el:amx-Mb(0.5em)">
-        <span class="el:amx-Fs(0.875em) el:amx-C_fgM">
+      <li class="mB8">
+        <span class="fs14 c-fgM">
           <%= t(".indexed_courses") %>:
         </span>
-        <span class="el:amx-Fs(0.875em) el:amx-C_fg">
+        <span class="fs14 c-fg">
           <%= number_with_delimiter(@stats[:course_count] ) %>
         </span>
       </li>
     <% end %>
     <% if @stats[:instructor_count] %>
-      <li class="el:amx-Mb(0.5em)">
-        <span class="el:amx-Fs(0.875em) el:amx-C_fgM">
+      <li class="mB8">
+        <span class="fs14 c-fgM">
           <%= t(".instructors") %>:
         </span>
-        <span class="el:amx-Fs(0.875em) el:amx-C_fg">
+        <span class="fs14 c-fg">
           <%= number_with_delimiter(@stats[:instructor_count]) %>
         </span>
       </li>
     <% end %>
     <% if @stats[:top_countries] %>
-      <li class="el:amx-Mb(0.5em)">
-        <div style="display: inline-flex" class="el:amx-FxAi(c) el:amx-C_fg">
-          <div class="el:amx-Mr(0.25em)">
-            <span class="el:amx-Fs(0.875em) el:amx-C_fgM">
+      <li class="mB8">
+        <div style="display: inline-flex" class="ai-c c-fg">
+          <div class="mR4">
+            <span class="fs14 c-fgM">
               <%= t(".main_audiences") %>:
             </span>
           </div>
           <% @stats[:top_countries].each_with_index do |country, index| %>
-            <svg class="el:amx-Ml(<%= index == 0 ? 0 : 0.5 %>em) el:amx-D(ib)" width="1rem" height="1rem">
+            <svg class="mL<%= index == 0 ? 0 : 8 %> d-ib" width="1.6rem" height="1.6rem">
               <use xlink:href="#country-flags-<%= country.downcase %>">
             </svg>
           <% end %>

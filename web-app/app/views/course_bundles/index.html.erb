@@ -46,13 +46,13 @@
   art_html: image_bundle_tag("media/svg/#{@tag}.svg", style: 'width:80%;display:block;margin:auto')
 %>
 
-<div class='el:amx-Bc_su el:amx-Bot el:amx-Mb(2em)'>
+<div class='bc-s bdT mB32'>
   <div class='container'>
-    <div class='el:amx-D(n)@sm row'>
+    <div class='d-n@sm row'>
       <div class='col-12'>
-        <ul class='el:m-list el:m-list--unstyled el:m-list--hrz el:amx-P(1em|0) el:amx-Fs(1em)@>lg'>
+        <ul class='el:m-list el:m-list--unstyled el:m-list--hrz pV16 fs16@>lg'>
           <% ('A'..'Z').each do |letter| %>
-            <li class='el:amx-Mr(0.875em)'>
+            <li class='mR14'>
               <a href='#<%= letter%>'>
                 <%= letter %>
               </a>
@@ -66,13 +66,13 @@
 
 <div class='container'>
   <% @bundles_by_letter.each do |bundles| %>
-    <h4 class='el:amx-Pb(0.5em) el:amx-Fs(1.25em)' id='<%= bundles.keys.first[0].upcase %>'><%= bundles.keys.first[0].upcase %></h4>
-    <div class='row el:amx-Mb(1em)'>
+    <h4 class='pB8 fs20' id='<%= bundles.keys.first[0].upcase %>'><%= bundles.keys.first[0].upcase %></h4>
+    <div class='row mB16'>
       <% bundles.each do |name,data| %>
         <div class='col-lg-4'>
           <%= link_to course_bundle_path(data[:tag].dasherize) do %>
-            <div class='el:m-sticker el:amx-Mb(1em)'>
-              <%= svg_use('tags', data[:tag], { class: 'el:m-sticker__media el:amx-Fi_fg' }) %><span class='el:m-sticker__text'>
+            <div class='el:m-sticker mB16'>
+              <%= svg_use('tags', data[:tag], { class: 'el:m-sticker__media fi-fg' }) %><span class='el:m-sticker__text'>
                 <span class='el:m-sticker__primary-label'><%= name %></span>
                 <span class='el:m-sticker__secondary-label'><%= data[:count] %> <%= t('dictionary.online_courses')&.downcase %> </span>
               </span>

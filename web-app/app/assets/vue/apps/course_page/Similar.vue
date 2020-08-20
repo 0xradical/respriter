@@ -1,10 +1,10 @@
 <template>
-  <div class="el:amx-D(b) el:amx-W(100%)">
-    <div class="el:amx-Fs(1.5em) el:amx-Fw(b)">
+  <div class="d-b w100">
+    <div class="fs24 fw-b">
       {{ $t("dictionary.similar.header") }}
     </div>
 
-    <div class="el:amx-Mt(1em)">
+    <div class="mT16">
       <card-carrousel
         :list="courses"
         component="CourseCardVertical"

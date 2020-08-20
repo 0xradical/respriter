@@ -1,34 +1,37 @@
 <template>
   <div class="clspt:contact-us__successful container">
     <div class="row">
-      <div class="col el:amx-Ta(c)">
+      <div class="col ta-c">
         <span
-          class="el:amx-C_gray5 el:amx-Fs(1.5em) el:amx-Fs(2em)@>lg el:amx-Fw(b) el:amx-Lh(1)"
+          class="c-fg fs24 fs32@>lg fw-b lh1"
         >
           {{ $t("contact_us.new.successful.title") }}
         </span>
       </div>
     </div>
-    <div class="row el:amx-Mt(0.5em)">
-      <div class="offset-lg-4 col-lg-4 el:amx-Ta(c)">
+    <div class="row mT8">
+      <div class="offset-lg-4 col-lg-4 ta-c">
         <span
-          class="el:amx-C_gray5 el:amx-Fs(1em) el:amx-Fs(1.25em)@>lg el:amx-Lh(2)"
+          class="c-fg fs16 fs20@>lg lh3"
         >
           {{ $t("contact_us.new.successful.subtitle") }}
         </span>
       </div>
     </div>
-    <div class="row el:amx-Mt(2em)">
+    <div class="row mT32">
       <div class="offset-lg-3 col-lg-3">
         <a
           @click.prevent="$emit('goback')"
-          class="btn btn--block btn--medium btn--primary-border"
+          class="el:m-button el:m-button--block el:m-button--medium el:m-button--primary-border"
         >
           {{ $t("contact_us.new.successful.action.another_message") }}
         </a>
       </div>
-      <div class="col-lg-3 el:amx-Mt(1em)@<sm">
-        <a href="/" class="btn btn--block btn--medium btn--primary-flat">
+      <div class="col-lg-3 mT16@<sm">
+        <a
+          href="/"
+          class="el:m-button el:m-button--block el:m-button--medium el:m-button--primary-flat"
+        >
           {{ $t("contact_us.new.successful.action.homepage") }}
         </a>
       </div>

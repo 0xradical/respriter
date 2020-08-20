@@ -1,9 +1,9 @@
-<span class="el:amx-Fs(0.75em) el:amx-C_fgM el:amx-Ls(5%) el:amx-Tt(u) el:amx-Fw(b)">
+<span class="fs12 c-fgM ls8 tt-u fw-b">
   <%= t(".title", provider: @provider.name) %>
 </span>
 
-<div class="description el:amx-Mt(1em)">
-  <div class="text el:amx-Fs(0.875em) el:amx-C_fg">
+<div class="description mT16">
+  <div class="text fs14 c-fg">
     <%= Kramdown::Document.new(@provider.description).to_html.html_safe %>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="el:amx-minW(0)" :class="rootClasses">
+  <div style="min-width: 0;" :class="rootClasses">
     <course-attribute
       v-if="
         showUnavailable || (course.root_audio && course.root_audio.length > 0)
@@ -10,7 +10,7 @@
       :valueClasses="attributeValueClasses"
     >
       <template v-if="course.root_audio && course.root_audio.length > 0">
-        <span class="el:amx-Tt(u)">{{ course.root_audio.join(",") }}</span>
+        <span class="tt-u">{{ course.root_audio.join(",") }}</span>
       </template>
       <template v-else>
         {{ $t("dictionary.not_available") }}
@@ -30,7 +30,7 @@
       <template
         v-if="course.root_subtitles && course.root_subtitles.length > 0"
       >
-        <span class="el:amx-Tt(u)">{{
+        <span class="tt-u">{{
           course.root_subtitles.slice(0, 5).join(",")
         }}</span>
       </template>

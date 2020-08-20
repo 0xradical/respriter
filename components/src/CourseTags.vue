@@ -40,7 +40,7 @@
     },
     computed: {
       tagBaseClasses() {
-        return ["el:m-tag", `el:m-tag--${this.color}-flat`, "el:amx-D(ib)"];
+        return ["el:m-tag", `el:m-tag--${this.color}-flat`, "d-ib", "fs8"];
       }
     }
   };

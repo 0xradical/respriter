@@ -9,17 +9,17 @@
       </span>
     </span>
     <div
-      class="el:amx-Pos(r) el:amx-Pl(0.5em)"
+      class="po-r pL8"
       v-if="course.provider_featured_on_search"
       style="display: inline-flex; align-items: center; flex: 1; height: 1em;"
     >
       <span
-        class="el:amx-Pos(a) el:amx-Tt(u) el:amx-C_pr el:amx-Fw(b) el:amx-Fs(0.375em) el:amx-Ml(1.625em) el:amx-Pl(1.375em)"
+        class="po-a tt-u c1 fw-b fs8 mL24 pL20"
         style="white-space: nowrap;"
       >
         {{ $t("dictionary.featured_provider") }}
       </span>
-      <svg class="el:amx-Pos(a)" width="1em" height="1em">
+      <svg class="po-a" width="1em" height="1em">
         <use xlink:href="#icons-featured-badge" />
       </svg>
     </div>

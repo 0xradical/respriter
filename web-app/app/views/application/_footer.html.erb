@@ -1,148 +1,176 @@
 <footer>
-  <div class='el:amx-C_fgV el:amx-Bc_bgV el:amx-Pt(2em) el:amx-Pb(2em)'>
+  <div class='c-fgV bC-bgV pV48'>
     <div class='container'>
       <div class='row'>
 
-        <div class='col-12 col-md-3'>
-          <h2 class='el:amx-Fs(1em) el:amx-C_fgM el:amx-Mb(1.75em)'><%= t('dictionary.categories') %></h2>
-          <ul class='el:m-list el:m-list--unstyled el:amx-C_fgV'>
+        <div class='col-12 col-lg-3'>
+          <h2 class='c-fgM fs14 mT40@sm mB24'><%= t('dictionary.categories') %></h2>
+          <ul class='el:m-list el:m-list--unstyled c-fgV fS14'>
             <% (RootTag.all).each_with_index do |t, index| %>
-              <% bundles = %w(computer_science marketing data_science physical_science_and_engineering) %>
-              <%= link_to (bundles.include?(t.id) ? course_bundles_path(t.slugify) : "/#{t.slugify}"), class: 'c-link c-link--white' do %>
-                <li class='el:amx-Fs(0.875em) el:amx-Mb(1em)'>
+              <li class='mB16'>
+                <%= link_to course_bundles_path(t.slugify), class: 'c-fgV c-fgV:h' do %>
                   <%= t("tags.#{t.id}") %>
-                </li>
-              <% end %>
+                <% end %>
+              </li>
             <% end %>
           </ul>
         </div>
 
-        <div class='col-12 col-md-2'>
-          <h2 class='el:amx-Fs(1em) el:amx-C_fgM el:amx-Mt(0.875em)@sm el:amx-Mb(1.75em)'>
+        <div class='col-12 col-lg-2'>
+          <h2 class='c-fgM fS14 mT40@sm mB24'>
             <%= t('dictionary.providers') %>
           </h2>
-          <ul class='el:m-list el:amx-Fs(0.875em)'>
-            <li class='el:amx-Mb(1em)'>
-              <%= link_to "https://www.udemy.com", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
-                Udemy
+          <ul class='el:m-list fS14'>
+            <% Provider.featured_on_footer.each do |provider| %>
+              <li class='mB16'>
+                <%= link_to provider.name, provider_path(provider.slug), class: 'c-fgV c-fgV:h' %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <!-- Pages -->
+        <div class='col-12 col-lg-2'>
+          <h2 class='c-fgM fS14 mT40@sm mB24'>Pages</h2>
+          <ul class='el:m-list fS14'>
+            <li class='mB16'>
+              <%= link_to t('instructors.index.h1'), '/instructors', class: 'c-fgV c-fgV:h' %>
+            </li>
+            <li>
+              <%= link_to t('dictionary.blog'), '/blog', class: 'c-fgV c-fgV:h' %>
+            </li>
+          </ul>
+
+          <!-- Get Listed -->
+          <h2 class='c-fgM fS14 mT48@>lg mT40@sm mB24'>
+            <%= image_tag(elements_asset_path('svgs/illustrations/flask.svg'), class: 'mR4 vA-t h1em w-a') %>
+            Integration / API <sup>beta</sup>
+          </h2>
+          <ul class='el:m-list fS14'>
+            <li class='mB16'>
+              <%= link_to get_listed_path, class: 'c-fgV c-fgV:h' do %>
+                Get Listed!
               <% end %>
             </li>
-            <li class='el:amx-Mb(1em)'>
-              <%= link_to "https://www.pluralsight.com", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
-                Pluralsight
-              <% end %>
-            </li>
-            <li class='el:amx-Mb(1em)'>
-              <%= link_to "https://www.coursera.org", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
-                Coursera
-              <% end %>
-            </li>
-            <li class='el:amx-Mb(1em)'>
-              <%= link_to "https://www.linkedin.com/learning", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
-                Linkedin Learning
-              <% end %>
-            </li>
-            <li class='el:amx-Mb(1em)'>
-              <%= link_to "https://edx.org", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
-                Edx
+            <li class='mB16'>
+              <%= link_to get_listed_path, class: 'c-fgV c-fgV:h' do %>
+                Classpert Index Tool
               <% end %>
             </li>
             <li>
-              <%= link_to "https://teamtreehouse.com", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
-                Treehouse
-              <% end %>
-            </li>
-            <li>
-              <%= link_to "https://techexplorations.com", class: 'el:amx-C_fgV c-link c-link--white', target: '_blank', rel: 'nofollow' do %>
-                Tech Explorations
-              <% end %>
+              <%= link_to 'Documentation', listing_api_documentation_url, class: 'c-fgV c-link c-link--white', target: '_blank' %>
             </li>
           </ul>
         </div>
 
-        <div class='col-12 col-md-3'>
-          <h2 class='el:amx-Fs(1em) el:amx-C_fgM el:amx-Mt(0.875em)@sm el:amx-Mb(1.75em)'>
-            Classpert Index Tool
-          </h2>
-          <ul class='el:m-list el:amx-Fs(0.875em)'>
-            <li class='el:amx-Mb(1em)'>
-              <%= link_to get_listed_path, class: 'el:amx-C_fgV c-link c-link--white' do %>
-                <%= image_bundle_tag('media/svg/flask.svg', class: 'el:amx-Mr(0.125em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %> Get Listed <sup>beta</sup>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to 'Documentation', listing_api_documentation_url, class: 'el:amx-C_fgV c-link c-link--white', target: '_blank' %>
-            </li>
-          </ul>
-
-          <h2 class='el:amx-Fs(1em) el:amx-C_fgM el:amx-Mt(1em) el:amx-Mb(1.75em)'>
-            <%= t('dictionary.about') %>
-          </h2>
-          <ul class='el:m-list el:amx-Fs(0.875em)'>
-            <li class='el:amx-Mb(1em)'>
-              <%= link_to t('instructors.index.h1'), '/instructors', class: 'el:amx-C_fgV c-link c-link-white', target: '_blank' %>
-            </li>
-            <li class='el:amx-Mb(1em)'>
-              <%= link_to t('dictionary.blog'), '/blog', class: 'el:amx-C_fgV c-link c-link--white', target: '_blank' %>
-            </li>
-            <li class='el:amx-Mb(1em)'>
-              <%= link_to t('contact_us.new.title'), '/contact-us', class: 'el:amx-C_fgV c-link c-link--white' %>
-            </li>
-            <li>
-              <%= link_to "https://aws.amazon.com/education/edstart/", rel: 'nofollow', target: '_blank', class: 'c-link c-link--white' do %>
-                <%= image_bundle_tag('media/svg/aws-rocket.svg', class: 'el:amx-Mr(0.125em)', style: "vertical-align:bottom;width:1.125em;height:1.125em") %> AWS EdStart Member
-              <% end %>
+        <!-- Company -->
+        <div class='col-12 col-lg-2'>
+          <h2 class='c-fgM fS14 mT40@sm mB24'>Company</h2>
+          <ul class='el:m-list fS14'>
+            <li class='mB16'>
+              <%= link_to t('contact_us.new.title'), '/contact-us', class: 'c-fgV c-fgV:h' %>
             </li>
           </ul>
         </div>
 
-        <div class='col-12 col-md-4 el:amx-Ta(r)'>
-          <span style='display:inline-block;vertical-align:middle'>
-            <span class='el:amx-C_fgM el:amx-Fs(1em) el:amx-Fw(b)'>Follow us!</span> &nbsp;
-            <ul style='display:inline-block;vertical-align:middle' class='el:m-list el:m-list--hrz el:amx-Fs(0.875em)'>
-              <li class='el:amx-Pr(0.5em)'>
-                <%= link_to "https://facebook.com/classpert", target: '_blank' do %>
-                  <%= svg_use('icons', 'facebook-circle', class: 'el:amx-Fi_fgV', width: '1.5em', height: '1.5em') %>
+        <div class='col-12 col-lg-3 order-first order-lg-last'>
+          <h2 class='c-fgM fS14 mB24'>Follow us!</h2>
+          <ul class='el:m-list el:m-list--hrz vA-m d-ib'>
+            <li class='mR24'>
+              <%= link_to "https://facebook.com/classpert", class: 'lh1', target: '_blank' do %>
+                <%= svg_use('icons', 'facebook-circle', class: 'fi-fgV h1.5em w1.5em') %>
+              <% end %>
+            </li><li class='mR24'>
+              <%= link_to "https://linkedin.com/company/classpert", class: 'lh1', target: '_blank' do %>
+                <%= svg_use('icons', 'linkedin-circle', class: 'fi-fgV h1.5em w1.5em') %>
+              <% end %>
+            </li><li class='mR24'>
+              <%= link_to "https://instagram.com/classpert", target: '_blank' do %>
+                <%= svg_use('icons', 'instagram-circle', class: 'fi-fgV h1.5em w1.5em') %>
+              <% end %>
+            </li><li>
+              <%= link_to "https://twitter.com/classpert", target: '_blank' do %>
+                <%= svg_use('icons', 'twitter-circle', class: 'fi-fgV h1.5em w1.5em') %>
+              <% end %>
+            </li>
+          </ul>
+          <h2 class='c-fgM fS14 mT48'>Site</h2>
+          <form class='mA0 mT16 po-r'>
+            <div data-elements-fake-select class='d-n@sm el:m-fake-select el:m-fake-select--xs'>
+              <span>
+                <%= country_flag(I18n.locale, { class: 'w1.5em h1.5em va-m mR8' }) %> 
+                <%= t("iso639_codes.#{I18n.locale}", locale: I18n.locale) %>
+              </span>
+              <ul class='el:m-fake-select__suggestions'>
+                <% (I18n.available_locales - [I18n.locale]).each do |locale| %>
+                  <li class='lh1'>
+                    <a href='//<%= Domain.new.route_for(locale) + request.path %>' rel='nofollow'>
+                      <%= country_flag(locale, { class: 'w1.5em h1.5em va-m mR8' }) %> 
+                      <%= t("iso639_codes.#{locale}", locale: locale) %>
+                    </a>
+                  </li>
                 <% end %>
-              </li>
-              <li class='el:amx-Pr(0.5em)'>
-                <%= link_to "https://linkedin.com/company/classpert", class: 'el:amx-C_fgV', target: '_blank' do %>
-                  <%= svg_use('icons', 'linkedin-circle', class: 'el:amx-Fi_fgV', width: '1.5em', height: '1.5em') %>
+              </ul>
+            </div>
+            <div class='d-n@>lg el:m-select el:m-select--small fS14'>
+              <select name='locale' onchange='submit();'>
+                <% I18n.available_locales.each do |locale| %>
+                  <option value='<%= locale %>' <%= I18n.locale == locale ? 'selected' : nil %>><%= t("iso639_codes.#{locale}", locale: locale) %></option>
                 <% end %>
-              </li>
-              <li class='el:amx-Pr(0.5em)'>
-                <%= link_to "https://instagram.com/classpert", target: '_blank' do %>
-                  <%= svg_use('icons', 'instagram-circle', class: 'el:amx-Fi_fgV',  width: '1.5em', height: '1.5em') %>
-                <% end %>
-              </li>
-              <li>
-                <%= link_to "https://twitter.com/classpert", target: '_blank' do %>
-                  <%= svg_use('icons', 'twitter-circle', class: 'el:amx-Fi_fgV',  width: '1.5em', height: '1.5em') %>
-                <% end %>
-              </li>
-            </ul>
-          </span>
+              </select>
+            </div>
+          </form>
+          <div class='mT48'>
+            <%= link_to "https://aws.amazon.com/education/edstart/", rel: 'nofollow', target: '_blank', class: 'fs14 c2V c2V:h' do %>
+              <%= image_bundle_tag('media/svg/aws-rocket.svg', class: 'mR4 va-m w-a h1.5em') %> AWS EdStart Member
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class='el:amx-Bc_suV el:amx-P(1em|0)' style='padding:16px 0px'>
+  <%#
+  <div class='bC-bgV'>
     <div class='container'>
-      <div class='row'>
-        <div class='col-12 el:amx-Fs(0.875em)'>
-          <div style='display:flex;align-items:center'>
-            <div style='width:80%'>
-              <%= link_to t('dictionary.terms_and_conditions'),
-                terms_and_conditions_path, class: 'c-link c-link--white el:amx-Fs(0.875em)',
-                style: 'line-height:32px' %> &nbsp; &nbsp;
-              <%= link_to t('dictionary.privacy_policy'), privacy_policy_path, class: 'c-link c-link--white el:amx-Fs(0.875em)', style: 'line-height:32px' %>
-            </div>
-            <div style='width:20%'>
-              <%= svg_use 'brand', 'logo', class: 'el:amx-Fi_fgV el:amx-F(r) el:amx-D(n)@sm', width: '123px', height: '20px' %>
-              <%= svg_use 'brand', 'logo_symbol', class: 'el:amx-Fi_fg el:amx-F(r) el:amx-D(n)@>lg', height: '20px', width: '20px' %>
+      <div class='pT24 pB32'>
+        <div class='row'>
+          <div class='col-lg-3'>
+            <div class='po-r h100'>
+              <%= link_to "https://aws.amazon.com/education/edstart/", rel: 'nofollow', target: '_blank', class: 'trait:vc fS14 c2V c2V:h' do
+                <%#= image_bundle_tag('media/svg/aws-rocket.svg', class: 'mR4 vA-m w-a h1.5em') AWS EdStart Member
+              <%# end
             </div>
           </div>
+          <div class='col-md-4 offset-5'>
+            <form class='mA0 w100' action='#'>
+              <div class='field field--xs d-ib mR16 w60'>
+                <label class='c-fgV'>Subscribe to our newsletter</label>
+                <div class='field__input'>
+                  <input type='text' />
+                </div>
+              </div><input type='submit' value='Subscribe' class='fS10 el:m-button el:m-button--sm el:m-button--primary-flat' />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+%>
+  <div class='bc-sv'>
+    <div class='container pT24 pB24'>
+      <div class='row align-items-center'>
+        <div class='mB24@sm col-12 col-lg-4'>
+          <%= link_to t('dictionary.terms_and_conditions'),
+            terms_and_conditions_path, class: 'fs12 c-fgV c-fgV:h d-b@sm mB24@sm mR32@>lg'
+          %><%= link_to t('dictionary.privacy_policy'), privacy_policy_path, class: 'fs12 c-fgV c-fgV:h d-b@sm' %>
+        </div>
+        <div class='col-8 col-lg-4 ta-c@>lg'>
+          <span class='lh1 fs12 c-fgM'>
+            Copyright &copy; <%= Time.now.year %> Classpert
+          </span>
+        </div>
+        <div class='col-4 ta-r offset-lg-2 col-lg-2'>
+          <%= svg_use 'brand', 'logo', class: 'w100 fi-fgV fi-fgv h1.5em'%>
         </div>
       </div>
     </div>

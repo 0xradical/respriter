@@ -2,7 +2,7 @@
   <div :class="['el:m-text-clipbox', ...rootClasses]">
     <a
       v-if="hyperlink"
-      class="el:m-text-clipbox__text el:amx-Fw(b)"
+      class="el:m-text-clipbox__text fw-b"
       @click="e => (clickHandler ? e.preventDefault() || clickHandler() : null)"
       :class="[...titleBaseClasses, ...titleClasses]"
       :href="hyperlinkRef"
@@ -15,7 +15,7 @@
     <component
       :is="tag"
       v-else
-      class="el:m-text-clipbox__text el:amx-Fw(b)"
+      class="el:m-text-clipbox__text fw-b"
       :class="[...titleBaseClasses, ...titleClasses]"
     >
       {{ course.name }}

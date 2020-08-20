@@ -7,7 +7,7 @@
     ></span>
     <ul>
       <li v-for="option in options" :key="option.id">
-        <div class="el:m-checkbox" :class="checkboxClasses">
+        <div class="el:m-checkbox fs16" :class="checkboxClasses">
           <div class="el:m-checkbox__selector">
             <input
               :checked="includedOption(option.id)"
@@ -65,14 +65,14 @@
       }
     },
     methods: {
-      toggleOption: function(option) {
+      toggleOption: function (option) {
         if (this.includedOption(option)) {
           this.$emit("excludeFacetOption", option);
         } else {
           this.$emit("includeFacetOption", option);
         }
       },
-      includedOption: function(option) {
+      includedOption: function (option) {
         return this.filter.includes(option);
       }
     },

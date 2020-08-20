@@ -6,17 +6,18 @@
       <% else %>
         <%= image_bundle_tag 'media/svg/avatar-default.svg' %>
       <% end %>
-    </div></a>
-    <ul class='el:o-dropdown__menu el:amx-Pb(-1.25em) el:o-dropdown__menu--dark el:o-dropdown__menu--right'>
-      <li class='el:amx-Mb(1.25em) el:amx-Fs(0.75em)'>
-        <%= link_to user_dashboard_url('/account-settings') do %>
-          <span class='el:amx-C_fgV'><%= t('user.tabs.account_settings') %></span>
-        <% end %>
-      </li>
-      <li class='el:amx-Mb(1.25em) el:amx-Fs(0.75em) el:amx-Bot el:amx-Pt(1em)'>
-        <a data-method='delete' href='/user_accounts/sign_out' class='el:amx-C_fgV'>
-          <span class='el:amx-C_fgV'><%= t('dictionary.sign_out') %></span>
-        </a>
-      </li>
-    </ul>
+    </div>
+  </a>
+  <ul class='el:o-dropdown__menu el:o-dropdown__menu--dark el:o-dropdown__menu--right fS10'>
+    <li class='pB16 bB'>
+      <%= link_to user_dashboard_url('/account-settings'), class: 'c-fgV c-fgV:h' do %>
+        <%= t('user.tabs.account_settings') %>
+      <% end %>
+    </li>
+    <li class='pT16'>
+      <a data-method='delete' href='/user_accounts/sign_out' class='c-fgV c-fgV:h'>
+        <%= t('dictionary.sign_out') %>
+      </a>
+    </li>
+  </ul>
 </div>

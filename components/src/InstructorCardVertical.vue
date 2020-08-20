@@ -1,5 +1,5 @@
 <template>
-  <a :href="instructor.profilePath" class="el:amx-D(b)">
+  <a :href="instructor.profilePath" class="d-b">
     <div class="el:o-profile-vcard" style="width: 255px;">
       <div
         class="el:o-profile-vcard__cover-slot"
@@ -25,7 +25,7 @@
           <li
             v-for="provider in instructor.teachingAt"
             :key="provider"
-            class="el:amx-Mr(0.5em)"
+            class="mR8"
           >
             <svg width="1em" height="1em">
               <use :xlink:href="`#providers-${providerIcon(provider)}`" />
@@ -39,30 +39,30 @@
         </ul>
       </div>
       <div class="el:o-profile-vcard__body-slot">
-        <div class="el:amx-D(f)">
+        <div class="d-f">
           <svg
             width="0.75em"
             height="0.75em"
-            class="el:amx-Mr(0.5em) el:amx-Fi_fgM"
+            class="mR8 fi-fgM"
           >
             <use xlink:href="#icons-camera" />
           </svg>
-          <span class="el:amx-Fs(0.75em) el:amx-C_fgM">
+          <span class="fs12 c-fgM">
             <ssrt
               k="dictionary.instructor.courses_count"
               :options="{ count: instructor.courseCount }"
             />
           </span>
         </div>
-        <div class="el:amx-D(f) el:amx-Mt(0.5em)">
+        <div class="d-f mT8">
           <svg
             width="0.75em"
             height="0.75em"
-            class="el:amx-Mr(0.5em) el:amx-Fi_fgM"
+            class="mR8 fi-fgM"
           >
             <use xlink:href="#icons-monitor-gear" />
           </svg>
-          <span class="el:amx-Fs(0.75em) el:amx-C_fgM">
+          <span class="fs12 c-fgM">
             <template v-if="instructor.subject">
               <ssrt :k="`tags.${instructor.subject}`" />
             </template>

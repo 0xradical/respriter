@@ -1,12 +1,12 @@
 <template>
   <div
     v-if="course.description"
-    class="el:amx-Bot el:amx-Bob"
+    class="bdT bdB"
     :class="rootClasses"
   >
     <div class="clspt:course-description" @click.prevent.stop="toggle">
-      <div class="el:amx-D(f) el:amx-FxJc(sb)">
-        <a class="el:amx-C_pr">{{
+      <div class="d-f jc-sb">
+        <a class="c1">{{
           toggled
             ? $t("dictionary.description.hide")
             : $t("dictionary.description.show")
@@ -17,13 +17,13 @@
             height="1rem"
             :transform="`rotate(${toggled ? 180 : 0}deg)`"
             name="arrow-down"
-            class="el:amx-C_pr"
+            class="c1"
           ></icon>
         </div>
       </div>
       <transition name="fade">
         <course-description
-          :rootClasses="['el:amx-Pt(0.5em)']"
+          :rootClasses="['pT8']"
           v-show="toggled"
           :course="course"
         ></course-description>

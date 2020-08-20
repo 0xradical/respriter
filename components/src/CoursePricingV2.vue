@@ -7,9 +7,11 @@
       v-if="course.subscription_type && trialCallout && hasTrial"
     >
       <span
-        class="d-ib fs8 el:m-tag el:m-tag--bold el:m-tag--xxs el:m-tag--primary-variant-flat"
+        class="d-ib fs8 el:m-tag el:m-tag--bold el:m-tag--primary-variant-flat"
       >
-        <ssrtxt>{{ locales.trialLocale }}</ssrtxt>
+        <ssrtxt>{{
+          locales.server.trialLocale || locales.client.trialLocale
+        }}</ssrtxt>
         <ssrt k="dictionary.free_trial" />
       </span>
     </span>
@@ -39,7 +41,7 @@
           >+ <ssrt k="dictionary.pricing.all_courses" />
         </span>
         <ssrtxt class="d-n" ref="tooltipContent">{{
-          locales.tooltipContent
+          locales.server.tooltipContent
         }}</ssrtxt>
         <span ref="tooltip" v-if="hasTrial">
           <icon
@@ -90,40 +92,93 @@
     },
     data() {
       return {
-        locales: {}
+        locales: {
+          client: {},
+          server: {}
+        }
       };
     },
     created() {
       if (this.$isServer) {
-        this.locales = {
+        this.locales.server = {
           ...(this.trialLocale
             ? {
-                trialLocale: this.$t(
+                trialLocale: this.translate(
                   this.trialLocale.key,
                   this.trialLocale.options
                 )
               }
             : {}),
-          freeTrial: this.$t("dictionary.free_trial")
+          freeTrial: this.translate("dictionary.free_trial")
         };
-
-        if (this.locales.trialLocale) {
-          this.locales.tooltipContent = this.$t("dictionary.pricing.tooltip", {
-            provider: this.course.provider_name,
-            offer: `${this.locales.trialLocale} ${this.locales.freeTrial}`
-          });
+        if (this.locales.server.trialLocale) {
+          this.locales.server.tooltipContent = this.translate(
+            "dictionary.pricing.tooltip",
+            {
+              provider: this.course.provider_name,
+              offer: `${this.locales.server.trialLocale} ${this.locales.server.freeTrial}`
+            }
+          );
         }
       }
     },
     mounted() {
+      this.locales.client = {
+        ...(this.trialLocale
+          ? {
+              trialLocale: this.translate(
+                this.trialLocale.key,
+                this.trialLocale.options
+              )
+            }
+          : {}),
+        freeTrial: this.translate("dictionary.free_trial")
+      };
+      if (this.locales.client.trialLocale) {
+        this.locales.client.tooltipContent = this.translate(
+          "dictionary.pricing.tooltip",
+          {
+            provider: this.course.provider_name,
+            offer: `${this.locales.client.trialLocale} ${this.locales.client.freeTrial}`
+          }
+        );
+      }
       this.$nextTick(function () {
-        if (this.$refs.tooltip && this.$refs.tooltipContent) {
+        let tooltipContent = undefined;
+        if (this.locales.client.tooltipContent) {
+          tooltipContent = this.locales.client.tooltipContent;
+        }
+        if (
+          !tooltipContent &&
+          this.$refs.tooltipContent &&
+          this.$refs.tooltipContent.$el
+        ) {
+          tooltipContent = this.$refs.tooltipContent.$el.innerHTML;
+        }
+        if (tooltipContent && this.$refs.tooltip) {
           tippy(this.$refs.tooltip, {
-            content: this.$refs.tooltipContent.$el.innerHTML,
+            content: tooltipContent,
             placement: "bottom"
           });
         }
       });
+    },
+    methods: {
+      translate(key, options) {
+        if (this.$isServer) {
+          return this.$t(key, options);
+        } else if (window && window.CoursePricing) {
+          return this.$i18n._t(
+            key,
+            this.$i18n.locale,
+            { [this.$i18n.locale]: window.CoursePricing.i18n.messages },
+            null,
+            options
+          );
+        } else {
+          return "";
+        }
+      }
     },
     computed: {
       price() {
