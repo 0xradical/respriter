@@ -4,6 +4,7 @@ sudo chown -R ubuntu:ubuntu /home/ubuntu/respriter
 cd /home/ubuntu/respriter
 bundle install
 npm install
+# initial setup for a fresh start
 export SPRITE_VERSION=$(node -p "require('./package.json').elements.version")
-export SPRITE_URL=https://elements-prd.classpert.com/${SPRITE_VERSION}/svgs/sprites/\{tags,country-flags,brand,i18n,icons,providers\}.svg
-./bin/build --sprite-version=$SPRITE_VERSION --sprite-url=$SPRITE_URL
+export SPRITE_FILES=https://elements-prd.classpert.com/${SPRITE_VERSION}/svgs/sprites/all.svg
+./bin/build --sprite-version=$SPRITE_VERSION --sprite-files=$SPRITE_FILES

@@ -9,10 +9,10 @@ Generate sprites on demand
 Respriter is a simple service that expects SVG sprite URLs (possibly versioned) as inputs
 and outputs a subset of the original sprites on a demand basis, using the following API endpoint:
 
-`/:version?sprite_a=x,y&sprite_b=w,z`
+`/:version?files=https://sprite.source.com/sprite.svg&sprite_a=x,y&sprite_b=w,z`
 
 The above means: Get me `<symbols>` x and y from sprite_a and `<symbols>` w and z from sprite_b
-from version `:version` and return me another SVG sprite with all thoses symbols. All `<defs>` that those specific `<symbols>` depend on are also present in the final SVG sprite.
+located at the `files` endpoint, scoped and cached using `:version` and return me another SVG sprite with all thoses symbols. All `<defs>` that those specific `<symbols>` depend on are also present in the final SVG sprite.
 
 If `:version` is not currently checked out, the server (`server.js`) downloads the specific version to disk onto the `dist/:version` folder and process the download on demand. The processing is done by the `bin/build` ruby binary. The entrypoint for the builder is the `lib` folder. Upon building, the server sends the response to a cache in a s3 bucket, whose name was sent in the `X-Cache-Bucket-Name` request header. In the absence of this header, there's no s3 caching.
 
@@ -55,7 +55,3 @@ Deployments are triggered using github webhooks on this repository. Just push to
 Deployments are performed through the AWS CodeSuite where there's orchestration for source downloading, service deployment / restarting and load balancing reattachment.
 
 The appspec.yml file controls the [deployment / restarting phase](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#reference-appspec-file-structure-hooks-list)
-
-## TODO
-
-- We currently configure specific sprite families statically on the elements server file (processor.js)

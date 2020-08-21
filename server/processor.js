@@ -67,9 +67,15 @@ const processor = (scope, cache) => params => {
         ? compose(s3Upload(scope, params, cache), svg)
         : svg;
 
+    const { files, ...rest } = params;
+
+    const fallBack = `https://elements-prd.classpert.com/${scope}/svgs/sprites/all.svg`;
+
     if (!assertScope(scope)) {
       execSync(
-        `${global.rootDir}/bin/build --SPRITE_VERSION=${scope} --SPRITE_URL="https://elements-prd.classpert.com/${scope}/svgs/sprites/\{tags,country-flags,brand,i18n,icons,providers\}.svg"`
+        `${global.rootDir}/bin/build --SPRITE_VERSION=${scope} --SPRITE_FILES=${
+          files || fallBack
+        }`
       );
     }
 
@@ -124,7 +130,7 @@ const processor = (scope, cache) => params => {
       // log,
       // transform query into object
       toPairs
-    )(params);
+    )(rest);
   } catch (error) {
     log(error);
     return Promise.reject("");

@@ -6,9 +6,9 @@ require 'json'
 
 module Respriter
   class Builder
-    def initialize(scope, urls)
+    def initialize(scope, files)
       @scope = scope
-      @urls = urls
+      @files = files
       @dependencies_tree = {}
       @definitions = {}
       @symbols = {}
@@ -18,10 +18,13 @@ module Respriter
       Respriter.setup(@scope)
     end
 
+    def urls
+      @files
+    end
     # Download everything upfront and then process
     # This is necessary for dependency tree building
     def load
-      @urls.each do |url|
+      urls.each do |url|
         response = Net::HTTP.get_response(URI(url))
 
         raise 'Sprite not found' if response.code != '200'
