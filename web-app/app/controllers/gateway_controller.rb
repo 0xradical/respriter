@@ -51,8 +51,6 @@ class GatewayController < ApplicationController
                        tracked_search_id: params[:sid],
                        user_account_id:   current_user_account&.id
                      })
-
-      redirect_to @forwarding_url if page_version[:version].blank?
     end
   end
 end
