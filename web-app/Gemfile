@@ -7,6 +7,8 @@
 
 ruby '2.6.5'
 
+source 'https://rubygems.org'
+
 gem 'active_record_upsert',             '~> 0.9.5'
 gem 'activerecord-import',              '~> 1.0.4'  # Bulk insert for ActiveRecord
 gem 'affiliate_hub',                    github: 'codextremist/affiliate_hub'
@@ -28,8 +30,8 @@ gem 'devise-jwt',                       '~> 0.5.8'
 gem 'dnsruby',                          '~> 1.61.3'
 gem 'ejs',                              '~> 1.1.1'
 gem 'elasticsearch-dsl',                '~> 0.1.0'
-gem 'elasticsearch-model',              '~> 6.0.0'
-gem 'elasticsearch-rails',              '~> 6.0.0'
+gem 'elasticsearch-model',              '~> 7.1.0'
+gem 'elasticsearch-rails',              '~> 7.1.0'
 gem 'execjs',                           '~> 2.7.0'
 gem 'fast_jsonapi',                     '~> 1.5'
 gem 'http',                             '~> 4.2.0'

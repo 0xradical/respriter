@@ -2,7 +2,7 @@
 
 module Search
   class CourseSearch
-    VERSION = '1.2.0'
+    VERSION = '2.0.0'
     PER_PAGE = 20
 
     attr_reader :query, :filter, :page, :per_page, :order, :boost, :session_id
@@ -143,18 +143,20 @@ module Search
       if @query.blank?
         text_query = { match_all: {} }
       else
-        text_query = {
+        text_query = [
           multi_match: {
             query:    @query,
-            type:     'cross_fields',
+            type:     'best_fields',
             operator: 'and',
+            tie_breaker: 0.3,
             fields:   [
-              'name.en^2', 'description.en', 'tags_text.en^2', 'instructors_text.en', 'provider_name_text.en',
-              'name.br^2', 'description.br', 'tags_text.br^2', 'instructors_text.br', 'provider_name_text.br',
-              'name.es^2', 'description.es', 'tags_text.es^2', 'instructors_text.es', 'provider_name_text.es'
+              'name.en^2', 'tags_text.en^2', 'instructors_text.en', 'provider_name_text.en', 'description.en', 
+              'name.br^2', 'tags_text.br^2', 'instructors_text.br', 'provider_name_text.br', 'description.br',
+              'name.es^2', 'tags_text.es^2', 'instructors_text.es', 'provider_name_text.es', 'description.es',
+              'name.ja^2', 'tags_text.ja^2', 'instructors_text.ja', 'provider_name_text.ja', 'description.ja',
             ]
-          }
-        }
+          },
+        ]
 
         should_query << {
           multi_match: {
@@ -162,16 +164,27 @@ module Search
             fields: [
               'category_text.en',
               'category_text.br',
-              'category_text.es'
+              'category_text.es',
+              'category_text.ja'
             ]
           }
         }
       end
 
       {
-        bool: {
-          must:   text_query,
-          should: should_query
+        boosting: {
+          positive:{
+            bool: {
+              must:   text_query,
+              should: should_query,
+            }
+          },
+          negative: {
+            match: {
+              provider_slug: "hotmart"
+            }
+          },
+          negative_boost: 0.5
         }
       }
     end
