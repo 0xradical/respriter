@@ -72,7 +72,7 @@ GIT
     mecab_standalone (0.1.0)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     abstract_type (0.0.7)
     actioncable (6.0.0)
@@ -251,19 +251,19 @@ GEM
     ecma-re-validator (0.2.0)
       regexp_parser (~> 1.2)
     ejs (1.1.1)
-    elasticsearch (7.3.0)
-      elasticsearch-api (= 7.3.0)
-      elasticsearch-transport (= 7.3.0)
-    elasticsearch-api (7.3.0)
+    elasticsearch (7.5.0)
+      elasticsearch-api (= 7.5.0)
+      elasticsearch-transport (= 7.5.0)
+    elasticsearch-api (7.5.0)
       multi_json
-    elasticsearch-dsl (0.1.8)
-    elasticsearch-model (6.0.0)
+    elasticsearch-dsl (0.1.9)
+    elasticsearch-model (7.1.0)
       activesupport (> 3)
       elasticsearch (> 1)
       hashie
-    elasticsearch-rails (6.0.0)
-    elasticsearch-transport (7.3.0)
-      faraday
+    elasticsearch-rails (7.1.0)
+    elasticsearch-transport (7.5.0)
+      faraday (>= 0.14, < 1)
       multi_json
     equalizer (0.0.11)
     erubi (1.9.0)
@@ -637,8 +637,8 @@ DEPENDENCIES
   dnsruby (~> 1.61.3)
   ejs (~> 1.1.1)
   elasticsearch-dsl (~> 0.1.0)
-  elasticsearch-model (~> 6.0.0)
-  elasticsearch-rails (~> 6.0.0)
+  elasticsearch-model (~> 7.1.0)
+  elasticsearch-rails (~> 7.1.0)
   execjs (~> 2.7.0)
   factory_bot
   factory_bot_rails

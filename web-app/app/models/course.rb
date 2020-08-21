@@ -96,9 +96,6 @@ class Course < ApplicationRecord
             'vue.js, vue js, vuejs, vue'
           ]
         },
-        english_stemmer:      { type: 'stemmer', language: 'english' },
-        brazilian_stemmer:    { type: 'stemmer', language: 'brazilian' },
-        spanish_stemmer:      { type: 'stemmer', language: 'spanish' },
         all_stopwords:        {
           type: 'stop', stopwords: %w[_english_ _portuguese_ _spanish_]
         },
@@ -113,7 +110,6 @@ class Course < ApplicationRecord
             lowercase
             programming_synonyms
             all_stopwords
-            english_stemmer
           ],
           char_filter: %w[html_strip]
         },
@@ -123,7 +119,6 @@ class Course < ApplicationRecord
             lowercase
             programming_synonyms
             all_stopwords
-            brazilian_stemmer
           ],
           char_filter: %w[html_strip]
         },
@@ -133,7 +128,15 @@ class Course < ApplicationRecord
             lowercase
             programming_synonyms
             all_stopwords
-            spanish_stemmer
+          ],
+          char_filter: %w[html_strip]
+        },
+        japanese_programmer:   {
+          tokenizer:   'kuromoji_tokenizer',
+          filter:      %w[
+            lowercase
+            programming_synonyms
+            all_stopwords
           ],
           char_filter: %w[html_strip]
         },
@@ -156,12 +159,14 @@ class Course < ApplicationRecord
         indexes :en, analyzer: 'english_programmer'
         indexes :br, analyzer: 'brazilian_programmer'
         indexes :es, analyzer: 'spanish_programmer'
+        indexes :ja, analyzer: 'japanese_programmer'
       end
 
       indexes :description, type: 'text', analyzer: 'english_programmer' do
         indexes :en, analyzer: 'english_programmer'
         indexes :br, analyzer: 'brazilian_programmer'
         indexes :es, analyzer: 'spanish_programmer'
+        indexes :ja, analyzer: 'japanese_programmer'
       end
 
       indexes :syllabus_markdown,
@@ -169,30 +174,35 @@ class Course < ApplicationRecord
         indexes :en, analyzer: 'english_programmer'
         indexes :br, analyzer: 'brazilian_programmer'
         indexes :es, analyzer: 'spanish_programmer'
+        indexes :ja, analyzer: 'japanese_programmer'
       end
 
       indexes :category_text do
         indexes :en, type: 'text', analyzer: 'english_programmer'
         indexes :br, type: 'text', analyzer: 'brazilian_programmer'
         indexes :es, type: 'text', analyzer: 'spanish_programmer'
+        indexes :ja, type: 'text', analyzer: 'japanese_programmer'
       end
 
       indexes :tags_text do
         indexes :en, type: 'text', analyzer: 'english_programmer'
         indexes :br, type: 'text', analyzer: 'brazilian_programmer'
         indexes :es, type: 'text', analyzer: 'spanish_programmer'
+        indexes :ja, type: 'text', analyzer: 'japanese_programmer'
       end
 
       indexes :instructors_text do
         indexes :en, type: 'text', analyzer: 'english_programmer'
         indexes :br, type: 'text', analyzer: 'brazilian_programmer'
         indexes :es, type: 'text', analyzer: 'spanish_programmer'
+        indexes :ja, type: 'text', analyzer: 'japanese_programmer'
       end
 
       indexes :provider_name_text do
         indexes :en, type: 'text', analyzer: 'english_programmer'
         indexes :br, type: 'text', analyzer: 'brazilian_programmer'
         indexes :es, type: 'text', analyzer: 'spanish_programmer'
+        indexes :ja, type: 'text', analyzer: 'japanese_programmer'
       end
 
       indexes :pace,                        type: 'keyword'
