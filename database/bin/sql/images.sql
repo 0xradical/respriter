@@ -1,4 +1,0 @@
-COPY (
-  SELECT images.*
-  FROM app.images
-) TO STDOUT WITH CSV HEADER DELIMITER ',';
