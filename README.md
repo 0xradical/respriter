@@ -16,10 +16,6 @@ located at the `files` endpoint, scoped and cached using `:version` and return m
 
 If `:version` is not currently checked out, the server (`server.js`) downloads the specific version to disk onto the `dist/:version` folder and process the download on demand. The processing is done by the `bin/build` ruby binary. The entrypoint for the builder is the `lib` folder. Upon building, the server sends the response to a cache in a s3 bucket, whose name was sent in the `X-Cache-Bucket-Name` request header. In the absence of this header, there's no s3 caching.
 
-### Caveats
-
-In its current iteration, there's only one possible generating input URL, hardcoded in the processor code, so basically the above currently means (production elements)[https://github.com/classpert/elements] `:version`. In the future, it will be possible to configure this input.
-
 ## Setup
 
 run `make setup`
