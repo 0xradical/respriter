@@ -1,9 +1,0 @@
-AllCops:
-  Exclude:
-    - '**/*.rb'
-
-Metrics/LineLength:
-  Max: 80
-
-Metrics/MethodLength:
-  Max: 100
