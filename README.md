@@ -18,7 +18,9 @@ If `:version` is not currently checked out, the server (`server.js`) downloads t
 
 ## Setup
 
-run `make setup`
+Run the following commands:
+
+`make setup`
 
 ## Infrastructure
 
@@ -26,7 +28,7 @@ run `make setup`
 
 The infrastructure for the respriter service has the following basic topology:
 
-![Respriter Topology on AWS](/docs/topology.svg)
+![Respriter Topology on AWS](docs/topology.svg)
 
 ### Infrastructure (as a) Code
 

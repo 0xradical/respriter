@@ -28,6 +28,7 @@ help:
 setup: .env .env.production docker-compose.yml ## Setup project
 	@make docker-pull
 	@make docker-build
+	@$(call docker_run_or_plain,npm install)
 
 serve: ## Run server
 	@$(call docker_run_with_ports_or_plain,npm run serve)
