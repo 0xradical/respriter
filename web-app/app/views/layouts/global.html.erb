@@ -99,17 +99,27 @@
 
     <!-- App css -->
     <style>.lazyloading{opacity:0}.lazyloaded{opacity:1;transition:opacity .3s}</style>
-    <%= stylesheet_bundles_with_chunks_tag *['application', 'vendor',  content_for?(:stylesheet_bundles) ? eval(content_for(:stylesheet_bundles)) : nil].flatten.compact %>
+    <% if content_for?(:stylesheet_tag) %>
+      <%= yield :stylesheet_tag %>
+    <% else %>
+      <%= stylesheet_bundles_with_chunks_tag *['application', 'vendor',  content_for?(:stylesheet_bundles) ? eval(content_for(:stylesheet_bundles)) : nil].flatten.compact %>
+    <% end %>
 
     <!-- Javascript -->
     <%# Best performance is using defer defined on the head %>
-    <%= javascript_bundles_with_chunks_tag *['application', 'vendor', 'lazysizes', content_for?(:javascript_bundles) ? eval(content_for(:javascript_bundles)) : nil].flatten.compact, defer: true %>
+    <% if content_for?(:javascript_tag) %>
+      <%= yield :javascript_tag %>
+    <% else %>
+      <%= javascript_bundles_with_chunks_tag *['application', 'vendor', 'lazysizes', content_for?(:javascript_bundles) ? eval(content_for(:javascript_bundles)) : nil].flatten.compact, defer: true %>
+    <% end %>
 
     <% if content_for?(:elements_js) %>
       <%= yield :elements_js %>
     <% else %>
       <%= elements_javascript_include_tag('bundle', defer: true,  skip_pipeline: true) %>
     <% end %>
+
+    <%= yield :javascript if content_for?(:javascript) %>
 
     <script type='text/javascript'>
       window.I18n = { locale: "<%= I18n.locale %>" }

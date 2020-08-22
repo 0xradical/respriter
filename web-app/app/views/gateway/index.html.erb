@@ -10,6 +10,14 @@
   <meta http-equiv="refresh" content="<%= @waiting_time_in_seconds %>; url=<%= @forwarding_url %>">
 <% end %>
 
+<%= content_for(:stylesheet_tag) do %>
+  <!-- nothing -->
+<% end %>
+
+<%= content_for(:javascript_tag) do %>
+  <!-- nothing -->
+<% end %>
+
 <%= content_for(:javascript) do %>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.1/lottie.min.js" integrity="sha512-bydaxcpHiWGaIdaqCwrSYIXjj4xRh4P1C3BE+AdJUgYAKAhEWeAt5GzDgeYdLT+MGBYeLPJf7cTz4llPwwdk+A==" crossorigin="anonymous"></script>
   <script>
@@ -31,10 +39,10 @@
 <% end %>
 
 <%= content_for :sprites do %>
-  <%= sprites({
+  <%= URI.open(sprites_url({
     brand: "logo_symbol",
     providers: @provider.slug
-  }) %>
+  })).read.html_safe %>
 <% end %>
 
 <div class="container-fluid bc-s">

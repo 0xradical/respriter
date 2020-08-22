@@ -43,6 +43,7 @@ services:
       - proxy.clspt
       - mail.clspt
       - video.clspt
+      - respriter.clspt
 
   que.clspt:
     <<: *base
@@ -396,10 +397,11 @@ services:
     command: make serve
     environment:
       - LOGSPOUT=ignore
+      - NODE_PORT=8087
     volumes:
-      - ../respriter:/app
+      - ./respriter:/app
     ports:
-      - 8087:8080
+      - 8087
     depends_on:
       - proxy.clspt
 

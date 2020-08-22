@@ -1,0 +1,11 @@
+.env
+.env.sh
+.env.production
+docker-compose.yml
+/node_modules/
+yarn-error.log
+/build/
+/dist/
+/scratchpad/
+.DS_Store
+terraform/.terraform/*

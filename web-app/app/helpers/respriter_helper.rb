@@ -11,13 +11,16 @@ module RespriterHelper
 
   def sprites_url(params = {}, options = {})
     host, version = get_options(options.extract!(:host, :version))
-    URI.join(URI(respriter_url),version).tap do |uri|
+    set_files(params, host, version)
+
+    URI.join(URI(respriter_url), version).tap do |uri|
       uri.query = params.flat_map { |k, v| "#{k}=#{Array.wrap(v).compact.uniq.join(',')}" }.join('&')
     end
   end
 
   def sprites(params = {}, options = {})
     host, version = get_options(options.extract!(:host, :version))
+    set_files(params, host, version)
 
     if respriter?
       sprite_uri = URI.join(
@@ -35,6 +38,12 @@ module RespriterHelper
   end
 
   private
+
+  def set_files(params, host, version)
+    params.merge!({
+                    files: File.join(host, version, 'svgs/sprites/all.svg')
+                  })
+  end
 
   def get_options(opts)
     [
