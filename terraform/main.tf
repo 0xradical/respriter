@@ -488,7 +488,6 @@ resource "aws_cloudfront_distribution" "default" {
 
     forwarded_values {
       query_string = true
-      query_string_cache_keys = var.aws_cloudfront_distribution_query_cache_keys
 
       cookies {
         forward = "none"
