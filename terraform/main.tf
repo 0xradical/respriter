@@ -616,7 +616,7 @@ resource "aws_s3_bucket" "codepipeline_bucket" {
     enabled = true
 
     expiration {
-      days = 1
+      days = 9000
     }
   }
 
