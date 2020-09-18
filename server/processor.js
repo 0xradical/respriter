@@ -20,7 +20,7 @@ const {
 } = require("./resolvers");
 
 function assertScope(scope) {
-  if (fs.existsSync(resolveScope(scope)())) {
+  if (fs.existsSync(resolveScope(scope)()) && fs.existsSync(resolveScoped("dependencies.json")(scope)())) {
     return true;
   } else {
     return false;
