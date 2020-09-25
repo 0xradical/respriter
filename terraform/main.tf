@@ -8,6 +8,7 @@ resource "aws_vpc" "default" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -20,6 +21,7 @@ resource "aws_internet_gateway" "default" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -43,6 +45,7 @@ resource "aws_subnet" "default" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
     CIDR        = "10.0.${1+count.index}.0/24"
@@ -83,6 +86,7 @@ resource "aws_security_group" "elb" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -123,6 +127,7 @@ resource "aws_security_group" "default" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -153,6 +158,7 @@ resource "aws_elb" "web" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -180,6 +186,7 @@ EOF
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -328,6 +335,7 @@ resource "aws_s3_bucket" "cache" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
     Purpose     = "Cache"
@@ -406,6 +414,7 @@ resource "aws_lambda_function" "s3_origin_request" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -505,6 +514,7 @@ resource "aws_cloudfront_distribution" "default" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -554,6 +564,7 @@ EOF
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -622,6 +633,7 @@ resource "aws_s3_bucket" "codepipeline_bucket" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -648,6 +660,7 @@ EOF
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -735,6 +748,7 @@ resource "aws_codepipeline" "codepipeline" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
@@ -757,6 +771,7 @@ resource "aws_codepipeline_webhook" "respriter" {
 
   tags = {
     App         = var.app
+    Name        = var.app
     Environment = var.environment
     Origin      = var.origin
   }
