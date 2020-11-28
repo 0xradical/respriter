@@ -82,7 +82,7 @@ const processor = (scope, cache) => params => {
     }
   })
     .then(() =>
-      fs.readFileSync(resolveScoped("dependencies.json")(scope)(), {
+      fs.readFile(resolveScoped("dependencies.json")(scope)(), {
         encoding: "utf8",
         flag: "r"
       })
