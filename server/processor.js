@@ -1,7 +1,7 @@
 const fs = require("fs");
 const AWS = require("aws-sdk");
 const crypto = require("crypto");
-const { execSync } = require("child_process");
+const { execAsync } = require("child_process");
 const {
   flatten,
   compose,
@@ -20,7 +20,10 @@ const {
 } = require("./resolvers");
 
 function assertScope(scope) {
-  if (fs.existsSync(resolveScope(scope)()) && fs.existsSync(resolveScoped("dependencies.json")(scope)())) {
+  if (
+    fs.existsSync(resolveScope(scope)()) &&
+    fs.existsSync(resolveScoped("dependencies.json")(scope)())
+  ) {
     return true;
   } else {
     return false;
@@ -60,81 +63,83 @@ const s3Upload = (scope, params, cache) => {
 };
 
 const processor = (scope, cache) => params => {
-  try {
-    var manifest = {};
-    const serve =
-      cache && cache.length
-        ? compose(s3Upload(scope, params, cache), svg)
-        : svg;
+  var serve =
+    cache && cache.length ? compose(s3Upload(scope, params, cache), svg) : svg;
 
-    const { files, ...rest } = params;
+  const { files, ...rest } = params;
 
-    const fallBack = `https://elements-prd.classpert.com/${scope}/svgs/sprites/all.svg`;
+  const fallBack = `https://elements-prd.classpert.com/${scope}/svgs/sprites/all.svg`;
 
+  return new Promise(function (resolve, reject) {
     if (!assertScope(scope)) {
-      execSync(
+      return execAsync(
         `${global.rootDir}/bin/build --SPRITE_VERSION=${scope} --SPRITE_FILES=${
           files || fallBack
         }`
       );
+    } else {
+      return resolve(true);
     }
-
-    manifest = JSON.parse(
+  })
+    .then(() =>
       fs.readFileSync(resolveScoped("dependencies.json")(scope)(), {
         encoding: "utf8",
         flag: "r"
       })
-    );
+    )
+    .then(dependencies => {
+      const manifest = JSON.parse(dependencies);
 
-    return compose(
-      // collect promises
-      ({ symbols, defs }) => symbols.then(s => defs.then(d => serve(s, d))),
-      // construct promises of symbols and defs
-      ({ symbols, defs }) => ({
-        symbols: Promise.all(
-          map(compose(dataReadAsync, resolveEntry("symbols")(scope)), symbols)
-        ),
-        defs: Promise.all(
-          map(compose(dataReadAsync, resolveEntry("defs")(scope)), defs)
-        )
-      }),
-      // log,
-      // add dependencies of symbols
-      reduce(
-        (acc, s) => ({
-          symbols: [...acc.symbols, s],
-          defs: [...acc.defs, ...(manifest[s] || [])]
+      return compose(
+        // collect promises
+        ({ symbols, defs }) => symbols.then(s => defs.then(d => serve(s, d))),
+        // construct promises of symbols and defs
+        ({ symbols, defs }) => ({
+          symbols: Promise.all(
+            map(compose(dataReadAsync, resolveEntry("symbols")(scope)), symbols)
+          ),
+          defs: Promise.all(
+            map(compose(dataReadAsync, resolveEntry("defs")(scope)), defs)
+          )
         }),
-        { symbols: [], defs: [] }
-      ),
-      // log,
-      flatten,
-      // flattenize everyone into sprite format
-      map(([k, o]) => map(o => join("-", [k, o]), split(",", o))),
-      // log,
-      // transform globbed scopes
-      map(([k, o]) =>
-        o === "*"
-          ? [
-              k,
-              fs
-                .readdirSync(resolveFamily("symbols")(scope)())
-                .reduce((a, s) => {
-                  var m = new RegExp(`^${k}-(.*)`).exec(s);
-                  return m ? [...a, m[1]] : a;
-                }, [])
-                .join(",")
-            ]
-          : [k, o]
-      ),
-      // log,
-      // transform query into object
-      toPairs
-    )(rest);
-  } catch (error) {
-    log(error);
-    return Promise.reject("");
-  }
+        // log,
+        // add dependencies of symbols
+        reduce(
+          (acc, s) => ({
+            symbols: [...acc.symbols, s],
+            defs: [...acc.defs, ...(manifest[s] || [])]
+          }),
+          { symbols: [], defs: [] }
+        ),
+        // log,
+        flatten,
+        // flattenize everyone into sprite format
+        map(([k, o]) => map(o => join("-", [k, o]), split(",", o))),
+        // log,
+        // transform globbed scopes
+        map(([k, o]) =>
+          o === "*"
+            ? [
+                k,
+                fs
+                  .readdirSync(resolveFamily("symbols")(scope)())
+                  .reduce((a, s) => {
+                    var m = new RegExp(`^${k}-(.*)`).exec(s);
+                    return m ? [...a, m[1]] : a;
+                  }, [])
+                  .join(",")
+              ]
+            : [k, o]
+        ),
+        // log,
+        // transform query into object
+        toPairs
+      )(rest);
+    })
+    .catch(error => {
+      log(error);
+      return new Promise.reject("");
+    });
 };
 
 module.exports = { processor };

@@ -21,11 +21,12 @@ module Respriter
     def urls
       @files
     end
+
     # Download everything upfront and then process
     # This is necessary for dependency tree building
     def load
       urls.each do |url|
-        response = Net::HTTP.get_response(URI(url))
+        response = get_response(URI(url))
 
         raise 'Sprite not found' if response.code != '200'
 
@@ -78,6 +79,17 @@ module Respriter
       load
       extract_dependencies
       dump_dependencies
+    end
+
+    private
+
+    def get_response(url)
+      uri = URI(url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = uri.scheme == 'https'
+      http.open_timeout = 5 # in seconds
+      http.read_timeout = 10 # in seconds
+      http.request(Net::HTTP::Get.new(uri.request_uri))
     end
   end
 end
