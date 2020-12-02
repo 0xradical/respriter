@@ -1,7 +1,11 @@
 const fs = require("fs");
 const AWS = require("aws-sdk");
 const crypto = require("crypto");
-const { execAsync } = require("child_process");
+const util = require("util");
+const { exec } = require("child_process");
+const execAsync = util.promisify(exec);
+const readFileAsync = util.promisify(fs.readFile);
+
 const {
   flatten,
   compose,
@@ -71,18 +75,21 @@ const processor = (scope, cache) => params => {
   const fallBack = `https://elements-prd.classpert.com/${scope}/svgs/sprites/all.svg`;
 
   return new Promise(function (resolve, reject) {
+    //
     if (!assertScope(scope)) {
       return execAsync(
         `${global.rootDir}/bin/build --SPRITE_VERSION=${scope} --SPRITE_FILES=${
           files || fallBack
         }`
-      );
+      )
+        .then(() => resolve(true))
+        .catch(err => reject(err));
     } else {
       return resolve(true);
     }
   })
     .then(() =>
-      fs.readFile(resolveScoped("dependencies.json")(scope)(), {
+      readFileAsync(resolveScoped("dependencies.json")(scope)(), {
         encoding: "utf8",
         flag: "r"
       })
@@ -138,7 +145,7 @@ const processor = (scope, cache) => params => {
     })
     .catch(error => {
       log(error);
-      return new Promise.reject("");
+      return Promise.reject(error);
     });
 };
 

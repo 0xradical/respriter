@@ -133,6 +133,7 @@ RUN apk add --no-cache build-base
 RUN gem install bundler
 RUN mkdir /app
 COPY Gemfile /app
+COPY Gemfile.lock /app
 
 RUN cd /app && bundle install --no-color
 
