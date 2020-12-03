@@ -134,6 +134,8 @@ RUN gem install bundler
 RUN mkdir /app
 COPY Gemfile /app
 COPY Gemfile.lock /app
+COPY package.json /app
+COPY package-lock.json /app
 
 RUN cd /app && bundle install --no-color
 
@@ -206,6 +208,8 @@ RUN addgroup -g 1000 node \
   # smoke tests
   && node --version \
   && npm --version
+
+RUN cd /app && npm ci
 
 RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
   && for key in \
