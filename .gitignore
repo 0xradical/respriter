@@ -8,4 +8,4 @@ yarn-error.log
 /dist/
 /scratchpad/
 .DS_Store
-terraform/.terraform/*
+terraform/**/.terraform/*
