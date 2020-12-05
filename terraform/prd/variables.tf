@@ -85,15 +85,3 @@ variable "classpert_certificate_arn" {
     "classpert.com" = "arn:aws:acm:us-east-1:452887582654:certificate/d5c5b123-8617-4dd8-85e4-006cfcc20ee6"
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
