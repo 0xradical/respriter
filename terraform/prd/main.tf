@@ -56,7 +56,7 @@ resource "aws_subnet" "default" {
 # so it is accessible via the web
 resource "aws_security_group" "elb" {
   name_prefix = var.prefix
-  description = "ELB SG to allow http(s) connections"
+  description = "ELB SG to allow http(s) connections for ${var.app} - ${var.environment}"
   vpc_id      = aws_vpc.default.id
 
   # HTTP access from anywhere
@@ -405,9 +405,9 @@ resource "aws_cloudwatch_log_group" "s3_origin_request" {
 
 resource "aws_lambda_function" "s3_origin_request" {
   filename         = data.archive_file.origin_request_lambda_zip.output_path
-  function_name    = "origin_request"
+  function_name    = "origin_request_${var.environment}"
   role             = aws_iam_role.cloudfront_lambda.arn
-  handler          = "origin_request.handler"
+  handler          = "origin_request_${var.environment}.handler"
   source_code_hash = data.archive_file.origin_request_lambda_zip.output_base64sha256
   runtime          = "nodejs12.x"
   publish          = true
@@ -530,7 +530,7 @@ resource "aws_cloudfront_distribution" "default" {
 
 # code deploy app
 resource "aws_codedeploy_app" "default" {
-  name = var.app
+  name = "${var.app}-${var.environment}"
 }
 
 # sns topic that will be used

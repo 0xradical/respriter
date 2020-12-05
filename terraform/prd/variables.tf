@@ -74,6 +74,10 @@ variable "cloudflare_subdomain" {
   default = "respriter"
 }
 
+variable "cloudflare_paused" {
+  default = false
+}
+
 variable "classpert_certificate_arn" {
   type = map(string)
   default = {

@@ -32,7 +32,7 @@ data "cloudflare_zones" "default" {
   filter {
     name   = var.cloudflare_zone
     status = "active"
-    paused = false
+    paused = var.cloudflare_paused
   }
 }
 
