@@ -63,7 +63,7 @@ variable "github_repository" {
 }
 
 variable "github_repository_webhook_secret" {
-  default = "a94dc512ef22af15644f95fc8a78d989"
+  default = "[GITHUB WEBHOOK SECRET]"
 }
 
 variable "cloudflare_zone" {
