@@ -33,7 +33,7 @@ variable "aws_ami" {
 
 # created on the console
 variable "aws_key_name" {
-  default = "thiago"
+  default = "[YOUR AWS SSH KEY NAME]"
 }
 
 variable "aws_codepipeline_github_branch" {
