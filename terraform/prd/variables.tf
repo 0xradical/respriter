@@ -55,7 +55,7 @@ variable "aws_cloudfront_distribution_query_cache_keys" {
 }
 
 variable "github_organization" {
-  default = "classpert"
+  default = "[YOUR GITHUB ORGANIZATION]"
 }
 
 variable "github_repository" {
@@ -67,7 +67,7 @@ variable "github_repository_webhook_secret" {
 }
 
 variable "cloudflare_zone" {
-  default = "classpert.com"
+  default = "your.production.domain.com"
 }
 
 variable "cloudflare_subdomain" {
@@ -78,10 +78,10 @@ variable "cloudflare_paused" {
   default = false
 }
 
-variable "classpert_certificate_arn" {
+variable "certificate_arn" {
   type = map(string)
   default = {
-    "classpert-staging.com" = "arn:aws:acm:us-east-1:452887582654:certificate/5e34a122-9960-4902-baab-8ba26c7f3bd6"
-    "classpert.com" = "arn:aws:acm:us-east-1:452887582654:certificate/d5c5b123-8617-4dd8-85e4-006cfcc20ee6"
-  }
+    "your.staging.domain.com" = "arn:aws:acm:us-east-1:452837582654:certificate/5e34a122-9960-4902-5768-8ba26c7f3bd6"
+    "your.production.domain.com" = "arn:aws:acm:us-east-1:452837582654:certificate/d5c5b123-8617-3444-85e4-006cfcc20ee6"
+ }
 }

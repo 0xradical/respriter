@@ -36,13 +36,13 @@ run `cd terraform && terraform init && terraform plan`
 
 ### Terraform Cloud
 
-The current Terraforma structure uses the Terraform Cloud to manage workspaces (one for production, one for staging, under terraform folder). Each workspaces contains the following environment variables set on the [Terraform Cloud Dashboard](https://app.terraform.io/app/classpert/workspaces/respriter-production/variables):
+The current Terraforma structure uses the Terraform Cloud to manage workspaces (one for production, one for staging, under terraform folder). Each workspaces contains the following environment variables set on the [Terraform Cloud Dashboard](https://app.terraform.io):
 
 - AWS_ACCESS_KEY_ID: Access key id that was created in the `terraform` user on AWS
 - AWS_SECRET_ACCESS_KEY: Secret for the key that was created in the `terraform` user on AWS (set to sensitive)
 - CLOUDFLARE_API_TOKEN: Token created on the [Cloudflare Dashboard](https://dash.cloudflare.com/profile/api-tokens), the token should have the Zone.Zone Settings, Zone.Zone, Zone.DNS permissions for All Zones (set to sensitive)
 - GITHUB_TOKEN: [Personal access token](https://github.com/settings/tokens) that grants permissions to Github Repos. It should have at least the permissions repo, read:packages, admin:repo_hook, admin:org_hook and admin:org (set to sensitive)
-- GITHUB_OWNER: Set to "classpert"
+- GITHUB_OWNER: Set to whatever you want
 
 ## EC2 Image (AMIs)
 

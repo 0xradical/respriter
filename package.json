@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/classpert/respriter.git"
+    "url": "git+https://github.com/0xradical/respriter.git"
   },
-  "author": "Classpert",
+  "author": "0xradical",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/classpert/respriter/issues"
+    "url": "https://github.com/0xradical/respriter/issues"
   },
-  "homepage": "https://github.com/classpert/respriter#readme",
+  "homepage": "https://github.com/0xradical/respriter#readme",
   "dependencies": {
     "aws-sdk": "^2.707.0",
     "cors": "^2.8.5",

@@ -6,5 +6,5 @@ bundle install
 npm install
 # initial setup for a fresh start
 export SPRITE_VERSION=$(node -p "require('./package.json').elements.version")
-export SPRITE_FILES=https://elements-prd.classpert.com/${SPRITE_VERSION}/svgs/sprites/all.svg
+export SPRITE_FILES=https://your.assets.cdn.com/sprites.svg
 ./bin/build --sprite-version=$SPRITE_VERSION --sprite-files=$SPRITE_FILES

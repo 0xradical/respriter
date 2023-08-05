@@ -1,4 +1,4 @@
-NAME   :=	classpert/respriter
+NAME   :=	respriter
 TAG    :=	1.0.0
 IMG    :=	${NAME}\:${TAG}
 LATEST :=	${NAME}\:latest

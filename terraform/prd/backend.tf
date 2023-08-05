@@ -3,7 +3,7 @@
 terraform {
   backend "remote" {
     hostname      = "app.terraform.io"
-    organization  = "classpert"
+    organization  = "[YOUR TERRAFORM ORGANIZATION]"
 
     workspaces {
       name = "respriter-production"

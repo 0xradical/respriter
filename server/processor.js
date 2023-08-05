@@ -72,7 +72,7 @@ const processor = (scope, cache) => params => {
 
   const { files, ...rest } = params;
 
-  const fallBack = `https://elements-prd.classpert.com/${scope}/svgs/sprites/all.svg`;
+  const fallBack = `https://your.assets.cdn.com/sprites.svg`;
 
   return new Promise(function (resolve, reject) {
     //

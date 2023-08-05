@@ -10,7 +10,7 @@ provider "aws" {
 provider "github" {
   version = "~> 2.8.1"
   individual = false
-  organization = "classpert"
+  organization = "[YOUR GITHUB ORGANIZATION]"
 }
 
 provider "cloudflare" {
